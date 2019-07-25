@@ -14,6 +14,7 @@ class Create1555355612782UsersTable extends Migration
             $table->string('email');
             $table->datetime('email_verified_at')->nullable();
             $table->string('password');
+            $table->bigInteger('rank_id')->unsigned()->nullable();
             $table->string('remember_token')->nullable();
             $table->timestamps();
             $table->softDeletes();

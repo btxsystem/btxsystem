@@ -19,22 +19,6 @@ class PermissionsController extends Controller
         return view('admin.permissions.index', compact('permissions'));
     }
 
-    public function create()
-    {
-        abort_unless(\Gate::allows('permission_create'), 403);
-
-        return view('admin.permissions.create');
-    }
-
-    public function store(StorePermissionRequest $request)
-    {
-        abort_unless(\Gate::allows('permission_create'), 403);
-
-        $permission = Permission::create($request->all());
-
-        return redirect()->route('admin.permissions.index');
-    }
-
     public function edit(Permission $permission)
     {
         abort_unless(\Gate::allows('permission_edit'), 403);
@@ -56,21 +40,5 @@ class PermissionsController extends Controller
         abort_unless(\Gate::allows('permission_show'), 403);
 
         return view('admin.permissions.show', compact('permission'));
-    }
-
-    public function destroy(Permission $permission)
-    {
-        abort_unless(\Gate::allows('permission_delete'), 403);
-
-        $permission->delete();
-
-        return back();
-    }
-
-    public function massDestroy(MassDestroyPermissionRequest $request)
-    {
-        Permission::whereIn('id', request('ids'))->delete();
-
-        return response(null, 204);
     }
 }

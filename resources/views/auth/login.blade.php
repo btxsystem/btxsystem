@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
 <div class="row justify-content-center">
-    <div class="col-md-8">
+    <div class="col-md-5">
         <div class="card-group">
             <div class="card p-4">
                 <div class="card-body">
@@ -35,9 +35,6 @@
                         <div class="row">
                             <div class="col-6">
                                 <input type="submit" class="btn btn-primary px-4" value='{{ trans('global.login') }}'>
-                                <label class="ml-2">
-                                    <input name="remember" type="checkbox" /> {{ trans('global.remember_me') }}
-                                </label>
                             </div>
                             <div class="col-6 text-right">
                                 <a class="btn btn-link px-0" href="{{ route('password.request') }}">

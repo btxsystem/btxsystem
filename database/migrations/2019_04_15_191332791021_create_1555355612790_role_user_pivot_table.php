@@ -12,7 +12,7 @@ class Create1555355612790RoleUserPivotTable extends Migration
             $table->unsignedInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
             $table->unsignedInteger('role_id');
-            $table->foreign('role_id')->references('id')->on('roles');
+            $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
         });
     }
 

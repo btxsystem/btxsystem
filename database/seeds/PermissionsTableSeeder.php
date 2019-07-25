@@ -132,7 +132,14 @@ class PermissionsTableSeeder extends Seeder
                 'title'      => 'product_access',
                 'created_at' => '2019-04-15 19:14:42',
                 'updated_at' => '2019-04-15 19:14:42',
-            ]];
+            ],
+            [
+                'id'         => '22',
+                'title'      => 'frontend',
+                'created_at' => '2019-04-15 19:14:42',
+                'updated_at' => '2019-04-15 19:14:42',
+            ]
+        ];
 
         Permission::insert($permissions);
     }
