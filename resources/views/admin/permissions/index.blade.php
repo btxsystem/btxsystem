@@ -11,9 +11,6 @@
             <table class=" table table-bordered table-striped table-hover datatable">
                 <thead>
                     <tr>
-                        <th width="10">
-
-                        </th>
                         <th>
                             {{ trans('global.permission.fields.title') }}
                         </th>
@@ -25,9 +22,6 @@
                 <tbody>
                     @foreach($permissions as $key => $permission)
                         <tr data-entry-id="{{ $permission->id }}">
-                            <td>
-
-                            </td>
                             <td>
                                 {{ $permission->title ?? '' }}
                             </td>
