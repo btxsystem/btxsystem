@@ -1,25 +1,4 @@
-# Laravel + CoreUI: Adminpanel Boilerplate
-
-It is a demo project for demonstrating what can be generated with new 2019 version of [QuickAdminPanel](https://2019.quickadminpanel.com) tool. This boilerplate was fully __generated__, without adding any custom line of code.
-
-## What's inside
-
-- Adminpanel based on [CoreUI theme](https://coreui.io/): with default one admin user (_admin@admin.com/password_) and two roles
-- Users/Roles/permissions management function (based on our own code similar to Spatie Roles-Permissions)
-- One demo CRUD for Products management - name/description/price
-- Everything that is needed for CRUDs: model+migration+controller+requests+views
-
-From that boilerplate you can manually create more CRUDs, assign permissions etc. Or use our [online generator](https://2019.quickadminpanel.com) for this.
-
-## Screenshots
-
-![Laravel + CoreUI screenshot 01](https://laraveldaily.com/wp-content/uploads/2019/04/Screen-Shot-2019-04-17-at-5.49.46-AM.png)
-
-![Laravel + CoreUI screenshot 02](https://laraveldaily.com/wp-content/uploads/2019/04/Screen-Shot-2019-04-17-at-5.51.26-AM.png)
-
-![Laravel + CoreUI screenshot 03](https://laraveldaily.com/wp-content/uploads/2019/04/Screen-Shot-2019-04-17-at-5.51.10-AM.png)
-
-![Laravel + CoreUI screenshot 04](https://laraveldaily.com/wp-content/uploads/2019/04/Screen-Shot-2019-04-17-at-5.52.03-AM.png)
+#Birex go
 
 ## How to use
 
