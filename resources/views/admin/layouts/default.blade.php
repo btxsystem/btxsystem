@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <title>
         @section('title')
-            | Josh Admin Template
+            | Bitrexgo
         @show
     </title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
@@ -46,15 +46,8 @@
                 @include('admin.layouts._notifications')
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        Hi
-                        <div class="riot">
-                            <div>
-                                <p class="user_name_max">Erik</p>
-                                <span>
-                                        <i class="caret"></i>
-                                    </span>
-                            </div>
-                        </div>
+                        <i class="livicon" data-name="gear" data-loop="true" data-color="#e9573f"
+                           data-hovercolor="#e9573f" data-size="28"></i>
                     </a>
                     <ul class="dropdown-menu">
                         <!-- User image -->

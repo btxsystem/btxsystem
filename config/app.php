@@ -175,6 +175,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        App\Providers\HelperServiceProvider::class,
         Yajra\Datatables\DatatablesServiceProvider::class,
 
     ],
@@ -229,7 +230,8 @@ return [
         'View'         => Illuminate\Support\Facades\View::class,
         'Bugsnag'      => Bugsnag\BugsnagLaravel\Facades\Bugsnag::class,
         'Datatables'   => Yajra\Datatables\Facades\Datatables::class,
-        'Nestable' => Nestable\Facades\NestableService::class,
+        'Nestable'     => Nestable\Facades\NestableService::class,
+        'Helper'       => App\Helper::class,
 
     ],
 
