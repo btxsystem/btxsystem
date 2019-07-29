@@ -3,42 +3,21 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\MassDestroyPermissionRequest;
-use App\Http\Requests\StorePermissionRequest;
-use App\Http\Requests\UpdatePermissionRequest;
+use Illuminate\Http\Request;
 use App\Permission;
+use DataTables;
 
 class PermissionsController extends Controller
 {
     public function index()
     {
-        abort_unless(\Gate::allows('permission_access'), 403);
+        if (request()->ajax()) {
+            $data = Permission::all('title');
+            return Datatables::of($data)
+                    ->addIndexColumn()
+                    ->make(true);
+        }
 
-        $permissions = Permission::all();
-
-        return view('admin.permissions.index', compact('permissions'));
-    }
-
-    public function edit(Permission $permission)
-    {
-        abort_unless(\Gate::allows('permission_edit'), 403);
-
-        return view('admin.permissions.edit', compact('permission'));
-    }
-
-    public function update(UpdatePermissionRequest $request, Permission $permission)
-    {
-        abort_unless(\Gate::allows('permission_edit'), 403);
-
-        $permission->update($request->all());
-
-        return redirect()->route('admin.permissions.index');
-    }
-
-    public function show(Permission $permission)
-    {
-        abort_unless(\Gate::allows('permission_show'), 403);
-
-        return view('admin.permissions.show', compact('permission'));
+        return view('admin.permissions.index');
     }
 }

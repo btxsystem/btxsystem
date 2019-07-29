@@ -8,16 +8,24 @@ use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Role;
 use App\User;
+use DataTables;
 
 class UsersController extends Controller
 {
     public function index()
     {
-        abort_unless(\Gate::allows('user_access'), 403);
-
-        $users = User::all();
-
-        return view('admin.users.index', compact('users'));
+        if (request()->ajax()) {
+            $data = User::all('id','name','email');
+            return Datatables::of($data)
+                    ->addIndexColumn()
+                    ->addColumn('action', function($row) {
+                        return '<a class="btn btn-warning fa fa-edit"></a>
+                                <a class="btn btn-danger fa fa-trash"></a>';
+                    })
+                    ->rawColumns(['action'])
+                    ->make(true);
+        }
+        return view('admin.users.index');
     }
 
     public function create()

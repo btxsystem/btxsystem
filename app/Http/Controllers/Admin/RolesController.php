@@ -8,16 +8,24 @@ use App\Http\Requests\StoreRoleRequest;
 use App\Http\Requests\UpdateRoleRequest;
 use App\Permission;
 use App\Role;
+use DataTables;
 
 class RolesController extends Controller
 {
     public function index()
     {
-        abort_unless(\Gate::allows('role_access'), 403);
-
-        $roles = Role::all();
-
-        return view('admin.roles.index', compact('roles'));
+        if (request()->ajax()) {
+            $data = Role::all('title');
+            return Datatables::of($data)
+                    ->addIndexColumn()
+                    ->addColumn('action', function($row) {
+                        return '<a class="btn btn-warning fa fa-edit"></a>
+                                <a class="btn btn-danger fa fa-trash"></a>';
+                    })
+                    ->rawColumns(['action'])
+                    ->make(true);
+        }
+        return view('admin.roles.index');
     }
 
     public function create()

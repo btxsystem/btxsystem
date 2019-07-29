@@ -1,46 +1,68 @@
 @extends('layouts.app')
 @section('content')
-<div class="row justify-content-center">
-    <div class="col-md-5">
-        <div class="card-group">
-            <div class="card p-4">
-                <div class="card-body">
-                    @if(\Session::has('message'))
-                        <p class="alert alert-info">
-                            {{ \Session::get('message') }}
-                        </p>
-                    @endif
-                    <form method="POST" action="{{ route('login') }}">
+<head>
+    <title>Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- global level css -->
+    <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/vendors/bootstrapvalidator/css/bootstrapValidator.min.css') }}" rel="stylesheet"/>
+    <!-- end of global level css -->
+    <!-- page level css -->
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/pages/login.css') }}" />
+    <link href="{{ asset('assets/vendors/iCheck/css/square/blue.css') }}" rel="stylesheet"/>
+    <!-- end of page level css -->
+
+</head>
+<body>
+<div class="container">
+    <div class="row vertical-offset-100">
+        <!-- Notifications -->
+        <div class="col-sm-6 col-sm-offset-3  col-md-5 col-md-offset-4 col-lg-4 col-lg-offset-4">
+            <div id="container_demo">
+                <a class="hiddenanchor" id="tologin"></a>
+                <a class="hiddenanchor" id="toforgot"></a>
+                <div id="wrapper">
+                    <div id="login" class="animate form">                
+                        <form method="POST" action="{{ route('login') }}" autocomplete="on" role="form" id="login_form">
                         {{ csrf_field() }}
-                        <h1>
-                            <div class="login-logo">
-                                <a href="#">
-                                    {{ trans('global.site_title') }}
+                        <h3 class="black_bg">
+                                <img src="{{ asset('assets/img/logo.png') }}" alt="josh logo">
+                                <br>Log In</h3>
+                        <div class="form-group ">
+                                <label style="margin-bottom:0px;" for="email" class="uname control-label"> <i class="livicon" data-name="mail" data-size="16" data-loop="true" data-c="#3c8dbc" data-hc="#3c8dbc"></i>
+                                    E-mail
+                                </label>
+                                <input id="email" name="email" type="email" placeholder="E-mail"
+                                        value=""/>
+                                <div class="col-sm-12">
+                                </div>
+                            </div>
+
+                        <div class="form-group ">
+                                <label style="margin-bottom:0px;" for="password" class="youpasswd"> <i class="livicon" data-name="key" data-size="16" data-loop="true" data-c="#3c8dbc" data-hc="#3c8dbc"></i>
+                                    Password
+                                </label>
+                                <input id="password" name="password" type="password" placeholder="Enter a password" />
+                                <div class="col-sm-12">
+                                </div>
+                            </div>
+
+                        <div class="form-group">
+                                <label>
+                                    <input type="checkbox" name="remember-me" id="remember-me" value="remember-me"
+                                            class="square-blue"/>
+                                    Keep me logged in
+                                </label>
+                            </div>
+
+                        <p class="login button">
+                                <input type="submit" value="Log In" class="btn btn-success" />
+                            </p>
+                            <p class="change_link">
+                                <a href="{{ route('password.request') }}">
+                                    <button type="button" class="btn btn-responsive botton-alignment btn-warning btn-sm">Forgot password</button>
                                 </a>
-                            </div>
-                        </h1>
-                        <p class="text-muted">{{ trans('global.login') }}</p>
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fa fa-user"></i></span>
-                            </div>
-                            <input name="email" type="text" class="form-control" placeholder="{{ trans('global.login_email') }}">
-                        </div>
-                        <div class="input-group mb-4">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fa fa-lock"></i></span>
-                            </div>
-                            <input name="password" type="password" class="form-control" placeholder="{{ trans('global.login_password') }}">
-                        </div>
-                        <div class="row">
-                            <div class="col-6">
-                                <input type="submit" class="btn btn-primary px-4" value='{{ trans('global.login') }}'>
-                            </div>
-                            <div class="col-6 text-right">
-                                <a class="btn btn-link px-0" href="{{ route('password.request') }}">
-                                    {{ trans('global.forgot_password') }}
-                                </a>
-                            </div>
+                            </p>
                         </div>
                     </form>
                 </div>
@@ -48,4 +70,18 @@
         </div>
     </div>
 </div>
+    <!-- global js -->
+    <script src="{{ asset('assets/js/jquery-1.11.1.min.js') }}" type="text/javascript"></script>
+    <!-- Bootstrap -->
+    <script src="{{ asset('assets/js/bootstrap.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/vendors/bootstrapvalidator/js/bootstrapValidator.min.js') }}" type="text/javascript"></script>
+    <!--livicons-->
+    <script src="{{ asset('assets/js/raphael-min.js') }}"></script>
+    <script src="{{ asset('assets/js/livicons-1.4.min.js') }}"></script>
+    <script src="{{ asset('assets/vendors/iCheck/js/icheck.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/js/pages/login.js') }}" type="text/javascript"></script>
+    <!-- end of global js -->
+
+</body>
 @endsection
+

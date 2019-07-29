@@ -22,4 +22,9 @@ class Rank extends Model
         'pv_needed_right',
         'needed_sponsor',
     ];
+
+    public function employeers()
+    {
+        return $this->hasMany(Employeer::class);
+    }
 }

@@ -1,129 +1,95 @@
-@extends('layouts.admin')
-@section('content')
-@can('user_create')
-    <div style="margin-bottom: 10px;" class="row">
-        <div class="col-lg-12">
-            <a class="btn btn-success" href="{{ route("admin.users.create") }}">
-                {{ trans('global.add') }} {{ trans('global.user.title_singular') }}
-            </a>
-        </div>
-    </div>
-@endcan
-<div class="card">
-    <div class="card-header">
-        {{ trans('global.user.title_singular') }} {{ trans('global.list') }}
-    </div>
+@extends('admin/layouts/default')
 
-    <div class="card-body">
-        <div class="table-responsive">
-            <table class=" table table-bordered table-striped table-hover datatable">
-                <thead>
-                    <tr>
-                        <th width="10">
-
-                        </th>
-                        <th>
-                            {{ trans('global.user.fields.name') }}
-                        </th>
-                        <th>
-                            {{ trans('global.user.fields.email') }}
-                        </th>
-                        <th>
-                            {{ trans('global.user.fields.email_verified_at') }}
-                        </th>
-                        <th>
-                            {{ trans('global.user.fields.roles') }}
-                        </th>
-                        <th>
-                            &nbsp;
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($users as $key => $user)
-                        <tr data-entry-id="{{ $user->id }}">
-                            <td>
-
-                            </td>
-                            <td>
-                                {{ $user->name ?? '' }}
-                            </td>
-                            <td>
-                                {{ $user->email ?? '' }}
-                            </td>
-                            <td>
-                                {{ $user->email_verified_at ?? '' }}
-                            </td>
-                            <td>
-                                @foreach($user->roles as $key => $item)
-                                    <span class="badge badge-info">{{ $item->title }}</span>
-                                @endforeach
-                            </td>
-                            <td>
-                                @can('user_show')
-                                    <a class="btn btn-xs btn-primary" href="{{ route('admin.users.show', $user->id) }}">
-                                        {{ trans('global.view') }}
-                                    </a>
-                                @endcan
-                                @can('user_edit')
-                                    <a class="btn btn-xs btn-info" href="{{ route('admin.users.edit', $user->id) }}">
-                                        {{ trans('global.edit') }}
-                                    </a>
-                                @endcan
-                                @can('user_delete')
-                                    <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
-                                        <input type="hidden" name="_method" value="DELETE">
-                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                        <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
-                                    </form>
-                                @endcan
-                            </td>
-
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
-@section('scripts')
+{{-- Page title --}}
+@section('title')
+List Of Users
 @parent
-<script>
-    $(function () {
-  let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
-  let deleteButton = {
-    text: deleteButtonTrans,
-    url: "{{ route('admin.users.massDestroy') }}",
-    className: 'btn-danger',
-    action: function (e, dt, node, config) {
-      var ids = $.map(dt.rows({ selected: true }).nodes(), function (entry) {
-          return $(entry).data('entry-id')
-      });
+@stop
 
-      if (ids.length === 0) {
-        alert('{{ trans('global.datatables.zero_selected') }}')
+{{-- page level styles --}}
+@section('header_styles')
+    <link rel="stylesheet" href="{{ asset('assets/vendors/datatables/css/dataTables.bootstrap.css') }}" />
+	<link href="{{ asset('assets/css/pages/tables.css') }}" rel="stylesheet" type="text/css" />
 
-        return
-      }
+    <!-- end of page level css-->
+@stop
 
-      if (confirm('{{ trans('global.areYouSure') }}')) {
-        $.ajax({
-          headers: {'x-csrf-token': _token},
-          method: 'POST',
-          url: config.url,
-          data: { ids: ids, _method: 'DELETE' }})
-          .done(function () { location.reload() })
-      }
-    }
-  }
-  let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
-@can('user_delete')
-  dtButtons.push(deleteButton)
-@endcan
+{{-- Page content --}}
+@section('content')
 
-  $('.datatable:not(.ajaxTable)').DataTable({ buttons: dtButtons })
-})
+<section class="content-header">
+    <!--section starts-->
+    <h1>Users</h1>
+    <ol class="breadcrumb">
+        <li>
+            <a href="#">Admin Management</a>
+        </li>
+        <li class="active">Users</li>
+    </ol>
+</section>
+<!--section ends-->
+<section class="content">
+                <div class="row">
+                    <div class="col-md-12">
+                        <!-- BEGIN SAMPLE TABLE PORTLET-->
+                        <a class="btn btn-primary"><i class="fa fa-plus" style="margin-right: 10px;"></i>Add</a>
+                        <div class="portlet box primary" style="margin-top: 15px;">
+                            <div class="portlet-title">
+                                <div class="caption">
+                                    <i class="livicon" data-name="permissions" data-size="16" data-loop="true" data-c="#fff" data-hc="white"></i>
+                                    Users Table
+                                </div>
+                            </div>
+                            
+                            <div class="portlet-body flip-scroll">
+                                <table class="table data-table table-bordered table-striped table-condensed flip-content" >
+                                    <thead class="flip-content">
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Name</th>
+                                            <th>Email</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!-- END SAMPLE TABLE PORTLET-->
+                        <!-- BEGIN SAMPLE TABLE PORTLET-->
+                    </div>
+                </div>
+            </section>
 
-</script>
-@endsection
-@endsection
+@stop
+
+{{-- page level scripts --}}
+@section('footer_scripts')
+    <script type="text/javascript" src="{{ asset('assets/vendors/datatables/js/jquery.dataTables.js') }}" ></script>
+    <script type="text/javascript" src="{{ asset('assets/vendors/datatables/js/dataTables.bootstrap.js') }}" ></script>
+    <script type="text/javascript" src="{{ asset('assets/vendors/datatables/js/dataTables.responsive.js') }}" ></script>
+    <script src="{{ asset('assets/js/pages/table-responsive.js') }}"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+          var table = $('.data-table').DataTable({
+              destroy: true,
+              processing: true,
+              serverSide: true,
+              ajax: {
+                url: "{{ route('admin.users') }}", 
+              },
+              
+              columns: [
+                  {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+                  {data: 'name', name: 'name'},
+                  {data: 'email', name: 'email'},
+                  {data: 'action', name: 'action'},
+                //  {data: 'email', name: 'email'},
+                //  {data: 'action', name: 'action', orderable: false, searchable: false},
+              ]
+          });
+          
+        });
+      </script>
+@stop
