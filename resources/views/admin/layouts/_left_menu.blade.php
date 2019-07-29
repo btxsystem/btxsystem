@@ -44,7 +44,7 @@
     </li>
     <li>
         <a href="">
-            <i class="livicon" data-name="" data-size="18" data-c="#F89A14" data-hc="#F89A14"
+            <i class="livicon" data-name="share" data-size="18" data-c="#F89A14" data-hc="#F89A14"
                data-loop="true"></i>
             Tree
         </a>
@@ -53,44 +53,20 @@
         <a href="#">
             <i class="livicon" data-name="medal" data-size="18" data-c="#6CC66C" data-hc="#6CC66C"
                data-loop="true"></i>
-            <span class="title">Laravel Examples</span>
+            <span class="title">Training</span>
             <span class="fa arrow"></span>
         </a>
         <ul class="sub-menu">
             <li>
                 <a href="">
                     <i class="fa fa-angle-double-right"></i>
-                    Ajax Data Tables
+                    Training Management
                 </a>
             </li>
             <li>
                 <a href="">
                     <i class="fa fa-angle-double-right"></i>
-                    Editable Data Tables
-                </a>
-            </li>
-            <li >
-                <a href="">
-                    <i class="fa fa-angle-double-right"></i>
-                    Custom Datatables
-                </a>
-            </li>
-            <li >
-                <a href="">
-                    <i class="fa fa-angle-double-right"></i>
-                    Drop Zone
-                </a>
-            </li>
-            <li >
-                <a href="">
-                    <i class="fa fa-angle-double-right"></i>
-                    Multiple File Upload
-                </a>
-            </li>
-            <li>
-                <a href="">
-                    <i class="fa fa-angle-double-right"></i>
-                    Select2 Filters
+                    Training Class
                 </a>
             </li>
         </ul>
