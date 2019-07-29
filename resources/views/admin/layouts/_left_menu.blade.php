@@ -45,7 +45,6 @@
     <li>
         <a href="">
             <i class="livicon" data-name="share" data-size="18" data-c="#F89A14" data-hc="#F89A14"
->>>>>>> master
                data-loop="true"></i>
             Tree
         </a>
