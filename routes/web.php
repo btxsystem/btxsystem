@@ -2,18 +2,20 @@
 
 Route::redirect('/', '/login');
 
-Route::redirect('/home', '/admin/dashboard');
+Route::redirect('/home', '/admin');
 
 Auth::routes(['register' => false]);
 
+Route::group(['prefix'=>'admin','as'=>'admin.'], function(){
 
-Route::name('admin.')->group(function () {
-    Route::prefix('/admin')->group(function () {
-        Route::get('/dashboard', 'HomeController@index')->name('home');
+    Route::get('/', ['as' => 'index', 'uses' => 'HomeController@index']);
+    Route::get('roles', ['as' => 'roles', 'uses' => 'Admin\RolesController@index']);
+    Route::get('users', ['as' => 'users', 'uses' => 'Admin\UsersController@index']);
+    Route::get('members', ['as' => 'members', 'uses' => 'Admin\MemberController@index']);
+    Route::get('membership', ['as' => 'membership', 'uses' => 'MembershipController@index']);
+
+    Route::group(['prefix'=>'admin-management','as'=>'admin-management.'], function(){
+        Route::get('permissions', ['as' => 'permissions', 'uses' => 'Admin\PermissionsController@index']);
     });
-    Route::get('/permissions', 'Admin\PermissionsController@index')->name('permissions');
-    Route::get('/roles', 'Admin\RolesController@index')->name('roles');
-    Route::get('/users', 'Admin\UsersController@index')->name('users');   
-    Route::get('/members', 'Admin\MemberController@index')->name('members');
-    Route::get('/membership', 'MembershipController@index')->name('membership');
+
 });

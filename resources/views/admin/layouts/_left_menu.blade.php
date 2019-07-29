@@ -1,6 +1,6 @@
 <ul id="menu" class="page-sidebar-menu">
     <li >
-        <a href="">
+    <a href="{{ route('admin.index') }}">
             <i class="livicon" data-name="dashboard" data-size="18" data-c="#418BCA" data-hc="#418BCA"
                data-loop="true"></i>
             <span class="title">Dashboard </span>
@@ -16,7 +16,7 @@
             </a>
             <ul class="sub-menu">
                 <li>
-                <a href="{{ route('admin.permissions') }}">
+                <a href="{{ route('admin.admin-management.permissions') }}">
                         <i class="fa fa-angle-double-right"></i>
                         Permissions
                     </a>
@@ -34,8 +34,8 @@
                     </a>
                 </li>
             </ul>
-        </li>
-
+     </li>
+     <li>
         <a href="{{ route('admin.members') }}">
             <i class="livicon" data-name="users" data-size="18" data-c="#1DA1F2" data-hc="#1DA1F2"
                data-loop="true"></i>
