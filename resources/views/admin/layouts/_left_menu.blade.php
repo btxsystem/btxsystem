@@ -43,7 +43,7 @@
         </a>
     </li>
     <li>
-        <a href="">
+        <a href="/admin/tree">
             <i class="livicon" data-name="" data-size="18" data-c="#F89A14" data-hc="#F89A14"
                data-loop="true"></i>
             Tree

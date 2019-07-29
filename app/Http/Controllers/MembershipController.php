@@ -11,4 +11,8 @@ class MembershipController extends Controller
         $child = Membership::nested()->renderAsJson();
         dd($child);
     } 
+
+    public function tree(){
+    	return view('admin.tree.index');
+    }
 }

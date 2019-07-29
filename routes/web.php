@@ -13,6 +13,7 @@ Route::group(['prefix'=>'admin','as'=>'admin.'], function(){
     Route::get('users', ['as' => 'users', 'uses' => 'Admin\UsersController@index']);
     Route::get('members', ['as' => 'members', 'uses' => 'Admin\MemberController@index']);
     Route::get('membership', ['as' => 'membership', 'uses' => 'MembershipController@index']);
+    Route::get('tree', 'MembershipController@tree');
 
     Route::group(['prefix'=>'admin-management','as'=>'admin-management.'], function(){
         Route::get('permissions', ['as' => 'permissions', 'uses' => 'Admin\PermissionsController@index']);
