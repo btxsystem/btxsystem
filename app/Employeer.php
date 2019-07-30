@@ -3,8 +3,6 @@
 namespace App;
 use Nestable\NestableTrait;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-
 
 class Employeer extends Model
 {
@@ -17,6 +15,7 @@ class Employeer extends Model
         'id_member',
         'first_name',
         'last_name',
+        'email',
         'password',
         'birthdate',
         'npwp_number',
@@ -26,6 +25,9 @@ class Employeer extends Model
         'phone_number',
         'no_rec',
         'rank_id',
+        'bitrex_cash',
+        'bitrex_points',
+        'pv'
     ];
 
     public function getName(){

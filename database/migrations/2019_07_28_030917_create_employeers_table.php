@@ -18,6 +18,7 @@ class CreateEmployeersTable extends Migration
             $table->string('id_member')->unique();
             $table->string('first_name');
             $table->string('last_name')->nullable();
+            $table->string('email')->unique();
             $table->string('password');
             $table->date('birthdate');
             $table->string('npwp_number');

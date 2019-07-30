@@ -167,6 +167,9 @@ return [
          */
         Bugsnag\BugsnagLaravel\BugsnagServiceProvider::class,
         Nestable\NestableServiceProvider::class,
+        UxWeb\SweetAlert\SweetAlertServiceProvider::class,
+        RealRashid\SweetAlert\SweetAlertServiceProvider::class,
+        Yajra\Datatables\DatatablesServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -176,7 +179,6 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\HelperServiceProvider::class,
-        Yajra\Datatables\DatatablesServiceProvider::class,
 
     ],
 
@@ -232,7 +234,7 @@ return [
         'Datatables'   => Yajra\Datatables\Facades\Datatables::class,
         'Nestable'     => Nestable\Facades\NestableService::class,
         'Helper'       => App\Helper::class,
-
+        'Alert' => UxWeb\SweetAlert\SweetAlert::class,
     ],
 
 ];

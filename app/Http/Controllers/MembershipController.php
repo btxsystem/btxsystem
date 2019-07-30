@@ -1,4 +1,3 @@
-<?php
 
 namespace App\Http\Controllers;
 
@@ -8,7 +7,7 @@ use App\Employeer;
 class MembershipController extends Controller
 {
     public function index(){
-        $child = Employeer::nested()->get();
+        $child = Employeer::nested()->renderAsJson();
         dd($child);
     } 
 
