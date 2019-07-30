@@ -1,21 +1,19 @@
 <?php
 
 namespace App;
+use Nestable\NestableTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 
 class Employeer extends Model
 {
-    use SoftDeletes;
-
-    protected $dates = [
-        'created_at',
-        'updated_at',
-        'deleted_at',
-    ];
+    use NestableTrait;
+    
+    protected $parent = 'parent_id';
 
     protected $fillable = [
+        'id',
         'id_member',
         'first_name',
         'last_name',
@@ -34,8 +32,4 @@ class Employeer extends Model
         return $this->first_name.' '.$this->last_name;
     }
 
-    public function rank()
-    {
-        return $this->belongsTo(Rank::class);
-    }
 }

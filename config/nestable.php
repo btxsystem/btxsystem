@@ -2,13 +2,15 @@
 
 return [
     'parent'=> 'parent_id',
+    'first_name' => 'first_name' ,
     'primary_key' => 'id',
     'generate_url'   => true,
     'childNode' => 'child',
     'body' => [
         'id',
+        'first_name',
         'position',
-        'sposor_id',
+        'sponsor_id',
     ],
     'html' => [],
     'dropdown' => []
