@@ -39,4 +39,8 @@ class MemberController extends Controller
 
         return view('admin.members.index');
     }
+
+    public function create(){
+        return view('admin.members.create');
+    }
 }
