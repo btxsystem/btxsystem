@@ -1,5 +1,9 @@
+<<<<<<< HEAD
 <?php 
 
+=======
+<?php
+>>>>>>> d5469acad6803f96e5a6e9d33d0db5ee3f9ee402
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -9,12 +13,14 @@ use DB;
 class MembershipController extends Controller
 {
     public function index(){
-        $child = Employeer::nested()->renderAsJson();
-        dd($child);
+      $child = Employeer::nested()->get();
+      // dd($child);
+    	return response()->json($child);
     } 
 
     public function tree(){
-    	return view('admin.tree.index');
+    	$child = Employeer::nested()->get();
+    	return view('admin.tree.index', compact('child'));
     }
 
     
