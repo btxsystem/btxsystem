@@ -6,6 +6,10 @@ Route::redirect('/home', '/admin');
 
 Auth::routes(['register' => false]);
 
+Route::group(['prefix' => 'select', 'as'=> 'select.'], function () {
+    Route::get('sponsor', ['as' => 'sponsor', 'uses' => 'MembershipController@select']);
+});
+
 Route::group(['prefix'=>'admin','as'=>'admin.'], function(){
 
     Route::get('/', ['as' => 'index', 'uses' => 'HomeController@index']);

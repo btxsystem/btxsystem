@@ -28,7 +28,7 @@
                     </a>
                 </li>
                 <li >
-                    <a href="{{ route('admin.users.index') }}">
+                    <a href="{{ route('admin.users') }}">
                         <i class="fa fa-angle-double-right"></i>
                         Admin
                     </a>
