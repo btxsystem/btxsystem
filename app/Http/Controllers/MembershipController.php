@@ -1,14 +1,13 @@
-<?php
 
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Membership;
+use App\Employeer;
 
 class MembershipController extends Controller
 {
     public function index(){
-        $child = Membership::nested()->renderAsJson();
+        $child = Employeer::nested()->renderAsJson();
         dd($child);
     } 
 

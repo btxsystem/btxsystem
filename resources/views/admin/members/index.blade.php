@@ -10,7 +10,9 @@ List Of Users
 @section('header_styles')
     <link rel="stylesheet" href="{{ asset('assets/vendors/datatables/css/dataTables.bootstrap.css') }}" />
 	<link href="{{ asset('assets/css/pages/tables.css') }}" rel="stylesheet" type="text/css" />
-
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <!-- end of page level css-->
 @stop
 
@@ -32,7 +34,7 @@ List Of Users
                 <div class="row">
                     <div class="col-md-12">
                         <!-- BEGIN SAMPLE TABLE PORTLET-->
-                        <a class="btn btn-primary"><i class="fa fa-plus" style="margin-right: 10px;"></i>Add</a>
+                        <a class="btn btn-large btn-primary" href="{{ route('admin.members.create') }}" data-toggle="modal"><i class="fa fa-plus" style="margin-right: 10px;"></i>Add</a>
                         <div class="portlet box primary" style="margin-top: 15px;">
                             <div class="portlet-title">
                                 <div class="caption">
@@ -80,7 +82,7 @@ List Of Users
               processing: true,
               serverSide: true,
               ajax: {
-                url: "{{ route('admin.members') }}", 
+                url: "{{ route('admin.members.index') }}", 
               },
               
               columns: [
