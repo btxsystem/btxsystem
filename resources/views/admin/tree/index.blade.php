@@ -73,9 +73,19 @@
       // new Treant( chart_config );
       $( document ).ready(function() {
       	var element = document.querySelector('#bah')
-
 				// And pass it to panzoom
-				panzoom(element)
+				panzoom(element);
+
+				$.ajax({
+				    type: 'GET', //THIS NEEDS TO BE GET
+				    url: '/admin/membership',
+				    success: function (data) {
+				        console.log(data);
+				    },
+				    error: function() { 
+				         console.log(data);
+				    }
+				});
 			});
 
 			var svg = d3.select("#example").append("svg")
@@ -85,17 +95,8 @@
 			var data = [
 				{"img":"https://img.icons8.com/bubbles/2x/user.png", "name":"Jarwo", "member":"id:1", "parent":"",},
 				{"img":"https://img.icons8.com/bubbles/2x/user.png", "name":"Sutri", "member":"id:2", "parent":"id:1"},
-				{"img":"https://img.icons8.com/bubbles/2x/user.png", "name":"Tejo", "member":"id:3", "parent":"id:4"},
+				{"img":"https://img.icons8.com/bubbles/2x/user.png", "name":"Tejo", "member":"id:3", "parent":"id:1"},
 				{"img":"https://img.icons8.com/bubbles/2x/user.png", "name":"Sulis", "member":"id:4", "parent":"id:1"},
-				// {"img":"https://img.icons8.com/bubbles/2x/user.png", "member":"bambang", "parent":"kevin"},
-				// {"img":"https://img.icons8.com/bubbles/2x/user.png", "member":"tukiyem", "parent":"kevin"},
-				// {"img":"https://img.icons8.com/bubbles/2x/user.png", "member":"gio", "parent":"kevin"},
-				// {"img":"https://img.icons8.com/bubbles/2x/user.png", "member":"haru", "parent":"sarah"},
-				// {"img":"https://img.icons8.com/bubbles/2x/user.png", "member":"ani", "parent":"sarah"},
-				// {"img":"https://img.icons8.com/bubbles/2x/user.png", "member":"jarwo", "parent":"sarah"},
-				// {"img":"https://img.icons8.com/bubbles/2x/user.png", "member":"suri", "parent":"marno"},
-				// {"img":"https://img.icons8.com/bubbles/2x/user.png", "member":"korim", "parent":"marno"},
-				// {"img":"https://img.icons8.com/bubbles/2x/user.png", "member":"ida", "parent":"marno"},
 			];
 			var dataStructure = d3.stratify()
 				.id(function(d){return d.member;})
@@ -103,7 +104,7 @@
 				(data);
 			var treeStructure = d3.tree().size([1500,400]);
 			var information = treeStructure(dataStructure);
-			console.log(information.descendants());
+			// console.log(information.descendants());
 			
 			var connections = svg.append("g").selectAll("path")
 				.data(information.links());
