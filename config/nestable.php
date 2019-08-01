@@ -2,10 +2,10 @@
 
 return [
     'parent'=> 'parent_id',
-    'first_name' => 'first_name' ,
+    'name_name' => 'first_name' ,
     'primary_key' => 'id',
     'generate_url'   => true,
-    'childNode' => 'child',
+    'childNode' => 'children',
     'body' => [
         'id',
         'first_name',
