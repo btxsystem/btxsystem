@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Http\Controllers;
 
@@ -14,7 +14,8 @@ class MembershipController extends Controller
     } 
 
     public function tree(){
-    	return view('admin.tree.index');
+    	$child = Employeer::nested()->get();
+    	return view('admin.tree.index', compact('child'));
     }
 
     

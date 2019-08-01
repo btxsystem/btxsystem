@@ -1,5 +1,4 @@
-@extends('admin/layouts/default')
-
+@extends('layouts.admin')
 {{-- Page title --}}
 @section('title')
 List Of Users

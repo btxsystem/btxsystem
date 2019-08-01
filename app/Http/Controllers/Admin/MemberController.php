@@ -49,4 +49,40 @@ class MemberController extends Controller
         Employeer::findOrFail($id)->update($data);
         return redirect()->back(); 
     }
+    
+    public function active($id){
+        $data['status'] = 1;
+        Employeer::findOrFail($id)->update($data);
+        return redirect()->back(); 
+    }
+
+    public function member_nonactive(){
+        if (request()->ajax()) {
+            $data = DB::table('employeers')->join('ranks','employeers.rank_id','=','ranks.id')
+                                           ->select('employeers.id','employeers.id_member','employeers.first_name',
+                                                    'employeers.last_name','employeers.status','employeers.phone_number',
+                                                    'ranks.name as rank')->where('status','=',0)->get();
+            return Datatables::of($data)
+                    ->addIndexColumn()
+                    ->editColumn('name', function($data) {
+                        return $data->first_name.' '.$data->last_name;
+                    })
+                    ->editColumn('status', function($data) {
+                        return $data->status == 1 ? 'Active' : 'Nonactive' ;
+                    })
+                    ->editColumn('hp', function($data) {
+                        return $data->phone_number;
+                    })
+                    ->editColumn('rank', function($data) {
+                        return $data->rank;
+                    })
+                    ->addColumn('action', function($row) {
+                        return '<a class="btn btn-primary fa fa-eye" title="detail"></a>
+                                <a href="nonactive/'.$row->id.'/active" class="btn btn-success fa fa-check-square" title="active"></a>';
+                    })
+                    ->rawColumns(['action'])
+                    ->make(true);
+        }
+        return view('admin.members.nonactive.index');
+    }
 }

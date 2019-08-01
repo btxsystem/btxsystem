@@ -1,28 +1,12 @@
-@extends('admin/layouts/default')
-{{-- Page title --}}
+@extends('layouts/admin')
 @section('title')
 List Of Bitrex Points
 @parent
 @stop
 
-{{-- page level styles --}}
-@section('header_styles')
-    <link rel="stylesheet" href="{{ asset('assets/vendors/datatables/css/dataTables.bootstrap.css') }}" />
-	<link href="{{ asset('assets/css/pages/tables.css') }}" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" href="http://demo.itsolutionstuff.com/plugin/bootstrap-3.min.css">
-	<script src="http://demo.itsolutionstuff.com/plugin/jquery.js"></script>
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-    <!-- end of page level css-->
-@stop
-
-{{-- Page content --}}
 @section('content')
 
 <section class="content-header">
-    <!--section starts-->
     <h1>Bitrex Points</h1>
     <ol class="breadcrumb">
         <li>
@@ -31,11 +15,9 @@ List Of Bitrex Points
         <li class="active">Bitrex Points</li>
     </ol>
 </section>
-<!--section ends-->
     <section class="content">                
     <div class="row">
         <div class="col-md-12">
-            <!-- BEGIN SAMPLE TABLE PORTLET-->
         <a href="#myDemoModal" role="button" class="btn btn-large btn-success" data-toggle="modal"><i class="fa fa-money" style="margin-right: 10px;"></i>Topup</a>    
         <div class="portlet box primary" style="margin-top: 15px;">
                 <div class="portlet-title">
@@ -61,8 +43,6 @@ List Of Bitrex Points
                     </table>
                 </div>
             </div>
-            <!-- END SAMPLE TABLE PORTLET-->
-            <!-- BEGIN SAMPLE TABLE PORTLET-->
         </div>
     </div>
     </section>
@@ -108,12 +88,7 @@ List Of Bitrex Points
 
 @stop
 
-{{-- page level scripts --}}
 @section('footer_scripts')
-    <script type="text/javascript" src="{{ asset('assets/vendors/datatables/js/jquery.dataTables.js') }}" ></script>
-    <script type="text/javascript" src="{{ asset('assets/vendors/datatables/js/dataTables.bootstrap.js') }}" ></script>
-    <script type="text/javascript" src="{{ asset('assets/vendors/datatables/js/dataTables.responsive.js') }}" ></script>
-    <script src="{{ asset('assets/js/pages/table-responsive.js') }}"></script>
     <script type="text/javascript">
         $(document).ready(function () {
           var table = $('.data-table').DataTable({

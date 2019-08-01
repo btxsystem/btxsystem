@@ -1,35 +1,21 @@
-@extends('admin/layouts/default')
+@extends('layouts.admin')
 
-{{-- Page title --}}
 @section('title')
-List Of Users
+List Of Users Active
 @parent
 @stop
 
-{{-- page level styles --}}
-@section('header_styles')
-    <link rel="stylesheet" href="{{ asset('assets/vendors/datatables/css/dataTables.bootstrap.css') }}" />
-	<link href="{{ asset('assets/css/pages/tables.css') }}" rel="stylesheet" type="text/css" />
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-    <!-- end of page level css-->
-@stop
-
-{{-- Page content --}}
 @section('content')
 
 <section class="content-header">
-    <!--section starts-->
-    <h1>Users</h1>
+    <h1>Users Active</h1>
     <ol class="breadcrumb">
         <li>
             <a href="#">Admin Management</a>
         </li>
-        <li class="active">Users</li>
+        <li class="active">Users Active</li>
     </ol>
 </section>
-<!--section ends-->
 <section class="content">
                 <div class="row">
                     <div class="col-md-12">
@@ -39,7 +25,7 @@ List Of Users
                             <div class="portlet-title">
                                 <div class="caption">
                                     <i class="livicon" data-name="user" data-size="16" data-loop="true" data-c="#fff" data-hc="white"></i>
-                                    Users Table
+                                    Users Active Table
                                 </div>
                             </div>
                             
@@ -61,20 +47,13 @@ List Of Users
                                 </table>
                             </div>
                         </div>
-                        <!-- END SAMPLE TABLE PORTLET-->
-                        <!-- BEGIN SAMPLE TABLE PORTLET-->
                     </div>
                 </div>
             </section>
 
 @stop
 
-{{-- page level scripts --}}
 @section('footer_scripts')
-    <script type="text/javascript" src="{{ asset('assets/vendors/datatables/js/jquery.dataTables.js') }}" ></script>
-    <script type="text/javascript" src="{{ asset('assets/vendors/datatables/js/dataTables.bootstrap.js') }}" ></script>
-    <script type="text/javascript" src="{{ asset('assets/vendors/datatables/js/dataTables.responsive.js') }}" ></script>
-    <script src="{{ asset('assets/js/pages/table-responsive.js') }}"></script>
     <script type="text/javascript">
         $(document).ready(function () {
           var table = $('.data-table').DataTable({
@@ -96,8 +75,6 @@ List Of Users
                   {data: 'hp', name: 'hp'},
                   {data: 'rank', name: 'rank', searchable: false},
                   {data: 'action', name: 'action', orderable: false, searchable: false},
-                //  {data: 'email', name: 'email'},
-                //  {data: 'action', name: 'action', orderable: false, searchable: false},
               ]
           });
           
