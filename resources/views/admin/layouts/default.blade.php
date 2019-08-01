@@ -144,6 +144,7 @@
     <i class="livicon" data-name="plane-up" data-size="18" data-loop="true" data-c="#fff" data-hc="white"></i>
 </a>
 <!-- global js -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="{{ asset('assets/js/app.js') }}" type="text/javascript"></script>
 <!-- end of global js -->
 <!-- begin page level js -->
