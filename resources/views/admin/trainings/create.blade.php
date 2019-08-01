@@ -1,4 +1,4 @@
-@extends('admin/layouts/default')
+@extends('layouts.admin')
 
 {{-- Page title --}}
 @section('title')
@@ -52,7 +52,7 @@ Add Training
                     <div class="portlet-body flip-scroll">
                     <form class="form-horizontal" action="{{ route('admin.trainings.store') }}" method="post">
                         @csrf
-                              <div class="form-group">
+                              <div class="form-group {{ $errors->has('location') ? 'has-error' : '' }}">
                                  <label class="col-md-2 control-label">Location</label>
                                  <div class="col-md-8">
                                     <div class="input-group">
@@ -66,7 +66,7 @@ Add Training
 
                                  </div>
                               </div>
-                              <div class="form-group">
+                              <div class="form-group {{ $errors->has('start_training') ? 'has-error' : '' }}">
                                     <label class="col-md-2 control-label">Start Training</label>
                                     <div class="col-md-8 inputGroupContainer">
                                        <div class="input-group">
@@ -81,7 +81,7 @@ Add Training
                                     </div>
                                  </div>
 
-                              <div class="form-group">
+                              <div class="form-group {{ $errors->has('price') ? 'has-error' : '' }}">
                                     <label class="col-md-2 control-label">Price</label>
                                     <div class="col-md-8 inputGroupContainer">
                                        <div class="input-group">
@@ -96,7 +96,7 @@ Add Training
                                     </div>
                                  </div>
 
-                              <div class="form-group">
+                              <div class="form-group {{ $errors->has('capacity') ? 'has-error' : '' }}">
                                  <label class="col-md-2 control-label">Capacity</label>
                                  <div class="col-md-8 inputGroupContainer">
                                     <div class="input-group">
@@ -111,7 +111,7 @@ Add Training
                                  </div>
                               </div>
 
-                              <div class="form-group">
+                              <div class="form-group {{ $errors->has('note') ? 'has-error' : '' }}">
                                  <label class="col-md-2 control-label">Note</label>
                                  <div class="col-md-8 inputGroupContainer">
                                     <div class="input-group">
@@ -124,7 +124,7 @@ Add Training
                                  </div>
                               </div>
 
-                                <div class="form-group">
+                                <div class="form-group {{ $errors->has('open') ? 'has-error' : '' }}">
                                     <label class="col-md-2 control-label">Open</label>
                                     <div class="col-md-8 inputGroupContainer">
                                         <div class="input-group">

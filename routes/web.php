@@ -12,17 +12,23 @@ Route::group(['prefix'=>'admin','as'=>'admin.'], function(){
     Route::get('roles', ['as' => 'roles', 'uses' => 'Admin\RolesController@index']);
     Route::get('membership', ['as' => 'membership', 'uses' => 'MembershipController@index']);
     Route::get('tree', 'MembershipController@tree');
+
     Route::group(['prefix'=>'admin-management','as'=>'admin-management.'], function(){
         Route::get('permissions', ['as' => 'permissions', 'uses' => 'Admin\PermissionsController@index']);
+
+        Route::group(['prefix'=>'users','as'=>'users.'],function(){
+            Route::get('', ['as' => 'index', 'uses' => 'Admin\UsersController@index']);
+            Route::get('create', ['as' => 'create', 'uses' => 'Admin\UsersController@create']);
+            Route::post('store', ['as' => 'store', 'uses' => 'Admin\UsersController@store']);
+            Route::get('{id}/edit', ['as' => 'edit', 'uses' => 'Admin\UsersController@edit']);
+            Route::put('{id}', ['as' => 'update', 'uses' => 'Admin\UsersController@update']);
+            Route::delete('{id}', ['as' => 'delete', 'uses' => 'Admin\UsersController@destroy']);
+        });
+
     });
 
-    Route::group(['prefix'=>'users','as'=>'users.'],function(){
-        Route::get('', ['as' => 'index', 'uses' => 'Admin\UsersController@index']);
-        Route::get('create', ['as' => 'create', 'uses' => 'Admin\UsersController@create']);
-        // Route::post('store', ['as' => 'store', 'uses' => 'Admin\UsersController@store']);
-        // Route::get('{id}/edit', ['as' => 'edit', 'uses' => 'Admin\UsersController@edit']);
-        // Route::put('{id}', ['as' => 'update', 'uses' => 'Admin\UsersController@update']);
-        // Route::delete('{id}', ['as' => 'delete', 'uses' => 'Admin\UsersController@destroy']);
+    Route::group(['prefix'=>'customer','as'=>'customer.'],function(){
+        // Route::get('', ['as' => 'index', 'uses' => 'Admin\CustomerController@index']);
     });
 
     Route::group(['prefix'=>'trainings','as'=>'trainings.'],function(){

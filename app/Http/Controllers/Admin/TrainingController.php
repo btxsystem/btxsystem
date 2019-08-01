@@ -6,13 +6,14 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Training;
 use DataTables;
+use DB;
 
 class TrainingController extends Controller
 {
     public function index()
     {
         if (request()->ajax()) {
-            $data = Training::all('id','location','start_training','price','capacity','note','open');
+            $data = DB::table('trainings')->select('id','location','start_training','price','capacity','note','open')->get();
             return Datatables::of($data)
                     ->addIndexColumn()
                     ->editColumn('price', function($row){

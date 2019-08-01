@@ -1,4 +1,4 @@
-@extends('admin/layouts/default')
+@extends('layouts.admin')
 
 {{-- Page title --}}
 @section('title')
@@ -53,11 +53,11 @@ Edit Training
                     <form class="form-horizontal" action="/admin/trainings/{{ $training->id }}" method="post">
                         @csrf
                         @method('PUT')
-                              <div class="form-group">
+                              <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
                                  <label class="col-md-2 control-label">Location</label>
                                  <div class="col-md-8">
                                     <div class="input-group">
-                                        <span class="input-group-Editon"><i class="glyphicon glyphicon-map-marker"></i></span>
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-map-marker"></i></span>
                                         <textarea class="from-control" name="location" id="location" rows="5" cols="90" required="true">{{ $training->location }}</textarea>
                                     </div>
 
@@ -67,11 +67,11 @@ Edit Training
 
                                  </div>
                               </div>
-                              <div class="form-group">
+                              <div class="form-group {{ $errors->has('start_training') ? 'has-error' : '' }}">
                                     <label class="col-md-2 control-label">Start Training</label>
                                     <div class="col-md-8 inputGroupContainer">
                                        <div class="input-group">
-                                           <span class="input-group-Editon"><i class="fa fa-calendar"></i></span>
+                                           <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                            <input id="start_training" name="start_training" placeholder="Start Training" class="form-control" required="true" value="{{ $training->start_training }}" type="date">
                                        </div>
 
@@ -82,11 +82,11 @@ Edit Training
                                     </div>
                                  </div>
 
-                              <div class="form-group">
+                              <div class="form-group {{ $errors->has('price') ? 'has-error' : '' }}">
                                     <label class="col-md-2 control-label">Price</label>
                                     <div class="col-md-8 inputGroupContainer">
                                        <div class="input-group">
-                                           <span class="input-group-Editon"><i class="fa fa-dollar"></i></span>
+                                           <span class="input-group-addon"><i class="fa fa-dollar"></i></span>
                                            <input id="price" name="price" placeholder="Price" class="form-control" required="true" value="{{ $training->price }}" type="text">
                                        </div>
 
@@ -97,11 +97,11 @@ Edit Training
                                     </div>
                                  </div>
 
-                              <div class="form-group">
+                              <div class="form-group {{ $errors->has('capacity') ? 'has-error' : '' }}">
                                  <label class="col-md-2 control-label">Capacity</label>
                                  <div class="col-md-8 inputGroupContainer">
                                     <div class="input-group">
-                                        <span class="input-group-Editon"><i class="fa fa-users"></i></span>
+                                        <span class="input-group-addon"><i class="fa fa-users"></i></span>
                                         <input id="capacity" name="capacity" placeholder="Capacity" class="form-control" required="true" value="{{ $training->capacity }}" type="text">
                                     </div>
                                     
@@ -112,11 +112,11 @@ Edit Training
                                  </div>
                               </div>
 
-                              <div class="form-group">
+                              <div class="form-group {{ $errors->has('note') ? 'has-error' : '' }}">
                                  <label class="col-md-2 control-label">Note</label>
                                  <div class="col-md-8 inputGroupContainer">
                                     <div class="input-group">
-                                        <span class="input-group-Editon"><i class="glyphicon glyphicon-book"></i></span>
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-book"></i></span>
                                         <textarea class="from-control" name="note" id="note" rows="5" cols="90" required="true">{{ $training->note }}</textarea>
                                     </div>
                                     @if ($errors->has('note'))
@@ -125,11 +125,11 @@ Edit Training
                                  </div>
                               </div>
 
-                                <div class="form-group">
+                                <div class="form-group {{ $errors->has('open') ? 'has-error' : '' }}">
                                     <label class="col-md-2 control-label">Open</label>
                                     <div class="col-md-8 inputGroupContainer">
                                         <div class="input-group">
-                                        <span class="input-group-Editon"><i class="fa fa-eye"></i></span>
+                                        <span class="input-group-addon"><i class="fa fa-eye"></i></span>
                                             <select id="js-example-basic-single" class="col-md-12" name="open">
                                                 <option value="0" {{ $training->open == 0 ? 'selected' : '' }}>No</option>
                                                 <option value="1" {{ $training->open == 1 ? 'selected' : '' }}>Yes</option>

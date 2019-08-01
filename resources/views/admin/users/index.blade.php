@@ -32,7 +32,7 @@ List Of Users
                 <div class="row">
                     <div class="col-md-12">
                         <!-- BEGIN SAMPLE TABLE PORTLET-->
-                        <a href="{{ route('admin.users.create') }}" class="btn btn-primary"><i class="fa fa-plus" style="margin-right: 10px;"></i>Add</a>
+                        <a href="{{ route('admin.admin-management.users.create') }}" class="btn btn-primary"><i class="fa fa-plus" style="margin-right: 10px;"></i>Add</a>
                         <div class="portlet box primary" style="margin-top: 15px;">
                             <div class="portlet-title">
                                 <div class="caption">
@@ -62,6 +62,12 @@ List Of Users
                 </div>
             </section>
 
+            <form id="delete-form" action="" method="POST" style="display:none;">
+                    @csrf
+                    {{ method_field('DELETE') }}
+                    <button type="submit"></button>
+                </form>
+
 @stop
 
 {{-- page level scripts --}}
@@ -77,19 +83,28 @@ List Of Users
               processing: true,
               serverSide: true,
               ajax: {
-                url: "{{ route('admin.users.index') }}", 
+                url: "{{ route('admin.admin-management.users.index') }}", 
               },
               
               columns: [
                   {data: 'DT_RowIndex', name: 'DT_RowIndex'},
                   {data: 'name', name: 'name'},
                   {data: 'email', name: 'email'},
-                  {data: 'action', name: 'action'},
+                 {data: 'action', name: 'action', orderable: false, searchable: false},
                 //  {data: 'email', name: 'email'},
-                //  {data: 'action', name: 'action', orderable: false, searchable: false},
               ]
           });
           
         });
+      </script>
+      <script>
+        function deleteUser(id) {
+            var result = confirm("are you sure delete this data ?")
+            if (result) {
+                event.preventDefault();
+                $('#delete-form').attr("action", window.location.href + '/' + id);
+                $('#delete-form').submit();
+            }
+        }
       </script>
 @stop

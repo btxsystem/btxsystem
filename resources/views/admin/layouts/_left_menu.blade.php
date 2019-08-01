@@ -28,7 +28,7 @@
                     </a>
                 </li>
                 <li >
-                    <a href="{{ route('admin.users') }}">
+                    <a href="{{ route('admin.admin-management.users.index') }}">
                         <i class="fa fa-angle-double-right"></i>
                         Admin
                     </a>
@@ -57,6 +57,13 @@
                 </li>
             </ul>
      </li>
+    <li>
+    <a href="{{ route('admin.customer') }}">
+            <i class="livicon" data-name="users" data-size="18" data-c="#bdecb6" data-hc="#bdecb6"
+               data-loop="true"></i>
+            Customer
+        </a>
+    </li>
     <li>
         <a href="">
             <i class="livicon" data-name="share" data-size="18" data-c="#F89A14" data-hc="#F89A14"
