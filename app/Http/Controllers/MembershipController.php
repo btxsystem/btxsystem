@@ -10,12 +10,11 @@ class MembershipController extends Controller
 {
     public function index(){
         $child = Employeer::nested()->get();
-        dd(response()->json($child[0]));
+        return response()->json($child[0]);
     } 
 
     public function tree(){
-    	$child = Employeer::nested()->get();
-    	return view('admin.tree.index', compact('child'));
+    	return view('admin.tree.index');
     }
 
     
