@@ -25,6 +25,7 @@ Route::group(['prefix'=>'admin','as'=>'admin.'], function(){
             Route::get('', ['as' => 'index', 'uses' => 'Admin\RolesController@index']);
             Route::get('create', ['as' => 'create', 'uses' => 'Admin\RolesController@create']);
             Route::post('store', ['as' => 'store', 'uses' => 'Admin\RolesController@store']);
+            Route::get('/{id}',['as' => 'delete', 'uses' => 'Admin\RolesController@destroy']);
         });
     });
 

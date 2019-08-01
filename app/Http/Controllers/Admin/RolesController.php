@@ -17,12 +17,12 @@ class RolesController extends Controller
     public function index()
     {
         if (request()->ajax()) {
-            $data = DB::table('roles')->select('id','title')->get();
+            $data = DB::table('roles')->select('id','title')->where('deleted_at','=',null)->get();
             return Datatables::of($data)
                     ->addIndexColumn()
                     ->addColumn('action', function($row) {
                         return '<a class="btn btn-warning fa fa-edit"></a>
-                                <a class="btn btn-danger fa fa-trash"></a>';
+                                <a class="btn btn-danger fa fa-trash" href="'.route('admin.admin-management.roles.delete',$row->id).'"></a>';
                     })
                     ->rawColumns(['action'])
                     ->make(true);
@@ -75,13 +75,10 @@ class RolesController extends Controller
         return view('admin.roles.show', compact('role'));
     }
 
-    public function destroy(Role $role)
+    public function destroy($id)
     {
-        abort_unless(\Gate::allows('role_delete'), 403);
-
-        $role->delete();
-
-        return back();
+        $hi = Role::findOrFail($id)->delete();
+        return redirect()->route('admin.admin-management.roles.index');
     }
 
     public function massDestroy(MassDestroyRoleRequest $request)
