@@ -35,13 +35,28 @@
                 </li>
             </ul>
      </li>
-     <li>
-        <a href="{{ route('admin.members.index') }}">
-            <i class="livicon" data-name="users" data-size="18" data-c="#1DA1F2" data-hc="#1DA1F2"
-               data-loop="true"></i>
-            Member
-        </a>
-    </li>
+     <li >
+            <a href="#">
+                <i class="livicon" data-name="users" data-size="18" data-c="#1DA1F2" data-hc="#1DA1F2"
+                data-loop="true"></i>
+                <span class="title">Members</span>
+                <span class="fa arrow"></span>
+            </a>
+            <ul class="sub-menu">
+                <li>
+                    <a href="{{ route('admin.members.active.index') }}">
+                        <i class="fa fa-angle-double-right"></i>
+                        Members Active
+                    </a>
+                </li>
+                <li >
+                    <a href="">
+                        <i class="fa fa-angle-double-right"></i>
+                        Member Nonactive
+                    </a>
+                </li>
+            </ul>
+     </li>
     <li>
         <a href="">
             <i class="livicon" data-name="share" data-size="18" data-c="#F89A14" data-hc="#F89A14"

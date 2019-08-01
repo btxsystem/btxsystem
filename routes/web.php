@@ -24,8 +24,11 @@ Route::group(['prefix'=>'admin','as'=>'admin.'], function(){
 
     
     Route::group(['prefix'=>'members','as'=>'members.'], function(){
-        Route::get('', ['as' => 'index', 'uses' => 'Admin\MemberController@index']);
-        Route::get('create', ['as' => 'create', 'uses' => 'Admin\MemberController@create']);
+        Route::group(['prefix'=>'active','as'=>'active.'], function(){
+            Route::get('', ['as' => 'index', 'uses' => 'Admin\MemberController@index']);
+            Route::get('create', ['as' => 'create', 'uses' => 'Admin\MemberController@create']);
+            Route::get('/{id}/nonactive', ['as' => 'nonactive', 'uses' => 'Admin\MemberController@nonactive']);
+        });
     });
 
     Route::group(['prefix'=>'bitrex-money','as'=>'bitrex-money.'], function(){

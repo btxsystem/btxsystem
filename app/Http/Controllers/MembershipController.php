@@ -9,8 +9,8 @@ use DB;
 class MembershipController extends Controller
 {
     public function index(){
-        $child = Employeer::nested()->renderAsJson();
-        dd($child);
+        $child = Employeer::nested()->get();
+        dd(response()->json($child[0]));
     } 
 
     public function tree(){
