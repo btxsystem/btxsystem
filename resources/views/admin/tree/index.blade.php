@@ -84,7 +84,7 @@
 			    type: 'GET', //THIS NEEDS TO BE GET
 			    url: '/admin/membership',
 			    success: function (data) {
-			      var data = data[0];
+			      var data = data;
 			      console.log(data)
 			   //    var data = {
 						//   "name": "A1",
@@ -180,7 +180,7 @@
 						var names = svg.append("g").selectAll("text")
 							.data(information.descendants());
 						names.enter().append("text")
-							.text(function(d){return "Name : " + d.data.name;})
+							.text(function(d){return "Name : " + d.data.first_name;})
 							.attr("x", function(d){return d.x+0;})
 							.attr("y", function(d){return d.y+50;})
 							.classed("bigger", true);
