@@ -58,7 +58,7 @@
         </a>
         <ul class="sub-menu">
             <li>
-                <a href="">
+                <a href="{{ route('admin.trainings.index') }}">
                     <i class="fa fa-angle-double-right"></i>
                     Training Management
                 </a>

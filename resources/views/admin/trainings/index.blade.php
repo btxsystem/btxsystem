@@ -32,7 +32,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <!-- BEGIN SAMPLE TABLE PORTLET-->
-                        <a class="btn btn-primary"><i class="fa fa-plus" style="margin-right: 10px;"></i>Add</a>
+                        <a href="{{ route('admin.trainings.create') }}" class="btn btn-primary"><i class="fa fa-plus" style="margin-right: 10px;"></i>Add</a>
                         <div class="portlet box primary" style="margin-top: 15px;">
                             <div class="portlet-title">
                                 <div class="caption">
@@ -42,7 +42,7 @@
                             </div>
 
                             <div class="portlet-body flip-scroll">
-                                <table class="table data-table table-bordered table-striped table-condensed flip-content" >
+                                <table class="table data-table table-bordered table-striped table-hover table-condensed flip-content" >
                                     <thead class="flip-content">
                                         <tr>
                                             <th>No</th>
@@ -52,6 +52,7 @@
                                             <th>Capacity</th>
                                             <th>Note</th>
                                             <th>Open</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -64,6 +65,12 @@
                     </div>
                 </div>
             </section>
+
+            <form id="delete-form" action="" method="POST" style="display:none;">
+                @csrf
+                {{ method_field('DELETE') }}
+                <button type="submit"></button>
+            </form>
 
 @stop
 
@@ -80,7 +87,7 @@
               processing: true,
               serverSide: true,
               ajax: {
-                url: "{{ route('admin.trainings') }}",
+                url: "{{ route('admin.trainings.index') }}",
               },
 
               columns: [
@@ -92,10 +99,20 @@
                   {data: 'note', name: 'note'},
                   {data: 'open', name: 'open'},
 
-                //{data: 'action', name: 'action', orderable: false, searchable: false},
+                {data: 'action', name: 'action', orderable: false, searchable: false},
               ]
           });
 
         });
+      </script>
+      <script>
+        function deleteTraining(id) {
+            var result = confirm("are you sure delete this data ?")
+            if (result) {
+                event.preventDefault();
+                $('#delete-form').attr("action", window.location.href + '/' + id);
+                $('#delete-form').submit();
+            }
+        }
       </script>
 @stop

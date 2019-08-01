@@ -32,7 +32,7 @@ List Of Users
                 <div class="row">
                     <div class="col-md-12">
                         <!-- BEGIN SAMPLE TABLE PORTLET-->
-                        <a class="btn btn-primary"><i class="fa fa-plus" style="margin-right: 10px;"></i>Add</a>
+                        <a href="{{ route('admin.users.create') }}" class="btn btn-primary"><i class="fa fa-plus" style="margin-right: 10px;"></i>Add</a>
                         <div class="portlet box primary" style="margin-top: 15px;">
                             <div class="portlet-title">
                                 <div class="caption">
@@ -77,7 +77,7 @@ List Of Users
               processing: true,
               serverSide: true,
               ajax: {
-                url: "{{ route('admin.users') }}", 
+                url: "{{ route('admin.users.index') }}", 
               },
               
               columns: [
