@@ -9,13 +9,15 @@ use App\Http\Requests\UpdateRoleRequest;
 use App\Permission;
 use App\Role;
 use DataTables;
+use DB;
+use Illuminate\Http\Request;
 
 class RolesController extends Controller
 {
     public function index()
     {
         if (request()->ajax()) {
-            $data = Role::all('title');
+            $data = DB::table('roles')->select('id','title')->get();
             return Datatables::of($data)
                     ->addIndexColumn()
                     ->addColumn('action', function($row) {
@@ -91,5 +93,23 @@ class RolesController extends Controller
         Role::whereIn('id', request('ids'))->delete();
 
         return response(null, 204);
+    }
+
+    public function select(Request $request){
+        $term = trim($request->q);
+        $formatted_tags = [];
+        if (empty($term)) {
+            $datas = DB::table('permissions')->select('id','title')->limit(5)->get();
+            foreach ($datas as $tag) {
+                $formatted_tags[] = ['id' => $tag->id, 'text' => $tag->title];
+            }
+        }else{
+            $tags = DB::table('permissions')->select('id','title')->where('title', 'LIKE', '%'.$term.'%')->limit(5)->get();
+            foreach ($tags as $tag) {
+                $formatted_tags[] = ['id' => $tag->id, 'text' => $tag->title];
+            }
+        return \Response::json($formatted_tags);
+    }
+
     }
 }

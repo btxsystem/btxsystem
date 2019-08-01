@@ -1,4 +1,4 @@
-@extends('admin/layouts/default')
+@extends('layouts.admin')
 
 @section('header_styles')
 	<link rel="stylesheet" type="text/css" href="{{ asset('assets/tree/Treant.css') }}">

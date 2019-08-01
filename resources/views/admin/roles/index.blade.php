@@ -1,24 +1,10 @@
-@extends('admin/layouts/default')
-
-{{-- Page title --}}
+@extends('layouts.admin')
 @section('title')
 List Of Roles
 @parent
 @stop
-
-{{-- page level styles --}}
-@section('header_styles')
-    <link rel="stylesheet" href="{{ asset('assets/vendors/datatables/css/dataTables.bootstrap.css') }}" />
-	<link href="{{ asset('assets/css/pages/tables.css') }}" rel="stylesheet" type="text/css" />
-
-    <!-- end of page level css-->
-@stop
-
-{{-- Page content --}}
 @section('content')
-
 <section class="content-header">
-    <!--section starts-->
     <h1>Roles</h1>
     <ol class="breadcrumb">
         <li>
@@ -27,12 +13,10 @@ List Of Roles
         <li class="active">Roles</li>
     </ol>
 </section>
-<!--section ends-->
 <section class="content">
                 <div class="row">
                     <div class="col-md-12">
-                        <!-- BEGIN SAMPLE TABLE PORTLET-->
-                        <a class="btn btn-primary"><i class="fa fa-plus" style="margin-right: 10px;"></i>Add</a>
+                        <a class="btn btn-primary" href="{{ route('admin.admin-management.roles.create')}}"><i class="fa fa-plus" style="margin-right: 10px;"></i>Add</a>
                         <div class="portlet box primary" style="margin-top: 15px;">
                             <div class="portlet-title">
                                 <div class="caption">
@@ -55,20 +39,13 @@ List Of Roles
                                 </table>
                             </div>
                         </div>
-                        <!-- END SAMPLE TABLE PORTLET-->
-                        <!-- BEGIN SAMPLE TABLE PORTLET-->
                     </div>
                 </div>
             </section>
 
 @stop
 
-{{-- page level scripts --}}
 @section('footer_scripts')
-    <script type="text/javascript" src="{{ asset('assets/vendors/datatables/js/jquery.dataTables.js') }}" ></script>
-    <script type="text/javascript" src="{{ asset('assets/vendors/datatables/js/dataTables.bootstrap.js') }}" ></script>
-    <script type="text/javascript" src="{{ asset('assets/vendors/datatables/js/dataTables.responsive.js') }}" ></script>
-    <script src="{{ asset('assets/js/pages/table-responsive.js') }}"></script>
     <script type="text/javascript">
         $(document).ready(function () {
           var table = $('.data-table').DataTable({
@@ -76,15 +53,13 @@ List Of Roles
               processing: true,
               serverSide: true,
               ajax: {
-                url: "{{ route('admin.roles') }}", 
+                url: "{{ route('admin.admin-management.roles.index') }}", 
               },
               
               columns: [
                   {data: 'DT_RowIndex', name: 'DT_RowIndex'},
                   {data: 'title', name: 'title'},
                   {data: 'action', name: 'action'},
-                //  {data: 'email', name: 'email'},
-                //  {data: 'action', name: 'action', orderable: false, searchable: false},
               ]
           });
           

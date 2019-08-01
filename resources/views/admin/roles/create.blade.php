@@ -1,51 +1,96 @@
 @extends('layouts.admin')
+
+@section('title')
+    Add Role
+    @parent
+@stop
+
 @section('content')
+<section class="content-header">
+        <h1>Add Roles</h1>
+        <ol class="breadcrumb">
+            <li>
+                <a href="">Admin Management</a>
+            </li>
+            <li class="active">Add Roles</li>
+        </ol>
+    
+        <div class="container">
+                <table class="table table-striped">
+                   <tbody>
+                      <tr>
+                         <td colspan="1">
+                         <form action="{{ route('admin.admin-management.roles.store') }}" class="well form-horizontal" method="POST" enctype="multipart/form-data"> 
+                            <fieldset>
+                                    <div class="form-group">
+                                    <label class="col-md-2 control-label">Title</label>
+                                    <div class="col-md-8 inputGroupContainer">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="fa fa-bookmark"></i></span>
+                                            <input id="title" name="title" placeholder="Title" class="form-control" required="true" value="" type="text">
+                                        </div>
+                                    </div>
+                                    </div>
 
-<div class="card">
-    <div class="card-header">
-        {{ trans('global.create') }} {{ trans('global.role.title_singular') }}
-    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-2 control-label"></label>
+                                        <div class="col-md-8 inputGroupContainer">
+                                            <span class="btn btn-info btn-sm select-all">Select all</span>
+                                            <span class="btn btn-danger btn-sm deselect-all">Deselect all</span>
+                                        </div>        
+                                    </div>
 
-    <div class="card-body">
-        <form action="{{ route("admin.roles.store") }}" method="POST" enctype="multipart/form-data">
-            @csrf
-            <div class="form-group {{ $errors->has('title') ? 'has-error' : '' }}">
-                <label for="title">{{ trans('global.role.fields.title') }}*</label>
-                <input type="text" id="title" name="title" class="form-control" value="{{ old('title', isset($role) ? $role->title : '') }}">
-                @if($errors->has('title'))
-                    <em class="invalid-feedback">
-                        {{ $errors->first('title') }}
-                    </em>
-                @endif
-                <p class="helper-block">
-                    {{ trans('global.role.fields.title_helper') }}
-                </p>
-            </div>
-            <div class="form-group {{ $errors->has('permissions') ? 'has-error' : '' }}">
-                <label for="permissions">{{ trans('global.role.fields.permissions') }}*
-                    <span class="btn btn-info btn-xs select-all">Select all</span>
-                    <span class="btn btn-info btn-xs deselect-all">Deselect all</span></label>
-                <select name="permissions[]" id="permissions" class="form-control select2" multiple="multiple">
-                    @foreach($permissions as $id => $permissions)
-                        <option value="{{ $id }}" {{ (in_array($id, old('permissions', [])) || isset($role) && $role->permissions->contains($id)) ? 'selected' : '' }}>
-                            {{ $permissions }}
-                        </option>
-                    @endforeach
-                </select>
-                @if($errors->has('permissions'))
-                    <em class="invalid-feedback">
-                        {{ $errors->first('permissions') }}
-                    </em>
-                @endif
-                <p class="helper-block">
-                    {{ trans('global.role.fields.permissions_helper') }}
-                </p>
-            </div>
-            <div>
-                <input class="btn btn-danger" type="submit" value="{{ trans('global.save') }}">
-            </div>
-        </form>
-    </div>
-</div>
-
+                                    <div class="form-group">                
+                                    <label class="col-md-2 control-label">Permissions</label>
+                                    <div class="col-md-8 inputGroupContainer">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="fa fa-key"></i></span>
+                                            <select name="permissions[]" id="permissions" class="form-control select2" multiple="multiple" required="true">
+    
+                                            </select>
+                                        </div>
+                                    </div>
+                                    </div>
+                                                                            
+                                    <div class="form-group">
+                                        <label class="col-md-2 control-label"></label>
+                                        <div class="col-md-8 inputGroupContainer">
+                                            <button type="submit" class="btn btn-primary btn-block">Add</button>
+                                        </div>
+                                    </div>
+                                                                
+                
+                               </fieldset>
+                            </form>
+                         </td>
+                      </tr>
+                   </tbody>
+                </table>
+             </div>
+    </section>
+    
+    <script type="text/javascript">
+        $(document).ready(function() {    
+            $('#permissions').select2({
+            placeholder: "Choose permissions...",
+            ajax: {
+                url: '{{ route("select.permissions") }}',
+                dataType: 'json',
+                data: function (params) {
+                    return {
+                        q: $.trim(params.term)
+                    };
+                },
+                processResults: function (data) {
+                    console.log(data);
+                    
+                    return {
+                        results: data
+                    };
+                },
+                cache: true
+            }
+        });
+        });
+    </script>
 @endsection
