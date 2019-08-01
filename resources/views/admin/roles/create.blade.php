@@ -21,6 +21,7 @@
                       <tr>
                          <td colspan="1">
                          <form action="{{ route('admin.admin-management.roles.store') }}" class="well form-horizontal" method="POST" enctype="multipart/form-data"> 
+                            {{ csrf_field() }}
                             <fieldset>
                                     <div class="form-group">
                                     <label class="col-md-2 control-label">Title</label>
@@ -70,7 +71,7 @@
     </section>
     
     <script type="text/javascript">
-        $(document).ready(function() {    
+        $(document).ready(function() {  
             $('#permissions').select2({
             placeholder: "Choose permissions...",
             ajax: {
@@ -82,8 +83,6 @@
                     };
                 },
                 processResults: function (data) {
-                    console.log(data);
-                    
                     return {
                         results: data
                     };

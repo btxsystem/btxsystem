@@ -32,11 +32,7 @@ class RolesController extends Controller
 
     public function create()
     {
-        abort_unless(\Gate::allows('role_create'), 403);
-
-        $permissions = Permission::all()->pluck('title', 'id');
-
-        return view('admin.roles.create', compact('permissions'));
+        return view('admin.roles.create');
     }
 
     public function store(StoreRoleRequest $request)
@@ -46,7 +42,7 @@ class RolesController extends Controller
         $role = Role::create($request->all());
         $role->permissions()->sync($request->input('permissions', []));
 
-        return redirect()->route('admin.roles.index');
+        return redirect()->route('admin.admin-management.roles.index');
     }
 
     public function edit(Role $role)
@@ -108,8 +104,7 @@ class RolesController extends Controller
             foreach ($tags as $tag) {
                 $formatted_tags[] = ['id' => $tag->id, 'text' => $tag->title];
             }
+        }
         return \Response::json($formatted_tags);
-    }
-
     }
 }
