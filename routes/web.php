@@ -2,6 +2,11 @@
 Route::redirect('/', '/login');
 Route::redirect('/home', '/admin');
 Auth::routes(['register' => false]);
+
+Route::group(['prefix' => 'select', 'as'=> 'select.'], function () {
+    Route::get('sponsor', ['as' => 'sponsor', 'uses' => 'MembershipController@select']);
+});
+
 Route::group(['prefix'=>'admin','as'=>'admin.'], function(){
     Route::get('/', ['as' => 'index', 'uses' => 'HomeController@index']);
     Route::get('roles', ['as' => 'roles', 'uses' => 'Admin\RolesController@index']);
@@ -30,8 +35,11 @@ Route::group(['prefix'=>'admin','as'=>'admin.'], function(){
     });
 
     Route::group(['prefix'=>'members','as'=>'members.'], function(){
-        Route::get('', ['as' => 'index', 'uses' => 'Admin\MemberController@index']);
-        Route::get('create', ['as' => 'create', 'uses' => 'Admin\MemberController@create']);
+        Route::group(['prefix'=>'active','as'=>'active.'], function(){
+            Route::get('', ['as' => 'index', 'uses' => 'Admin\MemberController@index']);
+            Route::get('create', ['as' => 'create', 'uses' => 'Admin\MemberController@create']);
+            Route::get('/{id}/nonactive', ['as' => 'nonactive', 'uses' => 'Admin\MemberController@nonactive']);
+        });
     });
     Route::group(['prefix'=>'bitrex-money','as'=>'bitrex-money.'], function(){
         Route::get('points', ['as' => 'points', 'uses' => 'Admin\BitrexPointController@index']);

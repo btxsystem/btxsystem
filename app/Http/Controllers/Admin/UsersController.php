@@ -9,13 +9,16 @@ use App\Http\Requests\UpdateUserRequest;
 use App\Role;
 use App\User;
 use DataTables;
+use DB;
 
 class UsersController extends Controller
 {
     public function index()
     {
         if (request()->ajax()) {
-            $data = User::all('id','name','email');
+            $data = DB::table('users')->join('role_user','users.id','=','role_user.user_id')
+                                      ->join('roles','role_user.role_id','=','roles.id')
+                                      ->select('users.name','users.email','roles.title')->get();
             return Datatables::of($data)
                     ->addIndexColumn()
                     ->addColumn('action', function($row) {
