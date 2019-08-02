@@ -35,9 +35,8 @@ Route::group(['prefix'=>'admin','as'=>'admin.'], function(){
 
     });
 
-    Route::group(['prefix'=>'customer','as'=>'customer.'],function(){
-        // Route::get('', ['as' => 'index', 'uses' => 'Admin\CustomerController@index']);
-    });
+    Route::resource('customer', 'Admin\CustomerController');
+    Route::get('customer/data/{id}', 'Admin\CustomerController@delete');
 
     Route::group(['prefix'=>'trainings','as'=>'trainings.'],function(){
         Route::get('', ['as' => 'index', 'uses' => 'Admin\TrainingController@index']);
