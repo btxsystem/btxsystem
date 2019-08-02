@@ -176,7 +176,6 @@ List Of Bitrex Points
     });
 
     var detail = (id) => {
-
         $.ajax({
                type:'GET',
                url: id+'/detail/username',
