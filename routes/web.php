@@ -64,5 +64,7 @@ Route::group(['prefix'=>'admin','as'=>'admin.'], function(){
     Route::group(['prefix'=>'bitrex-money','as'=>'bitrex-money.'], function(){
         Route::get('points', ['as' => 'points', 'uses' => 'Admin\BitrexPointController@index']);
         Route::get('topup', ['as' => 'topup', 'uses' => 'Admin\BitrexPointController@topup']);
+        Route::get('/{id}/detail', ['as' => 'detail', 'uses' => 'Admin\BitrexPointController@detail']);
+        Route::get('/{id}/detail/username', ['as' => 'username', 'uses' => 'Admin\BitrexPointController@getUsername']);
     });
 });

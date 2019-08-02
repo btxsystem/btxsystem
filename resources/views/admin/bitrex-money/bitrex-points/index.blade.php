@@ -93,26 +93,25 @@ List Of Bitrex Points
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                        <h4 class="modal-title">Detail transactions</h4>
+                        <h4 class="modal-title name_trx"></h4>
                     </div>
                     <div class="modal-body">
                             <fieldset>
                                             <div class="portlet-title">
                                                 <div class="caption">
                                                     <i class="livicon" data-name="permissions" data-size="16" data-loop="true" data-c="#fff" data-hc="white"></i>
-                                                    Bitrex Points Table
                                                 </div>
                                             </div>
                                             
                                             <div class="portlet-body flip-scroll">
-                                                <table class="table data-table table-bordered table-striped table-condensed flip-content" >
+                                                <table class="table data-table table-bordered table-striped table-condensed flip-content detail" >
                                                     <thead class="flip-content">
                                                         <tr>
                                                             <th>No</th>
-                                                            <th>Id Member</th>
-                                                            <th>Name</th>
+                                                            <th>Nominal</th>
                                                             <th>Points</th>
-                                                            <th>Action</th>
+                                                            <th>Description</th>
+                                                            <th>Transaction Date</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -177,7 +176,39 @@ List Of Bitrex Points
     });
 
     var detail = (id) => {
-        console.log(id);      
+
+        $.ajax({
+               type:'GET',
+               url: id+'/detail/username',
+               data: {
+                   _token : '<?php echo csrf_token() ?>',
+                   id: id,
+               },
+               success:function(data) {
+                  $('.name_trx').html("<b>"+data.text+"</b> - <b>"+data.id+"</b>");
+               }
+        });
+
+        var table = $('.detail').DataTable({
+              destroy: true,
+              processing: true,
+              serverSide: true,
+              ajax: {
+                url: id+"/detail"
+              },
+              
+              columns: [
+                  {
+                      data: 'DT_RowIndex', name: 'DT_RowIndex', 
+                      orderable: false, searchable: false
+                  },
+                  {data: 'nominal', name: 'nominal'},
+                  {data: 'points', name: 'points'},
+                  {data: 'description', name: 'description', searchable: false},
+                  {data: 'transaction_date', name: 'transaction_date', orderable: false, searchable: false},
+              ]    
+        });
+        
     };
       </script>
 @stop
