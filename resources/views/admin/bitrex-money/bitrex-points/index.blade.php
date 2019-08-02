@@ -60,7 +60,9 @@ List Of Bitrex Points
                             <div class="form-group">
                                 <label class="col-md-3 control-label">Name</label>
                                 <div class="col-md-8 inputGroupContainer">
-                                    <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span><select name="" id="name" name="name" placeholder="Name" class="form-control" required="true" value=""></select></div>
+                                    <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                        <select name="" id="name" name="name" class="form-control" required="true" value=""></select>
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -111,6 +113,26 @@ List Of Bitrex Points
               ]
           });
           
+          $(document).ready(function() {  
+            $('#name').select2({
+            placeholder: "Choose permissions...",
+            ajax: {
+                url: '',
+                dataType: 'json',
+                data: function (params) {
+                    return {
+                        q: $.trim(params.term)
+                    };
+                },
+                processResults: function (data) {
+                    return {
+                        results: data
+                    };
+                },
+                cache: true
+            }
         });
+        });
+    });
       </script>
 @stop
