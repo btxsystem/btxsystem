@@ -22,6 +22,8 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="chart" id="example"></div>
+
+				<!-- <div class="chart" id="basic-example"></div> -->
 			</div>
 		</div>
 	</section>
@@ -54,12 +56,15 @@
 			.bigger {
 				font-size: 13px;
 			}
+			.link {
+				text-decoration: none;
+				background: red;
+				padding: 20px;
+			}
 			.img-fluid {
 				width: 60px;
 				height: 60px;
 				display: block;
-				dominant-baseline: middle;
-				text-anchor: middle;
 				margin-right: auto;
 				margin-left: auto;
 			}
@@ -84,7 +89,7 @@
 			    type: 'GET', //THIS NEEDS TO BE GET
 			    url: '/admin/membership',
 			    success: function (data) {
-			      var data = data[0];
+			      var data = data;
 			      console.log(data)
 			   //    var data = {
 						//   "name": "A1",
@@ -128,6 +133,11 @@
 						//   					"img":"https://img.icons8.com/bubbles/2x/user.png",
 						//   					"level":"Silver",
 						// 	        },
+						// 	        {
+						// 	          "name": "C5",
+						//   					"img":"https://img.icons8.com/bubbles/2x/user.png",
+						//   					"level":"Silver",
+						// 	        },
 						//         ]
 						// 	    },
 						// 	    {
@@ -140,6 +150,16 @@
 						//   					"img":"https://img.icons8.com/bubbles/2x/user.png",
 						//   					"level":"Silver",
 						// 	        },
+						// 	        {
+						// 	          "name": "C7",
+						//   					"img":"https://img.icons8.com/bubbles/2x/user.png",
+						//   					"level":"Silver",
+						// 	        },
+						// 	        {
+						// 	          "name": "C8",
+						//   					"img":"https://img.icons8.com/bubbles/2x/user.png",
+						//   					"level":"Silver",
+						// 	        },
 						//         ]
 						// 	    }
 						// 	  ]
@@ -149,8 +169,9 @@
 						// 	.id(function(d){return d.id;})
 						// 	.parentId(function(d){return d.sponsor_id;})
 						// 	(this.data);
-						var treeStructure = d3.tree().size([800,270]);
-						var root = d3.hierarchy(data);
+						var treeStructure = d3.tree().size([1000,270]);
+
+						var root = d3.hierarchy(data).sort(function(a, b) { return a.data.position - b.data.position ;});
 						treeStructure(root);
 						var information = treeStructure(root);
 						// console.log(information.descendants());
@@ -180,7 +201,7 @@
 						var names = svg.append("g").selectAll("text")
 							.data(information.descendants());
 						names.enter().append("text")
-							.text(function(d){return "Name : " + d.data.name;})
+							.text(function(d){return d.data.first_name;})
 							.attr("x", function(d){return d.x+0;})
 							.attr("y", function(d){return d.y+50;})
 							.classed("bigger", true);
@@ -195,8 +216,10 @@
 
 						var image = svg.append("g").selectAll("image")
 							.data(information.descendants());
-						image.enter().append("image")
-							.attr("xlink:href", function(d){return d.data.img})
+						image.enter().append("a")
+							.attr("xlink:href", function(d){return "/"})
+							.append("image")
+							.attr("xlink:href", function(d){return "https://img.icons8.com/bubbles/2x/user.png"})
 							.attr("x", function(d){return d.x-30;})
 							.attr("y", function(d){return d.y-20;})
 							.classed("img-fluid", true);
