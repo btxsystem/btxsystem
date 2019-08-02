@@ -16,6 +16,7 @@ class CreateEmployeersTable extends Migration
         Schema::create('employeers', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('id_member')->unique();
+            $table->string('username')->unique();
             $table->string('first_name');
             $table->string('last_name')->nullable();
             $table->string('email')->unique();

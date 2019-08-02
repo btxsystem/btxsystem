@@ -12,6 +12,7 @@ class HistoryBitrexPoints extends Model
         'id',
         'id_member',
         'nominal',
+        'points',
         'description',
     ];
 }

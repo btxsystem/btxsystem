@@ -9,13 +9,6 @@ Add Training
 
 {{-- page level styles --}}
 @section('header_styles')
-    <link rel="stylesheet" href="{{ asset('assets/vendors/datatables/css/dataTables.bootstrap.css') }}" />
-	<link href="{{ asset('assets/css/pages/tables.css') }}" rel="stylesheet" type="text/css" />
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/css/select2.min.css" rel="stylesheet" />
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-    <!-- end of page level css-->
     <style>
         body {
             background : #ddd;
@@ -138,11 +131,6 @@ Add Training
 
 {{-- page level scripts --}}
 @section('footer_scripts')
-    <script type="text/javascript" src="{{ asset('assets/vendors/datatables/js/jquery.dataTables.js') }}" ></script>
-    <script type="text/javascript" src="{{ asset('assets/vendors/datatables/js/dataTables.bootstrap.js') }}" ></script>
-    <script type="text/javascript" src="{{ asset('assets/vendors/datatables/js/dataTables.responsive.js') }}" ></script>
-    <script src="{{ asset('assets/js/pages/table-responsive.js') }}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js"></script>
     <script>
     // In your Javascript (external .js resource or <script> tag)
         $(document).ready(function() {

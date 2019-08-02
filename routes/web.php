@@ -6,6 +6,7 @@ Auth::routes(['register' => false]);
 Route::group(['prefix' => 'select', 'as'=> 'select.'], function () {
     Route::get('sponsor', ['as' => 'sponsor', 'uses' => 'MembershipController@select']);
     Route::get('permissions', ['as' => 'permissions', 'uses' => 'Admin\RolesController@select']);
+    Route::get('username', ['as' => 'username', 'uses' => 'Admin\MemberController@select']);
 });
 
 Route::group(['prefix'=>'admin','as'=>'admin.'], function(){
