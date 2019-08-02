@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Employeer;
 use DB;
+use Alert;
 
 class MembershipController extends Controller
 {

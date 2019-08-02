@@ -4,15 +4,6 @@
 List Of Users
 @parent
 @stop
-
-{{-- page level styles --}}
-@section('header_styles')
-    <link rel="stylesheet" href="{{ asset('assets/vendors/datatables/css/dataTables.bootstrap.css') }}" />
-	<link href="{{ asset('assets/css/pages/tables.css') }}" rel="stylesheet" type="text/css" />
-
-    <!-- end of page level css-->
-@stop
-
 {{-- Page content --}}
 @section('content')
 
@@ -71,10 +62,6 @@ List Of Users
 
 {{-- page level scripts --}}
 @section('footer_scripts')
-    <script type="text/javascript" src="{{ asset('assets/vendors/datatables/js/jquery.dataTables.js') }}" ></script>
-    <script type="text/javascript" src="{{ asset('assets/vendors/datatables/js/dataTables.bootstrap.js') }}" ></script>
-    <script type="text/javascript" src="{{ asset('assets/vendors/datatables/js/dataTables.responsive.js') }}" ></script>
-    <script src="{{ asset('assets/js/pages/table-responsive.js') }}"></script>
     <script type="text/javascript">
         $(document).ready(function () {
           var table = $('.data-table').DataTable({

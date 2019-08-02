@@ -12,6 +12,7 @@
         <link href="{{ asset('assets/css/pages/tables.css') }}" rel="stylesheet" type="text/css" />
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
         <link href="{{ asset('assets/css/app.css') }}" rel="stylesheet" type="text/css"/>
+        <link rel="stylesheet" type="text/css" href="/assets/vendors/sweetalert/css/sweetalert.css">
 
         <!-- meta -->
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
@@ -27,7 +28,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
         
         @yield('header_styles')
-
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
         <body class="skin-josh">
             <header class="header">
 
@@ -145,5 +146,6 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
 
         @yield('footer_scripts')
+        @include('sweet::alert')
     </body>
 </html>

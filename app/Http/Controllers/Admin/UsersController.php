@@ -11,6 +11,7 @@ use App\Role;
 use App\User;
 use DataTables;
 use DB;
+use Alert;
 
 class UsersController extends Controller
 {
@@ -35,7 +36,6 @@ class UsersController extends Controller
     public function create()
     {
         $roles = Role::all()->pluck('title', 'id');
-
         return view('admin.users.create', compact('roles'));
     }
 
@@ -49,7 +49,7 @@ class UsersController extends Controller
 
         $user = User::create($request->all());
         $user->roles()->sync($request->input('roles', []));
-
+        Alert::success('Success add new user', 'Success');
         return redirect()->route('admin.admin-management.users.index');
     }
 
@@ -89,7 +89,7 @@ class UsersController extends Controller
     {
         $roles = DB::table('role_user')->where('user_id',$id)->delete();
         $user = User::findOrFail($id)->delete();
-
+        Alert::success('Success delete user', 'Success');
         return back();
     }
 

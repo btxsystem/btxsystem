@@ -28,7 +28,7 @@ List Of Bitrex Points
                 </div>
                 
                 <div class="portlet-body flip-scroll">
-                    <table class="table data-table table-bordered table-striped table-condensed flip-content" >
+                    <table class="table data-table table-bordered table-striped table-condensed flip-content employee" >
                         <thead class="flip-content">
                             <tr>
                                 <th>No</th>
@@ -47,7 +47,7 @@ List Of Bitrex Points
     </div>
     </section>
 
-<div id="myDemoModal" class="modal fade">
+    <div id="myDemoModal" class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -55,13 +55,13 @@ List Of Bitrex Points
                     <h4 class="modal-title">Topup</h4>
                 </div>
                 <div class="modal-body">
-                    <form action="" class="well form-horizontal">
+                    <form action="{{ route('admin.bitrex-money.topup') }}" class="well form-horizontal">
                         <fieldset>
                             <div class="form-group">
-                                <label class="col-md-3 control-label">Name</label>
+                                <label class="col-md-3 control-label">Username</label>
                                 <div class="col-md-8 inputGroupContainer">
                                     <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                                        <select name="" id="name" name="name" class="form-control" required="true" value=""></select>
+                                        <select name="name" id="username" class="form-control" required="true" value=""></select>
                                     </div>
                                 </div>
                             </div>
@@ -78,22 +78,64 @@ List Of Bitrex Points
                                 </div>
                             </div>
                         </fieldset>
+                        <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <input type="submit" class="btn btn-success">
+                            </div>
                     </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-success">Topup</button>
                 </div>
             </div>
         </div>
     </div>
+
+    <div id="detail" class="modal fade">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title">Detail transactions</h4>
+                    </div>
+                    <div class="modal-body">
+                            <fieldset>
+                                            <div class="portlet-title">
+                                                <div class="caption">
+                                                    <i class="livicon" data-name="permissions" data-size="16" data-loop="true" data-c="#fff" data-hc="white"></i>
+                                                    Bitrex Points Table
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="portlet-body flip-scroll">
+                                                <table class="table data-table table-bordered table-striped table-condensed flip-content" >
+                                                    <thead class="flip-content">
+                                                        <tr>
+                                                            <th>No</th>
+                                                            <th>Id Member</th>
+                                                            <th>Name</th>
+                                                            <th>Points</th>
+                                                            <th>Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                            </fieldset>
+                            <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
 
 @stop
 
 @section('footer_scripts')
     <script type="text/javascript">
         $(document).ready(function () {
-          var table = $('.data-table').DataTable({
+          var table = $('.employee').DataTable({
               destroy: true,
               processing: true,
               serverSide: true,
@@ -107,17 +149,17 @@ List Of Bitrex Points
                       orderable: false, searchable: false
                   },
                   {data: 'id_member', name: 'id_member'},
-                  {data: 'name', name: 'name'},
+                  {data: 'username', name: 'username'},
                   {data: 'points', name: 'points', searchable: false},
                   {data: 'action', name: 'action', orderable: false, searchable: false},
               ]
           });
-          
-          $(document).ready(function() {  
-            $('#name').select2({
-            placeholder: "Choose permissions...",
+
+            $('#username').select2({
+            placeholder: "Choose username...",
+            width:'100%',
             ajax: {
-                url: '',
+                url: '{{ route("select.username") }}',
                 dataType: 'json',
                 data: function (params) {
                     return {
@@ -132,7 +174,10 @@ List Of Bitrex Points
                 cache: true
             }
         });
-        });
     });
+
+    var detail = (id) => {
+        console.log(id);      
+    };
       </script>
 @stop
