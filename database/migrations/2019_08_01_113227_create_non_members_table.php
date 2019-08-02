@@ -16,7 +16,7 @@ class CreateNonMembersTable extends Migration
         Schema::create('non_members', function (Blueprint $table) {
             $table->increments('id');
             $table->string('first_name');
-            $table->string('last_name');
+            $table->string('last_name')->nullable();
             $table->string('username')->unique();
             $table->string('email');
             $table->string('password');

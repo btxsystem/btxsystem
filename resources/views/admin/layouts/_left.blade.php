@@ -58,10 +58,10 @@
             </ul>
      </li>
     <li>
-    <a href="">
-            <i class="livicon" data-name="users" data-size="18" data-c="#bdecb6" data-hc="#bdecb6"
+         <a href="{{ route('admin.customer.index') }}">
+            <i class="livicon" data-name="customer" data-size="18" data-c="#bdecb6" data-hc="#bdecb6"
                data-loop="true"></i>
-            Customer
+                Customers
         </a>
     </li>
     <li>
