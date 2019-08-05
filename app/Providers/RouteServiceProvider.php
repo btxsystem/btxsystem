@@ -39,6 +39,7 @@ class RouteServiceProvider extends ServiceProvider
 
         $this->mapWebRoutes();
 
+        $this->mapMemberRoutes();
         //
     }
 
@@ -69,5 +70,13 @@ class RouteServiceProvider extends ServiceProvider
              ->middleware('api')
              ->namespace($this->namespace)
              ->group(base_path('routes/api.php'));
+    }
+
+    // route for frontend
+    protected function mapMemberRoutes()
+    {
+        Route::middleware('employeer')
+             ->namespace($this->namespace)
+             ->group(base_path('routes/member.php'));
     }
 }

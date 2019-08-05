@@ -4,7 +4,7 @@ namespace App;
 use Nestable\NestableTrait;
 use Illuminate\Database\Eloquent\Model;
 
-class Employeer extends Model
+class Employeer extends Authenticatable
 {
     use NestableTrait;
     
@@ -25,6 +25,9 @@ class Employeer extends Model
         'status',
         'phone_number',
         'no_rec',
+        'position',
+        'parent_id',
+        'sponsor_id',
         'rank_id',
         'bitrex_cash',
         'bitrex_points',
@@ -33,6 +36,14 @@ class Employeer extends Model
 
     public function getName(){
         return $this->first_name.' '.$this->last_name;
+    }
+
+    public function children(){
+        return $this->hasMany( 'App\Employeer', 'parent_id', 'id' );
+    }
+      
+    public function parent(){
+        return $this->hasOne( 'App\Employeer', 'id', 'parent_id' );
     }
 
 }
