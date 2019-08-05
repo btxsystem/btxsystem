@@ -4,22 +4,22 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class BitraxCashHistory extends Model
+class HistoryBitrexCash extends Model
 {
 
 
-  	protected $table = 'bitrax_cash_history';
+  	protected $table = 'history_bitrex_cash';
   
 	protected $fillable = [
 
        'id_member',
        'nominal',
-       'description', 
-        
+	   'description', 
+	   'created_at',
     ];
 
 	 protected $hidden = [
-	      'created_at', 'updated_at'
+	     'updated_at'
 	 ];
 
 }

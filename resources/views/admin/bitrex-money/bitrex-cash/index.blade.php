@@ -7,7 +7,7 @@ List Of Bitrex Points
 @section('content')
 
 <section class="content-header">
-    <h1>Bitrex Points</h1>
+    <h1>Bitrex Cash</h1>
     <ol class="breadcrumb">
         <li>
             <a href="#">Bitrex Money</a>
@@ -23,7 +23,7 @@ List Of Bitrex Points
                 <div class="portlet-title">
                     <div class="caption">
                         <i class="livicon" data-name="permissions" data-size="16" data-loop="true" data-c="#fff" data-hc="white"></i>
-                        Bitrex Points Table
+                        Bitrex Cash Table
                     </div>
                 </div>
                 
@@ -65,14 +65,14 @@ List Of Bitrex Points
                                             </div>
                                             
                                             <div class="portlet-body flip-scroll">
-                                                <table class="table data-table table-bordered table-striped table-condensed flip-content" >
+                                                <table class="table data-table table-bordered table-striped table-condensed flip-content detail" >
                                                     <thead class="flip-content">
                                                         <tr>
                                                             <th>No</th>
                                                             <th>Id Member</th>
-                                                            <th>Name</th>
-                                                            <th>Points</th>
-                                                            <th>Action</th>
+                                                            <th>Nominal</th>
+                                                            <th>Description</th>
+                                                            <th>Date</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -100,7 +100,7 @@ List Of Bitrex Points
               processing: true,
               serverSide: true,
               ajax: {
-                url: "{{ route('admin.bitrex-money.points') }}", 
+                url: "{{ route('admin.bitrex-money.cash') }}", 
               },
               
               columns: [
@@ -115,29 +115,29 @@ List Of Bitrex Points
               ]
           });
 
-            $('#username').select2({
-            placeholder: "Choose username...",
-            width:'100%',
-            ajax: {
-                url: '{{ route("select.username") }}',
-                dataType: 'json',
-                data: function (params) {
-                    return {
-                        q: $.trim(params.term)
-                    };
-                },
-                processResults: function (data) {
-                    return {
-                        results: data
-                    };
-                },
-                cache: true
-            }
-        });
     });
 
     var detail = (id) => {
-        console.log(id);      
+        console.log('masuk'); 
+        var table = $('.detail').DataTable({
+              destroy: true,
+              processing: true,
+              serverSide: true,
+              ajax: {
+                url: id+"/cash/detail"
+              },
+              
+              columns: [
+                  {
+                      data: 'DT_RowIndex', name: 'DT_RowIndex', 
+                      orderable: false, searchable: false
+                  },
+                  {data: 'id_member', name: 'id_member'},
+                  {data: 'nominal', name: 'nominal'},
+                  {data: 'description', name: 'description', searchable: false},
+                  {data: 'created_at', name: 'created_at', orderable: false, searchable: false},
+              ]    
+        });    
     };
       </script>
 @stop
