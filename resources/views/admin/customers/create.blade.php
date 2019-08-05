@@ -8,7 +8,7 @@ Registration User
 @section('content')
 
 <section class="content-header">
-    <h1>Registration Customer</h1>
+    <h1> Customer</h1>
     <ol class="breadcrumb">
         <li>
             <a href="#">Customer Management</a>
@@ -60,7 +60,7 @@ Registration User
                                 </div>
                             </div>
 
-                            <div class="form-group">
+                           <!--  <div class="form-group">
                                 <label class="col-md-2 control-label">Password</label>
                                 <div class="col-md-8 inputGroupContainer">
                                 <div class="input-group">
@@ -68,7 +68,7 @@ Registration User
                                     <input id="password" name="password" placeholder="Password" class="form-control" required="true" value="{{$data ? $data->password : old('password')}}" type="password">
                                 </div>
                                 </div>
-                            </div>
+                            </div> -->
 
                            <div class="form-group">
                                 <label class="col-md-2 control-label"></label>

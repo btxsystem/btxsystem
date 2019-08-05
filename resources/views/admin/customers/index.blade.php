@@ -37,7 +37,6 @@ List Of Users Active
                                             <th>Name</th>
                                             <th>Username</th>
                                             <th>Email</th>
-                                            <th>Password</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -70,32 +69,12 @@ List Of Users Active
                   },
                   {data: 'name', name: 'name'},
                   {data: 'username', name: 'username'},                  
-                  {data: 'email', name: 'email'},                  
-                  {data: 'password', name: 'password'},             
+                  {data: 'email', name: 'email'},                   
                   {data: 'action', name: 'action', orderable: false, searchable: false},
               ]
           });
           
         });
-        function hapusData(row) {
-             row        = JSON.parse(row);
-             var result = confirm("hapus ... ?"); 
-             var data   = $("#del"+row.id).serializeArray();
-            if (result) {
-                $.ajax({
-                    type    : "POST", 
-                    url     : window.location.href + '/' + row.id, 
-                    data    : data,
-                    dataType: "json",      
-                    success : function(response)  
-                    {
-
-                        alert('Data Has Deleted');
-                        window.location.reload();
-
-                    }   
-                });
-            }  
-        }
+       
       </script>
 @stop

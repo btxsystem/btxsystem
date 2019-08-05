@@ -7,6 +7,8 @@ use App\Employeer;
 use App\Customer\Customer;
 use DataTables;
 use Illuminate\Support\Facades\DB;
+use Alert;
+use Validator;
 
 class CustomerController extends Controller
 {
@@ -21,8 +23,12 @@ class CustomerController extends Controller
                         return $data->first_name.' '.$data->last_name;
                     })
 
-                    ->editColumn('password', function($data) {
-                        return "*****";
+                    ->editColumn('username', function($data) {
+                        return $data->username;
+                    })
+
+                    ->editColumn('email', function($data) {
+                        return $data->email;
                     })
                   
                     ->addColumn('action', function($row) {
@@ -37,6 +43,7 @@ class CustomerController extends Controller
     }
 
     public function create(){
+
         $data['data'] = array();
 
         return view('admin.customers.create', $data);
@@ -46,20 +53,39 @@ class CustomerController extends Controller
 
         $input = $request->all();
 
+
+        $cek = Customer::where('username', $input['username'])->first();
+
+        if ($cek) {
+
+            Alert::error('username Sudah Ada', 'Gagal');
+
+            return redirect()->back();
+        }
+             
+
+
         $input['password'] = bcrypt($input['password']);
 
-        Customer::create($input);
+        $data = Customer::create($input);
+
+        Alert::error('Gagal Add Data Customer', 'Gagal');
 
         return view('admin.customers.index');
     }
 
     public function delete($id) {
 
-        $data = Customer::find($id);
+        $data = Customer::findOrFail($id);
 
-        if ($data) { $data->delete(); }
+        if ($data) { 
+            $data->delete(); 
+            Alert::success('Success Delete Data Customer', 'Success');
+        } else {
+            Alert::error('Gagal Delete Data Customer', 'Gagal');
+        }
 
-        return redirect()->back()->with('alert', 'hapus data sukses');
+        return view('admin.customers.index');
 
     }
 
@@ -67,7 +93,7 @@ class CustomerController extends Controller
 
         $data['data'] = array();
 
-        $cust = Customer::find($id);
+        $cust = Customer::findOrFail($id);
 
         if ($cust) { $data['data'] = $cust; }
 

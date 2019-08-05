@@ -108,7 +108,7 @@
                 </a>
             </li>
             <li>
-                <a href="">
+                <a href="{{ route('admin.bitrex-money.cash') }}">
                     <i class="fa fa-angle-double-right"></i>
                     Bitrex Cash
                 </a>
