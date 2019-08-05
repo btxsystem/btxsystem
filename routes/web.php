@@ -7,6 +7,7 @@ Route::group(['prefix' => 'select', 'as'=> 'select.'], function () {
     Route::get('sponsor', ['as' => 'sponsor', 'uses' => 'MembershipController@select']);
     Route::get('permissions', ['as' => 'permissions', 'uses' => 'Admin\RolesController@select']);
     Route::get('username', ['as' => 'username', 'uses' => 'Admin\MemberController@select']);
+    Route::get('/{id}/upline', ['as' => 'upline', 'uses' => 'MembershipController@select_upline']);
 });
 
 Route::group(['prefix'=>'admin','as'=>'admin.'], function(){
@@ -71,3 +72,4 @@ Route::group(['prefix'=>'admin','as'=>'admin.'], function(){
     });
     
 });
+

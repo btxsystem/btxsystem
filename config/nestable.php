@@ -2,13 +2,13 @@
 
 return [
     'parent'=> 'parent_id',
-    'name_name' => 'first_name' ,
+    'username' => 'username' ,
     'primary_key' => 'id',
     'generate_url'   => true,
     'childNode' => 'children',
     'body' => [
         'id',
-        'first_name',
+        'username',
         'position',
         'sponsor_id',
     ],

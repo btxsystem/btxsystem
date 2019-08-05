@@ -94,7 +94,7 @@ Registration User
                                     <div class="col-md-8 inputGroupContainer">
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="glyphicon glyphicon-heart"></i></span>
-                                            <select name="is_married[]" id="is_married" class="form-control" required="true">
+                                            <select name="is_married" id="is_married" class="form-control" required="true">
                                                 <option value="" disabled selected>Please choice your married status</option>
                                                 <option value="0">Single</option>
                                                 <option value="1">Married</option>
@@ -108,7 +108,7 @@ Registration User
                                     <div class="col-md-8 inputGroupContainer">
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-venus-mars"></i></span>
-                                        <select name="gender[]" id="gender" class="form-control" required="true">
+                                        <select name="gender" id="gender" class="form-control" required="true">
                                             <option value="" disabled selected>Please choice your gender</option>
                                             <option value="0">Male</option>
                                             <option value="1">Female</option>
@@ -142,7 +142,7 @@ Registration User
                                 <div class="col-md-8 inputGroupContainer">
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-male"></i></span>
-                                        <select name="sponsor_id[]" id="sponsor_id" class="form-control cari" required="true">
+                                        <select name="sponsor_id" id="sponsor_id" class="form-control cari" required="true">
 
                                         </select>
                                     </div>
@@ -155,7 +155,7 @@ Registration User
                                 <div class="col-md-8 inputGroupContainer">
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-users"></i></span>
-                                        <select name="parent_id[]" id="parent_id" class="form-control" required="true">
+                                        <select name="parent_id" id="parent_id" class="form-control" required="true">
 
                                         </select>
                                     </div>
@@ -168,7 +168,7 @@ Registration User
                                 <div class="col-md-8 inputGroupContainer">
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-crosshairs"></i></span>
-                                        <select name="position[]" id="position" class="form-control" required="true">
+                                        <select name="position" id="position" class="form-control" required="true">
 
                                         </select>
                                     </div>
@@ -192,8 +192,6 @@ Registration User
             </table>
          </div>
 </section>
-<!--section ends-->
-<section class="content">
 
 @stop
 
@@ -202,25 +200,47 @@ Registration User
     <script type="text/javascript">
         $(document).ready(function () {
             $('.cari').select2({
-                placeholder: 'Choice sponsor',
-                ajax: {
-                    url: '{{ route("select.sponsor") }}',
-                    dataType: 'json',
-                    delay: 250,
-                    processResults: function (data) {
-                        console.log(data);            
+            placeholder: "Choose sponsor...",
+            ajax: {
+                url: '{{ route("select.sponsor") }}',
+                dataType: 'json',
+                data: function (params) {
                     return {
-                        results:  $.map(data, function (item) {
-                        return {
-                            text: item.first_name,
-                            id: item.id
-                        }
-                        })
+                        q: $.trim(params.term)
                     };
-                    },
-                    cache: true
+                },
+                processResults: function (data) {
+                    return {
+                        results: data
+                    };
+                },
+                cache: true
                 }
             });
         });
-      </script>
+
+        $('.cari').change(function(){
+            id = $('.cari').val();
+            $('#parent_id').select2({
+            placeholder: "Choose upline...",
+            ajax: {
+                url: '/select/'+id+'/upline',
+                dataType: 'json',
+                data: function (params) {
+                    console.log(params);
+                    
+                    return {
+                        q: $.trim(params.term)
+                    };
+                },
+                processResults: function (data) {
+                    return {
+                        results: data
+                    };
+                },
+                cache: true
+                }
+            });
+        })
+    </script>
 @stop

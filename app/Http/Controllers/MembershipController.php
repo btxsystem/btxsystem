@@ -20,10 +20,24 @@ class MembershipController extends Controller
 
     
     public function select(Request $request){
-        if ($request->has('q')) {
-            $cari = $request->q;
-            $data = DB::table('employeers')->select('id', 'first_name')->where('first_name', 'LIKE', '%$cari%')->get();
-            return response()->json($data);
+        $term = trim($request->q);
+        $formatted_tags = [];
+        if (empty($term)) {
+            $datas = DB::table('employeers')->select('id','username')->limit(5)->get();
+            foreach ($datas as $tag) {
+                $formatted_tags[] = ['id' => $tag->id, 'text' => $tag->username];
+            }
+        }else{
+            $tags = DB::table('employeers')->select('id','username')->where('username', 'LIKE', '%'.$term.'%')->limit(5)->get();
+            foreach ($tags as $tag) {
+                $formatted_tags[] = ['id' => $tag->id, 'text' => $tag->username];
+            }
         }
+        return \Response::json($formatted_tags);
+    }
+
+    public function select_upline(Request $request, $id){
+        $data = new Employeer;
+        return \Response::json($data->children());
     }
 }
