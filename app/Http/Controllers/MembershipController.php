@@ -10,8 +10,8 @@ use Alert;
 class MembershipController extends Controller
 {
     public function index(){
-        $child = Employeer::nested()->get();
-        return response()->json($child[0]);
+        $child = Employeer::parent(1)->renderAsArray();
+        return $child[0];
     } 
 
     public function tree(){

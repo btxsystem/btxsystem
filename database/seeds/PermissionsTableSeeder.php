@@ -9,10 +9,10 @@ class PermissionsTableSeeder extends Seeder
     {
         $permissions = [
             [
-            'id'         => '1',
-            'title'      => 'user_management_access',
-            'created_at' => '2019-04-15 19:14:42',
-            'updated_at' => '2019-04-15 19:14:42',
+                'id'         => '1',
+                'title'      => 'user_management_access',
+                'created_at' => '2019-04-15 19:14:42',
+                'updated_at' => '2019-04-15 19:14:42',
             ],
             [
                 'id'         => '2',
