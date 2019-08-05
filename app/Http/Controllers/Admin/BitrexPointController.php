@@ -13,7 +13,7 @@ class BitrexPointController extends Controller
 {
     public function index(){
         if (request()->ajax()) {
-            $data = Employeer::all();
+            $data = DB::table('employeers')->select('id','id_member','username','bitrex_points');
             return Datatables::of($data)
                     ->addIndexColumn()
                     ->editColumn('username', function($data) {
@@ -45,5 +45,23 @@ class BitrexPointController extends Controller
         Employeer::findOrFail($request['name'])->update($add_points);
         Alert::success('Success topup', 'Success');
         return redirect()->route('admin.bitrex-money.points');
+    }
+
+    public function detail($id){
+        if (request()->ajax()) {
+            $data = DB::table('history_bitrex_point')->select('id','nominal','points','description','created_at')->where('id_member','=',$id);
+            return Datatables::of($data)
+                    ->addIndexColumn()
+                    ->editColumn('transaction_date', function($data){
+                        return $data->created_at;
+                    })
+                    ->make(true);
+        }
+    }
+
+    public function getUsername($id){
+        $tags = DB::table('employeers')->select('id_member','username')->where('id','=',$id)->get()->first();
+        $formatted_tags[] = ['id' => $tags->id_member, 'text' => $tags->username];
+        return \Response::json($formatted_tags[0]);
     }
 }

@@ -1,5 +1,6 @@
 <ul id="menu" class="page-sidebar-menu">
     <li >
+
     <a href="{{ route('admin.index') }}">
             <i class="livicon" data-name="dashboard" data-size="18" data-c="#418BCA" data-hc="#418BCA"
                data-loop="true"></i>
@@ -7,38 +8,50 @@
         </a>
     </li>
 
-    <li >
+    @can('user_management_access')
+        <li >
             <a href="">
-                <i class="livicon" data-name="user" data-size="18" data-c="#6CC66C" data-hc="#6CC66C"
-                   data-loop="true"></i>
+                <i class="livicon" data-name="user" data-size="18" data-c="#6CC66C" data-hc="#6CC66C" data-loop="true"></i>
                 <span class="title">Admin Management</span>
                 <span class="fa arrow"></span>
             </a>
+
             <ul class="sub-menu">
-                <li>
-                <a href="{{ route('admin.admin-management.permissions') }}">
-                        <i class="fa fa-angle-double-right"></i>
-                        Permissions
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ route('admin.admin-management.roles.index') }}">
-                        <i class="fa fa-angle-double-right"></i>
-                        Roles
-                    </a>
-                </li>
+
+                @can('permission_access')
+                    <li>
+                        <a href="{{ route('admin.admin-management.permissions') }}">
+                            <i class="fa fa-angle-double-right"></i>
+                            Permissions
+                        </a>
+                    </li>
+                @endcan
+
+                @can('role_access')
+                    <li>
+                        <a href="{{ route('admin.admin-management.roles.index') }}">
+                            <i class="fa fa-angle-double-right"></i>
+                            Roles
+                        </a>
+                    </li>
+                @endcan
+                
+                @can('user_access')
                 <li >
                     <a href="{{ route('admin.admin-management.users.index') }}">
                         <i class="fa fa-angle-double-right"></i>
-                        Admin
+                        Users Company
                     </a>
                 </li>
+                @endcan
+
             </ul>
-     </li>
-     <li >
+        </li>
+    @endcan
+
+        <li >
             <a href="#">
-                <i class="livicon" data-name="users" data-size="18" data-c="#1DA1F2" data-hc="#1DA1F2"
-                data-loop="true"></i>
+                <i class="livicon" data-name="users" data-size="18" data-c="#1DA1F2" data-hc="#1DA1F2" data-loop="true"></i>
                 <span class="title">Members</span>
                 <span class="fa arrow"></span>
             </a>

@@ -66,5 +66,8 @@ Route::group(['prefix'=>'admin','as'=>'admin.'], function(){
         Route::get('topup', ['as' => 'topup', 'uses' => 'Admin\BitrexPointController@topup']);
         Route::get('cash', ['as' => 'cash', 'uses' => 'Admin\BitrexCashController@index']);
 
+        Route::get('/{id}/detail', ['as' => 'detail', 'uses' => 'Admin\BitrexPointController@detail']);
+        Route::get('/{id}/detail/username', ['as' => 'username', 'uses' => 'Admin\BitrexPointController@getUsername']);
     });
+    
 });
