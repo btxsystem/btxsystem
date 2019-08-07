@@ -14,7 +14,8 @@ class BitrexPointController extends Controller
     public function index()
     {
         $data = Auth::user();
-        $history = DB::table('history_bitrex_point')->select('nominal','points','description','created_at as date','info');
+        $history = DB::table('history_bitrex_point')->select('nominal','points','description','created_at as date','info')
+                                                    ->where('id_member',$data->id_member);
         if (request()->ajax()) {
             return Datatables::of($history)
                     ->addIndexColumn()

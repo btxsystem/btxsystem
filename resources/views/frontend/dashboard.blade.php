@@ -67,9 +67,9 @@
 
 @section('footer_scripts')
     <script type="text/javascript">
-        $(document).(ready(function () {
-          console.log('aaaa');
+        $(document).ready(function () {
+            console.log('aaaa');
         });
-      </script>
+    </script>
 @stop
 

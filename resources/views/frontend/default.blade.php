@@ -80,7 +80,11 @@
 <script src="{{asset('assets2/plugins/jquery-datatable/buttons/buttons.colVis.min.js')}}"></script>
 <script src="{{asset('assets2/plugins/jquery-datatable/buttons/buttons.flash.min.js')}}"></script>
 <script src="{{asset('assets2/plugins/jquery-datatable/buttons/buttons.html5.min.js')}}"></script>
-
+<script type="text/javascript">
+    $('#change-password').keypress(function () {
+      console.log('aaaa');
+    });
+</script>
 @yield('footer_scripts')
 </body>
 </html>
