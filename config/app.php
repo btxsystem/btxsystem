@@ -180,6 +180,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\HelperServiceProvider::class,
+        Barryvdh\Cors\ServiceProvider::class,
 
     ],
 
@@ -235,7 +236,7 @@ return [
         'Datatables'   => Yajra\Datatables\Facades\Datatables::class,
         'Nestable'     => Nestable\Facades\NestableService::class,
         'Helper'       => App\Helper::class,
-        'Alert' => UxWeb\SweetAlert\SweetAlert::class,
+        'Alert'        => UxWeb\SweetAlert\SweetAlert::class,
     ],
 
 ];
