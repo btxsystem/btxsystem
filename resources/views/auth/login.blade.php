@@ -1,68 +1,68 @@
 @extends('layouts.app')
+
 @section('content')
-<head>
-    <title>Login</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- global level css -->
-    <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet" />
-    <link href="{{ asset('assets/vendors/bootstrapvalidator/css/bootstrapValidator.min.css') }}" rel="stylesheet"/>
-    <!-- end of global level css -->
-    <!-- page level css -->
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/pages/login.css') }}" />
-    <link href="{{ asset('assets/vendors/iCheck/css/square/blue.css') }}" rel="stylesheet"/>
-    <!-- end of page level css -->
-
-</head>
-<body>
 <div class="container">
-    <div class="row vertical-offset-100">
-        <!-- Notifications -->
-        <div class="col-sm-6 col-sm-offset-3  col-md-5 col-md-offset-4 col-lg-4 col-lg-offset-4">
-            <div id="container_demo">
-                <a class="hiddenanchor" id="tologin"></a>
-                <a class="hiddenanchor" id="toforgot"></a>
-                <div id="wrapper">
-                    <div id="login" class="animate form">                
-                        <form method="POST" action="{{ route('login') }}" autocomplete="on" role="form" id="login_form">
-                        {{ csrf_field() }}
-                        <h3 class="black_bg">
-                                <img src="{{ asset('assets/img/logo.png') }}" alt="josh logo">
-                                <br>Log In</h3>
-                        <div class="form-group ">
-                                <label style="margin-bottom:0px;" for="username" class="uname control-label"> <i class="livicon" data-name="user" data-size="16" data-loop="true" data-c="#3c8dbc" data-hc="#3c8dbc"></i>
-                                    Username
-                                </label>
-                                <input id="username" name="username" type="text" placeholder="Username"
-                                        value=""/>
-                                <div class="col-sm-12">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">{{ __('Login') }}</div>
+
+                <div class="card-body">
+                    <form method="POST" action="{{ route('login') }}">
+                        @csrf
+
+                        <div class="form-group row">
+                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+
+                                @error('email')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+
+                                @error('password')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-md-6 offset-md-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
+
+                                    <label class="form-check-label" for="remember">
+                                        {{ __('Remember Me') }}
+                                    </label>
                                 </div>
                             </div>
+                        </div>
 
-                        <div class="form-group ">
-                                <label style="margin-bottom:0px;" for="password" class="youpasswd"> <i class="livicon" data-name="key" data-size="16" data-loop="true" data-c="#3c8dbc" data-hc="#3c8dbc"></i>
-                                    Password
-                                </label>
-                                <input id="password" name="password" type="password" placeholder="Enter a password" />
-                                <div class="col-sm-12">
-                                </div>
+                        <div class="form-group row mb-0">
+                            <div class="col-md-8 offset-md-4">
+                                <button type="submit" class="btn btn-primary">
+                                    {{ __('Login') }}
+                                </button>
+
+                                @if (Route::has('password.request'))
+                                    <a class="btn btn-link" href="{{ route('password.request') }}">
+                                        {{ __('Forgot Your Password?') }}
+                                    </a>
+                                @endif
                             </div>
-
-                        <div class="form-group">
-                                <label>
-                                    <input type="checkbox" name="remember-me" id="remember-me" value="remember-me"
-                                            class="square-blue"/>
-                                    Keep me logged in
-                                </label>
-                            </div>
-
-                        <p class="login button">
-                                <input type="submit" value="Log In" class="btn btn-success" />
-                            </p>
-                            <p class="change_link">
-                                <a href="{{ route('password.request') }}">
-                                    <button type="button" class="btn btn-responsive botton-alignment btn-warning btn-sm">Forgot password</button>
-                                </a>
-                            </p>
                         </div>
                     </form>
                 </div>
@@ -70,18 +70,4 @@
         </div>
     </div>
 </div>
-    <!-- global js -->
-    <script src="{{ asset('assets/js/jquery-1.11.1.min.js') }}" type="text/javascript"></script>
-    <!-- Bootstrap -->
-    <script src="{{ asset('assets/js/bootstrap.min.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('assets/vendors/bootstrapvalidator/js/bootstrapValidator.min.js') }}" type="text/javascript"></script>
-    <!--livicons-->
-    <script src="{{ asset('assets/js/raphael-min.js') }}"></script>
-    <script src="{{ asset('assets/js/livicons-1.4.min.js') }}"></script>
-    <script src="{{ asset('assets/vendors/iCheck/js/icheck.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('assets/js/pages/login.js') }}" type="text/javascript"></script>
-    <!-- end of global js -->
-
-</body>
 @endsection
-

@@ -76,7 +76,6 @@ Route::group(['prefix'=>'admin','as'=>'admin.'], function(){
     
 });
 
-
 Route::group(['prefix'=>'member','as'=>'member.'], function(){
     Route::get('/login', 'AuthEmployeer\LoginController@showLoginAdmin')->name('login');
     Route::post('/login/cek', 'AuthEmployeer\LoginController@login')->name('login.cek');
@@ -100,3 +99,7 @@ Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
         Route::get('bitrex-points', ['as' => 'bitrex-points', 'uses' => 'Member\BitrexPointController@index']);
     });
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

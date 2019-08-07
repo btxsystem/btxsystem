@@ -5,13 +5,14 @@ namespace App;
 use Carbon\Carbon;
 use Hash;
 use Illuminate\Auth\Notifications\ResetPassword;
+use Laravel\Passport\HasApiTokens;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+     use HasApiTokens, Notifiable;
 
     protected $hidden = [
         'password',
@@ -25,13 +26,8 @@ class User extends Authenticatable
     ];
 
     protected $fillable = [
-        'name',
-        'email',
-        'password',
-        'created_at',
-        'updated_at',
-        'remember_token',
-        'email_verified_at',
+         'reff_id', 'roles_id', 'leasing_id', 'cabang_id', 'perusahaan_id', 'divisi_penjualan_id','name', 'email', 'phone',
+        'username', 'password', 'avatar', 'status', 'fcm_token', 'activation'
     ];
 
     public function getEmailVerifiedAtAttribute($value)

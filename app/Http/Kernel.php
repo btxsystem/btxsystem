@@ -41,5 +41,6 @@ class Kernel extends HttpKernel
         'bindings'      => \Illuminate\Routing\Middleware\SubstituteBindings::class,
         'auth.basic'    => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'employeer'     => \App\Http\Middleware\Employeer::class,
+        'cors'          => \App\Http\Middleware\Cors::class   
     ];
 }
