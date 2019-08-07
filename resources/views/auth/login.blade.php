@@ -29,10 +29,10 @@
                                 <img src="{{ asset('assets/img/logo.png') }}" alt="josh logo">
                                 <br>Log In</h3>
                         <div class="form-group ">
-                                <label style="margin-bottom:0px;" for="email" class="uname control-label"> <i class="livicon" data-name="mail" data-size="16" data-loop="true" data-c="#3c8dbc" data-hc="#3c8dbc"></i>
-                                    E-mail
+                                <label style="margin-bottom:0px;" for="username" class="uname control-label"> <i class="livicon" data-name="user" data-size="16" data-loop="true" data-c="#3c8dbc" data-hc="#3c8dbc"></i>
+                                    Username
                                 </label>
-                                <input id="email" name="email" type="email" placeholder="E-mail"
+                                <input id="username" name="username" type="text" placeholder="Username"
                                         value=""/>
                                 <div class="col-sm-12">
                                 </div>

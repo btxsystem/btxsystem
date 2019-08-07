@@ -3,10 +3,17 @@
 namespace App;
 use Nestable\NestableTrait;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
 class Employeer extends Authenticatable
 {
     use NestableTrait;
+    use Notifiable;
+
+    protected $hidden = [
+        'password',
+    ];
     
     protected $parent = 'parent_id';
 

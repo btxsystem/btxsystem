@@ -1,6 +1,6 @@
 <?php
-Route::redirect('/', '/login');
+//Route::redirect('/', '/login');
 
-Route::get('/member', function() {
-    return('aaaa');
-});
+//Route::get('/member', function() {
+//    return('aaaa');
+//});
