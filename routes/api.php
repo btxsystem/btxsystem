@@ -24,6 +24,21 @@ Route::group(['middleware' => 'auth:api'], function() {
     Route::resource('rank', 'Api\Member\RankController',
     array('only' => array('index', 'store', 'update', 'destroy')));
 
+    // customer
+
+    Route::resource('customer', 'Api\Customer\CustomerController',
+    array('only' => array('index', 'store', 'update', 'destroy')));
+
+
+    // Training
+
+    Route::resource('training', 'Api\Training\TrainingController',
+    array('only' => array('index', 'store', 'update', 'destroy')));
+
+
+
+    /////////////////////user akses/////////////////////////
+
     Route::post('fcm/token', 'Api\AuthController@setFCMToken');
 
     Route::resource('setting', 'Api\System\SettingController',

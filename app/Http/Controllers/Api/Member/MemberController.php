@@ -1,15 +1,4 @@
 <?php
-/**
- * Console API
- *
- * PHP version 7.1
- *
- * @category Modules
- * @package  App
- * @author   CS <info@cirebon-software.com>
- * @license  https://opensource.org/licenses/MIT MIT
- * @link     http://cirebon-software.com
- */
 
 namespace App\Http\Controllers\Api\Member;
 
@@ -19,12 +8,10 @@ use App\Http\Controllers\Api\BaseController;
 use App\User;
 
 /**
- * Module Barang
+ * Module member
  * @category Controller
- * @package  App\Http\Controllers\Api\Barang
- * @author   CS <info@cirebon-software.com>
- * @license  https://opensource.org/licenses/MIT MIT
- * @link     http://cirebon-software.com
+ * @package  
+ * @author   asma cirebon 081214190007 
  */
 
 class MemberController extends BaseController
@@ -146,6 +133,20 @@ class MemberController extends BaseController
         'name' => 'id',
         'operator' => 'desc'
     ];
+
+
+    public function customSearch($request, $query)
+    {
+        $input = $request->all();
+
+        if (isset($input['status'])) {
+
+            $query->where('status', $input['status']);
+        }
+
+        return $query;
+
+    }
 
 
 

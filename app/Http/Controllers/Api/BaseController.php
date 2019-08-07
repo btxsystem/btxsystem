@@ -6,9 +6,7 @@
  *
  * @category Modules
  * @package  App
- * @author   cirebon software
- * @license  https://opensource.org/licenses/MIT MIT
- * @link     cirebon software
+ * @author   asma 081214190007 cirebon software 
  */
 namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
