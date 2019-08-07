@@ -1,5 +1,6 @@
 <?php
-Route::redirect('/', '/login');
+
+/*Route::redirect('/', '/login');
 Route::redirect('/home', '/admin');
 Auth::routes(['register' => false]);
 
@@ -75,6 +76,29 @@ Route::group(['prefix'=>'admin','as'=>'admin.'], function(){
     
 });
 
+Route::group(['prefix'=>'member','as'=>'member.'], function(){
+    Route::get('/login', 'AuthEmployeer\LoginController@showLoginAdmin')->name('login');
+    Route::post('/login/cek', 'AuthEmployeer\LoginController@login')->name('login.cek');
+    Route::get('/dashboard', 'Member\DashboardController@index')->name('dashboard');
+    Route::group(['prefix'=>'profile','as'=>'profile.'], function(){
+        Route::get('', ['as' => 'index', 'uses' => 'Member\ProfileMemberController@index']);
+    });
+});
+*/
+
+Route::get('/login', 'Auth\LoginController@getLogin')->middleware('guest');
+Route::post('/login', 'Auth\LoginController@postLogin');
+Route::get('/logout', 'Auth\LoginController@logout');
+
+Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
+    Route::get('', ['as' => 'dashboard', 'uses' => 'Member\DashboardController@index']);
+    Route::group(['prefix' => 'profile', 'as'=> 'profile.'], function () {
+        Route::get('', ['as' => 'index', 'uses' => 'Member\ProfileMemberController@index']);
+    });
+    Route::group(['prefix' => 'bitrex-money', 'as'=> 'bitrex-money.'], function () {
+        Route::get('bitrex-points', ['as' => 'bitrex-points', 'uses' => 'Member\BitrexPointController@index']);
+    });
+});
 
 Auth::routes();
 
