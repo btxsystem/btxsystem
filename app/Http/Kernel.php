@@ -12,12 +12,15 @@ class Kernel extends HttpKernel
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
         \Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
+        \Barryvdh\Cors\HandleCors::class,
+
     ];
 
     protected $middlewareGroups = [
         'api' => [
             'throttle:60,1',
             'bindings',
+             \Barryvdh\Cors\HandleCors::class,
         ],
         'web' => [
             \App\Http\Middleware\EncryptCookies::class,
@@ -41,6 +44,6 @@ class Kernel extends HttpKernel
         'bindings'      => \Illuminate\Routing\Middleware\SubstituteBindings::class,
         'auth.basic'    => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'employeer'     => \App\Http\Middleware\Employeer::class,
-        'cors'          => \App\Http\Middleware\Cors::class   
+        'cors'          => \App\Http\Middleware\Cors::class ,  
     ];
 }

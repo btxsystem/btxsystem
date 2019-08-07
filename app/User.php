@@ -9,6 +9,8 @@ use Laravel\Passport\HasApiTokens;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
+
 
 class User extends Authenticatable
 {
@@ -26,8 +28,17 @@ class User extends Authenticatable
     ];
 
     protected $fillable = [
-         'reff_id', 'roles_id', 'leasing_id', 'cabang_id', 'perusahaan_id', 'divisi_penjualan_id','name', 'email', 'phone',
-        'username', 'password', 'avatar', 'status', 'fcm_token', 'activation'
+        'username',
+        'name',
+        'email',
+        'email_verified_at',
+        'password',
+        'remember_token',
+        'roles_id',
+        'fcm_token',
+        'created_at',
+        'updated_at',
+        'deleted_at'
     ];
 
     public function getEmailVerifiedAtAttribute($value)
@@ -55,5 +66,24 @@ class User extends Authenticatable
     public function roles()
     {
         return $this->belongsToMany(Role::class);
+    }
+
+
+    //------------------ api ---------------------
+
+    /**
+     * Authorize permission
+     *
+     * @param string $permission - accepted permission
+     *
+     * @return object
+     */
+    public function hasPermission($permission)
+    {
+        return (null !== DB::table('permission_role')
+        ->join('permissions', 'permission_role.permission_id', '=', 'permissions.id')
+        ->where('permissions.name', $permission)
+        ->where('permission_role.role_id', $this->roles_id)
+        ->first() || abort(401, 'This action is unauthorized.'));
     }
 }

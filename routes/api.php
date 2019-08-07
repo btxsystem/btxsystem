@@ -21,6 +21,9 @@ Route::group(['middleware' => 'auth:api'], function() {
     Route::resource('member', 'Api\Member\MemberController',
     array('only' => array('index', 'store', 'update', 'destroy')));
 
+    Route::resource('rank', 'Api\Member\RankController',
+    array('only' => array('index', 'store', 'update', 'destroy')));
+
     Route::post('fcm/token', 'Api\AuthController@setFCMToken');
 
     Route::resource('setting', 'Api\System\SettingController',
