@@ -25,7 +25,7 @@
         <div class="container-fluid">
             <div class="row clearfix">
                 <div class="col-lg-4 col-md-4 col-sm-12">
-                    <a href="#">
+                    <a href="{{route('member.bitrex-money.bitrex-points')}}">
                         <div class="card" style="box-shadow: 2px 2px 2px 1px #888888;">
                             <div style="background:#7284b7">
                                 <div class="col-lg-12 row">
@@ -68,8 +68,8 @@
 @section('footer_scripts')
     <script type="text/javascript">
         $(document).ready(function () {
-          console.log('aaaa');
+            console.log('aaaa');
         });
-      </script>
+    </script>
 @stop
 

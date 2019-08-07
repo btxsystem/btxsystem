@@ -142,7 +142,7 @@
         <script type="text/javascript" src="{{ asset('assets/vendors/datatables/js/jquery.dataTables.js') }}" ></script>
         <script type="text/javascript" src="{{ asset('assets/vendors/datatables/js/dataTables.bootstrap.js') }}" ></script>
         <script type="text/javascript" src="{{ asset('assets/vendors/datatables/js/dataTables.responsive.js') }}" ></script>
-        <script src="{{ asset('assets/js/pages/table-responsive.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('assets/js/pages/table-responsive.js') }}"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
 
         @yield('footer_scripts')

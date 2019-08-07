@@ -33,4 +33,10 @@ class ProfileMemberController extends Controller
         );
         return view('frontend.account.profile')->with('profile',$profile);
     }
+
+    public function resetPassword(Request $request){
+        $data = Auth::user();
+        $new = bcrypt($request->new_password);
+        dd(password_verify($request->old_password, $data->password));
+    }
 }
