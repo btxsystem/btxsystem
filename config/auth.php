@@ -13,11 +13,6 @@ return [
     |
     */
 
-    'defaults' => [
-        'guard' => 'user',
-        'passwords' => 'users',
-    ],
-
     /*
     |--------------------------------------------------------------------------
     | Authentication Guards
