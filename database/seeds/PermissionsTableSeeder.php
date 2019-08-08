@@ -2,11 +2,16 @@
 
 use App\Permission;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+
 
 class PermissionsTableSeeder extends Seeder
 {
     public function run()
     {
+
+        // Permission::truncate();
+
         $permissions = [
 
             [ 'id' => '200'  , 'name' => 'System.Users.Create'],
@@ -38,10 +43,24 @@ class PermissionsTableSeeder extends Seeder
             [ 'id' => '226'  , 'name' => 'Bitrex.Cash.View'],          
             [ 'id' => '227'  , 'name' => 'Bitrex.Cash.Create'],      
             [ 'id' => '228'  , 'name' => 'Bitrex.Cash.Edit'],          
-            [ 'id' => '229'  , 'name' => 'Bitrex.Cash.Delete']
+            [ 'id' => '229'  , 'name' => 'Bitrex.Cash.Delete'],
+            [ 'id' => '230'  , 'name' => 'Training.Management.Create'],
+            [ 'id' => '231'  , 'name' => 'Training.Management.Edit'],
+            [ 'id' => '232'  , 'name' => 'Training.Management.Delete'],
+            [ 'id' => '233'  , 'name' => 'Training.Class.View'],
+            [ 'id' => '234'  , 'name' => 'Training.Class.Create'],
+            [ 'id' => '235'  , 'name' => 'Training.Class.Edit'],
+            [ 'id' => '236'  , 'name' => 'Training.Class.Delete'],
+
 
         ];
 
+        $cek = Permission::find(200);
+
+        if(!$cek) {
         Permission::insert($permissions);
+            
+        }
+
     }
 }
