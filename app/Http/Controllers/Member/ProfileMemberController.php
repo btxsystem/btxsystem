@@ -37,6 +37,11 @@ class ProfileMemberController extends Controller
     public function resetPassword(Request $request){
         $data = Auth::user();
         $new = bcrypt($request->new_password);
-        dd(password_verify($request->old_password, $data->password));
+        $cek = password_verify($request->old_password, $data->password);
+        if ($cek) {
+            $request->new_password != $request->old_password ? '' : '';
+        }else{
+            // password dont same with passord on db
+        }
     }
 }
