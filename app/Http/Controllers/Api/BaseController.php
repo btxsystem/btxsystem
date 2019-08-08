@@ -21,6 +21,7 @@ use App\Models\Inventory\Stok;
 use App\Models\Inventory\KartuStok;
 use App\Models\Inventory\Product;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Training\Training;
 
 
 /**
@@ -141,11 +142,14 @@ abstract class BaseController extends Controller
     public function index(Request $request)
     {   
 
-        $auth = new Auth;
 
-        $user  = $auth::guard('api')->user();
+        $user  = Auth::guard('api')->user();
 
-        $user->hasPermission($this->permission . 'View');
+        // print_r($user); die;
+
+        $cek = $user->hasPermission($this->permission . 'View');
+
+
                               
         $inputs = $request->all();
 
@@ -226,11 +230,10 @@ abstract class BaseController extends Controller
     public function store(Request $request)
     {
 
-        $auth = new Auth;
+       $user  = Auth::guard('api')->user();
 
-        $user  = $auth::guard('api')->user();
+       $user->hasPermission($this->permission . 'Create');
 
-       // $user->hasPermission($this->permission . 'Create');
 
         $input = $request->validate($this->createRule);
 
@@ -238,9 +241,9 @@ abstract class BaseController extends Controller
 
         $model = new $this->model;
 
-        $input['created_by'] = $user->username;
+        // $input['created_by'] = $user->username;
 
-        $result = $model::create($input);
+        $result = Training::create($input);
 
         $this->afterCreate($request, $result);
 
@@ -269,7 +272,7 @@ abstract class BaseController extends Controller
      */
     public function update(Request $request, $primaryKey)
     {
-        $request->user('admin')->hasPermission($this->permission . 'Edit');
+        // $request->user('admin')->hasPermission($this->permission . 'Edit');
 
         $input = $request->validate($this->updateRule);
 
@@ -278,7 +281,7 @@ abstract class BaseController extends Controller
         $model = new $this->model;
         $data  = $model->findOrFail($primaryKey);
 
-        $input['updated_by'] = $request->user('admin')->username;
+        // $input['updated_by'] = $request->user('admin')->username;
 
         $data->update($input);
 

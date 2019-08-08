@@ -36,6 +36,10 @@ class UsersTableSeeder extends Seeder
             ],
         ];
 
-        User::insert($users);
+        $cek = User::find(1);
+
+        if (!$cek) {
+            User::insert($users);
+        }
     }
 }

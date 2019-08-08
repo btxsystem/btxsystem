@@ -119,18 +119,13 @@ class TrainingController extends BaseController
         //     $query->where('status', $input['status']);
         // }
 
+
         return $query;
 
     }
 
 
 
-    public function beforeCreate($input) 
-    {
-
-     
-        return $input;
-    }
 
     public function beforeUpdate($input) 
     {

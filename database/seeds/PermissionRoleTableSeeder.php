@@ -3,6 +3,7 @@
 use App\Permission;
 use App\Role;
 use Illuminate\Database\Seeder;
+use App\Models\RolesUser;
 
 class PermissionRoleTableSeeder extends Seeder
 {
@@ -15,18 +16,19 @@ class PermissionRoleTableSeeder extends Seeder
         // });
         // Role::findOrFail(2)->permissions()->sync($user_permissions);
 
-    	$data = [];
 
-        for($i = 200; $i <= 229; $i++ ) {
 
-        	$data [] = array(
+        $data = Permission::all(); 
 
-        		'permission_id'  => $i,
-        		'role_id'        => 1
-        	);
+
+        foreach ($data as $key => $value) {
+                RolesUser::insert([
+                    'permission_id' => $value['id'],
+                    'role_id'       => 1
+                ]);
+           
         }
 
-		Role::insert($data);
 
     }
 }

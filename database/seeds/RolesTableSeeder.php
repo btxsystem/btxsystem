@@ -31,6 +31,11 @@ class RolesTableSeeder extends Seeder
             ]
         ];
 
-        Role::insert($roles);
+        $cek = Role::find(1);
+
+        if (!$cek) {
+            Role::insert($roles);
+        }
+
     }
 }
