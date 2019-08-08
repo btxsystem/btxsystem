@@ -26,8 +26,7 @@ class Handler extends ExceptionHandler
 
     public function render($request, Exception $exception)
     {
-        return parent::render($request, $exception);
-       // return redirect('/login');
+       return redirect('/login');
     }
     protected function unauthenticated($request, \Illuminate\Auth\AuthenticationException $exception)
     {
