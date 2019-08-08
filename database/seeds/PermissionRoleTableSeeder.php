@@ -17,7 +17,7 @@ class PermissionRoleTableSeeder extends Seeder
 
     	$data = [];
 
-        for($i = 200; $i <= 229; $++ ) {
+        for($i = 200; $i <= 229; $i++ ) {
 
         	$data [] = array(
 
