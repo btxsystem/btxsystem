@@ -9,7 +9,7 @@ class Authenticate extends Middleware
     protected function redirectTo($request)
     {
         if (Auth::guard('user')->check()) {
-            return redirect('/user');
+            return redirect('/member');
         }
     }
 }

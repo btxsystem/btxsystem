@@ -21,6 +21,9 @@
 <link rel="stylesheet" href="{{asset('assets2/css/main.css')}}">
 <link rel="stylesheet" href="{{asset('assets2/css/color_skins.css')}}">
 
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+
 <!-- Datatable -->
 <link rel="stylesheet" href="{{asset('assets2/plugins/jquery-datatable/dataTables.bootstrap4.min.css')}}">
 
@@ -81,9 +84,65 @@
 <script src="{{asset('assets2/plugins/jquery-datatable/buttons/buttons.flash.min.js')}}"></script>
 <script src="{{asset('assets2/plugins/jquery-datatable/buttons/buttons.html5.min.js')}}"></script>
 <script type="text/javascript">
-    $('#change-password').keypress(function () {
-      console.log('aaaa');
+
+$(document).ready(function(){
+    forhide = 0;    
+    $('#old_password').keyup(function (event) {
+        var charCode = (event.which) ? event.which : event.keyCode;
+        min_length = $('#old_password').val().length;
+        if (forhide>=3){
+            $('#submit').enabled;
+        }
+
+        if (min_length < 6) {
+            $('#message_old_password').html( "<p id='message'>Minimum password 6 characters</p>" );
+        }else{
+            $('#message').remove();
+            forhide++;
+        }
     });
+
+    $('#new_password').keyup(function (event) {
+            var charCode = (event.which) ? event.which : event.keyCode;
+            min_length = $('#new_password').val().length;
+            
+            if (forhide>=3){
+                $('#submit').enabled;
+            }
+
+            if (min_length < 6) {
+                $('#message_new_password').html( "<p id='new_message'>Minimum password 6 characters</p>" );   
+            }else{    
+                if ($('#new_password').val() === $('#old_password').val()) {
+                    $('#message_new_password').html( "<p id='new_message'>New password must be difference</p>" );    
+                }else{
+                    $('#new_message').remove();
+                    forhide++;
+                }
+            }
+        });
+
+        $('#confirm_new_password').keyup(function () {
+            var charCode = (event.which) ? event.which : event.keyCode;
+            min_length = $('#confirm_new_password').val().length;
+            
+            if (forhide>=3){
+                $('#submit').attr("disabled", false);
+            }
+
+            if (min_length < 6) {
+                $('#message_confirm_new_password').html( "<p id='confirm_new_message'>Minimum password 6 characters</p>" );   
+            }else{
+                if ($('#new_password').val() != $('#confirm_new_password').val()) {
+                    $('#message_confirm_new_password').html( "<p id='confirm_new_message'>Password doesn't match</p>" );       
+                }else{
+                    $('#confirm_new_message').remove();
+                    forhide++;
+                }
+            }
+    });
+})
+    
 </script>
 @yield('footer_scripts')
 </body>
