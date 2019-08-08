@@ -36,7 +36,6 @@ Route::group(['middleware' => 'auth:api'], function() {
     array('only' => array('index', 'store', 'update', 'destroy')));
 
 
-
     /////////////////////user akses/////////////////////////
 
     Route::post('fcm/token', 'Api\AuthController@setFCMToken');

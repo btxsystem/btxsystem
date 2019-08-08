@@ -15,6 +15,9 @@ class AuthController extends Controller
 
     public $successStatus = 200;
 
+
+    // protected $guard = 'admin';
+
     /**
      * Login api
      *
@@ -29,9 +32,9 @@ class AuthController extends Controller
             'password' => $request->password
         ];
 
-        if ($auth::attempt($credensial)) {
+        if ($auth::guard('admin')->attempt($credensial)) {
 
-            $user = Auth::user();
+            $user = $request->user('admin');
 
             // if (!$user->status) {
             //     return response()->json(['error'=>'User Locked'], 400);
@@ -65,7 +68,7 @@ class AuthController extends Controller
 
         if ($auth::check()) {
 
-            $user = $auth::user();
+            $user = $$request->user('admin');
 
             User::where('id', $user->id)->update(['fcm_token' => request('fcmToken')]);
 
@@ -85,7 +88,7 @@ class AuthController extends Controller
         $auth = new Auth;
 
         if ($auth::check()) {
-            $auth::user()->authAcessToken()->delete();
+            $auth::user('admin')->authAcessToken()->delete();
         }
 
         return response()->json(['success' => 1], $this->successStatus);

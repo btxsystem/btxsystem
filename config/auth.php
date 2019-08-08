@@ -43,7 +43,11 @@ return [
 
         'api' => [
             'driver' => 'passport',
-            'provider' => 'users',
+            'provider' => 'admins',
+        ],
+        'admin' => [
+            'driver' => 'session',
+            'provider' => 'admins',
         ],
     ],
 
@@ -65,12 +69,16 @@ return [
     */
 
     'providers' => [
+
         'users' => [
+            'driver' => 'eloquent',
+            'model' => App\Employeer::class,
+        ],
+        'admins' => [
             'driver' => 'eloquent',
             'model' => App\User::class,
         ],
     ],
-
     /*
     |--------------------------------------------------------------------------
     | Resetting Passwords
@@ -89,6 +97,11 @@ return [
     'passwords' => [
         'users' => [
             'provider' => 'users',
+            'table' => 'password_resets',
+            'expire' => 120,
+        ],
+        'admins' => [
+            'provider' => 'admins',
             'table' => 'password_resets',
             'expire' => 120,
         ],

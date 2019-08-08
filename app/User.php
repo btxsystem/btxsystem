@@ -16,6 +16,7 @@ class User extends Authenticatable
 {
      use HasApiTokens, Notifiable;
 
+
     protected $hidden = [
         'password',
         'remember_token',

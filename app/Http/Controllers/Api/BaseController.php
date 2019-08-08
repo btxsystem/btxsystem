@@ -20,6 +20,7 @@ use FCM;
 use App\Models\Inventory\Stok;
 use App\Models\Inventory\KartuStok;
 use App\Models\Inventory\Product;
+use Illuminate\Support\Facades\Auth;
 
 
 /**
@@ -138,9 +139,14 @@ abstract class BaseController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
-    {
-        $request->user()->hasPermission($this->permission . 'View');
+    {   
 
+        $auth = new Auth;
+
+        $user  = $auth::guard('api')->user();
+
+        $user->hasPermission($this->permission . 'View');
+                              
         $inputs = $request->all();
 
         $inputs = $this->beforeSearch($inputs);
@@ -169,7 +175,7 @@ abstract class BaseController extends Controller
         }
 
         if ($this->filterByBranch) {
-            if (!in_array($request->user()->roles_id, config('app.admin'))) {
+            if (!in_array($request->user('admin')->roles_id, config('app.admin'))) {
                 $query->where('cabang_txt', '=', $request->user()->cabang_txt);
             } elseif (!empty($cabang) && $cabang!="null") {
                 $cabang = urldecode($cabang);
@@ -219,7 +225,12 @@ abstract class BaseController extends Controller
      */
     public function store(Request $request)
     {
-        $request->user()->hasPermission($this->permission . 'Create');
+
+        $auth = new Auth;
+
+        $user  = $auth::guard('api')->user();
+
+       // $user->hasPermission($this->permission . 'Create');
 
         $input = $request->validate($this->createRule);
 
@@ -227,7 +238,7 @@ abstract class BaseController extends Controller
 
         $model = new $this->model;
 
-        $input['created_by'] = $request->user()->username;
+        $input['created_by'] = $user->username;
 
         $result = $model::create($input);
 
@@ -258,7 +269,7 @@ abstract class BaseController extends Controller
      */
     public function update(Request $request, $primaryKey)
     {
-        $request->user()->hasPermission($this->permission . 'Edit');
+        $request->user('admin')->hasPermission($this->permission . 'Edit');
 
         $input = $request->validate($this->updateRule);
 
@@ -267,7 +278,7 @@ abstract class BaseController extends Controller
         $model = new $this->model;
         $data  = $model->findOrFail($primaryKey);
 
-        $input['updated_by'] = $request->user()->username;
+        $input['updated_by'] = $request->user('admin')->username;
 
         $data->update($input);
 
@@ -298,7 +309,7 @@ abstract class BaseController extends Controller
      */
     public function destroy(Request $request, $primaryKey)
     {
-        $request->user()->hasPermission($this->permission . 'Delete');
+        $request->user('admin')->hasPermission($this->permission . 'Delete');
 
         $model = new $this->model;
         $data = $model->findOrFail($primaryKey);
