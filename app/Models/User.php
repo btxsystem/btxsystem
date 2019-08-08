@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Carbon\Carbon;
 use Hash;
@@ -42,32 +42,6 @@ class User extends Authenticatable
         'deleted_at'
     ];
 
-    public function getEmailVerifiedAtAttribute($value)
-    {
-        return $value ? Carbon::createFromFormat('Y-m-d H:i:s', $value)->format(config('panel.date_format') . ' ' . config('panel.time_format')) : null;
-    }
-
-    public function setEmailVerifiedAtAttribute($value)
-    {
-        $this->attributes['email_verified_at'] = $value ? Carbon::createFromFormat(config('panel.date_format') . ' ' . config('panel.time_format'), $value)->format('Y-m-d H:i:s') : null;
-    }
-
-    public function setPasswordAttribute($input)
-    {
-        if ($input) {
-            $this->attributes['password'] = app('hash')->needsRehash($input) ? Hash::make($input) : $input;
-        }
-    }
-
-    public function sendPasswordResetNotification($token)
-    {
-        $this->notify(new ResetPassword($token));
-    }
-
-    public function roles()
-    {
-        return $this->belongsToMany(Role::class);
-    }
 
 
     //------------------ api ---------------------
@@ -92,4 +66,24 @@ class User extends Authenticatable
         return $this->hasMany('\App\OauthAccessToken');
     }
 
+        /**
+     * Get the role record associated with the user.
+     *
+     * @return object
+     */
+    public function roles()
+    {
+        return $this->belongsTo('\App\Models\Roles', 'roles_id', 'id');
+    } 
+
+
+    /**
+     * Get the role record associated with the user.
+     *
+     * @return object
+     */
+    public function permissions()
+    {
+        return $this->belongsToMany('\App\Permissions', 'permission_role', 'role_id', 'permission_id');
+    }
 }

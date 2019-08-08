@@ -17,7 +17,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
-use App\User;
+use App\Models\User;
 use Validator;
 use Illuminate\Support\Facades\Auth;
 
@@ -48,7 +48,7 @@ class UserController extends Controller
     {
         $user  = Auth::guard('api')->user();
 
-        // $user->hasPermission($this->permission . 'View');
+        $user->hasPermission($this->permission . 'View');
 
         $roles_id       = $request->get('roles_id', false);
 		$username	    = $request->get('username', false);
@@ -91,7 +91,10 @@ class UserController extends Controller
      */
     public function create(Request $request)
     {
-        $request->user()->hasPermission($this->permission . 'Create');
+
+        $user  = Auth::guard('api')->user();
+
+        $user->hasPermission($this->permission . 'Create');
 
         $validator = Validator::make($request->all(), [
             'name' => 'required',
@@ -126,16 +129,15 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        $request->user()->hasPermission($this->permission . 'Edit');
+        $user  = Auth::guard('api')->user();
+        
+        $user->hasPermission($this->permission . 'Edit');
 
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'email' => 'required|email',
             'username' => ['required', 'max:150', Rule::unique('users')->ignore($user->id)],
             'roles_id' => 'required',
-            'cabang_id' => 'required',
-            'perusahaan_id' => 'required',
-            'status' => 'required'
         ]);
 
         if ($validator->fails()) {

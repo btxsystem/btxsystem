@@ -30,7 +30,7 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
-use App\Roles;
+use App\Models\Roles;
 use App\Permissions;
 use Validator;
 
@@ -43,16 +43,20 @@ class RolesController extends Controller
      *
      * @return json
      */
-    public function index(Request $request)
+    public function index(Request $request) 
     {
-        $request->user()->hasPermission($this->permission . 'View');
+       
+        // $user  = Auth::guard('api')->user();
+
+        // $user->hasPermission($this->permission . 'View');
+
 
         $model = new Roles;
 
-        $roles = $model::orderBy('role_name', 'asc')->get();
+        $roles = $model::orderBy('title', 'asc')->get();
 
         foreach ($roles as $idx => $role) {
-            $roles[$idx]->permissions = $role->permissions()->pluck('permissions.id')->toArray();
+            $roles[$idx]->title = $role->permissions()->pluck('permission.id')->toArray();
         }
 
         return response()->json(['data' => $roles], 200, [], JSON_NUMERIC_CHECK);

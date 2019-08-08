@@ -28,7 +28,7 @@ namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Permissions;
+use App\Permission;
 
 class PermissionsController extends Controller
 {
@@ -40,11 +40,13 @@ class PermissionsController extends Controller
      */
     public function index()
     {
-        $model = new Permissions;
+        $model = new Permission; 
 
         $records = $model::orderBy('name','asc')->get();
 
         $list = array();
+
+        $data = array();
 
         foreach ($records as $row) {
             $rowArr = explode(".", $row->name);
