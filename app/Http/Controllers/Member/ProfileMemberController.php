@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Employeer;
 use DB;
+use Alert;
 
 class ProfileMemberController extends Controller
 {
@@ -39,9 +40,15 @@ class ProfileMemberController extends Controller
         $new = bcrypt($request->new_password);
         $cek = password_verify($request->old_password, $data->password);
         if ($cek) {
-            $request->new_password != $request->old_password ? '' : '';
+            if($request->new_password != $request->old_password){
+                Alert::success('pesan yang ingin disampaikan', 'Judul Pesan');
+            }else{
+                // same new password and old password
+                Alert::success('pesan yang ingin disampaikan', 'Judul Pesan');
+            }
         }else{
-            // password dont same with passord on db
+            // password dont same with password on db
+            Alert::failed('The password you entered does not match', 'Failed');
         }
     }
 }

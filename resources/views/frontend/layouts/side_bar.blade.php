@@ -15,11 +15,17 @@
                         <input class="form-control" name="old_password" id="old_password" type="password" min="5">
                         <label class="form-label">Old Password</label>
                     </div>
+                    <div style="color:red" id="message_old_password">
+                        
+                    </div>
                 </div>
                 <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="form-line">
                         <input class="form-control" name="new_password" id="new_password" type="password" min="5">
                         <label class="form-label">New Password</label>
+                    </div>
+                    <div style="color:red" id="message_new_password">
+                        
                     </div>
                 </div>
                 <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -27,10 +33,13 @@
                         <input class="form-control" name="confirm_new_password" id="confirm_new_password" type="password" min="5">
                         <label class="form-label">Confirm New Password</label>
                     </div>
+                    <div style="color:red" id="message_confirm_new_password">
+                        
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <a class="btn btn-secondary" data-dismiss="modal">Close</a>
-                    <input type="submit" class="btn btn-primary" value="Change Password">
+                    <input type="submit" class="btn btn-primary" id="submit" disabled value="Change Password">
                 </div>
             </form>
             </div>
