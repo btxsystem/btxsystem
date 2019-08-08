@@ -87,4 +87,18 @@ class User extends Authenticatable
         ->where('permission_role.role_id', $this->roles_id)
         ->first() || abort(401, 'This action is unauthorized.'));
     }
+
+    public static function authAcessToken(){
+        return $this->hasMany('\App\OauthAccessToken');
+    }
+
+    //     /**
+    //  * Get the role record associated with the user.
+    //  *
+    //  * @return object
+    //  */
+    // public function roles()
+    // {
+    //     return $this->belongsTo('\App\Roles', 'roles_id', 'id');
+    // }
 }

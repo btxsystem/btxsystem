@@ -19,6 +19,7 @@ use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
 use App\User;
 use Validator;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * Module Users
@@ -45,17 +46,16 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $request->user()->hasPermission($this->permission . 'View');
+        $user  = Auth::guard('api')->user();
 
-        $cabangTxt      = $request->get('cabang_id', false);
-        $perusahaanTxt  = $request->get('perusahaan_id', false);
+        // $user->hasPermission($this->permission . 'View');
+
         $roles_id       = $request->get('roles_id', false);
 		$username	    = $request->get('username', false);
         $name           = $request->get('name', false);
         $keyword        = $request->get('q', false);
-        //$sales_txt = $request->get('sales_txt', false);
 
-        $model = User::with('roles:id,role_name');
+        $model = User::with('roles');
 
         if (!empty($username) && $username!="null") {
             $username = urldecode($username);
@@ -71,15 +71,6 @@ class UserController extends Controller
             $model->where('users.roles_id', '=', "$roles_id");
         }
 
-        if (!empty($cabangTxt) && $cabangTxt!="null") {
-            $cabangTxt = urldecode($cabangTxt);
-            $model->where('users.cabang_id', '=', $cabangTxt);
-        }
-
-        if (!empty($perusahaanTxt) && $perusahaanTxt!="null") {
-            $perusahaanTxt = urldecode($perusahaanTxt);
-            $model->where('users.perusahaan_id', '=', $perusahaanTxt);
-        }
 
         if (!empty($keyword) && $keyword!="null") {
             $keyword = urldecode($keyword);
@@ -87,11 +78,8 @@ class UserController extends Controller
         }
 
         $list = $model->orderBy('users.username', 'asc')->get();
-        //$list = $model->orderBy('username', 'asc')->get();
-		
-		foreach($list as $index => $row) {
-			$list[$index]['mobile_no'] = $row->phone;
-		}
+        $list = $model->orderBy('username', 'asc')->get();
+	
 
         return response()->json(['data' => $list], 200, [], JSON_NUMERIC_CHECK);
     }

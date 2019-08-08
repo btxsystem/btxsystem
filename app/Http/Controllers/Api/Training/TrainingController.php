@@ -17,7 +17,6 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Http\Controllers\Api\BaseController;
 use App\User;
-
 /**
  * Module Barang
  * @category Controller
@@ -38,7 +37,7 @@ class TrainingController extends BaseController
      *
      * @var object
      **/
-    protected $model = 'App\Models\Training\Training';
+    protected $model = 'App\Models\Customer\Trening';
 
     /**
      * Module create validation rule
@@ -47,12 +46,12 @@ class TrainingController extends BaseController
      **/
     protected $createRule = [
 
-       'location'           => 'required',
-       'start_training'     => 'required',
-       'price'              => 'required',
-       'capacity'           => 'required',
+       'location'           => 'nullable',
+       'start_training'     => 'nullable',
+       'price'              => 'nullable',
+       'capacity'           => 'nullable',
        'note'               => 'nullable',
-       'open'               => 'required'
+       'open'               => 'nullable'
     ];
 
     /**

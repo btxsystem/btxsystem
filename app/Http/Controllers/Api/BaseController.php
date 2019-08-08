@@ -148,8 +148,6 @@ abstract class BaseController extends Controller
         // print_r($user); die;
 
         $cek = $user->hasPermission($this->permission . 'View');
-
-
                               
         $inputs = $request->all();
 
@@ -243,7 +241,7 @@ abstract class BaseController extends Controller
 
         // $input['created_by'] = $user->username;
 
-        $result = Training::create($input);
+        $result = $model::create($input);
 
         $this->afterCreate($request, $result);
 
