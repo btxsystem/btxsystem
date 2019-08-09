@@ -1,4 +1,6 @@
-@include('frontend.auth.header')
+
+<?php include 'header.php'?>
+
     <div class="main-content">
 
       <div class="slide">
@@ -8,16 +10,15 @@
               <div class="col-lg-12">
                 <section class="find-course find-course_mod-a wow bounceInRight colFormSignup">
                   <h2 class="find-course__title"><i class="icon stroke icon-User"></i>Login</h2>
-                  <form class="find-course__form" action="/login" method="post">
-                    @csrf
+                  <form class="find-course__form" action="get">
                     <div class="form-group">
-                      <input class="form-control" type="text" name="username" placeholder="Username">
-                      <input class="form-control" type="password" name="password"  placeholder="Password">
+                      <input class="form-control" type="text" placeholder="Email">
+                      <input class="form-control" type="text" placeholder="Password">
 
                     </div>
 
                     <div class="find-course__wrap-btn">
-                      <button type="submit" class="btn btn-effect btn-info">SUBMIT</button>
+                      <button class="btn btn-effect btn-info">SUBMIT</button>
                     </div>
                   </form>
                 </section>
@@ -136,7 +137,7 @@
               <div class="posts-wrap">
                 <article class="post post_mod-a clearfix wow zoomIn" data-wow-duration="1s">
                   <div class="entry-media">
-                    <div class="entry-thumbnail"> <a href="javascript:void(0);" ><img class="img-responsive" src="{{asset('img/1.jpg')}}" width="250" height="250" alt="Foto"/></a> </div>
+                    <div class="entry-thumbnail"> <a href="javascript:void(0);" ><img class="img-responsive" src="img/1.jpg" width="250" height="250" alt="Foto"/></a> </div>
                   </div>
                   <div class="entry-main">
                     <h3 class="entry-title ui-title-inner decor decor_mod-b"><a href="javascript:void(0);">Basic to Advanced Financial Education</a></h3>
@@ -148,7 +149,7 @@
                 <!-- end post -->
                 <article class="post post_mod-a clearfix wow zoomIn" data-wow-duration="1s" data-wow-delay=".5s">
                   <div class="entry-media">
-                    <div class="entry-thumbnail"> <a href="javascript:void(0);" ><img class="img-responsive" src="{{asset('img/2.jpg')}}" width="250" height="250" alt="Foto"/></a> </div>
+                    <div class="entry-thumbnail"> <a href="javascript:void(0);" ><img class="img-responsive" src="img/2.jpg" width="250" height="250" alt="Foto"/></a> </div>
                   </div>
                   <div class="entry-main">
                     <h3 class="entry-title ui-title-inner decor decor_mod-b"><a href="javascript:void(0);">Education Videos</a></h3>
@@ -160,7 +161,7 @@
                 <!-- end post -->
                 <article class="post post_mod-a clearfix wow zoomIn" data-wow-duration="1s" data-wow-delay="1s">
                   <div class="entry-media">
-                    <div class="entry-thumbnail"> <a href="javascript:void(0);" ><img class="img-responsive" src="{{asset('img/3.jpg')}}" width="250" height="250" alt="Foto"/></a> </div>
+                    <div class="entry-thumbnail"> <a href="javascript:void(0);" ><img class="img-responsive" src="img/3.jpg" width="250" height="250" alt="Foto"/></a> </div>
                   </div>
                   <div class="entry-main">
                     <h3 class="entry-title ui-title-inner decor decor_mod-b"><a href="javascript:void(0);">Online & Offline Class</a></h3>
@@ -172,7 +173,7 @@
                 <!-- end post -->
                 <article class="post post_mod-a clearfix wow zoomIn" data-wow-duration="1s" data-wow-delay="1.5s">
                   <div class="entry-media">
-                    <div class="entry-thumbnail"> <a href="javascript:void(0);" ><img class="img-responsive" src="{{asset('img/4.jpg')}}" width="250" height="250" alt="Foto"/></a> </div>
+                    <div class="entry-thumbnail"> <a href="javascript:void(0);" ><img class="img-responsive" src="img/4.jpg" width="250" height="250" alt="Foto"/></a> </div>
                   </div>
                   <div class="entry-main">
                     <h3 class="entry-title ui-title-inner decor decor_mod-b"><a href="javascript:void(0);">Smart Financial Community</a></h3>
@@ -441,5 +442,5 @@
 
     </div>
     <!-- end main-content -->
-    
-@include('frontend.auth.footer')
+
+<?php include 'footer.php'?>

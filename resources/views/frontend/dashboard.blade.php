@@ -1,6 +1,6 @@
 @extends('frontend.default')
 @section('title')
-    Profile
+    Dashboard
     @parent
 @stop
 
