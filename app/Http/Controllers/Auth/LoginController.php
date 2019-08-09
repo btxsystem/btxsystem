@@ -25,6 +25,7 @@ class LoginController extends Controller
         // if successful, then redirect to their intended location
       return redirect()->route('member.dashboard');
     }
+    return view('frontend.auth.login');
   }
 
   public function logout()

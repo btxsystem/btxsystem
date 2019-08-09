@@ -99,6 +99,7 @@ Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
     });
     Route::group(['prefix' => 'bitrex-money', 'as'=> 'bitrex-money.'], function () {
         Route::get('bitrex-points', ['as' => 'bitrex-points', 'uses' => 'Member\BitrexPointController@index']);
+        Route::get('bitrex-cash', ['as' => 'bitrex-cash', 'uses' => 'Member\BitrexCashController@index']);
     });
 });
 

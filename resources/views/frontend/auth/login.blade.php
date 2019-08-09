@@ -6,7 +6,7 @@
           <div class="container">
             <div class="row">
               <div class="col-lg-12">
-                <section class="find-course find-course_mod-a wow bounceInRight colFormSignup">
+                <section class="find-course find-course_mod-a wow bounceInRight colFormSignup" style="visibility: visible; animation-duration: 1s; animation-name: bounceInRight;">
                   <h2 class="find-course__title"><i class="icon stroke icon-User"></i>Login</h2>
                   <form class="find-course__form" action="/login" method="post">
                     @csrf
