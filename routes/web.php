@@ -86,6 +86,7 @@ Route::group(['prefix'=>'member','as'=>'member.'], function(){
 });
 */
 
+Route::redirect('/', '/login');
 Route::get('/login', 'Auth\LoginController@getLogin')->middleware('guest');
 Route::post('/login', 'Auth\LoginController@postLogin');
 Route::get('/logout', 'Auth\LoginController@logout');
@@ -98,6 +99,7 @@ Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
     });
     Route::group(['prefix' => 'bitrex-money', 'as'=> 'bitrex-money.'], function () {
         Route::get('bitrex-points', ['as' => 'bitrex-points', 'uses' => 'Member\BitrexPointController@index']);
+        Route::get('bitrex-cash', ['as' => 'bitrex-cash', 'uses' => 'Member\BitrexCashController@index']);
     });
 });
 

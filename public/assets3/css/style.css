@@ -1,0 +1,19 @@
+.btnBook .btn {
+  margin-top: 45px;
+  border-radius: 3px;
+  position: absolute;
+  background: #b92240;
+  box-shadow: 0 3px 0 0 #52001b;
+}
+.btnBook .btn a{
+  color: #ffffff;
+}
+.slide .imgSlide {
+  background-image: url('http://templines.rocks/html/academica/assets/media/main-slider/1.jpg');
+}
+.slide .imgSlide .colFormSignup {
+  width: 400px;
+  float: right;
+  margin-top: 30px;
+  margin-bottom: 60px;
+}
