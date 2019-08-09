@@ -86,6 +86,7 @@ Route::group(['prefix'=>'member','as'=>'member.'], function(){
 });
 */
 
+Route::redirect('/', '/login');
 Route::get('/login', 'Auth\LoginController@getLogin')->middleware('guest');
 Route::post('/login', 'Auth\LoginController@postLogin');
 Route::get('/logout', 'Auth\LoginController@logout');
