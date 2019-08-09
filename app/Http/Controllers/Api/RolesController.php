@@ -56,7 +56,10 @@ class RolesController extends Controller
         $roles = $model::orderBy('title', 'asc')->get();
 
         foreach ($roles as $idx => $role) {
-            $roles[$idx]->title = $role->permissions()->pluck('permission.id')->toArray();
+
+            kjenfkjcn3kofmlo,
+
+            // $roles[$idx]->title = $role->permissions()->pluck('permission.id')->toArray();
         }
 
         return response()->json(['data' => $roles], 200, [], JSON_NUMERIC_CHECK);
