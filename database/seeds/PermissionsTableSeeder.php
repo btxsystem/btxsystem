@@ -10,7 +10,7 @@ class PermissionsTableSeeder extends Seeder
     public function run()
     {
 
-        // Permission::truncate();
+       // Permission::truncate();
 
         $permissions = [
 
