@@ -145,5 +145,6 @@ $(document).ready(function(){
     
 </script>
 @yield('footer_scripts')
+@include('sweet::alert')
 </body>
 </html>

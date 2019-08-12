@@ -61,7 +61,7 @@
                                 <div class="col-lg-3 col-md-3 col-sm-3">
                                     <div class="icon l-amber"><i class="zmdi zmdi-chart-donut"></i></div>
                                     <div class="col-in">
-                                        <h3 class="counter m-b-0">4,516</h3>
+                                        <h3 class="counter m-b-0 auto-retail"></h3>
                                         <small class="text-muted m-t-0">Auto Retail</small>
                                     </div>
                                 </div>
@@ -82,7 +82,7 @@
                                 <div class="col-lg-3 col-md-3 col-sm-3">
                                     <div class="icon l-parpl"><i class="zmdi zmdi-card"></i></div>
                                     <div class="col-in">
-                                        <h3 class="counter m-b-0">3,915</h3>
+                                        <h3 class="counter m-b-0 sponsor"></h3>
                                         <small class="text-muted m-t-0">Sponsor</small>
                                     </div>
                                 </div>
@@ -101,7 +101,32 @@
 @section('footer_scripts')
     <script type="text/javascript">
         $(document).ready(function () {
-            console.log('aaaa');
+            $.ajax({
+                url: '{{route("member.select.daily-retail")}}',
+                data: data,
+                success:function(data){
+                    $('.auto-retail').each(function () {
+                        $(this).prop('Counter',0).animate({
+                            Counter: $(this).text()
+                        }, {
+                            duration: 4000,
+                            easing: 'swing',
+                            step: function () {
+                                $(this).text(Math.ceil(data.bonus_retail.nominal));
+                            }
+                        });
+                    });
+                }
+            });
+
+            $.ajax({
+                url: '{{route("member.select.daily-bonus-sponsor")}}',
+                data: data,
+                success:function(data){
+                    $('.sponsor').append(data.bonus_sponsor.nominal);
+                }
+            });
+
         });
     </script>
 @stop

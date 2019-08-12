@@ -27,9 +27,10 @@ class Handler extends ExceptionHandler
 
     public function render($request, Exception $exception)
     {
-      if(Auth::user()){
-        return redirect('/login');
-      }
+      return response()->view('errors.custom', [], 500);
+      //if(Auth::user()){
+      //  return redirect('/login');
+      //}
     }
     protected function unauthenticated($request, \Illuminate\Auth\AuthenticationException $exception)
     {
