@@ -28,7 +28,7 @@
                 <div class="col-lg-3 col-sm-6 col-md-6">
                     <div class="card l-parpl">
                         <div class="body">
-                            <h3 class="m-t-0">{{$profile->bitrex_points}}</h3>
+                            <h3 class="m-t-0 bitrex-points">{{$profile->bitrex_points}}</h3>
                             <p class="m-b-0">Bitrex Points</p>
                         </div>
                         <div class="sparkline" data-type="line" data-spot-Radius="3" data-highlight-Spot-Color="rgb(233, 30, 99)" data-highlight-Line-Color="#222"
@@ -40,7 +40,7 @@
                 <div class="col-lg-3 col-sm-6 col-md-6">
                     <div class="card l-amber">
                         <div class="body">
-                            <h3 class="m-t-0">{{$profile->bitrex_cash}}</h3>
+                            <h3 class="m-t-0 bitrex-cash">{{$profile->bitrex_cash}}</h3>
                             <p class="m-b-0">Bitrex Cash</p>
                         </div>
                         <div class="sparkline" data-type="line" data-spot-Radius="3" data-highlight-Spot-Color="rgb(233, 30, 99)" data-highlight-Line-Color="#222"
@@ -105,14 +105,15 @@
                 url: '{{route("member.select.daily-retail")}}',
                 data: data,
                 success:function(data){
+                    $('.auto-retail').append(data.bonus_retail.nominal);
                     $('.auto-retail').each(function () {
                         $(this).prop('Counter',0).animate({
                             Counter: $(this).text()
                         }, {
-                            duration: 4000,
+                            duration: 2000,
                             easing: 'swing',
-                            step: function () {
-                                $(this).text(Math.ceil(data.bonus_retail.nominal));
+                            step: function (now) {
+                                $(this).text(Math.ceil(now));
                             }
                         });
                     });
@@ -123,18 +124,43 @@
                 url: '{{route("member.select.daily-bonus-sponsor")}}',
                 data: data,
                 success:function(data){
+                    $('.sponsor').append(data.bonus_sponsor.nominal);
                     $('.sponsor').each(function () {
                         $(this).prop('Counter',0).animate({
                             Counter: $(this).text()
                         }, {
-                            duration: 4000,
+                            duration: 2000,
                             easing: 'swing',
-                            step: function () {
-                                $(this).text(Math.ceil(data.bonus_sponsor.nominal));
+                            step: function (now) {
+                                $(this).text(Math.ceil(now));
                             }
                         });
                     });
                 }
+            });
+
+            $('.bitrex-cash').each(function () {
+                $(this).prop('Counter',0).animate({
+                    Counter: $(this).text()
+                }, {
+                    duration: 2000,
+                    easing: 'swing',
+                    step: function (now) {
+                        $(this).text(Math.ceil(now));
+                    }
+                });
+            });
+
+            $('.bitrex-points').each(function () {
+                $(this).prop('Counter',0).animate({
+                    Counter: $(this).text()
+                }, {
+                    duration: 2000,
+                    easing: 'swing',
+                    step: function (now) {
+                        $(this).text(Math.ceil(now));
+                    }
+                });
             });
 
         });
