@@ -123,7 +123,17 @@
                 url: '{{route("member.select.daily-bonus-sponsor")}}',
                 data: data,
                 success:function(data){
-                    $('.sponsor').append(data.bonus_sponsor.nominal);
+                    $('.sponsor').each(function () {
+                        $(this).prop('Counter',0).animate({
+                            Counter: $(this).text()
+                        }, {
+                            duration: 4000,
+                            easing: 'swing',
+                            step: function () {
+                                $(this).text(Math.ceil(data.bonus_sponsor.nominal));
+                            }
+                        });
+                    });
                 }
             });
 
