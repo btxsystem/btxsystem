@@ -75,7 +75,8 @@ header.header {
 }
 .btn-info {
     color: #ffffff;
-    box-shadow: 0 4px 0 0 #52001b;
+    box-shadow: none;
+    border-radius: 5px;
     background-color: #b92240;
 }
 .btn-info:after {
@@ -294,7 +295,7 @@ ul.nav.navbar-nav {
                     <li><a href="#">About Us</a></li>
                     <li><a href="#">Our Product</a></li>
                     <li><a href="#">Event</a></li>
-                    <li><a href="#"><button class="btn btn-effect btn-info" style="background: #b92240;margin-top: -12px;">REGISTER</button></a></li>
+                    <li><a href="#"><button class="btn btn-effect btn-info btn-buy" style="background: #b92240; margin-top: -10px;">BUY</button></a></li>
                   </ul>
                 </div>
               </nav>
