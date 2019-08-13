@@ -97,6 +97,8 @@ Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
 
     Route::group(['prefix' => 'select', 'as'=> 'select.'], function () {
         Route::get('daily-retail', ['as' => 'daily-retail', 'uses' => 'Member\DashboardController@getAutoRetailDaily']);
+        Route::get('training', ['as' => 'training', 'uses' => 'Member\DashboardController@getTraining']);
+        Route::get('tree', ['as' => 'tree', 'uses' => 'Member\DashboardController@getTree']);
         Route::get('daily-bonus-sponsor', ['as' => 'daily-bonus-sponsor', 'uses' => 'Member\DashboardController@getBonusSponsorDaily']);
     });
 

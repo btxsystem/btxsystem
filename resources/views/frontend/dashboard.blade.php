@@ -6,6 +6,36 @@
 
 @section('content')
 <!-- Top Bar -->
+
+<div class="modal fade" id="training" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="train">Training Join</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="{{route('member.profile.reset-password')}}" method="POST">
+                    {{ method_field('post') }}
+                    @csrf    
+                    <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <p class="note"></p>
+                        <p class="location"></p>
+                        <p class="price"></p>
+                        <p class="capacity"></p>
+                        <p class="date"></p>
+                    </div>
+                    <div class="modal-footer">
+                        <a class="btn btn-secondary" data-dismiss="modal">Close</a>
+                        <input type="submit" class="btn btn-primary" id="join-training" value="Join">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
 <section class="content ecommerce-page">
   <div class="block-header">
       <div class="row">
@@ -23,6 +53,26 @@
       </div>
   </div>
   <div class="container-fluid">
+    <div class="row clearfix">
+        <a href="#" data-toggle="modal" data-target="#training">
+        <div class="col-lg-12 col-md-12">
+            <div class="card product-report">
+                <div id="area_chart" class="graph">
+                    <div class="body">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="icon l-turquoise"><i class="zmdi zmdi-book"></i></div>
+                            <div class="col-in">
+                                <h4 class="counter m-b-0">Training</h4>
+                                <small class="text-muted m-t-0 description"></small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+        </div>
+    </div>
+
     <div class="row clearfix">
       <div class="col-lg-3 col-sm-6 col-md-6">
         <div class="card l-parpl">
@@ -173,6 +223,20 @@
                         $(this).text(Math.ceil(now));
                     }
                 });
+            });
+
+            $.ajax({
+                url: '{{route("member.select.training")}}',
+                data: data,
+                success:function(data){
+                   $('.description').append(data.training.note);
+                   $('.note').append(data.training.note);
+                   $('.location').append('Location : ' + data.training.location);
+                   $('.price').append('Price : ' + data.training.price);
+                   $('.capacity').append('Capacity : ' + data.training.capacity);
+                   $('.date').append('Date : ' + data.training.date);
+
+                }
             });
 
         });

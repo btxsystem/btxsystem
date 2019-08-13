@@ -4,7 +4,7 @@
             <div class="modal-header">
                 <h5 class="modal-title" id="change-password">Reset Password</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
+                    <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <form action="{{route('member.profile.reset-password')}}" method="POST">
@@ -42,9 +42,9 @@
                     <input type="submit" class="btn btn-primary" id="submit" disabled value="Change Password">
                 </div>
             </form>
-            </div>
         </div>
     </div>
+</div>
     
 <aside id="leftsidebar" class="sidebar">
     <!-- User Info -->
