@@ -1,4 +1,5 @@
 <?php
+\Cache::flush();
 
 /*Route::redirect('/', '/login');
 Route::redirect('/home', '/admin');

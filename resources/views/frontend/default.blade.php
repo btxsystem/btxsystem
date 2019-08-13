@@ -8,7 +8,7 @@
 
 <title>
     @section('title')
-     | Betrixgo
+     | Bitrexgo
     @show
 </title>
 

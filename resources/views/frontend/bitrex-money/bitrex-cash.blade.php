@@ -1,6 +1,6 @@
 @extends('frontend.default')
 @section('title')
-    Bitrex points
+    Bitrex cash
     @parent
 @stop
 @section('content')
@@ -40,18 +40,6 @@
                         <div class="card">
                             <div class="header">
                                 <h2> Bitrex Points History </h2>
-                                <ul class="header-dropdown">
-                                    <li class="dropdown"> <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <i class="zmdi zmdi-more-vert"></i> </a>
-                                        <ul class="dropdown-menu pull-right">
-                                            <li><a href="javascript:void(0);">Action</a></li>
-                                            <li><a href="javascript:void(0);">Another action</a></li>
-                                            <li><a href="javascript:void(0);">Something else here</a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="body">
-                                <a href="#" class="btn btn-primary btn-md" data-toggle="modal" data-target="#topup">Topup</a>
                             </div>
                             <div class="body">
                                 <div class="table-responsive">
@@ -61,7 +49,6 @@
                                                 <th>No</th>
                                                 <th>Description</th>
                                                 <th>Nominal</th>
-                                                <th>Points</th>
                                                 <th>Info</th>
                                                 <th>Transaction Date</th>
                                             </tr>
@@ -91,7 +78,7 @@
           processing: true,
           serverSide: true,
           ajax: {
-            url: "{{ route('member.bitrex-money.bitrex-points') }}", 
+            url: "{{ route('member.bitrex-money.bitrex-cash') }}", 
           },
           columns: [
               {
@@ -100,7 +87,6 @@
               },
               {data: 'description', name: 'description'},
               {data: 'nominal', name: 'nominal'},
-              {data: 'points', name: 'points'},
               {
                   data: 'info', name: 'info',
                   orderable: false, searchable: false
@@ -112,13 +98,5 @@
           ]
       });
     });
-    $('#nominal').change(function(){
-        var points = $('#nominal').val() / 1000; 
-        $('#points').val(points);
-    })
-    $('#nominal').keydown(function(){
-        var points = $('#nominal').val() / 1000; 
-        $('#points').val(points);
-    })
 </script>
 @stop

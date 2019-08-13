@@ -58,8 +58,8 @@
                             <p>{{$profile['rank']}}</p>
                         </a>
                     </li>
-                    <li><a title="email"><i class="zmdi zmdi-email"></i>
-                        <p>{{$profile['email']}}</p>
+                    <li><a title="pv_"><b class="">PV</b>
+                        <p class="pv">{{$profile['pv']}}</p>
                     </a></li>
                     <li><a title="username"><i class="zmdi zmdi-account-circle"></i>
                         <p>{{$profile['username']}}</p>
@@ -99,7 +99,17 @@
 @section('footer_scripts')
     <script type="text/javascript">
         $(document).ready(function () {
-          console.log('aaaa');
+            $('.pv').each(function () {
+                $(this).prop('Counter',0).animate({
+                    Counter: $(this).text()
+                }, {
+                    duration: 2000,
+                    easing: 'swing',
+                    step: function (now) {
+                        $(this).text(Math.ceil(now));
+                    }
+                });
+            });
         });
     </script>
 @stop
