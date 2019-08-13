@@ -1,9 +1,9 @@
 .btnBook .btn {
   margin-top: 45px;
-  border-radius: 3px;
+  border-radius: 5px;
   position: absolute;
   background: #b92240;
-  box-shadow: 0 3px 0 0 #52001b;
+  /*box-shadow: 0 3px 0 0 #52001b;*/
 }
 .btnBook .btn a{
   color: #ffffff;
@@ -16,4 +16,23 @@
   float: right;
   margin-top: 30px;
   margin-bottom: 60px;
+}
+
+.btn-buy {
+  border-radius: 5px;
+}
+
+
+@media (max-width: 480px) {
+  .slide .imgSlide .colFormSignup {
+    float: none;
+    width: 100%;
+  }
+  .btnBook .btn {
+    margin-top: 0px;
+    margin-left: 50px;
+  }
+  .btn-buy {
+    margin-top: 6px !important;
+  }
 }
