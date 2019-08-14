@@ -46,10 +46,11 @@ class ExploreController extends Controller
   public function chapter($id)
   {
     $chapter = BookChapter::query()
-      ->select('id', 'title')
+      ->select('id', 'title', 'book_id')
       ->where('id', $id)
       ->with([
-        'lessons:id,chapter_id,title,type,content'
+        'lessons:id,chapter_id,title,type,content',
+        'book:id,title'
       ])
       ->firstOrFail();
 

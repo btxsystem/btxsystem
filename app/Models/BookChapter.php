@@ -17,4 +17,9 @@ class BookChapter extends Model
   {
       return $this->hasMany('\App\Models\BookChapterLesson', 'chapter_id', 'id');
   }
+
+  public function book()
+  {
+      return $this->hasOne('\App\Models\Book', 'id', 'book_id');
+  }
 }

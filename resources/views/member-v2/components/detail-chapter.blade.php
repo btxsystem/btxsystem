@@ -35,7 +35,10 @@
             </ul>
           </nav>
       </div>
-      <div class="col-xl-9 col-lg-8 col-sm-7 mt50">
+      <div class="col-xl-9 col-lg-8 col-sm-7 mt10">
+        <nav aria-label="breadcrumb">
+          <div id="breadcrumb"></div>
+        </nav>
         <div id="lesson_content"></div>
       </div>
     </div>
@@ -66,7 +69,42 @@
     refreshContent()
   }
 
+  function breadcrumb() {
+    let dataBreadcrumb = ''
+    let breadcrumbs = [
+      {
+        title: 'Home',
+        route: 's'
+      },
+      {
+        title: '{{$chapter->book->title}}',
+        route: "{{route('chapter.list', ['id' => $chapter->book->id])}}"
+      },
+      {
+        title: '{{$chapter->title}}',
+        route: "{{route('chapter.detail', ['id' => $chapter->id])}}"
+      },
+      {
+        title: currentLesson.title,
+        route: ''
+      }
+    ]
+
+    dataBreadcrumb += `<ol class="breadcrumb bg-dark">`
+    breadcrumbs.map((v, i) => {
+      if(i == breadcrumbs.length - 1) {
+        dataBreadcrumb += `<li class="breadcrumb-item active" aria-current="page">${v.title}</li>`
+      } else {
+        dataBreadcrumb += `<li class="breadcrumb-item"><a href="${v.route}">${v.title}</a></li>`
+      }
+    })
+    dataBreadcrumb += '</ol>'
+    $('#breadcrumb').html(dataBreadcrumb)
+
+  }
+
   function refreshContent() {
+    breadcrumb()
     $('#lesson_content').html(currentLesson.content);
   }
 </script>
