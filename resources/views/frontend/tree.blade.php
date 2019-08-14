@@ -1,10 +1,12 @@
-@extends('layouts.admin')
+@extends('frontend.default')
+@section('title')
+    Tree
+    @parent
+@stop
 
 @section('header_styles')
 	<link rel="stylesheet" type="text/css" href="{{ asset('assets/tree/Treant.css') }}">
 	<link rel="stylesheet" type="text/css" href="{{ asset('assets/tree/basic-example.css') }}">
-
-  <!-- end of page level css-->
 @stop
 
 @section('content')
@@ -87,7 +89,7 @@
 				.attr('id', 'bah');
 			$.ajax({
 			    type: 'GET', //THIS NEEDS TO BE GET
-			    url: '/admin/membership',
+			    url: '{{route("member.select.tree")}}',
 			    success: function (data) {
 			      var data = data;
 			      console.log(data)

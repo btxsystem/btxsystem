@@ -47,9 +47,27 @@ class DashboardController extends Controller
         return response()->json(['training'=>$data]);
     }
 
+    public function tree(){
+        $data = Auth::user();
+        return view('frontend.tree')->with('profile',$data);;
+    }
+
     public function getTree(){
-        $employeers = Employeer::nested()->renderAsArray();
-        //dd($employeers['pv_right']=200);
+        $employeers = Employeer::parent(Auth::id())->renderAsArray();
+        $user = DB::table('employeers')->where('id',Auth::id())->first();
+        $data = [
+            "id" => $user->id,
+            "username" => $user->username,
+            "position" => $user->position,
+            "sponsor_id" => $user->sponsor_id,
+            "pv" => $user->pv,
+            "pv_left" => 0,
+            "pv_midle" => 0,
+            "pv_right" => 0,
+            "children" => $employeers,
+            "parent_id" => $user->parent_id,
+        ];
+        return response()->json($data);
         $this->buildTree($employeers, 1);
     }
 

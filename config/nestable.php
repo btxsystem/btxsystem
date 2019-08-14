@@ -11,8 +11,8 @@ return [
         'position',
         'sponsor_id',
         'pv',
-        'pv_left',
-        'pv_midle',
-        'pv_right',
+        'pv_left' => 0,
+        'pv_midle' => 0,
+        'pv_right' => 0,
     ]
 ];

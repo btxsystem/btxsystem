@@ -93,7 +93,9 @@ Route::post('/login', 'Auth\LoginController@postLogin');
 Route::get('/logout', 'Auth\LoginController@logout');
 
 Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
+
     Route::get('', ['as' => 'dashboard', 'uses' => 'Member\DashboardController@index']);
+    Route::get('tree', ['as' => 'tree', 'uses' => 'Member\DashboardController@tree']);
 
     Route::group(['prefix' => 'select', 'as'=> 'select.'], function () {
         Route::get('daily-retail', ['as' => 'daily-retail', 'uses' => 'Member\DashboardController@getAutoRetailDaily']);
@@ -107,10 +109,12 @@ Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
         Route::post('reset-password', ['as' => 'reset-password', 'uses' => 'Member\ProfileMemberController@resetPassword']);
     });
 
-    Route::group(['prefix' => 'bitrex-money', 'as'=> 'bitrex-money.'], function () {
+    Route::group(['prefix' => 'income-and-expenses', 'as'=> 'bitrex-money.'], function () {
         Route::get('bitrex-points', ['as' => 'bitrex-points', 'uses' => 'Member\BitrexPointController@index']);
         Route::get('bitrex-cash', ['as' => 'bitrex-cash', 'uses' => 'Member\BitrexCashController@index']);
+        Route::get('pv', ['as' => 'pv', 'uses' => 'Member\PvController@index']);
     });
+    
 });
 
 //Auth::routes();
