@@ -53,7 +53,7 @@
       </div>
   </div>
   <div class="container-fluid">
-    <div class="row clearfix">
+    <div class="row clearfix training_" hidden="true">
         <a href="#" data-toggle="modal" data-target="#training">
         <div class="col-lg-12 col-md-12">
             <div class="card product-report">
@@ -229,13 +229,16 @@
                 url: '{{route("member.select.training")}}',
                 data: data,
                 success:function(data){
-                   $('.description').append(data.training.note);
-                   $('.note').append(data.training.note);
-                   $('.location').append('Location : ' + data.training.location);
-                   $('.price').append('Price : ' + data.training.price);
-                   $('.capacity').append('Capacity : ' + data.training.capacity);
-                   $('.date').append('Date : ' + data.training.date);
+                   if (data.training) {
+                        $('.training_').removeAttr('hidden');
+                        $('.description').append(data.training.note);
+                        $('.note').append(data.training.note);
+                        $('.location').append('Location : ' + data.training.location);
+                        $('.price').append('Price : ' + data.training.price);
+                        $('.capacity').append('Capacity : ' + data.training.capacity);
+                        $('.date').append('Date : ' + data.training.date);
 
+                   }
                 }
             });
 
