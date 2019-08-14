@@ -115,15 +115,15 @@ Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
 //Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['prefix' => 'asep'], function () {
-    Route::get('explores', 'MemberV2\ExploreController@index');
-    Route::get('subscription', 'MemberV2\ExploreController@subscription');
+    Route::get('explores', 'MemberV2\ExploreController@index')->name('member.explore');
+    Route::get('subscription', 'MemberV2\ExploreController@subscription')->name('member.subscription');
     Route::get('chapters/{id}', 'MemberV2\ExploreController@chapters')->name('chapter.list');
     Route::get('chapter/{id}', 'MemberV2\ExploreController@chapter')->name('chapter.detail');
 });
 
-Route::domain('ebook.bitrexgo.co.id')->group(function () {
-    Route::get('explores', 'MemberV2\ExploreController@index')->name('member.explore');;
-    Route::get('subscription', 'MemberV2\ExploreController@subscription')->name('member.subscription');;
-    Route::get('chapters/{id}', 'MemberV2\ExploreController@chapters')->name('chapter.list');
-    Route::get('chapter/{id}', 'MemberV2\ExploreController@chapter')->name('chapter.detail');
-});
+// Route::domain('ebook.bitrexgo.co.id')->group(function () {
+//     Route::get('explores', 'MemberV2\ExploreController@index')->name('member.explore');
+//     Route::get('subscription', 'MemberV2\ExploreController@subscription')->name('member.subscription');
+//     Route::get('chapters/{id}', 'MemberV2\ExploreController@chapters')->name('chapter.list');
+//     Route::get('chapter/{id}', 'MemberV2\ExploreController@chapter')->name('chapter.detail');
+// });
