@@ -40,6 +40,17 @@
           <div id="breadcrumb"></div>
         </nav>
         <div id="lesson_content"></div>
+        <div>
+          <div class="s">
+            <div>
+              <div class="d-flex align-items-center flex-column bd-highlight mb-3" style="height: 72vh;">
+                <div class="mt-auto">
+                  <button class="btn btn-warning" id="next">Lanjutkan</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 </div>
@@ -58,6 +69,7 @@
 
   let chapterId = '{{ $chapter->id }}'
   let currentLesson = lessons[0]
+  let maxIndexLesson = lessons.length - 1
   refreshContent()
 
   function changeLesson(index) {
@@ -107,5 +119,12 @@
     breadcrumb()
     $('#lesson_content').html(currentLesson.content);
   }
+
+  $('#next').on('click', function() {
+    let index = lessons.findIndex(data => data.id == currentLesson.id)
+    if(index == maxIndexLesson) return
+    currentLesson = lessons[index+1]
+    refreshContent()
+  })
 </script>
 @stop
