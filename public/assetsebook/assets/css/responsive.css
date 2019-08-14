@@ -1,0 +1,253 @@
+.img-robot {
+	max-height: 350px; 
+	margin-top: 150px;
+}
+.img-8{
+	width: 100px;
+}
+.logo-3 {
+	margin-left: 30px;
+}
+
+.logo-5{
+	margin-left: 10px;"
+}
+
+.wizard {
+	padding: 0px;
+	margin-left: -60px;
+}
+
+.wizard-1{
+	color: #999;
+	margin-left: -80px;
+}
+
+.step-1 {
+	padding-top: 1px; 
+	margin-bottom: 5px;
+	height: 30px; 
+	width: 30px; 
+	background-color: #fff;
+	border-radius: 50%; 
+	border: 2px solid #fff; 
+	color: #666;
+}
+
+.step-2 {
+	padding-top: 1px; 
+	margin-bottom: 5px;
+	height: 30px; 
+	width: 30px; 
+	border-radius: 50%; 
+	border: 2px solid #fff; 
+	color: #fff;
+}
+
+.hr-1 {
+	position: absolute; 
+	width: 90px; 
+	top: -3px; 
+	left: 20%; 
+	border-top: dotted 2px #999;
+}
+
+.hr-2 {
+	position: absolute; 
+	width: 90px; 
+	top: -3px; 
+	left: 41%; 
+	border-top: dotted 2px #999;
+}
+
+@media (max-width: 1024px){
+	.wizard {
+		margin-left: -40px;
+	}
+	.wizard-1 {
+		margin-left: -60px;
+	}
+	.hr-1 {
+		width: 75px;
+		left: 21%;
+	}
+	.hr-2 {
+		width: 75px;
+		left: 43%;
+	}
+	.bit-card2 {
+		height: 390px;
+	}
+}
+
+@media (max-width: 768px){
+	.prog{
+		padding: 0px;
+		margin-left: 0px;
+	}
+	.img-12 {
+		height: 200px;
+	}
+	.m30{
+		margin: 15px;
+	}
+	.bit-w2{
+		width: 150px;
+	}
+	.img-robot{
+	max-height: 250px; 
+	margin-top: 90px;
+	}
+	.offset-md-2 {
+		margin-left: 5%;
+	}
+	.logo-5 {
+		margin-left: 10px;
+	}
+	.wizard-1{
+		margin-left: -30px;
+	}
+	.hr-1 {
+		left: 22%;
+	}
+	.hr-2 {
+		left: 49%;
+	}
+}
+
+@media (max-width: 420px){
+	.text-right.fz12 {
+		margin-top: 5px;
+		text-align: left !important;
+	}
+	.kakti {
+		padding: 0px !important;
+	}
+	.fz20 {
+		font-size: 17px;
+	}
+	.area-13 {
+		height: 50%;
+	}
+	.CodeMirror.cm-s-monokai{
+		height: 100% !important;
+	}
+	.wizard-step-container2{
+		width: 70%;
+	}
+	.prog {
+		margin-left: 0px;
+	}
+	.prog-xs{
+		margin-left: -10px;
+	}
+	.bit-btn2 {
+		padding-right: 90px;
+		padding-left: 90px;
+	}
+	.bit-btn3{
+		padding-right: 15px;
+		padding-left: 15px;
+	}
+	.bit-form1:after{
+		display: none;
+	}
+	.img-robot{
+	max-height: 250px; 
+	margin-top: 50px;
+	}
+	.logo-3 {
+		margin-left: -68%;
+	}
+	.user-3 {
+		margin: 0px;
+	}
+	.title-3{
+		margin-top: 40px;
+	}
+	.badge-3{
+		right: -15px;
+	}
+	.bit-card-orange {
+		margin-top: -5px;
+	}
+	.wizard {
+		margin-left: 20px;
+		margin-top: 20px;
+	}
+	.wizard-1{
+		margin-left: -10px;
+	}
+	.hr-1 {
+		left: 22%;
+	}
+	.hr-2 {
+		left: 53%;
+	}
+	.img-8 {
+		width: 90px;
+	}
+}
+
+@media (max-width: 400px){
+	.img-8 {
+		width: 80px;
+	}
+	.logo-3 {
+		margin-left: -51%;
+	}
+	.hr-1 {
+		width: 60px;
+		left: 23%;
+	}
+	.hr-2 {
+		width: 60px;
+		left: 
+	}
+	.img-xs {
+		height: 60px;
+	}
+	.pd40 {
+		padding: 35px;
+	}
+}
+
+@media (max-width: 320px){
+	.logo-3 {
+		margin-left: -38%;
+	}
+	.hr-1 {
+		width: 50px;
+	}
+	.hr-2 {
+		width: 50px;
+	}
+	.bit-btn3{
+		padding-left: 20px;
+		padding-right: 20px;
+	}
+	.pd40 {
+		padding: 10px;
+	}
+}
+
+.scroll {
+   width: 100%;
+   height: 100%;
+   overflow-y: scroll;
+}
+.scroll::-webkit-scrollbar {
+    width: 13px;
+}
+
+.scroll::-webkit-scrollbar-track {
+    background: #ddd; 
+}
+
+.scroll::-webkit-scrollbar-thumb {
+    background: #bbb;
+}
+
+.scroll::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
