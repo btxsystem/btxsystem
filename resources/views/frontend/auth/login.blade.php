@@ -136,7 +136,7 @@
               <div class="posts-wrap">
                 <article class="post post_mod-a clearfix wow zoomIn" data-wow-duration="1s">
                   <div class="entry-media">
-                    <div class="entry-thumbnail"> <a href="javascript:void(0);" ><img class="img-responsive" src="{{asset('img/1.jpg')}}" width="250" height="250" alt="Foto"/></a> </div>
+                    <div class="entry-thumbnail"> <a href="javascript:void(0);" ><img class="img-responsive" src="{{asset('img/1.jpg')}}" style="width: 100%;" alt="Foto"/></a> </div>
                   </div>
                   <div class="entry-main">
                     <h3 class="entry-title ui-title-inner decor decor_mod-b"><a href="javascript:void(0);">Basic to Advanced Financial Education</a></h3>
@@ -148,7 +148,7 @@
                 <!-- end post -->
                 <article class="post post_mod-a clearfix wow zoomIn" data-wow-duration="1s" data-wow-delay=".5s">
                   <div class="entry-media">
-                    <div class="entry-thumbnail"> <a href="javascript:void(0);" ><img class="img-responsive" src="{{asset('img/2.jpg')}}" width="250" height="250" alt="Foto"/></a> </div>
+                    <div class="entry-thumbnail"> <a href="javascript:void(0);" ><img class="img-responsive" src="{{asset('img/2.jpg')}}" style="width: 100%;" width="250" height="250" alt="Foto"/></a> </div>
                   </div>
                   <div class="entry-main">
                     <h3 class="entry-title ui-title-inner decor decor_mod-b"><a href="javascript:void(0);">Education Videos</a></h3>
@@ -160,7 +160,7 @@
                 <!-- end post -->
                 <article class="post post_mod-a clearfix wow zoomIn" data-wow-duration="1s" data-wow-delay="1s">
                   <div class="entry-media">
-                    <div class="entry-thumbnail"> <a href="javascript:void(0);" ><img class="img-responsive" src="{{asset('img/3.jpg')}}" width="250" height="250" alt="Foto"/></a> </div>
+                    <div class="entry-thumbnail"> <a href="javascript:void(0);" ><img class="img-responsive" src="{{asset('img/3.jpg')}}" style="width: 100%;" width="250" height="250" alt="Foto"/></a> </div>
                   </div>
                   <div class="entry-main">
                     <h3 class="entry-title ui-title-inner decor decor_mod-b"><a href="javascript:void(0);">Online & Offline Class</a></h3>
@@ -172,7 +172,7 @@
                 <!-- end post -->
                 <article class="post post_mod-a clearfix wow zoomIn" data-wow-duration="1s" data-wow-delay="1.5s">
                   <div class="entry-media">
-                    <div class="entry-thumbnail"> <a href="javascript:void(0);" ><img class="img-responsive" src="{{asset('img/4.jpg')}}" width="250" height="250" alt="Foto"/></a> </div>
+                    <div class="entry-thumbnail"> <a href="javascript:void(0);" ><img class="img-responsive" src="{{asset('img/4.jpg')}}" style="width: 100%;" width="250" height="250" alt="Foto"/></a> </div>
                   </div>
                   <div class="entry-main">
                     <h3 class="entry-title ui-title-inner decor decor_mod-b"><a href="javascript:void(0);">Smart Financial Community</a></h3>
@@ -376,12 +376,26 @@
             <div class="col-md-12">
               <section class="section-default wow bounceInRight" data-wow-duration="1s">
                 <h2 class="ui-title-block">Our <strong>Team</strong></h2>
-                <ul class="list-clients list-unstyled clearfix">
+                <div class="row">
+                  <div class="col-lg-3">
+                    <img class="img-responsive" src="https://bitrexgo.co.id/assets1/images/gallery/5.jpg" height="100" width="200" alt="Partners" style="width: 100%; margin-bottom: 20px;">
+                  </div>
+                  <div class="col-lg-3">
+                    <img class="img-responsive" src="https://bitrexgo.co.id/assets1/images/gallery/5.jpg" height="100" width="200" alt="Partners" style="width: 100%; margin-bottom: 20px;">
+                  </div>
+                  <div class="col-lg-3">
+                    <img class="img-responsive" src="https://bitrexgo.co.id/assets1/images/gallery/11.jpg" height="100" width="200" alt="Partners" style="width: 100%; margin-bottom: 20px;">
+                  </div>
+                  <div class="col-lg-3">
+                    <img class="img-responsive" src="https://bitrexgo.co.id/assets1/images/gallery/11.jpg" height="100" width="200" alt="Partners" style="width: 100%; margin-bottom: 20px;">
+                  </div>
+                </div>
+                <!-- <ul class="list-clients list-unstyled clearfix">
                   <li class="list-clients__item" style="width: 25%"><img class="img-responsive" src="https://bitrexgo.co.id/assets1/images/gallery/5.jpg" height="100" width="200" alt="Partners"></li>
                   <li class="list-clients__item" style="width: 25%"><img class="img-responsive" src="https://bitrexgo.co.id/assets1/images/gallery/5.jpg" height="100" width="200" alt="Partners"></li>
                   <li class="list-clients__item" style="width: 25%"><img class="img-responsive" src="https://bitrexgo.co.id/assets1/images/gallery/11.jpg" height="100" width="200" alt="Partners"></li>
                   <li class="list-clients__item" style="width: 25%"><img class="img-responsive" src="https://bitrexgo.co.id/assets1/images/gallery/11.jpg" height="100" width="200" alt="Partners"></li>
-                </ul>
+                </ul> -->
                 <!-- end accordion -->
               </section>
             </div>
