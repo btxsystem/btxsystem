@@ -50,7 +50,7 @@ class CreateTriggerBonusSponsorFromNonMember extends Migration
                 SET bonus_bv = (SELECT bv FROM `ebooks` WHERE id = NEW.ebook_id);
                 SET bonus_pv = (SELECT pv FROM `ebooks` WHERE id = NEW.ebook_id);
                 SET parent = (SELECT parent_id FROM `employeers` WHERE id = NEW.member_id);
-                IF parent = NULL THEN 
+                IF parent is NULL THEN 
                     SET parent = NEW.member_id;
                 END IF;
                 SET pv_now = (SELECT pv FROM `employeers` WHERE id = NEW.member_id);

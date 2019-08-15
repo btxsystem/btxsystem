@@ -53,31 +53,26 @@ class DashboardController extends Controller
     }
 
     public function getTree(){
-        $employeers = Employeer::parent(Auth::id())->renderAsArray();
-        $user = DB::table('employeers')->where('id',Auth::id())->first();
-        $data = [
-            "id" => $user->id,
-            "username" => $user->username,
-            "position" => $user->position,
-            "sponsor_id" => $user->sponsor_id,
-            "pv" => $user->pv,
-            "pv_left" => 0,
-            "pv_midle" => 0,
-            "pv_right" => 0,
-            "children" => $employeers,
-            "parent_id" => $user->parent_id,
-        ];
-        return response()->json($data);
-        $this->buildTree($employeers, 1);
-    }
-
-    public function buildTree(array &$employeers, $parentId) {
-        $tamp = [];
-        foreach ($employeers as $key => $employeer) {
-            
-        }
-        dd($tamp);
-    }
-        
+        $user = Employeer::where('id',Auth::id())->with('children')->first();
+        for ($i=0; $i < 3; $i++) {
+            if(isset($user->children[$i])){
+                $user->children[$i] = Employeer::where('id',$user->children[$i]->id)->with('children')->first(); 
+                for ($j=0; $j<3; $j++){
+                    if(!(isset($user->children[$i]->children[$j]))){
+                        $user->children[$i]->children[$j] = [
+                            'available' => true,
+                            'position' => $j
+                        ];        
+                    }
+                }
+            }else{
+                $user->children[$i] = [
+                    'available' => true,
+                    'position' => $i
+                ];
+            }
+        };
+        return response()->json($user);
+    }   
         
 }

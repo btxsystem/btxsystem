@@ -47,7 +47,8 @@ class Employeer extends Authenticatable
     }
 
     public function children(){
-        return $this->hasMany( 'App\Employeer', 'parent_id', 'id' );
+        return $this->hasMany('App\Employeer', 'parent_id');
+        // return \DB::table('employeer')->where('parent_id', $this->id)->get();
     }
 
 }

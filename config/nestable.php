@@ -14,5 +14,6 @@ return [
         'pv_left' => 0,
         'pv_midle' => 0,
         'pv_right' => 0,
+        'rank_id',
     ]
 ];

@@ -28,7 +28,7 @@ class CreateEmployeersTable extends Migration
             $table->boolean('status')->comment('0 -> nonactive, 1 -> active');
             $table->string('phone_number');
             $table->string('no_rec');
-            $table->integer('position')->comment('1 : left ,2 : midle, 3 : right')->nullable();
+            $table->integer('position')->comment('0 : left ,1 : midle, 2 : right')->nullable();
             $table->bigInteger('parent_id')->unsigned()->nullable();
             $table->bigInteger('sponsor_id')->unsigned()->nullable();
             $table->bigInteger('rank_id')->unsigned();

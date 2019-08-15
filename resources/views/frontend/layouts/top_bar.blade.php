@@ -9,8 +9,7 @@
             <li><a href="javascript:void(0);" class="ls-toggle-btn" data-close="true"><i class="zmdi zmdi-swap"></i></a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-            <li><a href="javascript:void(0);" title="search" class="js-search" data-close="true"><i class="zmdi zmdi-search"></i></a></li>
-            <li><a href="/logout" title="sign out"><i class="material-icons">input</i></a></li>
+           <li><a href="/logout" title="sign out"><i class="material-icons">input</i></a></li>
         </ul>
     </div>
 </nav>
