@@ -50,7 +50,7 @@ Add Training
                             </div>
 
                     <div class="portlet-body flip-scroll">
-                    <form class="form-horizontal" action="{{ route('admin.trainings.store') }}" method="post">
+                    <form class="form-horizontal" action="{{ route('trainings.store') }}" method="post">
                         @csrf
                               <div class="form-group {{ $errors->has('location') ? 'has-error' : '' }}">
                                  <label class="col-md-2 control-label">Location</label>

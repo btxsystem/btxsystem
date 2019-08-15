@@ -1,7 +1,7 @@
 <ul id="menu" class="page-sidebar-menu">
     <li >
 
-    <a href="{{ route('user') }}">
+    <a href="{{ route('dashboard') }}">
             <i class="livicon" data-name="dashboard" data-size="18" data-c="#418BCA" data-hc="#418BCA"
                data-loop="true"></i>
             <span class="title">Dashboard </span>
@@ -70,7 +70,7 @@
         </a>
     </li>
     <li>
-        <a href="">
+        <a href="{{ route('tree.index') }}">
             <i class="livicon" data-name="share" data-size="18" data-c="#F89A14" data-hc="#F89A14"
                data-loop="true"></i>
             Tree

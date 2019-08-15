@@ -45,6 +45,15 @@ Route::group(['prefix' => 'select', 'as'=> 'select.'], function () {
 
     });
 
+    Route::group(['prefix'=>'trainings','as'=>'trainings.'],function(){
+        Route::get('', ['as' => 'index', 'uses' => 'Admin\TrainingController@index']);
+        Route::get('create', ['as' => 'create', 'uses' => 'Admin\TrainingController@create']);
+        Route::post('store', ['as' => 'store', 'uses' => 'Admin\TrainingController@store']);
+        Route::get('{id}/edit', ['as' => 'edit', 'uses' => 'Admin\TrainingController@edit']);
+        Route::put('{id}', ['as' => 'update', 'uses' => 'Admin\TrainingController@update']);
+        Route::delete('{id}', ['as' => 'delete', 'uses' => 'Admin\TrainingController@destroy']);
+    });
+
     Route::resource('customer', 'Admin\CustomerController');
     Route::get('customer/data/{id}', 'Admin\CustomerController@delete');
 
@@ -68,6 +77,12 @@ Route::group(['prefix' => 'select', 'as'=> 'select.'], function () {
             Route::get('', ['as' => 'index', 'uses' => 'Admin\MemberController@member_nonactive']);
             Route::get('/{id}/active', ['as' => 'active', 'uses' => 'Admin\MemberController@active']);
         });
+    });
+
+    Route::group(['prefix'=>'tree','as'=>'tree.'], function(){
+            Route::get('index', ['as' => 'index', 'uses' => 'Admin\TreeController@tree']);
+            Route::get('create', ['as' => 'create', 'uses' => 'Admin\TreeController@create']);
+            Route::get('select', ['as' => 'select', 'uses' => 'Admin\TreeController@getTree']);
     });
 
     Route::group(['prefix'=>'bitrex-money','as'=>'bitrex-money.'], function(){
