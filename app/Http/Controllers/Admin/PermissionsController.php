@@ -11,6 +11,7 @@ class PermissionsController extends Controller
 {
     public function index()
     {
+        
         if (request()->ajax()) {
             $data = Permission::all('title');
             return Datatables::of($data)

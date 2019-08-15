@@ -61,7 +61,7 @@ List Of Permissions
               processing: true,
               serverSide: true,
               ajax: {
-                url: "{{ route('admin.admin-management.permissions') }}", 
+                url: "", 
               },
               
               columns: [

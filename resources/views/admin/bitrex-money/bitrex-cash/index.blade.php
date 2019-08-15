@@ -100,7 +100,7 @@ List Of Bitrex Points
               processing: true,
               serverSide: true,
               ajax: {
-                url: "{{ route('admin.bitrex-money.cash') }}", 
+                url: "{{ route('bitrex-money.cash') }}", 
               },
               
               columns: [

@@ -1,14 +1,13 @@
 <ul id="menu" class="page-sidebar-menu">
     <li >
 
-    <a href="{{ route('admin.index') }}">
+    <a href="{{ route('user') }}">
             <i class="livicon" data-name="dashboard" data-size="18" data-c="#418BCA" data-hc="#418BCA"
                data-loop="true"></i>
             <span class="title">Dashboard </span>
         </a>
     </li>
 
-    @can('user_management_access')
         <li >
             <a href="">
                 <i class="livicon" data-name="user" data-size="18" data-c="#6CC66C" data-hc="#6CC66C" data-loop="true"></i>
@@ -18,36 +17,29 @@
 
             <ul class="sub-menu">
 
-                @can('permission_access')
                     <li>
-                        <a href="{{ route('admin.admin-management.permissions') }}">
+                        <a href="{{ route('admin-management.permissions') }}">
                             <i class="fa fa-angle-double-right"></i>
                             Permissions
                         </a>
                     </li>
-                @endcan
 
-                @can('role_access')
                     <li>
-                        <a href="{{ route('admin.admin-management.roles.index') }}">
+                        <a href="{{ route('admin-management.roles.index') }}">
                             <i class="fa fa-angle-double-right"></i>
                             Roles
                         </a>
                     </li>
-                @endcan
                 
-                @can('user_access')
                 <li >
-                    <a href="{{ route('admin.admin-management.users.index') }}">
+                    <a href="{{ route('admin-management.users.index') }}">
                         <i class="fa fa-angle-double-right"></i>
                         Users Company
                     </a>
                 </li>
-                @endcan
 
             </ul>
         </li>
-    @endcan
 
         <li >
             <a href="#">
@@ -57,13 +49,13 @@
             </a>
             <ul class="sub-menu">
                 <li>
-                    <a href="{{ route('admin.members.active.index') }}">
+                    <a href="{{ route('members.active.index') }}">
                         <i class="fa fa-angle-double-right"></i>
                         Members Active
                     </a>
                 </li>
                 <li >
-                    <a href="{{ route('admin.members.nonactive.index') }}">
+                    <a href="{{ route('members.nonactive.index') }}">
                         <i class="fa fa-angle-double-right"></i>
                         Member Nonactive
                     </a>
@@ -71,7 +63,7 @@
             </ul>
      </li>
     <li>
-         <a href="{{ route('admin.customer.index') }}">
+         <a href="{{ route('customer.index') }}">
             <i class="livicon" data-name="customer" data-size="18" data-c="#bdecb6" data-hc="#bdecb6"
                data-loop="true"></i>
                 Customers
@@ -93,7 +85,7 @@
         </a>
         <ul class="sub-menu">
             <li>
-                <a href="{{ route('admin.trainings.index') }}">
+                <a href="{{ route('trainings.index') }}">
                     <i class="fa fa-angle-double-right"></i>
                     Training Management 
                 </a>
@@ -115,13 +107,13 @@
         </a>
         <ul class="sub-menu">
             <li>
-                <a href="{{ route('admin.bitrex-money.points') }}">
+                <a href="{{ route('bitrex-money.points') }}">
                     <i class="fa fa-angle-double-right"></i>
                     Bitrex Points
                 </a>
             </li>
             <li>
-                <a href="{{ route('admin.bitrex-money.cash') }}">
+                <a href="{{ route('bitrex-money.cash') }}">
                     <i class="fa fa-angle-double-right"></i>
                     Bitrex Cash
                 </a>

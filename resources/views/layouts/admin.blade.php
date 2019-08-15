@@ -78,7 +78,7 @@
                                         </a>
                                     </div>
                                     <div class="pull-right">
-                                        <a href="{{ route('logout') }}">
+                                        <a href="">
                                             <i class="livicon" data-name="sign-out" data-s="15"></i>
                                             Logout
                                         </a>

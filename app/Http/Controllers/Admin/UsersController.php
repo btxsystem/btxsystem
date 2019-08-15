@@ -15,6 +15,10 @@ use Alert;
 
 class UsersController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('backoffice');
+    }
     public function index()
     {
         if (request()->ajax()) {
@@ -43,6 +47,7 @@ class UsersController extends Controller
     {
         $validatedData = $request->validate([
             'name' => 'required|string|min:3|max:255',
+            'username' => 'required|string|min:3|max:255',
             'email' => 'required|email|unique:users',
             'password' => 'required|min:8',
         ]);
@@ -50,7 +55,7 @@ class UsersController extends Controller
         $user = User::create($request->all());
         $user->roles()->sync($request->input('roles', []));
         Alert::success('Success add new user', 'Success');
-        return redirect()->route('admin.admin-management.users.index');
+        return redirect()->route('admin-management.users.index');
     }
 
     public function edit($id)

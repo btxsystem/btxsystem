@@ -16,7 +16,7 @@ List Of Roles
 <section class="content">
                 <div class="row">
                     <div class="col-md-12">
-                        <a class="btn btn-primary" href="{{ route('admin.admin-management.roles.create')}}"><i class="fa fa-plus" style="margin-right: 10px;"></i>Add</a>
+                        <a class="btn btn-primary" href="{{ route('admin-management.roles.create')}}"><i class="fa fa-plus" style="margin-right: 10px;"></i>Add</a>
                         <div class="portlet box primary" style="margin-top: 15px;">
                             <div class="portlet-title">
                                 <div class="caption">
@@ -53,7 +53,7 @@ List Of Roles
               processing: true,
               serverSide: true,
               ajax: {
-                url: "{{ route('admin.admin-management.roles.index') }}", 
+                url: "{{ route('admin-management.roles.index') }}", 
               },
               
               columns: [

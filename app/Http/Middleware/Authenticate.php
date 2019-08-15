@@ -12,4 +12,5 @@ class Authenticate extends Middleware
             return redirect('/member');
         } 
     }
+    
 }
