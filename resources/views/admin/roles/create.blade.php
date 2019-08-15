@@ -20,7 +20,7 @@
                    <tbody>
                       <tr>
                          <td colspan="1">
-                         <form action="{{ route('admin.admin-management.roles.store') }}" class="well form-horizontal" method="POST" enctype="multipart/form-data"> 
+                         <form action="{{ route('admin-management.roles.store') }}" class="well form-horizontal" method="POST" enctype="multipart/form-data"> 
                             {{ csrf_field() }}
                             <fieldset>
                                     <div class="form-group">

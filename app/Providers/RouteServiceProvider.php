@@ -39,8 +39,8 @@ class RouteServiceProvider extends ServiceProvider
 
         $this->mapWebRoutes();
 
-        // $this->mapMemberRoutes();
-        //
+        $this->mapAdminRoutes();
+        
     }
 
     /**
@@ -70,13 +70,14 @@ class RouteServiceProvider extends ServiceProvider
              ->middleware(['api', 'cors'])
              ->namespace($this->namespace)
              ->group(base_path('routes/api.php'));
+
     }
 
-    // route for frontend
-    protected function mapMemberRoutes()
-    {
-        Route::middleware('employeer')
+    protected function mapAdminRoutes(){
+
+       Route::prefix('backoffice')
+             ->middleware('backoffice')
              ->namespace($this->namespace)
-             ->group(base_path('routes/member.php'));
+             ->group(base_path('routes/admin.php'));
     }
 }

@@ -57,8 +57,6 @@ class RolesController extends Controller
 
         foreach ($roles as $idx => $role) {
 
-           // kjenfkjcn3kofmlo,
-
             // $roles[$idx]->title = $role->permissions()->pluck('permission.id')->toArray();
         }
 

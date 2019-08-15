@@ -48,7 +48,7 @@ Add Training
                         </div>
 
         <div class="portlet-body flip-scroll">
-        <form class="form-horizontal" action="{{ route("admin.admin-management.users.store") }}" method="POST">
+        <form class="form-horizontal" action="{{ route('admin-management.users.store') }}" method="POST">
             @csrf
             <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
                 <label class="col-md-2 control-label" for="name">{{ trans('global.user.fields.name') }}</label>
@@ -60,6 +60,23 @@ Add Training
                     @if($errors->has('name'))
                     <em class="text-danger">
                         {{ $errors->first('name') }}
+                    </em>
+                @endif
+                </div>
+                <p class="helper-block">
+                    {{ trans('global.user.fields.name_helper') }}
+                </p>
+            </div>
+            <div class="form-group {{ $errors->has('username') ? 'has-error' : '' }}">
+                <label class="col-md-2 control-label" for="username">Username</label>
+                <div class="col-md-8">
+                   <div class="input-group">
+                       <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                        <input type="text" id="username" name="username" class="form-control" value="{{ old('username', isset($user) ? $user->username : '') }}">
+                   </div>
+                    @if($errors->has('username'))
+                    <em class="text-danger">
+                        {{ $errors->first('username') }}
                     </em>
                 @endif
                 </div>

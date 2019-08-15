@@ -63,7 +63,7 @@ List Of Users Nonactive
               processing: true,
               serverSide: true,
               ajax: {
-                url: "{{ route('admin.members.nonactive.index') }}", 
+                url: "{{ route('members.nonactive.index') }}", 
               },
               
               columns: [

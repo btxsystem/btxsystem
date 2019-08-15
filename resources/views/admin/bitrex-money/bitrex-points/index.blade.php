@@ -55,7 +55,7 @@ List Of Bitrex Points
                     <h4 class="modal-title">Topup</h4>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('admin.bitrex-money.topup') }}" class="well form-horizontal">
+                    <form action="{{ route('bitrex-money.topup') }}" class="well form-horizontal">
                         <fieldset>
                             <div class="form-group">
                                 <label class="col-md-3 control-label">Username</label>
@@ -139,7 +139,7 @@ List Of Bitrex Points
               processing: true,
               serverSide: true,
               ajax: {
-                url: "{{ route('admin.bitrex-money.points') }}", 
+                url: "{{ route('bitrex-money.points') }}", 
               },
               
               columns: [

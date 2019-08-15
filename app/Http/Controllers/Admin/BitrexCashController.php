@@ -11,6 +11,10 @@ use DB;
 
 class BitrexCashController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('backoffice');
+    }
     public function index(){
         if (request()->ajax()) {
             $data = DB::table('employeers')->select('id','id_member','username','bitrex_points');
