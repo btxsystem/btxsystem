@@ -1,4 +1,5 @@
 <?php
+\Cache::flush();
 
 /*Route::redirect('/', '/login');
 Route::redirect('/home', '/admin');
@@ -92,17 +93,44 @@ Route::post('/login', 'Auth\LoginController@postLogin');
 Route::get('/logout', 'Auth\LoginController@logout');
 
 Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
+
     Route::get('', ['as' => 'dashboard', 'uses' => 'Member\DashboardController@index']);
+    Route::get('tree', ['as' => 'tree', 'uses' => 'Member\DashboardController@tree']);
+
+    Route::group(['prefix' => 'select', 'as'=> 'select.'], function () {
+        Route::get('daily-retail', ['as' => 'daily-retail', 'uses' => 'Member\DashboardController@getAutoRetailDaily']);
+        Route::get('training', ['as' => 'training', 'uses' => 'Member\DashboardController@getTraining']);
+        Route::get('tree', ['as' => 'tree', 'uses' => 'Member\DashboardController@getTree']);
+        Route::get('daily-bonus-sponsor', ['as' => 'daily-bonus-sponsor', 'uses' => 'Member\DashboardController@getBonusSponsorDaily']);
+    });
+
     Route::group(['prefix' => 'profile', 'as'=> 'profile.'], function () {
         Route::get('', ['as' => 'index', 'uses' => 'Member\ProfileMemberController@index']);
         Route::post('reset-password', ['as' => 'reset-password', 'uses' => 'Member\ProfileMemberController@resetPassword']);
     });
-    Route::group(['prefix' => 'bitrex-money', 'as'=> 'bitrex-money.'], function () {
+
+    Route::group(['prefix' => 'income-and-expenses', 'as'=> 'bitrex-money.'], function () {
         Route::get('bitrex-points', ['as' => 'bitrex-points', 'uses' => 'Member\BitrexPointController@index']);
         Route::get('bitrex-cash', ['as' => 'bitrex-cash', 'uses' => 'Member\BitrexCashController@index']);
+        Route::get('pv', ['as' => 'pv', 'uses' => 'Member\PvController@index']);
     });
+    
 });
 
 //Auth::routes();
 
 //Route::get('/home', 'HomeController@index')->name('home');
+
+Route::group(['prefix' => 'asep'], function () {
+    Route::get('explores', 'MemberV2\ExploreController@index');
+    Route::get('subscription', 'MemberV2\ExploreController@subscription');
+    Route::get('chapters/{id}', 'MemberV2\ExploreController@chapters')->name('chapter.list');
+    Route::get('chapter/{id}', 'MemberV2\ExploreController@chapter')->name('chapter.detail');
+});
+
+Route::domain('ebook.bitrexgo.co.id')->group(function () {
+    Route::get('explores', 'MemberV2\ExploreController@index')->name('member.explore');;
+    Route::get('subscription', 'MemberV2\ExploreController@subscription')->name('member.subscription');;
+    Route::get('chapters/{id}', 'MemberV2\ExploreController@chapters')->name('chapter.list');
+    Route::get('chapter/{id}', 'MemberV2\ExploreController@chapter')->name('chapter.detail');
+});

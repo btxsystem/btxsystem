@@ -8,7 +8,7 @@
 
 <title>
     @section('title')
-     | Betrixgo
+     | Bitrexgo
     @show
 </title>
 
@@ -145,5 +145,6 @@ $(document).ready(function(){
     
 </script>
 @yield('footer_scripts')
+@include('sweet::alert')
 </body>
 </html>

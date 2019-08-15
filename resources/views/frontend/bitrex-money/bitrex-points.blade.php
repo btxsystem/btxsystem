@@ -1,4 +1,8 @@
 @extends('frontend.default')
+@section('title')
+    Bitrex points
+    @parent
+@stop
 @section('content')
 <div class="modal fade" id="topup" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">

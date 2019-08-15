@@ -4,7 +4,7 @@
             <div class="modal-header">
                 <h5 class="modal-title" id="change-password">Reset Password</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
+                    <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <form action="{{route('member.profile.reset-password')}}" method="POST">
@@ -42,9 +42,9 @@
                     <input type="submit" class="btn btn-primary" id="submit" disabled value="Change Password">
                 </div>
             </form>
-            </div>
         </div>
     </div>
+</div>
     
 <aside id="leftsidebar" class="sidebar">
     <!-- User Info -->
@@ -63,10 +63,12 @@
         <ul class="list">
             <li class="header">Menu</li>
             <li> <a href="{{route('member.dashboard')}}"><i class="zmdi zmdi-view-dashboard col-red"></i><span>Dashboard</span> </a> </li>
-            <li><a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-money col-green"></i><span>B-Money</span> </a>
+            <li> <a href="{{route('member.tree')}}"><i class="zmdi zmdi-device-hub col-blue"></i><span>Tree</span> </a> </li>
+            <li><a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-money col-green"></i><span>Income and expenses</span> </a>
                 <ul class="ml-menu">
                     <li><a href="{{route('member.bitrex-money.bitrex-points')}}">Points</a> </li>
                     <li><a href="{{route('member.bitrex-money.bitrex-cash')}}">Cash</a> </li>
+                    <li><a href="{{route('member.bitrex-money.pv')}}">Pv</a> </li>
                 </ul>
             </li>
             <li class="header">Profile</li>

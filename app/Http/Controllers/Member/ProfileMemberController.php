@@ -41,14 +41,16 @@ class ProfileMemberController extends Controller
         $cek = password_verify($request->old_password, $data->password);
         if ($cek) {
             if($request->new_password != $request->old_password){
+                $pass['password'] = $new;
+                $info = Employeer::find($data->id)->update($pass);
                 Alert::success('pesan yang ingin disampaikan', 'Judul Pesan');
             }else{
-                // same new password and old password
-                Alert::success('pesan yang ingin disampaikan', 'Judul Pesan');
+                Alert::failed('The password must difference', 'Failed');
             }
         }else{
             // password dont same with password on db
             Alert::failed('The password you entered does not match', 'Failed');
         }
+        return view('frontend.dashboard');
     }
 }

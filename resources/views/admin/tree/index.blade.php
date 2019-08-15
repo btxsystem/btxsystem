@@ -91,90 +91,11 @@
 			    success: function (data) {
 			      var data = data;
 			      console.log(data)
-			   //    var data = {
-						//   "name": "A1",
-						//   "img":"https://img.icons8.com/bubbles/2x/user.png",
-						//   "level":"Silver",
-						// 	  "children": [
-						// 	    {
-						// 	      "name": "B1",
-						//   			"img":"https://img.icons8.com/bubbles/2x/user.png",
-						//   			"level":"Silver",
-						// 	      "children": [
-						// 	        {
-						// 	          "name": "C1",
-						//   					"img":"https://img.icons8.com/bubbles/2x/user.png",
-						//   					"level":"Silver",
-						// 	        },
-						// 	        {
-						// 	          "name": "C2",
-						//   					"img":"https://img.icons8.com/bubbles/2x/user.png",
-						//   					"level":"Silver",
-						// 	        },
-						// 	        {
-						// 	          "name": "C3",
-						// 	          "img":"https://img.icons8.com/bubbles/2x/user.png", 
-						// 	          "level":"Silver",
-						// 	        }
-						// 	      ]
-						// 	    },
-						// 	    {
-						// 	      "name": "B2",
-						// 	      "img":"https://img.icons8.com/bubbles/2x/user.png",
-						// 	      "level":"Silver",
-						// 	      "children": [
-						// 	        {
-						// 	          "name": "C4",
-						//   					"img":"https://img.icons8.com/bubbles/2x/user.png",
-						//   					"level":"Silver",
-						// 	        },
-						// 	        {
-						// 	          "name": "C5",
-						//   					"img":"https://img.icons8.com/bubbles/2x/user.png",
-						//   					"level":"Silver",
-						// 	        },
-						// 	        {
-						// 	          "name": "C5",
-						//   					"img":"https://img.icons8.com/bubbles/2x/user.png",
-						//   					"level":"Silver",
-						// 	        },
-						//         ]
-						// 	    },
-						// 	    {
-						// 	      "name": "B3",
-						// 	      "img":"https://img.icons8.com/bubbles/2x/user.png",
-						// 	      "level":"Silver",
-						// 	      "children": [
-						// 	        {
-						// 	          "name": "C6",
-						//   					"img":"https://img.icons8.com/bubbles/2x/user.png",
-						//   					"level":"Silver",
-						// 	        },
-						// 	        {
-						// 	          "name": "C7",
-						//   					"img":"https://img.icons8.com/bubbles/2x/user.png",
-						//   					"level":"Silver",
-						// 	        },
-						// 	        {
-						// 	          "name": "C8",
-						//   					"img":"https://img.icons8.com/bubbles/2x/user.png",
-						//   					"level":"Silver",
-						// 	        },
-						//         ]
-						// 	    }
-						// 	  ]
-						// }
-						// console.log(data)
-						// var dataStructure = d3.stratify()
-						// 	.id(function(d){return d.id;})
-						// 	.parentId(function(d){return d.sponsor_id;})
-						// 	(this.data);
 						var treeStructure = d3.tree().size([1000,270]);
 
 						var root = d3.hierarchy(data).sort(function(a, b) { return a.data.position - b.data.position ;});
 						treeStructure(root);
 						var information = treeStructure(root);
-						// console.log(information.descendants());
 						
 						var connections = svg.append("g").selectAll("path")
 							.data(information.links());
@@ -190,14 +111,7 @@
 						rectangles.enter().append("rect")
 							.attr("x", function(d){return d.x-50;})
 							.attr("y", function(d){return d.y-20;});
-
-						// var circles = svg.append("g").selectAll("circle")
-						// 	.data(information.descendants());
-						// circles.enter().append("circle")
-						// 	.attr("cx", function(d){return d.x})
-						// 	.attr("cy", function(d){return d.y})
-						// 	.attr("r", 5);
-
+							
 						var names = svg.append("g").selectAll("text")
 							.data(information.descendants());
 						names.enter().append("text")

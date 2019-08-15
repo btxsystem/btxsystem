@@ -49,9 +49,5 @@ class Employeer extends Authenticatable
     public function children(){
         return $this->hasMany( 'App\Employeer', 'parent_id', 'id' );
     }
-      
-    public function parent(){
-        return $this->hasOne( 'App\Employeer', 'id', 'parent_id' );
-    }
 
 }

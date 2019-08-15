@@ -34,23 +34,23 @@ class AuthController extends Controller
 
         if ($auth::guard('admin')->attempt($credensial)) {
 
+
             $user = $request->user('admin');
 
             // if (!$user->status) {
             //     return response()->json(['error'=>'User Locked'], 400);
             // }
-
             User::where('id', $user->id)->update(['fcm_token' => request('fcmToken')]);
 
-            $success['user']  =  $user;
-            $success['token'] =  $user->createToken('SmsApi')->accessToken;
+            $success['user']  =  $user; 
+            $success['token'] =  $user->createToken('bitrex')->accessToken;
 
             $success['permissions'] = DB::table('permission_role')
             ->join('permissions', 'permission_role.permission_id', '=', 'permissions.id')
             ->where('permission_role.role_id', $user->roles_id)
             ->pluck('name');
             
-            return response()->json($success, $this->successStatus, [], JSON_NUMERIC_CHECK);
+            return response()->json($success, $this->successStatus);
         }
 
         return response()->json(['error'=>'Unauthorised'], 401);
