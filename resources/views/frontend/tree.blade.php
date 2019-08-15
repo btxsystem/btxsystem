@@ -94,7 +94,7 @@
 				panzoom(element);
 			});
 			var svg = d3.select("#example").append("svg")
-				.attr("width",1000).attr("height",500)
+				.attr("width",1200).attr("height",800)
 				.append("g").attr("transform", "translate(60,0)")
 				.attr('id', 'bah');
 			$.ajax({
