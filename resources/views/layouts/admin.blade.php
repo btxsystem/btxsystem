@@ -8,6 +8,8 @@
             @show
         </title>
         <!-- for css -->
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets/tree/Treant.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets/tree/basic-example.css') }}">
         <link rel="stylesheet" href="{{ asset('assets/vendors/datatables/css/dataTables.bootstrap.css') }}" />
         <link href="{{ asset('assets/css/pages/tables.css') }}" rel="stylesheet" type="text/css" />
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
