@@ -17,6 +17,7 @@
   <link href="{{asset('assets3/css/color4.css')}}" rel="alternate stylesheet" title="color4" media="all">
   <link href="{{asset('assets3/css/color5.css')}}" rel="alternate stylesheet" title="color5" media="all">
   <script src="{{asset('assets3/js/jquery-1.11.3.min.js')}}"></script>
+
 </head>
 
 <body>

@@ -54,6 +54,7 @@ class DashboardController extends Controller
 
     public function getTree(){
         $user = Employeer::where('id',Auth::id())->with('children')->first();
+        $child = array();
         for ($i=0; $i < 3; $i++) {
             if(isset($user->children[$i])){
                 $user->children[$i] = Employeer::where('id',$user->children[$i]->id)->with('children')->first(); 
@@ -73,6 +74,27 @@ class DashboardController extends Controller
             }
         };
         return response()->json($user);
-    }   
+    }
+    
+    // public function getTree(){
+    //     $user = Employeer::where('id',Auth::id())->with('children')->first();
+    //     $position = 0;
+    //     $tree = new \stdClass();
+    //     for ($i=0; $i < 3; $i++) {
+    //         if(isset($user->children[$i])){
+    //             $position = $user->children[$i]->position;
+    //             $child->children[$position] =  $user->children[$i];
+    //             $user->children[$i] = Employeer::where('id',$user->children[$i]->id)->with('children')->first(); 
+    //             for ($j=0; $j<3; $j++){
+    //                 if(isset($user->children[$i]->children[$j])){
+    //                     $position = $user->children[$i]->children[$j]->position;
+    //                     $child->children[$i]->children[$position] = $user->children[$i]->children[$j];           
+    //                 }
+    //             }
+    //         }
+    //     };
+    //    // dd($child);
+    //     return response()->json($child);
+    // }
         
 }
