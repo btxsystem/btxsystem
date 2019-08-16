@@ -17,7 +17,7 @@ class TreeController extends Controller
 
     public function tree(){
     	$data = Auth::user();
-    	return view('admin.tree.index')->with('profile',$data);;
+    	return view('admin.tree.index')->with('profile',$data);
     }
 
     public function getTree(){

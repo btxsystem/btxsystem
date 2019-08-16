@@ -96,6 +96,13 @@ Route::group(['prefix' => 'select', 'as'=> 'select.'], function () {
         Route::get('/{id}/detail/username', ['as' => 'username', 'uses' => 'Admin\BitrexPointController@getUsername']);
     });
 
+    Route::group(['prefix'=>'event','as'=>'event.'], function(){
+            Route::get('', ['as' => 'index', 'uses' => 'Admin\EventController@index']);
+    });
+
+    Route::group(['prefix'=>'promotion','as'=>'promotion.'], function(){
+            Route::get('', ['as' => 'index', 'uses' => 'Admin\PromotionController@index']);
+    });
 
 /*Route::group(['prefix'=>'member','as'=>'member.'], function(){
     Route::get('/login', 'AuthEmployeer\LoginController@showLoginAdmin')->name('login');
