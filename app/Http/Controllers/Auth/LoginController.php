@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Employeer;
 use Auth;
+use Alert;
+
 class LoginController extends Controller
 {
   public function getLogin()

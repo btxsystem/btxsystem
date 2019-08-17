@@ -17,11 +17,13 @@
   <link href="{{asset('assets3/css/color4.css')}}" rel="alternate stylesheet" title="color4" media="all">
   <link href="{{asset('assets3/css/color5.css')}}" rel="alternate stylesheet" title="color5" media="all">
   <script src="{{asset('assets3/js/jquery-1.11.3.min.js')}}"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
 
 </head>
 
 <body>
-
+@include('sweet::alert')
 <style type="text/css">
 img.header-logo__img {
     margin-top: 15px;

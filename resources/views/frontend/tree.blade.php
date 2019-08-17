@@ -43,13 +43,6 @@
 
 @section('footer_scripts')
 		<style>
-			/*circle{
-				fill: white;
-				stroke: silver;
-				width: 80px;
-				height: 40px;
-				stroke-width: 2;
-			}*/
 			rect {
 				fill: #ebebeb;
 				stroke: #ebebeb;
@@ -104,7 +97,7 @@
 					console.log(data);
 					
 			      	var data = data;
-					var treeStructure = d3.tree().size([1600,380]);
+					var treeStructure = d3.tree().size([1500,380]);
 
 					var root = d3.hierarchy(data).sort(function(a, b) { return a.data.position - b.data.position ;});
 					treeStructure(root);

@@ -14,20 +14,12 @@ class PvController extends Controller
     public function index()
     {
         $data = Auth::user();
-        $history = DB::table('history_pv')->select('pv','pv_today','created_at as date')->where('id_member',$data->id);
-        if (request()->ajax()) {
-            return Datatables::of($history)
-                    ->addIndexColumn()
-                    ->editColumn('date', function($history) {
-                        return date('F j, Y',strtotime($history->date));
-                    })
-                    ->make(true);
-        }
-        
         return view('frontend.pv')->with('profile',$data);
     }
 
-    public function getHistoryPoints(){
-        
+    public function getHistoryPv(){
+        $data = Auth::user();
+        $history = DB::table('history_pv')->select('pv','pv_today','created_at as date')->where('id_member',$data->id)->orderBy('created_at','desc')->paginate(3);
+        return response()->json(['pv'=>$history]); 
     }
 }
