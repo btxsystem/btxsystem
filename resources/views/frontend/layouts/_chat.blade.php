@@ -8,7 +8,7 @@
             <div class="chat-widget">
             <ul class="chat-scroll-list clearfix">
                 <li class="left float-left">
-                    <img src="assets/images/xs/avatar3.jpg" class="rounded-circle" alt="">
+                    <img src="{{asset('assets2/images/xs/avatar3.jpg')}}" class="rounded-circle" alt="">
                     <div class="chat-info">
                         <a class="name" href="#">Alexander</a>
                         <span class="datetime">6:12</span>                            
@@ -21,10 +21,10 @@
                 <li class="right">
                     <div class="chat-info"><span class="datetime">6:16</span> <span class="message">There are many variations of passages of Lorem Ipsum available</span> </div>
                 </li>
-                <li class="left float-left"> <img src="assets/images/xs/avatar2.jpg" class="rounded-circle" alt="">
+                <li class="left float-left"> <img src=""{{asset('assets2/images/xs/avatar2.jpg')}}"" class="rounded-circle" alt="">
                     <div class="chat-info"> <a class="name" href="#">Elizabeth</a> <span class="datetime">6:25</span> <span class="message">Hi, Alexander,<br> John <br> What are you doing?</span> </div>
                 </li>
-                <li class="left float-left"> <img src="assets/images/xs/avatar1.jpg" class="rounded-circle" alt="">
+                <li class="left float-left"> <img src=""{{asset('assets2/images/xs/avatar1.jpg')}}"" class="rounded-circle" alt="">
                     <div class="chat-info"> <a class="name" href="#">Michael</a> <span class="datetime">6:28</span> <span class="message">I would love to join the team.</span> </div>
                 </li>
                     <li class="right">

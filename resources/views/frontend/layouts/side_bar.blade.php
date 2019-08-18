@@ -71,6 +71,7 @@
                     <li><a href="{{route('member.bitrex-money.pv')}}">Pv</a> </li>
                 </ul>
             </li>
+            <li> <a href="{{route('member.tree')}}"><i class="zmdi zmdi-shopping-cart col-yellow"></i><span>History Transaction</span> </a> </li>
             <li class="header">Profile</li>
             <li> <a href="{{route('member.profile.index')}}"><i class="zmdi zmdi-account col-purple"></i><span>My Profile</span> </a> </li>
             <li> <a data-toggle="modal" data-target="#change-password"><i class="zmdi zmdi-rotate-right col-red"></i><span>Reset Password</span> </a> </li> 

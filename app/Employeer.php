@@ -3,7 +3,6 @@
 namespace App;
 use Nestable\NestableTrait;
 use Illuminate\Database\Eloquent\Model;
-use Laravel\Passport\HasApiTokens;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -47,8 +46,11 @@ class Employeer extends Authenticatable
     }
 
     public function children(){
-        return $this->hasMany('App\Employeer', 'parent_id');
-        // return \DB::table('employeer')->where('parent_id', $this->id)->get();
+        return $this->hasMany( 'App\Employeer', 'parent_id', 'id' );
+    }
+      
+    public function parent(){
+        return $this->hasOne( 'App\Employeer', 'id', 'parent_id' );
     }
 
 }

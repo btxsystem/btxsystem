@@ -101,7 +101,13 @@ Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
         Route::get('daily-retail', ['as' => 'daily-retail', 'uses' => 'Member\DashboardController@getAutoRetailDaily']);
         Route::get('training', ['as' => 'training', 'uses' => 'Member\DashboardController@getTraining']);
         Route::get('tree', ['as' => 'tree', 'uses' => 'Member\DashboardController@getTree']);
+        Route::get('history-points', ['as' => 'history-points', 'uses' => 'Member\BitrexPointController@getHistoryPoints']);
+        Route::get('history-cash', ['as' => 'history-cash', 'uses' => 'Member\BitrexCashController@getHistoryCash']);
+        Route::get('history-pv', ['as' => 'history-pv', 'uses' => 'Member\PvController@getHistoryPv']);
         Route::get('daily-bonus-sponsor', ['as' => 'daily-bonus-sponsor', 'uses' => 'Member\DashboardController@getBonusSponsorDaily']);
+        Route::get('daily-pairing', ['as' => 'daily-pairing', 'uses' => 'Member\DashboardController@getBonusPairing']);
+        Route::get('generate', ['as' => 'generate', 'uses' => 'Member\PvController@generate']);
+
     });
 
     Route::group(['prefix' => 'profile', 'as'=> 'profile.'], function () {

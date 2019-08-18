@@ -32,7 +32,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <!-- BEGIN SAMPLE TABLE PORTLET-->
-                        <a href="{{ route('admin.trainings.create') }}" class="btn btn-primary"><i class="fa fa-plus" style="margin-right: 10px;"></i>Add</a>
+                        <a href="{{ route('trainings.create') }}" class="btn btn-primary"><i class="fa fa-plus" style="margin-right: 10px;"></i>Add</a>
                         <div class="portlet box primary" style="margin-top: 15px;">
                             <div class="portlet-title">
                                 <div class="caption">
@@ -87,7 +87,7 @@
               processing: true,
               serverSide: true,
               ajax: {
-                url: "{{ route('admin.trainings.index') }}",
+                url: "{{ route('trainings.index') }}",
               },
 
               columns: [

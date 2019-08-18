@@ -114,7 +114,7 @@
       </div>
     </div>
     <div class="row clearfix">
-      <div class="col-lg-8 col-md-12">
+      <div class="col-lg-12 col-md-12">
         <div class="card product-report">
             <div class="header">
                 <h2>Daily Bonus</h2>
@@ -131,7 +131,7 @@
                   <div class="col-lg-3 col-md-3 col-sm-3">
                       <div class="icon l-turquoise"><i class="zmdi zmdi-chart"></i></div>
                       <div class="col-in">
-                          <h3 class="counter m-b-0">6,481</h3>
+                          <h3 class="counter m-b-0 pairing"></h3>
                           <small class="text-muted m-t-0">Pairing</small>
                       </div>
                   </div>
@@ -239,6 +239,25 @@
                         $('.date').append('Date : ' + data.training.date);
 
                    }
+                }
+            });
+
+            $.ajax({
+                url: '{{route("member.select.daily-pairing")}}',
+                data: data,
+                success:function(data){
+                    $('.pairing').append(data.bonus_pairing.nominal);
+                    $('.pairing').each(function () {
+                        $(this).prop('Counter',0).animate({
+                            Counter: $(this).text()
+                        }, {
+                            duration: 2000,
+                            easing: 'swing',
+                            step: function (now) {
+                                $(this).text(Math.ceil(now));
+                            }
+                        });
+                    });
                 }
             });
 

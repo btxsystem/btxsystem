@@ -13,9 +13,10 @@
                     <div class="form-group">
                       <input class="form-control" type="text" name="username" placeholder="Username">
                       <input class="form-control" type="password" name="password"  placeholder="Password">
-
+                      <div class="" style="color:red;">
+                          
+                      </div>
                     </div>
-
                     <div class="find-course__wrap-btn">
                       <button type="submit" class="btn btn-effect btn-info">SUBMIT</button>
                     </div>
@@ -26,29 +27,10 @@
           </div>
         </div>
       </div>
-
-
-
-      <!-- <div id="sliderpro1" class="slider-pro main-slider">
-        <div class="sp-slides">
-          <div class="sp-slide"> <img class="sp-image" src="http://templines.rocks/html/academica/assets/media/main-slider/1.jpg"
-          data-src="http://templines.rocks/html/academica/assets/media/main-slider/1.jpg"
-          data-retina="http://templines.rocks/html/academica/assets/media/main-slider/1.jpg" alt="img"/>
-            <div class="item-wrap sp-layer  sp-padding" data-horizontal="700" data-vertical="1"
-          data-show-transition="left" data-hide-transition="up" data-show-delay="400" data-hide-delay="200">
-              <div class="main-slider__inner text-center">
-                <div class="main-slider__title" >Welcome to Bitrexgo</div>
-                <div class="main-slider__subtitle ">A place to learn about trading.</div>
-                <a class="main-slider__btn btn btn-warning btn-effect" href="/">VIEW</a> </div>
-
-                <!-- <div class="col-md-12">
-
-                </div> -->
-
-            </div>
-          </div>
-        </div>
-      </div> 
+      </div>
+    </div>
+  </div>
+</div> 
 
       <!-- end main-slider -->
 

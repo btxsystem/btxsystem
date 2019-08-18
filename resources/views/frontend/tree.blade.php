@@ -43,13 +43,6 @@
 
 @section('footer_scripts')
 		<style>
-			/*circle{
-				fill: white;
-				stroke: silver;
-				width: 80px;
-				height: 40px;
-				stroke-width: 2;
-			}*/
 			rect {
 				fill: #ebebeb;
 				stroke: #ebebeb;
@@ -94,7 +87,7 @@
 				panzoom(element);
 			});
 			var svg = d3.select("#example").append("svg")
-				.attr("width",1000).attr("height",500)
+				.attr("width",1200).attr("height",800)
 				.append("g").attr("transform", "translate(60,0)")
 				.attr('id', 'bah');
 			$.ajax({
@@ -104,7 +97,7 @@
 					console.log(data);
 					
 			      	var data = data;
-					var treeStructure = d3.tree().size([1600,380]);
+					var treeStructure = d3.tree().size([1500,380]);
 
 					var root = d3.hierarchy(data).sort(function(a, b) { return a.data.position - b.data.position ;});
 					treeStructure(root);

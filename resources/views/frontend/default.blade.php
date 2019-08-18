@@ -53,12 +53,6 @@
 
     @include('frontend.layouts.side_bar')
 
-<!-- Right Sidebar -->
-    @include('frontend.layouts.right_bar')
-
-<!-- Chat-launcher -->
-    @include('frontend.layouts._chat')
-
 <!-- Main Content -->
 @yield('content')
 
@@ -73,6 +67,8 @@
 
 <script src="{{asset('assets2/bundles/mainscripts.bundle.js')}}"></script>
 <script src="{{asset('assets2/js/pages/index.js')}}"></script>
+<script src="{{asset('assets2/js/moment.js')}}"></script>
+<script src="{{asset('assets2/js/number.js')}}"></script>
 <script src="{{asset('assets2/js/pages/charts/jquery-knob.min.js')}}"></script>
 
 <!-- Jquery Datatable -->
