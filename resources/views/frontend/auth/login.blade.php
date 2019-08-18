@@ -335,7 +335,9 @@
               <div class="col-sm-6">
                 <!-- <form class="subscribe__form" action="get"> -->
                   <!-- <input class="subscribe__input form-control" type="text" placeholder="Your Email address ..."> -->
-                  <button class="subscribe__btn btn btn-success btn-effect" data-toggle="modal" data-target="#testimony" style="width: 200px;margin-right: 80px;margin-top: 20px;">Submit</button>
+                <div class="btnBook">
+                  <button class="subscribe__btn btn btn-effect" data-toggle="modal" data-target="#testimony" style="width: 200px;margin-right: 80px;margin-top: 20px; color: #fff;">Submit</button>
+                </div>
                 <!-- </form> -->
                 <!-- Modal -->
                 <div class="modal fade" id="testimony" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -347,14 +349,15 @@
                           <span aria-hidden="true">&times;</span>
                         </button>
                       </div>
-                      <div class="modal-body">
+                      <div class="modal-body" style="height: auto;">
                         <input class="form-control" type="text" placeholder="Nama">
                         <input class="form-control" type="text" placeholder="Email">
-                        <input class="form-control" type="text" placeholder="Your Testimony Here..." style="height: 200px;">
+                        <textarea class="form-control" placeholder="Your Testimony Here..." style="min-width: 100%; max-width: 100%; min-height: 150px; max-height: 150px;"></textarea>  
                       </div>
                       <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-success">Send Testimony</button>
+                        <button type="button" class="btn" style="background-color: #b92240; color: #fff;">Send Testimony</button>
+                        <button type="button" class="btn" style="background-color: orange; color: #fff; margin-top: -5px;" data-dismiss="modal">Close</button>
+                      </div>
                       </div>
                     </div>
                   </div>
