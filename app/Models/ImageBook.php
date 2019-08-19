@@ -12,4 +12,9 @@ class ImageBook extends Model
     'book_id',
     'image_id'
   ];
+
+  public function image()
+  {
+      return $this->hasOne('\App\Models\Image', 'id', 'image_id');
+  }
 }

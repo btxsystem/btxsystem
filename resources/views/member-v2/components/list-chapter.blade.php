@@ -4,6 +4,10 @@
     @parent
 @stop
 
+@section('styles')
+<link rel="stylesheet" href="{{asset('assetsebook/assets/css/style.css')}}">
+@stop
+
 @section('style_class')bit-bg4 @stop
 
 @section('content')

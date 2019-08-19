@@ -4,11 +4,69 @@
     @parent
 @stop
 
-@section('style_class')bit-bg1 @stop
+@section('styles')
+<link rel="stylesheet" href="{{asset('assetsebook/v2/css/style.css')}}">
+@stop
+
+@section('style_class')bg-1 @stop
 
 @section('content')
-@include('member-v2.partials.navbar')
-<div class="pt-md-5 pb-md-4 text-center mb-4 title-3">
+<div class="col-12 d-flex justify-content-center" style="position: absolute; z-index: 1030;">
+		<div class="col-lg-2 col-6 py-3">
+			<img src="{{asset('assetsebook/v2/img/logo-white.png')}}" class="mx-auto d-block img-fluid logo">
+		</div>
+	</div>
+
+	<div id="carouselExampleControls" class="carousel slide" data-ride="carousel" style="max-height: 655px; overflow: hidden;">
+	  <div class="carousel-inner" style="background: #333;">
+	    <div class="carousel-item active">
+	      <img src="https://assets.regus.com/images/nwp/homepage-product-office-space.jpg" class="d-block w-100" style="opacity: 0.5">
+	    </div>
+	    <div class="carousel-item">
+	      <img src="https://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE2uXZM?ver=a904&q=90&m=2&h=768&w=1024&b=%23FFFFFFFF&aim=true" class="d-block w-100" style="opacity: 0.5">
+	    </div>
+	    <div class="carousel-item">
+	      <img src="https://www.it.unsw.edu.au/students/software/office365.jpeg" class="d-block w-100" style="opacity: 0.5">
+	    </div>
+	  </div>
+	</div>
+
+	<div class="my-5">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-6 mb-3">
+					<div class="bg-white shadow rounded p-3 border-hover">
+						<div class="row">
+							<div class="col-lg-3 d-flex align-items-center">
+								<img src="{{asset('assetsebook/v2/img/1.png')}}" class="mx-auto d-block">
+							</div>
+							<div class="col-lg-9">
+								<h2 class="mb-0" style="color: #8543da;">Basic</h2>
+								<span>Materi basic untuk mempermudah anda dalam tahap belajar forex.</span><br>
+								<a href="detail.html" class="btn btn-purple btn-sm mt-3 px-5">BUY</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-6 mb-3">
+					<div class="bg-white shadow rounded p-3 border-hover">
+						<div class="row">
+							<div class="col-lg-3 d-flex align-items-center">
+								<img src="{{asset('assetsebook/v2/img/2.png')}}" class="mx-auto d-block">
+							</div>
+							<div class="col-lg-9">
+								<h2 class="mb-0" style="color: #8543da;">Advanced</h2>
+								<span>Materi Advanced untuk tingkatan lebih lanjut dalam belajar forex.</span><br>
+								<a href="detail.html" class="btn btn-purple btn-sm mt-3 px-5">BUY</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+<!-- <div class="pt-md-5 pb-md-4 text-center mb-4 title-3">
   <h3 class="text-center colorwhite bit-relative"><b>Bitrexgo Premium</b></h3>
 </div>
 <div class="container c1">
@@ -52,26 +110,8 @@
           </ul>
         </div>
       </div>
-      <!-- <div class="card mb-4 shadow-sm mb-5">
-        <div class="card-header">
-          <h5>12 Bulan</h5>
-        </div>
-        <div class="card-body d-flex flex-column">
-          <h3 class="card-title pricing-card-title">Rp.59,000</h3>
-          <p class="fz16 f5 m0">Per Bulan</p>
-          <ul class="list-unstyled mt-3 mb-4 price-list">
-            <li>Akses Semua Konten</li>
-            <li>Akses Semua Kursus</li>
-            <li>Coding Area</li>
-            <li>Group Facebook</li>
-            <li>Tshirt Exclusive</li>
-            <li>Konsultasi dengan praktisi</li>
-          </ul>
-          <button class="btn btn-md btn-warning mt-auto bit-btn4">Pilih Paket</button>
-        </div>
-      </div> -->
     </div>
   </div>
 </div>
-</div>
+</div> -->
 @stop

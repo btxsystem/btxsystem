@@ -16,4 +16,9 @@ class Book extends Model
   {
       return $this->hasMany('\App\Models\BookChapter', 'book_id', 'id');
   }
+
+  public function imageBooks()
+  {
+      return $this->hasMany('\App\Models\ImageBook', 'book_id', 'id');
+  }
 }

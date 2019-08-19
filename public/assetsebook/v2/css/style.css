@@ -1,0 +1,52 @@
+a.hover{
+	text-decoration: none;
+	color: #333;
+}
+
+a.hover .shadow {
+	border : 2px solid transparent;
+}
+
+a.hover .shadow:hover {
+	border : 2px solid rgba(130, 34, 216, 1);
+}
+
+.bg-1 {
+	background-color: rgba(130, 34, 216, 1);
+	background: -moz-linear-gradient(left, rgba(130, 34, 216, 1) 0%, rgba(168, 29, 231, 1) 100%);
+	background: -webkit-gradient(left top, right top, color-stop(0%, rgba(130, 34, 216, 1)), color-stop(100%, rgba(168, 29, 231, 1)));
+	background: -webkit-linear-gradient(left, rgba(130, 34, 216, 1) 0%, rgba(168, 29, 231, 1) 100%);
+	background: -o-linear-gradient(left, rgba(130, 34, 216, 1) 0%, rgba(168, 29, 231, 1) 100%);
+	background: -ms-linear-gradient(left, rgba(130, 34, 216, 1) 0%, rgba(168, 29, 231, 1) 100%);
+	background-color: linear-gradient(to right, rgba(130, 34, 216, 1) 0%, rgba(168, 29, 231, 1) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#8222d8', endColorstr='#a81de7', GradientType=1);
+}
+
+.btn-purple {
+	background: rgba(130, 34, 216, 1);
+	background: -moz-linear-gradient(left, rgba(130, 34, 216, 1) 0%, rgba(168, 29, 231, 1) 100%);
+	background: -webkit-gradient(left top, right top, color-stop(0%, rgba(130, 34, 216, 1)), color-stop(100%, rgba(168, 29, 231, 1)));
+	background: -webkit-linear-gradient(left, rgba(130, 34, 216, 1) 0%, rgba(168, 29, 231, 1) 100%);
+	background: -o-linear-gradient(left, rgba(130, 34, 216, 1) 0%, rgba(168, 29, 231, 1) 100%);
+	background: -ms-linear-gradient(left, rgba(130, 34, 216, 1) 0%, rgba(168, 29, 231, 1) 100%);
+	background: linear-gradient(to right, rgba(130, 34, 216, 1) 0%, rgba(168, 29, 231, 1) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#8222d8', endColorstr='#a81de7', GradientType=1);
+	color: #fff !important;
+}
+
+.btn-purple:hover {
+	background: linear-gradient(to right, rgba(168, 29, 231, 1) 100%, rgba(130, 34, 216, 1) 0%);
+}
+
+.detail-padding {
+	padding-top: 100px;
+}
+
+@media (max-width: 450px) {
+	.detail-padding {
+		padding-top: 80px;
+	}
+	.pb-sm {
+		padding-bottom: 20px;
+	}
+}
