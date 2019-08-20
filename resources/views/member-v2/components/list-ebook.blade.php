@@ -4,11 +4,108 @@
     @parent
 @stop
 
+@section('styles')
+<link rel="stylesheet" href="{{asset('assetsebook/v2/css/style.css')}}">
+@stop
+
 @section('style_class')bit-bg4 @stop
 
 @section('content')
-@include('member-v2.partials.navbar')
-<div class="bit-jumbo"></div>
+<div class="bg-1 col-12 d-flex justify-content-center" style="position: absolute; height: 50vh;">
+	</div>
+	<div class="col-lg-12 pb-3">
+		<a href="index.html">
+			<img src="{{asset('assetsebook/v2/img/logo-white.png')}}" class="mx-auto d-block img-fluid pt-3" style="height: 80px;">
+		</a>
+		<div class="detail-padding">
+			<div class="container">
+				<div class="bg-white shadow rounded p-3 mb-5">
+					<div class="row">
+						<div class="col-lg-4 pb-sm">
+							<img src="http://demo.viewpreview.online/assets/img/illustration6.png" class="w-100">
+						</div>
+						<div class="col-lg-8">
+							<img src="http://demo.viewpreview.online/assets/img/bookmark-green.png" class="float-right d-block">
+							<h3>Menjadi Seorang Treder Forex</h3>
+							<span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</span>
+						</div>
+					</div>
+				</div>
+        @foreach($books as $book)
+				<div class="d-flex align-items-center">
+					<img src="http://demo.viewpreview.online/assets/img/star.png" class="img-fluid mr-3">
+					<span>{{ ucwords($book->title) }}</span><button class="btn btn-purple px-5 ml-3" onclick="selectedSubscription('{{$book}}')">BUY</button>
+				</div>
+				<hr>
+        <div class="row mb-5">
+        @foreach($book->bookEbooks as $ebook)
+          <a href="#" class="col-lg-3 mb-3 hover">
+						<div class="shadow rounded p-3" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+							<div style="overflow: hidden;" class="mb-2">
+								<img src="{{asset($ebook->book->imageBooks[0]->image->src)}}" class="img-fluid w-100">
+							</div>
+							<span style="font-size: 20px; font-weight: bold;">{{ $ebook->book->title }}</span><br>
+							<span>{{ $ebook->book->article }}</span>
+						</div>
+					</a>
+        @endforeach
+        </div>
+        @endforeach
+				<!-- <div class="d-flex align-items-center">
+					<img src="http://demo.viewpreview.online/assets/img/book-icon.png" class="img-fluid mr-2" style="height: 20px;">
+					<span>Advanced</span><button class="btn btn-purple px-5 ml-3" data-toggle="modal" data-target="#exampleModal">BUY</button>
+				</div>
+				<hr>
+				<div class="row mb-3">
+					<a href="#" class="col-lg-3 mb-3 hover">
+						<div class="shadow rounded p-3" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+							<div style="overflow: hidden;" class="mb-2">
+								<img src="http://demo.viewpreview.online/assets/img/illustration9.png" class="img-fluid w-100">
+							</div>
+							<span style="font-size: 20px; font-weight: bold;">Membangun Aplikasi iOS</span><br>
+							<span>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+							tempor incididunt ut labore et dolore magna aliqua.</span>
+						</div>
+					</a>
+				</div> -->
+			</div>
+		</div>
+	</div>
+
+	<!-- Modal -->
+		<div class="modal fade" id="modal-subscription" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content bg-1 text-white">
+		      <div class="modal-body">
+		      	<img src="{{asset('assetsebook/v2/img/logo-white.png')}}" class="img-fluid mb-3 mx-auto d-block" style="width: 130px;">
+					  <div class="form-group">
+					    <label for="exampleInputEmail1">Refferal <small class="text-danger">*</small></label>
+					    <input type="text" class="form-control" id="referral" aria-describedby="emailHelp" placeholder="Refferal" required>
+					  </div>
+					  <div class="form-group">
+					    <label for="exampleInputPassword1">Fullname <small class="text-danger">*</small></label>
+					    <input type="text" class="form-control" id="fullname" placeholder="Fullname" required>
+					  </div>
+					  <div class="form-group">
+					    <label for="exampleInputPassword1">Email <small class="text-danger">*</small></label>
+					    <input type="email" class="form-control" id="email" placeholder="Email" required>
+					  </div>
+					  <div class="form-group">
+					    <label for="exampleInputPassword1">Phone Number <small class="text-danger">*</small></label>
+					    <input type="number" class="form-control" id="phone_number" placeholder="Phone number" required>
+					  </div>
+					  <span>Total yang dibayar : </span><b><span id="total_price"></span></b>
+		      </div>
+		      <div class="modal-footer justify-content-center">
+		        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+		        <button type="button" class="btn btn-primary">Submit</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+	<!-- End Modal -->
+
+<!-- <div class="bit-jumbo"></div>
 <div class="container mb50" style="padding-left: 5%; padding-right: 5%;">
 <div class="row mt50">
     <div class="col-md-12">
@@ -25,19 +122,12 @@
                   <h5 class="media-heading fz20">Menjadi Seorang Web Developer</h5>
                   <p class="fz14">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
                   <hr>
-                  <!-- <div class="float-left">
-                    <span><img src="assets/img/materi.png" class="media-object"> 5</span>
-                    <span><img src="assets/img/pilot.png" class="media-object"> 3</span>
-                  </div> -->
                   <div class="float-right">
                       <button class="btn btn-md btn-warning bit-btn5">
                       Mulai Belajar
                       </button>
                   </div>
                 </div>
-                <!-- <div class="media-right col-lg-1 col-sm-1 col-2">
-                  <img src="assets/img/bookmark-green.png" class="media-object">
-                </div> -->
             </div>
           </div>
       </div>
@@ -55,16 +145,7 @@
                         <h5 class="media-heading fz20 mt20 text-dark">{{ $book->title }}</h5>
                         <p class="fz14 text-dark">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore ab quas atque, vero ipsa odio quod quia, dolor pariatur exercitationem aperiam soluta.</p>
                     </a>
-                      <!-- <div class="mt-auto">
-                        <hr>
-                        <div class="float-left">
-                            <span><img src="{{asset('ebook/assets/img/materi.png')}}" height="15" class="mtmin3 mr5"> 5</span>
-                            <span><img src="{{asset('ebook/assets/img/pilot.png')}}" height="18" class="mtmin3 mr5"> 3</span>
-                        </div>
-                        <div class="float-right">
-                            <img src="assets/img/bookmark.png" class="media-object">
-                        </div>
-                      </div> -->
+
                   </div>
                 </div>
             </div>
@@ -72,5 +153,20 @@
           </div>
       </div>
     </div>
-</div>
+</div> -->
+@stop
+
+@section('footer_scripts')
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script>
+function selectedSubscription(param) {
+  $('#modal-subscription').modal('show')
+
+  const data = JSON.parse(param)
+
+  $('#total_price').html(data.price)
+}
+</script>
 @stop

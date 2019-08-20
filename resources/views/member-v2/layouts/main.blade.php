@@ -12,7 +12,7 @@
 <!-- Favicon-->
 <link rel="icon" href="favicon.ico" type="image/x-icon">
 <link rel="stylesheet" href="{{asset('assetsebook/assets/css/bootstrap.css')}}">
-<link rel="stylesheet" href="{{asset('assetsebook/assets/css/style.css')}}">
+@yield('styles')
 <link rel="stylesheet" href="{{asset('assetsebook/assets/css/responsive.css')}}">
 <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:400,700" rel="stylesheet">
 <link rel="stylesheet" href="{{asset('assetsebook/assets/css/icheck.css')}}">
