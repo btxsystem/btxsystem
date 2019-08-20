@@ -40,6 +40,7 @@ Route::group(['prefix' => 'select', 'as'=> 'select.'], function () {
             Route::get('', ['as' => 'index', 'uses' => 'Admin\RolesController@index']);
             Route::get('create', ['as' => 'create', 'uses' => 'Admin\RolesController@create']);
             Route::post('store', ['as' => 'store', 'uses' => 'Admin\RolesController@store']);
+            Route::get('{id}/edit', ['as' => 'edit', 'uses' => 'Admin\UsersController@edit']);
             Route::get('/{id}',['as' => 'delete', 'uses' => 'Admin\RolesController@destroy']);
         });
 

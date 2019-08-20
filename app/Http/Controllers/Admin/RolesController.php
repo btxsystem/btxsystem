@@ -21,8 +21,8 @@ class RolesController extends Controller
             return Datatables::of($data)
                     ->addIndexColumn()
                     ->addColumn('action', function($row) {
-                        return '<a class="btn btn-warning fa fa-edit"></a>
-                                <a class="btn btn-danger fa fa-trash" href="'.route('admin.admin-management.roles.delete',$row->id).'"></a>';
+                        return '<a class="btn btn-warning fa fa-edit" href="'.route('admin-management.roles.edit',$row->id).'"></a>
+                                <a class="btn btn-danger fa fa-trash" href="'.route('admin-management.roles.delete',$row->id).'"></a>';
                     })
                     ->rawColumns(['action'])
                     ->make(true);

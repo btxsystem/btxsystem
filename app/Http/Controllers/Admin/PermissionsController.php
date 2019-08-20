@@ -13,7 +13,7 @@ class PermissionsController extends Controller
     {
         
         if (request()->ajax()) {
-            $data = Permission::all('title');
+            $data = Permission::all('title','name');
             return Datatables::of($data)
                     ->addIndexColumn()
                     ->make(true);

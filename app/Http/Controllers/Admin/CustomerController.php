@@ -12,7 +12,7 @@ use Validator;
 
 class CustomerController extends Controller
 {
-    public function index(){
+    public function index(){    
         if (request()->ajax()) {
             $data = Customer::all();
 

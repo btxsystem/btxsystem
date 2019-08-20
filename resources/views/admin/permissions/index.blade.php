@@ -66,7 +66,7 @@ List Of Permissions
               
               columns: [
                   {data: 'DT_RowIndex', name: 'DT_RowIndex'},
-                  {data: 'title', name: 'title'},
+                  {data: 'name', name: 'name'},
                 //  {data: 'email', name: 'email'},
                 //  {data: 'action', name: 'action', orderable: false, searchable: false},
               ]
