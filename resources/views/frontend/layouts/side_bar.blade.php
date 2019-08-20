@@ -64,6 +64,7 @@
             <li class="header">Menu</li>
             <li> <a href="{{route('member.dashboard')}}"><i class="zmdi zmdi-view-dashboard col-red"></i><span>Dashboard</span> </a> </li>
             <li> <a href="{{route('member.tree')}}"><i class="zmdi zmdi-device-hub col-blue"></i><span>Tree</span> </a> </li>
+            <li> <a href=""><i class="zmdi zmdi-accounts col-purple"></i><span>Prospected Member</span> </a> </li>
             <li><a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-money col-green"></i><span>Income and expenses</span> </a>
                 <ul class="ml-menu">
                     <li><a href="{{route('member.bitrex-money.bitrex-points')}}">Points</a> </li>
@@ -71,7 +72,12 @@
                     <li><a href="{{route('member.bitrex-money.pv')}}">Pv</a> </li>
                 </ul>
             </li>
-            <li> <a href="{{route('member.tree')}}"><i class="zmdi zmdi-shopping-cart col-yellow"></i><span>History Transaction</span> </a> </li>
+            <li><a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-shopping-cart col-orange"></i><span>Transaction</span> </a>
+                <ul class="ml-menu">
+                    <li><a href="{{route('member.transaction.my-transaction')}}">My Transactions</a></li>
+                    <li><a href="{{route('member.transaction.prospected-member-transaction')}}">Prospected Member Transactions</a></li>
+                </ul>
+            </li>
             <li class="header">Profile</li>
             <li> <a href="{{route('member.profile.index')}}"><i class="zmdi zmdi-account col-purple"></i><span>My Profile</span> </a> </li>
             <li> <a data-toggle="modal" data-target="#change-password"><i class="zmdi zmdi-rotate-right col-red"></i><span>Reset Password</span> </a> </li> 
