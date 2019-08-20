@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateRanksTable extends Migration
+class CreateRewardsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -20,7 +20,6 @@ class CreateRanksTable extends Migration
             $table->integer('pv_needed_midle');
             $table->integer('pv_needed_right');
             $table->integer('needed_sponsor');
-            $table->timestamps();
         });
     }
 

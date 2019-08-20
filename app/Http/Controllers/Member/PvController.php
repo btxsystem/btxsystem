@@ -27,35 +27,41 @@ class PvController extends Controller
         $pairings = DB::table('pairings')->join('employeers','pairings.id_member','=','employeers.id')
                                          ->select('pairings.pv_left','pairings.pv_midle','pairings.pv_right','pairings.id_member','employeers.rank_id','employeers.bitrex_cash')
                                          ->get();
-        //dd($pairings);
         foreach ($pairings as $key => $pairing) {
             $bonus = 0;
             $bonus_pairing = 0;
+            $tamp = 0;
             $max = true;
             while (($max) && (($pairing->pv_left >= 100 and $pairing->pv_midle >= 100) || ($pairing->pv_left >= 100 and $pairing->pv_right >= 100) || ($pairing->pv_right >= 100 and $pairing->pv_midle >= 100))) {
                 if (($pairing->pv_right <= $pairing->pv_left) and ($pairing->pv_right <= $pairing->pv_midle)) {
                     if (($pairing->pv_left <= $pairing->pv_midle)) {
-                        $bonus = $pairing->pv_left / 100;
+                        $tamp = $pairing->pv_left % 100;
+                        $bonus = ($pairing->pv_left - $tamp) / 100;
                     }else{
-                        $bonus = $pairing->pv_midle / 100;
+                        $tamp = $pairing->pv_midle % 100;
+                        $bonus = ($pairing->pv_midle - $tamp) / 100;
                     }
                     $bonus_pairing += $bonus*100000; 
                     $pairing->pv_left = $pairing->pv_left - (100 * $bonus);
                     $pairing->pv_midle = $pairing->pv_midle - (100 * $bonus);
                 }elseif (($pairing->pv_midle <= $pairing->pv_left) and ($pairing->pv_midle <= $pairing->pv_right)) {
                     if (($pairing->pv_left <= $pairing->pv_right)) {
-                        $bonus = $pairing->pv_left / 100;
+                        $tamp = $pairing->pv_left % 100;
+                        $bonus = ($pairing->pv_left - $tamp) / 100;
                     }else{
-                        $bonus = $pairing->pv_right / 100;
+                        $tamp = $pairing->pv_right % 100;
+                        $bonus = ($pairing->pv_right - $tamp) / 100;
                     }
                     $bonus_pairing += $bonus*100000;
                     $pairing->pv_left = $pairing->pv_left - (100 * $bonus);
                     $pairing->pv_right = $pairing->pv_right - (100 * $bonus);
                 }elseif (($pairing->pv_left <= $pairing->pv_midle) and ($pairing->pv_left <= $pairing->pv_right)) {
                     if (($pairing->pv_midle <= $pairing->pv_right)) {
-                        $bonus = $pairing->pv_midle / 100;
+                        $tamp = $pairing->pv_midle % 100;
+                        $bonus = ($pairing->pv_midle - $tamp) / 100;
                     }else{
-                        $bonus = $pairing->pv_right / 100;
+                        $tamp = $pairing->pv_right % 100;
+                        $bonus = ($pairing->pv_right - $tamp) / 100;
                     }
                     $bonus_pairing += $bonus*100000;
                     $pairing->pv_midle = $pairing->pv_midle - (100 * $bonus);
