@@ -159,7 +159,31 @@ function selectedSubscription(param = null) {
 }
 
 function submit() {
-	alert($('meta[name="_token"]').attr('content'))
+	let required = [
+		{
+			field: 'firstName',
+			message: 'First Name Required'
+		},
+		{
+			field: 'referralCode',
+			message: 'Referral Code Required'
+		}
+	]
+
+	let errors = [];
+
+	required.map(v => {
+		if($(`#${v.field}`).val() == '') {
+			alert(v.message)
+			errors.push(v)
+		}
+	})
+
+	if(errors.length > 0) {
+		alert('Some field are required')
+		return false;
+	}
+
 	$.ajaxSetup({
 		headers: {
 			'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
@@ -169,14 +193,19 @@ function submit() {
 		url: "{{ route('member.register') }}",
 		method: 'post',
 		data: {
-				userName: 'asep23',
-				referralCode: '001'
+				referralCode: $('#referralCode').val(),
+				lastName: $('#lastName').val(),
+				firstName: $('#firstName').val(),
+				email: $('#email').val(),
+				phoneNumber: $('#phoneNumber').val()
 		},
 		success: function(result){
 			console.log(result)
+			alert('Success Register')
 		},
 		error: function(err) {
 			console.log(err)
+			alert('Failed Register')
 		}});
 }
 </script>
