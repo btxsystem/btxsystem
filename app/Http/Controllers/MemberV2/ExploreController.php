@@ -12,6 +12,8 @@ use App\Models\Ebook;
 use App\Models\BookEbook;
 use App\Models\BookChapter;
 
+use App\Employeer;
+
 class ExploreController extends Controller
 {
   public $pathView = 'member-v2';
@@ -43,9 +45,20 @@ class ExploreController extends Controller
     ]);
   }
 
-  public function subscription()
+  public function subscription(Request $request, $username = null)
   {
-    return view($this->pathView . '.components.subscription');
+    $ebooks = Ebook::all();
+
+    $referral = '';
+    
+    if(Employeer::where('id_member', $username)->count() > 0) {
+      $referral = $username;
+    }
+
+    return view($this->pathView . '.components.subscription')->with([
+      'username' => $referral,
+      'ebooks' => $ebooks
+    ]);
   }
 
   public function chapters($id)
