@@ -21,7 +21,7 @@ Registration User
                <tbody>
                   <tr>
                      <td colspan="1">
-                        <form class="well form-horizontal" method="post" action="{{ route("customer.store") }}">
+                        <form class="well form-horizontal" method="{{ $data ? 'post' : 'put'}}" action="{{ $data ? route('customer.update',$data->id) : route("customer.store")  }}">
                             {{ csrf_field() }}
                            <fieldset>
                               <div class="form-group">
