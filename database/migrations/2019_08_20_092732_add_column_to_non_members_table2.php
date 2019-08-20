@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddColumnToNonMembersTable extends Migration
+class AddColumnToNonMembersTable2 extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class AddColumnToNonMembersTable extends Migration
     public function up()
     {
         Schema::table('non_members', function (Blueprint $table) {
-            //
+            $table->string('number_phone')->nullable();
         });
     }
 
@@ -25,8 +25,6 @@ class AddColumnToNonMembersTable extends Migration
      */
     public function down()
     {
-        Schema::table('non_members', function (Blueprint $table) {
-            //
-        });
+        $table->dropColumn('number_phone');
     }
 }

@@ -20,12 +20,12 @@
 <link rel="stylesheet" href="{{asset('assets2/css/ecommerce.css')}}">
 <link rel="stylesheet" href="{{asset('assets2/css/main.css')}}">
 <link rel="stylesheet" href="{{asset('assets2/css/color_skins.css')}}">
+<link rel="stylesheet" href="{{asset('assets2/css/datatable.css')}}">
+<link rel="stylesheet" href="{{asset('assets2/css/raw.css')}}">
+<link rel="stylesheet" href="{{asset('assets2/css/responsive.css')}}">
 
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
-
-<!-- Datatable -->
-<link rel="stylesheet" href="{{asset('assets2/plugins/jquery-datatable/dataTables.bootstrap4.min.css')}}">
 
 </head>
 
@@ -72,13 +72,10 @@
 <script src="{{asset('assets2/js/pages/charts/jquery-knob.min.js')}}"></script>
 
 <!-- Jquery Datatable -->
+<script src="{{asset('assets2/js/datatable.js')}}"></script>
+<script src="{{asset('assets2/js/raw-order.js')}}"></script>
+<script src="{{asset('assets2/js/responsive.js')}}"></script>
 <!-- Jquery DataTable Plugin Js --> 
-<script src="{{asset('assets2/bundles/datatablescripts.bundle.js')}}"></script>
-<script src="{{asset('assets2/plugins/jquery-datatable/buttons/dataTables.buttons.min.js')}}"></script>
-<script src="{{asset('assets2/plugins/jquery-datatable/buttons/buttons.bootstrap4.min.js')}}"></script>
-<script src="{{asset('assets2/plugins/jquery-datatable/buttons/buttons.colVis.min.js')}}"></script>
-<script src="{{asset('assets2/plugins/jquery-datatable/buttons/buttons.flash.min.js')}}"></script>
-<script src="{{asset('assets2/plugins/jquery-datatable/buttons/buttons.html5.min.js')}}"></script>
 <script type="text/javascript">
 
 $(document).ready(function(){

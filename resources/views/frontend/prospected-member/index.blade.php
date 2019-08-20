@@ -1,6 +1,6 @@
 @extends('frontend.default')
 @section('title')
-    Bitrex cash
+    Prospected Member
     @parent
 @stop
 @section('content')
@@ -8,7 +8,7 @@
     <div class="block-header">
         <div class="row">
             <div class="col-lg-7 col-md-6 col-sm-12">
-                <h2>Bitrex Cash History
+                <h2>Prospected Member
                 <small class="text-muted">Bitrexgo</small>
                 </h2>
             </div>
@@ -20,24 +20,19 @@
                 <table id="example" class="display nowrap" style="width:100%">
                     <thead>
                         <tr>
-                            <th>Seq.</th>
                             <th>Name</th>
-                            <th>Position</th>
-                            <th>Office</th>
-                            <th>Start date</th>
-                            <th>Salary</th>
+                            <th>Username</th>
+                            <th>Email</th>
+                            <th>Number Phone</th>
                         </tr>
                     </thead>
                     <tbody>
                     </tbody>
                     <tfoot>
-                        <tr>
-                        <th>Seq.</th>
-                        <th>Name</th>
-                        <th>Position</th>
-                        <th>Office</th>
-                        <th>Start date</th>
-                        <th>Salary</th>
+                            <th>Name</th>
+                            <th>Username</th>
+                            <th>Email</th>
+                            <th>Number Phone</th>
                         </tr>
                     </tfoot>
                 </table> 
@@ -51,10 +46,25 @@
 <script type="text/javascript">
     $(document).ready(function() {
     var table = $('#example').DataTable( {
-        rowReorder: {
+        destroy: true,
+        processing: true,
+        serverSide: true,
+        responsive: true,
+        "retrieve": true,
+        ajax: {
+            url: "{{ route('member.prospected-member') }}", 
+        },
+              
+        columns: [
+            {data: 'name', name: 'name', },
+            {data: 'username', name: 'username'},
+            {data: 'email', name: 'email'},
+            {data: 'number_phone', name: 'number_phone', searchable: false},
+            ],
+        
+            rowReorder: {
             selector: 'td:nth-child(2)'
         },
-        responsive: true
     } );
 } );
 </script>
