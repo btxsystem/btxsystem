@@ -121,8 +121,8 @@ Route::group(['prefix' => 'asep'], function () {
     Route::get('chapters/{id}', 'MemberV2\ExploreController@chapters')->name('chapter.list');
     Route::get('chapter/{id}', 'MemberV2\ExploreController@chapter')->name('chapter.detail');
 
-    Route::get('register', 'MemberV2\RegisterController@register')->name('member.register');
-    Route::get('testing', 'MemberV2\RegisterController@testing')->name('member.register');
+    Route::post('register', 'MemberV2\RegisterController@register')->name('member.register');
+    // Route::get('testing', 'MemberV2\RegisterController@testing')->name('member.registers');
 });
 
 // Route::domain('ebook.bitrexgo.co.id')->group(function () {

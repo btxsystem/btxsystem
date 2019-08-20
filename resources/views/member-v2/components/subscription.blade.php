@@ -62,17 +62,21 @@
 						@if($username == '')
 					  <div class="form-group">
 					    <label for="exampleInputEmail1">Refferal <small class="text-danger">*</small></label>
-					    <input type="text" class="form-control" id="referral" aria-describedby="emailHelp" placeholder="Refferal" required>
+					    <input type="text" class="form-control" id="referralCode" aria-describedby="emailHelp" placeholder="Refferal" required>
 					  </div>
 						@else
 						<div class="form-group">
 					    <label for="exampleInputEmail1">Refferal <small class="text-danger">*</small></label>
-					    <input type="text" class="form-control" id="referral" aria-describedby="emailHelp" placeholder="Refferal" readonly value="{{$username}}">
+					    <input type="text" class="form-control" id="referralCode" aria-describedby="emailHelp" placeholder="Refferal" readonly value="{{$username}}">
 					  </div>
 						@endif
 					  <div class="form-group">
-					    <label for="exampleInputPassword1">Fullname <small class="text-danger">*</small></label>
-					    <input type="text" class="form-control" id="fullname" placeholder="Fullname" required>
+					    <label for="exampleInputPassword1">Firstname <small class="text-danger">*</small></label>
+					    <input type="text" class="form-control" id="firstName" placeholder="Firstname" required>
+					  </div>
+						<div class="form-group">
+					    <label for="exampleInputPassword1">Lastname <small class="text-danger">*</small></label>
+					    <input type="text" class="form-control" id="lastName" placeholder="Lastname" required>
 					  </div>
 					  <div class="form-group">
 					    <label for="exampleInputPassword1">Email <small class="text-danger">*</small></label>
@@ -80,13 +84,13 @@
 					  </div>
 					  <div class="form-group">
 					    <label for="exampleInputPassword1">Phone Number <small class="text-danger">*</small></label>
-					    <input type="number" class="form-control" id="phone_number" placeholder="Phone number" required>
+					    <input type="number" class="form-control" id="phoneNumber" placeholder="Phone number" required>
 					  </div>
 					  <span>Total yang dibayar : </span><b><span id="total_price"></span></b>
 		      </div>
 		      <div class="modal-footer justify-content-center">
 		        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-		        <button type="button" class="btn btn-primary">Submit</button>
+		        <button type="button" class="btn btn-primary" onclick="submit()">Submit</button>
 		      </div>
 		    </div>
 		  </div>
@@ -142,7 +146,7 @@
 </div> -->
 @stop
 @section('footer_scripts')
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <script>
@@ -152,6 +156,28 @@ function selectedSubscription(param = null) {
   const data = JSON.parse(param)
 
   $('#total_price').html(data.price)
+}
+
+function submit() {
+	alert($('meta[name="_token"]').attr('content'))
+	$.ajaxSetup({
+		headers: {
+			'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+		}
+	});
+	$.ajax({
+		url: "{{ route('member.register') }}",
+		method: 'post',
+		data: {
+				userName: 'asep23',
+				referralCode: '001'
+		},
+		success: function(result){
+			console.log(result)
+		},
+		error: function(err) {
+			console.log(err)
+		}});
 }
 </script>
 @stop

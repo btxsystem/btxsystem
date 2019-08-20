@@ -13,7 +13,7 @@ class NonMember implements Transaction
   {
     $data = (new NonMemberBuilder())
       ->setFirstName(\Request::input('firstName') ?? '')
-      ->setUsername(\Request::input('userName') ?? '')
+      ->setUsername('asep21')
       ->setLastName(\Request::input('lastName') ?? '')
       ->setEmail(\Request::input('email') ?? '')
       ->setPassword($password ?? 'asep')

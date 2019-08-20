@@ -12,7 +12,7 @@ class TransactionFactory
   {
     if($type == 'member') {
       return new TransactionMember();
-    } else {
+    } else if($type == 'nonmember'){
       return new TransactionNonMember();
     }
   }
