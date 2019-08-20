@@ -2,6 +2,7 @@
 
 namespace App\Builder;
 use App\Builder\Models\NonMember;
+use App\Models\NonMember as NonMemberModel;
 
 class NonMemberBuilder
 {
@@ -72,5 +73,19 @@ class NonMemberBuilder
       $this->phone,
       $this->referredBy
     ));
+  }
+
+  public function saved()
+  {
+    $nonMember = new NonMemberModel();
+    $nonMember->first_name = $this->firstName;
+    $nonMember->last_name = $this->lastName;
+    $nonMember->username = $this->username;
+    $nonMember->email = $this->email;
+    $nonMember->password = $this->password;
+    $nonMember->referred_by = $this->referredBy;
+    $nonMember->save();
+
+    return $nonMember;
   }
 }

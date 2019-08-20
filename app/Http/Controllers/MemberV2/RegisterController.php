@@ -15,8 +15,16 @@ use App\Builder\TransactionNonMemberBuilder;
 use App\Employeer;
 
 
+use App\Factory\TransactionFactory;
+use App\Factory\RegisterFactory;
+
 class RegisterController extends Controller
 {
+
+  public function testing()
+  {
+    TransactionFactory::run('nonmember')->create();
+  }
   
   public function register(Request $request)
   {
@@ -43,29 +51,10 @@ class RegisterController extends Controller
           ]);
         }
       }
-      
-      $data = (new NonMemberBuilder())
-        ->setFirstName($request->input('firstName') ?? 'a')
-        ->setUsername($request->input('userName') ?? 'asep12')
-        ->setLastName($request->input('lastName') ?? 'a')
-        ->setEmail($request->input('email') ?? 'asep@gmail.com')
-        ->setPassword('asep')
-        ->setReferredBy($referralId)
-        ->build();
 
-      $nonMember = new NonMember();
-      $nonMember->first_name = $data->firstName;
-      $nonMember->last_name = $data->lastName;
-      $nonMember->username = $data->username;
-      $nonMember->email = $data->email;
-      $nonMember->password = Hash::make($data->password);
-      $nonMember->save();
+      $nonMember = RegisterFactory::run('nonmember')->create();
 
-      $transaction = (new TransactionNonMemberBuilder())
-        ->setMemberId($referralId)
-        ->setNonMemberId($nonMember->id)
-        ->setEbookId(1)
-        ->saved();
+      $transaction = TransactionFactory::run('nonmember')->create($referralId, $nonMember->id);
 
       if(!$nonMember || !$transaction) {
         DB::rollback();
