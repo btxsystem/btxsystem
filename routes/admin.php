@@ -58,6 +58,9 @@ Route::group(['prefix' => 'select', 'as'=> 'select.'], function () {
     Route::resource('customer', 'Admin\CustomerController');
     Route::get('customer/data/{id}', 'Admin\CustomerController@delete');
 
+    Route::resource('book', 'Admin\BookController');
+    Route::get('book/delete/{id}', 'Admin\BookController@destroy')->name('deleteBook');
+
     Route::group(['prefix'=>'trainings','as'=>'trainings.'],function(){
         Route::get('', ['as' => 'index', 'uses' => 'Admin\TrainingController@index']);
         Route::get('create', ['as' => 'create', 'uses' => 'Admin\TrainingController@create']);
