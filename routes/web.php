@@ -145,7 +145,7 @@ Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
 //     // Route::get('testing', 'MemberV2\RegisterController@testing')->name('member.registers');
 // });
 
-Route::domain('ebook.bitrexgo.co.id')->group(function () {
+Route::domain('ebook.bitrexgo.id')->group(function () {
     Route::get('explores', 'MemberV2\ExploreController@index')->name('member.explore');
     Route::get('subscription', 'MemberV2\ExploreController@subscription')->name('member.subscription');
     Route::get('chapters/{id}', 'MemberV2\ExploreController@chapters')->name('chapter.list');
