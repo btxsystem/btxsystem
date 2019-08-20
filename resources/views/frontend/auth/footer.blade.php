@@ -58,7 +58,7 @@
                     <input class="form-control" type="text" placeholder="Your Name">
                     <input class="form-control" type="email" placeholder="Email address">
                     <textarea class="form-control" rows="7" placeholder="Message"></textarea>
-                    <button class="btn btn-primary btn-effect">SEND MESSSAGE</button>
+                    <button class="btn" style="background-color: #27cbbd; border-radius: 5px;">SEND MESSSAGE</button>
                   </div>
                 </form>
               </section>
