@@ -44,7 +44,7 @@ class CreateTriggerBonusSponsorFromNonMember extends Migration
         });
 
         DB::unprepared('
-        CREATE TRIGGER IF NOT EXISTS tr_bonus_sponsor_from_non_member AFTER INSERT ON `transaction_non_members` 
+        CREATE TRIGGER tr_bonus_sponsor_from_non_member AFTER INSERT ON `transaction_non_members` 
             FOR EACH ROW BEGIN
                 DECLARE bonus_bv decimal(15, 0);
                 DECLARE bonus_pv, parent, pv_now integer;
