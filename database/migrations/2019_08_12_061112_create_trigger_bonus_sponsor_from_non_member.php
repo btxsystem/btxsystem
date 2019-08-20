@@ -13,6 +13,7 @@ class CreateTriggerBonusSponsorFromNonMember extends Migration
      */
     public function up()
     {
+
         Schema::create('history_pv', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('pv')->default(0);
@@ -32,7 +33,7 @@ class CreateTriggerBonusSponsorFromNonMember extends Migration
             $table->timestamps();
         });
         
-        Schema::create('rewards', function (Blueprint $table) {
+        Schema::create('pv_rewards', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('pv_left')->default(0);
             $table->integer('pv_midle')->default(0);
@@ -69,9 +70,9 @@ class CreateTriggerBonusSponsorFromNonMember extends Migration
      */
     public function down()
     {
-        DB::unprepared('DROP TRIGGER `tr_bonus_sponsor_from_non_member`');
-        Schema::dropIfExists('rewards');
-        Schema::dropIfExists('pairings');
         Schema::dropIfExists('history_pv');
+        Schema::dropIfExists('pairings');
+        Schema::dropIfExists('pv_rewards');
+        DB::unprepared('DROP TRIGGER IF EXISTS `tr_bonus_sponsor_from_non_member`');
     }
 }

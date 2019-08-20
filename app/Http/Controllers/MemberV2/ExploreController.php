@@ -8,7 +8,11 @@ use Illuminate\Support\Facades\Auth;
 use DB;
 
 use App\Models\Book;
+use App\Models\Ebook;
+use App\Models\BookEbook;
 use App\Models\BookChapter;
+
+use App\Employeer;
 
 class ExploreController extends Controller
 {
@@ -16,16 +20,45 @@ class ExploreController extends Controller
 
   public function index()
   {
-    $books = Book::query()->select('id', 'title')->get();
+    $books = Ebook::select('id', 'title', 'price', 'pv', 'price_markup', 'bv')->with([
+      'bookEbooks' => function($q) {
+        $q->select('id', 'book_id', 'ebook_id')->with([
+          'book' => function($q) {
+            $q->select('id', 'title', 'article')->with([
+              'imageBooks' => function($q) {
+                $q->select('id', 'image_id', 'book_id')->with([
+                  'image'
+                ]);
+              }
+            ]);
+          }
+        ]);
+      }
+    ])->get();
+
+    // return response()->json([
+    //   'data' => $books
+    // ], 200);
 
     return view($this->pathView . '.components.list-ebook')->with([
       'books' => $books
     ]);
   }
 
-  public function subscription()
+  public function subscription(Request $request, $username = null)
   {
-    return view($this->pathView . '.components.subscription');
+    $ebooks = Ebook::all();
+
+    $referral = '';
+    
+    if(Employeer::where('id_member', $username)->count() > 0) {
+      $referral = $username;
+    }
+
+    return view($this->pathView . '.components.subscription')->with([
+      'username' => $referral,
+      'ebooks' => $ebooks
+    ]);
   }
 
   public function chapters($id)

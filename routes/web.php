@@ -96,6 +96,7 @@ Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
 
     Route::get('', ['as' => 'dashboard', 'uses' => 'Member\DashboardController@index']);
     Route::get('tree', ['as' => 'tree', 'uses' => 'Member\DashboardController@tree']);
+    Route::get('prospected-member', ['as' => 'prospected-member', 'uses' => 'Member\ProspectedMemberController@index']);
 
     Route::group(['prefix' => 'select', 'as'=> 'select.'], function () {
         Route::get('daily-retail', ['as' => 'daily-retail', 'uses' => 'Member\DashboardController@getAutoRetailDaily']);
@@ -107,7 +108,13 @@ Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
         Route::get('daily-bonus-sponsor', ['as' => 'daily-bonus-sponsor', 'uses' => 'Member\DashboardController@getBonusSponsorDaily']);
         Route::get('daily-pairing', ['as' => 'daily-pairing', 'uses' => 'Member\DashboardController@getBonusPairing']);
         Route::get('generate', ['as' => 'generate', 'uses' => 'Member\PvController@generate']);
+        Route::get('my-transaction', ['as' => 'my-transaction', 'uses' => 'Member\TransactionController@myTransaction']);
+        Route::get('prospected-member-transaction', ['as' => 'prospected-member-transaction', 'uses' => 'Member\TransactionController@prospectedMemberHistory']);
+    });
 
+    Route::group(['prefix' => 'transaction', 'as'=> 'transaction.'], function () {
+        Route::get('my-transaction', ['as' => 'my-transaction', 'uses' => 'Member\TransactionController@index']);
+        Route::get('prospected-member-transaction', ['as' => 'prospected-member-transaction', 'uses' => 'Member\TransactionController@transactionNonMember']);
     });
 
     Route::group(['prefix' => 'profile', 'as'=> 'profile.'], function () {
@@ -127,16 +134,21 @@ Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
 
 //Route::get('/home', 'HomeController@index')->name('home');
 
-Route::group(['prefix' => 'asep'], function () {
-    Route::get('explores', 'MemberV2\ExploreController@index');
-    Route::get('subscription', 'MemberV2\ExploreController@subscription');
-    Route::get('chapters/{id}', 'MemberV2\ExploreController@chapters')->name('chapter.list');
-    Route::get('chapter/{id}', 'MemberV2\ExploreController@chapter')->name('chapter.detail');
-});
+// Route::group(['prefix' => 'asep'], function () {
+//     Route::get('explores', 'MemberV2\ExploreController@index')->name('member.explore');
+//     Route::get('subscription/{username}', 'MemberV2\ExploreController@subscription')->name('member.subscription');
+//     Route::get('subscription', 'MemberV2\ExploreController@subscription')->name('member.subscription');
+//     Route::get('chapters/{id}', 'MemberV2\ExploreController@chapters')->name('chapter.list');
+//     Route::get('chapter/{id}', 'MemberV2\ExploreController@chapter')->name('chapter.detail');
+
+//     Route::post('register', 'MemberV2\RegisterController@register')->name('member.register');
+//     // Route::get('testing', 'MemberV2\RegisterController@testing')->name('member.registers');
+// });
 
 Route::domain('ebook.bitrexgo.co.id')->group(function () {
-    Route::get('explores', 'MemberV2\ExploreController@index')->name('member.explore');;
-    Route::get('subscription', 'MemberV2\ExploreController@subscription')->name('member.subscription');;
+    Route::get('explores', 'MemberV2\ExploreController@index')->name('member.explore');
+    Route::get('subscription', 'MemberV2\ExploreController@subscription')->name('member.subscription');
     Route::get('chapters/{id}', 'MemberV2\ExploreController@chapters')->name('chapter.list');
     Route::get('chapter/{id}', 'MemberV2\ExploreController@chapter')->name('chapter.detail');
+    Route::post('register', 'MemberV2\RegisterController@register')->name('member.register');
 });

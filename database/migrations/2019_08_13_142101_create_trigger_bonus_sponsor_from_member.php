@@ -40,6 +40,6 @@ class CreateTriggerBonusSponsorFromMember extends Migration
      */
     public function down()
     {
-        DB::unprepared('DROP TRIGGER `tr_bonus_sponsor_from_member`');
+        DB::unprepared('DROP TRIGGER IF EXISTS `tr_bonus_sponsor_from_member`');
     }
 }

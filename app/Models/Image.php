@@ -12,4 +12,13 @@ class Image extends Model
     'src',
     'name'
   ];
+
+  protected $appends = [
+    'image_url'
+  ];
+
+  public function getImageUrlAttribute()
+  {
+    return url($this->src);
+  }
 }
