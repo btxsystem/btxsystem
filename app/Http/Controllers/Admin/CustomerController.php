@@ -70,9 +70,11 @@ class CustomerController extends Controller
 
         $data = Customer::create($input);
 
-        Alert::error('Gagal Add Data Customer', 'Gagal');
+        Alert::error('Sukses Menambah Data Customer', 'Sukses');
 
-        return view('admin.customers.index');
+        return redirect()->route('customer.index');
+
+        // return redirect('admin.customers.index');
     }
 
     public function show($id) {
@@ -95,7 +97,7 @@ class CustomerController extends Controller
 
         if ($cust) { $data['data'] = $cust; }
 
-        return view('admin.customers.create', $data);
+        return view('admin.customers.edit', $data);
 
     }
 
@@ -118,7 +120,8 @@ class CustomerController extends Controller
 
         Alert::success('Sukses Update Data Customer', 'Sukses');
 
-        return view('admin.customers.index');
+        return redirect()->route('customer.show', $id);
+        // return view('admin.customers.index');
     }
 
     public function delete($id) {

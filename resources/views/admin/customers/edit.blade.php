@@ -13,7 +13,7 @@ Registration User
         <li>
             <a href="#">Customer Management</a>
         </li>
-        <li class="active">Add Data Customer</li>
+        <li class="active">Edit Data Customer</li>
     </ol>
 
     <div class="container">
@@ -21,9 +21,10 @@ Registration User
                <tbody>
                   <tr>
                      <td colspan="1">
-                        <form class="well form-horizontal" method="post" action="{{route('customer.store')}}">
-                            {{ csrf_field() }}
+                        <form class="well form-horizontal" method="post" action="{{route('customer.update',$data->id)}}">
+                            {{ csrf_field() }} {{ method_field('PATCH')}}
                            <fieldset>
+                           <input id="id"  name="id"  required="true" value="{{$data->id}}" type="hidden">
                               <div class="form-group">
                                  <label class="col-md-2 control-label">Full Name</label>
                                  <div class="col-md-4 inputGroupContainer">
@@ -83,7 +84,12 @@ Registration User
                            <div class="form-group">
                                 <label class="col-md-2 control-label"></label>
                                 <div class="col-md-8 inputGroupContainer">                                
+
+                                    @if($data) 
+                                        <button class="btn btn-primary btn-block" name="_method" value="put" type="submit"> Update</button>
+                                    @else
                                        <button type="submit" class="btn btn-primary btn-block">Submit</button>
+                                    @endif
                                 </div>
                             </div>
                                                             
