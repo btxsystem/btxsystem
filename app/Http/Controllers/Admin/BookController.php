@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Book;
+use App\Models\Ebook;
 use DataTables;
-use Illuminate\Support\Facades\DB;
 use Alert;
 use Validator;
 
@@ -44,7 +44,8 @@ class BookController extends Controller
      */
     public function create()
     {
-        return view('admin.books.create');
+        $ebooks = Ebook::all();
+        return view('admin.books.create', compact('ebooks'));
     }
 
     /**
@@ -55,10 +56,22 @@ class BookController extends Controller
      */
     public function store(Request $request)
     {
+
+        $request->validate([
+            'ebook_id' => 'required',
+            'title' => 'required',
+            'article' => 'required',
+        ]);
+
+        $ebook = Ebook::findOrFail($request->ebook_id);
         $book = new Book;
         $book->title = $request->title;
         $book->article = $request->article;
+     
+
         $book->save();
+
+        $ebook->books()->attach($book);
 
         Alert::success('Sukses Menambah Data Book', 'Sukses');
 
@@ -75,7 +88,6 @@ class BookController extends Controller
     public function show($id)
     {
         $data = Book::findOrFail($id);
-
         return view('admin.books.detail', compact('data'));
     }
 
@@ -129,5 +141,26 @@ class BookController extends Controller
         }
 
         return redirect()->route('book.index');
+    }
+
+    public function uploadImage(Request $request) {
+
+        $CKEditor = $request->CKEditor;
+        $funcNum = $request->CKEditorFuncNum;
+
+        $message = $url = '';
+        if ($request->hasFile('upload')) {
+            $file = $request->hasFile('upload');
+            if ($file->isValid()) {
+                $filename = $file->getClientOriginalName();
+                $file->move(storage_path().'/images/', $filename);
+                $url = public_path() .'/images/' . $filename;
+            } else {
+                $message = 'An error occured while uploading the file.';
+            }
+        } else {
+            $message = 'No file uploaded.';
+        }
+        return '<script>window.parent.CKEDITOR.tools.callFunction('.$funcNum.', "'.$url.'", "'.$message.'")</script>';
     }
 }

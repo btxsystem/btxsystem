@@ -24,6 +24,22 @@ Create Book
                         <form class="well form-horizontal" method="post" action="{{route('book.store')}}">
                             {{ csrf_field() }}
                            <fieldset>
+
+                           <div class="form-group">
+                                    <label class="col-md-2 control-label">Type</label>
+                                    <div class="col-md-8 inputGroupContainer">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="fa fa-book"></i></span>
+                                            <select name="ebook_id" id="ebook_id" class="form-control" required="true">
+                                                <option value="" disabled selected>Select Type</option>
+                                                @foreach($ebooks as $ebook)
+                                                <option value="{{$ebook->id}}">{{$ebook->title}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                            </div>
+
                             <div class="form-group">
                                 <label class="col-md-2 control-label">Title</label>
                                 <div class="col-md-8 inputGroupContainer">
@@ -66,6 +82,6 @@ Create Book
 @section('footer_scripts')
     <script src="/editor/ckeditor/ckeditor.js"></script>  
     <script>
-        CKEDITOR.replace( 'article' );  
+        CKEDITOR.replace( 'article');  
     </script>
 @stop

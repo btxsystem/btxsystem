@@ -16,6 +16,13 @@ class Ebook extends Model
     'price_markup'
   ];
 
+
+  public function books()
+  {
+      return $this->belongsToMany('\App\Models\Book');
+  }
+
+
   public function bookEbooks()
   {
       return $this->hasMany('\App\Models\BookEbook', 'ebook_id', 'id');
