@@ -53,4 +53,12 @@ class Employeer extends Authenticatable
         return $this->hasOne( 'App\Employeer', 'id', 'parent_id' );
     }
 
+    public function rank(){
+        return $this->belongsTo('App\Rank');
+    }
+
+    public function pv_down(){
+        return $this->hasOne('App\PvRank','id_member');
+    }
+
 }
