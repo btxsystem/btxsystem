@@ -136,15 +136,6 @@ Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
 
 Route::group(['prefix' => 'asep'], function () {
     Route::get('explore/{type}', 'MemberV2\ExploreController@detail')->name('member.ebook.detail');
-
-<<<<<<< HEAD
-//     Route::post('register', 'MemberV2\RegisterController@register')->name('member.register');
-//     // Route::get('testing', 'MemberV2\RegisterController@testing')->name('member.registers');
-// });
-
-Route::domain('ebook.bitrexgo.coid')->group(function () {
-=======
->>>>>>> e357543e9fc4b4cad45cd9826394bd84f8136105
     Route::get('explores', 'MemberV2\ExploreController@index')->name('member.explore');
     Route::get('subscription/{username}', 'MemberV2\ExploreController@subscription')->name('member.subscription.referral');
     Route::get('subscription', 'MemberV2\ExploreController@subscription')->name('member.subscription');
