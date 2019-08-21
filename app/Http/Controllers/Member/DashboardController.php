@@ -174,7 +174,22 @@ class DashboardController extends Controller
                }
             }
         }
-        return response()->json($data);
+
+        $tree = [
+            'id' => $user->id_member,
+            'username' => $user->username,
+            'rank' => $user->rank->name,
+            'pv_left' => $user->pv_down->pv_left ? $user->pv_down->pv_left : 0,
+            'pv_midle' => $user->pv_down->pv_midle ? $user->pv_down->pv_midle : 0 ,
+            'pv_right' => $user->pv_down->pv_right ? $user->pv_down->pv_right : 0,
+            'children' => [],
+        ];
+
+        for ($i=0; $i < 3; $i++) { 
+            $tree['children'][$i] = $data['children'][$i];
+        }
+        
+        return($tree);
     }
     
     // public function getTree(){
