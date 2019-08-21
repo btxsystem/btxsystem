@@ -49,9 +49,9 @@ class RegisterController extends Controller
       //$nonMember = RegisterFactory::run('nonmember')->create();
 
       $memberId = Auth::guard('nonmember')->user()->id;
-      $transaction = TransactionFactory::run('nonmember')->create($referralId, $memberId);
+      $transaction = TransactionFactory::run('nonmember')->create($referralId, $memberId, $request->input('ebook'));
 
-      if(!$nonMember || !$transaction) {
+      if(!$transaction) {
         DB::rollback();
 
         return response()->json([
