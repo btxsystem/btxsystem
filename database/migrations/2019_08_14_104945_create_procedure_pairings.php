@@ -13,7 +13,6 @@ class CreateProcedurePairings extends Migration
      */
     public function up()
     {   
-        DB::unprepared('DROP PROCEDURE add_pv_pairing');
         DB::unprepared(' 
             CREATE PROCEDURE add_pv_pairing(idm INT, pv INT)
             BEGIN
