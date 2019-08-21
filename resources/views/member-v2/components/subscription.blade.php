@@ -43,8 +43,9 @@
 							</div>
 							<div class="col-lg-9">
 								<h2 class="mb-0" style="color: #8543da;">{{ucwords($ebook->title)}}</h2>
-								<span>Materi basic untuk mempermudah anda dalam tahap belajar forex.</span><br>
-								<button onclick="selectedSubscription('{{$ebook}}')" class="btn btn-purple btn-sm mt-3 px-5">BUY</button>
+								<span>{{ $ebook->description }}</span><br>
+								<!-- <button onclick="selectedSubscription('{{$ebook}}')" class="btn btn-purple btn-sm mt-3 px-5">BUY</button> -->
+								<a href="{{route('member.ebook.detail', ['type' => strtolower($ebook->title)])}}" class="btn btn-purple btn-sm mt-3 px-5">BUY</a>
 							</div>
 						</div>
 					</div>
@@ -149,13 +150,14 @@
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script src="{{asset('assetsebook/js/helper.js')}}"></script>
 <script>
 function selectedSubscription(param = null) {
   $('#modal-subscription').modal('show')
 
   const data = JSON.parse(param)
 
-  $('#total_price').html(data.price)
+  $('#total_price').html(toIDR(data.price))
 }
 
 function submit() {
@@ -201,7 +203,15 @@ function submit() {
 		},
 		success: function(result){
 			console.log(result)
-			alert('Success Register')
+
+			const {message} = result
+
+			if(!message) {
+				alert('Failed Regiester')
+				return false
+			}
+
+			alert('Success register')
 		},
 		error: function(err) {
 			console.log(err)
