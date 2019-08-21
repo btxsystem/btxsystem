@@ -20,6 +20,8 @@ class Ebook extends Model
     'access'
   ];
 
+  protected $guarded = [];
+
   public function bookEbooks()
   {
       return $this->hasMany('\App\Models\BookEbook', 'ebook_id', 'id');

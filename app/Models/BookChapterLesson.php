@@ -14,4 +14,6 @@ class BookChapterLesson extends Model
     'type',
     'chapter_id'
   ];
+
+  protected $guarded = [];
 }

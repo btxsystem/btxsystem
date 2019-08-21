@@ -15,6 +15,12 @@ class DatabaseSeeder extends Seeder
 
             PermissionsTableSeeder::class,
             PermissionRoleTableSeeder::class,
+            
+            EbookTableSeeder::class,
+            BooksTableSeeder::class,
+            BookEbookTableSeeder::class,
+            BookChaptersTableSeeder::class,
+            BookChapterLessonsTableSeeder::class,
 
         ]);
     }
