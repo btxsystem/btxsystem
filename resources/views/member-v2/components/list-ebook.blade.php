@@ -32,22 +32,44 @@
 					</div>
 				</div>
         @foreach($books as $book)
+				@if(!$book->access)
 				<div class="d-flex align-items-center">
 					<img src="http://demo.viewpreview.online/assets/img/star.png" class="img-fluid mr-3">
 					<span>{{ ucwords($book->title) }}</span><button class="btn btn-purple px-5 ml-3" onclick="selectedSubscription('{{$book}}')">BUY</button>
 				</div>
+				@endif
 				<hr>
         <div class="row mb-5">
         @foreach($book->bookEbooks as $ebook)
+					@if(!$book->access)
           <a href="#" class="col-lg-3 mb-3 hover">
 						<div class="shadow rounded p-3" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
 							<div style="overflow: hidden;" class="mb-2">
+								@if(count($ebook->book->imageBooks) > 0)
 								<img src="{{asset($ebook->book->imageBooks[0]->image->src)}}" class="img-fluid w-100">
+								@else
+								<img src="{{asset('assetsebook/v2/img/logo-white.png')}}" class="img-fluid w-100">
+								@endif
 							</div>
 							<span style="font-size: 20px; font-weight: bold;">{{ $ebook->book->title }}</span><br>
 							<span>{{ $ebook->book->article }}</span>
 						</div>
 					</a>
+					@else
+					<a href="{{route('chapter.list', ['id' => $ebook->id])}}" class="col-lg-3 mb-3 hover">
+						<div class="shadow rounded p-3" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+							<div style="overflow: hidden;" class="mb-2">
+								@if(count($ebook->book->imageBooks) > 0)
+								<img src="{{asset($ebook->book->imageBooks[0]->image->src)}}" class="img-fluid w-100">
+								@else
+								<img src="{{asset('assetsebook/v2/img/logo-white.png')}}" class="img-fluid w-100">
+								@endif
+							</div>
+							<span style="font-size: 20px; font-weight: bold;">{{ $ebook->book->title }}</span><br>
+							<span>{{ $ebook->book->article }}</span>
+						</div>
+					</a>
+					@endif
         @endforeach
         </div>
         @endforeach
@@ -73,18 +95,22 @@
 	</div>
 
 	<!-- Modal -->
-		<div class="modal fade" id="modal-subscription" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal fade" id="modal-subscription" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		  <div class="modal-dialog" role="document">
 		    <div class="modal-content bg-1 text-white">
 		      <div class="modal-body">
 		      	<img src="{{asset('assetsebook/v2/img/logo-white.png')}}" class="img-fluid mb-3 mx-auto d-block" style="width: 130px;">
 					  <div class="form-group">
 					    <label for="exampleInputEmail1">Refferal <small class="text-danger">*</small></label>
-					    <input type="text" class="form-control" id="referral" aria-describedby="emailHelp" placeholder="Refferal" required>
+					    <input type="text" class="form-control" id="referralCode" aria-describedby="emailHelp" placeholder="Refferal" required>
 					  </div>
 					  <div class="form-group">
-					    <label for="exampleInputPassword1">Fullname <small class="text-danger">*</small></label>
-					    <input type="text" class="form-control" id="fullname" placeholder="Fullname" required>
+					    <label for="exampleInputPassword1">Firstname <small class="text-danger">*</small></label>
+					    <input type="text" class="form-control" id="firstName" placeholder="Firstname" required>
+					  </div>
+						<div class="form-group">
+					    <label for="exampleInputPassword1">Lastname <small class="text-danger">*</small></label>
+					    <input type="text" class="form-control" id="lastName" placeholder="Lastname" required>
 					  </div>
 					  <div class="form-group">
 					    <label for="exampleInputPassword1">Email <small class="text-danger">*</small></label>
@@ -92,13 +118,13 @@
 					  </div>
 					  <div class="form-group">
 					    <label for="exampleInputPassword1">Phone Number <small class="text-danger">*</small></label>
-					    <input type="number" class="form-control" id="phone_number" placeholder="Phone number" required>
+					    <input type="number" class="form-control" id="phoneNumber" placeholder="Phone number" required>
 					  </div>
 					  <span>Total yang dibayar : </span><b><span id="total_price"></span></b>
 		      </div>
 		      <div class="modal-footer justify-content-center">
 		        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-		        <button type="button" class="btn btn-primary">Submit</button>
+		        <button type="button" class="btn btn-primary" onclick="submit()">Submit</button>
 		      </div>
 		    </div>
 		  </div>
@@ -157,16 +183,75 @@
 @stop
 
 @section('footer_scripts')
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script src="{{asset('assetsebook/js/helper.js')}}"></script>
 <script>
 function selectedSubscription(param) {
   $('#modal-subscription').modal('show')
 
   const data = JSON.parse(param)
 
-  $('#total_price').html(data.price)
+  $('#total_price').html(toIDR(data.price))
+}
+function submit() {
+	let required = [
+		{
+			field: 'firstName',
+			message: 'First Name Required'
+		},
+		{
+			field: 'referralCode',
+			message: 'Referral Code Required'
+		}
+	]
+
+	let errors = [];
+
+	required.map(v => {
+		if($(`#${v.field}`).val() == '') {
+			alert(v.message)
+			errors.push(v)
+		}
+	})
+
+	if(errors.length > 0) {
+		alert('Some field are required')
+		return false;
+	}
+
+	$.ajaxSetup({
+		headers: {
+			'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+		}
+	});
+	$.ajax({
+		url: "{{ route('member.register') }}",
+		method: 'post',
+		data: {
+				referralCode: $('#referralCode').val(),
+				lastName: $('#lastName').val(),
+				firstName: $('#firstName').val(),
+				email: $('#email').val(),
+				phoneNumber: $('#phoneNumber').val()
+		},
+		success: function(result){
+			console.log(result)
+
+			const {message} = result
+
+			if(!message) {
+				alert('Failed Regiester')
+				return false
+			}
+
+			alert('Success register')
+		},
+		error: function(err) {
+			console.log(err)
+			alert('Failed Register')
+		}});
 }
 </script>
 @stop
