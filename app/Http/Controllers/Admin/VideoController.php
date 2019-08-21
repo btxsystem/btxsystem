@@ -69,10 +69,10 @@ class VideoController extends Controller
         
         $video->save();
 
-        $pivot = new VideoEbook;
-        $pivot->video_id = $video->id;
-        $pivot->book_id = $request->ebook_id;
-        $pivot->save();
+        // $pivot = new VideoEbook;
+        // $pivot->video_id = $video->id;
+        // $pivot->book_id = $request->ebook_id;
+        // $pivot->save();
 
         
         Alert::success('Sukses Menambah Data Video', 'Sukses');
