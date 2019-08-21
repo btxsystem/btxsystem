@@ -142,7 +142,7 @@ Route::domain('ebook.bitrexgo.id')->group(function () {
 
     Route::post('register', 'MemberV2\RegisterController@register')->name('member.register');
 
-    Route::get('/login', 'Auth\NonMemberController@getLogin')->middleware('guest')->name('member.login');
-    Route::post('/login', 'Auth\NonMemberController@postLogin')->name('member.login.post');
-    Route::get('/logout', 'Auth\LoginController@logout')->name('member.logout.post');
+    Route::get('/v2/login', 'Auth\NonMemberController@getLogin')->middleware('guest')->name('member.login');
+    Route::post('/v2/login', 'Auth\NonMemberController@postLogin')->name('member.login.post');
+    Route::get('/v2/logout', 'Auth\LoginController@logout')->name('member.logout.post');
 });
