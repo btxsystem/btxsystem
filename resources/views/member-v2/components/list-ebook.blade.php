@@ -26,7 +26,7 @@
 						</div>
 						<div class="col-lg-8">
 							<img src="http://demo.viewpreview.online/assets/img/bookmark-green.png" class="float-right d-block">
-							<h3>Menjadi Seorang Treder Forex</h3>
+							<h3>Menjadi Seorang Trader Forex</h3>
 							<span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</span>
 						</div>
 					</div>
