@@ -17,6 +17,7 @@ class CreateBooksTable extends Migration
             $table->bigIncrements('id');
             $table->string('title')->unique();
             $table->longText('article');
+            $table->string('slug')->nullable();
             $table->timestamps();
         });
     }

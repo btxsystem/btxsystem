@@ -17,6 +17,7 @@ class CreateBookChapters extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('book_id')->unsigned();
             $table->string('title')->nullable();
+            $table->string('slug')->nullable();
             $table->foreign('book_id')->references('id')->on('books')->onDelete('cascade');
             $table->timestamps();
         });

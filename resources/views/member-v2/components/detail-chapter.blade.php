@@ -90,7 +90,7 @@
     let breadcrumbs = [
       {
         title: 'Home',
-        route: 's'
+        route: '{{route("member.explore")}}'
       },
       {
         title: '{{$chapter->book->title}}',
