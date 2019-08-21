@@ -46,9 +46,10 @@ class RegisterController extends Controller
         }
       }
 
-      $nonMember = RegisterFactory::run('nonmember')->create();
+      //$nonMember = RegisterFactory::run('nonmember')->create();
 
-      $transaction = TransactionFactory::run('nonmember')->create($referralId, $nonMember->id);
+      $memberId = Auth::guard('nonmember')->user()->id;
+      $transaction = TransactionFactory::run('nonmember')->create($referralId, $memberId);
 
       if(!$nonMember || !$transaction) {
         DB::rollback();

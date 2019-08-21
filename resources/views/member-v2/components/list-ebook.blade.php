@@ -32,14 +32,17 @@
 					</div>
 				</div>
         @foreach($books as $book)
+				@if(!$book->access)
 				<div class="d-flex align-items-center">
 					<img src="http://demo.viewpreview.online/assets/img/star.png" class="img-fluid mr-3">
 					<span>{{ ucwords($book->title) }}</span><button class="btn btn-purple px-5 ml-3" onclick="selectedSubscription('{{$book}}')">BUY</button>
 				</div>
+				@endif
 				<hr>
         <div class="row mb-5">
         @foreach($book->bookEbooks as $ebook)
-          <a href="{{route('chapter.list', ['id' => $ebook->id])}}" class="col-lg-3 mb-3 hover">
+					@if(!$book->access)
+          <a href="#" class="col-lg-3 mb-3 hover">
 						<div class="shadow rounded p-3" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
 							<div style="overflow: hidden;" class="mb-2">
 								@if(count($ebook->book->imageBooks) > 0)
@@ -52,25 +55,23 @@
 							<span>{{ $ebook->book->article }}</span>
 						</div>
 					</a>
+					@else
+					<a href="{{route('chapter.list', ['id' => $ebook->id])}}" class="col-lg-3 mb-3 hover">
+						<div class="shadow rounded p-3" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+							<div style="overflow: hidden;" class="mb-2">
+								@if(count($ebook->book->imageBooks) > 0)
+								<img src="{{asset($ebook->book->imageBooks[0]->image->src)}}" class="img-fluid w-100">
+								@else
+								<img src="{{asset('assetsebook/v2/img/logo-white.png')}}" class="img-fluid w-100">
+								@endif
+							</div>
+							<span style="font-size: 20px; font-weight: bold;">{{ $ebook->book->title }}</span><br>
+							<span>{{ $ebook->book->article }}</span>
+						</div>
+					</a>
+					@endif
         @endforeach
         </div>
-				<div class="row mb-5">
-				@foreach($book->bookEbooks as $ebook)
-          <a href="{{route('chapter.list', ['id' => $ebook->id])}}" class="col-lg-3 mb-3 hover">
-						<div class="shadow rounded p-3" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
-							<div style="overflow: hidden;" class="mb-2">
-								@if(count($ebook->book->imageBooks) > 0)
-								<img src="{{asset($ebook->book->imageBooks[0]->image->src)}}" class="img-fluid w-100">
-								@else
-								<img src="{{asset('assetsebook/v2/img/logo-white.png')}}" class="img-fluid w-100">
-								@endif
-							</div>
-							<span style="font-size: 20px; font-weight: bold;">{{ $ebook->book->title }}</span><br>
-							<span>{{ $ebook->book->article }}</span>
-						</div>
-					</a>
-        @endforeach
-				</div>
         @endforeach
 				<!-- <div class="d-flex align-items-center">
 					<img src="http://demo.viewpreview.online/assets/img/book-icon.png" class="img-fluid mr-2" style="height: 20px;">
