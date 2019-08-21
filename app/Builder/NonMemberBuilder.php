@@ -83,7 +83,7 @@ class NonMemberBuilder
     $nonMember->username = $this->createUsername();
     $nonMember->email = $this->email;
     $nonMember->password = $this->password;
-    $nonMember->referred_by = $this->referredBy;
+    // $nonMember->referred_by = $this->referredBy;
     $nonMember->save();
 
     return $nonMember;
@@ -93,6 +93,8 @@ class NonMemberBuilder
   {
     $id = NonMemberModel::query()->orderBy('id', 'desc')->first()->id;
 
-    return "NM{$id}";
+    $newNumber = (int) $id + 1;
+
+    return "NM{$newNumber}";
   }
 }

@@ -19,13 +19,7 @@ use App\Factory\TransactionFactory;
 use App\Factory\RegisterFactory;
 
 class RegisterController extends Controller
-{
-
-  public function testing()
-  {
-    TransactionFactory::run('nonmember')->create();
-  }
-  
+{  
   public function register(Request $request)
   {
     // $this->validate($request, [
@@ -41,7 +35,7 @@ class RegisterController extends Controller
       
       //cek referal code
       if($referralCode != '') {
-        $referralUser = Employeer::where('id_member', $referralCode);
+        $referralUser = Employeer::where('username', $referralCode);
         if($referralUser->count() > 0) {
           $referralId = $referralUser->first()->id;
         } else {

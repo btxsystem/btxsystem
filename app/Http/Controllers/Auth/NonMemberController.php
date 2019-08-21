@@ -4,35 +4,34 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Employeer;
+use App\NonMember;
 use Auth;
 class NonMemberController extends Controller
 {
   public function getLogin()
   {
-    return view('frontend.auth.login');
+    return view('member-v2.components.login');
   }
+  
   public function postLogin(Request $request)
   {
-      // Validate the form data
     $this->validate($request, [
       'username' => 'required',
       'password' => 'required'
     ]);
-      // Attempt to log the user in
-      // Passwordnya pake bcrypt
-    if (Auth::guard('user')->attempt(['username' => $request->username, 'password' => $request->password])) {
-        // if successful, then redirect to their intended location
-      return redirect()->route('member.dashboard');
+
+    if (Auth::guard('non_member')->attempt(['username' => $request->username, 'password' => $request->password])) {
+      return redirect()->route('member.subscription');
     }
-    return view('frontend.auth.login');
+
+    return view('member-v2.components.login');
   }
 
   public function logout()
   {
-    if (Auth::guard('user')->check()) {
-      Auth::guard('user')->logout();
+    if (Auth::guard('non_member')->check()) {
+      Auth::guard('non_member')->logout();
     } 
-    return redirect('/login');
+    return redirect()->route('member.login');
   }
 }

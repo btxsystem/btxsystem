@@ -49,6 +49,10 @@ return [
             'driver' => 'session',
             'provider' => 'admins',
         ],
+        'non_member' => [
+            'driver' => 'session',
+            'provider' => 'non_members',
+        ],
     ],
 
     /*
@@ -78,6 +82,10 @@ return [
             'driver' => 'eloquent',
             'model' => App\User::class,
         ],
+        'non_members' => [
+            'driver' => 'eloquent',
+            'model' => App\NonMember::class,
+        ],
     ],
     /*
     |--------------------------------------------------------------------------
@@ -102,6 +110,11 @@ return [
         ],
         'admins' => [
             'provider' => 'admins',
+            'table' => 'password_resets',
+            'expire' => 120,
+        ],
+        'non_members' => [
+            'provider' => 'non_members',
             'table' => 'password_resets',
             'expire' => 120,
         ],

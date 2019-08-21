@@ -18,6 +18,9 @@ class ExploreController extends Controller
 {
   public $pathView = 'member-v2';
 
+  /**
+   * Index
+   */
   public function index()
   {
     $books = Ebook::select('id', 'title', 'price', 'pv', 'price_markup', 'bv')->with([
@@ -45,14 +48,49 @@ class ExploreController extends Controller
     ]);
   }
 
+  /**
+   * Index
+   */
+  public function detail(Request $request, $type = 'basic')
+  {
+    $books = Ebook::select('id', 'title', 'price', 'pv', 'price_markup', 'bv')->with([
+      'bookEbooks' => function($q) {
+        $q->select('id', 'book_id', 'ebook_id')->with([
+          'book' => function($q) {
+            $q->select('id', 'title', 'article')->with([
+              'imageBooks' => function($q) {
+                $q->select('id', 'image_id', 'book_id')->with([
+                  'image'
+                ]);
+              }
+            ]);
+          }
+        ]);
+      }
+    ])->where('title', $type)->get();
+
+    // return response()->json([
+    //   'data' => $books
+    // ], 200);
+
+    return view($this->pathView . '.components.list-ebook')->with([
+      'books' => $books
+    ]);
+  }
+
+  /**
+   * Subscription
+   */
   public function subscription(Request $request, $username = null)
   {
     $ebooks = Ebook::all();
 
     $referral = '';
     
-    if(Employeer::where('id_member', $username)->count() > 0) {
+    if(Employeer::where('username', $username)->count() > 0) {
       $referral = $username;
+    } else {
+      redirect()->route('member.subscription');
     }
 
     return view($this->pathView . '.components.subscription')->with([
@@ -61,6 +99,9 @@ class ExploreController extends Controller
     ]);
   }
 
+  /**
+   * Chapter Lists
+   */
   public function chapters($id)
   {
     $book = Book::query()
@@ -76,6 +117,9 @@ class ExploreController extends Controller
     ]);;
   }
 
+  /**
+   * Chapter Detail
+   */
   public function chapter($id)
   {
     $chapter = BookChapter::query()
