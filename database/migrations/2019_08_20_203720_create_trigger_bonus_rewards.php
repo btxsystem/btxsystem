@@ -42,24 +42,23 @@ class CreateTriggerBonusRewards extends Migration
         DB::unprepared('
         CREATE TRIGGER tr_bonus_reward2 AFTER UPDATE ON `pv_rewards` 
             FOR EACH ROW BEGIN
-            DECLARE rank int;
-                set rank = (SELECT rank_id FROM `employeers` WHERE employeers.id = new.id_member);
-                IF new.pv_left >= 1000000 and new.pv_midle >= 1000000 and new.pv_right >= 1000000 and rank = 8 THEN
+                set @rank = (SELECT rank_id FROM `employeers` WHERE employeers.id = new.id_member);
+                IF new.pv_left >= 1000000 and new.pv_midle >= 1000000 and new.pv_right >= 1000000 and @rank = 8 THEN
                     INSERT INTO got_rewards (`member_id`, `reward_id`,  `created_at`, `updated_at`) VALUES (new.id_member, 8, now(), now());
                     UPDATE pv_rewards SET updated_at = now(), pv_rewards.pv_left = pv_rewards.pv_left - 1000000, pv_rewards.pv_midle = pv_rewards.pv_midle - 1000000 , pv_rewards.pv_right = pv_rewards.pv_right - 1000000  WHERE pv_rewards.id_member = new.id_member;
-                ELSEIF new.pv_left >= 330000 and new.pv_midle >= 330000 and new.pv_right >= 330000 and rank >= 7 THEN
+                ELSEIF new.pv_left >= 330000 and new.pv_midle >= 330000 and new.pv_right >= 330000 and @rank >= 7 THEN
                     INSERT INTO got_rewards (`member_id`, `reward_id`,  `created_at`, `updated_at`) VALUES (new.id_member, 7, now(), now());
-                ELSEIF new.pv_left >= 110000 and new.pv_midle >= 110000 and new.pv_right >= 110000 and rank >= 6 THEN
+                ELSEIF new.pv_left >= 110000 and new.pv_midle >= 110000 and new.pv_right >= 110000 and @rank >= 6 THEN
                     INSERT INTO got_rewards (`member_id`, `reward_id`,  `created_at`, `updated_at`) VALUES (new.id_member, 6, now(), now());
-                ELSEIF new.pv_left >= 35000 and new.pv_midle >= 35000 and new.pv_right >= 35000 and rank >= 5 THEN
+                ELSEIF new.pv_left >= 35000 and new.pv_midle >= 35000 and new.pv_right >= 35000 and @rank >= 5 THEN
                     INSERT INTO got_rewards (`member_id`, `reward_id`,  `created_at`, `updated_at`) VALUES (new.id_member, 5, now(), now());
-                ELSEIF new.pv_left >= 12000 and new.pv_midle >= 12000 and new.pv_right >= 12000 and rank >= 4 THEN
+                ELSEIF new.pv_left >= 12000 and new.pv_midle >= 12000 and new.pv_right >= 12000 and @rank >= 4 THEN
                     INSERT INTO got_rewards (`member_id`, `reward_id`,  `created_at`, `updated_at`) VALUES (new.id_member, 4, now(), now());
-                ELSEIF new.pv_left >= 4000 and new.pv_midle >= 4000 and new.pv_right >= 4000 and rank >= 3 THEN
+                ELSEIF new.pv_left >= 4000 and new.pv_midle >= 4000 and new.pv_right >= 4000 and @rank >= 3 THEN
                     INSERT INTO got_rewards (`member_id`, `reward_id`,  `created_at`, `updated_at`) VALUES (new.id_member, 3, now(), now());
-                ELSEIF new.pv_left >= 1200 and new.pv_midle >= 1200 and new.pv_right >= 1200 and rank >= 2 THEN
+                ELSEIF new.pv_left >= 1200 and new.pv_midle >= 1200 and new.pv_right >= 1200 and @rank >= 2 THEN
                     INSERT INTO got_rewards (`member_id`, `reward_id`,  `created_at`, `updated_at`) VALUES (new.id_member, 2, now(), now());
-                ELSEIF new.pv_left >= 400 and new.pv_midle >= 400 and new.pv_right >= 400 and rank >= 1 THEN
+                ELSEIF new.pv_left >= 400 and new.pv_midle >= 400 and new.pv_right >= 400 and @rank >= 1 THEN
                     INSERT INTO got_rewards (`member_id`, `reward_id`,  `created_at`, `updated_at`) VALUES (new.id_member, 1, now(), now());
                 END IF;
             END
