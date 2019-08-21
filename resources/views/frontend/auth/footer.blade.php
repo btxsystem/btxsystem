@@ -21,7 +21,7 @@
             
             <div class="col-lg-2 col-sm-3">
               <section class="footer-section">
-                <h3 class="footer-title">NAVIGATION</h3>
+                <!-- <h3 class="footer-title">NAVIGATION</h3>
                 <ul class="footer-list list-unstyled">
                   <li class="footer-list__item"><a class="footer-list__link" href="javascript:void(0);">Event & Promotion</a></li>
                   <li class="footer-list__item"><a class="footer-list__link" href="javascript:void(0);">Gallery</a></li>
@@ -29,14 +29,14 @@
                   <li class="footer-list__item"><a class="footer-list__link" href="javascript:void(0);">Testimony</a></li>
                   <li class="footer-list__item"><a class="footer-list__link" href="javascript:void(0);">Contact Us</a></li>
                   <li class="footer-list__item"><a class="footer-list__link" href="javascript:void(0);">Login</a></li>
-                </ul>
+                </ul> -->
               </section>
               <!-- end footer-section --> 
             </div>
             <!-- end col -->
             
             <div class="col-lg-3 col-sm-3">
-              <section class="footer-section">
+              <!-- <section class="footer-section">
                 <h3 class="footer-title">RECENT EVENTS & PROMOTION</h3>
                 <div class="tweets">
                   <div class="tweets__text">Go-Trip Korea 2019</div>
@@ -45,7 +45,7 @@
                 <div class="tweets">
                   <div class="tweets__text">Go-Cruise Singapore 2019<br><a href="javascript:void(0);">https://bitrexgo.co.id/IMDS15</a></div>
                   <span class="tweets__time">on June 30, 2019</span> </div>
-                <a class="tweets__link" href="javascript:void(0);">Get Information @Bitrexgo</a> </section>
+                <a class="tweets__link" href="javascript:void(0);">Get Information @Bitrexgo</a> </section> -->
               <!-- end footer-section --> 
             </div>
             <!-- end col -->
@@ -58,7 +58,7 @@
                     <input class="form-control" type="text" placeholder="Your Name">
                     <input class="form-control" type="email" placeholder="Email address">
                     <textarea class="form-control" rows="7" placeholder="Message"></textarea>
-                    <button class="btn" style="background-color: #27cbbd; border-radius: 5px;">SEND MESSSAGE</button>
+                    <button class="btn" style="background-color: #b92240; border-radius: 5px;">SEND MESSSAGE</button>
                   </div>
                 </form>
               </section>
@@ -70,17 +70,15 @@
         </div>
         <!-- end footer-inner -->
         
-        <div class="row">
+        <!-- <div class="row">
           <div class="col-xs-12">
             <div class="footer-bottom" style="font-size: 10px;">
               
               FULL RISK DISCLOSURE: Trading contains substantial risk and is not for every investor. An investor could potentially lose all or more than the initial investment. Risk capital is money that can be lost without jeopardizing financial security or life style. Only risk capital should be used for trading and only those with sufficient risk capital should consider trading. Past performance is no guarantee of future results.
 
             </div>
-            <!-- end footer-bottom --> 
           </div>
-          <!-- end col --> 
-        </div>
+        </div> -->
         <!-- end row --> 
       </div>
       <!-- end container --> 

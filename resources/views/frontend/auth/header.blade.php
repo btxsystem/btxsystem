@@ -295,9 +295,9 @@ ul.nav.navbar-nav {
                 </div>
                 <div id="navbar-collapse-1" class="navbar-collapse collapse">
                   <ul class="nav navbar-nav">
-                    <li><a href="#">About Us</a></li>
-                    <li><a href="#">Our Product</a></li>
-                    <li><a href="#">Event</a></li>
+                    <li><a id="about" href="#">About Us</a></li>
+                    <li><a id="product" href="#">Our Product</a></li>
+                    <li><a id="event" href="#">Event</a></li>
                     <li><a href="#"><button class="btn btn-effect btn-info btn-buy" style="background: #b92240; margin-top: -10px;">BUY</button></a></li>
                   </ul>
                 </div>

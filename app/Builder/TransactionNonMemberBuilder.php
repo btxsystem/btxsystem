@@ -14,7 +14,7 @@ class TransactionNonMemberBuilder
 
   public $ebookId = 0;
 
-  public $status = 0;
+  public $status = 1;
 
   public function setIncome($value)
   {

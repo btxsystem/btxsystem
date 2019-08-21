@@ -94,12 +94,9 @@
 			    type: 'GET', //THIS NEEDS TO BE GET
 			    url: '{{route("member.select.tree")}}',
 			    success: function (data) {
-					console.log(data);
-					
-			      	var data = data;
 					var treeStructure = d3.tree().size([1500,380]);
 
-					var root = d3.hierarchy(data).sort(function(a, b) { return a.data.position - b.data.position ;});
+					var root = d3.hierarchy(data).sort(function(a, b) {return a.data.position - b.data.position ;});
 					treeStructure(root);
 					var information = treeStructure(root);
 					
@@ -129,7 +126,7 @@
 					var levels = svg.append("g").selectAll("text")
 						.data(information.descendants());
 					levels.enter().append("text")
-						.text(function(d){return "Rank : " + d.data.rank_id;})
+						.text(function(d){return "Rank : " + d.data.rank;})
 						.attr("x", function(d){return d.x+0;})
 						.attr("y", function(d){return d.y+90;})
 						.classed("bigger", true)
@@ -137,7 +134,7 @@
 					var pv_left = svg.append("g").selectAll("text")
 						.data(information.descendants());
 					pv_left.enter().append("text")
-						.text(function(d){return "L : " + 0})
+						.text(function(d){return "L : " + d.data.pv_left;})
 						.attr("x", function(d){return d.x-40;})
 						.attr("y", function(d){return d.y+110;})
 						.classed("bigger", true);
@@ -145,7 +142,7 @@
 					var pv_midle = svg.append("g").selectAll("text")
 						.data(information.descendants());
 					pv_midle.enter().append("text")
-						.text(function(d){return "M : " + 0})
+						.text(function(d){return "M : " + d.data.pv_midle})
 						.attr("x", function(d){return d.x+0;})
 						.attr("y", function(d){return d.y+110;})
 						.classed("bigger", true);
@@ -153,7 +150,7 @@
 					var pv_right = svg.append("g").selectAll("text")
 						.data(information.descendants());
 					pv_right.enter().append("text")
-						.text(function(d){return "R : " + 0})
+						.text(function(d){return "R : " + d.data.pv_right})
 						.attr("x", function(d){return d.x+40;})
 						.attr("y", function(d){return d.y+110;})
 						.classed("bigger", true);
@@ -161,7 +158,7 @@
 					var image = svg.append("g").selectAll("image")
 						.data(information.descendants());
 					image.enter().append("a")
-						.attr("xlink:href", function(d){return "/"})
+						.attr("xlink:href", function(d){return "#"})
 						.append("image")
 						.attr("xlink:href", function(d){return "https://img.icons8.com/bubbles/2x/user.png"})
 						.attr("x", function(d){return d.x-30;})

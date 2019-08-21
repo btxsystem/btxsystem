@@ -13,11 +13,22 @@ use App\Models\BookEbook;
 use App\Models\BookChapter;
 
 use App\Employeer;
+use App\Models\NonMember;
 
 class ExploreController extends Controller
 {
   public $pathView = 'member-v2';
 
+  // public function __construct()
+  // {
+  //   if(!\Auth::guard('nonmember')->user()) {
+  //     redirect()->route('member.login');
+  //   }
+  // }
+  
+  /**
+   * Index
+   */
   public function index()
   {
     $books = Ebook::select('id', 'title', 'price', 'pv', 'price_markup', 'bv')->with([
@@ -33,27 +44,71 @@ class ExploreController extends Controller
             ]);
           }
         ]);
-      }
-    ])->get();
+      }])->get();
 
     // return response()->json([
     //   'data' => $books
     // ], 200);
 
     return view($this->pathView . '.components.list-ebook')->with([
-      'books' => $books
+      'books' => $books,
+      'username' => ''
     ]);
   }
 
+  /**
+   * Index
+   */
+  public function detail(Request $request, $type = 'basic')
+  {
+    $books = Ebook::select('id', 'title', 'price', 'pv', 'price_markup', 'bv')->with([
+      'bookEbooks' => function($q) {
+        $q->select('id', 'book_id', 'ebook_id')->with([
+          'book' => function($q) {
+            $q->select('id', 'title', 'article')->with([
+              'imageBooks' => function($q) {
+                $q->select('id', 'image_id', 'book_id')->with([
+                  'image'
+                ]);
+              }
+            ]);
+          }
+        ]);
+      }
+    ])->where('title', $type)->get();
+
+    $username = $request->input('username') ?? '';
+
+    // return response()->json([
+    //   'data' => $books
+    // ], 200);
+
+    return view($this->pathView . '.components.list-ebook')->with([
+      'books' => $books,
+      'username' => $username
+    ]);
+  }
+
+  /**
+   * Subscription
+   */
   public function subscription(Request $request, $username = null)
   {
-    $ebooks = Ebook::all();
+    $ebooks = Ebook::select('id', 'price', 'pv', 'bv', 'price_markup', 'description', 'title')->get();
 
     $referral = '';
     
-    if(Employeer::where('id_member', $username)->count() > 0) {
+    if(Employeer::where('username', $username)->count() > 0) {
       $referral = $username;
+    } else {
+      redirect()->route('member.subscription');
     }
+
+    // $transactions = DB::table('non_members')
+    //   ->join('transaction_non_members', 'non_members.id', '=', 'transaction_non_members.non_member_id')
+    //   ->select('transaction_non_members.ebook_id')
+    //   ->where('transaction_non_members.non_member_id', Auth::guard('nonmember')->user()->id)
+    //   ->get();
 
     return view($this->pathView . '.components.subscription')->with([
       'username' => $referral,
@@ -61,6 +116,9 @@ class ExploreController extends Controller
     ]);
   }
 
+  /**
+   * Chapter Lists
+   */
   public function chapters($id)
   {
     $book = Book::query()
@@ -76,6 +134,9 @@ class ExploreController extends Controller
     ]);;
   }
 
+  /**
+   * Chapter Detail
+   */
   public function chapter($id)
   {
     $chapter = BookChapter::query()
@@ -90,5 +151,48 @@ class ExploreController extends Controller
     return view($this->pathView . '.components.detail-chapter')->with([
       'chapter' => $chapter
     ]);;
+  }
+
+  /**
+   * 
+   */
+  public function checkUsername(Request $request)
+  {
+    $username = $request->input('username');
+
+    $check = NonMember::where('username', $username)->count();
+
+    if($check > 0) {
+      return response()->json([
+        'success' => false,
+        'message' => 'Username already exist',
+      ]);
+    }
+
+    return response()->json([
+      'success' => true,
+      'message' => 'Username ready to use',
+    ]);
+  }
+
+  /**
+   * 
+   */
+  public function checkReferral(Request $request)
+  {
+    $username = $request->input('username');
+    $check = Employeer::where('username', $username)->count();
+
+    if($check <= 0) {
+      return response()->json([
+        'success' => false,
+        'message' => 'Referral not already exist',
+      ]);
+    }
+
+    return response()->json([
+      'success' => true,
+      'message' => 'Referral ready to use',
+    ]);
   }
 }

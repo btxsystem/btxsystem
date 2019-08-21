@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddColumnToNonMembersTable2 extends Migration
+class AddColumnToEbooksTable2 extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddColumnToNonMembersTable2 extends Migration
      */
     public function up()
     {
-        Schema::table('non_members', function (Blueprint $table) {
-            $table->string('number_phone')->nullable();
+        Schema::table('ebooks', function (Blueprint $table) {
+            $table->text('description')->nullable();
         });
     }
 
@@ -25,8 +25,8 @@ class AddColumnToNonMembersTable2 extends Migration
      */
     public function down()
     {
-        Schema::table('non_members', function (Blueprint $table) {
-             $table->dropColumn('number_phone');
+        Schema::table('ebooks', function (Blueprint $table) {
+            $table->dropColumn('description');
         });
     }
 }

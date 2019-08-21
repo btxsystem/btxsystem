@@ -17,7 +17,7 @@
 		</div>
 	</div>
 
-	<div id="carouselExampleControls" class="carousel slide" data-ride="carousel" style="max-height: 655px; overflow: hidden;">
+	<div id="carouselExampleControls" class="carousel slide" data-ride="carousel" style="max-height: 455px; overflow: hidden;">
 	  <div class="carousel-inner" style="background: #333;">
 	    <div class="carousel-item active">
 	      <img src="https://assets.regus.com/images/nwp/homepage-product-office-space.jpg" class="d-block w-100" style="opacity: 0.5">
@@ -43,8 +43,12 @@
 							</div>
 							<div class="col-lg-9">
 								<h2 class="mb-0" style="color: #8543da;">{{ucwords($ebook->title)}}</h2>
-								<span>Materi basic untuk mempermudah anda dalam tahap belajar forex.</span><br>
-								<button onclick="selectedSubscription('{{$ebook}}')" class="btn btn-purple btn-sm mt-3 px-5">BUY</button>
+								<span>{{ $ebook->description }}</span><br>
+								@if($ebook->access)
+								<a href="{{route('member.ebook.detail', ['type' => strtolower($ebook->title)])}}?username={{$username}}" class="btn btn-purple btn-sm mt-3 px-5">Detail</a>
+								@else
+								<a href="{{route('member.ebook.detail', ['type' => strtolower($ebook->title)])}}?username={{$username}}" class="btn btn-purple btn-sm mt-3 px-5">BUY</a>
+								@endif
 							</div>
 						</div>
 					</div>
@@ -96,66 +100,19 @@
 		  </div>
 		</div>
 	<!-- End Modal -->
-<!-- <div class="pt-md-5 pb-md-4 text-center mb-4 title-3">
-  <h3 class="text-center colorwhite bit-relative"><b>Bitrexgo Premium</b></h3>
-</div>
-<div class="container c1">
-  <div class="row justify-content-center">
-    <div class="card-deck mb-3 bit-relative">
-      <div class="card mb-4 shadow-sm mb-5">
-        <div class="card-logo">
-          <img src="{{asset('assetsebook/assets/img/basic.jpg')}}" class="img-fluid"> 
-        </div>
-        <div class="card-body d-flex flex-column">
-        <button class="btn btn-md btn-warning mr-auto">Basic + Intermediate</button><br/>
-          <p>Pada modul ini anda akan mempelajari trading dari dasar. Pertama anda akan mengerti istilah-istilah yang digunakan dalam dunia trading, anda akan mempelajari cara membaca grafik dan membuat analisa dasar sendiri.
-          </p>
-          <b><label>Apa yang anda dapatkan :</label></b><br>
-          <ul style="margin-left:20px;">
-            <li>Pembelajaran dasar mengenai dunia trading forex</li>
-            <li>Mempersiapkan pawa trader pemula sebelum trading forex</li>
-            <li>Menyadari dan mengenal resiko-resiko trading di dunia forex</li>
-            <li>Mengetahui siapa saja pelaku dan penggerak dunia forex</li>
-            <li>Mempelajari dasar-dasar analisa fundamental</li>
-            <li>Mempelajari dasar-dasar analisa teknikal</li>
-            <li>Mengetahui kapan moment terbaik untuk melakukan trading forex</li>
-            <li>Mempelajari sifat-sifat dasar yang harus dimiliki trader</li>
-          </ul>
-        </div>
-      </div>
-      <div class="card mb-4 shadow-sm mb-5">
-        <div class="card-logo">
-          <img src="{{asset('assetsebook/assets/img/advance.jpg')}}" class="img-fluid"> 
-        </div>
-        <div class="card-body d-flex flex-column">
-          <button class="btn btn-md btn-warning mr-auto">Basic + Intermediate</button><br/>
-          <p>Pada modul ini anda akan mempelajari dunia trading lanjutan. Bagaimana cara membaca pasar dengan penggabungan dua atau lebih analisa, diantaranya analisa secara fundamental dan teknikal, serta mempelajari secara mendalam indikator-indikator teknikal.</p>
-          <b><label>Apa yang anda dapatkan :</label></b><br>
-          <ul style="margin-left:20px;">
-            <li>Merupakan kelanjutan dari modul basic + intermediate</li>
-            <li>Membahas materi yang lebih dalam mengenai analisa teknikal dan fundamental</li>
-            <li>Mengupas lebih dalam fungsi-fungsi indikator di dalam metatrader</li>
-            <li>Mengajarkan cara penggunaan indikator dan kombinasinya</li>
-            <li>Mengajarkan mental trading</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-</div> -->
 @stop
 @section('footer_scripts')
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script src="{{asset('assetsebook/js/helper.js')}}"></script>
 <script>
 function selectedSubscription(param = null) {
   $('#modal-subscription').modal('show')
 
   const data = JSON.parse(param)
 
-  $('#total_price').html(data.price)
+  $('#total_price').html(toIDR(data.price))
 }
 
 function submit() {
@@ -201,7 +158,15 @@ function submit() {
 		},
 		success: function(result){
 			console.log(result)
-			alert('Success Register')
+
+			const {message} = result
+
+			if(!message) {
+				alert('Failed Regiester')
+				return false
+			}
+
+			alert('Success register')
 		},
 		error: function(err) {
 			console.log(err)
