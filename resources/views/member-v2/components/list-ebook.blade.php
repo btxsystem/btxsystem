@@ -103,11 +103,11 @@
 						<input type="hidden" id="ebook">
 						<input type="hidden" id="income">
 					  <div class="form-group">
-					    <label for="exampleInputEmail1">Refferal <small class="text-danger">*</small></label>
+					    <label for="exampleInputEmail1">Referral <small class="text-danger">*</small></label>
 							@if($username != '')
-					    <input type="text" class="form-control" id="referralCode" aria-describedby="emailHelp" placeholder="Refferal" required value="{{$username}}" readonly>
+					    <input type="text" class="form-control" id="referralCode" aria-describedby="emailHelp" placeholder="Referral" required value="{{$username}}" readonly>
 							@else
-							<input type="text" class="form-control" id="referralCode" aria-describedby="emailHelp" placeholder="Refferal" required>
+							<input type="text" class="form-control" id="referralCode" aria-describedby="emailHelp" placeholder="Referral" required>
 							@endif
 							<span class="text-white d-none" id="referralErrorMessage">Referral tidak ditemukan.</span>
 					  </div>
@@ -118,12 +118,12 @@
 							<span class="text-white d-none" id="usernameErrorMessage">Username telah dipakai.</span>
 					  </div>
 					  <div class="form-group">
-					    <label for="exampleInputPassword1">Firstname <small class="text-danger">*</small></label>
-					    <input type="text" class="form-control" id="firstName" placeholder="Firstname" required>
+					    <label for="exampleInputPassword1">First Name <small class="text-danger">*</small></label>
+					    <input type="text" class="form-control" id="firstName" placeholder="First Name" required>
 					  </div>
 						<div class="form-group">
-					    <label for="exampleInputPassword1">Lastname <small class="text-danger">*</small></label>
-					    <input type="text" class="form-control" id="lastName" placeholder="Lastname" required>
+					    <label for="exampleInputPassword1">Last Name <small class="text-danger">*</small></label>
+					    <input type="text" class="form-control" id="lastName" placeholder="Last Name " required>
 					  </div>
 					  <div class="form-group">
 					    <label for="exampleInputPassword1">Email <small class="text-danger">*</small></label>
