@@ -49,7 +49,7 @@ return [
             'driver' => 'session',
             'provider' => 'admins',
         ],
-        'non_member' => [
+        'nonmember' => [
             'driver' => 'session',
             'provider' => 'non_members',
         ],
@@ -84,7 +84,7 @@ return [
         ],
         'non_members' => [
             'driver' => 'eloquent',
-            'model' => App\NonMember::class,
+            'model' => App\Models\NonMember::class,
         ],
     ],
     /*

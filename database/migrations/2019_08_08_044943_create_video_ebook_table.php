@@ -15,10 +15,10 @@ class CreateVideoEbookTable extends Migration
     {
         Schema::create('video_ebook', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('book_id')->unsigned();
+            $table->bigInteger('ebook_id')->unsigned();
             $table->bigInteger('video_id')->unsigned();
             $table->timestamps();
-            $table->foreign('book_id')->references('id')->on('books')->onDelete('cascade');
+            $table->foreign('ebook_id')->references('id')->on('ebooks')->onDelete('cascade');
             $table->foreign('video_id')->references('id')->on('videos')->onDelete('cascade');
         });
     }

@@ -20,7 +20,8 @@ class NonMemberController extends Controller
       'password' => 'required'
     ]);
 
-    if (Auth::guard('non_member')->attempt(['username' => $request->username, 'password' => $request->password])) {
+    if (Auth::guard('nonmember')->attempt(['username' => $request->username, 'password' => $request->password])) {
+      //dd(Auth::guard('nonmember')->user()->id);
       return redirect()->route('member.subscription');
     }
 
@@ -29,8 +30,8 @@ class NonMemberController extends Controller
 
   public function logout()
   {
-    if (Auth::guard('non_member')->check()) {
-      Auth::guard('non_member')->logout();
+    if (Auth::guard('nonmember')->check()) {
+      Auth::guard('nonmember')->logout();
     } 
     return redirect()->route('member.login');
   }

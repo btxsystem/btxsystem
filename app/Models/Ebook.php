@@ -20,4 +20,9 @@ class Ebook extends Model
   {
       return $this->hasMany('\App\Models\BookEbook', 'ebook_id', 'id');
   }
+  
+  public function videoEbooks()
+  {
+      return $this->hasMany('\App\Models\VideoEbook', 'ebook_id', 'id');
+  }
 }

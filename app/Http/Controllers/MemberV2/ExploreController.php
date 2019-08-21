@@ -36,7 +36,8 @@ class ExploreController extends Controller
             ]);
           }
         ]);
-      }
+      },
+    'videoEbooks'
     ])->get();
 
     // return response()->json([
@@ -92,6 +93,12 @@ class ExploreController extends Controller
     } else {
       redirect()->route('member.subscription');
     }
+
+    // $transactions = DB::table('non_members')
+    //   ->join('transaction_non_members', 'non_members.id', '=', 'transaction_non_members.non_member_id')
+    //   ->select('transaction_non_members.ebook_id')
+    //   ->where('transaction_non_members.non_member_id', Auth::guard('nonmember')->user()->id)
+    //   ->get();
 
     return view($this->pathView . '.components.subscription')->with([
       'username' => $referral,
