@@ -12,6 +12,8 @@ class VideoEbook extends Model
     'video_id',
     'ebook_id'
   ];
+
+  protected $guarded = [];
   
   public function videos()
   {

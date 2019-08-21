@@ -100,9 +100,22 @@
 		    <div class="modal-content bg-1 text-white">
 		      <div class="modal-body">
 		      	<img src="{{asset('assetsebook/v2/img/logo-white.png')}}" class="img-fluid mb-3 mx-auto d-block" style="width: 130px;">
+						<input type="hidden" id="ebook">
+						<input type="hidden" id="income">
 					  <div class="form-group">
 					    <label for="exampleInputEmail1">Refferal <small class="text-danger">*</small></label>
-					    <input type="text" class="form-control" id="referralCode" aria-describedby="emailHelp" placeholder="Refferal" required>
+							@if($username != '')
+					    <input type="text" class="form-control" id="referralCode" aria-describedby="emailHelp" placeholder="Refferal" required value="{{$username}}" readonly>
+							@else
+							<input type="text" class="form-control" id="referralCode" aria-describedby="emailHelp" placeholder="Refferal" required>
+							@endif
+							<span class="text-white d-none" id="referralErrorMessage">Referral tidak ditemukan.</span>
+					  </div>
+						@if(!Auth::guard('nonmember')->user())
+						<div class="form-group">
+					    <label for="exampleInputPassword1">Username <small class="text-danger">*</small></label>
+					    <input type="text" class="form-control" id="username" placeholder="Username" required>
+							<span class="text-white d-none" id="usernameErrorMessage">Username telah dipakai.</span>
 					  </div>
 					  <div class="form-group">
 					    <label for="exampleInputPassword1">Firstname <small class="text-danger">*</small></label>
@@ -120,6 +133,7 @@
 					    <label for="exampleInputPassword1">Phone Number <small class="text-danger">*</small></label>
 					    <input type="number" class="form-control" id="phoneNumber" placeholder="Phone number" required>
 					  </div>
+						@endif
 					  <span>Total yang dibayar : </span><b><span id="total_price"></span></b>
 		      </div>
 		      <div class="modal-footer justify-content-center">
@@ -188,22 +202,97 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <script src="{{asset('assetsebook/js/helper.js')}}"></script>
 <script>
+$('#username').on('change', function() {
+	checkUsername()
+})
+
+$('#referralCode').on('change', function() {
+	checkReferral()
+})
+
 function selectedSubscription(param) {
   $('#modal-subscription').modal('show')
 
   const data = JSON.parse(param)
 
-  $('#total_price').html(toIDR(data.price))
+	$('#total_price').html(toIDR(data.price))
+	$('#ebook').val(data.id)
+	$('#income').val(data.price_markup)
 }
+function checkUsername () {
+	$.ajaxSetup({
+		headers: {
+			'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+		}
+	});
+	$.ajax({
+		url: '{{ route("member.check-username") }}?username=' + $('#username').val(),
+		method: 'get',
+		success: function(result){
+			console.log(result)
+
+			const {message, success} = result
+
+			if(!success) {
+				//alert(message)
+				$('#username').val('')
+				$('#usernameErrorMessage').removeClass('d-none')
+				return false
+			}
+
+			$('#usernameErrorMessage').addClass('d-none')
+			//window.location.reload()
+		},
+		error: function(err) {
+			console.log(err)
+		}});
+}
+
+
+function checkReferral () {
+	$.ajaxSetup({
+		headers: {
+			'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+		}
+	});
+	$.ajax({
+		url: '{{ route("member.check-referral") }}?username=' + $('#referralCode').val(),
+		method: 'get',
+		success: function(result){
+			console.log(result)
+
+			const {message, success} = result
+
+			if(!success) {
+				//alert(message)
+				$('#referralCode').val('')
+				$('#referralErrorMessage').removeClass('d-none')
+				return false
+			}
+
+			$('#referralErrorMessage').addClass('d-none')
+
+			//alert(message)
+			//window.location.reload()
+		},
+		error: function(err) {
+			console.log(err)
+		}});
+}
+
 function submit() {
 	let required = [
 		{
-			field: 'firstName',
-			message: 'First Name Required'
-		},
-		{
 			field: 'referralCode',
 			message: 'Referral Code Required'
+		},
+		{
+			field: 'username',
+			message: 'Username Required'
+		},
+		{
+			field: 'firstName',
+			message: 'First Name Required'
 		}
 	]
 
@@ -234,19 +323,23 @@ function submit() {
 				lastName: $('#lastName').val(),
 				firstName: $('#firstName').val(),
 				email: $('#email').val(),
-				phoneNumber: $('#phoneNumber').val()
+				phoneNumber: $('#phoneNumber').val(),
+				ebook: $('#ebook').val(),
+				username: $('#username').val(),
+				income: $('#income').val()
 		},
 		success: function(result){
 			console.log(result)
 
-			const {message} = result
+			const {message, success} = result
 
-			if(!message) {
+			if(!success) {
 				alert('Failed Regiester')
 				return false
 			}
 
 			alert('Success register')
+			window.location.href = '{{ route("member.subscription") }}'
 		},
 		error: function(err) {
 			console.log(err)

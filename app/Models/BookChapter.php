@@ -13,6 +13,8 @@ class BookChapter extends Model
     'book_id'
   ];
 
+  protected $guarded = [];
+
   public function lessons()
   {
       return $this->hasMany('\App\Models\BookChapterLesson', 'chapter_id', 'id');

@@ -45,11 +45,23 @@ class RegisterController extends Controller
           ]);
         }
       }
+      
+      if(Auth::guard('nonmember')->user()) {
+        $nonMember = true;
+        $memberId = Auth::guard('nonmember')->user()->id;
+      } else {
+        $nonMember = RegisterFactory::run('nonmember')->create(
+          Hash::make('secret')
+        );
+        $memberId = $nonMember->id;
+      }
 
-      //$nonMember = RegisterFactory::run('nonmember')->create();
-
-      $memberId = Auth::guard('nonmember')->user()->id;
-      $transaction = TransactionFactory::run('nonmember')->create($referralId, $memberId);
+      $transaction = TransactionFactory::run('nonmember')->create(
+        $referralId, 
+        $memberId, 
+        $request->input('ebook'),
+        $request->input('income')
+      );
 
       if(!$nonMember || !$transaction) {
         DB::rollback();
@@ -72,7 +84,7 @@ class RegisterController extends Controller
       return response()->json([
         'success' => false,
         'message' => 'Failed register',
-        'error' => $e
+        'error' => []
       ]);
     }
   }
