@@ -13,17 +13,18 @@ use App\Models\BookEbook;
 use App\Models\BookChapter;
 
 use App\Employeer;
+use App\Models\NonMember;
 
 class ExploreController extends Controller
 {
   public $pathView = 'member-v2';
 
-  public function __construct()
-  {
-    if(!\Auth::guard('nonmember')->user()) {
-      redirect()->route('member.login');
-    }
-  }
+  // public function __construct()
+  // {
+  //   if(!\Auth::guard('nonmember')->user()) {
+  //     redirect()->route('member.login');
+  //   }
+  // }
   
   /**
    * Index
@@ -43,16 +44,15 @@ class ExploreController extends Controller
             ]);
           }
         ]);
-      },
-    'videoEbooks'
-    ])->get();
+      }])->get();
 
     // return response()->json([
     //   'data' => $books
     // ], 200);
 
     return view($this->pathView . '.components.list-ebook')->with([
-      'books' => $books
+      'books' => $books,
+      'username' => ''
     ]);
   }
 
@@ -77,12 +77,15 @@ class ExploreController extends Controller
       }
     ])->where('title', $type)->get();
 
+    $username = $request->input('username') ?? '';
+
     // return response()->json([
     //   'data' => $books
     // ], 200);
 
     return view($this->pathView . '.components.list-ebook')->with([
-      'books' => $books
+      'books' => $books,
+      'username' => $username
     ]);
   }
 
@@ -148,5 +151,48 @@ class ExploreController extends Controller
     return view($this->pathView . '.components.detail-chapter')->with([
       'chapter' => $chapter
     ]);;
+  }
+
+  /**
+   * 
+   */
+  public function checkUsername(Request $request)
+  {
+    $username = $request->input('username');
+
+    $check = NonMember::where('username', $username)->count();
+
+    if($check > 0) {
+      return response()->json([
+        'success' => false,
+        'message' => 'Username already exist',
+      ]);
+    }
+
+    return response()->json([
+      'success' => true,
+      'message' => 'Username ready to use',
+    ]);
+  }
+
+  /**
+   * 
+   */
+  public function checkReferral(Request $request)
+  {
+    $username = $request->input('username');
+    $check = Employeer::where('username', $username)->count();
+
+    if($check <= 0) {
+      return response()->json([
+        'success' => false,
+        'message' => 'Referral not already exist',
+      ]);
+    }
+
+    return response()->json([
+      'success' => true,
+      'message' => 'Referral ready to use',
+    ]);
   }
 }

@@ -15,7 +15,8 @@ class NonMember implements Transaction
       ->setFirstName(\Request::input('firstName') ?? '')
       ->setLastName(\Request::input('lastName') ?? '')
       ->setEmail(\Request::input('email') ?? '')
-      ->setPassword($password ?? 'asep')
+      ->setPassword($password)
+      ->setUsername(\Request::input('username'))
       ->setReferredBy($referralId ?? 0)
       ->saved();
     

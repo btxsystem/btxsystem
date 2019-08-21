@@ -80,7 +80,7 @@ class NonMemberBuilder
     $nonMember = new NonMemberModel();
     $nonMember->first_name = $this->firstName;
     $nonMember->last_name = $this->lastName;
-    $nonMember->username = $this->createUsername();
+    $nonMember->username = $this->username;
     $nonMember->email = $this->email;
     $nonMember->password = $this->password;
     // $nonMember->referred_by = $this->referredBy;
@@ -89,12 +89,12 @@ class NonMemberBuilder
     return $nonMember;
   }
 
-  public function createUsername()
-  {
-    $id = NonMemberModel::query()->orderBy('id', 'desc')->first()->id;
+  // public function createUsername()
+  // {
+  //   $id = NonMemberModel::query()->orderBy('id', 'desc')->first()->id;
 
-    $newNumber = (int) $id + 1;
+  //   $newNumber = (int) $id + 1;
 
-    return "NM{$newNumber}";
-  }
+  //   return "NM{$newNumber}";
+  // }
 }
