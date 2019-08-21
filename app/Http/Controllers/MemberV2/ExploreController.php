@@ -83,7 +83,7 @@ class ExploreController extends Controller
    */
   public function subscription(Request $request, $username = null)
   {
-    $ebooks = Ebook::all();
+    $ebooks = Ebook::select('id', 'price', 'pv', 'bv', 'price_markup', 'description', 'title')->get();
 
     $referral = '';
     

@@ -10,6 +10,8 @@ class Authenticate extends Middleware
     {
         if (Auth::guard('user')->check()) {
             return redirect('/member');
-        } 
+        } else if(Auth::guard('non_member')->check()) {
+            return redirect('/member');
+        }
     }
 }

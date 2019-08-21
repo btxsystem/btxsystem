@@ -43,7 +43,7 @@
 							</div>
 							<div class="col-lg-9">
 								<h2 class="mb-0" style="color: #8543da;">{{ucwords($ebook->title)}}</h2>
-								<span>Materi basic untuk mempermudah anda dalam tahap belajar forex.</span><br>
+								<span>{{ $ebook->description }}</span><br>
 								<!-- <button onclick="selectedSubscription('{{$ebook}}')" class="btn btn-purple btn-sm mt-3 px-5">BUY</button> -->
 								<a href="{{route('member.ebook.detail', ['type' => strtolower($ebook->title)])}}" class="btn btn-purple btn-sm mt-3 px-5">BUY</a>
 							</div>
