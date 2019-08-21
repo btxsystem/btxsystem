@@ -100,6 +100,7 @@
 		    <div class="modal-content bg-1 text-white">
 		      <div class="modal-body">
 		      	<img src="{{asset('assetsebook/v2/img/logo-white.png')}}" class="img-fluid mb-3 mx-auto d-block" style="width: 130px;">
+						<input type="hidden" id="ebook">
 					  <div class="form-group">
 					    <label for="exampleInputEmail1">Refferal <small class="text-danger">*</small></label>
 					    <input type="text" class="form-control" id="referralCode" aria-describedby="emailHelp" placeholder="Refferal" required>
@@ -193,7 +194,8 @@ function selectedSubscription(param) {
 
   const data = JSON.parse(param)
 
-  $('#total_price').html(toIDR(data.price))
+	$('#total_price').html(toIDR(data.price))
+	$('#ebook').val(data.id)
 }
 function submit() {
 	let required = [
@@ -234,7 +236,8 @@ function submit() {
 				lastName: $('#lastName').val(),
 				firstName: $('#firstName').val(),
 				email: $('#email').val(),
-				phoneNumber: $('#phoneNumber').val()
+				phoneNumber: $('#phoneNumber').val(),
+				ebook: $('#ebook').val()
 		},
 		success: function(result){
 			console.log(result)
@@ -247,6 +250,7 @@ function submit() {
 			}
 
 			alert('Success register')
+			window.location.reload()
 		},
 		error: function(err) {
 			console.log(err)

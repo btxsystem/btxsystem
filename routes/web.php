@@ -146,6 +146,7 @@ Route::group(['prefix' => 'asep'], function () {
 
     Route::get('/login', 'Auth\NonMemberController@getLogin')->middleware('guest')->name('member.login');
     Route::post('/login', 'Auth\NonMemberController@postLogin')->name('member.login.post');
+    Route::get('/logout', 'Auth\LoginController@logout')->name('member.logout.post');
     // Route::get('testing', 'MemberV2\RegisterController@testing')->name('member.registers');
 });
 

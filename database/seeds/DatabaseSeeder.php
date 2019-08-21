@@ -14,8 +14,12 @@ class DatabaseSeeder extends Seeder
             EmployeersTableSeeder::class,
             PermissionsTableSeeder::class,
             PermissionRoleTableSeeder::class,
-            RewardsTableSeeder::class,
-            HistoryPvTableSeeder::class,
+            EbookTableSeeder::class,
+            BooksTableSeeder::class,
+            BookEbookTableSeeder::class,
+            BookChaptersTableSeeder::class,
+            BookChapterLessonsTableSeeder::class,
+
         ]);
     }
 }

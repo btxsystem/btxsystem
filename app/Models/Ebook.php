@@ -20,6 +20,8 @@ class Ebook extends Model
     'access'
   ];
 
+  protected $guarded = [];
+
   public function bookEbooks()
   {
       return $this->hasMany('\App\Models\BookEbook', 'ebook_id', 'id');
@@ -37,8 +39,12 @@ class Ebook extends Model
 
   public function getAccessAttribute()
   {
-    $memberTransaction = $this->transaction()->where('non_member_id', \Auth::guard('nonmember')->user()->id);
-    return $memberTransaction->count() > 0 ? $memberTransaction->first()->status == 1 ? true : false : false;
+    if(\Auth::guard('nonmember')->user()) {
+      $memberTransaction = $this->transaction()->where('non_member_id', \Auth::guard('nonmember')->user()->id);
+      return $memberTransaction->count() > 0 ? $memberTransaction->first()->status == 1 ? true : false : false;
+    } else {
+      return false;
+    }
   }
 
 }

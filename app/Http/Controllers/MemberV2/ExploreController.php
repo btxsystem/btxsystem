@@ -18,6 +18,13 @@ class ExploreController extends Controller
 {
   public $pathView = 'member-v2';
 
+  public function __construct()
+  {
+    if(!\Auth::guard('nonmember')->user()) {
+      redirect()->route('member.login');
+    }
+  }
+  
   /**
    * Index
    */
