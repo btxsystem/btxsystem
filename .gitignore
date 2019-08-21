@@ -1,6 +1,8 @@
 /node_modules
 /public/hot
 /public/storage
+/public/editor/kcfinder/upload/images
+/public/upload
 /storage/*.key
 /vendor
 /.idea
@@ -8,6 +10,7 @@
 /nbproject
 /.vagrant
 .env
+.DS_Store
 .phpunit.result.cache
 Homestead.json
 Homestead.yaml

@@ -12,7 +12,10 @@ class Book extends Model
     'title',
   ];
 
-  protected $guarded = [];
+  public function ebooks()
+  {
+    return $this->belongsToMany('\App\Models\Ebook');
+  }
 
   public function chapters()
   {

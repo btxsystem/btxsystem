@@ -20,7 +20,16 @@ class Ebook extends Model
     'access'
   ];
 
-  protected $guarded = [];
+
+  public function books()
+  {
+      return $this->belongsToMany('\App\Models\Book');
+  }
+
+  public function videos()
+  {
+    return $this->belongsToMany('\App\Models\Video', 'video_ebook', 'book_id', 'video_id');
+  }
 
   public function bookEbooks()
   {

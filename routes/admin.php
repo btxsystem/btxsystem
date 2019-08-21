@@ -58,6 +58,16 @@ Route::group(['prefix' => 'select', 'as'=> 'select.'], function () {
     Route::resource('customer', 'Admin\CustomerController');
     Route::get('customer/data/{id}', 'Admin\CustomerController@delete');
 
+    // Video
+    Route::resource('video', 'Admin\VideoController');
+    Route::get('video/delete/{id}', 'Admin\VideoController@destroy')->name('deleteVideo');
+    // Book
+    Route::resource('book', 'Admin\BookController');
+    Route::get('book/delete/{id}', 'Admin\BookController@destroy')->name('deleteBook');
+    // Ebook
+    Route::resource('book-chapter', 'Admin\BookChapterController');
+
+
     Route::group(['prefix'=>'trainings','as'=>'trainings.'],function(){
         Route::get('', ['as' => 'index', 'uses' => 'Admin\TrainingController@index']);
         Route::get('create', ['as' => 'create', 'uses' => 'Admin\TrainingController@create']);
