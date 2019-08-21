@@ -58,10 +58,11 @@ Route::group(['prefix' => 'select', 'as'=> 'select.'], function () {
     Route::resource('customer', 'Admin\CustomerController');
     Route::get('customer/data/{id}', 'Admin\CustomerController@delete');
 
+    // Video
+    Route::resource('video', 'Admin\VideoController');
     // Book
     Route::resource('book', 'Admin\BookController');
     Route::get('book/delete/{id}', 'Admin\BookController@destroy')->name('deleteBook');
-    Route::post('ckupload', 'Admin\BookController@uploadImage')->name('ckupload');
     // Ebook
     Route::resource('book-chapter', 'Admin\BookChapterController');
 

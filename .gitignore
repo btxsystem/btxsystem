@@ -2,6 +2,7 @@
 /public/hot
 /public/storage
 /public/editor/kcfinder/upload/images
+/public/upload
 /storage/*.key
 /vendor
 /.idea

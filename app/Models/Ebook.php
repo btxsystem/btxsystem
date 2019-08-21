@@ -22,6 +22,11 @@ class Ebook extends Model
       return $this->belongsToMany('\App\Models\Book');
   }
 
+  public function videos()
+  {
+    return $this->belongsToMany('\App\Models\Video', 'video_ebook', 'book_id', 'video_id');
+  }
+
 
   public function bookEbooks()
   {

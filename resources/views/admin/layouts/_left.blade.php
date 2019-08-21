@@ -55,15 +55,9 @@
                     </a>
                 </li>
                 <li >
-                    <a href="">
+                    <a href="{{ route('video.index') }}">
                         <i class="fa fa-angle-double-right"></i>
-                        Book Chapter
-                    </a>
-                </li>
-                <li >
-                    <a href="">
-                        <i class="fa fa-angle-double-right"></i>
-                        Book Chapter
+                        Videos
                     </a>
                 </li>
             </ul>
