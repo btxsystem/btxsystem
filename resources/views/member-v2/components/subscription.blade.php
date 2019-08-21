@@ -17,7 +17,7 @@
 		</div>
 	</div>
 
-	<div id="carouselExampleControls" class="carousel slide" data-ride="carousel" style="max-height: 655px; overflow: hidden;">
+	<div id="carouselExampleControls" class="carousel slide" data-ride="carousel" style="max-height: 455px; overflow: hidden;">
 	  <div class="carousel-inner" style="background: #333;">
 	    <div class="carousel-item active">
 	      <img src="https://assets.regus.com/images/nwp/homepage-product-office-space.jpg" class="d-block w-100" style="opacity: 0.5">
