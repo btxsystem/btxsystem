@@ -174,7 +174,7 @@ class DashboardController extends Controller
                }
             }
         }
-        return $data;
+        return response()->json($data);
     }
     
     // public function getTree(){
