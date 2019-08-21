@@ -12,6 +12,6 @@ class Video extends Model
 
     public function ebooks()
     {
-        return $this->belongsToMany('\App\Models\Ebook', 'video_ebook', 'book_id', 'video_id');
+        return $this->belongsToMany('\App\Models\Ebook', 'video_ebook', 'video_id', 'book_id');
     }
 }

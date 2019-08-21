@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Video;
+use App\Models\VideoEbook;
 use App\Models\Ebook;
 use DataTables;
 use Alert;
@@ -26,7 +27,6 @@ class VideoController extends Controller
                     ->addIndexColumn()
                     ->addColumn('action', function($row) {
                         return '<a href="'.route('video.show',$row->id).'"  class="btn btn-primary fa fa-eye" title="Show"></a>
-                                <a href="'.route('video.edit',$row->id).'"  class="btn btn-warning fa fa-pencil" title="Edit"></a>
                                 <a href="'.route('deleteVideo',$row->id).'" class="btn btn-danger fa fa-trash" title="Delete"></a>';
                     })
                     ->rawColumns(['action'])
@@ -62,16 +62,19 @@ class VideoController extends Controller
         
         $file->move('upload/video/', $fileName);
 
-        $ebook = Ebook::findOrFail($request->ebook_id);
+        
         $video = new Video;
         $video->title = $request->title;
         $video->path = $uploadPath;
-
+        
         $video->save();
 
-        $ebook->videos()->attach($video);
+        $pivot = new VideoEbook;
+        $pivot->video_id = $video->id;
+        $pivot->book_id = $request->ebook_id;
+        $pivot->save();
 
-
+        
         Alert::success('Sukses Menambah Data Video', 'Sukses');
 
         return redirect()->route('video.index');
