@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <title>
             @section('title')
-             | Betrixgo
+             | Bitrexgo
             @show
         </title>
         <!-- for css -->
@@ -37,7 +37,7 @@
             <header class="header">
 
                 <a href="" class="logo">
-                    <img src="{{ asset('assets/img/logo.png') }}" alt="logo">
+                    <img src="http://ebook.bitrexgo.id/assetsebook/v2/img/logo-white.png" alt="logo">
                 </a>
 
                 <nav class="navbar navbar-static-top" role="navigation">
