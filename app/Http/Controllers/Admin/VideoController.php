@@ -27,7 +27,7 @@ class VideoController extends Controller
                     ->addColumn('action', function($row) {
                         return '<a href="'.route('video.show',$row->id).'"  class="btn btn-primary fa fa-eye" title="Show"></a>
                                 <a href="'.route('video.edit',$row->id).'"  class="btn btn-warning fa fa-pencil" title="Edit"></a>
-                                <a href="'.route('deleteBook',$row->id).'" class="btn btn-danger fa fa-trash" title="Delete"></a>';
+                                <a href="'.route('deleteVideo',$row->id).'" class="btn btn-danger fa fa-trash" title="Delete"></a>';
                     })
                     ->rawColumns(['action'])
                     ->make(true);
@@ -120,6 +120,16 @@ class VideoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $data = Video::findOrFail($id);
+
+        if ($data) { 
+            \File::delete(public_path($data->path));
+            $data->delete(); 
+            Alert::success('Success Delete Data Video', 'Success');
+        } else {
+            Alert::error('Gagal Delete Data Video', 'Gagal');
+        }
+
+        return redirect()->route('video.index');
     }
 }
