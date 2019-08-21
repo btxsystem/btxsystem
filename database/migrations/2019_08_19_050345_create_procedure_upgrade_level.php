@@ -13,7 +13,6 @@ class CreateProcedureUpgradeLevel extends Migration
      */
     public function up()
     {
-        DB::unprepared('DROP PROCEDURE IF EXIST add_pv_rank');
         Schema::create('pv_rank', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('pv_left')->default(0);
