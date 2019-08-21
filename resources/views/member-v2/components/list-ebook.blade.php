@@ -202,6 +202,7 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <script src="{{asset('assetsebook/js/helper.js')}}"></script>
 <script>
+let auth = "{{Auth::guard('nonmember')->user()}}"
 $('#username').on('change', function() {
 	checkUsername()
 })
@@ -339,7 +340,12 @@ function submit() {
 			}
 
 			alert('Success register')
-			window.location.href = '{{ route("member.subscription") }}'
+			
+			if(auth != '') {
+				window.location.href = '{{ route("member.subscription") }}'
+			} else {
+				window.location.href = '{{ route("member.login") }}'
+			}
 		},
 		error: function(err) {
 			console.log(err)
