@@ -147,7 +147,10 @@ Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
 
 //     Route::get('/login', 'Auth\NonMemberController@getLogin')->middleware('guest')->name('member.login');
 //     Route::post('/login', 'Auth\NonMemberController@postLogin')->name('member.login.post');
-//     Route::get('/logout', 'Auth\LoginController@logout')->name('member.logout.post');
+//     Route::get('/logout', 'Auth\NonMemberController@logout')->name('member.logout.post');
+
+//     Route::get('checkReferral', 'MemberV2\ExploreController@checkReferral')->name('member.check-referral');
+//     Route::get('checkUsername', 'MemberV2\ExploreController@checkUsername')->name('member.check-username');
 //     // Route::get('testing', 'MemberV2\RegisterController@testing')->name('member.registers');
 // });
 
@@ -161,7 +164,10 @@ Route::domain('ebook.bitrexgo.id')->group(function () {
 
     Route::post('register', 'MemberV2\RegisterController@register')->name('member.register');
 
-    Route::get('/v2/login', 'Auth\NonMemberController@getLogin')->middleware('guest')->name('member.login');
-    Route::post('/v2/login', 'Auth\NonMemberController@postLogin')->name('member.login.post');
-    Route::get('/v2/logout', 'Auth\LoginController@logout')->name('member.logout.post');
+    Route::get('/login', 'Auth\NonMemberController@getLogin')->middleware('guest')->name('member.login');
+    Route::post('/login', 'Auth\NonMemberController@postLogin')->name('member.login.post');
+    Route::get('/logout', 'Auth\NonMemberController@logout')->name('member.logout.post');
+
+    Route::get('checkReferral', 'MemberV2\ExploreController@checkReferral')->name('member.check-referral');
+    Route::get('checkUsername', 'MemberV2\ExploreController@checkUsername')->name('member.check-username');
 });
