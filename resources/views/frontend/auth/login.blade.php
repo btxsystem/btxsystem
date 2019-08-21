@@ -34,7 +34,7 @@
 
       <!-- end main-slider -->
 
-      <div class="section_mod-a">
+      <div class="section_mod-a" id="myAbout">
         <div class="container">
           <div class="section_mod-a__inner">
             <div class="row">
@@ -107,7 +107,7 @@
       </div>
       <!-- end section_mod-a -->
 
-      <section class="section-default">
+      <section class="section-default" id="myProduct">
         <div class="container">
           <div class="row">
             <div class="col-xs-12">
@@ -244,7 +244,7 @@
       </section>
       <!-- end section-default -->
 
-      <section class="section-default" style="background: #22919b;margin-top: 0px;margin-bottom: 0px;padding-top: 70px;padding-bottom: 50px;">
+      <section class="section-default" id="myEvent" style="background: #22919b;margin-top: 0px;margin-bottom: 0px;padding-top: 70px;padding-bottom: 50px;">
         <div class="container">
           <div class="row">
             <div class="col-xs-12">
@@ -442,3 +442,21 @@
     <!-- end main-content -->
     
 @include('frontend.auth.footer')
+
+<script>
+  $("#product").click(function() {
+    $('html, body').animate({
+        scrollTop: $("#myProduct").offset().top - 100
+    }, 1000);
+  });
+  $("#about").click(function() {
+    $('html, body').animate({
+        scrollTop: $("#myAbout").offset().top - 180
+    }, 1000);
+  });
+  $("#event").click(function() {
+    $('html, body').animate({
+        scrollTop: $("#myEvent").offset().top - 130
+    }, 1000);
+  });
+</script>

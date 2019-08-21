@@ -174,6 +174,8 @@ class DashboardController extends Controller
                }
             }
         }
+        return response()->json($data);
+        return json_encode($data);
 
         $tree = [
             'id' => $user->id_member,
