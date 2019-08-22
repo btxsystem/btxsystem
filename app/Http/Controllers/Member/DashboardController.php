@@ -70,14 +70,14 @@ class DashboardController extends Controller
         $data = [];
 
         $child = [];
-
         $data = [
-            'id' => $user->id_member,
+            'id' => $user->id,
             'username' => $user->username,
             'rank' => $user->rank->name,
-            'pv_left' => $user->pv_down->pv_left ? $user->pv_down->pv_left : 0,
-            'pv_midle' => $user->pv_down->pv_midle ? $user->pv_down->pv_midle : 0 ,
-            'pv_right' => $user->pv_down->pv_right ? $user->pv_down->pv_right : 0,
+            'pv_left' => $user->pv_down ? $user->pv_down->pv_left : 0,
+            'pv_midle' => $user->pv_down ? $user->pv_down->pv_midle : 0 ,
+            'pv_right' => $user->pv_down ? $user->pv_down->pv_right : 0,
+            'parent_id' => $user->parent_id ? $user->parent_id : null,
             'children' => [],
         ];
         
@@ -89,32 +89,35 @@ class DashboardController extends Controller
                         $tamp2 = Employeer::where('id',$user->children[$i]->children[$j]->id)->with('pv_down','rank')->first();
                         if($user->children[$i]->children[$j]->position == 0){
                             $child[0] =  [
-                                'id' => $tamp2->id_member,
+                                'id' => $tamp2->id,
                                 'username' => $tamp2->username,
                                 'rank' => $tamp2->rank->name,
                                 'pv_left' => $tamp2->pv_down ? $tamp2->pv_down->pv_left : 0,
                                 'pv_midle' => $tamp2->pv_down ? $tamp2->pv_down->pv_midle  : 0 ,
                                 'pv_right' => $tamp2->pv_down ? $tamp2->pv_down->pv_right : 0,
+                                'parent_id' => $user->parent_id,
                                 'position' => $tamp2->position
                             ];   
                         }else if($user->children[$i]->children[$j]->position == 1){
                             $child[1] =  [
-                                'id' => $tamp2->id_member,
+                                'id' => $tamp2->id,
                                 'username' => $tamp2->username,
                                 'rank' => $tamp2->rank->name,
                                 'pv_left' => $tamp2->pv_down ? $tamp2->pv_down->pv_left : 0,
                                 'pv_midle' => $tamp2->pv_down ? $tamp2->pv_down->pv_midle  : 0 ,
                                 'pv_right' => $tamp2->pv_down ? $tamp2->pv_down->pv_right : 0,
+                                'parent_id' => $user->parent_id,
                                 'position' => $tamp2->position
                             ];   
                         }else{
                             $child[2] =  [
-                                'id' => $tamp2->id_member,
+                                'id' => $tamp2->id,
                                 'username' => $tamp2->username,
                                 'rank' => $tamp2->rank->name,
                                 'pv_left' => $tamp2->pv_down ? $tamp2->pv_down->pv_left : 0,
                                 'pv_midle' => $tamp2->pv_down ? $tamp2->pv_down->pv_midle  : 0 ,
                                 'pv_right' => $tamp2->pv_down ? $tamp2->pv_down->pv_right : 0,
+                                'parent_id' => $user->parent_id,
                                 'position' => $tamp2->position
                             ];   
                         }        
@@ -122,53 +125,57 @@ class DashboardController extends Controller
                 }
                 if ($user->children[$i]->position == 0) {
                     $data['children'][0] =  [
-                        'id' => $tamp->id_member,
+                        'id' => $tamp->id,
                         'username' => $tamp->username,
                         'rank' => $tamp->rank->name,
                         'pv_left' => $tamp->pv_down ? $tamp->pv_down->pv_left : 0,
                         'pv_midle' => $tamp->pv_down ? $tamp->pv_down->pv_midle  : 0 ,
                         'pv_right' => $tamp->pv_down ? $tamp->pv_down->pv_right : 0,
                         'children' => $child ? $child : [],
+                        'parent_id' => $tamp->parent_id,
                         'position' => $tamp->position
                     ];
                 }else if ($user->children[$i]->position == 1) {
                     $data['children'][1] =  [
-                        'id' => $tamp->id_member,
+                        'id' => $tamp->id,
                         'username' => $tamp->username,
                         'rank' => $tamp->rank->name,
                         'pv_left' => $tamp->pv_down ? $tamp->pv_down->pv_left : 0,
                         'pv_midle' => $tamp->pv_down ? $tamp->pv_down->pv_midle  : 0 ,
                         'pv_right' => $tamp->pv_down ? $tamp->pv_down->pv_right : 0,
                         'children' => $child ? $child : [],
+                        'parent_id' => $tamp->parent_id,
                         'position' => $tamp->position
                     ];
                 }else{
                     $data['children'][2] =  [
-                        'id' => $tamp->id_member,
+                        'id' => $tamp->id,
                         'username' => $tamp->username,
                         'rank' => $tamp->rank->name,
                         'pv_left' => $tamp->pv_down ? $tamp->pv_down->pv_left : 0,
                         'pv_midle' => $tamp->pv_down ? $tamp->pv_down->pv_midle  : 0 ,
                         'pv_right' => $tamp->pv_down ? $tamp->pv_down->pv_right : 0,
                         'children' => $child ? $child : [],
+                        'parent_id' => $tamp->parent_id,
                         'position' => $tamp->position
                     ];
                 }
             }
         };
-       
         for ($i=0; $i < 3; $i++) { 
             if (!isset($data['children'][$i])) {
                 $data['children'][$i] =[
                     'available' => true,
-                    'position' => $i
+                    'position' => $i,
+                    'parent_id' => $data['id']
                ];
             }else{   
                for ($j=0; $j < 3 ; $j++) { 
                    if (!isset($data['children'][$i]['children'][$j])) {
                       $data['children'][$i]['children'][$j] = [
                         'available' => true,
-                        'position' => $j
+                        'position' => $j,
+                        'parent_id' => $data['children'][$i]['id']
                       ];
                    }
                }
@@ -176,19 +183,25 @@ class DashboardController extends Controller
         }
 
         $tree = [
-            'id' => $user->id_member,
+            'id' => $user->id,
             'username' => $user->username,
             'rank' => $user->rank->name,
-            'pv_left' => $user->pv_down->pv_left ? $user->pv_down->pv_left : 0,
-            'pv_midle' => $user->pv_down->pv_midle ? $user->pv_down->pv_midle : 0 ,
-            'pv_right' => $user->pv_down->pv_right ? $user->pv_down->pv_right : 0,
+            'pv_left' => $user->pv_down ? $user->pv_down->pv_left : 0,
+            'pv_midle' => $user->pv_down ? $user->pv_down->pv_midle : 0 ,
+            'pv_right' => $user->pv_down ? $user->pv_down->pv_right : 0,
+            'parent_id' => $user->parent_id,
             'children' => [],
         ];
-
+        
         for ($i=0; $i < 3; $i++) { 
             $tree['children'][$i] = $data['children'][$i];
+            unset($tree['children'][$i]['children']);
+            if (isset($data['children'][$i]['children'])) {   
+                for ($j=0; $j<3 ; $j++) {
+                    $tree['children'][$i]['children'][$j] = $data['children'][$i]['children'][$j];
+                }
+            }
         }
-
         return response()->json($tree);
     }
     

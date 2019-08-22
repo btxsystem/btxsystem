@@ -2,7 +2,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="change-password">Reset Password</h5>
+                <h5 class="modal-title">Reset Password</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -53,8 +53,8 @@
             <img src="{{asset('img/1.jpg')}}" width="48" height="48" alt="User" />
         </div>
         <div class="info-container">
-            <div class="name" data-toggle="dropdown">{{isset($profile->username) ? $profile->username : $profile['username'] }}</div>
-            <div class="email">{{isset($profile->email) ? $profile->email : $profile['email'] }}</div>
+            <div class="name" data-toggle="dropdown" style="color:white">{{isset($profile->username) ? $profile->username : $profile['username'] }}</div>
+            <div class="email" style="color:white">{{isset($profile->email) ? $profile->email : $profile['email'] }}</div>
         </div>
     </div>
     <!-- #User Info --> 

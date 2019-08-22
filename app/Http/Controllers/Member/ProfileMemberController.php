@@ -7,10 +7,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Employeer;
 use DB;
-use Alert;
 
 class ProfileMemberController extends Controller
 {
+    
     public function index()
     {
         $data = Auth::user();
@@ -52,5 +52,22 @@ class ProfileMemberController extends Controller
             Alert::failed('The password you entered does not match', 'Failed');
         }
         return view('frontend.dashboard');
+    }
+
+    public function register(Request $request){
+        $data = [
+            'id_member' => invoiceNumbering(),
+            'username' => $request->username,
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'email' => $request->email,
+            'password' => bcrypt('Mbitrex'.rand(100,1000)),
+            'birthdate' => $request->birthdate,
+            'npwp' => '-',
+            'is_married' => 0,
+            'gender' => null,
+
+        ];
+        dd($request);
     }
 }
