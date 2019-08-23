@@ -50,15 +50,15 @@
 							</div>
 							<div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
 								<div class="form-line">
-									<input type="text" class="datepicker form-control" placeholder="Birthdate" required>
+									<input type="text" name="birthdate" class="datepicker form-control" placeholder="Birthdate" required>
 								</div>
 							</div>
 							<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
 							<h5 class="card-inside-title">Gender</h5>
                             <div class="demo-radio-button">
-								<input name="gender" type="radio" id="male" class="with-gap radio-col-red" checked />
+								<input name="gender" type="radio" value="1" class="with-gap radio-col-red" checked />
 								<label for="male">Male</label>
-								<input name="gender" type="radio" id="female" class="with-gap radio-col-red" />
+								<input name="gender" type="radio" value="0" class="with-gap radio-col-red" />
 								<label for="female">Female</label>
 							</div>
 							</div>
@@ -108,8 +108,8 @@
 			rect {
 				fill: #ebebeb;
 				stroke: #ebebeb;
-				width: 100px;
-				height: 150px;
+				width: 150px;
+				height: 190px;
 				stroke-width: 2;
 			}
 			path {
@@ -138,20 +138,20 @@
 		</style>
     <script>
       // new Treant( chart_config );
-      $( document ).ready(function() {
+      $(document).ready(function() {
       	var element = document.querySelector('#bah')
 				// And pass it to panzoom
 				panzoom(element);
 			});
 			var svg = d3.select("#tree").append("svg")
-				.attr("width",1200).attr("height",800)
-				.append("g").attr("transform", "translate(60,0)")
+				.attr("width",1040).attr("height",600)
+				.append("g").attr("transform", "translate(-750,-80)")
 				.attr('id', 'bah');
 			$.ajax({
 			    type: 'GET', //THIS NEEDS TO BE GET
 			    url: '{{route("member.select.tree")}}',
 			    success: function (data) {
-					var treeStructure = d3.tree().size([1500,380]);
+					var treeStructure = d3.tree().size([2000,480]);
 
 					var root = d3.hierarchy(data).sort(function(a, b) {return a.data.position - b.data.position ;});
 					treeStructure(root);
@@ -169,15 +169,15 @@
 					var rectangles = svg.append("g").selectAll("rect")
 						.data(information.descendants());
 					rectangles.enter().append("rect")
-						.attr("x", function(d){return d.x-50;})
-						.attr("y", function(d){return d.y-20;});
+						.attr("x", function(d){return d.x-75;})
+						.attr("y", function(d){return d.y-50;});
 						
 					var names = svg.append("g").selectAll("text")
 						.data(information.descendants());
 					names.enter().append("text")
 						.text(function(d){return d.data.username ? d.data.username : 'Available';})
 						.attr("x", function(d){return d.x+0;})
-						.attr("y", function(d){return d.y+70;})
+						.attr("y", function(d){return d.y+40;})
 						.classed("bigger", true);
 
 					var levels = svg.append("g").selectAll("text")
@@ -185,15 +185,15 @@
 					levels.enter().append("text")
 						.text(function(d){return d.data.rank ? "Rank : " + d.data.rank : '';})
 						.attr("x", function(d){return d.x+0;})
-						.attr("y", function(d){return d.y+90;})
+						.attr("y", function(d){return d.y+60;})
 						.classed("bigger", true)
 
 					var pv_left = svg.append("g").selectAll("text")
 						.data(information.descendants());
 					pv_left.enter().append("text")
 						.text(function(d){return d.data.pv_left >= 0 ? "L : " + d.data.pv_left : '';})
-						.attr("x", function(d){return d.x-40;})
-						.attr("y", function(d){return d.y+110;})
+						.attr("x", function(d){return d.x+0;})
+						.attr("y", function(d){return d.y+80;})
 						.classed("bigger", true);
 
 					var pv_midle = svg.append("g").selectAll("text")
@@ -201,15 +201,15 @@
 					pv_midle.enter().append("text")
 						.text(function(d){return d.data.pv_midle >= 0 ? "M : " + d.data.pv_midle : ''})
 						.attr("x", function(d){return d.x+0;})
-						.attr("y", function(d){return d.y+110;})
+						.attr("y", function(d){return d.y+100;})
 						.classed("bigger", true);
 
 					var pv_right = svg.append("g").selectAll("text")
 						.data(information.descendants());
 					pv_right.enter().append("text")
 						.text(function(d){return d.data.pv_right >= 0 ? "R : " + d.data.pv_right : ''})
-						.attr("x", function(d){return d.x+40;})
-						.attr("y", function(d){return d.y+110;})
+						.attr("x", function(d){return d.x+0;})
+						.attr("y", function(d){return d.y+120;})
 						.classed("bigger", true);
 
 					var image = svg.append("g").selectAll("image")
@@ -221,7 +221,7 @@
 						.append("image")
 						.attr("xlink:href", function(d){return "https://img.icons8.com/bubbles/2x/user.png"})
 						.attr("x", function(d){return d.x-30;})
-						.attr("y", function(d){return d.y-0;})
+						.attr("y", function(d){return d.y-40;})
 						.classed("img-fluid", true);
 			    },
 			    error: function() { 

@@ -80,7 +80,6 @@ class DashboardController extends Controller
             'parent_id' => $user->parent_id ? $user->parent_id : null,
             'children' => [],
         ];
-        
         for ($i=0; $i < 3; $i++) {
             if(isset($user->children[$i])){
                 $tamp = Employeer::where('id',$user->children[$i]->id)->with('children','pv_down','rank')->first();
@@ -95,7 +94,7 @@ class DashboardController extends Controller
                                 'pv_left' => $tamp2->pv_down ? $tamp2->pv_down->pv_left : 0,
                                 'pv_midle' => $tamp2->pv_down ? $tamp2->pv_down->pv_midle  : 0 ,
                                 'pv_right' => $tamp2->pv_down ? $tamp2->pv_down->pv_right : 0,
-                                'parent_id' => $user->parent_id,
+                                'parent_id' => $tamp2->parent_id,
                                 'position' => $tamp2->position
                             ];   
                         }else if($user->children[$i]->children[$j]->position == 1){
@@ -106,7 +105,7 @@ class DashboardController extends Controller
                                 'pv_left' => $tamp2->pv_down ? $tamp2->pv_down->pv_left : 0,
                                 'pv_midle' => $tamp2->pv_down ? $tamp2->pv_down->pv_midle  : 0 ,
                                 'pv_right' => $tamp2->pv_down ? $tamp2->pv_down->pv_right : 0,
-                                'parent_id' => $user->parent_id,
+                                'parent_id' => $tamp2->parent_id,
                                 'position' => $tamp2->position
                             ];   
                         }else{
@@ -117,7 +116,7 @@ class DashboardController extends Controller
                                 'pv_left' => $tamp2->pv_down ? $tamp2->pv_down->pv_left : 0,
                                 'pv_midle' => $tamp2->pv_down ? $tamp2->pv_down->pv_midle  : 0 ,
                                 'pv_right' => $tamp2->pv_down ? $tamp2->pv_down->pv_right : 0,
-                                'parent_id' => $user->parent_id,
+                                'parent_id' => $tamp2->parent_id,
                                 'position' => $tamp2->position
                             ];   
                         }        
@@ -162,6 +161,7 @@ class DashboardController extends Controller
                 }
             }
         };
+
         for ($i=0; $i < 3; $i++) { 
             if (!isset($data['children'][$i])) {
                 $data['children'][$i] =[
@@ -171,7 +171,8 @@ class DashboardController extends Controller
                ];
             }else{   
                for ($j=0; $j < 3 ; $j++) { 
-                   if (!isset($data['children'][$i]['children'][$j])) {
+                   if (!isset($data['children'][$i]['children'][$j]) || ($data['children'][$i]['children'][$j]['parent_id'] != $data['children'][$i]['id'] )) {
+                      unset($data['children'][$i]['children'][$j]);
                       $data['children'][$i]['children'][$j] = [
                         'available' => true,
                         'position' => $j,
@@ -202,6 +203,7 @@ class DashboardController extends Controller
                 }
             }
         }
+ 
         return response()->json($tree);
     }
     
