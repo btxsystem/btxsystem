@@ -15,12 +15,10 @@ Detail Book
         </li>
         <li class="active">Detail Data Book</li>
     </ol>
-
+    <br>
     <div class="container">
-            <table class="table table-striped">
-               <tbody>
-                  <tr>
-                  <td colspan="1">
+        <div class="col-md-12">
+            <td colspan="1">
                     <div class="well form-horizontal">
                      <fieldset>
                         <div class="pull-right">
@@ -46,11 +44,37 @@ Detail Book
                             </div>                       
                           </div>
                      </fieldset>
+                </div>
+            </td>
+        </div>
+     </div>
+
+    <br>
+    <div class="container">
+        <div class="col-md-12">
+            <td colspan="1">
+                    <div class="well form-horizontal">
+                     <fieldset>
+                     <div class="nav-tabs-custom">
+                            <ul class="nav nav-tabs">
+                            <li class="active"><a href="#chapter" data-toggle="tab" aria-expanded="true">Chapter</a></li>
+                            <!-- <li class=""><a href="#invoice" data-toggle="tab" aria-expanded="false">Invoice</a></li> -->
+
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="chapter">
+                                @include('admin.books.partials.chapter')
+                                </div>
+                            <!-- /.tab-pane -->
+                            <!-- <div class="tab-pane" id="invoice">
+                                    Tist
+                            </div> -->
+
+                        </div>
+                     </fieldset>
                     </div>
-                    </td>
-                  </tr>
-               </tbody>
-            </table>
+            </td>
+        </div>
      </div>
 </section>
 <!--section ends-->

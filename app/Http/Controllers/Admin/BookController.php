@@ -87,7 +87,8 @@ class BookController extends Controller
      */
     public function show($id)
     {
-        $data = Book::findOrFail($id);
+        $data = Book::with('chapters')->findOrFail($id);
+
         return view('admin.books.detail', compact('data'));
     }
 
