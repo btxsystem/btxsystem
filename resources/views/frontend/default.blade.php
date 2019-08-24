@@ -19,13 +19,19 @@
 <!-- Custom Css -->
 <link rel="stylesheet" href="{{asset('assets2/css/ecommerce.css')}}">
 <link rel="stylesheet" href="{{asset('assets2/css/main.css')}}">
+{{-- <link rel="stylesheet" href="{{asset('assets2/css/modal.css')}}"> --}}
+<link rel="stylesheet" href="{{asset('assets2/plugins/bootstrap-select/css/bootstrap-select.css')}}">
 <link rel="stylesheet" href="{{asset('assets2/css/color_skins.css')}}">
 <link rel="stylesheet" href="{{asset('assets2/css/datatable.css')}}">
 <link rel="stylesheet" href="{{asset('assets2/css/raw.css')}}">
 <link rel="stylesheet" href="{{asset('assets2/css/responsive.css')}}">
 
+<link rel="stylesheet" href="{{asset('assets2/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css')}}">
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+
+<!-- tree -->
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/tree/Treant.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/tree/basic-example.css') }}">
 
 </head>
 
@@ -69,13 +75,27 @@
 <script src="{{asset('assets2/js/pages/index.js')}}"></script>
 <script src="{{asset('assets2/js/moment.js')}}"></script>
 <script src="{{asset('assets2/js/number.js')}}"></script>
+{{-- <script src="{{asset('assets2/js/modal.js')}}"></script> --}}
 <script src="{{asset('assets2/js/pages/charts/jquery-knob.min.js')}}"></script>
+
+<!-- Date Picker --> 
+<script src="{{asset('assets2/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js')}}"></script>
+<script src="{{asset('assets2/js/pages/forms/basic-form-elements.js')}}"></script>
 
 <!-- Jquery Datatable -->
 <script src="{{asset('assets2/js/datatable.js')}}"></script>
 <script src="{{asset('assets2/js/raw-order.js')}}"></script>
 <script src="{{asset('assets2/js/responsive.js')}}"></script>
 <!-- Jquery DataTable Plugin Js --> 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+
+<!-- tree -->
+<script type="text/javascript" src="{{ asset('assets/tree/Treant.js') }}" ></script>
+<script type="text/javascript" src="{{ asset('assets/tree/basic-example.js') }}" ></script>
+<script type="text/javascript" src="{{ asset('assets/tree/raphael.js') }}" ></script>
+<script src="{{ asset('assets/tree/panzoom.js') }}"></script>
+<script src="{{ asset('assets/tree/d3.js') }}"></script>
+
 <script type="text/javascript">
 
 $(document).ready(function(){

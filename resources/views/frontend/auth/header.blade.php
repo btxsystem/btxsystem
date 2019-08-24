@@ -273,7 +273,7 @@ ul.nav.navbar-nav {
             </a>
             <div class="btnBook">
               <div class="btn">
-                <a href="http://ebook.bitrexgo.co.id/" target="_blank">EBOOK</a>
+                <a href="{{route('member.subscription')}}">EBOOK</a>
               </div>
             </div>
             <div class="header-inner">
@@ -298,7 +298,7 @@ ul.nav.navbar-nav {
                     <li><a id="about" href="#">About Us</a></li>
                     <li><a id="product" href="#">Our Product</a></li>
                     <li><a id="event" href="#">Event</a></li>
-                    <li><a href="#"><button class="btn btn-effect btn-info btn-buy" style="background: #b92240; margin-top: -10px;">BUY</button></a></li>
+                    <li><a href="{{route('member.subscription')}}"><button class="btn btn-effect btn-info btn-buy" style="background: #b92240; margin-top: -10px;">BUY</button></a></li>
                   </ul>
                 </div>
               </nav>

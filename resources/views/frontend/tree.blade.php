@@ -4,12 +4,74 @@
     @parent
 @stop
 
-@section('header_styles')
-	<link rel="stylesheet" type="text/css" href="{{ asset('assets/tree/Treant.css') }}">
-	<link rel="stylesheet" type="text/css" href="{{ asset('assets/tree/basic-example.css') }}">
-@stop
-
 @section('content')
+
+    <div class="modal fade" id="register" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <h5 class="modal-title" id="exampleModalLabel">Register</h5>
+			  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			  </button>
+			</div>
+			<div class="modal-body">
+			    <form action="{{route('member.register-downline')}}" method="POST">
+							@csrf
+							<input type="text" name="parent" id="parent" value="" hidden>
+							<input type="text" name="position" id="position" value="" hidden>
+							<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
+								<div class="form-line">
+									<input class="form-control" name="username" id="username" type="text" min="3" required>
+									<label class="form-label">Username</label>
+								</div>
+							</div>
+							<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12 row">
+								<div class="form-line form-group form-float col-lg-6 col-md-6 col-sm-6 col-xs-6">
+									<input class="form-control" name="first_name" id="first_name" type="text" min="2" required>
+									<label class="form-label">First Name</label>
+								</div>
+								<div class="form-line form-group form-float col-lg-6 col-md-6 col-sm-6 col-xs-6">
+									<input class="form-control" name="last_name" id="last_name" type="text" min="2" required>
+									<label class="form-label">Last Name</label>
+								</div>
+							</div>
+							<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
+								<div class="form-line">
+									<input class="form-control" name="email" id="email" type="email" min="3" required>
+									<label class="form-label">Email</label>
+								</div>
+							</div>
+							<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
+								<div class="form-line">
+									<input class="form-control" name="number_phone" id="number_phone" type="number" min="10" required>
+									<label class="form-label">Phone Number</label>
+								</div>
+							</div>
+							<div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
+								<div class="form-line">
+									<input type="text" name="birthdate" class="datepicker form-control" placeholder="Birthdate" required>
+								</div>
+							</div>
+							<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
+							<h5 class="card-inside-title">Gender</h5>
+                            <div class="demo-radio-button">
+								<input name="gender" type="radio" value="1" class="with-gap radio-col-red" checked />
+								<label for="male">Male</label>
+								<input name="gender" type="radio" value="0" class="with-gap radio-col-red" />
+								<label for="female">Female</label>
+							</div>
+							</div>
+							<div class="modal-footer">
+								<a class="btn btn-secondary" data-dismiss="modal">Close</a>
+								<input type="submit" class="btn btn-primary" value="Register">
+							</div>
+						</form>
+			</div>
+		  </div>
+		</div>
+	  </div>
+
 	<section class="content ecommerce-page">
 		<div class="block-header">
 			<div class="row">
@@ -28,7 +90,7 @@
 							<div class="row">
 								<div class="col-md-12">
 									<br>
-									<div class="chart" id="example"></div>
+									<div class="chart" id="tree"></div>
 
 									<!-- <div class="chart" id="basic-example"></div> -->
 								</div>
@@ -46,8 +108,8 @@
 			rect {
 				fill: #ebebeb;
 				stroke: #ebebeb;
-				width: 100px;
-				height: 150px;
+				width: 150px;
+				height: 190px;
 				stroke-width: 2;
 			}
 			path {
@@ -74,27 +136,22 @@
 				margin-left: auto;
 			}
 		</style>
-    <script type="text/javascript" src="{{ asset('assets/tree/Treant.js') }}" ></script>
-    <script type="text/javascript" src="{{ asset('assets/tree/basic-example.js') }}" ></script>
-    <script type="text/javascript" src="{{ asset('assets/tree/raphael.js') }}" ></script>
-    <script src='https://unpkg.com/panzoom@8.0.0/dist/panzoom.min.js'></script>
-    <script src="https://d3js.org/d3.v5.min.js"></script>
     <script>
       // new Treant( chart_config );
-      $( document ).ready(function() {
+      $(document).ready(function() {
       	var element = document.querySelector('#bah')
 				// And pass it to panzoom
 				panzoom(element);
 			});
-			var svg = d3.select("#example").append("svg")
-				.attr("width",1200).attr("height",800)
-				.append("g").attr("transform", "translate(60,0)")
+			var svg = d3.select("#tree").append("svg")
+				.attr("width",1040).attr("height",600)
+				.append("g").attr("transform", "translate(-750,-80)")
 				.attr('id', 'bah');
 			$.ajax({
 			    type: 'GET', //THIS NEEDS TO BE GET
 			    url: '{{route("member.select.tree")}}',
 			    success: function (data) {
-					var treeStructure = d3.tree().size([1500,380]);
+					var treeStructure = d3.tree().size([2000,480]);
 
 					var root = d3.hierarchy(data).sort(function(a, b) {return a.data.position - b.data.position ;});
 					treeStructure(root);
@@ -112,63 +169,74 @@
 					var rectangles = svg.append("g").selectAll("rect")
 						.data(information.descendants());
 					rectangles.enter().append("rect")
-						.attr("x", function(d){return d.x-50;})
-						.attr("y", function(d){return d.y-20;});
+						.attr("x", function(d){return d.x-75;})
+						.attr("y", function(d){return d.y-50;});
 						
 					var names = svg.append("g").selectAll("text")
 						.data(information.descendants());
 					names.enter().append("text")
-						.text(function(d){return d.data.username;})
+						.text(function(d){return d.data.username ? d.data.username : 'Available';})
 						.attr("x", function(d){return d.x+0;})
-						.attr("y", function(d){return d.y+70;})
+						.attr("y", function(d){return d.y+40;})
 						.classed("bigger", true);
 
 					var levels = svg.append("g").selectAll("text")
 						.data(information.descendants());
 					levels.enter().append("text")
-						.text(function(d){return "Rank : " + d.data.rank;})
+						.text(function(d){return d.data.rank ? "Rank : " + d.data.rank : '';})
 						.attr("x", function(d){return d.x+0;})
-						.attr("y", function(d){return d.y+90;})
+						.attr("y", function(d){return d.y+60;})
 						.classed("bigger", true)
 
 					var pv_left = svg.append("g").selectAll("text")
 						.data(information.descendants());
 					pv_left.enter().append("text")
-						.text(function(d){return "L : " + d.data.pv_left;})
-						.attr("x", function(d){return d.x-40;})
-						.attr("y", function(d){return d.y+110;})
+						.text(function(d){return d.data.pv_left >= 0 ? "L : " + d.data.pv_left : '';})
+						.attr("x", function(d){return d.x+0;})
+						.attr("y", function(d){return d.y+80;})
 						.classed("bigger", true);
 
 					var pv_midle = svg.append("g").selectAll("text")
 						.data(information.descendants());
 					pv_midle.enter().append("text")
-						.text(function(d){return "M : " + d.data.pv_midle})
+						.text(function(d){return d.data.pv_midle >= 0 ? "M : " + d.data.pv_midle : ''})
 						.attr("x", function(d){return d.x+0;})
-						.attr("y", function(d){return d.y+110;})
+						.attr("y", function(d){return d.y+100;})
 						.classed("bigger", true);
 
 					var pv_right = svg.append("g").selectAll("text")
 						.data(information.descendants());
 					pv_right.enter().append("text")
-						.text(function(d){return "R : " + d.data.pv_right})
-						.attr("x", function(d){return d.x+40;})
-						.attr("y", function(d){return d.y+110;})
+						.text(function(d){return d.data.pv_right >= 0 ? "R : " + d.data.pv_right : ''})
+						.attr("x", function(d){return d.x+0;})
+						.attr("y", function(d){return d.y+120;})
 						.classed("bigger", true);
 
 					var image = svg.append("g").selectAll("image")
 						.data(information.descendants());
 					image.enter().append("a")
-						.attr("xlink:href", function(d){return "#"})
+						.attr("onclick", function(d){ return `tree_submit(${d.data.username ? `'${d.data.username}'` : `'${"available"}'`}, ${d.data.parent_id}, ${d.data.position} )` })
+					    .attr("value", function(d){return d.data.username ? d.data.username : "available"})
+					    .attr("href","#")
 						.append("image")
 						.attr("xlink:href", function(d){return "https://img.icons8.com/bubbles/2x/user.png"})
 						.attr("x", function(d){return d.x-30;})
-						.attr("y", function(d){return d.y-0;})
+						.attr("y", function(d){return d.y-40;})
 						.classed("img-fluid", true);
 			    },
 			    error: function() { 
 			      console.log("Error");
-			    }
+				}
 			});
 
+			var tree_submit = (a, parent, position) => {
+                if(a!="available"){
+                     
+				}else{
+					$('#register').modal('show');
+					$('#parent').attr('value',parent);
+					$('#position').attr('value',position);
+				}
+			};
     </script>
 @stop
