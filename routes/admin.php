@@ -60,6 +60,11 @@ Route::group(['prefix' => 'select', 'as'=> 'select.'], function () {
 
     // Ebook
     Route::resource('ebook', 'Admin\EbookController');
+    Route::get('ebook/{id}/create/book','Admin\BookController@create')->name('ebook.create.book');
+    Route::get('ebook/{id}/create/video','Admin\VideoController@create')->name('ebook.create.video');
+
+    Route::get('ebook/{id}/book-data','Admin\EbookController@bookData')->name('ebook.bookData');
+    Route::get('ebook/{id}/video-data','Admin\EbookController@videoData')->name('ebook.videoData');
 
     // Book
     Route::resource('book', 'Admin\BookController');

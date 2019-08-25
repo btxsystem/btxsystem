@@ -1,19 +1,19 @@
 @extends('layouts.admin')
 
 @section('title')
-Edit Book
+Edit Ebook
 @parent
 @stop
 
 @section('content')
 
 <section class="content-header">
-    <h1> Book</h1>
+    <h1> Ebook</h1>
     <ol class="breadcrumb">
         <li>
-            <a href="#">Book Management</a>
+            <a href="#">Ebook</a>
         </li>
-        <li class="active">Edit Data Book</li>
+        <li class="active">Edit Data Ebook</li>
     </ol>
 
     <div class="container">
@@ -21,10 +21,11 @@ Edit Book
                <tbody>
                   <tr>
                      <td colspan="1">
-                        <form class="well form-horizontal" method="post" action="{{route('book.update', $data->id)}}">
+                        <form class="well form-horizontal" method="post" action="{{route('ebook.update', $data->id)}}">
                             {{ csrf_field() }} {{ method_field('PATCH')}}
                            <fieldset>
-                            <div class="form-group">
+
+                           <div class="form-group">
                                 <label class="col-md-2 control-label">Title</label>
                                 <div class="col-md-8 inputGroupContainer">
                                     <div class="input-group">
@@ -35,10 +36,50 @@ Edit Book
                             </div>
 
                             <div class="form-group">
-                                <label class="col-md-2 control-label">Article</label>
+                                <label class="col-md-2 control-label">Price</label>
                                 <div class="col-md-8 inputGroupContainer">
                                     <div class="input-group">
-                                        <textarea id="article" name="article" class="article">{{ $data->article }}</textarea>
+                                        <span class="input-group-addon"><i class="fa fa-money"></i></span>
+                                        <input id="price" name="price" placeholder="Price" class="form-control" required="true" value="{{$data->price}}" type="number">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">Markup Price</label>
+                                <div class="col-md-8 inputGroupContainer">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-money"></i></span>
+                                        <input id="price_markup" name="price_markup" placeholder="Markup" class="form-control" required="true" value="{{$data->price_markup}}" type="number">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">Point Value</label>
+                                <div class="col-md-8 inputGroupContainer">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-balance-scale"></i></span>
+                                        <input id="pv" name="pv" placeholder="Point" class="form-control" required="true" value="{{$data->pv}}" type="number">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">Bonus Value</label>
+                                <div class="col-md-8 inputGroupContainer">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-area-chart"></i></span>
+                                        <input id="bv" name="bv" placeholder="Bonus" class="form-control" required="true" value="{{$data->bv}}" type="number">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">Description</label>
+                                <div class="col-md-8 inputGroupContainer">
+                                    <div class="input-group">
+                                        <textarea id="description" name="description" class="description">{{$data->description}}</textarea>
                                     </div>
                                 </div>
                             </div>
@@ -49,6 +90,7 @@ Edit Book
                                        <button type="submit" class="btn btn-primary btn-block">Submit</button>
                                 </div>
                             </div>
+
                                                             
                            </fieldset>
                         </form>
@@ -64,8 +106,11 @@ Edit Book
 @stop
 
 @section('footer_scripts')
-    <script src="/editor/ckeditor/ckeditor.js"></script>  
+<script src="/editor/ckeditor/ckeditor.js"></script>  
     <script>
-        CKEDITOR.replace( 'article' );  
+        CKEDITOR.replace( 'description',{
+            width: "710px",
+            height: "350px",
+        });  
     </script>
 @stop

@@ -66,6 +66,9 @@ Edit Book
 @section('footer_scripts')
     <script src="/editor/ckeditor/ckeditor.js"></script>  
     <script>
-        CKEDITOR.replace( 'article' );  
+        CKEDITOR.replace( 'article', {
+            width: "710px",
+            height: "350px",
+        });  
     </script>
 @stop

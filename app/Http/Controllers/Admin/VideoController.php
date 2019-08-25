@@ -41,10 +41,11 @@ class VideoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
-        $ebooks = Ebook::all();
-        return view('admin.videos.create', compact('ebooks'));
+        $data = Ebook::find($id);
+
+        return view('admin.videos.create', compact('data'));
     }
 
     /**
@@ -55,29 +56,29 @@ class VideoController extends Controller
      */
     public function store(Request $request)
     {
-
-        $file = $request->video;
-        $fileName = \Str::slug($request->title).'-'.time().'-'.$file->getClientOriginalName() ; 
-        $uploadPath = 'upload/video/' . $fileName;  
+        $request->validate([
+            'path' => 'required|mimes:mp4,mov'
+        ]);
         
-        $file->move('upload/video/', $fileName);
+        if ($request->hasFile('path')) {
+            $file = $request->path;
+            $fileName = \Str::slug($request->title).'-'.time().'-'.$file->getClientOriginalName() ; 
+            $uploadPath = 'upload/video/' . $fileName;  
+            
+            $file->move('upload/video/', $fileName);
+        }
 
-        
+        $ebook = Ebook::findOrFail($request->ebook_id);
         $video = new Video;
         $video->title = $request->title;
         $video->path = $uploadPath;
         
         $video->save();
-
-        // $pivot = new VideoEbook;
-        // $pivot->video_id = $video->id;
-        // $pivot->book_id = $request->ebook_id;
-        // $pivot->save();
-
+        $ebook->videos()->attach($video);
         
         Alert::success('Sukses Menambah Data Video', 'Sukses');
 
-        return redirect()->route('video.index');
+        return redirect()->route('ebook.show', $ebook->id);
     }
 
     /**
@@ -100,7 +101,9 @@ class VideoController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data = Video::findOrFail($id);
+
+        return view('admin.videos.edit', compact('data'));
     }
 
     /**
@@ -112,7 +115,31 @@ class VideoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'path' => 'required|mimes:mp4,mov'
+        ]);
+        
+        $data = Video::findOrFail($id);
+        $oldPath = $data->path;
+        if ($request->hasFile('path')) {
+            $file = $request->path;
+            $fileName = \Str::slug($request->title).'-'.time().'-'.$file->getClientOriginalName() ; 
+            $uploadPath = 'upload/video/' . $fileName;  
+            
+            $file->move('upload/video/', $fileName);
+            \File::delete(public_path($oldPath));
+        }
+
+  
+        $data->title = $request->title;
+        $data->path = $uploadPath ? $uploadPath : $oldPath;
+        $data->save();
+
+       
+
+        Alert::success('Sukses Update Data Book', 'Sukses');
+
+        return redirect()->route('video.show', $id);
     }
 
     /**
@@ -132,7 +159,7 @@ class VideoController extends Controller
         } else {
             Alert::error('Gagal Delete Data Video', 'Gagal');
         }
-
-        return redirect()->route('video.index');
+        return back();
+        // return redirect()->route('video.index');
     }
 }

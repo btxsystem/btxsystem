@@ -11,9 +11,9 @@ Create Book
     <h1> Book</h1>
     <ol class="breadcrumb">
         <li>
-            <a href="#">Book Management</a>
+            <a href="#">Ebook</a>
         </li>
-        <li class="active">Add Data Book</li>
+        <li class="active">Add Data Ebook</li>
     </ol>
 
     <div class="container">
@@ -21,24 +21,9 @@ Create Book
                <tbody>
                   <tr>
                      <td colspan="1">
-                        <form class="well form-horizontal" method="post" action="{{route('book.store')}}">
+                        <form class="well form-horizontal" method="post" action="{{route('ebook.store')}}">
                             {{ csrf_field() }}
                            <fieldset>
-
-                           <div class="form-group">
-                                    <label class="col-md-2 control-label">Type</label>
-                                    <div class="col-md-8 inputGroupContainer">
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="fa fa-book"></i></span>
-                                            <select name="ebook_id" id="ebook_id" class="form-control" required="true">
-                                                <option value="" disabled selected>Select Type</option>
-                                                @foreach($ebooks as $ebook)
-                                                <option value="{{$ebook->id}}">{{$ebook->title}}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                            </div>
 
                             <div class="form-group">
                                 <label class="col-md-2 control-label">Title</label>
@@ -51,13 +36,55 @@ Create Book
                             </div>
 
                             <div class="form-group">
-                                <label class="col-md-2 control-label">Article</label>
+                                <label class="col-md-2 control-label">Price</label>
                                 <div class="col-md-8 inputGroupContainer">
                                     <div class="input-group">
-                                        <textarea id="article" name="article" class="article"></textarea>
+                                        <span class="input-group-addon"><i class="fa fa-money"></i></span>
+                                        <input id="price" name="price" placeholder="Price" class="form-control" required="true" value="{{old('price')}}" type="number">
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">Markup Price</label>
+                                <div class="col-md-8 inputGroupContainer">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-money"></i></span>
+                                        <input id="price_markup" name="price_markup" placeholder="Markup" class="form-control" required="true" value="{{old('price_markup')}}" type="number">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">Point Value</label>
+                                <div class="col-md-8 inputGroupContainer">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-balance-scale"></i></span>
+                                        <input id="pv" name="pv" placeholder="Point" class="form-control" required="true" value="{{old('pv')}}" type="number">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">Bonus Value</label>
+                                <div class="col-md-8 inputGroupContainer">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-area-chart"></i></span>
+                                        <input id="bv" name="bv" placeholder="Bonus" class="form-control" required="true" value="{{old('bv')}}" type="number">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">Description</label>
+                                <div class="col-md-8 inputGroupContainer">
+                                    <div class="input-group">
+                                        <textarea id="description" name="description" class="description"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+
 
                             <div class="form-group">
                                 <label class="col-md-2 control-label"></label>
@@ -80,8 +107,11 @@ Create Book
 @stop
 
 @section('footer_scripts')
-    <script src="/editor/ckeditor/ckeditor.js"></script>  
+<script src="/editor/ckeditor/ckeditor.js"></script>  
     <script>
-        CKEDITOR.replace( 'article');  
+        CKEDITOR.replace( 'description',{
+            width: "710px",
+            height: "350px",
+        });  
     </script>
 @stop

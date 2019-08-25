@@ -41,7 +41,7 @@
             </ul>
         </li>
 
-        <li >
+        <!-- <li >
             <a href="#">
                 <i class="livicon" data-name="notebook" data-size="18" data-c="#bdecb6" data-hc="#bdecb6" data-loop="true"></i>
                 <span class="title">Old Ebooks</span>
@@ -61,7 +61,7 @@
                     </a>
                 </li>
             </ul>
-        </li>
+        </li> -->
 
         <li >
             <a href="#">
@@ -70,14 +70,19 @@
                 <span class="fa arrow"></span>
             </a>
             <ul class="sub-menu">
-            @foreach(\App\Models\Ebook::all() as $ebook)
-                <li>
-                    <a href="{{route('ebook.show', $ebook->id)}}">
-                        <i class="fa fa-angle-double-right"></i>
-                        {{$ebook->title}}
+                <li >
+                    <a href="{{ route('ebook.index') }}">
+                        <i class="fa fa-reorder"></i>
+                        Ebook List
                     </a>
                 </li>
-            @endforeach
+                <li >
+                    <a href="{{ route('ebook.create') }}">
+                        <i class="fa fa-plus"></i>
+                        Create New Ebook
+                    </a>
+                </li>
+
             </ul>
         </li>
 

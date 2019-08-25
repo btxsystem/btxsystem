@@ -19,7 +19,21 @@ class EbookController extends Controller
      */
     public function index()
     {
-        //
+        if (request()->ajax()) {
+            $data = Ebook::all();
+
+            return Datatables::of($data)
+                    ->addIndexColumn()
+                    ->addColumn('action', function($row) {
+                        return '<a href="'.route('ebook.show',$row->id).'"  class="btn btn-primary fa fa-eye"title="Show"></a>
+                                <a href="'.route('ebook.edit',$row->id).'"  class="btn btn-warning fa fa-pencil"title="Edit"></a>
+                                <a data-id="'.$row->id.' "class="btn btn-danger fa fa-trash"title="Delete"></a>';
+                    })
+                    ->rawColumns(['action'])
+                    ->make(true);
+        }
+    
+        return view('admin.ebooks.index');
     }
 
     /**
@@ -29,7 +43,7 @@ class EbookController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.ebooks.create');
     }
 
     /**
@@ -40,7 +54,19 @@ class EbookController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $ebook = new Ebook;
+        $ebook->title = $request->title;
+        $ebook->price = $request->price;
+        $ebook->price_markup = $request->price_markup;
+        $ebook->pv = $request->pv;
+        $ebook->bv = $request->bv;
+        $ebook->description = $request->description;
+        $ebook->save();
+
+        Alert::success('Sukses Menambah Data Ebook', 'Sukses');
+
+        return redirect()->route('ebook.show', $ebook->id);
     }
 
     /**
@@ -52,17 +78,7 @@ class EbookController extends Controller
     public function show($id)
     {
         $data = Ebook::with('books')->findOrFail($id);
-        if (request()->ajax()) {
-            return Datatables::of($data->books)
-            ->addIndexColumn()
-            ->addColumn('action', function($row) {
-                return '<a href="'.route('book.show',$row->id).'"  class="btn btn-primary fa fa-eye" title="Show"></a>
-                        <a href="'.route('book.edit',$row->id).'"  class="btn btn-warning fa fa-pencil" title="Edit"></a>
-                        <a href="'.route('deleteBook',$row->id).'" class="btn btn-danger fa fa-trash" title="Delete"></a>';
-            })
-            ->rawColumns(['action'])
-            ->make(true);
-         }
+
         return view('admin.ebooks.detail', compact('data'));
     }
 
@@ -75,9 +91,7 @@ class EbookController extends Controller
     public function edit($id)
     {
         $data = Ebook::findOrFail($id);
-
-        return $data;
-
+ 
         return view('admin.ebooks.edit', compact('data'));
     }
 
@@ -90,7 +104,18 @@ class EbookController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        
+        $data = Ebook::findOrFail($id);
+        $data->title = $request->title;
+        $data->price = $request->price;
+        $data->price_markup = $request->price_markup;
+        $data->pv = $request->pv;
+        $data->bv = $request->bv;
+        $data->description = $request->description;
+        $data->save();
+        Alert::success('Sukses Update Data Ebook', 'Sukses');
+
+        return redirect()->route('ebook.show', $id);
     }
 
     /**
@@ -101,6 +126,45 @@ class EbookController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $data = Ebook::findOrFail($id);
+        if ($data) { 
+            $data->delete(); 
+            Alert::success('Success Delete Data Ebook', 'Success');
+        } else {
+            Alert::error('Gagal Delete Data Ebook', 'Gagal');
+        }
     }
+
+
+
+    public function bookData($id)
+    {
+        $data = Ebook::with('books')->findOrFail($id);
+     
+        return Datatables::of($data->books)
+            ->addIndexColumn()
+            ->addColumn('action', function($row) {
+                return '<a href="'.route('book.show',$row->id).'"  class="btn btn-primary fa fa-eye" title="Show"></a>
+                        <a href="'.route('book.edit',$row->id).'"  class="btn btn-warning fa fa-pencil" title="Edit"></a>
+                        <a href="'.route('deleteBook',$row->id).'" class="btn btn-danger fa fa-trash" title="Delete"></a>';
+            })
+            ->rawColumns(['action'])
+            ->make(true);
+    }
+
+    public function videoData($id)
+    {
+        $data = Ebook::with('videos')->findOrFail($id);
+     
+        return Datatables::of($data->videos)
+            ->addIndexColumn()
+            ->addColumn('action', function($row) {
+                return '<a href="'.route('video.show',$row->id).'"  class="btn btn-primary fa fa-eye" title="Show"></a>
+                        <a href="'.route('video.edit',$row->id).'"  class="btn btn-warning fa fa-pencil" title="Edit"></a>
+                        <a href="'.route('deleteVideo',$row->id).'" class="btn btn-danger fa fa-trash" title="Delete"></a>';
+            })
+            ->rawColumns(['action'])
+            ->make(true);
+    }
+
 }

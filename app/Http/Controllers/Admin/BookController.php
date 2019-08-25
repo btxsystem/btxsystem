@@ -42,10 +42,11 @@ class BookController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
-        $ebooks = Ebook::all();
-        return view('admin.books.create', compact('ebooks'));
+        $data = Ebook::find($id);
+
+        return view('admin.books.create', compact('data'));
     }
 
     /**
@@ -56,9 +57,9 @@ class BookController extends Controller
      */
     public function store(Request $request)
     {
+        // return $request->all();
 
         $request->validate([
-            'ebook_id' => 'required',
             'title' => 'required',
             'article' => 'required',
         ]);
@@ -75,7 +76,7 @@ class BookController extends Controller
 
         Alert::success('Sukses Menambah Data Book', 'Sukses');
 
-        return redirect()->route('book.index');
+        return redirect()->route('ebook.show', $ebook->id);
 
     }
 
@@ -141,27 +142,6 @@ class BookController extends Controller
             Alert::error('Gagal Delete Data Book', 'Gagal');
         }
 
-        return redirect()->route('book.index');
-    }
-
-    public function uploadImage(Request $request) {
-
-        $CKEditor = $request->CKEditor;
-        $funcNum = $request->CKEditorFuncNum;
-
-        $message = $url = '';
-        if ($request->hasFile('upload')) {
-            $file = $request->hasFile('upload');
-            if ($file->isValid()) {
-                $filename = $file->getClientOriginalName();
-                $file->move(storage_path().'/images/', $filename);
-                $url = public_path() .'/images/' . $filename;
-            } else {
-                $message = 'An error occured while uploading the file.';
-            }
-        } else {
-            $message = 'No file uploaded.';
-        }
-        return '<script>window.parent.CKEDITOR.tools.callFunction('.$funcNum.', "'.$url.'", "'.$message.'")</script>';
+        return back();
     }
 }
