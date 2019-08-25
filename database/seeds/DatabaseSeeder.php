@@ -12,6 +12,7 @@ class DatabaseSeeder extends Seeder
             UsersTableSeeder::class,
             RoleUserTableSeeder::class,
             EmployeersTableSeeder::class,
+            HistoryPvTableSeeder::class,
             PermissionsTableSeeder::class,
             PermissionRoleTableSeeder::class,
             EbookTableSeeder::class,
@@ -19,7 +20,6 @@ class DatabaseSeeder extends Seeder
             BookEbookTableSeeder::class,
             BookChaptersTableSeeder::class,
             BookChapterLessonsTableSeeder::class,
-
         ]);
     }
 }

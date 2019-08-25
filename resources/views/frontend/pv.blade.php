@@ -36,11 +36,13 @@
             success:function(data){
                 console.log(data.pv.data);
                 if (data.pv.data[0]==undefined) {
-                    $('#bill').html('<div class="body" style="color:red;"><center><strong>You have not history!!!</strong></center></div>');    
+                    $('#bill').html('<div class="body" style="color:red;"><center><strong>History is currently empty</strong></center></div>');    
                 }else{
                     $.each(data.pv.data, function(i, item) {
                         date = moment(item.date).format('MMMM Do Y');
-                        $('#bill').append('<div class="card ke-'+i+'" style="border: 1px solid #ccc; box-shadow: 1px 1px 3px 0px  rgba(0,0,0,0.3);"><div class="body"><div class="row"><strong class="col-sm-4" id="date">Date Time: '+date+'</strong></div><hr><div class="row"><div class="col" id="pv">Pv income: '+item.pv_today+'</div><hr></div><div class="row"><div class="col" id="pv_toltsl">Total Pv: '+item.pv+'</div></div></div>'); 
+                        pv = addCommas(item.pv);
+                        pv_today = addCommas(item.pv_today);
+                        $('#bill').append('<div class="card ke-'+i+'" style="border: 1px solid #ccc; box-shadow: 1px 1px 3px 0px  rgba(0,0,0,0.3);"><div class="body"><div class="row"><strong class="col-sm-4" id="date">Date Time: '+date+'</strong></div><hr><div class="row"><div class="col" id="pv">Pv income: '+pv_today+'</div><hr></div><div class="row"><div class="col" id="pv_toltsl">Total Pv: '+pv+'</div></div></div>'); 
                     });
                 }
             }

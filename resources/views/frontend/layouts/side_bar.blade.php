@@ -68,9 +68,9 @@
             <li> <a href=""><i class="zmdi zmdi-book col-red"></i><span>Ebook</span> </a> </li>
             <li><a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-money col-green"></i><span>Income and expenses</span> </a>
                 <ul class="ml-menu">
-                    <li><a href="{{route('member.bitrex-money.bitrex-points')}}">Points</a> </li>
-                    <li><a href="{{route('member.bitrex-money.bitrex-cash')}}">Cash</a> </li>
-                    <li><a href="{{route('member.bitrex-money.pv')}}">Pv</a> </li>
+                    <li><a href="{{route('member.bitrex-money.bitrex-points')}}">Bitrex Points</a> </li>
+                    <li><a href="{{route('member.bitrex-money.bitrex-cash')}}">Bitrex Value</a> </li>
+                    <li><a href="{{route('member.bitrex-money.pv')}}">Bitrex Pv</a> </li>
                 </ul>
             </li>
             <li><a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-shopping-cart col-orange"></i><span>Transaction</span> </a>
@@ -81,7 +81,7 @@
             </li>
             <li class="header">Profile</li>
             <li> <a href="{{route('member.profile.index')}}"><i class="zmdi zmdi-account col-purple"></i><span>My Profile</span> </a> </li>
-            <li> <a data-toggle="modal" data-target="#change-password"><i class="zmdi zmdi-rotate-right col-red"></i><span>Reset Password</span> </a> </li> 
+            <li> <a data-toggle="modal" data-target="#change-password"><i class="zmdi zmdi-key col-red"></i><span>Change Password</span> </a> </li> 
         </ul>
     </div>
     <!-- #Menu --> 
