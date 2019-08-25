@@ -15,12 +15,10 @@ Detail Book
         </li>
         <li class="active">Detail Data Book</li>
     </ol>
-
+    <br>
     <div class="container">
-            <table class="table table-striped">
-               <tbody>
-                  <tr>
-                  <td colspan="1">
+        <div class="col-md-12">
+            <td colspan="1">
                     <div class="well form-horizontal">
                      <fieldset>
                         <div class="pull-right">
@@ -46,11 +44,37 @@ Detail Book
                             </div>                       
                           </div>
                      </fieldset>
+                </div>
+            </td>
+        </div>
+     </div>
+
+    <br>
+    <div class="container">
+        <div class="col-md-12">
+            <td colspan="1">
+                    <div class="well form-horizontal">
+                     <fieldset>
+                     <div class="nav-tabs-custom">
+                            <ul class="nav nav-tabs">
+                            <li class="active"><a href="#chapter" data-toggle="tab" aria-expanded="true">Chapter</a></li>
+                            <li class=""><a href="#image" data-toggle="tab" aria-expanded="false">Image</a></li>
+
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="chapter">
+                                @include('admin.books.partials.image')
+                                </div>
+                        
+                            <div class="tab-pane" id="image">
+                                @include('admin.books.partials.chapter')
+                            </div>
+
+                        </div>
+                     </fieldset>
                     </div>
-                    </td>
-                  </tr>
-               </tbody>
-            </table>
+            </td>
+        </div>
      </div>
 </section>
 <!--section ends-->
@@ -62,7 +86,7 @@ Detail Book
                     <h4 class="modal-title">Book Chapter</h4>
                 </div>
                 <div class="modal-body">
-                    <form class="well form-horizontal" action="{{ route('book-chapter.store') }}" method="post">                    <form class="well form-horizontal" method="post" action="{{route('book-chapter.store')}}">
+                    <form class="well form-horizontal" action="{{ route('book-chapter.store') }}" method="post">  
                         {{ csrf_field() }}
                         <fieldset>
                         <input id="book_id" name="book_id" value="{{$data->id}}" type="hidden">
@@ -82,7 +106,7 @@ Detail Book
                 </div>
             </div>
         </div>
-    </div>
+</div>
 
 @stop
 

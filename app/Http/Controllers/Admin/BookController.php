@@ -42,10 +42,11 @@ class BookController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
-        $ebooks = Ebook::all();
-        return view('admin.books.create', compact('ebooks'));
+        $data = Ebook::find($id);
+
+        return view('admin.books.create', compact('data'));
     }
 
     /**
@@ -56,9 +57,7 @@ class BookController extends Controller
      */
     public function store(Request $request)
     {
-
         $request->validate([
-            'ebook_id' => 'required',
             'title' => 'required',
             'article' => 'required',
         ]);
@@ -66,16 +65,15 @@ class BookController extends Controller
         $ebook = Ebook::findOrFail($request->ebook_id);
         $book = new Book;
         $book->title = $request->title;
+        $book->slug = \Str::slug($request->title) .'-'. date('YmdHis');
         $book->article = $request->article;
-     
-
         $book->save();
 
         $ebook->books()->attach($book);
 
         Alert::success('Sukses Menambah Data Book', 'Sukses');
 
-        return redirect()->route('book.index');
+        return redirect()->route('ebook.show', $ebook->id);
 
     }
 
@@ -87,7 +85,8 @@ class BookController extends Controller
      */
     public function show($id)
     {
-        $data = Book::findOrFail($id);
+        $data = Book::with('chapters')->findOrFail($id);
+
         return view('admin.books.detail', compact('data'));
     }
 
@@ -115,6 +114,7 @@ class BookController extends Controller
     {
         $data = Book::findOrFail($id);
         $data->title = $request->title;
+        $data->slug = \Str::slug($request->title) .'-'. date('YmdHis');
         $data->article = $request->article;
         $data->save();
 
@@ -140,27 +140,6 @@ class BookController extends Controller
             Alert::error('Gagal Delete Data Book', 'Gagal');
         }
 
-        return redirect()->route('book.index');
-    }
-
-    public function uploadImage(Request $request) {
-
-        $CKEditor = $request->CKEditor;
-        $funcNum = $request->CKEditorFuncNum;
-
-        $message = $url = '';
-        if ($request->hasFile('upload')) {
-            $file = $request->hasFile('upload');
-            if ($file->isValid()) {
-                $filename = $file->getClientOriginalName();
-                $file->move(storage_path().'/images/', $filename);
-                $url = public_path() .'/images/' . $filename;
-            } else {
-                $message = 'An error occured while uploading the file.';
-            }
-        } else {
-            $message = 'No file uploaded.';
-        }
-        return '<script>window.parent.CKEDITOR.tools.callFunction('.$funcNum.', "'.$url.'", "'.$message.'")</script>';
+        return back();
     }
 }

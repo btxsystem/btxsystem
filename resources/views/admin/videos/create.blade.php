@@ -24,22 +24,7 @@ Create Book
                         <form class="well form-horizontal" method="post" enctype="multipart/form-data" action="{{route('video.store')}}">
                             {{ csrf_field() }}
                            <fieldset>
-
-                           <div class="form-group">
-                                    <label class="col-md-2 control-label">Type</label>
-                                    <div class="col-md-8 inputGroupContainer">
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="fa fa-book"></i></span>
-                                            <select name="ebook_id" id="ebook_id" class="form-control" required="true">
-                                                <option value="" disabled selected>Select Type</option>
-                                                @foreach($ebooks as $ebook)
-                                                <option value="{{$ebook->id}}">{{$ebook->title}}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                            </div>
-
+                           <input type="hidden" id="ebook_id" name="ebook_id" value="{{$data->id}}">
                             <div class="form-group">
                                 <label class="col-md-2 control-label">Title</label>
                                 <div class="col-md-8 inputGroupContainer">
@@ -53,7 +38,8 @@ Create Book
                             <div class="form-group">
                                 <label class="col-md-2 control-label">Video</label>
                                 <div class="col-md-8 inputGroupContainer">
-                                        <input id="video" name="video" class="form-control" required="true" value="{{old('title')}}" type="file">
+                                    <input id="path" name="path" class="form-control" required="true" value="{{old('path')}}" type="file">
+                                    <small class="text-danger">{{ $errors->first('path') }}</small>
                                 </div>
                             </div>
 

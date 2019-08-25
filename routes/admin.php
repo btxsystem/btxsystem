@@ -58,14 +58,29 @@ Route::group(['prefix' => 'select', 'as'=> 'select.'], function () {
     Route::resource('customer', 'Admin\CustomerController');
     Route::get('customer/data/{id}', 'Admin\CustomerController@delete');
 
-    // Video
-    Route::resource('video', 'Admin\VideoController');
-    Route::get('video/delete/{id}', 'Admin\VideoController@destroy')->name('deleteVideo');
+    // Ebook
+    Route::resource('ebook', 'Admin\EbookController');
+    Route::get('ebook/{id}/create/book','Admin\BookController@create')->name('ebook.create.book');
+    Route::get('ebook/{id}/create/video','Admin\VideoController@create')->name('ebook.create.video');
+
+    Route::get('ebook/{id}/book-data','Admin\EbookController@bookData')->name('ebook.bookData');
+    Route::get('ebook/{id}/video-data','Admin\EbookController@videoData')->name('ebook.videoData');
+
     // Book
     Route::resource('book', 'Admin\BookController');
     Route::get('book/delete/{id}', 'Admin\BookController@destroy')->name('deleteBook');
-    // Ebook
+    
+    // Book Chapter
+    Route::post('update-chapter', 'Admin\BookChapterController@updateChapter')->name('updateDataChapter');
     Route::resource('book-chapter', 'Admin\BookChapterController');
+
+    // Book Chapter Lesson
+    Route::resource('book-chapter-lesson', 'Admin\BookChapterLessonController');
+    Route::get('book-chapter/{id}/create/lessons','Admin\BookChapterLessonController@create')->name('ebookChapter.create.lesson');
+
+    // Video
+    Route::resource('video', 'Admin\VideoController');
+    Route::get('video/delete/{id}', 'Admin\VideoController@destroy')->name('deleteVideo');
 
 
     Route::group(['prefix'=>'trainings','as'=>'trainings.'],function(){

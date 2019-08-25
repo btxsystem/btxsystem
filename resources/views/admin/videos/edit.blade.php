@@ -21,7 +21,7 @@ Edit Book
                <tbody>
                   <tr>
                      <td colspan="1">
-                        <form class="well form-horizontal" method="post" action="{{route('book.update', $data->id)}}">
+                        <form class="well form-horizontal" method="post" action="{{route('video.update', $data->id)}}" enctype="multipart/form-data">
                             {{ csrf_field() }} {{ method_field('PATCH')}}
                            <fieldset>
                             <div class="form-group">
@@ -35,11 +35,10 @@ Edit Book
                             </div>
 
                             <div class="form-group">
-                                <label class="col-md-2 control-label">Article</label>
+                                <label class="col-md-2 control-label">Video</label>
                                 <div class="col-md-8 inputGroupContainer">
-                                    <div class="input-group">
-                                        <textarea id="article" name="article" class="article">{{ $data->article }}</textarea>
-                                    </div>
+                                    <input id="path" name="path" class="form-control" required="true" value="{{old('path')}}" type="file">
+                                    <small class="text-danger">{{ $errors->first('path') }}</small>
                                 </div>
                             </div>
 

@@ -1,19 +1,19 @@
 @extends('layouts.admin')
 
 @section('title')
-Create Book
+Edit Ebook
 @parent
 @stop
 
 @section('content')
 
 <section class="content-header">
-    <h1> Book</h1>
+    <h1> Ebook</h1>
     <ol class="breadcrumb">
         <li>
-            <a href="#">Book Management</a>
+            <a href="#">Ebook</a>
         </li>
-        <li class="active">Add Data Book</li>
+        <li class="active">Edit Data Ebook</li>
     </ol>
 
     <div class="container">
@@ -21,25 +21,25 @@ Create Book
                <tbody>
                   <tr>
                      <td colspan="1">
-                        <form class="well form-horizontal" method="post" action="{{route('book.store')}}">
-                            {{ csrf_field() }}
+                        <form class="well form-horizontal" method="post" action="{{route('book-chapter-lesson.update', $data->id)}}">
+                            {{ csrf_field() }} {{ method_field('PATCH')}}
                            <fieldset>
-                            <input type="hidden" id="ebook_id" name="ebook_id" value="{{$data->id}}">
-                            <div class="form-group">
+
+                           <div class="form-group">
                                 <label class="col-md-2 control-label">Title</label>
                                 <div class="col-md-8 inputGroupContainer">
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-pencil"></i></span>
-                                        <input id="title" name="title" placeholder="Title" class="form-control" required="true" value="{{old('title')}}" type="text">
+                                        <input id="title" name="title" placeholder="Title" class="form-control" required="true" value="{{$data->title}}" type="text">
                                     </div>
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label class="col-md-2 control-label">Article</label>
+                                <label class="col-md-2 control-label">Content</label>
                                 <div class="col-md-8 inputGroupContainer">
                                     <div class="input-group">
-                                        <textarea id="article" name="article" class="article"></textarea>
+                                        <textarea id="content" name="content" class="content">{{$data->content}}</textarea>
                                     </div>
                                 </div>
                             </div>
@@ -50,6 +50,7 @@ Create Book
                                        <button type="submit" class="btn btn-primary btn-block">Submit</button>
                                 </div>
                             </div>
+
                                                             
                            </fieldset>
                         </form>
@@ -65,9 +66,9 @@ Create Book
 @stop
 
 @section('footer_scripts')
-    <script src="/editor/ckeditor/ckeditor.js"></script>  
+<script src="/editor/ckeditor/ckeditor.js"></script>  
     <script>
-        CKEDITOR.replace( 'article',{
+        CKEDITOR.replace( 'content',{
             width: "710px",
             height: "350px",
         });  

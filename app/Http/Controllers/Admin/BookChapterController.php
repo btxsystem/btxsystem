@@ -42,9 +42,8 @@ class BookChapterController extends Controller
         $book = new BookChapter;
         $book->book_id = $request->book_id;
         $book->title = $request->title;
+        $book->slug = \Str::slug($request->title) .'-'. date('YmdHis');
         $book->save();
-
-
         Alert::success('Sukses Menambah Chapter Book', 'Sukses');
 
         return redirect()->route('book.show', $request->book_id);
@@ -58,7 +57,21 @@ class BookChapterController extends Controller
      */
     public function show($id)
     {
-        //
+        $data = BookChapter::findOrFail($id);
+
+        if (request()->ajax()) {
+            return Datatables::of($data->lessons)
+                    ->addIndexColumn()
+                    ->addColumn('action', function($row) {
+                        return '<a href="'.route('book-chapter-lesson.show',$row->id).'"  class="btn btn-primary fa fa-eye"title="Show"></a>
+                                <a href="'.route('book-chapter-lesson.edit',$row->id).'"  class="btn btn-warning fa fa-pencil"title="Edit"></a>';
+                    })
+                    ->rawColumns(['action'])
+                    ->make(true);
+        }
+    
+
+        return view('admin.book-chapters.detail', compact('data'));
     }
 
     /**
@@ -69,7 +82,9 @@ class BookChapterController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data = BookChapter::findOrFail($id);
+
+        return \response()->json($data);
     }
 
     /**
@@ -79,9 +94,19 @@ class BookChapterController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function updateChapter(Request $request)
     {
-        //
+        $book = BookChapter::findOrFail($request->chapter_id);
+        $book->book_id = $request->book_id;
+        $book->title = $request->title;
+        $book->slug = \Str::slug($request->title) .'-'. date('YmdHis');
+        $book->save();
+    
+    
+        Alert::success('Sukses Update Chapter Book', 'Sukses');
+        
+        return back();
+ 
     }
 
     /**
@@ -92,6 +117,13 @@ class BookChapterController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $data = BookChapter::findOrFail($id);
+        if ($data) { 
+            $data->delete(); 
+            Alert::success('Success Delete Book Chapter', 'Success');
+            return back();
+        } else {
+            Alert::error('Gagal Delete Data Book Chapter', 'Gagal');
+        }
     }
 }

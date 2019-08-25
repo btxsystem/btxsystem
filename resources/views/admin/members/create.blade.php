@@ -224,7 +224,7 @@ Registration User
             $('#parent_id').select2({
             placeholder: "Choose upline...",
             ajax: {
-                url: '/select/'+id+'/upline',
+                url: '{{route('select.sponsor')}}',
                 dataType: 'json',
                 data: function (params) {
                     console.log(params);

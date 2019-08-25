@@ -1,19 +1,19 @@
 @extends('layouts.admin')
 
 @section('title')
-Create Book
+Create Chapter Lesson
 @parent
 @stop
 
 @section('content')
 
 <section class="content-header">
-    <h1> Book</h1>
+    <h1> Chapter Lesson</h1>
     <ol class="breadcrumb">
         <li>
-            <a href="#">Book Management</a>
+            <a href="#">Chapter Lesson</a>
         </li>
-        <li class="active">Add Data Book</li>
+        <li class="active">Add Data Lesson</li>
     </ol>
 
     <div class="container">
@@ -21,10 +21,10 @@ Create Book
                <tbody>
                   <tr>
                      <td colspan="1">
-                        <form class="well form-horizontal" method="post" action="{{route('book.store')}}">
+                        <form class="well form-horizontal" method="post" action="{{route('book-chapter-lesson.store')}}">
                             {{ csrf_field() }}
                            <fieldset>
-                            <input type="hidden" id="ebook_id" name="ebook_id" value="{{$data->id}}">
+                           <input type="hidden" id="chapter_id" name="chapter_id" value="{{$data->id}}">
                             <div class="form-group">
                                 <label class="col-md-2 control-label">Title</label>
                                 <div class="col-md-8 inputGroupContainer">
@@ -36,13 +36,15 @@ Create Book
                             </div>
 
                             <div class="form-group">
-                                <label class="col-md-2 control-label">Article</label>
+                                <label class="col-md-2 control-label">Content</label>
                                 <div class="col-md-8 inputGroupContainer">
                                     <div class="input-group">
-                                        <textarea id="article" name="article" class="article"></textarea>
+                                        <textarea id="content" name="content" class="content"></textarea>
                                     </div>
                                 </div>
                             </div>
+
+
 
                             <div class="form-group">
                                 <label class="col-md-2 control-label"></label>
@@ -65,11 +67,22 @@ Create Book
 @stop
 
 @section('footer_scripts')
-    <script src="/editor/ckeditor/ckeditor.js"></script>  
+<script src="/editor/ckeditor/ckeditor.js"></script>  
     <script>
-        CKEDITOR.replace( 'article',{
+        CKEDITOR.replace( 'content',{
             width: "710px",
             height: "350px",
-        });  
+        }); 
+        $("form").submit( function(e) {
+            var messageLength = CKEDITOR.instances['content'].getData().replace(/<[^>]*>/gi, '').length;
+            if( !messageLength ) {
+                swal({
+                    title: "Content need to filled !!",
+                    type: "warning",
+
+                });
+                e.preventDefault();
+            }
+        }); 
     </script>
 @stop
