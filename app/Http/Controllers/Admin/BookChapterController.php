@@ -44,8 +44,6 @@ class BookChapterController extends Controller
         $book->title = $request->title;
         $book->slug = \Str::slug($request->title) .'-'. date('YmdHis');
         $book->save();
-
-
         Alert::success('Sukses Menambah Chapter Book', 'Sukses');
 
         return redirect()->route('book.show', $request->book_id);
@@ -59,7 +57,21 @@ class BookChapterController extends Controller
      */
     public function show($id)
     {
-        //
+        $data = BookChapter::findOrFail($id);
+
+        if (request()->ajax()) {
+            return Datatables::of($data->lessons)
+                    ->addIndexColumn()
+                    ->addColumn('action', function($row) {
+                        return '<a href="'.route('book-chapter-lesson.show',$row->id).'"  class="btn btn-primary fa fa-eye"title="Show"></a>
+                                <a href="'.route('book-chapter-lesson.edit',$row->id).'"  class="btn btn-warning fa fa-pencil"title="Edit"></a>';
+                    })
+                    ->rawColumns(['action'])
+                    ->make(true);
+        }
+    
+
+        return view('admin.book-chapters.detail', compact('data'));
     }
 
     /**

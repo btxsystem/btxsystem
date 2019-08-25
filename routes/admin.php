@@ -74,6 +74,10 @@ Route::group(['prefix' => 'select', 'as'=> 'select.'], function () {
     Route::post('update-chapter', 'Admin\BookChapterController@updateChapter')->name('updateDataChapter');
     Route::resource('book-chapter', 'Admin\BookChapterController');
 
+    // Book Chapter Lesson
+    Route::resource('book-chapter-lesson', 'Admin\BookChapterLessonController');
+    Route::get('book-chapter/{id}/create/lessons','Admin\BookChapterLessonController@create')->name('ebookChapter.create.lesson');
+
     // Video
     Route::resource('video', 'Admin\VideoController');
     Route::get('video/delete/{id}', 'Admin\VideoController@destroy')->name('deleteVideo');

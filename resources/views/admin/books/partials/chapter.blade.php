@@ -14,11 +14,16 @@
                     <td>{{$chapter->title}}</td>
                     <td class="text-center" width="15%">
         
+                        <a href="{{route('book-chapter.show', $chapter->id)}}" class="text-primary" title="Show">
+                            <i aria-hidden="true"  class="fa fa-eye fa-lg"></i>
+                        </a> 
+
+                        &nbsp;
                         <a class="text-warning" data-toggle="modal" data-placement="top" title="Edit">
                             <i aria-hidden="true" data-id="{{$chapter->id}}"  class="fa fa-pencil-square-o fa-lg edit_chapter_modal"></i>
                         </a> 
 
-
+                        &nbsp;
                         <a href="#"
                             class="text-danger"
                             data-toggle="tooltip"
