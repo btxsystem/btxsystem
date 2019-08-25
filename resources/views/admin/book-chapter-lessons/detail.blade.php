@@ -29,7 +29,7 @@ Lesson Overview
 
                     <div class="pull-right">
                         <a style=" color: white; text-decoration: none; margin-right: 20px; !important" href="{{ route('book-chapter-lesson.edit', $data->id) }}"><i style="font-size:15px;" class="fa fa-pencil"></i>&nbsp; &nbsp;<strong>Edit Data</strong></a>
-                        <a style=" color: #e34d39; text-decoration: none !important">
+                        <a style=" color: white; text-decoration: none !important">
                             <i style="font-size:15px;" class="fa fa-power-off"></i>&nbsp; &nbsp;<strong>Delete</strong></a>
                      
                      </div>

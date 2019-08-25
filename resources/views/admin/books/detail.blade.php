@@ -58,17 +58,17 @@ Detail Book
                      <div class="nav-tabs-custom">
                             <ul class="nav nav-tabs">
                             <li class="active"><a href="#chapter" data-toggle="tab" aria-expanded="true">Chapter</a></li>
-                            <!-- <li class=""><a href="#invoice" data-toggle="tab" aria-expanded="false">Invoice</a></li> -->
+                            <li class=""><a href="#image" data-toggle="tab" aria-expanded="false">Image</a></li>
 
                             </ul>
                             <div class="tab-content">
                                 <div class="tab-pane active" id="chapter">
-                                @include('admin.books.partials.chapter')
+                                @include('admin.books.partials.image')
                                 </div>
-                            <!-- /.tab-pane -->
-                            <!-- <div class="tab-pane" id="invoice">
-                                    Tist
-                            </div> -->
+                        
+                            <div class="tab-pane" id="image">
+                                @include('admin.books.partials.chapter')
+                            </div>
 
                         </div>
                      </fieldset>

@@ -29,7 +29,7 @@ List Of {{$data->title}}
 
                     <div class="pull-right">
                         <a style=" color: white; text-decoration: none; margin-right: 20px; !important" href="{{ route('ebook.edit', $data->id) }}"><i style="font-size:15px;" class="fa fa-pencil"></i>&nbsp; &nbsp;<strong>Edit Data</strong></a>
-                        <a data-id="{{$data->id}}" style=" color: #e34d39; text-decoration: none !important"><i style="font-size:15px;" class="fa fa-power-off"></i>&nbsp; &nbsp;<strong>Delete</strong></a>
+                        <a data-id="{{$data->id}}" style=" color: white; text-decoration: none !important"><i style="font-size:15px;" class="fa fa-power-off"></i>&nbsp; &nbsp;<strong>Delete</strong></a>
                      
                      </div>
                 </div>
