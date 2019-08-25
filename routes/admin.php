@@ -71,6 +71,7 @@ Route::group(['prefix' => 'select', 'as'=> 'select.'], function () {
     Route::get('book/delete/{id}', 'Admin\BookController@destroy')->name('deleteBook');
     
     // Book Chapter
+    Route::post('update-chapter', 'Admin\BookChapterController@updateChapter')->name('updateDataChapter');
     Route::resource('book-chapter', 'Admin\BookChapterController');
 
     // Video

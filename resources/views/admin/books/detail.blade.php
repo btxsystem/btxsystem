@@ -86,7 +86,7 @@ Detail Book
                     <h4 class="modal-title">Book Chapter</h4>
                 </div>
                 <div class="modal-body">
-                    <form class="well form-horizontal" action="{{ route('book-chapter.store') }}" method="post">                    <form class="well form-horizontal" method="post" action="{{route('book-chapter.store')}}">
+                    <form class="well form-horizontal" action="{{ route('book-chapter.store') }}" method="post">  
                         {{ csrf_field() }}
                         <fieldset>
                         <input id="book_id" name="book_id" value="{{$data->id}}" type="hidden">
@@ -106,7 +106,7 @@ Detail Book
                 </div>
             </div>
         </div>
-    </div>
+</div>
 
 @stop
 

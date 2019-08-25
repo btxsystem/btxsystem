@@ -42,6 +42,7 @@ class BookChapterController extends Controller
         $book = new BookChapter;
         $book->book_id = $request->book_id;
         $book->title = $request->title;
+        $book->slug = \Str::slug($request->title) .'-'. date('YmdHis');
         $book->save();
 
 
@@ -69,7 +70,9 @@ class BookChapterController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data = BookChapter::findOrFail($id);
+
+        return \response()->json($data);
     }
 
     /**
@@ -79,9 +82,19 @@ class BookChapterController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function updateChapter(Request $request)
     {
-        //
+        $book = BookChapter::findOrFail($request->chapter_id);
+        $book->book_id = $request->book_id;
+        $book->title = $request->title;
+        $book->slug = \Str::slug($request->title) .'-'. date('YmdHis');
+        $book->save();
+    
+    
+        Alert::success('Sukses Update Chapter Book', 'Sukses');
+        
+        return back();
+ 
     }
 
     /**
@@ -92,6 +105,13 @@ class BookChapterController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $data = BookChapter::findOrFail($id);
+        if ($data) { 
+            $data->delete(); 
+            Alert::success('Success Delete Book Chapter', 'Success');
+            return back();
+        } else {
+            Alert::error('Gagal Delete Data Book Chapter', 'Gagal');
+        }
     }
 }

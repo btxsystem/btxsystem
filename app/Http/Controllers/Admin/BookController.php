@@ -57,8 +57,6 @@ class BookController extends Controller
      */
     public function store(Request $request)
     {
-        // return $request->all();
-
         $request->validate([
             'title' => 'required',
             'article' => 'required',
@@ -67,9 +65,8 @@ class BookController extends Controller
         $ebook = Ebook::findOrFail($request->ebook_id);
         $book = new Book;
         $book->title = $request->title;
+        $book->slug = \Str::slug($request->title) .'-'. date('YmdHis');
         $book->article = $request->article;
-     
-
         $book->save();
 
         $ebook->books()->attach($book);
@@ -117,6 +114,7 @@ class BookController extends Controller
     {
         $data = Book::findOrFail($id);
         $data->title = $request->title;
+        $data->slug = \Str::slug($request->title) .'-'. date('YmdHis');
         $data->article = $request->article;
         $data->save();
 

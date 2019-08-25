@@ -54,9 +54,9 @@ class EbookController extends Controller
      */
     public function store(Request $request)
     {
-
         $ebook = new Ebook;
         $ebook->title = $request->title;
+        $ebook->slug = \Str::slug($request->title) .'-'. date('YmdHis') ;
         $ebook->price = $request->price;
         $ebook->price_markup = $request->price_markup;
         $ebook->pv = $request->pv;
@@ -107,6 +107,7 @@ class EbookController extends Controller
         
         $data = Ebook::findOrFail($id);
         $data->title = $request->title;
+        $data->slug = \Str::slug($request->title) .'-'. date('YmdHis');
         $data->price = $request->price;
         $data->price_markup = $request->price_markup;
         $data->pv = $request->pv;
