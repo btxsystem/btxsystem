@@ -20,10 +20,11 @@ class NonMemberController extends Controller
       'password' => 'required'
     ]);
 
-    if (Auth::guard('nonmember')->attempt(['username' => $request->username, 'password' => $request->password])) {
+    if (Auth::guard('nonmember')->attempt(['username' => $request->username, 'password' => $request->password])){
       //dd(Auth::guard('nonmember')->user()->id);
       return redirect()->route('member.subscription');
     }
+    // Tambah logic member
 
     return view('member-v2.components.login');
   }
@@ -33,6 +34,7 @@ class NonMemberController extends Controller
     if (Auth::guard('nonmember')->check()) {
       Auth::guard('nonmember')->logout();
     } 
+    // Tambah logic member
     return redirect()->route('member.login');
   }
 }

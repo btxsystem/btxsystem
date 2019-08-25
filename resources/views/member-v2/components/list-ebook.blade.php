@@ -134,7 +134,7 @@
 					    <input type="number" class="form-control" id="phoneNumber" placeholder="Phone number" required>
 					  </div>
 						@endif
-					  <span>Total yang dibayar : </span><b><span id="total_price"></span></b>
+					  <span>Total yang dibayar : IDR </span><b><span id="total_price"></span></b>
 		      </div>
 		      <div class="modal-footer justify-content-center">
 		        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
