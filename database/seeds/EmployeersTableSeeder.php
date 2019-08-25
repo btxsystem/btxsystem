@@ -14,7 +14,7 @@ class EmployeersTableSeeder extends Seeder
     {
         $employee = [
             [
-                'id_member'      => '001',
+                'id_member'      => 'M1908000001',
                 'username'      => 'Joshua',
                 'first_name'     => 'Joshua',
                 'last_name'       => 'D',
@@ -38,7 +38,7 @@ class EmployeersTableSeeder extends Seeder
                 'pv' => 300,
             ],
             [
-                'id_member'      => '002',
+                'id_member'      => 'M1908000002',
                 'username'      => 'ErikSut',
                 'first_name'     => 'Erik',
                 'last_name'       => 'Sutiawan',
@@ -62,7 +62,7 @@ class EmployeersTableSeeder extends Seeder
                 'pv' => 300,
             ],
             [
-                'id_member'      => '003',
+                'id_member'      => 'M1908000003',
                 'username'      => 'Dadank',
                 'first_name'     => 'Dadank',
                 'last_name'       => 'Thea',
@@ -86,7 +86,7 @@ class EmployeersTableSeeder extends Seeder
                 'pv' => 300,
             ],
             [
-                'id_member'      => '004',
+                'id_member'      => 'M1908000004',
                 'username'      => 'Rizal',
                 'first_name'     => 'Rizal',
                 'last_name'       => 'Thea',
