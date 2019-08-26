@@ -91,7 +91,7 @@ class DashboardController extends Controller
         $data = [
             'id' => $user->id,
             'username' => $user->username,
-            'rank' => $user->rank->name,
+            'rank' => $user->rank ? $user->rank->name : '-',
             'pv_left' => $user->pv_down ? $user->pv_down->pv_left : 0,
             'pv_midle' => $user->pv_down ? $user->pv_down->pv_midle : 0 ,
             'pv_right' => $user->pv_down ? $user->pv_down->pv_right : 0,
@@ -108,7 +108,7 @@ class DashboardController extends Controller
                             $child[0] =  [
                                 'id' => $tamp2->id,
                                 'username' => $tamp2->username,
-                                'rank' => $tamp2->rank->name,
+                                'rank' => $tamp2->rank ? $tamp2->rank->name : '-' ,
                                 'pv_left' => $tamp2->pv_down ? $tamp2->pv_down->pv_left : 0,
                                 'pv_midle' => $tamp2->pv_down ? $tamp2->pv_down->pv_midle  : 0 ,
                                 'pv_right' => $tamp2->pv_down ? $tamp2->pv_down->pv_right : 0,
@@ -119,7 +119,7 @@ class DashboardController extends Controller
                             $child[1] =  [
                                 'id' => $tamp2->id,
                                 'username' => $tamp2->username,
-                                'rank' => $tamp2->rank->name,
+                                'rank' => $tamp2->rank ? $tamp2->rank->name : '-' ,
                                 'pv_left' => $tamp2->pv_down ? $tamp2->pv_down->pv_left : 0,
                                 'pv_midle' => $tamp2->pv_down ? $tamp2->pv_down->pv_midle  : 0 ,
                                 'pv_right' => $tamp2->pv_down ? $tamp2->pv_down->pv_right : 0,
@@ -130,7 +130,7 @@ class DashboardController extends Controller
                             $child[2] =  [
                                 'id' => $tamp2->id,
                                 'username' => $tamp2->username,
-                                'rank' => $tamp2->rank->name,
+                                'rank' => $tamp2->rank ? $tamp2->rank->name : '-' ,
                                 'pv_left' => $tamp2->pv_down ? $tamp2->pv_down->pv_left : 0,
                                 'pv_midle' => $tamp2->pv_down ? $tamp2->pv_down->pv_midle  : 0 ,
                                 'pv_right' => $tamp2->pv_down ? $tamp2->pv_down->pv_right : 0,
@@ -144,7 +144,7 @@ class DashboardController extends Controller
                     $data['children'][0] =  [
                         'id' => $tamp->id,
                         'username' => $tamp->username,
-                        'rank' => $tamp->rank->name,
+                        'rank' => $tamp->rank ? $tamp->rank->name : '-',
                         'pv_left' => $tamp->pv_down ? $tamp->pv_down->pv_left : 0,
                         'pv_midle' => $tamp->pv_down ? $tamp->pv_down->pv_midle  : 0 ,
                         'pv_right' => $tamp->pv_down ? $tamp->pv_down->pv_right : 0,
@@ -156,7 +156,7 @@ class DashboardController extends Controller
                     $data['children'][1] =  [
                         'id' => $tamp->id,
                         'username' => $tamp->username,
-                        'rank' => $tamp->rank->name,
+                        'rank' => $tamp->rank ? $tamp->rank->name : '-',
                         'pv_left' => $tamp->pv_down ? $tamp->pv_down->pv_left : 0,
                         'pv_midle' => $tamp->pv_down ? $tamp->pv_down->pv_midle  : 0 ,
                         'pv_right' => $tamp->pv_down ? $tamp->pv_down->pv_right : 0,
@@ -168,7 +168,7 @@ class DashboardController extends Controller
                     $data['children'][2] =  [
                         'id' => $tamp->id,
                         'username' => $tamp->username,
-                        'rank' => $tamp->rank->name,
+                        'rank' => $tamp->rank ? $tamp->rank->name : '-',
                         'pv_left' => $tamp->pv_down ? $tamp->pv_down->pv_left : 0,
                         'pv_midle' => $tamp->pv_down ? $tamp->pv_down->pv_midle  : 0 ,
                         'pv_right' => $tamp->pv_down ? $tamp->pv_down->pv_right : 0,
@@ -204,7 +204,7 @@ class DashboardController extends Controller
         $tree = [
             'id' => $user->id,
             'username' => $user->username,
-            'rank' => $user->rank->name,
+            'rank' => $user->rank ? $user->rank->name : '-',
             'pv_left' => $user->pv_down ? $user->pv_down->pv_left : 0,
             'pv_midle' => $user->pv_down ? $user->pv_down->pv_midle : 0 ,
             'pv_right' => $user->pv_down ? $user->pv_down->pv_right : 0,
@@ -234,7 +234,7 @@ class DashboardController extends Controller
         $data = [
             'id' => $user->id,
             'username' => $user->username,
-            'rank' => $user->rank->name,
+            'rank' => $user->rank ? $user->rank->name : '-',
             'pv_left' => $user->pv_down ? $user->pv_down->pv_left : 0,
             'pv_midle' => $user->pv_down ? $user->pv_down->pv_midle : 0 ,
             'pv_right' => $user->pv_down ? $user->pv_down->pv_right : 0,
@@ -251,7 +251,7 @@ class DashboardController extends Controller
                             $child[0] =  [
                                 'id' => $tamp2->id,
                                 'username' => $tamp2->username,
-                                'rank' => $tamp2->rank->name,
+                                'rank' => $tamp2->rank ? $tamp2->rank->name : '-' ,
                                 'pv_left' => $tamp2->pv_down ? $tamp2->pv_down->pv_left : 0,
                                 'pv_midle' => $tamp2->pv_down ? $tamp2->pv_down->pv_midle  : 0 ,
                                 'pv_right' => $tamp2->pv_down ? $tamp2->pv_down->pv_right : 0,
@@ -262,7 +262,7 @@ class DashboardController extends Controller
                             $child[1] =  [
                                 'id' => $tamp2->id,
                                 'username' => $tamp2->username,
-                                'rank' => $tamp2->rank->name,
+                                'rank' => $tamp2->rank ? $tamp2->rank->name : '-' ,
                                 'pv_left' => $tamp2->pv_down ? $tamp2->pv_down->pv_left : 0,
                                 'pv_midle' => $tamp2->pv_down ? $tamp2->pv_down->pv_midle  : 0 ,
                                 'pv_right' => $tamp2->pv_down ? $tamp2->pv_down->pv_right : 0,
@@ -273,7 +273,7 @@ class DashboardController extends Controller
                             $child[2] =  [
                                 'id' => $tamp2->id,
                                 'username' => $tamp2->username,
-                                'rank' => $tamp2->rank->name,
+                                'rank' => $tamp2->rank ? $tamp2->rank->name : '-' ,
                                 'pv_left' => $tamp2->pv_down ? $tamp2->pv_down->pv_left : 0,
                                 'pv_midle' => $tamp2->pv_down ? $tamp2->pv_down->pv_midle  : 0 ,
                                 'pv_right' => $tamp2->pv_down ? $tamp2->pv_down->pv_right : 0,
@@ -287,7 +287,7 @@ class DashboardController extends Controller
                     $data['children'][0] =  [
                         'id' => $tamp->id,
                         'username' => $tamp->username,
-                        'rank' => $tamp->rank->name,
+                        'rank' => $tamp->rank ? $tamp->rank->name : '-',
                         'pv_left' => $tamp->pv_down ? $tamp->pv_down->pv_left : 0,
                         'pv_midle' => $tamp->pv_down ? $tamp->pv_down->pv_midle  : 0 ,
                         'pv_right' => $tamp->pv_down ? $tamp->pv_down->pv_right : 0,
@@ -299,7 +299,7 @@ class DashboardController extends Controller
                     $data['children'][1] =  [
                         'id' => $tamp->id,
                         'username' => $tamp->username,
-                        'rank' => $tamp->rank->name,
+                        'rank' => $tamp->rank ? $tamp->rank->name : '-',
                         'pv_left' => $tamp->pv_down ? $tamp->pv_down->pv_left : 0,
                         'pv_midle' => $tamp->pv_down ? $tamp->pv_down->pv_midle  : 0 ,
                         'pv_right' => $tamp->pv_down ? $tamp->pv_down->pv_right : 0,
@@ -311,7 +311,7 @@ class DashboardController extends Controller
                     $data['children'][2] =  [
                         'id' => $tamp->id,
                         'username' => $tamp->username,
-                        'rank' => $tamp->rank->name,
+                        'rank' => $tamp->rank ? $tamp->rank->name : '-',
                         'pv_left' => $tamp->pv_down ? $tamp->pv_down->pv_left : 0,
                         'pv_midle' => $tamp->pv_down ? $tamp->pv_down->pv_midle  : 0 ,
                         'pv_right' => $tamp->pv_down ? $tamp->pv_down->pv_right : 0,
@@ -347,7 +347,7 @@ class DashboardController extends Controller
         $tree = [
             'id' => $user->id,
             'username' => $user->username,
-            'rank' => $user->rank->name,
+            'rank' => $user->rank ? $user->rank->name : '-',
             'pv_left' => $user->pv_down ? $user->pv_down->pv_left : 0,
             'pv_midle' => $user->pv_down ? $user->pv_down->pv_midle : 0 ,
             'pv_right' => $user->pv_down ? $user->pv_down->pv_right : 0,

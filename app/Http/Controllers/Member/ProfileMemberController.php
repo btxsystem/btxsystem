@@ -64,22 +64,27 @@ class ProfileMemberController extends Controller
             'email' => $request->email,
             'password' => bcrypt('Mbitrex'.rand(100,1000)),
             'birthdate' => $request->birthdate,
-            'npwp_number' => '-',
-            'is_married' => 0,
             'gender' => $request->gender,
-            'status' => 1,
-            'phone_number' => $request->number_phone,
-            'no_rec' => '-',
             'position' => $request->position,
             'parent_id' => $request->parent,
             'sponsor_id' => $sponsor->id,
-            'rank_id' => 1,
             'bitrex_cash' => 0,
             'bitrex_points' => 0,
-            'pv' => 0   
+            'pv' => 0,
+            'nik' => $request->nik,
         ];
-        
+
         Employeer::create($data);
         return redirect()->route('member.tree');
+    }
+
+    public function isSameUsername($user){
+        $data = [
+            'status' => 200,
+            'username' => false,
+        ];
+        $cek = Employeer::where('username','=',$user)->select('username')->first();
+        $cek ? $data['username'] = true : $data['username'] = false;
+        return response()->json($data);
     }
 }

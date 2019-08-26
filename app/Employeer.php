@@ -38,7 +38,10 @@ class Employeer extends Authenticatable
         'rank_id',
         'bitrex_cash',
         'bitrex_points',
-        'pv'
+        'pv',
+        'src',
+        'is_update',
+        'nik'
     ];
 
     public function getName(){

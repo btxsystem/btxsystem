@@ -25,6 +25,7 @@
 							<input class="form-control" name="username" id="username" type="text" min="3" required>
 							<label class="form-label">Username</label>
 						</div>
+						<h5 style="color:red" id="username_danger"></h5>
 					</div>
 					<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12 row">
 						<div class="form-line form-group form-float col-lg-6 col-md-6 col-sm-6 col-xs-6">
@@ -44,8 +45,8 @@
 					</div>
 					<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div class="form-line">
-							<input class="form-control" name="number_phone" id="number_phone" type="number" min="10" required>
-							<label class="form-label">Phone Number</label>
+							<input class="form-control" name="nik" id="number_phone" type="number" min="10" required>
+							<label class="form-label">NIK / Passport</label>
 						</div>
 					</div>
 					<div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -64,7 +65,7 @@
 					</div>
 					<div class="modal-footer">
 						<a class="btn btn-secondary" data-dismiss="modal">Close</a>
-						<input type="submit" class="btn btn-primary" value="Register">
+						<input type="submit" class="btn btn-primary register" value="Register">
 					</div>
 				</form>
 			</div>
@@ -143,6 +144,22 @@
 		$('#upline').hide();
 		panzoom(element);
 	});
+	
+	$('#username').keyup(function(){
+		var text = this.value;
+		$.ajax({
+			type: 'GET',
+			url: '/member/select/username/'+text,
+			success: function (data) {
+				data.username ? $('#username_danger').text('username you entered already exists') : $('#username_danger').empty();
+				data.username ? $(".register").prop('disabled', true) : $(".register").prop('disabled', false);
+			},
+			error: function() { 
+				console.log("Error");
+			}
+		});
+	})
+
 	var svg = d3.select("#tree").append("svg")
 		.attr("width",1040).attr("height",600)
 		.append("g").attr("transform", "translate(-750,-80)")
@@ -181,76 +198,76 @@
 
 	var tree = (data) => {
 		var treeStructure = d3.tree().size([2000,480]);
-			var root = d3.hierarchy(data).sort(function(a, b) {return a.data.position - b.data.position ;});
-			treeStructure(root);
-			var information = treeStructure(root);
+		var root = d3.hierarchy(data).sort(function(a, b) {return a.data.position - b.data.position ;});
+		treeStructure(root);
+		var information = treeStructure(root);
+		
+		var connections = svg.append("g").selectAll("path")
+			.data(information.links());
+
+		connections.enter().append("path")
+			.attr("d", function(d){
+				return "M" + d.source.x + "," + d.source.y + " v 150 H" +
+				d.target.x + " V" + d.target.y;
+			});
 			
-			var connections = svg.append("g").selectAll("path")
-				.data(information.links());
+		var rectangles = svg.append("g").selectAll("rect")
+			.data(information.descendants());
+		rectangles.enter().append("rect")
+			.attr("onclick", function(d){ return `tree_submit(${d.data.username ? `'${d.data.username}'` : `'${"available"}'`}, ${d.data.parent_id}, ${d.data.position} )` })
+			.attr("value", function(d){return d.data.username ? d.data.username : "available"})
+			.attr("href","#")
+			.attr("x", function(d){return d.x-75;})
+			.attr("y", function(d){return d.y-50;});
+			
+		var names = svg.append("g").selectAll("text")
+			.data(information.descendants());
+		names.enter().append("text")
+			.text(function(d){return d.data.username ? d.data.username : 'Available';})
+			.attr("x", function(d){return d.x+0;})
+			.attr("y", function(d){return d.y+40;})
+			.classed("bigger", true);
 
-			connections.enter().append("path")
-				.attr("d", function(d){
-					return "M" + d.source.x + "," + d.source.y + " v 150 H" +
-					d.target.x + " V" + d.target.y;
-				});
-				
-			var rectangles = svg.append("g").selectAll("rect")
-				.data(information.descendants());
-			rectangles.enter().append("rect")
-				.attr("onclick", function(d){ return `tree_submit(${d.data.username ? `'${d.data.username}'` : `'${"available"}'`}, ${d.data.parent_id}, ${d.data.position} )` })
-				.attr("value", function(d){return d.data.username ? d.data.username : "available"})
-				.attr("href","#")
-				.attr("x", function(d){return d.x-75;})
-				.attr("y", function(d){return d.y-50;});
-				
-			var names = svg.append("g").selectAll("text")
-				.data(information.descendants());
-			names.enter().append("text")
-				.text(function(d){return d.data.username ? d.data.username : 'Available';})
-				.attr("x", function(d){return d.x+0;})
-				.attr("y", function(d){return d.y+40;})
-				.classed("bigger", true);
+		var levels = svg.append("g").selectAll("text")
+			.data(information.descendants());
+		levels.enter().append("text")
+			.text(function(d){return d.data.rank ? "Rank : " + d.data.rank : '';})
+			.attr("x", function(d){return d.x+0;})
+			.attr("y", function(d){return d.y+60;})
+			.classed("bigger", true)
 
-			var levels = svg.append("g").selectAll("text")
-				.data(information.descendants());
-			levels.enter().append("text")
-				.text(function(d){return d.data.rank ? "Rank : " + d.data.rank : '';})
-				.attr("x", function(d){return d.x+0;})
-				.attr("y", function(d){return d.y+60;})
-				.classed("bigger", true)
+		var pv_left = svg.append("g").selectAll("text")
+			.data(information.descendants());
+		pv_left.enter().append("text")
+			.text(function(d){return d.data.pv_left >= 0 ? "L : " + addCommas(d.data.pv_left) : '';})
+			.attr("x", function(d){return d.x+0;})
+			.attr("y", function(d){return d.y+80;})
+			.classed("bigger", true);
 
-			var pv_left = svg.append("g").selectAll("text")
-				.data(information.descendants());
-			pv_left.enter().append("text")
-				.text(function(d){return d.data.pv_left >= 0 ? "L : " + addCommas(d.data.pv_left) : '';})
-				.attr("x", function(d){return d.x+0;})
-				.attr("y", function(d){return d.y+80;})
-				.classed("bigger", true);
+		var pv_midle = svg.append("g").selectAll("text")
+			.data(information.descendants());
+		pv_midle.enter().append("text")
+			.text(function(d){return d.data.pv_midle >= 0 ? "M : " + addCommas(d.data.pv_midle) : ''})
+			.attr("x", function(d){return d.x+0;})
+			.attr("y", function(d){return d.y+100;})
+			.classed("bigger", true);
 
-			var pv_midle = svg.append("g").selectAll("text")
-				.data(information.descendants());
-			pv_midle.enter().append("text")
-				.text(function(d){return d.data.pv_midle >= 0 ? "M : " + addCommas(d.data.pv_midle) : ''})
-				.attr("x", function(d){return d.x+0;})
-				.attr("y", function(d){return d.y+100;})
-				.classed("bigger", true);
+		var pv_right = svg.append("g").selectAll("text")
+			.data(information.descendants());
+		pv_right.enter().append("text")
+			.text(function(d){return d.data.pv_right >= 0 ? "R : " + addCommas(d.data.pv_right) : ''})
+			.attr("x", function(d){return d.x+0;})
+			.attr("y", function(d){return d.y+120;})
+			.classed("bigger", true);
 
-			var pv_right = svg.append("g").selectAll("text")
-				.data(information.descendants());
-			pv_right.enter().append("text")
-				.text(function(d){return d.data.pv_right >= 0 ? "R : " + addCommas(d.data.pv_right) : ''})
-				.attr("x", function(d){return d.x+0;})
-				.attr("y", function(d){return d.y+120;})
-				.classed("bigger", true);
-
-			var image = svg.append("g").selectAll("image")
-				.data(information.descendants());
-			image.enter().append("a")
-				.append("image")
-				.attr("xlink:href", function(d){return "https://img.icons8.com/bubbles/2x/user.png"})
-				.attr("x", function(d){return d.x-30;})
-				.attr("y", function(d){return d.y-40;})
-				.classed("img-fluid", true);
+		var image = svg.append("g").selectAll("image")
+			.data(information.descendants());
+		image.enter().append("a")
+			.append("image")
+			.attr("xlink:href", function(d){return "https://img.icons8.com/bubbles/2x/user.png"})
+			.attr("x", function(d){return d.x-30;})
+			.attr("y", function(d){return d.y-40;})
+			.classed("img-fluid", true);
 	}
 
 </script>

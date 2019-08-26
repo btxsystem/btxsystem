@@ -104,6 +104,7 @@ Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
         Route::get('training', ['as' => 'training', 'uses' => 'Member\DashboardController@getTraining']);
         Route::get('tree', ['as' => 'tree', 'uses' => 'Member\DashboardController@getTree']);
         Route::get('child-tree/{user}', ['as' => 'child-tree', 'uses' => 'Member\DashboardController@getChildTree']);
+        Route::get('username/{user}', ['as' => 'username', 'uses' => 'Member\ProfileMemberController@isSameUsername']);
         Route::get('history-points', ['as' => 'history-points', 'uses' => 'Member\BitrexPointController@getHistoryPoints']);
         Route::get('history-value', ['as' => 'history-cash', 'uses' => 'Member\BitrexCashController@getHistoryCash']);
         Route::get('history-pv', ['as' => 'history-pv', 'uses' => 'Member\PvController@getHistoryPv']);
