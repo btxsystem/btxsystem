@@ -207,8 +207,8 @@ class ExploreController extends Controller
 
     if(Auth::guard('nonmember')->user()) {
       $memberId  = Auth::guard('nonmember')->user()->id;
-    } else if (Auth::guard('member')->user()) {
-      $memberId  = Auth::guard('member')->user()->id;
+    } else if (Auth::guard('user')->user()) {
+      $memberId  = Auth::guard('user')->user()->id;
     }
 
     $save = BookChapterLessonSolved::insert([

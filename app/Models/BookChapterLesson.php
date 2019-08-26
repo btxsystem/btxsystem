@@ -29,8 +29,8 @@ class BookChapterLesson extends Model
     if(\Auth::guard('nonmember')->user()) {
       $nonMemberId  = \Auth::guard('nonmember')->user()->id;
       return $this->lesson()->where('member_id', $nonMemberId)->first() ? true : false;
-    } else if (\Auth::guard('member')->user()) {
-      $memberid  = \Auth::guard('member')->user()->id;
+    } else if (\Auth::guard('user')->user()) {
+      $memberid  = \Auth::guard('user')->user()->id;
       return $this->lesson()->where('member_id', $memberid)->first() ? true : false;
     }
   }

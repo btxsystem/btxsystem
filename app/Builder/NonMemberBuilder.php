@@ -1,100 +1,121 @@
 <?php
 
 namespace App\Builder;
-use App\Builder\Models\NonMember;
-use App\Models\NonMember as NonMemberModel;
 
 class NonMemberBuilder
 {
-  public $firstName = '';
+  public $id;
 
-  public $lastName = '';
-  
-  public $username = '';
-  
-  public $email = '';
-  
-  public $password = '';
-  
-  public $phone = 0;
-  
-  public $referredBy = '';
+  public $firstName;
 
-  public function setFirstname($value)
-  {
-    $this->firstName = $value;
-    return $this;
-  }
+  public $lastName;
 
-  public function setLastName($value)
-  {
-    $this->lastName = $value;
-    return $this;
-  }
+  public $username;
 
-  public function setUsername($value)
-  {
-    $this->username = $value;
-    return $this;
-  }
+  public $email;
 
-  public function setEmail($value)
-  {
-    $this->email = $value;
-    return $this;
-  }
+  public $password;
 
-  public function setPassword($value)
-  {
-    $this->password = $value;
-    return $this;
-  }
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
-  public function setPhone($value)
-  {
-    $this->phone = $value;
-    return $this;
-  }
+    /**
+     * @param mixed $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+        return $this;
+    }
 
-  public function setReferredBy($value)
-  {
-    $this->referredBy = $value;
-    return $this;
-  }
+    /**
+     * @return mixed
+     */
+    public function getFirstName()
+    {
+        return $this->firstName;
+    }
 
-  public function build() : NonMember
-  {
-    return (object) (new NonMember(
-      $this->firstName,
-      $this->lastName,
-      $this->username,
-      $this->email,
-      $this->password,
-      $this->phone,
-      $this->referredBy
-    ));
-  }
+    /**
+     * @param mixed $firstName
+     */
+    public function setFirstName($firstName)
+    {
+        $this->firstName = $firstName;
+        return $this;
+    }
 
-  public function saved()
-  {
-    $nonMember = new NonMemberModel();
-    $nonMember->first_name = $this->firstName;
-    $nonMember->last_name = $this->lastName;
-    $nonMember->username = $this->username;
-    $nonMember->email = $this->email;
-    $nonMember->password = $this->password;
-    // $nonMember->referred_by = $this->referredBy;
-    $nonMember->save();
+    /**
+     * @return mixed
+     */
+    public function getLastName()
+    {
+        return $this->lastName;
+    }
 
-    return $nonMember;
-  }
+    /**
+     * @param mixed $lastName
+     */
+    public function setLastName($lastName)
+    {
+        $this->lastName = $lastName;
+        return $this;
+    }
 
-  // public function createUsername()
-  // {
-  //   $id = NonMemberModel::query()->orderBy('id', 'desc')->first()->id;
+    /**
+     * @return mixed
+     */
+    public function getUsername()
+    {
+        return $this->username;
+    }
 
-  //   $newNumber = (int) $id + 1;
+    /**
+     * @param mixed $username
+     */
+    public function setUsername($username)
+    {
+        $this->username = $username;
+        return $this;
+    }
 
-  //   return "NM{$newNumber}";
-  // }
+    /**
+     * @return mixed
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * @param mixed $email
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    /**
+     * @param mixed $password
+     */
+    public function setPassword($password)
+    {
+        $this->password = $password;
+        return $this;
+    }
+
 }

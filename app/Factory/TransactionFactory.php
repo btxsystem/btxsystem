@@ -1,20 +1,18 @@
 <?php
 
 namespace App\Factory;
-use App\Interfaces\Transaction;
-use App\Interfaces\Classes\TransactionMember;
-use App\Interfaces\Classes\TransactionNonMember;
+use App\Service\TransactionService;
+use App\Service\TransactionServiceRegister;
 
-class TransactionFactory
+interface TransactionFactory
 {
+  function call(): TransactionService;
+}
 
-  public static function run($type = 'nonmember'): Transaction
+class TransactionFactoryRegister implements TransactionFactory
+{
+  function call(): TransactionService
   {
-    if($type == 'member') {
-      return new TransactionMember();
-    } else if($type == 'nonmember'){
-      return new TransactionNonMember();
-    }
+    return new TransactionServiceRegister();
   }
-
 }

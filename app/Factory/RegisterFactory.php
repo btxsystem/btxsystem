@@ -1,16 +1,18 @@
 <?php
 
 namespace App\Factory;
-use App\Interfaces\Classes\NonMember;
+use App\Service\RegisterService;
+use App\Service\RegisterServiceMake;
 
-class RegisterFactory
+interface RegisterFactory
 {
+  function call(): RegisterService;
+}
 
-  public static function run($type = 'nonmember')
+class RegisterFactoryMake implements RegisterFactory
+{
+  function call(): RegisterService
   {
-    if($type == 'nonmember') {
-      return new NonMember();
-    }
+    return new RegisterServiceMake();
   }
-
 }
