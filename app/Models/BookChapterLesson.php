@@ -16,4 +16,22 @@ class BookChapterLesson extends Model
   ];
 
   protected $guarded = [];
+
+  protected $appends = ['solved'];
+
+  public function lesson()
+  {
+    return $this->hasOne(BookChapterLessonSolved::class, 'lesson_id', 'id');
+  }
+
+  public function getSolvedAttribute()
+  {
+    if(\Auth::guard('nonmember')->user()) {
+      $nonMemberId  = \Auth::guard('nonmember')->user()->id;
+      return $this->lesson()->where('member_id', $nonMemberId)->first() ? true : false;
+    } else if (\Auth::guard('member')->user()) {
+      $memberid  = \Auth::guard('member')->user()->id;
+      return $this->lesson()->where('member_id', $memberid)->first() ? true : false;
+    }
+  }
 }
