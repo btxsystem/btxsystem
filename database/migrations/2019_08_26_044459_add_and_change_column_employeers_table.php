@@ -23,6 +23,7 @@ class AddAndChangeColumnEmployeersTable extends Migration
             $table->bigInteger('rank_id')->nullable()->unsigned()->change();
             $table->string('src')->nullable();
             $table->boolean('is_update')->comment('0 -> have not update, 1 -> have update ')->default(1);
+            $table->string('nik');
         });
     }
 
@@ -37,6 +38,7 @@ class AddAndChangeColumnEmployeersTable extends Migration
             $table->unique('email');
             $table->dropColumn('src');
             $table->dropColumn('is_update');
+            $table->dropColumn('nik');
         });
     }
 }

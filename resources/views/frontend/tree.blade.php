@@ -56,9 +56,9 @@
 					<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<h5 class="card-inside-title">Gender</h5>
 						<div class="demo-radio-button">
-							<input name="gender" type="radio" value="1" class="with-gap radio-col-red" checked />
+							<input name="gender" type="radio" value="1" id="male" class="with-gap radio-col-red" checked />
 							<label for="male">Male</label>
-							<input name="gender" type="radio" value="0" class="with-gap radio-col-red" />
+							<input name="gender" type="radio" value="0" id="female" class="with-gap radio-col-red" />
 							<label for="female">Female</label>
 						</div>
 					</div>
