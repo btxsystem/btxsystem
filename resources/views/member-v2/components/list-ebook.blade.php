@@ -111,7 +111,7 @@
 							@endif
 							<span class="text-white d-none" id="referralErrorMessage">Referral tidak ditemukan.</span>
 					  </div>
-						@if(!Auth::guard('nonmember')->user())
+						@if(!Auth::guard('nonmember')->user() && !Auth::guard('user')->user())
 						<div class="form-group">
 					    <label for="exampleInputPassword1">Username <small class="text-danger">*</small></label>
 					    <input type="text" class="form-control" id="username" placeholder="Username" required>
@@ -134,7 +134,7 @@
 					    <input type="number" class="form-control" id="phoneNumber" placeholder="Phone number" required>
 					  </div>
 						@endif
-					  <span>Total yang dibayar : </span><b><span id="total_price"></span></b>
+					  <span>Total yang dibayar : IDR </span><b><span id="total_price"></span></b>
 		      </div>
 		      <div class="modal-footer justify-content-center">
 		        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
@@ -317,7 +317,7 @@ function submit() {
 		}
 	});
 	$.ajax({
-		url: "{{ route('member.register') }}",
+		url: "{{ route('member.register-v2') }}",
 		method: 'post',
 		data: {
 				referralCode: $('#referralCode').val(),

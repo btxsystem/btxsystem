@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateBookChapters extends Migration
+class CreateBookChapterLessonSolvedTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,11 @@ class CreateBookChapters extends Migration
      */
     public function up()
     {
-        Schema::create('book_chapters', function (Blueprint $table) {
+        Schema::create('book_chapter_lesson_solved', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('book_id')->unsigned();
-            $table->string('title')->nullable();
-            $table->string('slug')->nullable();
-            $table->foreign('book_id')->references('id')->on('books')->onDelete('cascade');
+            $table->bigInteger('lesson_id')->unsigned();
+            $table->bigInteger('member_id')->unsigned();
+            $table->foreign('lesson_id')->references('id')->on('book_chapter_lessons')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -30,6 +29,6 @@ class CreateBookChapters extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('book_chapters');
+        Schema::dropIfExists('book_chapter_lesson_solved');
     }
 }

@@ -23,20 +23,24 @@
       <div id="view" class="col-xl-3 col-lg-4 col-sm-5 scroll" style="background: #FFF;height:100vh !important">
           <h3 class="mt30 pl15">{{ $chapter->title }}</h3>
           <nav class="navbar">
-            <ul class="navbar-nav bit-ul">
+            <!-- <ul class="navbar-nav bit-ul">
                 @php
                 $i = 1
                 @endphp
                 @foreach($chapter->lessons as $lesson)
                 <li class="nav-item" onclick="changeLesson({{$i  - 1}})">
                   <p class="float-left w8">{{$i++}}. {{ $lesson->title }}</p>
-                  <!-- <div class="float-right radio icheck-emerland">
-                      <input type="radio" id="emerland8" name="bit1">
-                      <label for="emerland8"></label>
-                  </div> -->
+                  @if($lesson->solved)
+                  <p class="float-right">
+                    <i class="fa fa-check text-success"></i>
+                  </p>
+                  @endif>
                 </li>
                 @endforeach
-            </ul>
+            </ul> -->
+            <ul class="navbar-nav bit-ul">
+            <div id="lessonlist"></div>
+            <ul>
           </nav>
       </div>
       <div class="col-xl-9 col-lg-8 col-sm-7 mt10">
@@ -75,6 +79,22 @@
   let currentLesson = lessons[0]
   let maxIndexLesson = lessons.length - 1
   refreshContent()
+  initLesson()
+
+  function initLesson () {
+    let initLessonList = ''
+    lessons.map((v, i) => {
+      initLessonList += `
+        <li class="nav-item" onclick="changeLesson(${i})">
+          <p class="float-left w8">${v.title}</p>
+          <p class="float-right ${!v.solved ? 'd-none' : ''}">
+            <i class="fa fa-check text-success"></i>
+          </p>
+        </li>
+        `
+    })
+    $('#lessonlist').html(initLessonList)
+  }
 
   function changeLesson(index) {
     currentLesson = lessons[index]
@@ -90,7 +110,7 @@
     let breadcrumbs = [
       {
         title: 'Home',
-        route: 's'
+        route: '{{route("member.explore")}}'
       },
       {
         title: '{{$chapter->book->title}}',
@@ -124,11 +144,42 @@
     $('#lesson_content').html(currentLesson.content);
   }
 
+  function solvedLesson(lessonData) {
+    $.ajaxSetup({
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+      }
+    });
+    $.ajax({
+      url: "{{ route('member.solved-lesson') }}?lesson=" + lessonData.id,
+      method: 'get',
+      success: function(result){
+
+        const {success} = result
+
+        if(success) {
+          lessonData.solved = true
+          initLesson()
+        }
+   
+      },
+      error: function(err) {
+        console.log(err)
+      }});    
+  }
+
   $('#next').on('click', function() {
     let index = lessons.findIndex(data => data.id == currentLesson.id)
-    if(index == maxIndexLesson) return
+    if(!currentLesson.solved) {
+      solvedLesson(currentLesson)
+    }
+    if(index == maxIndexLesson) {
+      alert('Berhasil menyelesaikan chapter {{$chapter->book->title}}')
+      return
+    }
     currentLesson = lessons[index+1]
     refreshContent()
+    initLesson()
   })
 </script>
 @stop

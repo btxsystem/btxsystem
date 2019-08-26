@@ -11,6 +11,7 @@ use App\Models\Book;
 use App\Models\Ebook;
 use App\Models\BookEbook;
 use App\Models\BookChapter;
+use App\Models\BookChapterLessonSolved;
 
 use App\Employeer;
 use App\Models\NonMember;
@@ -147,7 +148,9 @@ class ExploreController extends Controller
         'book:id,title'
       ])
       ->firstOrFail();
-
+    // return response()->json([
+    //   'data' => $chapter
+    // ], 200);
     return view($this->pathView . '.components.detail-chapter')->with([
       'chapter' => $chapter
     ]);;
@@ -193,6 +196,36 @@ class ExploreController extends Controller
     return response()->json([
       'success' => true,
       'message' => 'Referral ready to use',
+    ]);
+  }
+
+  public function solvedLesson(Request $request)
+  {
+    $lesson = $request->input('lesson');
+
+    $memberId = 0;
+
+    if(Auth::guard('nonmember')->user()) {
+      $memberId  = Auth::guard('nonmember')->user()->id;
+    } else if (Auth::guard('user')->user()) {
+      $memberId  = Auth::guard('user')->user()->id;
+    }
+
+    $save = BookChapterLessonSolved::insert([
+      'lesson_id' => $lesson,
+      'member_id' => $memberId
+    ]);
+
+    if(!$save) {
+      return response()->json([
+        'success' => false,
+        'message' => 'Failed Solved Lesson',
+      ]);
+    }
+
+    return response()->json([
+      'success' => true,
+      'message' => 'Success Solved Lesson',
     ]);
   }
 }

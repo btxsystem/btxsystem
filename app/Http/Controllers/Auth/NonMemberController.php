@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\NonMember;
 use Auth;
 class NonMemberController extends Controller
 {
@@ -20,10 +19,13 @@ class NonMemberController extends Controller
       'password' => 'required'
     ]);
 
-    if (Auth::guard('nonmember')->attempt(['username' => $request->username, 'password' => $request->password])) {
+    if (Auth::guard('nonmember')->attempt(['username' => $request->username, 'password' => $request->password])){
       //dd(Auth::guard('nonmember')->user()->id);
       return redirect()->route('member.subscription');
+    } else if (Auth::guard('user')->attempt(['username' => $request->username, 'password' => $request->password])) {
+      return redirect()->route('member.subscription');
     }
+    // Tambah logic member
 
     return view('member-v2.components.login');
   }
@@ -32,7 +34,10 @@ class NonMemberController extends Controller
   {
     if (Auth::guard('nonmember')->check()) {
       Auth::guard('nonmember')->logout();
-    } 
+    } else if (Auth::guard('user')->check()) {
+      Auth::guard('user')->logout();
+    }
+    // Tambah logic member
     return redirect()->route('member.login');
   }
 }

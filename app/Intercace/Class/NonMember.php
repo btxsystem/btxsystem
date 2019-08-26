@@ -1,14 +1,10 @@
 <?php
-
 namespace App\Interfaces\Classes;
-
 use App\Interfaces\Transaction;
 use App\Builder\NonMemberBuilder;
 use Illuminate\Http\Request;
-
 class NonMember implements Transaction
 {
-
   public function create($password = '', $referralId = 0)
   {
     $data = (new NonMemberBuilder())

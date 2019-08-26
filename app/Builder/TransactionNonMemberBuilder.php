@@ -1,25 +1,22 @@
 <?php
 
 namespace App\Builder;
-use App\Builder\Models\TransactionNonMember;
-use App\Models\TransactionNonMember as TransactionNonMemberModel;
 
 class TransactionNonMemberBuilder
 {
-  public $income = 0.2;
-
   public $memberId = 0;
 
   public $nonMemberId = 0;
 
-  public $ebookId = 0;
+  public $income = 0;
 
   public $status = 1;
 
-  public function setIncome($value)
+  public $ebookId = 0;
+
+  public function getMemberId()
   {
-    $this->income = $value;
-    return $this;
+    return $this->memberId;
   }
 
   public function setMemberId($value)
@@ -28,45 +25,47 @@ class TransactionNonMemberBuilder
     return $this;
   }
 
-  public function setNonMemberId($value)
+  public function getNonMemberId()
   {
-    $this->nonMemberId = $value;
+    return $this->nonMemberId;
+  }
+
+  public function setNonMemberId($nonMemberId)
+  {
+    $this->nonMemberId = $nonMemberId;
     return $this;
+  }
+
+  public function getIncome()
+  {
+    return $this->income;
+  }
+
+  public function setIncome($income)
+  {
+    $this->income = $income;
+    return $this;
+  }
+  
+  public function getStatus()
+  {
+    return $this->status;
+  }
+
+  public function setStatus($status)
+  {
+    $this->status = $status;
+    return $this;
+  }
+
+  public function getEbookId()
+  {
+    return $this->ebookId;
   }
 
   public function setEbookId($value)
   {
     $this->ebookId = $value;
     return $this;
-  }
-
-  public function setStatus($value)
-  {
-    $this->status = $value;
-    return $this;
-  }
-
-  public function build() : TransactionNonMember
-  {
-    return (object) (new TransactionNonMember(
-      $this->income,
-      $this->memberId,
-      $this->nonMemberId,
-      $this->ebookId,
-      $this->status
-    ));
-  }
-
-  public function saved()
-  {
-    $data = new TransactionNonMemberModel();
-    $data->income = $this->income;
-    $data->member_id = $this->memberId;
-    $data->non_member_id = $this->nonMemberId;
-    $data->ebook_id = $this->ebookId;
-    $data->status = $this->status;
-    $data->save();
-
-    return $data;
   }
 }
