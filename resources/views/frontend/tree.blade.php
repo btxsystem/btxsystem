@@ -140,7 +140,6 @@
 <script>
 	$(document).ready(function() {
 		var element = document.querySelector('#bah');
-		$('.hidden').hide();
 		$('#upline').hide();
 		panzoom(element);
 	});
