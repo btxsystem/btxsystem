@@ -37,7 +37,7 @@ class EmployeersTableSeeder extends Seeder
                 'bitrex_points' => 0,
                 'pv' => 300,
                 'is_update' => 1,
-                'nik' => 12319203
+                'nik' => '12319203'
             ],
             [
                 'id_member'      => 'M1908000002',
@@ -63,7 +63,7 @@ class EmployeersTableSeeder extends Seeder
                 'bitrex_points' => 0,
                 'pv' => 300,
                 'is_update' => 1,
-                'nik' => 12319204
+                'nik' => '12319204'
             ],
             [
                 'id_member'      => 'M1908000003',
@@ -89,7 +89,7 @@ class EmployeersTableSeeder extends Seeder
                 'bitrex_points' => 0,
                 'pv' => 300,
                 'is_update' => 1,
-                'nik' => 12319205
+                'nik' => '12319205'
             ],
             [
                 'id_member'      => 'M1908000004',
@@ -115,7 +115,7 @@ class EmployeersTableSeeder extends Seeder
                 'bitrex_points' => 0,
                 'pv' => 300,
                 'is_update' => 1,
-                'nik' => 12319206
+                'nik' => '12319206'
             ],
         ];
 
