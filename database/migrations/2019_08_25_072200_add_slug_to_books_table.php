@@ -14,11 +14,7 @@ class AddSlugToBooksTable extends Migration
     public function up()
     {
         Schema::table('books', function (Blueprint $table) {
-            if (Schema::hasColumn('users', 'user_id'))
-            {
-                $table->dropColumn(['user_id']);
-            }
-            $table->text('slug')->nullable()->after('title');
+            $table->text('slug')->nullable();
         });
     }
 
