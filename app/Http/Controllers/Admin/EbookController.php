@@ -54,6 +54,10 @@ class EbookController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'src' => 'mimes:png,jpg,jpeg'
+        ]);
+
         $ebook = new Ebook;
         $ebook->title = $request->title;
         $ebook->slug = \Str::slug($request->title) .'-'. date('YmdHis') ;
@@ -62,6 +66,15 @@ class EbookController extends Controller
         $ebook->pv = $request->pv;
         $ebook->bv = $request->bv;
         $ebook->description = $request->description;
+
+        if ($request->hasFile('src')) {
+            $image = $request->src;
+            $imageName = time() . str_random(15).'.'.$image->getClientOriginalExtension();
+            $uploadPath = 'upload/ebook/image/' . $imageName; //make sure folder path already exist
+            $image->move('upload/ebook/image/', $imageName);
+            $ebook->src = $uploadPath;
+        }
+
         $ebook->save();
 
         Alert::success('Sukses Menambah Data Ebook', 'Sukses');
@@ -104,8 +117,15 @@ class EbookController extends Controller
      */
     public function update(Request $request, $id)
     {
+
+        $request->validate([
+            'src' => 'mimes:png,jpg,jpeg'
+        ]);
+
         
         $data = Ebook::findOrFail($id);
+        $oldImage = $data->src; //Get old path to delete when updated
+
         $data->title = $request->title;
         $data->slug = \Str::slug($request->title) .'-'. date('YmdHis');
         $data->price = $request->price;
@@ -113,6 +133,18 @@ class EbookController extends Controller
         $data->pv = $request->pv;
         $data->bv = $request->bv;
         $data->description = $request->description;
+
+        if ($request->hasFile('src')) {
+            $image = $request->src;
+            $imageName = time() . str_random(15).'.'.$image->getClientOriginalExtension();
+            $uploadPath = 'upload/ebook/image/' . $imageName; //make sure folder path already exist
+            $image->move('upload/ebook/image/', $imageName);
+
+            \File::delete(public_path($oldImage)); //Delete old image
+            $data->src = $uploadPath;
+        }
+
+
         $data->save();
         Alert::success('Sukses Update Data Ebook', 'Sukses');
 
@@ -129,6 +161,7 @@ class EbookController extends Controller
     {
         $data = Ebook::findOrFail($id);
         if ($data) { 
+            \File::delete(public_path($data->src));
             $data->delete(); 
             Alert::success('Success Delete Data Ebook', 'Success');
         } else {
