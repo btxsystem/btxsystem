@@ -26,7 +26,7 @@ class DashboardController extends Controller
             "status" => $data->status ? 'Active' : 'Nonactive',
             "phone_number" => $data->phone_number,
             "no_rec" => $data->no_rec,
-            "rank" => $rank->name,
+            "rank" => $rank ? $rank->name : '-' ,
             "bitrex_cash" => $data->bitrex_cash,
             "bitrex_points" => $data->bitrex_points,
             "pv" => $data->pv
