@@ -14,7 +14,7 @@ class AddSlugToBooksTable extends Migration
     public function up()
     {
         Schema::table('books', function (Blueprint $table) {
-            $table->text('slug')->nullable();
+            $table->text('slug')->nullable()->after('title');
         });
     }
 
