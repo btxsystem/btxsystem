@@ -23,19 +23,13 @@ class EbookController extends Controller
     }
 
     public function store(Request $request){
-        $trx = new TransactionMember;
-        $trx->member_id = Auth::user()->id ? Auth::user()->id : '-';
-        $trx->ebook_id = $request->id ? $request->id : '-' ;
-        $trx->status = 1;
-        $trx->expired_at = '2020-03-05';
-        //$data = [
-        //    'member_id' => Auth::user()->id,
-        //    'ebook_id' => $request->id,
-        //    'status' => 1,
-        //    'expired_at' => '2020-03-05'
-        //];
-        dd($trx);
-        TransactionMember::create($data);
+        $data = [
+            'member_id' => Auth::user()->id,
+            'ebook_id' => $request->id,
+            'status' => 1,
+            'expired_at' => '2020-03-05'
+        ];
+        $cek = TransactionMember::create($data);
         return redirect()->route('member.ebook.index');
     }
 }
