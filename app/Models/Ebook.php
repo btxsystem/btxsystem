@@ -14,7 +14,9 @@ class Ebook extends Model
     'price',
     'pv',
     'bv',
-    'price_markup'
+    'price_markup',
+    'src',
+    'description'
   ];
 
   protected $appends = [

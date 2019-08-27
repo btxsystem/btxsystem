@@ -145,6 +145,7 @@
 		var element = document.querySelector('#bah');
 		$('#upline').hide();
 		panzoom(element);
+		touches(element);
 	});
 	
 	$('#username').keyup(function(){
@@ -164,7 +165,7 @@
 
 	var svg = d3.select("#tree").append("svg")
 		.attr("width",1040).attr("height",600)
-		.append("g").attr("transform", "translate(-750,-80)")
+		.append("g").attr("transform", "translate(-750,-50)")
 		.attr('id', 'bah');
 	$.ajax({
 		type: 'GET',

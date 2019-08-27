@@ -99,10 +99,16 @@ Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
     Route::get('prospected-member', ['as' => 'prospected-member', 'uses' => 'Member\ProspectedMemberController@index']);
     Route::post('register-downline', ['as' => 'register-downline', 'uses' => 'Member\ProfileMemberController@register']);
 
+    Route::group(['prefix' => 'ebook', 'as'=> 'ebook.'], function () {
+        Route::get('', ['as' => 'index', 'uses' => 'Member\EbookController@index']);
+        Route::post('', ['as' => 'store', 'uses' => 'Member\EbookController@store'] );
+    });
+
     Route::group(['prefix' => 'select', 'as'=> 'select.'], function () {
         Route::get('daily-retail', ['as' => 'daily-retail', 'uses' => 'Member\DashboardController@getAutoRetailDaily']);
         Route::get('training', ['as' => 'training', 'uses' => 'Member\DashboardController@getTraining']);
         Route::get('tree', ['as' => 'tree', 'uses' => 'Member\DashboardController@getTree']);
+        Route::get('ebook', ['as' => 'ebook', 'uses' => 'Member\EbookController@getEbook']);
         Route::get('child-tree/{user}', ['as' => 'child-tree', 'uses' => 'Member\DashboardController@getChildTree']);
         Route::get('username/{user}', ['as' => 'username', 'uses' => 'Member\ProfileMemberController@isSameUsername']);
         Route::get('history-points', ['as' => 'history-points', 'uses' => 'Member\BitrexPointController@getHistoryPoints']);

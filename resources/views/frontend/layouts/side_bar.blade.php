@@ -65,7 +65,7 @@
             <li> <a href="{{route('member.dashboard')}}"><i class="zmdi zmdi-view-dashboard col-red"></i><span>Dashboard</span> </a> </li>
             <li> <a href="{{route('member.tree')}}"><i class="zmdi zmdi-device-hub col-blue"></i><span>Tree</span> </a> </li>
             <li> <a href="{{ route('member.prospected-member') }}"><i class="zmdi zmdi-accounts col-purple"></i><span>Prospected Member</span> </a> </li>
-            <li> <a href=""><i class="zmdi zmdi-book col-red"></i><span>Ebook</span> </a> </li>
+            <li> <a href="{{ route('member.ebook.index') }}"><i class="zmdi zmdi-book col-red"></i><span>Ebook</span> </a> </li>
             <li><a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-money col-green"></i><span>Income and expenses</span> </a>
                 <ul class="ml-menu">
                     <li><a href="{{route('member.bitrex-money.bitrex-points')}}">Bitrex Points</a> </li>
