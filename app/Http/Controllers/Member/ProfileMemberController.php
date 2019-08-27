@@ -62,7 +62,7 @@ class ProfileMemberController extends Controller
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
             'email' => $request->email,
-            'password' => bcrypt('Mbitrex'.rand(100,1000)),
+            'password' => bcrypt('password'),//bcrypt('Mbitrex'.rand(100,1000)),
             'birthdate' => $request->birthdate,
             'gender' => $request->gender,
             'position' => $request->position,
