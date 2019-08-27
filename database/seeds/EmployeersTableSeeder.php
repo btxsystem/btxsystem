@@ -62,6 +62,8 @@ class EmployeersTableSeeder extends Seeder
                 'bitrex_cash'  => 0,
                 'bitrex_points' => 0,
                 'pv' => 300,
+                'is_update' => 1,
+                'nik' => 12319204
             ],
             [
                 'id_member'      => 'M1908000003',
@@ -86,6 +88,8 @@ class EmployeersTableSeeder extends Seeder
                 'bitrex_cash'  => 0,
                 'bitrex_points' => 0,
                 'pv' => 300,
+                'is_update' => 1,
+                'nik' => 12319205
             ],
             [
                 'id_member'      => 'M1908000004',
@@ -110,6 +114,8 @@ class EmployeersTableSeeder extends Seeder
                 'bitrex_cash'  => 0,
                 'bitrex_points' => 0,
                 'pv' => 300,
+                'is_update' => 1,
+                'nik' => 12319206
             ],
         ];
 
