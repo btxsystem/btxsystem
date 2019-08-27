@@ -100,7 +100,7 @@ class EmployeersTableSeeder extends Seeder
                 'phone_number' => '009338494948',
                 'no_rec' => '12345678',
                 'position' => 1,
-                'parent_id' => 2,
+                'parent_id' => 1,
                 'sponsor_id' => 1,
                 'rank_id' => 1,
                 'created_at'     => '2019-04-15 19:13:32',

@@ -14,6 +14,7 @@ class AddSlugToBooksTable extends Migration
     public function up()
     {
         Schema::table('books', function (Blueprint $table) {
+            dropColumnIfExists('slug');
             $table->text('slug')->nullable()->after('title');
         });
     }
