@@ -70,10 +70,10 @@ class RegisterController extends Controller
       $transaction  = (new TransactionFactoryRegister())->call()->createMember($builder);
     } else {
       $builder = (new NonMemberBuilder())
-        ->setFirstName('Asep')
-        ->setLastName('yayat')
-        ->setEmail('asep@gmail.com')
-        ->setUsername(time())
+        ->setFirstName($request->input('firstName'))
+        ->setLastName($request->input('lastName'))
+        ->setEmail($request->input('email'))
+        ->setUsername($request->input('username'))
         ->setPassword('secret');
         
       $nonMember = (new RegisterFactoryMake())->call()->createNonMember($builder);

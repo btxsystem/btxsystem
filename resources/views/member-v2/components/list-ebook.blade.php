@@ -71,6 +71,7 @@
 					@endif
         @endforeach
         </div>
+				@if($book->access)
 				<div class="row mb-5">
         @foreach($book->videoEbooks as $video)
           <div class="col-lg-4 mb-3 hover">
@@ -83,6 +84,7 @@
 					</div>
 				@endforeach
 				</div>
+				@endif
         @endforeach
 				<!-- <div class="d-flex align-items-center">
 					<img src="http://demo.viewpreview.online/assets/img/book-icon.png" class="img-fluid mr-2" style="height: 20px;">
@@ -113,6 +115,7 @@
 		      	<img src="{{asset('assetsebook/v2/img/logo-white.png')}}" class="img-fluid mb-3 mx-auto d-block" style="width: 130px;">
 						<input type="hidden" id="ebook">
 						<input type="hidden" id="income">
+						@if(!Auth::guard('user')->user())
 					  <div class="form-group">
 					    <label for="exampleInputEmail1">Referral <small class="text-danger">*</small></label>
 							@if($username != '')
@@ -122,6 +125,7 @@
 							@endif
 							<span class="text-white d-none" id="referralErrorMessage">Referral tidak ditemukan.</span>
 					  </div>
+						@endif
 						@if(!Auth::guard('nonmember')->user() && !Auth::guard('user')->user())
 						<div class="form-group">
 					    <label for="exampleInputPassword1">Username <small class="text-danger">*</small></label>
