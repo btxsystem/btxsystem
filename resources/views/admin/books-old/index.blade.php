@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('title')
-List Of Ebooks
+List Of Books
 @parent
 @stop
 
@@ -11,25 +11,21 @@ List Of Ebooks
     <h1>Book </h1>
     <ol class="breadcrumb">
         <li>
-            <a href="#">Ebooks</a>
+            <a href="#">Books</a>
         </li>
-        <li class="active">List Ebook </li>
+        <li class="active">Books </li>
     </ol>
 </section>
 <section class="content">
                 <div class="row">
                     <div class="col-md-12">
                         <!-- BEGIN SAMPLE TABLE PORTLET-->
-                        <!-- <a class="btn btn-large btn-primary" href="{{ route('ebook.create') }}"></i>Add</a> -->
+                        <a class="btn btn-large btn-primary" href="{{ route('book.create') }}"></i>Add</a>
                         <div class="portlet box primary" style="margin-top: 15px;">
                             <div class="portlet-title">
                                 <div class="caption">
                                     <i class="livicon" data-name="notebook" data-size="16" data-loop="true" data-c="#fff" data-hc="white"></i>
-                                    Ebook  Table
-                                </div>
-
-                                <div class="pull-right">
-                                    <a style=" color: white; text-decoration: none; margin-right: 20px; !important" href="{{ route('ebook.create') }}"><i style="font-size:15px;" class="fa fa-plus"></i>&nbsp; &nbsp;<strong>Add New Ebook</strong></a>
+                                    Book  Table
                                 </div>
                             </div>
                             
@@ -61,7 +57,7 @@ List Of Ebooks
               processing: true,
               serverSide: true,
               ajax: {
-                url: "{{ route('ebook.index') }}", 
+                url: "{{ route('book.index') }}", 
               },
               
               columns: [
@@ -71,29 +67,6 @@ List Of Ebooks
               ]
           });
           
-        });
-
-        $(document).on('click', '.delete-ebook', function (e) {
-            e.preventDefault();
-            var id = $(this).data('id');
-            var url =   "{{url('backoffice/ebook/')}}"
-            swal({
-                    title: "Are you sure!",
-                    type: "error",
-                    confirmButtonClass: "btn-danger",
-                    confirmButtonText: "Yes!",
-                    showCancelButton: true,
-                },
-                function() {
-                    $.ajax({
-                        type: "DELETE",
-                        url: url +'/'+ id,
-                        data: {id:id},
-                        success: function (data) {
-                                window.location.href = "{{ route('ebook.index') }}";
-                            }         
-                    });
-            });
         });
        
       </script>

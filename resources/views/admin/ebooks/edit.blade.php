@@ -21,7 +21,7 @@ Edit Ebook
                <tbody>
                   <tr>
                      <td colspan="1">
-                        <form class="well form-horizontal" method="post" action="{{route('ebook.update', $data->id)}}">
+                        <form class="well form-horizontal" method="post" action="{{route('ebook.update', $data->id)}}" enctype="multipart/form-data">
                             {{ csrf_field() }} {{ method_field('PATCH')}}
                            <fieldset>
 
@@ -72,6 +72,17 @@ Edit Ebook
                                         <span class="input-group-addon"><i class="fa fa-area-chart"></i></span>
                                         <input id="bv" name="bv" placeholder="Bonus" class="form-control" required="true" value="{{$data->bv}}" type="number">
                                     </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">Image</label>
+                                <div class="col-md-8 inputGroupContainer">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-file-photo-o"></i></span>
+                                        <input id="src" name="src" class="form-control" type="file">
+                                    </div>
+                                    <p class="text-danger">{{ $errors->first('src') }}</p>
                                 </div>
                             </div>
 
