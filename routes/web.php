@@ -168,6 +168,8 @@ Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
 
 //     Route::get('solvedLesson', 'MemberV2\ExploreController@solvedLesson')->name('member.solved-lesson');
 
+//     Route::get('testMail', 'MemberV2\ExploreController@testMail');
+
 //     Route::post('renewalEbook', 'MemberV2\RegisterController@renewalEbook')->name('member.ebook-renewal');
 // });
 
@@ -192,6 +194,8 @@ Route::domain('ebook.bitrexgo.id')->group(function () {
     Route::get('checkUsername', 'MemberV2\ExploreController@checkUsername')->name('member.check-username');
 
     Route::get('solvedLesson', 'MemberV2\ExploreController@solvedLesson')->name('member.solved-lesson');
+
+    Route::get('testMail', 'MemberV2\ExploreController@testMail');
 
     Route::post('renewalEbook', 'MemberV2\RegisterController@renewalEbook')->name('member.ebook-renewal');
 });

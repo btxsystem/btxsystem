@@ -18,6 +18,9 @@ use App\Models\NonMember;
 use App\Models\TransactionNonMember;
 use App\Models\TransactionMember;
 
+use App\Mail\WelcomeMail;
+use Illuminate\Support\Facades\Mail;
+
 class ExploreController extends Controller
 {
   public $pathView = 'member-v2';
@@ -28,6 +31,12 @@ class ExploreController extends Controller
   //     redirect()->route('member.login');
   //   }
   // }
+
+  public function testMail()
+  {
+    Mail::to('asepmedia18@gmail.com')->send(new WelcomeMail());
+  }
+
   public function home()
   {
     return view($this->pathView . '.components.home');
