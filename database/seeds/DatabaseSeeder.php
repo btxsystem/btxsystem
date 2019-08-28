@@ -20,6 +20,8 @@ class DatabaseSeeder extends Seeder
             BookEbookTableSeeder::class,
             BookChaptersTableSeeder::class,
             BookChapterLessonsTableSeeder::class,
+            VideosTableSeeder::class,
+            VideoEbookTableSeeder::class,
         ]);
     }
 }

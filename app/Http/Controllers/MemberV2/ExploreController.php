@@ -38,7 +38,7 @@ class ExploreController extends Controller
    */
   public function index()
   {
-    $books = Ebook::select('id', 'title', 'price', 'pv', 'price_markup', 'bv')->with([
+    $books = Ebook::whereIn('id', [1, 2])->select('id', 'title', 'price', 'pv', 'price_markup', 'bv')->with([
       'bookEbooks' => function($q) {
         $q->select('id', 'book_id', 'ebook_id')->with([
           'book' => function($q) {
@@ -51,7 +51,13 @@ class ExploreController extends Controller
             ]);
           }
         ]);
-      }])->get();
+      },
+      'videoEbooks' => function($q) {
+        $q->with([
+          'videos'
+        ]);
+      }
+      ])->get();
 
     // return response()->json([
     //   'data' => $books
@@ -68,7 +74,7 @@ class ExploreController extends Controller
    */
   public function detail(Request $request, $type = 'basic')
   {
-    $books = Ebook::select('id', 'title', 'price', 'pv', 'price_markup', 'bv')->with([
+    $books = Ebook::whereIn('id', [1, 2])->select('id', 'title', 'price', 'pv', 'price_markup', 'bv')->with([
       'bookEbooks' => function($q) {
         $q->select('id', 'book_id', 'ebook_id')->with([
           'book' => function($q) {
@@ -81,7 +87,12 @@ class ExploreController extends Controller
             ]);
           }
         ]);
-      }
+      },
+    'videoEbooks' => function($q) {
+      $q->with([
+        'videos'
+      ]);
+    }  
     ])->where('title', $type)->get();
 
     $username = $request->input('username') ?? '';

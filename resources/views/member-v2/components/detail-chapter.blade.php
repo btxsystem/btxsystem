@@ -175,6 +175,7 @@
     }
     if(index == maxIndexLesson) {
       alert('Berhasil menyelesaikan chapter {{$chapter->book->title}}')
+      window.location.href = '{{route("member.explore")}}'
       return
     }
     currentLesson = lessons[index+1]

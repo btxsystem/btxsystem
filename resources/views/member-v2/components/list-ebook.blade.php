@@ -30,12 +30,13 @@
 					</div>
 				</div>
         @foreach($books as $book)
-				@if(!$book->access)
 				<div class="d-flex align-items-center">
 					<img src="http://demo.viewpreview.online/assets/img/star.png" class="img-fluid mr-3">
-					<span>{{ ucwords($book->title) }}</span><button class="btn btn-purple px-5 ml-3" onclick="selectedSubscription('{{$book}}')">BUY</button>
+					<span>{{ ucwords($book->title) }}</span>
+					@if(!$book->access)
+					<button class="btn btn-purple px-5 ml-3" onclick="selectedSubscription('{{$book}}')">BUY</button>
+					@endif
 				</div>
-				@endif
 				<hr>
         <div class="row mb-5">
         @foreach($book->bookEbooks as $ebook)
@@ -70,6 +71,18 @@
 					@endif
         @endforeach
         </div>
+				<div class="row mb-5">
+        @foreach($book->videoEbooks as $video)
+          <div class="col-lg-4 mb-3 hover">
+						<div class="embed-responsive embed-responsive-16by9">
+							<video controls>
+								<source src="{{$video->videos[0]->path_url}}" type="video/mp4">
+							Your browser does not support the video tag.
+							</video>
+						</div>
+					</div>
+				@endforeach
+				</div>
         @endforeach
 				<!-- <div class="d-flex align-items-center">
 					<img src="http://demo.viewpreview.online/assets/img/book-icon.png" class="img-fluid mr-2" style="height: 20px;">
