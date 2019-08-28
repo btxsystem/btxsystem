@@ -144,10 +144,11 @@ Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
 //Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['prefix' => 'asep'], function () {
+    // Route::get('/', 'MemberV2\ExploreController@home')->name('member.home');
     Route::get('explore/{type}', 'MemberV2\ExploreController@detail')->name('member.ebook.detail');
     Route::get('explores', 'MemberV2\ExploreController@index')->name('member.explore');
     Route::get('subscription/{username}', 'MemberV2\ExploreController@subscription')->name('member.subscription.referral');
-    Route::get('subscription', 'MemberV2\ExploreController@subscription')->name('member.subscription');
+    Route::get('/', 'MemberV2\ExploreController@subscription')->name('member.home');
     Route::get('chapters/{id}', 'MemberV2\ExploreController@chapters')->name('chapter.list');
     Route::get('chapter/{id}', 'MemberV2\ExploreController@chapter')->name('chapter.detail');
 
@@ -157,12 +158,14 @@ Route::group(['prefix' => 'asep'], function () {
 
     Route::get('/v2/login', 'Auth\NonMemberController@getLogin')->middleware('guest')->name('member.login');
     Route::post('/v2/login', 'Auth\NonMemberController@postLogin')->name('member.login.post');
-    Route::get('/v2/logout', 'Auth\NonMemberController@logout')->name('member.logout.post');
+    Route::get('/v2/logout', 'Auth\NonMemberController@logout')->name('member.logout');
 
     Route::get('checkReferral', 'MemberV2\ExploreController@checkReferral')->name('member.check-referral');
     Route::get('checkUsername', 'MemberV2\ExploreController@checkUsername')->name('member.check-username');
 
     Route::get('solvedLesson', 'MemberV2\ExploreController@solvedLesson')->name('member.solved-lesson');
+
+    Route::post('renewalEbook', 'MemberV2\RegisterController@renewalEbook')->name('member.ebook-renewal');
 });
 
 // Route::domain('ebook.bitrexgo.id')->group(function () {

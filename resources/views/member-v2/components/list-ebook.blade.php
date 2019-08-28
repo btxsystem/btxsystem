@@ -14,9 +14,7 @@
 <div class="bg-1 col-12 d-flex justify-content-center" style="position: absolute; height: 50vh;">
 	</div>
 	<div class="col-lg-12 pb-3">
-		<a href="index.html">
-			<img src="{{asset('assetsebook/v2/img/logo-white.png')}}" class="mx-auto d-block img-fluid pt-3" style="height: 80px;">
-		</a>
+		@include('member-v2.partials.navbar-detail')
 		<div class="detail-padding">
 			<div class="container">
 				<div class="bg-white shadow rounded p-3 mb-5">
@@ -202,7 +200,7 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <script src="{{asset('assetsebook/js/helper.js')}}"></script>
 <script>
-let auth = "{{Auth::guard('nonmember')->user()}}"
+let auth = "{{Auth::guard('nonmember')->user() || Auth::guard('user')->user()}}"
 $('#username').on('change', function() {
 	checkUsername()
 })
@@ -342,7 +340,7 @@ function submit() {
 			alert('Success register')
 			
 			if(auth != '') {
-				window.location.href = '{{ route("member.subscription") }}'
+				window.location.href = '{{ route("member.home") }}'
 			} else {
 				window.location.href = '{{ route("member.login") }}'
 			}

@@ -51,23 +51,9 @@
                           Login
                           </button>
                         </div>
-                        <div class="soc mt30">
-                          <div class="form-group soc-line position-relative text-center"><span class="position-relative">Atau login dengan</span></div>
-                          <div class="row">
-                              <div class="col-sm-6 col-6">
-                                <a href="#" class="btn btn-lg btn-block btn-fb mb-3">
-                                <i class="fa fa-facebook" aria-hidden="true"></i>
-                                </a>
-                              </div>
-                              <div class="col-sm-6 col-6">
-                                <a href="#" class="btn btn-lg btn-block btn-gplus mb-3">
-                                <i class="fa fa-google-plus" aria-hidden="true"></i>
-                                </a>
-                              </div>
-                          </div>
-                        </div>
+          
                         <div class="mt-4 text-center colorgray">
-                          Belum punya akun? <a href="#" class="linkgrayoutline">Daftar</a>
+                          Belum punya akun? <a href="{{route('member.home')}}" class="linkgrayoutline">Daftar</a>
                         </div>
                     </form>
                   </div>

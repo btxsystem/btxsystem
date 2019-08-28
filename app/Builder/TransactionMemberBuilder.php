@@ -10,6 +10,10 @@ class TransactionMemberBuilder
 
   public $status = 1;
 
+  public $identifiedBy = ['id' => 0];
+
+  public $expiredAt = null;
+
   public function getMemberId()
   {
     return $this->memberId;
@@ -43,4 +47,25 @@ class TransactionMemberBuilder
     return $this;
   }  
 
+  public function getIdentifiedBy()
+  {
+    return $this->identifiedBy;
+  }
+
+  public function setIdentifiedBy($identifiedBy)
+  {
+    $this->identifiedBy = $identifiedBy;
+    return $this;
+  }
+  
+  public function getExpiredAt()
+  {
+    return $this->expiredAt;
+  }
+
+  public function setExpiredAt($expiredAt)
+  {
+    $this->expiredAt = $expiredAt;
+    return $this;
+  }
 }

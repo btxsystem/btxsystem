@@ -6,17 +6,18 @@
 
 @section('styles')
 <link rel="stylesheet" href="{{asset('assetsebook/v2/css/style.css')}}">
+<style type="text/css">
+.transparent {
+	background-color: transparent!important;
+	background: transparent!important;
+}
+</style>
 @stop
 
 @section('style_class')bg-1 @stop
 
 @section('content')
-<div class="col-12 d-flex justify-content-center" style="position: absolute; z-index: 1030;">
-		<div class="col-lg-2 col-6 py-3">
-			<img src="{{asset('assetsebook/v2/img/logo-white.png')}}" class="mx-auto d-block img-fluid logo">
-		</div>
-	</div>
-
+	@include('member-v2.partials.navbar-home')
 	<div id="carouselExampleControls" class="carousel slide" data-ride="carousel" style="max-height: 455px; overflow: hidden;">
 	  <div class="carousel-inner" style="background: #333;">
 	    <div class="carousel-item active">
@@ -42,12 +43,23 @@
 								<img src="{{asset('assetsebook/v2/img/1.png')}}" class="mx-auto d-block">
 							</div>
 							<div class="col-lg-9">
-								<h2 class="mb-0" style="color: #8543da;">{{ucwords($ebook->title)}}</h2>
+								<h2 class="mb-0" style="color: #8543da;">{{ucwords(str_replace('_', ' ', $ebook->title))}}</h2>
 								<span>{{ $ebook->description }}</span><br>
-								@if($ebook->access)
-								<a href="{{route('member.ebook.detail', ['type' => strtolower($ebook->title)])}}?username={{$username}}" class="btn btn-purple btn-sm mt-3 px-5">Detail</a>
+								@if($ebook->id == 3 || $ebook->id == 4)
+									<form action="{{route('member.ebook-renewal')}}" method="post">
+										{{csrf_field()}}
+										<input type="hidden" name="ebook" value="{{$ebook->id == 3 ? 1 : 2}}">
+										<button type="submit" class="btn btn-purple btn-sm mt-3 px-5">BUY</button>
+										<a href="{{route('member.ebook.detail', ['type' => strtolower($ebook->id == 3 ? 'basic' : 'advanced')])}}?username={{$username}}" class="btn btn-purple btn-sm mt-3 px-5">Detail</a>
+									</form>
 								@else
-								<a href="{{route('member.ebook.detail', ['type' => strtolower($ebook->title)])}}?username={{$username}}" class="btn btn-purple btn-sm mt-3 px-5">BUY</a>
+									<div class="pb-3">
+										@if($ebook->access)
+										<a href="{{route('member.ebook.detail', ['type' => strtolower($ebook->title)])}}?username={{$username}}" class="btn btn-purple btn-sm mt-3 px-5">Detail</a>
+										@else
+										<a href="{{route('member.ebook.detail', ['type' => strtolower($ebook->title)])}}?username={{$username}}" class="btn btn-purple btn-sm mt-3 px-5">BUY</a>
+										@endif
+									</div>
 								@endif
 							</div>
 						</div>
@@ -57,6 +69,34 @@
 			</div>
 		</div>
 	</div>
+	<div class="bg-white p-4">
+		<div class="container mt-5 mb-4">
+			<div class="row">
+				<div class="col-12">
+					<h2 class="text-center">Our Facility</h2>
+					<div class="row mt-5	">
+						<div class="col-md-3">
+							<img src="https://www.ebook.bitrexgo.co.id/beta/img/preview-1.png"  class="img-fluid" alt="">
+							<h5 class="mt-2 text-center">Basic to Advanced Financial Education</h5>
+						</div>
+						<div class="col-md-3">
+							<img src="https://www.ebook.bitrexgo.co.id/beta/img/preview-2.png"  class="img-fluid" alt="">
+							<h5 class="mt-2 text-center">Education Videos</h5>
+						</div>
+						<div class="col-md-3">
+							<img src="https://www.ebook.bitrexgo.co.id/beta/img/preview-3.png"  class="img-fluid" alt="">
+							<h5 class="mt-2 text-center">Online & Offline Class</h5>
+						</div>
+						<div class="col-md-3">
+							<img src="https://www.ebook.bitrexgo.co.id/beta/img/preview-4.png"  class="img-fluid" alt="">
+							<h5 class="mt-2 text-center">Smart Financial Community</h5>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	@include('member-v2.partials.footer')
 	<!-- Modal -->
 	<div class="modal fade" id="modal-subscription" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		  <div class="modal-dialog" role="document">
