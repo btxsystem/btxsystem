@@ -58,7 +58,7 @@
     });
     function loadMoreData(page){
         $.ajax({
-            url: '/member/select/history-cash?page=' + page,
+            url: '/member/select/history-value?page=' + page,
             beforeSend: function(){
                 $('.ajax-load').show();
             }

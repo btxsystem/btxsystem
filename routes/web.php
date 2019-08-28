@@ -99,6 +99,7 @@ Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
     Route::get('prospected-member', ['as' => 'prospected-member', 'uses' => 'Member\ProspectedMemberController@index']);
     Route::post('register-downline', ['as' => 'register-downline', 'uses' => 'Member\ProfileMemberController@register']);
     Route::get('reward', ['as' => 'reward', 'uses' => 'Member\ProfileMemberController@rewards']);
+    Route::get('reward/{id}/update', 'Member\ProfileMemberController@getMyRewards');
 
     Route::group(['prefix' => 'ebook', 'as'=> 'ebook.'], function () {
         Route::get('', ['as' => 'index', 'uses' => 'Member\EbookController@index']);
@@ -120,6 +121,7 @@ Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
         Route::get('generate', ['as' => 'generate', 'uses' => 'Member\PvController@generate']);
         Route::get('my-transaction', ['as' => 'my-transaction', 'uses' => 'Member\TransactionController@myTransaction']);
         Route::get('prospected-member-transaction', ['as' => 'prospected-member-transaction', 'uses' => 'Member\TransactionController@prospectedMemberHistory']);
+        Route::get('reward', ['as' => 'reward', 'uses' => 'Member\ProfileMemberController@getRewards']);
     });
 
     Route::group(['prefix' => 'transaction', 'as'=> 'transaction.'], function () {
