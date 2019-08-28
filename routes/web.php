@@ -152,7 +152,7 @@ Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
 //     Route::get('explores', 'MemberV2\ExploreController@index')->name('member.explore');
 //     Route::get('ebook/{username}', 'MemberV2\ExploreController@subscription')->name('member.subscription.referral');
 //     Route::get('/ebook', 'MemberV2\ExploreController@subscription')->name('member.home');
-//     Route::get('chapters/{id}', 'MemberV2\ExploreController@chapters')->name('chapter.list');
+//     Route::get('chapters/{slug}', 'MemberV2\ExploreController@chapters')->name('chapter.list');
 //     Route::get('chapter/{id}', 'MemberV2\ExploreController@chapter')->name('chapter.detail');
 
 //     Route::post('register', 'MemberV2\RegisterController@register')->name('member.register');
@@ -168,6 +168,8 @@ Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
 
 //     Route::get('solvedLesson', 'MemberV2\ExploreController@solvedLesson')->name('member.solved-lesson');
 
+//     Route::get('testMail', 'MemberV2\ExploreController@testMail');
+
 //     Route::post('renewalEbook', 'MemberV2\RegisterController@renewalEbook')->name('member.ebook-renewal');
 // });
 
@@ -177,7 +179,7 @@ Route::domain('ebook.bitrexgo.id')->group(function () {
     Route::get('explores', 'MemberV2\ExploreController@index')->name('member.explore');
     Route::get('ebook/{username}', 'MemberV2\ExploreController@subscription')->name('member.subscription.referral');
     Route::get('/ebook', 'MemberV2\ExploreController@subscription')->name('member.home');
-    Route::get('chapters/{id}', 'MemberV2\ExploreController@chapters')->name('chapter.list');
+    Route::get('chapters/{slug}', 'MemberV2\ExploreController@chapters')->name('chapter.list');
     Route::get('chapter/{id}', 'MemberV2\ExploreController@chapter')->name('chapter.detail');
 
     Route::post('register', 'MemberV2\RegisterController@register')->name('member.register');
@@ -192,6 +194,8 @@ Route::domain('ebook.bitrexgo.id')->group(function () {
     Route::get('checkUsername', 'MemberV2\ExploreController@checkUsername')->name('member.check-username');
 
     Route::get('solvedLesson', 'MemberV2\ExploreController@solvedLesson')->name('member.solved-lesson');
+
+    Route::get('testMail', 'MemberV2\ExploreController@testMail');
 
     Route::post('renewalEbook', 'MemberV2\RegisterController@renewalEbook')->name('member.ebook-renewal');
 });

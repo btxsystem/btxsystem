@@ -10,6 +10,7 @@ class Book extends Model
   
   protected $fillable = [
     'title',
+    'slug'
   ];
 
   public function ebooks()

@@ -12,7 +12,7 @@
                   </address>
                 </div>
                 <div class="footer-contacts"> <i class="icon stroke icon-Phone2"></i> <span class="footer-contacts__inner">+62 817-0380-0329, (021) 80823903</span> </div>
-                <div class="footer-contacts"> <i class="icon stroke icon-Mail"></i> <a class="footer-contacts__inner" href="mailto:Info@academica.com">cs@bitrexgo.com</a> </div>
+                <div class="footer-contacts"> <i class="icon stroke icon-Mail"></i> <a class="footer-contacts__inner" href="mailto:Info@academica.com">cs@bitrexgo.co.id</a> </div>
                 <div class="footer-contacts">© 2019 BITREXGO. All Rights Reserved</div>
               </section>
               <!-- end footer-section --> 

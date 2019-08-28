@@ -60,7 +60,7 @@
 						</div>
 					</a>
 					@else
-					<a href="{{route('chapter.list', ['id' => $ebook->id])}}" class="col-lg-3 mb-3 hover">
+					<a href="{{route('chapter.list', ['slug' => $ebook->book->slug])}}" class="col-lg-3 mb-3 hover">
 						<div class="shadow rounded p-3" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
 							<div style="overflow: hidden;" class="mb-2">
 								@if(count($ebook->book->imageBooks) > 0)
@@ -90,7 +90,8 @@
 								<source src="{{$video->videos[0]->path_url}}" type="video/mp4">
 							Your browser does not support the video tag.
 							</video>
-						</div>
+						</div><br/>
+						<span style="font-size: 20px; font-weight: bold;">{{ $video->videos[0]->title }}</span>
 					</div>
 				@endforeach
 				</div>

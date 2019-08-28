@@ -18,6 +18,9 @@ use App\Models\NonMember;
 use App\Models\TransactionNonMember;
 use App\Models\TransactionMember;
 
+use App\Mail\WelcomeMail;
+use Illuminate\Support\Facades\Mail;
+
 class ExploreController extends Controller
 {
   public $pathView = 'member-v2';
@@ -28,6 +31,12 @@ class ExploreController extends Controller
   //     redirect()->route('member.login');
   //   }
   // }
+
+  public function testMail()
+  {
+    Mail::to('asepmedia18@gmail.com')->send(new WelcomeMail());
+  }
+
   public function home()
   {
     return view($this->pathView . '.components.home');
@@ -42,7 +51,7 @@ class ExploreController extends Controller
       'bookEbooks' => function($q) {
         $q->select('id', 'book_id', 'ebook_id')->with([
           'book' => function($q) {
-            $q->select('id', 'title', 'article')->with([
+            $q->select('id', 'title', 'article', 'slug')->with([
               'imageBooks' => function($q) {
                 $q->select('id', 'image_id', 'book_id')->with([
                   'image'
@@ -78,7 +87,7 @@ class ExploreController extends Controller
       'bookEbooks' => function($q) {
         $q->select('id', 'book_id', 'ebook_id')->with([
           'book' => function($q) {
-            $q->select('id', 'title', 'article')->with([
+            $q->select('id', 'title', 'article', 'slug')->with([
               'imageBooks' => function($q) {
                 $q->select('id', 'image_id', 'book_id')->with([
                   'image'
@@ -191,11 +200,11 @@ class ExploreController extends Controller
   /**
    * Chapter Lists
    */
-  public function chapters($id)
+  public function chapters($slug)
   {
     $book = Book::query()
-      ->select('id', 'title')
-      ->where('id', $id)
+      ->select('id', 'title', 'slug')
+      ->where('slug', $slug)
       ->with([
         'chapters'
       ])
