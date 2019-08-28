@@ -34,7 +34,7 @@
 					<img src="http://demo.viewpreview.online/assets/img/star.png" class="img-fluid mr-3">
 					<span>{{ ucwords($book->title) }}</span>
 					@if(!$book->access)
-					<button class="btn btn-purple px-5 ml-3" onclick="selectedSubscription('{{$book}}')">BUY</button>
+					<button class="btn btn-identity-red text-white px-5 ml-3" onclick="selectedSubscription('{{$book}}')">BUY</button>
 					@endif
 				</div>
 				<hr>
@@ -152,8 +152,8 @@
 					  <span>Total yang dibayar : IDR </span><b><span id="total_price"></span></b>
 		      </div>
 		      <div class="modal-footer justify-content-center">
-		        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-		        <button type="button" class="btn btn-primary" onclick="submit()">Submit</button>
+		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		        <button type="button" class="btn btn-identity-red" onclick="submit()">Submit</button>
 		      </div>
 		    </div>
 		  </div>

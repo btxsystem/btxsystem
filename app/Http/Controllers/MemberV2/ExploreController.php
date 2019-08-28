@@ -95,7 +95,7 @@ class ExploreController extends Controller
     }  
     ])->where('title', $type)->get();
 
-    $username = $request->input('username') ?? '';
+    $username = $request->input('username') ?? \Session::get('referral');
 
     // return response()->json([
     //   'data' => $books
@@ -165,8 +165,13 @@ class ExploreController extends Controller
 
     $referral = '';
     
-    if(Employeer::where('username', $username)->count() > 0) {
-      $referral = $username;
+    if(Employeer::where('username', $username)->count() > 0 || \Session::has('referral')) {
+      if(\Session::has('referral')) {
+        $referral = \Session::get('referral');
+      } else {
+        $referral = $username;
+        \Session::put('referral', $username);
+      }
     } else {
       redirect()->route('member.home');
     }

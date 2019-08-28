@@ -40,6 +40,7 @@ class RegisterController extends Controller
       //cek referal code
       if($referralCode != '') {
         $referralUser = Employeer::where('username', $referralCode);
+        \Session::put('referral', $referralCode);
         if($referralUser->count() > 0) {
           $referralId = $referralUser->first()->id;
         } else {
