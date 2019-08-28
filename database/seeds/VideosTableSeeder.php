@@ -17,6 +17,10 @@ class VideosTableSeeder extends Seeder
                 'title' =>'Video Dummy',
                 'path' => 'videos/sample.mp4',
             ],
+            [
+                'title' =>'Video Dummy 2',
+                'path' => 'videos/sample.mp4',
+            ],
         ]);
     }
 }

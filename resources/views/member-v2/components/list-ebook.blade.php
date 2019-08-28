@@ -6,6 +6,11 @@
 
 @section('styles')
 <link rel="stylesheet" href="{{asset('assetsebook/v2/css/style.css')}}">
+<style>
+.text-bold {
+	font-weight:bold !important;
+}
+</style>
 @stop
 
 @section('style_class')bit-bg4 @stop
@@ -23,7 +28,7 @@
 							<img src="http://demo.viewpreview.online/assets/img/illustration6.png" class="w-100">
 						</div>
 						<div class="col-lg-8">
-							<img src="http://demo.viewpreview.online/assets/img/bookmark-green.png" class="float-right d-block">
+							<!-- <img src="http://demo.viewpreview.online/assets/img/bookmark-green.png" class="float-right d-block"> -->
 							<h3>Menjadi Seorang Trader Forex</h3>
 							<span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</span>
 						</div>
@@ -31,8 +36,8 @@
 				</div>
         @foreach($books as $book)
 				<div class="d-flex align-items-center">
-					<img src="http://demo.viewpreview.online/assets/img/star.png" class="img-fluid mr-3">
-					<span>{{ ucwords($book->title) }}</span>
+					<!-- <img src="http://demo.viewpreview.online/assets/img/star.png" class="img-fluid mr-3"> -->
+					<span class="text-bold">{{ ucwords($book->title) }} Module</span>
 					@if(!$book->access)
 					<button class="btn btn-identity-red text-white px-5 ml-3" onclick="selectedSubscription('{{$book}}')">BUY</button>
 					@endif
@@ -72,6 +77,11 @@
         @endforeach
         </div>
 				@if($book->access)
+				<div class="d-flex align-items-center">
+					<!-- <img src="http://demo.viewpreview.online/assets/img/star.png" class="img-fluid mr-3"> -->
+					<span class="text-bold">{{ ucwords($book->title) }} Videos</span>
+				</div>
+				<hr>
 				<div class="row mb-5">
         @foreach($book->videoEbooks as $video)
           <div class="col-lg-4 mb-3 hover">
