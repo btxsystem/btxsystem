@@ -87,7 +87,7 @@ Route::group(['prefix'=>'member','as'=>'member.'], function(){
 });
 */
 
-Route::redirect('/', '/login');
+// Route::redirect('/', '/login');
 Route::get('/login', 'Auth\LoginController@getLogin')->middleware('guest');
 Route::post('/login', 'Auth\LoginController@postLogin');
 Route::get('/logout', 'Auth\LoginController@logout');
@@ -150,8 +150,8 @@ Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
 //     // Route::get('/', 'MemberV2\ExploreController@home')->name('member.home');
 //     Route::get('explore/{type}', 'MemberV2\ExploreController@detail')->name('member.ebook.detail');
 //     Route::get('explores', 'MemberV2\ExploreController@index')->name('member.explore');
-//     Route::get('ebook/{username}', 'MemberV2\ExploreController@subscription')->name('member.subscription.referral');
-//     Route::get('/ebook', 'MemberV2\ExploreController@subscription')->name('member.home');
+//     Route::get('/{username}', 'MemberV2\ExploreController@subscription')->name('member.subscription.referral');
+//     Route::get('/', 'MemberV2\ExploreController@subscription')->name('member.home');
 //     Route::get('chapters/{slug}', 'MemberV2\ExploreController@chapters')->name('chapter.list');
 //     Route::get('chapter/{id}', 'MemberV2\ExploreController@chapter')->name('chapter.detail');
 
@@ -177,8 +177,8 @@ Route::domain('ebook.bitrexgo.id')->group(function () {
     // Route::get('/', 'MemberV2\ExploreController@home')->name('member.home');
     Route::get('explore/{type}', 'MemberV2\ExploreController@detail')->name('member.ebook.detail');
     Route::get('explores', 'MemberV2\ExploreController@index')->name('member.explore');
-    Route::get('ebook/{username}', 'MemberV2\ExploreController@subscription')->name('member.subscription.referral');
-    Route::get('/ebook', 'MemberV2\ExploreController@subscription')->name('member.home');
+    Route::get('/{username}', 'MemberV2\ExploreController@subscription')->name('member.subscription.referral');
+    Route::get('/', 'MemberV2\ExploreController@subscription')->name('member.home');
     Route::get('chapters/{slug}', 'MemberV2\ExploreController@chapters')->name('chapter.list');
     Route::get('chapter/{id}', 'MemberV2\ExploreController@chapter')->name('chapter.detail');
 
