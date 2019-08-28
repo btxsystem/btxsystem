@@ -17,6 +17,12 @@
     <div class="row mt50">
       <div class="col-xl-8 col-lg-8 col-sm-7 col-12 mx-auto">
         <h4 class="mb20">{{$book->title}}</h4>
+          <ol class="breadcrumb bg-dark">
+            <li class="breadcrumb-item" aria-current="page">
+              <a href="">Home</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">{{$book->title}}</li>
+          </ol>  
         <div class="card noborder mb30">
             <div class="card-body">
               <div class="row">
