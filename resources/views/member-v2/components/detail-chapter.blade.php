@@ -21,7 +21,7 @@
 <div class="container-fluid">
     <div class="row">
       <div id="view" class="col-xl-3 col-lg-4 col-sm-5 scroll" style="background: #FFF;height:100vh !important">
-          <h3 class="mt30 pl15">{{ $chapter->title }}</h3>
+          <h3 class="mt30 pl15">{{ $chapter->title }} <span id="percentage"></span></h3>
           <nav class="navbar">
             <!-- <ul class="navbar-nav bit-ul">
                 @php
@@ -78,10 +78,21 @@
   let chapterId = '{{ $chapter->id }}'
   let currentLesson = lessons[0]
   let maxIndexLesson = lessons.length - 1
+  let percentage = 0;
+  
   refreshContent()
   initLesson()
 
   function initLesson () {
+    let filterPercentage = lessons.filter(v => {
+      return v.solved
+    })
+
+    let sumPercentage = filterPercentage.length / lessons.length * 100;
+
+    percentage = sumPercentage
+    
+    $('#percentage').html(`${percentage}%`)
     let initLessonList = ''
     lessons.map((v, i) => {
       initLessonList += `
