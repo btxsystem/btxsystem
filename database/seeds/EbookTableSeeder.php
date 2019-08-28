@@ -16,37 +16,37 @@ class EbookTableSeeder extends Seeder
         Ebook::insert([
             [
                 'title' => 'basic',
-                'price' => 100000,
+                'price' => 5720000,
                 'pv' => 100,
-                'bv' => 100,
-                'price_markup' => 2000,
+                'bv' => 5200000,
+                'price_markup' => 1480000,
                 'description' => 'Materi basic untuk mempermudah anda dalam tahap belajar forex.',
                 'position' => 1
             ],
             [
                 'title' => 'advanced',
-                'price' => 100000,
+                'price' => 5720000,
                 'pv' => 100,
-                'bv' => 100,
-                'price_markup' => 2000,
+                'bv' => 5200000,
+                'price_markup' => 1480000,
                 'description' => 'Materi basic untuk mempermudah anda dalam tahap belajar forex.',
                 'position' => 2
             ],
             [
                 'title' => 'renewal_basic',
-                'price' => 100000,
-                'pv' => 100,
-                'bv' => 100,
-                'price_markup' => 2000,
+                'price' => 1430000,
+                'pv' => 25,
+                'bv' => 1300000,
+                'price_markup' => 370000,
                 'description' => 'Materi basic untuk mempermudah anda dalam tahap belajar forex.',
                 'position' => 1
             ],
             [
                 'title' => 'renewal_advanced',
-                'price' => 100000,
-                'pv' => 100,
-                'bv' => 100,
-                'price_markup' => 2000,
+                'price' => 1430000,
+                'pv' => 25,
+                'bv' => 1300000,
+                'price_markup' => 370000,
                 'description' => 'Materi basic untuk mempermudah anda dalam tahap belajar forex.',
                 'position' => 2
             ]
