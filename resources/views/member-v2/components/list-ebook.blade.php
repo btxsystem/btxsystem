@@ -242,10 +242,10 @@ function selectedSubscription(param) {
 
   const data = JSON.parse(param)
 
-	<?php if(Auth::guard('nonmember')->user()){?>
-		$('#total_price').html(toIDR(parseInt(data.price) + parseInt(data.price_markup)))
-	<?php } else {?>
+	<?php if(Auth::guard('user')->user()){?>
 		$('#total_price').html(toIDR(data.price))
+	<?php } else {?>
+		$('#total_price').html(toIDR(parseInt(data.price) + parseInt(data.price_markup)))
 	<?php } ?>
 	$('#ebook').val(data.id)
 	$('#income').val(data.price_markup)
