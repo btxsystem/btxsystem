@@ -104,13 +104,14 @@ class ExploreController extends Controller
     }  
     ])->where('title', $type)->get();
 
-    $referral = $request->input('username') ?? \Session::get('referral');
+    // $referral = $request->input('username') ?? \Session::get('referral');
 
     $referral = '';
     
     if(Employeer::where('username', $username)->count() > 0 || \Session::has('referral')) {
       if(\Session::has('referral')) {
         $referral = \Session::get('referral');
+        \Session::forget('referral');
       } else {
         $referral = $username;
         \Session::put('referral', $username);
@@ -188,6 +189,7 @@ class ExploreController extends Controller
     if(Employeer::where('username', $username)->count() > 0 || \Session::has('referral')) {
       if(\Session::has('referral')) {
         $referral = \Session::get('referral');
+        \Session::forget('referral');
       } else {
         $referral = $username;
         \Session::put('referral', $username);
