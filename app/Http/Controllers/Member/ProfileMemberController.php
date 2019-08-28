@@ -86,4 +86,9 @@ class ProfileMemberController extends Controller
         $cek ? $data['username'] = true : $data['username'] = false;
         return response()->json($data);
     }
+
+    public function rewards(){
+        $data = Auth::user();
+        return view('frontend.rewards.index')->with('profile',$data);
+    }
 }

@@ -98,6 +98,7 @@ Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
     Route::get('tree', ['as' => 'tree', 'uses' => 'Member\DashboardController@tree']);
     Route::get('prospected-member', ['as' => 'prospected-member', 'uses' => 'Member\ProspectedMemberController@index']);
     Route::post('register-downline', ['as' => 'register-downline', 'uses' => 'Member\ProfileMemberController@register']);
+    Route::get('reward', ['as' => 'reward', 'uses' => 'Member\ProfileMemberController@rewards']);
 
     Route::group(['prefix' => 'ebook', 'as'=> 'ebook.'], function () {
         Route::get('', ['as' => 'index', 'uses' => 'Member\EbookController@index']);
