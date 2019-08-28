@@ -3,6 +3,39 @@ body {
   font-family: 'Nunito Sans', sans-serif;
 }
 
+.bg-1 {
+	background-color: rgba(130, 34, 216, 1);
+	background: -moz-linear-gradient(left, rgb(34, 25, 42) 0%, rgba(23, 7, 3) 100%);
+	background: -webkit-gradient(left top, right top, color-stop(0%, rgba(130, 34, 216, 1)), color-stop(100%, rgb(24, 5, 32)));
+	background: -webkit-linear-gradient(left, rgb(26, 21, 31) 0%, rgba(23, 7, 3) 100%);
+	background: -o-linear-gradient(left, rgb(24, 16, 31) 0%, rgb(23, 7, 31) 100%);
+	background: -ms-linear-gradient(left, rgb(18, 12, 24) 0%, rgba(23, 7, 3) 100%);
+	background-color: linear-gradient(to right, rgb(13, 6, 19) 0%, rgba(23, 7, 3) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#8222d8', endColorstr='#a81de7', GradientType=1);
+}
+
+.btn-identity {
+	background-color: #fb6e10 !important;
+	border-color: #fb6e10 !important;
+}
+
+.btn-identity:hover {
+	background-color: #fb6e10 !important;
+}
+
+.btn-identity-red {
+	background-color: #b92240 !important;
+	border-color: #b92240 !important;
+}
+
+.btn-identity-red:hover {
+	background-color: #b92240 !important;
+}
+
+.text-identity-yellow {
+	color: #ffb320 !important;
+}
+
 textarea:focus,
 textarea.form-control:focus,
 input.form-control:focus,

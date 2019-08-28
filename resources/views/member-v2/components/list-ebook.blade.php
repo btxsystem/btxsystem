@@ -14,9 +14,7 @@
 <div class="bg-1 col-12 d-flex justify-content-center" style="position: absolute; height: 50vh;">
 	</div>
 	<div class="col-lg-12 pb-3">
-		<a href="index.html">
-			<img src="{{asset('assetsebook/v2/img/logo-white.png')}}" class="mx-auto d-block img-fluid pt-3" style="height: 80px;">
-		</a>
+		@include('member-v2.partials.navbar-detail')
 		<div class="detail-padding">
 			<div class="container">
 				<div class="bg-white shadow rounded p-3 mb-5">
@@ -32,12 +30,13 @@
 					</div>
 				</div>
         @foreach($books as $book)
-				@if(!$book->access)
 				<div class="d-flex align-items-center">
 					<img src="http://demo.viewpreview.online/assets/img/star.png" class="img-fluid mr-3">
-					<span>{{ ucwords($book->title) }}</span><button class="btn btn-purple px-5 ml-3" onclick="selectedSubscription('{{$book}}')">BUY</button>
+					<span>{{ ucwords($book->title) }}</span>
+					@if(!$book->access)
+					<button class="btn btn-identity-red text-white px-5 ml-3" onclick="selectedSubscription('{{$book}}')">BUY</button>
+					@endif
 				</div>
-				@endif
 				<hr>
         <div class="row mb-5">
         @foreach($book->bookEbooks as $ebook)
@@ -72,6 +71,20 @@
 					@endif
         @endforeach
         </div>
+				@if($book->access)
+				<div class="row mb-5">
+        @foreach($book->videoEbooks as $video)
+          <div class="col-lg-4 mb-3 hover">
+						<div class="embed-responsive embed-responsive-16by9">
+							<video controls>
+								<source src="{{$video->videos[0]->path_url}}" type="video/mp4">
+							Your browser does not support the video tag.
+							</video>
+						</div>
+					</div>
+				@endforeach
+				</div>
+				@endif
         @endforeach
 				<!-- <div class="d-flex align-items-center">
 					<img src="http://demo.viewpreview.online/assets/img/book-icon.png" class="img-fluid mr-2" style="height: 20px;">
@@ -102,6 +115,7 @@
 		      	<img src="{{asset('assetsebook/v2/img/logo-white.png')}}" class="img-fluid mb-3 mx-auto d-block" style="width: 130px;">
 						<input type="hidden" id="ebook">
 						<input type="hidden" id="income">
+						@if(!Auth::guard('user')->user())
 					  <div class="form-group">
 					    <label for="exampleInputEmail1">Referral <small class="text-danger">*</small></label>
 							@if($username != '')
@@ -111,6 +125,7 @@
 							@endif
 							<span class="text-white d-none" id="referralErrorMessage">Referral tidak ditemukan.</span>
 					  </div>
+						@endif
 						@if(!Auth::guard('nonmember')->user() && !Auth::guard('user')->user())
 						<div class="form-group">
 					    <label for="exampleInputPassword1">Username <small class="text-danger">*</small></label>
@@ -137,8 +152,8 @@
 					  <span>Total yang dibayar : IDR </span><b><span id="total_price"></span></b>
 		      </div>
 		      <div class="modal-footer justify-content-center">
-		        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-		        <button type="button" class="btn btn-primary" onclick="submit()">Submit</button>
+		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		        <button type="button" class="btn btn-identity-red" onclick="submit()">Submit</button>
 		      </div>
 		    </div>
 		  </div>
@@ -202,7 +217,7 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <script src="{{asset('assetsebook/js/helper.js')}}"></script>
 <script>
-let auth = "{{Auth::guard('nonmember')->user()}}"
+let auth = "{{Auth::guard('nonmember')->user() || Auth::guard('user')->user()}}"
 $('#username').on('change', function() {
 	checkUsername()
 })
@@ -342,7 +357,7 @@ function submit() {
 			alert('Success register')
 			
 			if(auth != '') {
-				window.location.href = '{{ route("member.subscription") }}'
+				window.location.href = '{{ route("member.home") }}'
 			} else {
 				window.location.href = '{{ route("member.login") }}'
 			}

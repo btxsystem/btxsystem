@@ -7,6 +7,8 @@ use App\Models\TransactionNonMember;
 interface TransactionService {
   function createNonMember($builder);
   function createMember($builder);
+  function updateNonMember($builder);
+  function updateMember($builder);
 }
 
 class TransactionServiceRegister implements TransactionService
@@ -28,6 +30,7 @@ class TransactionServiceRegister implements TransactionService
     $transaction->non_member_id = $builder->getNonMemberId();
     $transaction->status = $builder->getStatus();
     $transaction->income = $builder->getIncome();
+    $transaction->expired_at = $builder->getExpiredAt();
     $transaction->save();
 
     if(!$transaction) {
@@ -51,6 +54,7 @@ class TransactionServiceRegister implements TransactionService
     $transaction->member_id = $builder->getMemberId();
     $transaction->ebook_id = $builder->getEbookId();
     $transaction->status = $builder->getStatus();
+    $transaction->expired_at = $builder->getExpiredAt();
     $transaction->save();
 
     if(!$transaction) {
@@ -59,4 +63,55 @@ class TransactionServiceRegister implements TransactionService
 
     return true;
   }
+
+  function updateNonMember($builder) {
+    
+    $check = TransactionNonMember::where([
+      'ebook_id' => $builder->getEbookId(),
+      'non_member_id' => $builder->getNonMemberId(),
+    ])->first();
+
+    if(!$check) {
+      return false;
+    }
+
+    $params = [
+      'status' => $builder->getStatus() ?? $check->status,
+      'expired_at' => $builder->getExpiredAt() ?? $check->expired_at,
+    ];
+
+    $transaction = TransactionNonMember::where($builder->getIdentifiedBy())->update($params);
+
+    if(!$transaction) {
+      return false;
+    }
+
+    return true;
+  }
+
+  function updateMember($builder) {
+    
+    $check = TransactionMember::where([
+      'ebook_id' => $builder->getEbookId(),
+      'member_id' => $builder->getMemberId(),
+    ])->first();
+
+    if(!$check) {
+      return false;
+    }
+
+    $params = [
+      'status' => $builder->getStatus() ?? $check->status,
+      'expired_at' => $builder->getExpiredAt() ?? $check->expired_at,
+    ];
+
+    $transaction = TransactionMember::where($builder->getIdentifiedBy())->update($params);
+
+    if(!$transaction) {
+      return false;
+    }
+
+    return true;
+  }
+
 }

@@ -21,6 +21,8 @@ class DatabaseSeeder extends Seeder
             BookChaptersTableSeeder::class,
             BookChapterLessonsTableSeeder::class,
             RewardsTableSeeder::class,
+            VideosTableSeeder::class,
+            VideoEbookTableSeeder::class,
         ]);
     }
 }
