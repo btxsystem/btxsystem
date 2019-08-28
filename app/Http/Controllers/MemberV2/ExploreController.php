@@ -81,7 +81,7 @@ class ExploreController extends Controller
   /**
    * Index
    */
-  public function detail(Request $request, $type = 'basic')
+  public function detail(Request $request, $type = 'basic', $username = null)
   {
     $books = Ebook::whereIn('id', [1, 2])->select('id', 'title', 'price', 'pv', 'price_markup', 'bv')->with([
       'bookEbooks' => function($q) {
@@ -104,7 +104,18 @@ class ExploreController extends Controller
     }  
     ])->where('title', $type)->get();
 
-    $username = $request->input('username') ?? \Session::get('referral');
+    $referral = $request->input('username') ?? \Session::get('referral');
+
+    $referral = '';
+    
+    if(Employeer::where('username', $username)->count() > 0 || \Session::has('referral')) {
+      if(\Session::has('referral')) {
+        $referral = \Session::get('referral');
+      } else {
+        $referral = $username;
+        \Session::put('referral', $username);
+      }
+    }
 
     // return response()->json([
     //   'data' => $books
@@ -112,7 +123,7 @@ class ExploreController extends Controller
 
     return view($this->pathView . '.components.list-ebook')->with([
       'books' => $books,
-      'username' => $username
+      'username' => $referral
     ]);
   }
 
