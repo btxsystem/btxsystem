@@ -7,9 +7,10 @@
 <section class="content ecommerce-page">
     <div class="block-header">
         <div class="row">
-            <div class="col-lg-7 col-md-6 col-sm-12">
+            <div class="col-lg-12 col-md-12 col-sm-12">
                 <h2>Bitrex Value History
                 <small class="text-muted">Bitrexgo</small>
+                <h5 class="d-flex flex-row-reverse">Bitrex Value: IDR {{number_format($profile->bitrex_cash)}}</h5>
                 </h2>
             </div>
         </div>
@@ -38,7 +39,7 @@
                     $('#bill').html('<div class="body" style="color:red;"><center><strong>History is currently empty</strong></center></div>');    
                 }else{
                     $.each(data.cash.data, function(i, item) {
-                        date = moment(item.created_at).format('MMMM Do Y');
+                        date = moment(item.created_at).format('MMMM Do Y - HH:mm');
                         type = item.info ? 'Income' : 'Spending';
                         color = item.info ? 'green' : 'red';
                         nominal = addCommas(item.nominal);
@@ -69,7 +70,7 @@
             }
             $('.ajax-load').hide();
             $.each(data.cash.data, function(i, item) {
-                date = moment(item.created_at).format('MMMM Do Y');
+                date = moment(item.created_at).format('MMMM Do Y - HH:mm');
                 type = item.info ? 'Income' : 'Spending';
                 color = item.info ? 'green' : 'red';
                 nominal = addCommas(item.nominal);

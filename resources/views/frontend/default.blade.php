@@ -37,22 +37,6 @@
 
 @yield('header_styles')
 <body class="theme-orange">
-<!-- Page Loader -->
-<div class="page-loader-wrapper">
-    <div class="loader">        
-        <div class="line"></div>
-		<div class="line"></div>
-		<div class="line"></div>
-        <p>Please wait...</p>
-    </div>
-</div>
-<!-- Overlay For Sidebars -->
-<div class="overlay"></div><!-- Search  -->
-<div class="search-bar">
-    <div class="search-icon"> <i class="material-icons">search</i> </div>
-    <input type="text" placeholder="search...">
-    <div class="close-search"> <i class="material-icons">close</i> </div>
-</div>
 <!-- Top Bar -->
     @include('frontend.layouts.top_bar')
 <!-- Left Sidebar -->
