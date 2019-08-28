@@ -99,7 +99,6 @@
                     <div class="body">
                     <div class="row">
                         <div class="col-sm-6 col-7">
-                        <h4>IDR</h4>
                         <h3 class="m-t-0 bitrex-points">{{$profile['bitrex_points']}}</h3>
                         <p class="m-b-0">Bitrex Points</p>
                         </div>

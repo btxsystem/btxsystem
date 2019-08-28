@@ -37,18 +37,19 @@
     <section class="content ecommerce-page">
         <div class="block-header">
             <div class="row">
-                <div class="col-lg-7 col-md-6 col-sm-12">
+                <div class="col-lg-12 col-md-12 col-sm-12">
                     <h2>Bitrex Points History
-                    <small class="text-muted">Bitrexgo</small>
+                        <small class="text-muted">Bitrexgo</small>
                     </h2>
                 </div>
             </div>
         </div>
         <div class="block-header">
             <div class="row">
-                <div class="col-lg-7 col-md-6 col-sm-12">
+                <div class="col-lg-12 col-md-12 col-sm-12">
                     <div class="body">
                         <a href="#" class="btn btn-primary btn-md" data-toggle="modal" data-target="#topup">Topup</a>
+                        <h5 class="d-flex flex-row-reverse">Bitrex Points: {{number_format($profile->bitrex_points)}}</h5>
                     </div>
                 </div>
             </div>
