@@ -15,6 +15,7 @@ class AddSlugToEbooksTable extends Migration
     {
         Schema::table('ebooks', function (Blueprint $table) {
             $table->text('slug')->nullable()->after('title');
+            $table->integer('position')->nullable();
         });
     }
 
@@ -27,6 +28,7 @@ class AddSlugToEbooksTable extends Migration
     {
         Schema::table('ebooks', function (Blueprint $table) {
             $table->dropColumn('slug');
+            $table->dropColumn('position');
         });
     }
 }
