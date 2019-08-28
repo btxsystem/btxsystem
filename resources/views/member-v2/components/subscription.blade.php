@@ -6,17 +6,18 @@
 
 @section('styles')
 <link rel="stylesheet" href="{{asset('assetsebook/v2/css/style.css')}}">
+<style type="text/css">
+.transparent {
+	background-color: transparent!important;
+	background: transparent!important;
+}
+</style>
 @stop
 
 @section('style_class')bg-1 @stop
 
 @section('content')
-<div class="col-12 d-flex justify-content-center" style="position: absolute; z-index: 1030;">
-		<div class="col-lg-2 col-6 py-3">
-			<img src="{{asset('assetsebook/v2/img/logo-white.png')}}" class="mx-auto d-block img-fluid logo">
-		</div>
-	</div>
-
+	@include('member-v2.partials.navbar-home')
 	<div id="carouselExampleControls" class="carousel slide" data-ride="carousel" style="max-height: 455px; overflow: hidden;">
 	  <div class="carousel-inner" style="background: #333;">
 	    <div class="carousel-item active">
@@ -31,23 +32,60 @@
 	  </div>
 	</div>
 
-	<div class="my-5">
+	<!-- <div class="my-5 bg-dark">
+
+	</div> -->
+	<div style="position:relative;margin-top:-80px;">
 		<div class="container">
+			<div class="row">
+				<div class="col-md-2 mx-auto">
+					<div class="mt-3">
+					@if(Auth::guard('nonmember')->user() != null || Auth::guard('user')->user() != null)
+						<a href="{{route('member.logout')}}" class="btn btn-identity-red btn-block">Logout</a>
+					@else
+						<a href="{{route('member.login')}}" class="btn btn-identity-red btn-block">Login</a>
+					@endif
+					</div>
+				</div>
+			</div>			
+		</div>		
+	</div>
+	<div class="pt-5 pb-5" style="background-color:#4a4a4a;">
+		<div class="container pt-5">
 			<div class="row">
 				@foreach($ebooks as $ebook)
 				<div class="col-lg-6 mb-3">
-					<div class="bg-white shadow rounded p-3 border-hover">
+					<div class="shadow rounded p-3 border-hover" style="background-color:#333;">
 						<div class="row">
 							<div class="col-lg-3 d-flex align-items-center">
-								<img src="{{asset('assetsebook/v2/img/1.png')}}" class="mx-auto d-block">
+								@if($ebook->id == 1 || $ebook->id == 3)
+								<img src="{{asset('assetsebook/v2/img/basic-and-intermediate.jpeg')}}" class="mx-auto d-block img-fluid">
+								@else
+								<img src="{{asset('assetsebook/v2/img/advance.jpeg')}}" class="mx-auto d-block img-fluid">
+								@endif
 							</div>
 							<div class="col-lg-9">
-								<h2 class="mb-0" style="color: #8543da;">{{ucwords($ebook->title)}}</h2>
-								<span>{{ $ebook->description }}</span><br>
-								@if($ebook->access)
-								<a href="{{route('member.ebook.detail', ['type' => strtolower($ebook->title)])}}?username={{$username}}" class="btn btn-purple btn-sm mt-3 px-5">Detail</a>
+								<h2 class="mb-1 text-identity-yellow" style="color: #fb6e10;">{{ucwords(str_replace('_', ' ', $ebook->title))}}</h2>
+								@if($ebook->id == 1 || $ebook->id == 3)
+								<span class="text-white">Pada modul ini anda akan mempelajari trading dari dasar. Pertama anda akan mengerti istilah-istilah yang digunakan dalam dunia trading, anda akan mempelajari cara membaca grafik dan membuat analisa dasar sendiri.<br></span><br>
 								@else
-								<a href="{{route('member.ebook.detail', ['type' => strtolower($ebook->title)])}}?username={{$username}}" class="btn btn-purple btn-sm mt-3 px-5">BUY</a>
+								<span class="text-white">Pada modul ini anda akan mempelajari dunia trading lanjutan. Bagaimana cara membaca pasar dengan penggabungan dua atau lebih analisa, diantaranya analisa secara fundamental dan teknikal, serta mempelajari secara mendalam indikator-indikator teknikal.</span><br>
+								@endif
+								@if($ebook->id == 3 || $ebook->id == 4)
+									<form action="{{route('member.ebook-renewal')}}" method="post">
+										{{csrf_field()}}
+										<input type="hidden" name="ebook" value="{{$ebook->id == 3 ? 1 : 2}}">
+										<button type="submit" class="btn btn-identity-red text-white btn-sm mt-3 px-5">BUY</button>
+										<a href="{{route('member.ebook.detail', ['type' => strtolower($ebook->id == 3 ? 'basic' : 'advanced')])}}" class="btn btn-light text-dark btn-sm mt-3 px-5">Detail</a>
+									</form>
+								@else
+									<div class="pb-3">
+										@if($ebook->access)
+										<a href="{{route('member.ebook.detail', ['type' => strtolower($ebook->title)])}}" class="btn btn-light text-dark btn-sm mt-3 px-5">Detail</a>
+										@else
+										<a href="{{route('member.ebook.detail', ['type' => strtolower($ebook->title)])}}" class="btn btn-identity-red btn-sm mt-3 px-5">BUY</a>
+										@endif
+									</div>
 								@endif
 							</div>
 						</div>
@@ -55,8 +93,36 @@
 				</div>
 				@endforeach
 			</div>
+		</div>	
+	</div>
+	<div class="bg-white p-4">
+		<div class="container mt-5 mb-4">
+			<div class="row">
+				<div class="col-12">
+					<h2 class="text-center">Our Facility</h2>
+					<div class="row mt-5	">
+						<div class="col-md-3">
+							<img src="https://www.ebook.bitrexgo.co.id/beta/img/preview-1.png"  class="img-fluid" alt="">
+							<h5 class="mt-2 text-center">Basic to Advanced Financial Education</h5>
+						</div>
+						<div class="col-md-3">
+							<img src="https://www.ebook.bitrexgo.co.id/beta/img/preview-2.png"  class="img-fluid" alt="">
+							<h5 class="mt-2 text-center">Education Videos</h5>
+						</div>
+						<div class="col-md-3">
+							<img src="https://www.ebook.bitrexgo.co.id/beta/img/preview-3.png"  class="img-fluid" alt="">
+							<h5 class="mt-2 text-center">Online & Offline Class</h5>
+						</div>
+						<div class="col-md-3">
+							<img src="https://www.ebook.bitrexgo.co.id/beta/img/preview-4.png"  class="img-fluid" alt="">
+							<h5 class="mt-2 text-center">Smart Financial Community</h5>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
+	@include('member-v2.partials.footer')
 	<!-- Modal -->
 	<div class="modal fade" id="modal-subscription" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		  <div class="modal-dialog" role="document">

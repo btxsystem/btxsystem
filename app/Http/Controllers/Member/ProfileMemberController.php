@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Employeer;
 use DB;
+use Carbon\Carbon;
 
 class ProfileMemberController extends Controller
 {
@@ -85,5 +86,25 @@ class ProfileMemberController extends Controller
         $cek = Employeer::where('username','=',$user)->select('username')->first();
         $cek ? $data['username'] = true : $data['username'] = false;
         return response()->json($data);
+    }
+
+    public function rewards(){
+        $data = Auth::user();
+        return view('frontend.rewards.index')->with('profile',$data);
+    }
+
+    public function getRewards(){
+        $member = Auth::user();
+        $rewards = DB::table('got_rewards')->join('gift_rewards','got_rewards.reward_id','=','gift_rewards.id')
+                                           ->where('member_id',$member->id)
+                                           ->select('gift_rewards.id','gift_rewards.description','gift_rewards.nominal','got_rewards.status','got_rewards.created_at')
+                                           ->paginate(4);
+        return response()->json($rewards, 200);
+    }
+
+    public function getMyRewards($id){
+        $member = Auth::user();
+        DB::table('got_rewards')->where('reward_id', $id)->update(['status' => 1, 'updated_at' => Carbon::now()]);
+        return redirect()->route('member.reward');
     }
 }

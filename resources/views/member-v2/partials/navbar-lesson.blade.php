@@ -1,8 +1,8 @@
-<nav class="bit-header2 navbar navbar-inverse">
+<nav class=" navbar navbar-inverse bg-1">
          <div class="container-fluid">
             <div class="navbar-header">
                <a class="navbar-brand" href="{{ url()->previous() }}">
-               <button type="button" class="btn btn-transparent-border bit-btn1 d-none d-sm-block">
+               <button type="button" class="btn btn-transparent-border border text-white bit-btn1s d-none d-sm-block">
                   <img src="{{asset('assetsebook/assets/img/close-icon.png')}}"> CLOSE
                </button>
                <button type="button" class="btn btn-transparent-border bit-btn1 d-sm-none">

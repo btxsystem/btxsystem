@@ -15,6 +15,8 @@ use App\Models\BookChapterLessonSolved;
 
 use App\Employeer;
 use App\Models\NonMember;
+use App\Models\TransactionNonMember;
+use App\Models\TransactionMember;
 
 class ExploreController extends Controller
 {
@@ -26,13 +28,17 @@ class ExploreController extends Controller
   //     redirect()->route('member.login');
   //   }
   // }
-  
+  public function home()
+  {
+    return view($this->pathView . '.components.home');
+  }
+
   /**
    * Index
    */
   public function index()
   {
-    $books = Ebook::select('id', 'title', 'price', 'pv', 'price_markup', 'bv')->with([
+    $books = Ebook::whereIn('id', [1, 2])->select('id', 'title', 'price', 'pv', 'price_markup', 'bv')->with([
       'bookEbooks' => function($q) {
         $q->select('id', 'book_id', 'ebook_id')->with([
           'book' => function($q) {
@@ -45,7 +51,13 @@ class ExploreController extends Controller
             ]);
           }
         ]);
-      }])->get();
+      },
+      'videoEbooks' => function($q) {
+        $q->with([
+          'videos'
+        ]);
+      }
+      ])->get();
 
     // return response()->json([
     //   'data' => $books
@@ -62,7 +74,7 @@ class ExploreController extends Controller
    */
   public function detail(Request $request, $type = 'basic')
   {
-    $books = Ebook::select('id', 'title', 'price', 'pv', 'price_markup', 'bv')->with([
+    $books = Ebook::whereIn('id', [1, 2])->select('id', 'title', 'price', 'pv', 'price_markup', 'bv')->with([
       'bookEbooks' => function($q) {
         $q->select('id', 'book_id', 'ebook_id')->with([
           'book' => function($q) {
@@ -75,10 +87,15 @@ class ExploreController extends Controller
             ]);
           }
         ]);
-      }
+      },
+    'videoEbooks' => function($q) {
+      $q->with([
+        'videos'
+      ]);
+    }  
     ])->where('title', $type)->get();
 
-    $username = $request->input('username') ?? '';
+    $username = $request->input('username') ?? \Session::get('referral');
 
     // return response()->json([
     //   'data' => $books
@@ -92,17 +109,71 @@ class ExploreController extends Controller
 
   /**
    * Subscription
+   * 1 = Basic
+   * 2 = Advanced
+   * 3 = Renewal Basic
+   * 4 = Renewal Advanced
    */
   public function subscription(Request $request, $username = null)
   {
-    $ebooks = Ebook::select('id', 'price', 'pv', 'bv', 'price_markup', 'description', 'title')->get();
+    $excludesEbooks = [3, 4];
+    
+    if($user = Auth::guard('nonmember')->user()) {
+      $transaction = TransactionNonMember::select('ebook_id')->where([
+        'non_member_id' => $user->id,
+        'status' => 1
+      ])->get();
+
+      foreach($transaction as $trx) {
+        if(count($transaction) == 1) {
+          if($trx->ebook_id == 1) {
+            $excludesEbooks = [$trx->ebook_id, 4];
+          } else {
+            $excludesEbooks = [$trx->ebook_id, 3];
+          }
+        } else {
+          $excludesEbooks = [1, 2];
+        }
+      }
+    } else if($user = Auth::guard('user')->user()) {
+      $transaction = TransactionMember::select('ebook_id')->where([
+        'member_id' => $user->id,
+        'status' => 1
+      ])->get();
+
+      foreach($transaction as $trx) {
+        if(count($transaction) == 1) {
+          if($trx->ebook_id == 1) {
+            $excludesEbooks = [$trx->ebook_id, 4];
+          } else {
+            $excludesEbooks = [$trx->ebook_id, 3];
+          }
+        } else if(count($transaction) == 2){
+          $excludesEbooks = [1, 2];
+        } else {
+          $excludesEbooks = [3, 4];
+        }
+      }
+    } else {
+      $excludesEbooks = [3, 4];
+    }
+
+    $ebooks = Ebook::whereNotIn('id', $excludesEbooks)
+    ->select('id', 'price', 'pv', 'bv', 'price_markup', 'description', 'title')
+    ->orderBy('position', 'ASC')
+    ->get();
 
     $referral = '';
     
-    if(Employeer::where('username', $username)->count() > 0) {
-      $referral = $username;
+    if(Employeer::where('username', $username)->count() > 0 || \Session::has('referral')) {
+      if(\Session::has('referral')) {
+        $referral = \Session::get('referral');
+      } else {
+        $referral = $username;
+        \Session::put('referral', $username);
+      }
     } else {
-      redirect()->route('member.subscription');
+      redirect()->route('member.home');
     }
 
     // $transactions = DB::table('non_members')

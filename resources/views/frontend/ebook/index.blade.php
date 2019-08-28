@@ -60,6 +60,7 @@
                                                                 <br>
                                                                 <h5 style="color:black" id="description-basic"></h5><br>
                                                                 <a href="#" data-toggle="modal" data-target="#buy" class="btn btn-danger btn-sm mt-3 px-5" id="cart1">BUY</a>
+                                                                <a href="#" class="btn btn-danger btn-sm mt-3 px-5" id="view1">VIEW</a>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -76,6 +77,7 @@
                                                                 <br>
                                                                 <h5 style="color:black" id="advance-description"></h5><br>
                                                                 <a href="#" data-toggle="modal" data-target="#buy" class="btn btn-danger btn-sm mt-3 px-5" id="cart2">BUY</a>
+                                                                <a href="#" class="btn btn-danger btn-sm mt-3 px-5" id="view2">VIEW</a>
                                                             </div>
                                                         </div>
                                                     </div>

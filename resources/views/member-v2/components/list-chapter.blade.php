@@ -26,14 +26,17 @@
               </div>
               <hr>
               @if(count($book->chapters) > 0)
+              @php
+              $i = 1;
+              @endphp
               @foreach($book->chapters as $chapter)
               <a href="{{route('chapter.detail', ['id' => $chapter->id])}}">
                 <div class="media mb10">
-                    <div class="media-left">
+                    <!-- <div class="media-left">
                       <img src="{{asset('assetsebook/assets/img/1.png')}}" class="media-object" style="width:50px">
-                    </div>
+                    </div> -->
                     <div class="media-body pr50 pl15 pt7">
-                      <h5 class="media-heading fz14 text-dark">{{ $chapter->title }}</h5>
+                      <h5 class="media-heading fz14 text-dark">{{$i++}}. {{ $chapter->title }}</h5>
                     </div>
                 </div>
               </a>

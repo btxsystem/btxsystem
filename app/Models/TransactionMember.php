@@ -16,4 +16,9 @@ class TransactionMember extends Model
     'status',
     'expired_at'
   ];
+
+  public function ebook()
+  {
+      return $this->hasOne('\App\Models\Ebook', 'id', 'ebook_id');
+  }
 }

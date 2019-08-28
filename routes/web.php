@@ -98,6 +98,8 @@ Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
     Route::get('tree', ['as' => 'tree', 'uses' => 'Member\DashboardController@tree']);
     Route::get('prospected-member', ['as' => 'prospected-member', 'uses' => 'Member\ProspectedMemberController@index']);
     Route::post('register-downline', ['as' => 'register-downline', 'uses' => 'Member\ProfileMemberController@register']);
+    Route::get('reward', ['as' => 'reward', 'uses' => 'Member\ProfileMemberController@rewards']);
+    Route::get('reward/{id}/update', 'Member\ProfileMemberController@getMyRewards');
 
     Route::group(['prefix' => 'ebook', 'as'=> 'ebook.'], function () {
         Route::get('', ['as' => 'index', 'uses' => 'Member\EbookController@index']);
@@ -119,6 +121,7 @@ Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
         Route::get('generate', ['as' => 'generate', 'uses' => 'Member\PvController@generate']);
         Route::get('my-transaction', ['as' => 'my-transaction', 'uses' => 'Member\TransactionController@myTransaction']);
         Route::get('prospected-member-transaction', ['as' => 'prospected-member-transaction', 'uses' => 'Member\TransactionController@prospectedMemberHistory']);
+        Route::get('reward', ['as' => 'reward', 'uses' => 'Member\ProfileMemberController@getRewards']);
     });
 
     Route::group(['prefix' => 'transaction', 'as'=> 'transaction.'], function () {
@@ -144,11 +147,11 @@ Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
 //Route::get('/home', 'HomeController@index')->name('home');
 
 // Route::group(['prefix' => 'asep'], function () {
+//     // Route::get('/', 'MemberV2\ExploreController@home')->name('member.home');
 //     Route::get('explore/{type}', 'MemberV2\ExploreController@detail')->name('member.ebook.detail');
-
 //     Route::get('explores', 'MemberV2\ExploreController@index')->name('member.explore');
-//     Route::get('subscription/{username}', 'MemberV2\ExploreController@subscription')->name('member.subscription.referral');
-//     Route::get('subscription', 'MemberV2\ExploreController@subscription')->name('member.subscription');
+//     Route::get('ebook/{username}', 'MemberV2\ExploreController@subscription')->name('member.subscription.referral');
+//     Route::get('/ebook', 'MemberV2\ExploreController@subscription')->name('member.home');
 //     Route::get('chapters/{id}', 'MemberV2\ExploreController@chapters')->name('chapter.list');
 //     Route::get('chapter/{id}', 'MemberV2\ExploreController@chapter')->name('chapter.detail');
 
@@ -158,19 +161,22 @@ Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
 
 //     Route::get('/v2/login', 'Auth\NonMemberController@getLogin')->middleware('guest')->name('member.login');
 //     Route::post('/v2/login', 'Auth\NonMemberController@postLogin')->name('member.login.post');
-//     Route::get('/v2/logout', 'Auth\NonMemberController@logout')->name('member.logout.post');
+//     Route::get('/v2/logout', 'Auth\NonMemberController@logout')->name('member.logout');
 
 //     Route::get('checkReferral', 'MemberV2\ExploreController@checkReferral')->name('member.check-referral');
 //     Route::get('checkUsername', 'MemberV2\ExploreController@checkUsername')->name('member.check-username');
 
 //     Route::get('solvedLesson', 'MemberV2\ExploreController@solvedLesson')->name('member.solved-lesson');
+
+//     Route::post('renewalEbook', 'MemberV2\RegisterController@renewalEbook')->name('member.ebook-renewal');
 // });
 
 Route::domain('ebook.bitrexgo.id')->group(function () {
+    // Route::get('/', 'MemberV2\ExploreController@home')->name('member.home');
     Route::get('explore/{type}', 'MemberV2\ExploreController@detail')->name('member.ebook.detail');
     Route::get('explores', 'MemberV2\ExploreController@index')->name('member.explore');
-    Route::get('subscription/{username}', 'MemberV2\ExploreController@subscription')->name('member.subscription.referral');
-    Route::get('subscription', 'MemberV2\ExploreController@subscription')->name('member.subscription');
+    Route::get('ebook/{username}', 'MemberV2\ExploreController@subscription')->name('member.subscription.referral');
+    Route::get('/ebook', 'MemberV2\ExploreController@subscription')->name('member.home');
     Route::get('chapters/{id}', 'MemberV2\ExploreController@chapters')->name('chapter.list');
     Route::get('chapter/{id}', 'MemberV2\ExploreController@chapter')->name('chapter.detail');
 
@@ -180,10 +186,12 @@ Route::domain('ebook.bitrexgo.id')->group(function () {
 
     Route::get('/v2/login', 'Auth\NonMemberController@getLogin')->middleware('guest')->name('member.login');
     Route::post('/v2/login', 'Auth\NonMemberController@postLogin')->name('member.login.post');
-    Route::get('/v2/logout', 'Auth\NonMemberController@logout')->name('member.logout.post');
+    Route::get('/v2/logout', 'Auth\NonMemberController@logout')->name('member.logout');
 
     Route::get('checkReferral', 'MemberV2\ExploreController@checkReferral')->name('member.check-referral');
     Route::get('checkUsername', 'MemberV2\ExploreController@checkUsername')->name('member.check-username');
 
     Route::get('solvedLesson', 'MemberV2\ExploreController@solvedLesson')->name('member.solved-lesson');
+
+    Route::post('renewalEbook', 'MemberV2\RegisterController@renewalEbook')->name('member.ebook-renewal');
 });

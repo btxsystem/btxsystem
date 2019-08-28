@@ -10,8 +10,17 @@ class Video extends Model
   
     protected $guarded = [];
 
+    protected $appends = [
+        'path_url'
+    ];
+
     public function ebooks()
     {
         return $this->belongsToMany('\App\Models\Ebook', 'video_ebook', 'video_id', 'book_id');
+    }
+
+    public function getPathUrlAttribute()
+    {
+        return url($this->path);
     }
 }
