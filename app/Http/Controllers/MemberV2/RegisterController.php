@@ -22,12 +22,13 @@ use App\Models\TransactionNonMember;
 use Carbon\Carbon;
 
 class RegisterController extends Controller
-{  
+{ 
+  /**
+   * 
+   */
   public function registerV2(Request $request)
   {
     DB::beginTransaction();
-
-    // $current = Carbon::now();
 
     if(Auth::guard('nonmember')->user()) {
       $nonMember = true;
@@ -127,11 +128,12 @@ class RegisterController extends Controller
     
   }
 
+  /**
+   * 
+   */
   public function renewalEbook(Request $request)
   {
     DB::beginTransaction();
-
-    // $current = Carbon::now();
 
     if(Auth::guard('nonmember')->user()) {
       $nonMemberId = Auth::guard('nonmember')->user()->id;

@@ -13,6 +13,9 @@ interface TransactionService {
 
 class TransactionServiceRegister implements TransactionService
 {
+  /**
+   * 
+   */
   function createNonMember($builder) {
     
     $check = TransactionNonMember::where([
@@ -40,6 +43,9 @@ class TransactionServiceRegister implements TransactionService
     return true;
   }
 
+  /**
+   * 
+   */
   function createMember($builder) {
     $check = TransactionMember::where([
       'member_id' => $builder->getMemberId(),
@@ -64,6 +70,9 @@ class TransactionServiceRegister implements TransactionService
     return true;
   }
 
+  /**
+   * 
+   */
   function updateNonMember($builder) {
     
     $check = TransactionNonMember::where([
@@ -89,6 +98,9 @@ class TransactionServiceRegister implements TransactionService
     return true;
   }
 
+  /**
+   * 
+   */
   function updateMember($builder) {
     
     $check = TransactionMember::where([
