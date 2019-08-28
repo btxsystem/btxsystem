@@ -90,7 +90,8 @@
 								<source src="{{$video->videos[0]->path_url}}" type="video/mp4">
 							Your browser does not support the video tag.
 							</video>
-						</div>
+						</div><br/>
+						<span style="font-size: 20px; font-weight: bold;">{{ $video->videos[0]->title }}</span>
 					</div>
 				@endforeach
 				</div>
