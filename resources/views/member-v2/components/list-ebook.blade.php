@@ -374,7 +374,7 @@ function submit() {
 			if(auth != '') {
 				window.location.href = '{{ route("member.home") }}'
 			} else {
-				window.location.href = '{{ route("member.login") }}'
+				window.location.href = '{{ route("member.home") }}'
 			}
 		},
 		error: function(err) {
