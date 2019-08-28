@@ -28,65 +28,21 @@ class RegisterController extends Controller
    */
   public function registerV2(Request $request)
   {
-    DB::beginTransaction();
+    try {
+      DB::beginTransaction();
 
-    if(Auth::guard('nonmember')->user()) {
-      $nonMember = true;
-
-      $nonMemberId = Auth::guard('nonmember')->user()->id;
-
-      $referralId = '';
-      $referralCode = $request->input('referralCode') ?? '';
-      
-      //cek referal code
-      if($referralCode != '') {
-        $referralUser = Employeer::where('username', $referralCode);
-        \Session::put('referral', $referralCode);
-        if($referralUser->count() > 0) {
-          $referralId = $referralUser->first()->id;
-        } else {
-          return response()->json([
-            'success' => false,
-            'message' => 'Failed register'
-          ]);
-        }
-      }
-
-      $builder = (new TransactionNonMemberBuilder())
-      ->setMemberId($referralId)
-      ->setNonMemberId($nonMemberId)
-      ->setExpiredAt(date('Y-m-d'))
-      ->setIncome($request->input('income'))
-      ->setEbookId($request->input('ebook'));
-      
-      $transaction  = (new TransactionFactoryRegister())->call()->createNonMember($builder);
-    } else if(Auth::guard('user')->user()) {
-      $nonMember = true;
-
-      $memberId = Auth::guard('user')->user()->id;
-      $builder = (new TransactionMemberBuilder())
-      ->setMemberId($memberId)
-      ->setExpiredAt(Carbon::create(date('Y-m-d'))->addYear(1))
-      ->setEbookid($request->input('ebook'));
-      
-      $transaction  = (new TransactionFactoryRegister())->call()->createMember($builder);
-    } else {
-      $builder = (new NonMemberBuilder())
-        ->setFirstName($request->input('firstName'))
-        ->setLastName($request->input('lastName'))
-        ->setEmail($request->input('email'))
-        ->setUsername($request->input('username'))
-        ->setPassword('secret');
-        
-      $nonMember = (new RegisterFactoryMake())->call()->createNonMember($builder);
-
-      if($nonMember) {
+      if(Auth::guard('nonmember')->user()) {
+        $nonMember = true;
+  
+        $nonMemberId = Auth::guard('nonmember')->user()->id;
+  
         $referralId = '';
         $referralCode = $request->input('referralCode') ?? '';
         
         //cek referal code
         if($referralCode != '') {
           $referralUser = Employeer::where('username', $referralCode);
+          \Session::put('referral', $referralCode);
           if($referralUser->count() > 0) {
             $referralId = $referralUser->first()->id;
           } else {
@@ -97,34 +53,87 @@ class RegisterController extends Controller
           }
         }
   
-        $builderTrx = (new TransactionNonMemberBuilder())
+        $builder = (new TransactionNonMemberBuilder())
         ->setMemberId($referralId)
-        ->setNonMemberId($nonMember->id)
-        ->setExpiredAt(Carbon::create(date('Y-m-d'))->addYear(1))
+        ->setNonMemberId($nonMemberId)
+        ->setExpiredAt(date('Y-m-d'))
         ->setIncome($request->input('income'))
         ->setEbookId($request->input('ebook'));
         
-        $transaction  = (new TransactionFactoryRegister())->call()->createNonMember($builderTrx);
+        $transaction  = (new TransactionFactoryRegister())->call()->createNonMember($builder);
+      } else if(Auth::guard('user')->user()) {
+        $nonMember = true;
+  
+        $memberId = Auth::guard('user')->user()->id;
+        $builder = (new TransactionMemberBuilder())
+        ->setMemberId($memberId)
+        ->setExpiredAt(Carbon::create(date('Y-m-d'))->addYear(1))
+        ->setEbookid($request->input('ebook'));
+        
+        $transaction  = (new TransactionFactoryRegister())->call()->createMember($builder);
       } else {
-        $transaction = false;
+        $builder = (new NonMemberBuilder())
+          ->setFirstName($request->input('firstName'))
+          ->setLastName($request->input('lastName'))
+          ->setEmail($request->input('email'))
+          ->setUsername($request->input('username'))
+          ->setPassword('secret');
+          
+        $nonMember = (new RegisterFactoryMake())->call()->createNonMember($builder);
+  
+        if($nonMember) {
+          $referralId = '';
+          $referralCode = $request->input('referralCode') ?? '';
+          
+          //cek referal code
+          if($referralCode != '') {
+            $referralUser = Employeer::where('username', $referralCode);
+            if($referralUser->count() > 0) {
+              $referralId = $referralUser->first()->id;
+            } else {
+              return response()->json([
+                'success' => false,
+                'message' => 'Failed register'
+              ]);
+            }
+          }
+    
+          $builderTrx = (new TransactionNonMemberBuilder())
+          ->setMemberId($referralId)
+          ->setNonMemberId($nonMember->id)
+          ->setExpiredAt(Carbon::create(date('Y-m-d'))->addYear(1))
+          ->setIncome($request->input('income'))
+          ->setEbookId($request->input('ebook'));
+          
+          $transaction  = (new TransactionFactoryRegister())->call()->createNonMember($builderTrx);
+        } else {
+          $transaction = false;
+        }
       }
-    }
-
-    if(!$nonMember || !$transaction) {
+  
+      if(!$nonMember || !$transaction) {
+        DB::rollback();
+  
+        return response()->json([
+          'success' => false,
+          'message' => 'Failed register'
+        ]);
+      }    
+  
+      DB::commit();
+  
+      return response()->json([
+        'success' => true,
+        'message' => 'Success register'
+      ]);
+    } catch(\Exception $e) {
       DB::rollback();
-
+  
       return response()->json([
         'success' => false,
         'message' => 'Failed register'
       ]);
-    }    
-
-    DB::commit();
-
-    return response()->json([
-      'success' => true,
-      'message' => 'Success register'
-    ]);
+    }
     
   }
 

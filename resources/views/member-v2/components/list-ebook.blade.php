@@ -242,7 +242,7 @@ function selectedSubscription(param) {
 
   const data = JSON.parse(param)
 
-	<?php if(Auth::guard('user')->user()){?>
+	<?php if(Auth::guard('nonmember')->user()){?>
 		$('#total_price').html(toIDR(parseInt(data.price) + parseInt(data.price_markup)))
 	<?php } else {?>
 		$('#total_price').html(toIDR(data.price))
