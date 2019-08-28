@@ -56,6 +56,7 @@ class VideoController extends Controller
      */
     public function store(Request $request)
     {
+        // return $request->all();
         $request->validate([
             'path' => 'required|mimes:mp4,mov'
         ]);
@@ -69,12 +70,18 @@ class VideoController extends Controller
         }
 
         $ebook = Ebook::findOrFail($request->ebook_id);
+
         $video = new Video;
         $video->title = $request->title;
         $video->path = $uploadPath;
         
         $video->save();
-        $ebook->videos()->attach($video);
+
+        VideoEbook::firstOrCreate([
+            'video_id' => $video->id,
+            'ebook_id' => $request->ebook_id
+        ]);
+        // $ebook->videos()->attach($video);
         
         Alert::success('Sukses Menambah Data Video', 'Sukses');
 
@@ -153,13 +160,12 @@ class VideoController extends Controller
         $data = Video::findOrFail($id);
 
         if ($data) { 
-            \File::delete(public_path($data->path));
             $data->delete(); 
             Alert::success('Success Delete Data Video', 'Success');
         } else {
             Alert::error('Gagal Delete Data Video', 'Gagal');
         }
+
         return back();
-        // return redirect()->route('video.index');
     }
 }

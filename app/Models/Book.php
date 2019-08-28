@@ -17,6 +17,11 @@ class Book extends Model
     return $this->belongsToMany('\App\Models\Ebook');
   }
 
+  public function images()
+  {
+    return $this->belongsToMany('\App\Models\Image', 'image_book','book_id', 'image_id');
+  }
+
   public function chapters()
   {
       return $this->hasMany('\App\Models\BookChapter', 'book_id', 'id');

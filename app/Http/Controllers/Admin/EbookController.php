@@ -27,7 +27,7 @@ class EbookController extends Controller
                     ->addColumn('action', function($row) {
                         return '<a href="'.route('ebook.show',$row->id).'"  class="btn btn-primary fa fa-eye"title="Show"></a>
                                 <a href="'.route('ebook.edit',$row->id).'"  class="btn btn-warning fa fa-pencil"title="Edit"></a>
-                                <a data-id="'.$row->id.' "class="btn btn-danger fa fa-trash"title="Delete"></a>';
+                                <a data-id="'.$row->id.' "class="btn btn-danger fa fa-trash delete-ebook"title="Delete"></a>';
                     })
                     ->rawColumns(['action'])
                     ->make(true);
@@ -91,6 +91,9 @@ class EbookController extends Controller
     public function show($id)
     {
         $data = Ebook::with('books')->findOrFail($id);
+        // return $data->load('videos');
+
+        // return 'a';
 
         return view('admin.ebooks.detail', compact('data'));
     }

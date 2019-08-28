@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('title')
-List Of {{$data->title}}
+{{$data->title}}
 @parent
 @stop
 
@@ -95,7 +95,7 @@ List Of {{$data->title}}
                         Video List
                     </div>
                     <div class="pull-right">
-                        <a style=" color: white; text-decoration: none !important" href="{{ route('ebook.create.book', $data->id) }}"><i style="font-size:15px;" class="fa fa-plus"></i>&nbsp; &nbsp;<strong>Create New Videos</strong></a>
+                        <a style=" color: white; text-decoration: none !important" href="{{ route('ebook.create.video', $data->id) }}"><i style="font-size:15px;" class="fa fa-plus"></i>&nbsp; &nbsp;<strong>Create New Videos</strong></a>
                      </div>
                 </div>
                 
@@ -153,11 +153,15 @@ List Of {{$data->title}}
           });
         });
 
-        $(document).on('click', '.fa-power-off', function (e) {
+        $(document).on('click', '.delete-video', function (e) {
             e.preventDefault();
             var id = $(this).data('id');
+            console.log(id)
+            var urlVideo =   "{{url('backoffice/deleteVideo/')}}"
+            // console.log(urlVideo);
+
             swal({
-                    title: "Are you sure!",
+                    title: "Are you sure delete this video ?",
                     type: "error",
                     confirmButtonClass: "btn-danger",
                     confirmButtonText: "Yes!",
@@ -166,10 +170,10 @@ List Of {{$data->title}}
                 function() {
                     $.ajax({
                         type: "DELETE",
-                        url: "{{ route('ebook.destroy', $data->id) }}",
+                        url: urlVideo + '/' + id,
                         data: {id:id},
                         success: function (data) {
-                                window.location.href = "{{ route('ebook.index') }}";
+                                window.location.href = "{{ route('ebook.index')}}";
                             }         
                     });
             });

@@ -142,4 +142,38 @@ class BookController extends Controller
 
         return back();
     }
+
+    public function chapterData($id)
+    {
+        $data = Book::with('chapters')->findOrFail($id);
+     
+        return Datatables::of($data->chapters)
+            ->addIndexColumn()
+            ->addColumn('action', function($row) {
+                return '
+                        <a href="'.route('book-chapter.show',$row->id).'"  class="btn btn-primary fa fa-eye" title="Show"></a>
+                        <a data-id="'.$row->id.'"  class="btn btn-warning fa fa-pencil edit-chapter" title="Edit"></a>
+                        <a href="'.route('deleteChapter',$row->id).'" class="btn btn-danger fa fa-trash" title="Delete"></a>';
+                    
+            })
+            ->rawColumns(['action'])
+            ->make(true);
+    }
+
+    public function imageData($id)
+    {
+        $data = Book::with('images')->findOrFail($id);
+
+        // return $data->load('images');
+     
+        return Datatables::of($data->images)
+            ->addIndexColumn()
+            ->addColumn('action', function($row) {
+                return '
+                        <a data-id="'.$row->id.'"  class="btn btn-warning fa fa-pencil edit-image" title="Edit"></a>
+                        <a href="'.route('deleteImage',$row->id).'" class="btn btn-danger fa fa-trash" title="Delete"></a>';
+            })
+            ->rawColumns(['action'])
+            ->make(true);
+    }
 }
