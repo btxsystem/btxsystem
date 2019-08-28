@@ -14,13 +14,6 @@ class RanksTableSeeder extends Seeder
     {
         $ranks = [
             [
-                'name'      => '-',
-                'pv_needed_left' => 0,
-                'pv_needed_midle' => 0,
-                'pv_needed_right' => 0,
-                'needed_sponsor' => 0,
-            ],
-            [
                 'name'      => 'Platinum 1',
                 'pv_needed_left' => 400,
                 'pv_needed_midle' => 400,
