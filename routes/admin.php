@@ -68,11 +68,20 @@ Route::group(['prefix' => 'select', 'as'=> 'select.'], function () {
 
     // Book
     Route::resource('book', 'Admin\BookController');
+    Route::get('book/{id}/chapter-data','Admin\BookController@chapterData')->name('book.chapterData');
+    Route::get('book/{id}/image-data','Admin\BookController@imageData')->name('book.imageData');
+
     Route::get('book/delete/{id}', 'Admin\BookController@destroy')->name('deleteBook');
     
+    // Book Image
+    Route::post('update-image', 'Admin\BookImageController@updateImage')->name('updateDataImage');
+    Route::resource('book-image', 'Admin\BookImageController');
+    Route::get('image/delete/{id}', 'Admin\BookImageController@destroy')->name('deleteImage');
+
     // Book Chapter
     Route::post('update-chapter', 'Admin\BookChapterController@updateChapter')->name('updateDataChapter');
     Route::resource('book-chapter', 'Admin\BookChapterController');
+    Route::get('chapter/delete/{id}', 'Admin\BookChapterController@destroy')->name('deleteChapter');
 
     // Book Chapter Lesson
     Route::resource('book-chapter-lesson', 'Admin\BookChapterLessonController');
@@ -81,6 +90,7 @@ Route::group(['prefix' => 'select', 'as'=> 'select.'], function () {
     // Video
     Route::resource('video', 'Admin\VideoController');
     Route::get('video/delete/{id}', 'Admin\VideoController@destroy')->name('deleteVideo');
+
 
 
     Route::group(['prefix'=>'trainings','as'=>'trainings.'],function(){

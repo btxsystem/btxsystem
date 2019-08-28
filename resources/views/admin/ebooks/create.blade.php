@@ -21,7 +21,7 @@ Create Book
                <tbody>
                   <tr>
                      <td colspan="1">
-                        <form class="well form-horizontal" method="post" action="{{route('ebook.store')}}">
+                        <form class="well form-horizontal" method="post" action="{{route('ebook.store')}}" enctype="multipart/form-data">
                             {{ csrf_field() }}
                            <fieldset>
 
@@ -72,6 +72,18 @@ Create Book
                                         <span class="input-group-addon"><i class="fa fa-area-chart"></i></span>
                                         <input id="bv" name="bv" placeholder="Bonus" class="form-control" required="true" value="{{old('bv')}}" type="number">
                                     </div>
+                                    <p class="text-danger">{{ $errors->first('bv') }}</p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">Image</label>
+                                <div class="col-md-8 inputGroupContainer">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-file-photo-o"></i></span>
+                                        <input id="src" name="src" class="form-control" type="file">
+                                    </div>
+                                    <p class="text-danger">{{ $errors->first('src') }}</p>
                                 </div>
                             </div>
 
@@ -79,7 +91,7 @@ Create Book
                                 <label class="col-md-2 control-label">Description</label>
                                 <div class="col-md-8 inputGroupContainer">
                                     <div class="input-group">
-                                        <textarea id="description" name="description" class="description"></textarea>
+                                        <textarea id="description" name="description" class="description">{{old('description')}}</textarea>
                                     </div>
                                 </div>
                             </div>

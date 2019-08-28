@@ -17,6 +17,12 @@ class Image extends Model
     'image_url'
   ];
 
+  public function books()
+  {
+    return $this->belongsToMany('\App\Models\Book', 'image_book','image_id', 'book_id');
+  }
+
+
   public function getImageUrlAttribute()
   {
     return url($this->src);
