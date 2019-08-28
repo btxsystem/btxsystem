@@ -390,6 +390,44 @@
         </div>
         <!-- end row -->
       </div>
+
+      <!-- end container -->
+      <div class="container">
+        <div class="row">
+          <div class="border-decor_top">
+
+            <div class="col-md-12">
+              <section class="section-default wow bounceInRight" data-wow-duration="1s">
+                <h2 class="ui-title-block">Our <strong>Facility</strong></h2>
+                <div class="row">
+                  <div class="col-lg-3">
+                    <img class="img-responsive" src="https://www.bitrexgo.co.id/assets/img/training-center.jpg" height="100" width="200" alt="Partners" style="width: 100%; margin-bottom: 20px;">
+                  </div>
+                  <div class="col-lg-3">
+                    <img class="img-responsive" src="https://www.bitrexgo.co.id/assets/img/robot-expert-advisor.png" height="100" width="200" alt="Partners" style="width: 100%; margin-bottom: 20px;">
+                  </div>
+                  <div class="col-lg-3">
+                    <img class="img-responsive" src="https://www.bitrexgo.co.id/assets/img/market-analysis.jpg" height="100" width="200" alt="Partners" style="width: 100%; margin-bottom: 20px;">
+                  </div>
+                  <div class="col-lg-3">
+                    <img class="img-responsive" src="https://www.bitrexgo.co.id/assets/img/trading-community.png" height="100" width="200" alt="Partners" style="width: 100%; margin-bottom: 20px;">
+                  </div>
+                </div>
+                <!-- <ul class="list-clients list-unstyled clearfix">
+                  <li class="list-clients__item" style="width: 25%"><img class="img-responsive" src="https://bitrexgo.co.id/assets1/images/gallery/5.jpg" height="100" width="200" alt="Partners"></li>
+                  <li class="list-clients__item" style="width: 25%"><img class="img-responsive" src="https://bitrexgo.co.id/assets1/images/gallery/5.jpg" height="100" width="200" alt="Partners"></li>
+                  <li class="list-clients__item" style="width: 25%"><img class="img-responsive" src="https://bitrexgo.co.id/assets1/images/gallery/11.jpg" height="100" width="200" alt="Partners"></li>
+                  <li class="list-clients__item" style="width: 25%"><img class="img-responsive" src="https://bitrexgo.co.id/assets1/images/gallery/11.jpg" height="100" width="200" alt="Partners"></li>
+                </ul> -->
+                <!-- end accordion -->
+              </section>
+            </div>
+            <!-- end col -->
+          </div>
+          <!-- end section-default -->
+        </div>
+        <!-- end row -->
+      </div>
       <!-- end container -->
 
       <div class="container">
