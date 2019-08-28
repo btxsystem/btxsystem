@@ -32,7 +32,7 @@ class PvController extends Controller
             $bonus_pairing = 0;
             $tamp = 0;
             $max = true;
-            $pajak = $pairing->verification ? 0.03 : 0.025;
+            $pajak = $pairing->verification ? 0.25 : 0.03;
             while (($max) && (($pairing->pv_left >= 100 and $pairing->pv_midle >= 100) || ($pairing->pv_left >= 100 and $pairing->pv_right >= 100) || ($pairing->pv_right >= 100 and $pairing->pv_midle >= 100))) {
                 if (($pairing->pv_right <= $pairing->pv_left) and ($pairing->pv_right <= $pairing->pv_midle)) {
                     if (($pairing->pv_left <= $pairing->pv_midle)) {
