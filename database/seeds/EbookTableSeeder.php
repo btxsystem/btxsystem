@@ -20,7 +20,8 @@ class EbookTableSeeder extends Seeder
                 'pv' => 100,
                 'bv' => 100,
                 'price_markup' => 2000,
-                'description' => 'Materi basic untuk mempermudah anda dalam tahap belajar forex.'
+                'description' => 'Materi basic untuk mempermudah anda dalam tahap belajar forex.',
+                'position' => 1
             ],
             [
                 'title' => 'advanced',
@@ -28,7 +29,8 @@ class EbookTableSeeder extends Seeder
                 'pv' => 100,
                 'bv' => 100,
                 'price_markup' => 2000,
-                'description' => 'Materi basic untuk mempermudah anda dalam tahap belajar forex.'
+                'description' => 'Materi basic untuk mempermudah anda dalam tahap belajar forex.',
+                'position' => 2
             ],
             [
                 'title' => 'renewal_basic',
@@ -36,7 +38,8 @@ class EbookTableSeeder extends Seeder
                 'pv' => 100,
                 'bv' => 100,
                 'price_markup' => 2000,
-                'description' => 'Materi basic untuk mempermudah anda dalam tahap belajar forex.'
+                'description' => 'Materi basic untuk mempermudah anda dalam tahap belajar forex.',
+                'position' => 1
             ],
             [
                 'title' => 'renewal_advanced',
@@ -44,7 +47,8 @@ class EbookTableSeeder extends Seeder
                 'pv' => 100,
                 'bv' => 100,
                 'price_markup' => 2000,
-                'description' => 'Materi basic untuk mempermudah anda dalam tahap belajar forex.'
+                'description' => 'Materi basic untuk mempermudah anda dalam tahap belajar forex.',
+                'position' => 2
             ]
         ]);
     }
