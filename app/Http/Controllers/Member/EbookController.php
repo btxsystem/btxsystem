@@ -38,6 +38,7 @@ class EbookController extends Controller
     }
 
     public function store(Request $request){
+        dd($request);
         $data = [
             'member_id' => Auth::user()->id,
             'ebook_id' => $request->id,
