@@ -70,7 +70,7 @@
                                                 </div>
                                                 <div class="col-lg-6 mb-3">
                                                     <div class="bg-white shadow rounded p-3 border-hover triangle">
-                                                        <div id="flag" class="renewal-basic" aria-hidden="true">
+                                                        <div id="flag" class="renewal-advance" aria-hidden="true">
                                                             <span>Renewal</span>
                                                         </div>
                                                         <div class="row">
@@ -119,7 +119,7 @@
         height: 53px;
         z-index: 0;
         top: -42px;
-        background-color:#D4AF37;
+        background-color: #D4AF37;
     }
     #flag span {
         position: relative;
