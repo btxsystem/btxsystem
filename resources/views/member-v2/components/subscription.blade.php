@@ -38,7 +38,14 @@ div#flag {
 	overflow: hidden;
 	position: relative;
 }
+h2.plan-title {
+	text-align:center !important;		
+	margin-top: 5px !important;
+}
 @media only screen and (min-width: 992px) {
+	h2.plan-title {
+		text-align:left !important;	
+	}
 	div#flag { 
 		background-color: #333;
 		padding: 10px;
@@ -113,7 +120,7 @@ div#flag {
 					<div class="shadow rounded p-3 border-hover bg-white triangle">
 						@if($ebook->access)
 						<div id="flag" aria-hidden="true">
-							<span>Renewal</span>
+							<span class="text-light">Renewal</span>
 						</div>
 						@endif
 						<div class="row">
@@ -128,7 +135,7 @@ div#flag {
 								@php
 								$title = explode("_", $ebook->title)
 								@endphp
-								<h2 class="mb-1 text-dark" style="color: #fb6e10;">
+								<h2 class="plan-title mb-1 text-dark" style="color: #fb6e10;">
 									@if($ebook->access)
 										<span>{{ucwords(str_replace('_', ' ', $ebook->title))}}</span>
 										<div class="clearfix"></div>
@@ -136,7 +143,7 @@ div#flag {
 										<span>{{ucwords(str_replace('_', ' ', $ebook->title))}}</span>
 									@endif
 								</h2>
-								@if($ebook->id == 1 || $ebook->id == 3)
+								@if($ebook->id == 1)
 								<span class="text-dark">Pada modul ini anda akan mempelajari trading dari dasar. Pertama anda akan mengerti istilah-istilah yang digunakan dalam dunia trading, anda akan mempelajari cara membaca grafik dan membuat analisa dasar sendiri.<br></span><br>
 								@else
 								<span class="text-dark">Pada modul ini anda akan mempelajari dunia trading lanjutan. Bagaimana cara membaca pasar dengan penggabungan dua atau lebih analisa, diantaranya analisa secara fundamental dan teknikal, serta mempelajari secara mendalam indikator-indikator teknikal.</span><br>
@@ -146,21 +153,23 @@ div#flag {
 										{{csrf_field()}}
 										<input type="hidden" name="ebook" value="{{$ebook->id == 3 ? 1 : 2}}">
 										<button type="submit" class="btn btn-identity-red text-white btn-sm mt-3 px-5">BUY</button>
-										<a href="{{route('member.ebook.detail', ['type' => strtolower($ebook->id == 3 ? 'basic' : 'advanced')])}}" class="btn btn-light text-dark btn-sm mt-3 px-5">Detail</a>
+										<a href="{{route('member.ebook.detail', ['type' => strtolower($ebook->id == 3 ? 'basic' : 'advanced')])}}" class="btn btn-secondary text-white btn-sm mt-3 px-5">Detail</a>
 									</form>
 								@else
-									<div class="pb-3">
+									<div>
 										@if($ebook->access)
 										<form action="{{route('member.ebook-renewal')}}" method="post">
 											{{csrf_field()}}
 											<input type="hidden" name="ebook" value="{{$ebook->id}}">
 											<button type="submit" class="btn btn-identity-red text-white btn-sm mt-3 px-5">BUY</button>
 											@if(!$ebook->expired)
-												<a href="{{route('member.ebook.detail', ['type' => strtolower($ebook->title)])}}" class="btn btn-light text-dark btn-sm mt-3 px-5">Detail</a>
+												<a href="{{route('member.ebook.detail', ['type' => strtolower($ebook->title)])}}" class="btn btn-secondary text-white btn-sm mt-3 px-5">Detail</a>
 											@endif
 										</form>
 										@else
-										<a href="{{route('member.ebook.detail', ['type' => strtolower($ebook->title), 'username' => $username])}}" class="btn btn-identity-red btn-sm mt-3 px-5">BUY</a>
+										<form action="">
+											<a href="{{route('member.ebook.detail', ['type' => strtolower($ebook->title), 'username' => $username])}}" class="btn btn-identity-red btn-sm mt-3 px-5">BUY</a>
+										</form>
 										@endif
 									</div>
 								@endif
