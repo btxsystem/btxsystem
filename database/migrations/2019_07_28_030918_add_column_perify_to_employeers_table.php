@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddSlugToEbooksTable extends Migration
+class AddColumnPerifyToEmployeersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,8 @@ class AddSlugToEbooksTable extends Migration
      */
     public function up()
     {
-        Schema::table('ebooks', function (Blueprint $table) {
-            $table->text('slug')->nullable()->after('title');
-            $table->integer('position')->nullable();
+        Schema::table('employeers', function (Blueprint $table) {
+            $table->boolean('verification')->default(0)->comment('0: not verification 1: verification');
         });
     }
 
@@ -26,9 +25,8 @@ class AddSlugToEbooksTable extends Migration
      */
     public function down()
     {
-        Schema::table('ebooks', function (Blueprint $table) {
-            $table->dropColumn('slug');
-            $table->dropColumn('position');
+        Schema::table('employeers', function (Blueprint $table) {
+            $table->dropColumn('verification');
         });
     }
 }

@@ -13,23 +13,24 @@
                 <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="">
+            <form action="{{route('member.transaction.topup')}}" method="POST">
+                @csrf
                 <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="form-line">
-                        <input class="form-control" id="nominal" type="number" min="5">
+                        <input class="form-control" name="nominal" id="nominal" type="number" min="5">
                         <label class="form-label">Nominal</label>
                     </div>
                 </div>
                 <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="form-line">
-                        <input class="form-control" id="points" type="text" readonly>
+                        <input class="form-control" name="points" id="points" type="text" readonly>
                     </div>
                 </div>
+                <div class="modal-footer">
+                    <a href="#" class="btn btn-secondary" data-dismiss="modal">Close</a>
+                    <button type="submit" class="btn btn-primary">Topup</a>
+                </div>
             </form>
-            <div class="modal-footer">
-                <a href="#" class="btn btn-secondary" data-dismiss="modal">Close</a>
-                <a href="#" class="btn btn-primary">Topup</a>
-            </div>
             </div>
         </div>
     </div>
@@ -125,11 +126,11 @@
         });
     }
 
-    $('#nominal').change(function(){
+    $('#nominal').keyup(function(){
         var points = $('#nominal').val() / 1000; 
         $('#points').val(points);
     })
-    $('#nominal').keydown(function(){
+    $('#nominal').keyup(function(){
         var points = $('#nominal').val() / 1000; 
         $('#points').val(points);
     })

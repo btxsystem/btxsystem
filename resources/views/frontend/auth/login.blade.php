@@ -435,7 +435,7 @@
           <div class="border-decor_top">
             <div class="col-md-12">
               <section class="section-default wow bounceInLeft" data-wow-duration="1s">
-                <h2 class="ui-title-block">What <strong>Students Say</strong></h2>
+                <h2 class="ui-title-block">Testimonials <strong></strong></h2>
                 <div class="slider-reviews owl-carousel owl-theme owl-theme_mod-c enable-owl-carousel"
                         data-single-item="true"
                         data-auto-play="7000"

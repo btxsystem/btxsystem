@@ -18,6 +18,9 @@ use App\Models\NonMember;
 use App\Models\TransactionNonMember;
 use App\Models\TransactionMember;
 
+use App\Mail\WelcomeMail;
+use Illuminate\Support\Facades\Mail;
+
 class ExploreController extends Controller
 {
   public $pathView = 'member-v2';
@@ -28,6 +31,12 @@ class ExploreController extends Controller
   //     redirect()->route('member.login');
   //   }
   // }
+
+  public function testMail()
+  {
+    Mail::to('zzzz@gmail.com')->send(new WelcomeMail());
+  }
+
   public function home()
   {
     return view($this->pathView . '.components.home');
@@ -42,7 +51,7 @@ class ExploreController extends Controller
       'bookEbooks' => function($q) {
         $q->select('id', 'book_id', 'ebook_id')->with([
           'book' => function($q) {
-            $q->select('id', 'title', 'article')->with([
+            $q->select('id', 'title', 'article', 'slug')->with([
               'imageBooks' => function($q) {
                 $q->select('id', 'image_id', 'book_id')->with([
                   'image'
@@ -72,13 +81,13 @@ class ExploreController extends Controller
   /**
    * Index
    */
-  public function detail(Request $request, $type = 'basic')
+  public function detail(Request $request, $type = 'basic', $username = null)
   {
     $books = Ebook::whereIn('id', [1, 2])->select('id', 'title', 'price', 'pv', 'price_markup', 'bv')->with([
       'bookEbooks' => function($q) {
         $q->select('id', 'book_id', 'ebook_id')->with([
           'book' => function($q) {
-            $q->select('id', 'title', 'article')->with([
+            $q->select('id', 'title', 'article', 'slug')->with([
               'imageBooks' => function($q) {
                 $q->select('id', 'image_id', 'book_id')->with([
                   'image'
@@ -95,7 +104,20 @@ class ExploreController extends Controller
     }  
     ])->where('title', $type)->get();
 
-    $username = $request->input('username') ?? \Session::get('referral');
+    $referral = $request->input('username') ?? \Session::get('referral');
+
+    
+    if(Employeer::where('username', $username)->count() > 0 || \Session::has('referral')) {
+      if(\Session::has('referral')) {
+        $referral = \Session::get('referral');
+        if($referral != $username) {
+          // \Session::forget('referral');
+        }
+      } else {
+        $referral = $username;
+        \Session::put('referral', $username);
+      }
+    }
 
     // return response()->json([
     //   'data' => $books
@@ -103,7 +125,7 @@ class ExploreController extends Controller
 
     return view($this->pathView . '.components.list-ebook')->with([
       'books' => $books,
-      'username' => $username
+      'username' => $referral
     ]);
   }
 
@@ -158,7 +180,7 @@ class ExploreController extends Controller
       $excludesEbooks = [3, 4];
     }
 
-    $ebooks = Ebook::whereNotIn('id', $excludesEbooks)
+    $ebooks = Ebook::whereNotIn('id', [3, 4])
     ->select('id', 'price', 'pv', 'bv', 'price_markup', 'description', 'title')
     ->orderBy('position', 'ASC')
     ->get();
@@ -168,6 +190,7 @@ class ExploreController extends Controller
     if(Employeer::where('username', $username)->count() > 0 || \Session::has('referral')) {
       if(\Session::has('referral')) {
         $referral = \Session::get('referral');
+        \Session::forget('referral');
       } else {
         $referral = $username;
         \Session::put('referral', $username);
@@ -175,7 +198,9 @@ class ExploreController extends Controller
     } else {
       redirect()->route('member.home');
     }
-
+    // return response()->json([
+    //   'data' => $ebooks
+    // ], 200);
     // $transactions = DB::table('non_members')
     //   ->join('transaction_non_members', 'non_members.id', '=', 'transaction_non_members.non_member_id')
     //   ->select('transaction_non_members.ebook_id')
@@ -191,15 +216,19 @@ class ExploreController extends Controller
   /**
    * Chapter Lists
    */
-  public function chapters($id)
+  public function chapters($slug)
   {
     $book = Book::query()
-      ->select('id', 'title')
-      ->where('id', $id)
+      ->select('id', 'title', 'slug')
+      ->where('slug', $slug)
       ->with([
-        'chapters'
+        'lessons'
       ])
-      ->firstOrFail();
+      ->first();
+
+    if(!$book) {
+      return redirect()->route('member.explore');
+    }
 
     return view($this->pathView . '.components.list-chapter')->with([
       'book' => $book
@@ -218,12 +247,47 @@ class ExploreController extends Controller
         'lessons:id,chapter_id,title,type,content',
         'book:id,title'
       ])
-      ->firstOrFail();
+      ->first();
+
+    if(!$chapter) {
+      return redirect()->route('member.explore');
+    }
+
     // return response()->json([
     //   'data' => $chapter
     // ], 200);
     return view($this->pathView . '.components.detail-chapter')->with([
       'chapter' => $chapter
+    ]);;
+  }
+
+  /**
+   * Chapter Detail
+   */
+  public function bookDetail($slug)
+  {
+    $book = Book::query()
+      ->select('id', 'title', 'slug')
+      ->where('slug', $slug)
+      ->with([
+        'lessons:id,book_id,title,type,content',
+        'bookEbook' => function($q) {
+          $q->with([
+            'ebook'
+          ]);
+        }
+      ])
+      ->first();
+
+    if(!$book) {
+      return redirect()->route('member.explore');
+    }
+
+    // return response()->json([
+    //   'data' => $chapter
+    // ], 200);
+    return view($this->pathView . '.components.book-detail')->with([
+      'book' => $book
     ]);;
   }
 

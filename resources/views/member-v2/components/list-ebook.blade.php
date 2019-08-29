@@ -16,7 +16,7 @@
 @section('style_class')bit-bg4 @stop
 
 @section('content')
-<div class="bg-1 col-12 d-flex justify-content-center" style="position: absolute; height: 50vh;">
+<div class="col-12 d-flex justify-content-center" style="position: absolute; height: 50vh;background-color:#ffb320;">
 	</div>
 	<div class="col-lg-12 pb-3">
 		@include('member-v2.partials.navbar-detail')
@@ -46,7 +46,7 @@
         <div class="row mb-5">
         @foreach($book->bookEbooks as $ebook)
 					@if(!$book->access)
-          <a href="#" class="col-lg-3 mb-3 hover">
+          <div class="col-lg-3 mb-3 hover">
 						<div class="shadow rounded p-3" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
 							<div style="overflow: hidden;" class="mb-2">
 								@if(count($ebook->book->imageBooks) > 0)
@@ -58,9 +58,9 @@
 							<span style="font-size: 20px; font-weight: bold;">{{ $ebook->book->title }}</span><br>
 							<span>{{ $ebook->book->article }}</span>
 						</div>
-					</a>
+					</div>
 					@else
-					<a href="{{route('chapter.list', ['id' => $ebook->id])}}" class="col-lg-3 mb-3 hover">
+					<a href="{{route('book.detail', ['slug' => $ebook->book->slug])}}" class="col-lg-3 mb-3 hover">
 						<div class="shadow rounded p-3" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
 							<div style="overflow: hidden;" class="mb-2">
 								@if(count($ebook->book->imageBooks) > 0)
@@ -90,7 +90,8 @@
 								<source src="{{$video->videos[0]->path_url}}" type="video/mp4">
 							Your browser does not support the video tag.
 							</video>
-						</div>
+						</div><br/>
+						<span style="font-size: 20px; font-weight: bold;">{{ $video->videos[0]->title }}</span>
 					</div>
 				@endforeach
 				</div>
@@ -170,61 +171,13 @@
 		</div>
 	<!-- End Modal -->
 
-<!-- <div class="bit-jumbo"></div>
-<div class="container mb50" style="padding-left: 5%; padding-right: 5%;">
-<div class="row mt50">
-    <div class="col-md-12">
-      <div class="card noborder" style="margin-top: -230px;">
-          <div class="card-body">
-            <div class="media row">
-                <div class="media-left col-lg-4 col-sm-5 col-12 mb-4">
-                  <img src="{{asset('assetsebook/assets/img/illustration.png')}}" class="img-fluid media-object mx-auto d-block">
-                </div>
-                <div class="media-body m30 col-lg-7 col-sm-6 col-10" style="padding: 0px;">
-                  <button class="btn btn-sm btn-warning bit-btn3">
-                  FEATURED
-                  </button>
-                  <h5 class="media-heading fz20">Menjadi Seorang Web Developer</h5>
-                  <p class="fz14">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                  <hr>
-                  <div class="float-right">
-                      <button class="btn btn-md btn-warning bit-btn5">
-                      Mulai Belajar
-                      </button>
-                  </div>
-                </div>
-            </div>
-          </div>
-      </div>
-
-      <div class="bit-line">
-          <img src="{{asset('assetsebook/assets/img/book-icon.png')}}" class="mtmin5 mr10"> <span>Semua Pelajaran</span>
-          <hr class="mb40">
-          <div class="row">
-            @foreach($books as $book)
-            <div class="col-lg-3 col-sm-6 col-6">
-                <div class="card bit-card2 shadow-sb">
-                  <div class="card-body d-flex flex-column">
-                    <a href="{{route('chapter.list', ['id' => $book->id])}}">
-                      <img src="{{asset('assetsebook/assets/img/illustration7.png')}}" class="img-fluid media-object mx-auto d-block">
-                        <h5 class="media-heading fz20 mt20 text-dark">{{ $book->title }}</h5>
-                        <p class="fz14 text-dark">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore ab quas atque, vero ipsa odio quod quia, dolor pariatur exercitationem aperiam soluta.</p>
-                    </a>
-
-                  </div>
-                </div>
-            </div>
-            @endforeach
-          </div>
-      </div>
-    </div>
-</div> -->
 @stop
 
 @section('footer_scripts')
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script src="{{asset('assetsebook/js/helper.js')}}"></script>
 <script>
 let auth = "{{Auth::guard('nonmember')->user() || Auth::guard('user')->user()}}"
@@ -241,7 +194,11 @@ function selectedSubscription(param) {
 
   const data = JSON.parse(param)
 
-	$('#total_price').html(toIDR(data.price))
+	<?php if(Auth::guard('user')->user()){?>
+		$('#total_price').html(toIDR(data.price))
+	<?php } else {?>
+		$('#total_price').html(toIDR(parseInt(data.price) + parseInt(data.price_markup)))
+	<?php } ?>
 	$('#ebook').val(data.id)
 	$('#income').val(data.price_markup)
 }
@@ -360,17 +317,18 @@ function submit() {
 			const {message, success} = result
 
 			if(!success) {
-				alert('Failed Regiester')
+				swal("Fail", "Cant't Register", "error");
 				return false
 			}
 
-			alert('Success register')
-			
-			if(auth != '') {
-				window.location.href = '{{ route("member.home") }}'
-			} else {
-				window.location.href = '{{ route("member.login") }}'
-			}
+			swal("Success", "Register Successfully", "success").then((value) => {
+				if(auth != '') {
+					window.location.href = '{{ route("member.home") }}'
+				} else {
+					window.location.href = '{{ route("member.home") }}'
+				}	
+			});
+
 		},
 		error: function(err) {
 			console.log(err)

@@ -11,6 +11,61 @@
 	background-color: transparent!important;
 	background: transparent!important;
 }
+div#flag { 
+	background-color: #333;
+	padding: 6%;
+	font-size: 11px !important;
+	border-radius: 2px;
+	-ms-transform: rotate(40deg);
+	-webkit-transform: rotate(40deg);
+	transform: rotate(40deg);
+	width: 50%;
+	text-align: center;
+	position: absolute;
+	right: -12%;
+	height: 8%;
+	z-index: 0;
+	top: -5%;
+	background-color:#D4AF37;
+	z-index: 2;
+}
+#flag span {
+	position: relative;
+	left: 25%;
+	top: 41%;;
+}
+.triangle{
+	overflow: hidden;
+	position: relative;
+}
+@media only screen and (min-width: 992px) {
+	div#flag { 
+		background-color: #333;
+		padding: 10px;
+		font-size: 16px !important;
+		border-radius: 2px;
+		-ms-transform: rotate(40deg);
+		-webkit-transform: rotate(40deg);
+		transform: rotate(40deg);
+		width: 160px;
+		text-align: center;
+		position: absolute;
+		right: -8%;
+		height: 73px;
+		z-index: 0;
+		top: -30;
+		background-color:#D4AF37;
+	}
+	#flag span {
+		position: relative;
+		left: 20px;
+		top: 28px;
+	}
+	.triangle{
+		overflow: hidden;
+		position: relative;
+	}
+}
 </style>
 @stop
 
@@ -43,19 +98,24 @@
 					@if(Auth::guard('nonmember')->user() != null || Auth::guard('user')->user() != null)
 						<a href="{{route('member.logout')}}" class="btn btn-identity-red btn-block">Logout</a>
 					@else
-						<a href="{{route('member.login')}}" class="btn btn-identity-red btn-block">Login</a>
+						<button onclick="showModalLogin()" class="btn btn-identity-red btn-block text-white">Login</button>
 					@endif
 					</div>
 				</div>
 			</div>			
 		</div>		
 	</div>
-	<div class="pt-5 pb-5" style="background-color:#4a4a4a;">
+	<div class="pt-5 pb-5" style="background-color:#ffb320;">
 		<div class="container pt-5">
 			<div class="row">
 				@foreach($ebooks as $ebook)
 				<div class="col-lg-6 mb-3">
-					<div class="shadow rounded p-3 border-hover" style="background-color:#333;">
+					<div class="shadow rounded p-3 border-hover bg-white triangle">
+						@if($ebook->access)
+						<div id="flag" aria-hidden="true">
+							<span>Renewal</span>
+						</div>
+						@endif
 						<div class="row">
 							<div class="col-lg-3 d-flex align-items-center">
 								@if($ebook->id == 1 || $ebook->id == 3)
@@ -65,11 +125,21 @@
 								@endif
 							</div>
 							<div class="col-lg-9">
-								<h2 class="mb-1 text-identity-yellow" style="color: #fb6e10;">{{ucwords(str_replace('_', ' ', $ebook->title))}}</h2>
+								@php
+								$title = explode("_", $ebook->title)
+								@endphp
+								<h2 class="mb-1 text-dark" style="color: #fb6e10;">
+									@if($ebook->access)
+										<span>{{ucwords(str_replace('_', ' ', $ebook->title))}}</span>
+										<div class="clearfix"></div>
+									@else
+										<span>{{ucwords(str_replace('_', ' ', $ebook->title))}}</span>
+									@endif
+								</h2>
 								@if($ebook->id == 1 || $ebook->id == 3)
-								<span class="text-white">Pada modul ini anda akan mempelajari trading dari dasar. Pertama anda akan mengerti istilah-istilah yang digunakan dalam dunia trading, anda akan mempelajari cara membaca grafik dan membuat analisa dasar sendiri.<br></span><br>
+								<span class="text-dark">Pada modul ini anda akan mempelajari trading dari dasar. Pertama anda akan mengerti istilah-istilah yang digunakan dalam dunia trading, anda akan mempelajari cara membaca grafik dan membuat analisa dasar sendiri.<br></span><br>
 								@else
-								<span class="text-white">Pada modul ini anda akan mempelajari dunia trading lanjutan. Bagaimana cara membaca pasar dengan penggabungan dua atau lebih analisa, diantaranya analisa secara fundamental dan teknikal, serta mempelajari secara mendalam indikator-indikator teknikal.</span><br>
+								<span class="text-dark">Pada modul ini anda akan mempelajari dunia trading lanjutan. Bagaimana cara membaca pasar dengan penggabungan dua atau lebih analisa, diantaranya analisa secara fundamental dan teknikal, serta mempelajari secara mendalam indikator-indikator teknikal.</span><br>
 								@endif
 								@if($ebook->id == 3 || $ebook->id == 4)
 									<form action="{{route('member.ebook-renewal')}}" method="post">
@@ -81,9 +151,16 @@
 								@else
 									<div class="pb-3">
 										@if($ebook->access)
-										<a href="{{route('member.ebook.detail', ['type' => strtolower($ebook->title)])}}" class="btn btn-light text-dark btn-sm mt-3 px-5">Detail</a>
+										<form action="{{route('member.ebook-renewal')}}" method="post">
+											{{csrf_field()}}
+											<input type="hidden" name="ebook" value="{{$ebook->id}}">
+											<button type="submit" class="btn btn-identity-red text-white btn-sm mt-3 px-5">BUY</button>
+											@if(!$ebook->expired)
+												<a href="{{route('member.ebook.detail', ['type' => strtolower($ebook->title)])}}" class="btn btn-light text-dark btn-sm mt-3 px-5">Detail</a>
+											@endif
+										</form>
 										@else
-										<a href="{{route('member.ebook.detail', ['type' => strtolower($ebook->title)])}}" class="btn btn-identity-red btn-sm mt-3 px-5">BUY</a>
+										<a href="{{route('member.ebook.detail', ['type' => strtolower($ebook->title), 'username' => $username])}}" class="btn btn-identity-red btn-sm mt-3 px-5">BUY</a>
 										@endif
 									</div>
 								@endif
@@ -166,12 +243,57 @@
 		  </div>
 		</div>
 	<!-- End Modal -->
+	<!-- Modal -->
+	<div class="modal fade" id="modal-login" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content text-white">
+		      <div class="modal-body">
+						<h4 class="card-title text-dark">Login Untuk Melanjutkan</h4>
+						<form method="post" class="my-login-validation" novalidate="" action="{{route('member.login.post')}}">
+						@csrf
+								<div class="form-group">
+									<label for="email" class="text-dark">Username</label>
+									<label class="sr-only" for="inlineFormInputGroup"></label>
+									<div class="input-group mb-2">
+											<div class="input-group-prepend">
+												<div class="input-group-text"><img src="{{asset('assetsebook/assets/img/email.png')}}"></div>
+											</div>
+											<input type="text" class="form-control" name="username" placeholder="Masukan username anda">
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="password" class="text-dark">Password</label>
+									<label class="sr-only" for="inlineFormInputGroup"></label>
+									<div class="input-group mb-2">
+											<div class="input-group-prepend">
+												<div class="input-group-text"><img src="{{asset('assetsebook/assets/img/password.png')}}"></div>
+											</div>
+											<input type="password" class="form-control" name="password" placeholder="Masukan password anda">
+									</div>
+									<a href="#" class="float-right linkgray mb30 fz13">Lupa Password?</a>
+								</div>
+								<div class="form-group">
+									<button class="btn btn-md btn-block btn-identity-red text-white" style="border-radius: 30px;">
+									Login
+									</button>
+								</div>
+
+								<!-- <div class="mt-4 text-center colorgray">
+									Belum punya akun? <a href="{{route('member.home')}}" class="linkgrayoutline">Daftar</a>
+								</div> -->
+						</form>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+	<!-- End Modal -->	
 @stop
 @section('footer_scripts')
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <script src="{{asset('assetsebook/js/helper.js')}}"></script>
+
 <script>
 function selectedSubscription(param = null) {
   $('#modal-subscription').modal('show')
@@ -238,6 +360,10 @@ function submit() {
 			console.log(err)
 			alert('Failed Register')
 		}});
+}
+
+function showModalLogin() {
+	$('#modal-login').modal('show')
 }
 </script>
 @stop

@@ -3,6 +3,7 @@
   border-radius: 5px;
   position: absolute;
   background: #b92240;
+  margin-left: 50px;
   /*box-shadow: 0 3px 0 0 #52001b;*/
 }
 .btnBook .btn a{

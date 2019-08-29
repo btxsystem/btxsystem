@@ -10,6 +10,9 @@ interface RegisterService {
 
 class RegisterServiceMake implements RegisterService
 {
+  /**
+   * 
+   */
   function createNonMember($builder) {
     $check = NonMember::where('username', $builder->getUsername())->first();
 

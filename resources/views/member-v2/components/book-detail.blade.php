@@ -21,23 +21,8 @@
 <div class="container-fluid">
     <div class="row">
       <div id="view" class="col-xl-3 col-lg-4 col-sm-5 scroll" style="background: #FFF;height:100vh !important">
-          <h3 class="mt30 pl15">{{ $chapter->title }} <span id="percentage"></span></h3>
+          <h3 class="mt30 pl15">{{ $book->title }} <span id="percentage"></span></h3>
           <nav class="navbar">
-            <!-- <ul class="navbar-nav bit-ul">
-                @php
-                $i = 1
-                @endphp
-                @foreach($chapter->lessons as $lesson)
-                <li class="nav-item" onclick="changeLesson({{$i  - 1}})">
-                  <p class="float-left w8">{{$i++}}. {{ $lesson->title }}</p>
-                  @if($lesson->solved)
-                  <p class="float-right">
-                    <i class="fa fa-check text-success"></i>
-                  </p>
-                  @endif>
-                </li>
-                @endforeach
-            </ul> -->
             <ul class="navbar-nav bit-ul">
             <div id="lessonlist"></div>
             <ul>
@@ -70,12 +55,12 @@
 <script>
   let lessons = [];
 
-  <?php foreach($chapter->lessons as $k => $v){?>
+  <?php foreach($book->lessons as $k => $v){?>
 
   lessons[<?=$k;?>] = <?=$v;?>;
   <?php } ?>
 
-  let chapterId = '{{ $chapter->id }}'
+  let chapterId = '{{ $book->id }}'
   let currentLesson = lessons[0]
   let maxIndexLesson = lessons.length - 1
   let percentage = 0;
@@ -124,12 +109,12 @@
         route: '{{route("member.explore")}}'
       },
       {
-        title: '{{$chapter->book->title}}',
-        route: "{{route('chapter.list', ['id' => $chapter->book->id])}}"
+        title: '{{ucwords($book->bookEbook->ebook->title)}}',
+        route: "{{route('member.ebook.detail', ['type' => $book->bookEbook->ebook->title])}}"
       },
       {
-        title: '{{$chapter->title}}',
-        route: "{{route('chapter.detail', ['id' => $chapter->id])}}"
+        title: '{{$book->title}}',
+        route: '{{route("book.detail", ["slug" => $book->slug])}}'
       },
       {
         title: currentLesson.title,
@@ -185,7 +170,7 @@
       solvedLesson(currentLesson)
     }
     if(index == maxIndexLesson) {
-      alert('Berhasil menyelesaikan chapter {{$chapter->title}}')
+      alert('Berhasil menyelesaikan chapter')
       window.location.href = '{{route("member.explore")}}'
       return
     }

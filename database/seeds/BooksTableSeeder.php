@@ -16,10 +16,12 @@ class BooksTableSeeder extends Seeder
             [
                 'title' => 'Trading',
                 'article' => 'Lorem imspus doler ismte',
+                'slug' => str_slug('trading')
             ],
             [
                 'title' => 'Trading Advanced',
                 'article' => 'Lorem imspus doler ismte',
+                'slug' => str_slug('trading-advanced')
             ],
         ]);
     }

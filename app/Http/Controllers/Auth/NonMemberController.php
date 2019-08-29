@@ -41,6 +41,6 @@ class NonMemberController extends Controller
       Auth::guard('user')->logout();
     }
     // Tambah logic member
-    return redirect()->route('member.login');
+    return redirect()->route('member.home');
   }
 }

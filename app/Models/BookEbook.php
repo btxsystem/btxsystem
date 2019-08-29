@@ -24,4 +24,9 @@ class BookEbook extends Model
   {
     return $this->hasOne('\App\Models\Book', 'id', 'book_id');
   }
+
+  public function ebook()
+  {
+    return $this->hasOne('\App\Models\Ebook', 'id', 'ebook_id');
+  }
 }

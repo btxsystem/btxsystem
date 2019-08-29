@@ -55,6 +55,6 @@ class Kernel extends HttpKernel
         'auth.basic'    => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'employeer'     => \App\Http\Middleware\Employeer::class,
         'cors'          =>  \App\Http\Middleware\Cors::class , 
-         
+        'ebook.access'          =>  \App\Http\Middleware\EbookAccess::class , 
     ];
 }

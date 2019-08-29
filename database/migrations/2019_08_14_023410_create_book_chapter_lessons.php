@@ -15,12 +15,12 @@ class CreateBookChapterLessons extends Migration
     {
         Schema::create('book_chapter_lessons', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('chapter_id')->unsigned();
+            $table->bigInteger('book_id')->unsigned();
             $table->string('title')->nullable();
             $table->text('content')->nullable();
             $table->string('slug')->nullable();
             $table->string('type')->nullable();
-            $table->foreign('chapter_id')->references('id')->on('book_chapters')->onDelete('cascade');
+            $table->foreign('book_id')->references('id')->on('books')->onDelete('cascade');
             $table->timestamps();
         });
     }

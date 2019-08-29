@@ -49,7 +49,10 @@
                                         <div class="container">
                                             <div class="row">
                                                 <div class="col-lg-6 mb-3">
-                                                    <div class="bg-white shadow rounded p-3 border-hover">
+                                                    <div class="bg-white shadow rounded p-3 border-hover triangle">
+                                                        <div id="flag" class="renewal-basic" aria-hidden="true">
+                                                            <span>Renewal</span>
+                                                        </div>
                                                         <div class="row">
                                                             <div class="col-lg-3 d-flex align-items-center">
                                                                 <img src="http://ebook.bitrexgo.id/assetsebook/v2/img/1.png" class="mx-auto d-block">
@@ -60,13 +63,16 @@
                                                                 <br>
                                                                 <h5 style="color:black" id="description-basic"></h5><br>
                                                                 <a href="#" data-toggle="modal" data-target="#buy" class="btn btn-danger btn-sm mt-3 px-5" id="cart1">BUY</a>
-                                                                <a href="#" class="btn btn-danger btn-sm mt-3 px-5" id="view1">VIEW</a>
+                                                                <a href="{{route('member.ebook.referral', ['type' => 'advance', 'username' => isset($profile->username) ? $profile->username : $profile['username']])}}" class="btn btn-danger btn-sm mt-3 px-5" id="view1">VIEW</a>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6 mb-3">
-                                                    <div class="bg-white shadow rounded p-3 border-hover">
+                                                    <div class="bg-white shadow rounded p-3 border-hover triangle">
+                                                        <div id="flag" class="renewal-advance" aria-hidden="true">
+                                                            <span>Renewal</span>
+                                                        </div>
                                                         <div class="row">
                                                             <div class="col-lg-3 d-flex align-items-center">
                                                                 <img src="http://ebook.bitrexgo.id/assetsebook/v2/img/1.png" class="mx-auto d-block">
@@ -77,7 +83,7 @@
                                                                 <br>
                                                                 <h5 style="color:black" id="advance-description"></h5><br>
                                                                 <a href="#" data-toggle="modal" data-target="#buy" class="btn btn-danger btn-sm mt-3 px-5" id="cart2">BUY</a>
-                                                                <a href="#" class="btn btn-danger btn-sm mt-3 px-5" id="view2">VIEW</a>
+                                                                <a href="{{route('member.ebook.referral', ['type' => 'advance', 'username' => isset($profile->username) ? $profile->username : $profile['username']])}}" class="btn btn-danger btn-sm mt-3 px-5" id="view2">VIEW</a>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -96,7 +102,35 @@
 </section>
 @stop
 
-@section('footer_scripts')  
+@section('footer_scripts')
+<style>
+    div#flag { 
+        background-color: #333;
+        padding: 10px;
+        font-size: 11px !important;
+        border-radius: 2px;
+        -ms-transform: rotate(40deg);
+        -webkit-transform: rotate(40deg);
+        transform: rotate(40deg);
+        width: 160px;
+        text-align: center;
+        position: relative;
+        right: -77%;
+        height: 53px;
+        z-index: 0;
+        top: -42px;
+        background-color: #D4AF37;
+    }
+    #flag span {
+        position: relative;
+        left: 28px;
+        top: 18px;
+    }
+    .triangle{
+        overflow: hidden;
+        position: relative;
+    }
+</style>  
 <script type="text/javascript">
     $(document).ready(function () {
         $('#cart1').click(function(){
@@ -113,11 +147,21 @@
 			success: function (data) {
 				for (let index = 0; index < data.length; index++) {
                     if(index == 0){
-                        $('#basic').text(data[index].title);
+                        var str = data[index].id == 3 ? data[index].title.replace('renewal_', ' ') : data[index].title ;
+                        str = str.toLowerCase().replace(/\b[a-z]/g, function(letter) {
+                            return letter.toUpperCase();
+                        });
+                        $('#basic').text(str);
+                        data[index].id == 3 ? $('.renewal-basic').show() : $('.renewal-basic').hide() ;
                         $('#description-basic').text(data[index].description);
                         $('#basic-value').val(data[index].id);
                     }else{
-                        $('#advance').text(data[index].title);
+                        var str = data[index].id == 4 ? data[index].title.replace('renewal_', ' ') : data[index].title ;
+                        str = str.toLowerCase().replace(/\b[a-z]/g, function(letter) {
+                            return letter.toUpperCase();
+                        });
+                        $('#advance').text(str);
+                        data[index].id == 4 ? $('.renewal-advance').show() : $('.renewal-advance').hide() ;
                         $('#advance-description').text(data[index].description);
                         $('#advance-value').val(data[index].id);
                     }

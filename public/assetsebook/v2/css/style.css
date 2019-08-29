@@ -60,9 +60,14 @@ a.hover .shadow:hover {
 	color: #ffb320 !important;
 }
 
+.bg-identity-yellow {
+	color: #ffb320 !important;
+}
+
 .detail-padding {
 	padding-top: 100px;
 }
+
 
 @media (max-width: 450px) {
 	.detail-padding {

@@ -1,4 +1,4 @@
-<nav class=" navbar navbar-inverse bg-1">
+<nav class=" navbar navbar-inverse" style="background-color:#ffb320;">
          <div class="container-fluid">
             <div class="navbar-header">
                <a class="navbar-brand" href="{{ url()->previous() }}">
