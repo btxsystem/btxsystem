@@ -75,6 +75,26 @@
 	</div>
 </div>
 
+<div class="modal fade" id="warning" tabindex="-1" role="dialog" aria-labelledby="modal-warning" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="modal-warning">Warning!!!</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<h5>You do not have enough points, you must refill!</h5>
+			</div>
+			<div class="modal-footer">
+				<a class="btn btn-secondary" data-dismiss="modal">Close</a>
+			</div>
+		</div>
+	</div>
+</div>
+	
+
 <section class="content ecommerce-page">
 	<div class="block-header">
 		<div class="row">
@@ -192,9 +212,22 @@
 				}
 			});
 		}else{
-			$('#register').modal('show');
-			$('#parent').attr('value',parent);
-			$('#position').attr('value',position);
+			$.ajax({
+				type: 'GET',
+				url: '/member/select/bitrex-points',
+				success: function (data) {
+					if (data.bitrex_points >= 280) {
+						$('#register').modal('show');
+						$('#parent').attr('value',parent);
+						$('#position').attr('value',position);		
+					}else{
+						$('#warning').modal('show');
+					}
+				},
+				error: function() { 
+					console.log("Error");
+				}
+			});
 		}
 	};
 

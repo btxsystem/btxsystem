@@ -22,4 +22,9 @@ class BitrexPointController extends Controller
         $history = HistoryBitrexPoints::where('id_member',$data->id)->orderBy('created_at','desc')->paginate(3);
         return response()->json(['points'=>$history]); 
     }
+
+    public function getBitrexPoints(){
+        $data = DB::table('employeers')->where('id',Auth::id())->select('bitrex_points')->first();
+        return response()->json($data, 200);
+    }
 }
