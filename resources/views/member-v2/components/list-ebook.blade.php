@@ -134,14 +134,16 @@
 							@else
 							<input type="text" class="form-control" id="referralCode" aria-describedby="emailHelp" placeholder="Referral" required>
 							@endif
-							<span class="text-white d-none" id="referralErrorMessage">Referral tidak ditemukan.</span>
+							<span class="text-danger d-none" id="referralErrorMessage">Referral tidak ditemukan.</span>
+							<span class="text-success d-none" id="referralSuccessMessage">Referral dapat digunakan.</span>
 					  </div>
 						@endif
 						@if(!Auth::guard('nonmember')->user() && !Auth::guard('user')->user())
 						<div class="form-group">
 					    <label for="exampleInputPassword1">Username <small class="text-danger">*</small></label>
 					    <input type="text" class="form-control" id="username" placeholder="Username" required>
-							<span class="text-white d-none" id="usernameErrorMessage">Username telah dipakai.</span>
+							<span class="text-danger d-none" id="usernameErrorMessage">Username telah dipakai.</span>
+							<span class="text-success d-none" id="usernameSuccessMessage">Username dapat digunakan.</span>
 					  </div>
 					  <div class="form-group">
 					    <label for="exampleInputPassword1">First Name <small class="text-danger">*</small></label>
@@ -219,11 +221,17 @@ function checkUsername () {
 			if(!success) {
 				//alert(message)
 				$('#username').val('')
+				$('#usernameSuccessMessage').addClass('d-none')
 				$('#usernameErrorMessage').removeClass('d-none')
+				$('#username').addClass('is-valid')
+				$('#username').addClass('is-invalid')
 				return false
 			}
 
+			$('#usernameSuccessMessage').removeClass('d-none')
 			$('#usernameErrorMessage').addClass('d-none')
+			$('#username').removeClass('is-invalid')
+			$('#username').addClass('is-valid')
 			//window.location.reload()
 		},
 		error: function(err) {
@@ -249,11 +257,17 @@ function checkReferral () {
 			if(!success) {
 				//alert(message)
 				$('#referralCode').val('')
+				$('#referralSuccessMessage').addClass('d-none')
 				$('#referralErrorMessage').removeClass('d-none')
+				$('#referralCode').addClass('is-valid')
+				$('#referralCode').addClass('is-invalid')
 				return false
 			}
 
+			$('#referralSuccessMessage').removeClass('d-none')
 			$('#referralErrorMessage').addClass('d-none')
+			$('#referralCode').removeClass('is-invalid')
+			$('#referralCode').addClass('is-valid')
 
 			//alert(message)
 			//window.location.reload()
