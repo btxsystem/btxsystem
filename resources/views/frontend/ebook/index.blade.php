@@ -119,7 +119,7 @@
         height: 53px;
         z-index: 0;
         top: -42px;
-        background-color:#D4AF37;
+        background-color: #D4AF37;
     }
     #flag span {
         position: relative;
