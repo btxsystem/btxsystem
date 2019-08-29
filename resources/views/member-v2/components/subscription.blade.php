@@ -13,32 +13,32 @@
 }
 div#flag { 
 	background-color: #333;
-	padding: 10px;
-	font-size: 14px !important;
+	padding: 6%;
+	font-size: 11px !important;
 	border-radius: 2px;
 	-ms-transform: rotate(40deg);
 	-webkit-transform: rotate(40deg);
 	transform: rotate(40deg);
-	width: 160px;
+	width: 50%;
 	text-align: center;
 	position: absolute;
-	right: -13%;
-	height: 73px;
+	right: -12%;
+	height: 8%;
 	z-index: 0;
-	top: -30;
+	top: -5%;
 	background-color:#D4AF37;
 	z-index: 2;
 }
 #flag span {
 	position: relative;
-	left: 20px;
-	top: 28px;
+	left: 25%;
+	top: 41%;;
 }
 .triangle{
 	overflow: hidden;
 	position: relative;
 }
-@media only screen and (win-width: 992px) {
+@media only screen and (min-width: 992px) {
 	div#flag { 
 		background-color: #333;
 		padding: 10px;
@@ -111,9 +111,11 @@ div#flag {
 				@foreach($ebooks as $ebook)
 				<div class="col-lg-6 mb-3">
 					<div class="shadow rounded p-3 border-hover bg-white triangle">
+						@if($ebook->access)
 						<div id="flag" aria-hidden="true">
 							<span>Renewal</span>
 						</div>
+						@endif
 						<div class="row">
 							<div class="col-lg-3 d-flex align-items-center">
 								@if($ebook->id == 1 || $ebook->id == 3)
@@ -291,6 +293,7 @@ div#flag {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <script src="{{asset('assetsebook/js/helper.js')}}"></script>
+
 <script>
 function selectedSubscription(param = null) {
   $('#modal-subscription').modal('show')
