@@ -97,7 +97,7 @@
 											<input type="hidden" name="ebook" value="{{$ebook->id}}">
 											<button type="submit" class="btn btn-identity-red text-white btn-sm mt-3 px-5">BUY</button>
 											@if(!$ebook->expired)
-												<a href="{{route('member.ebook.detail', ['type' => strtolower($ebook->id == 3 ? 'basic' : 'advanced')])}}" class="btn btn-light text-dark btn-sm mt-3 px-5">Detail</a>
+												<a href="{{route('member.ebook.detail', ['type' => strtolower($ebook->name)])}}" class="btn btn-light text-dark btn-sm mt-3 px-5">Detail</a>
 											@endif
 										</form>
 										@else
