@@ -11,7 +11,7 @@ List Of Users Nonactive
     <h1>Users Nonactive</h1>
     <ol class="breadcrumb">
         <li>
-            <a href="#">Admin Management</a>
+            <a href="#">Members</a>
         </li>
         <li class="active">Users Nonactive</li>
     </ol>
@@ -75,8 +75,8 @@ List Of Users Nonactive
                   {data: 'name', name: 'name'},
                   {data: 'status', name: 'status', searchable: false},
                   {data: 'hp', name: 'hp'},
-                  {data: 'rank', name: 'rank', searchable: false},
-                  {data: 'action', name: 'action', orderable: false, searchable: false},
+                  {data: 'rank', name: 'rank', searchable: false, className:'text-center'},
+                  {data: 'action', name: 'action', orderable: false, searchable: false, className:'text-center'},
               ]
           });
           

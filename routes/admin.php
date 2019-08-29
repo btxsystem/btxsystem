@@ -103,9 +103,19 @@ Route::group(['prefix' => 'select', 'as'=> 'select.'], function () {
     });
 
     Route::group(['prefix'=>'members','as'=>'members.'], function(){
+        // Route::get('/active', ['as' => 'active', 'uses' => 'Admin\MemberController@index']);
+        // Route::get('/nonactive', ['as' => 'nonactive', 'uses' => 'Admin\MemberController@member_nonactive']);
+        // Route::get('/{id}', ['as' => 'show', 'uses' => 'Admin\MemberController@show']);
+        Route::get('/create-data', ['as' => 'create-data', 'uses' => 'Admin\MemberController@create']);
+        Route::get('/show-data/{id}', ['as' => 'show', 'uses' => 'Admin\MemberController@show']);
+        Route::get('/edit-data/{id}', ['as' => 'edit-data', 'uses' => 'Admin\MemberController@edit']);
+        Route::patch('/update-member/{id}', ['as' => 'update-data', 'uses' => 'Admin\MemberController@update']);
+
         Route::group(['prefix'=>'active','as'=>'active.'], function(){
             Route::get('', ['as' => 'index', 'uses' => 'Admin\MemberController@index']);
-            Route::get('create', ['as' => 'create', 'uses' => 'Admin\MemberController@create']);
+            // Route::get('/{id}', ['as' => 'show', 'uses' => 'Admin\MemberController@show']);
+            Route::post('', ['as' => 'store', 'uses' => 'Admin\MemberController@store']);
+            // Route::get('create', ['as' => 'create', 'uses' => 'Admin\MemberController@create']);
             Route::get('/{id}/nonactive', ['as' => 'nonactive', 'uses' => 'Admin\MemberController@nonactive']);
         });
 
