@@ -10,8 +10,13 @@ class Book extends Model
   
   protected $fillable = [
     'title',
-    'slug'
+    'slug',
   ];
+
+  public function bookEbook()
+  {
+    return $this->hasOne('\App\Models\BookEbook', 'book_id', 'id');
+  }
 
   public function ebooks()
   {
@@ -26,6 +31,11 @@ class Book extends Model
   public function chapters()
   {
       return $this->hasMany('\App\Models\BookChapter', 'book_id', 'id');
+  }
+
+  public function lessons()
+  {
+      return $this->hasMany('\App\Models\BookChapterLesson', 'book_id', 'id');
   }
 
   public function imageBooks()

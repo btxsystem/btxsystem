@@ -222,7 +222,7 @@ class ExploreController extends Controller
       ->select('id', 'title', 'slug')
       ->where('slug', $slug)
       ->with([
-        'chapters'
+        'lessons'
       ])
       ->first();
 
@@ -258,6 +258,36 @@ class ExploreController extends Controller
     // ], 200);
     return view($this->pathView . '.components.detail-chapter')->with([
       'chapter' => $chapter
+    ]);;
+  }
+
+  /**
+   * Chapter Detail
+   */
+  public function bookDetail($slug)
+  {
+    $book = Book::query()
+      ->select('id', 'title', 'slug')
+      ->where('slug', $slug)
+      ->with([
+        'lessons:id,book_id,title,type,content',
+        'bookEbook' => function($q) {
+          $q->with([
+            'ebook'
+          ]);
+        }
+      ])
+      ->first();
+
+    if(!$book) {
+      return redirect()->route('member.explore');
+    }
+
+    // return response()->json([
+    //   'data' => $chapter
+    // ], 200);
+    return view($this->pathView . '.components.book-detail')->with([
+      'book' => $book
     ]);;
   }
 
