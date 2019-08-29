@@ -85,8 +85,8 @@ class BookController extends Controller
      */
     public function show($id)
     {
-        $data = Book::with('chapters')->findOrFail($id);
-
+        $data = Book::with('lessons')->findOrFail($id);
+        // return $data;
         return view('admin.books.detail', compact('data'));
     }
 
@@ -145,15 +145,15 @@ class BookController extends Controller
 
     public function chapterData($id)
     {
-        $data = Book::with('chapters')->findOrFail($id);
+        $data = Book::with('lessons')->findOrFail($id);
      
-        return Datatables::of($data->chapters)
+        return Datatables::of($data->lessons)
             ->addIndexColumn()
             ->addColumn('action', function($row) {
                 return '
-                        <a href="'.route('book-chapter.show',$row->id).'"  class="btn btn-primary fa fa-eye" title="Show"></a>
-                        <a data-id="'.$row->id.'"  class="btn btn-warning fa fa-pencil edit-chapter" title="Edit"></a>
-                        <a href="'.route('deleteChapter',$row->id).'" class="btn btn-danger fa fa-trash" title="Delete"></a>';
+                        <a href="'.route('book-chapter-lesson.show',$row->id).'"  class="btn btn-primary fa fa-eye" title="Show"></a>
+                        <a href="'.route('book-chapter-lesson.edit',$row->id).'"  class="btn btn-primary fa fa-pencil" title="Edit"></a>
+                        <a href="'.route('deleteChapterLesson',$row->id).'" class="btn btn-danger fa fa-trash" title="Delete"></a>';
                     
             })
             ->rawColumns(['action'])
