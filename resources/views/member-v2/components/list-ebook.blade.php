@@ -60,7 +60,7 @@
 						</div>
 					</div>
 					@else
-					<a href="{{route('chapter.list', ['slug' => $ebook->book->slug])}}" class="col-lg-3 mb-3 hover">
+					<a href="{{route('book.detail', ['slug' => $ebook->book->slug])}}" class="col-lg-3 mb-3 hover">
 						<div class="shadow rounded p-3" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
 							<div style="overflow: hidden;" class="mb-2">
 								@if(count($ebook->book->imageBooks) > 0)
@@ -171,55 +171,6 @@
 		</div>
 	<!-- End Modal -->
 
-<!-- <div class="bit-jumbo"></div>
-<div class="container mb50" style="padding-left: 5%; padding-right: 5%;">
-<div class="row mt50">
-    <div class="col-md-12">
-      <div class="card noborder" style="margin-top: -230px;">
-          <div class="card-body">
-            <div class="media row">
-                <div class="media-left col-lg-4 col-sm-5 col-12 mb-4">
-                  <img src="{{asset('assetsebook/assets/img/illustration.png')}}" class="img-fluid media-object mx-auto d-block">
-                </div>
-                <div class="media-body m30 col-lg-7 col-sm-6 col-10" style="padding: 0px;">
-                  <button class="btn btn-sm btn-warning bit-btn3">
-                  FEATURED
-                  </button>
-                  <h5 class="media-heading fz20">Menjadi Seorang Web Developer</h5>
-                  <p class="fz14">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                  <hr>
-                  <div class="float-right">
-                      <button class="btn btn-md btn-warning bit-btn5">
-                      Mulai Belajar
-                      </button>
-                  </div>
-                </div>
-            </div>
-          </div>
-      </div>
-
-      <div class="bit-line">
-          <img src="{{asset('assetsebook/assets/img/book-icon.png')}}" class="mtmin5 mr10"> <span>Semua Pelajaran</span>
-          <hr class="mb40">
-          <div class="row">
-            @foreach($books as $book)
-            <div class="col-lg-3 col-sm-6 col-6">
-                <div class="card bit-card2 shadow-sb">
-                  <div class="card-body d-flex flex-column">
-                    <a href="{{route('chapter.list', ['id' => $book->id])}}">
-                      <img src="{{asset('assetsebook/assets/img/illustration7.png')}}" class="img-fluid media-object mx-auto d-block">
-                        <h5 class="media-heading fz20 mt20 text-dark">{{ $book->title }}</h5>
-                        <p class="fz14 text-dark">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore ab quas atque, vero ipsa odio quod quia, dolor pariatur exercitationem aperiam soluta.</p>
-                    </a>
-
-                  </div>
-                </div>
-            </div>
-            @endforeach
-          </div>
-      </div>
-    </div>
-</div> -->
 @stop
 
 @section('footer_scripts')

@@ -154,9 +154,10 @@ Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
 //     Route::get('explore/{type}', 'MemberV2\ExploreController@detail')->name('member.ebook.detail');
 //     Route::get('explores', 'MemberV2\ExploreController@index')->name('member.explore');
 //     Route::get('/member/{username}', 'MemberV2\ExploreController@subscription')->name('member.subscription.referral');
-//     Route::get('/', 'MemberV2\ExploreController@subscription')->name('member.home');
-//     Route::get('chapters/{slug}', 'MemberV2\ExploreController@chapters')->name('chapter.list')->middleware('ebook.access');
-//     Route::get('chapter/{id}', 'MemberV2\ExploreController@chapter')->name('chapter.detail')->middleware('ebook.access');
+//     Route::get('/ebook', 'MemberV2\ExploreController@subscription')->name('member.home');
+//     // Route::get('chapters/{slug}', 'MemberV2\ExploreController@chapters')->name('chapter.list')->middleware('ebook.access');
+//     Route::get('book/{slug}', 'MemberV2\ExploreController@bookDetail')->name('book.detail')->middleware('ebook.access');
+//     // Route::get('chapter/{id}', 'MemberV2\ExploreController@chapter')->name('chapter.detail')->middleware('ebook.access');
 
 //     Route::post('register', 'MemberV2\RegisterController@register')->name('member.register');
 
@@ -183,8 +184,9 @@ Route::domain('ebook.bitrexgo.id')->group(function () {
     Route::get('explores', 'MemberV2\ExploreController@index')->name('member.explore');
     Route::get('/member/{username}', 'MemberV2\ExploreController@subscription')->name('member.subscription.referral');
     Route::get('/ebook', 'MemberV2\ExploreController@subscription')->name('member.home');
-    Route::get('chapters/{slug}', 'MemberV2\ExploreController@chapters')->name('chapter.list')->middleware('ebook.access');
-    Route::get('chapter/{id}', 'MemberV2\ExploreController@chapter')->name('chapter.detail')->middleware('ebook.access');
+    // Route::get('chapters/{slug}', 'MemberV2\ExploreController@chapters')->name('chapter.list')->middleware('ebook.access');
+    Route::get('book/{slug}', 'MemberV2\ExploreController@bookDetail')->name('book.detail')->middleware('ebook.access');
+    // Route::get('chapter/{id}', 'MemberV2\ExploreController@chapter')->name('chapter.detail')->middleware('ebook.access');
 
     Route::post('register', 'MemberV2\RegisterController@register')->name('member.register');
 
