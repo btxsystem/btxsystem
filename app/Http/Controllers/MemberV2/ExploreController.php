@@ -221,7 +221,11 @@ class ExploreController extends Controller
       ->with([
         'chapters'
       ])
-      ->firstOrFail();
+      ->first();
+
+    if(!$book) {
+      return redirect()->route('member.explore');
+    }
 
     return view($this->pathView . '.components.list-chapter')->with([
       'book' => $book
@@ -240,7 +244,12 @@ class ExploreController extends Controller
         'lessons:id,chapter_id,title,type,content',
         'book:id,title'
       ])
-      ->firstOrFail();
+      ->first();
+
+    if(!$chapter) {
+      return redirect()->route('member.explore');
+    }
+
     // return response()->json([
     //   'data' => $chapter
     // ], 200);
