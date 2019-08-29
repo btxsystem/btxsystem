@@ -87,7 +87,7 @@ Route::group(['prefix'=>'member','as'=>'member.'], function(){
 });
 */
 
-// Route::redirect('/', '/login');
+Route::redirect('/', '/login');
 Route::get('/login', 'Auth\LoginController@getLogin')->middleware('guest');
 Route::post('/login', 'Auth\LoginController@postLogin');
 Route::get('/logout', 'Auth\LoginController@logout');
@@ -122,11 +122,13 @@ Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
         Route::get('my-transaction', ['as' => 'my-transaction', 'uses' => 'Member\TransactionController@myTransaction']);
         Route::get('prospected-member-transaction', ['as' => 'prospected-member-transaction', 'uses' => 'Member\TransactionController@prospectedMemberHistory']);
         Route::get('reward', ['as' => 'reward', 'uses' => 'Member\ProfileMemberController@getRewards']);
+        Route::get('bitrex-points', ['as' => 'bitrex-points', 'uses' => 'Member\BitrexPointController@getBitrexPoints']);
     });
 
     Route::group(['prefix' => 'transaction', 'as'=> 'transaction.'], function () {
         Route::get('my-transaction', ['as' => 'my-transaction', 'uses' => 'Member\TransactionController@index']);
         Route::get('prospected-member-transaction', ['as' => 'prospected-member-transaction', 'uses' => 'Member\TransactionController@transactionNonMember']);
+        Route::post('topup', ['as' => 'topup', 'uses' => 'Member\TransactionController@topup']);
     });
 
     Route::group(['prefix' => 'profile', 'as'=> 'profile.'], function () {

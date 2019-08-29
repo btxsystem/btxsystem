@@ -51,6 +51,9 @@
                                                 <div class="col-lg-6 mb-3">
                                                     <div class="bg-white shadow rounded p-3 border-hover">
                                                         <div class="row">
+                                                            <div id="flag" class="renewal-basic" aria-hidden="true">
+                                                                Renewal
+                                                            </div>
                                                             <div class="col-lg-3 d-flex align-items-center">
                                                                 <img src="http://ebook.bitrexgo.id/assetsebook/v2/img/1.png" class="mx-auto d-block">
                                                             </div>
@@ -68,6 +71,9 @@
                                                 <div class="col-lg-6 mb-3">
                                                     <div class="bg-white shadow rounded p-3 border-hover">
                                                         <div class="row">
+                                                            <div id="flag" class="renewal-advance" aria-hidden="true">
+                                                                Renewal
+                                                            </div>
                                                             <div class="col-lg-3 d-flex align-items-center">
                                                                 <img src="http://ebook.bitrexgo.id/assetsebook/v2/img/1.png" class="mx-auto d-block">
                                                             </div>
@@ -96,7 +102,22 @@
 </section>
 @stop
 
-@section('footer_scripts')  
+@section('footer_scripts')
+<style>
+    div#flag { 
+        background-color: #333;
+        padding: 10px;
+        font-size: 11px !important;
+        border-radius: 2px;
+        -ms-transform: rotate(40deg); /* IE 9 */
+        -webkit-transform: rotate(40deg); /* Safari 3-8 */
+        transform: rotate(40deg);
+        width: 60px;
+        position: absolute;
+        right:0;
+        top:4;
+    }
+</style>  
 <script type="text/javascript">
     $(document).ready(function () {
         $('#cart1').click(function(){
@@ -113,11 +134,22 @@
 			success: function (data) {
 				for (let index = 0; index < data.length; index++) {
                     if(index == 0){
-                        $('#basic').text(data[index].title);
+                        console.log(data[index].id);
+                        
+                        var str = data[index].id = 3 ? data[index].title.replace('renewal_', ' ') : data[index].title ;
+                        str = str.toLowerCase().replace(/\b[a-z]/g, function(letter) {
+                            return letter.toUpperCase();
+                        });
+                        $('#basic').text(str);
+                        data[index].id = 3 ? $('.renewal-basic').show() : $('.renewal-basic').hide() ;
                         $('#description-basic').text(data[index].description);
                         $('#basic-value').val(data[index].id);
                     }else{
-                        $('#advance').text(data[index].title);
+                        var str = data[index].id = 4 ? data[index].title.replace('renewal_', ' ') : data[index].title ;
+                        str = str.toLowerCase().replace(/\b[a-z]/g, function(letter) {
+                            return letter.toUpperCase();
+                        });
+                        $('#advance').text(str);
                         $('#advance-description').text(data[index].description);
                         $('#advance-value').val(data[index].id);
                     }

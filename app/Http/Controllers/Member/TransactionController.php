@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use DB;
+use Carbon\Carbon;
 
 class TransactionController extends Controller
 {
@@ -35,5 +36,19 @@ class TransactionController extends Controller
                                        ->where('transaction_non_members.non_member_id','=',Auth::id())
                                        ->select('ebooks.title','ebooks.price','ebooks.price_markup','transaction_non_members.created_at as date','non_members.username')->paginate(3);
         return response()->json(['transaction'=>$data]);
+    }
+
+    public function topup(Request $request){
+        try {
+            DB::beginTransaction();
+            $data = DB::table('employeers')->where('id',Auth::id())->select('bitrex_points')->first();
+            DB::table('employeers')->where('id', Auth::id())->update(['bitrex_points' => $data->bitrex_points + $request->points, 'updated_at' => Carbon::now()]);
+            DB::table('history_bitrex_point')->insert(['id_member' => Auth::id(), 'nominal' => $request->nominal, 'points' => $request->points, 'description' => 'Topup', 'info' => 1, 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()]);
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollback();
+            return 'gagal';
+        }
+        return redirect()->route('member.bitrex-money.bitrex-points');
     }
 }
