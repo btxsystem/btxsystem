@@ -20,7 +20,8 @@ class Ebook extends Model
   ];
 
   protected $appends = [
-    'access'
+    'access',
+    'expired'
   ];
 
 
@@ -62,6 +63,29 @@ class Ebook extends Model
     } else if(\Auth::guard('user')->user()){
       $userTransaction = $this->transactionMember()->where('member_id', \Auth::guard('user')->user()->id);
       return $userTransaction->count() > 0 ? $userTransaction->first()->status == 1 ? true : false : false;
+    } else {
+      return false;
+    }
+  }
+
+  public function getExpiredAttribute()
+  {
+    if(!$this->access) {
+      return false;
+    }
+
+    if(\Auth::guard('nonmember')->user()) {
+      $memberTransaction = $this->transaction()->where('non_member_id', \Auth::guard('nonmember')->user()->id)->first();
+      
+      $expired = $memberTransaction->expired_at < date('Y-m-d');
+
+      return $expired;
+    } else if(\Auth::guard('user')->user()){
+      $userTransaction = $this->transactionMember()->where('member_id', \Auth::guard('user')->user()->id)->first();
+      
+      $expired = $userTransaction->expired_at < date('Y-m-d');
+
+      return $expired;
     } else {
       return false;
     }
