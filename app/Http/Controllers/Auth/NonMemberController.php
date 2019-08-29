@@ -12,7 +12,8 @@ class NonMemberController extends Controller
     if(Auth::guard('nonmember')->user() || Auth::guard('user')->user()) {
       return redirect()->route('member.home');
     }
-    return view('member-v2.components.login');
+    return redirect()->route('member.home');
+    //return view('member-v2.components.login');
   }
   
   public function postLogin(Request $request)
@@ -29,8 +30,11 @@ class NonMemberController extends Controller
       return redirect()->route('member.home');
     }
     // Tambah logic member
-
-    return view('member-v2.components.login');
+    
+    return redirect()->route('member.home', ['redirect' => ''])->with([
+      'message' => 'Username atau Password salah'
+    ]);
+    //return view('member-v2.components.login');
   }
 
   public function logout()

@@ -305,6 +305,9 @@ h2.plan-title {
 <script src="{{asset('assetsebook/js/helper.js')}}"></script>
 
 <script>
+<?php if(\Request::get('redirect') == '' || \Request::get('redirect') != ''){?>
+showModalLogin();
+<?php } ?>
 function selectedSubscription(param = null) {
   $('#modal-subscription').modal('show')
 
