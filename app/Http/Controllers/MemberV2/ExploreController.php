@@ -34,7 +34,7 @@ class ExploreController extends Controller
 
   public function testMail()
   {
-    Mail::to('asepmedia18@gmail.com')->send(new WelcomeMail());
+    Mail::to('zzzz@gmail.com')->send(new WelcomeMail());
   }
 
   public function home()
@@ -104,14 +104,15 @@ class ExploreController extends Controller
     }  
     ])->where('title', $type)->get();
 
-    // $referral = $request->input('username') ?? \Session::get('referral');
+    $referral = $request->input('username') ?? \Session::get('referral');
 
-    $referral = '';
     
     if(Employeer::where('username', $username)->count() > 0 || \Session::has('referral')) {
       if(\Session::has('referral')) {
         $referral = \Session::get('referral');
-        \Session::forget('referral');
+        if($referral != $username) {
+          // \Session::forget('referral');
+        }
       } else {
         $referral = $username;
         \Session::put('referral', $username);
@@ -221,7 +222,11 @@ class ExploreController extends Controller
       ->with([
         'chapters'
       ])
-      ->firstOrFail();
+      ->first();
+
+    if(!$book) {
+      return redirect()->route('member.explore');
+    }
 
     return view($this->pathView . '.components.list-chapter')->with([
       'book' => $book
@@ -240,7 +245,12 @@ class ExploreController extends Controller
         'lessons:id,chapter_id,title,type,content',
         'book:id,title'
       ])
-      ->firstOrFail();
+      ->first();
+
+    if(!$chapter) {
+      return redirect()->route('member.explore');
+    }
+
     // return response()->json([
     //   'data' => $chapter
     // ], 200);
