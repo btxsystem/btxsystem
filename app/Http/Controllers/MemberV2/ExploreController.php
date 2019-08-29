@@ -34,7 +34,7 @@ class ExploreController extends Controller
 
   public function testMail()
   {
-    Mail::to('asepmedia18@gmail.com')->send(new WelcomeMail());
+    Mail::to('zzzz@gmail.com')->send(new WelcomeMail());
   }
 
   public function home()

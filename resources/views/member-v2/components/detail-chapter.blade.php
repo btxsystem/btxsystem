@@ -137,12 +137,12 @@
       }
     ]
 
-    dataBreadcrumb += `<ol class="breadcrumb bg-dark">`
+    dataBreadcrumb += `<ol class="breadcrumb bg-light border">`
     breadcrumbs.map((v, i) => {
       if(i == breadcrumbs.length - 1) {
         dataBreadcrumb += `<li class="breadcrumb-item active" aria-current="page">${v.title}</li>`
       } else {
-        dataBreadcrumb += `<li class="breadcrumb-item"><a href="${v.route}">${v.title}</a></li>`
+        dataBreadcrumb += `<li class="breadcrumb-item"><a class="text-dark" href="${v.route}">${v.title}</a></li>`
       }
     })
     dataBreadcrumb += '</ol>'
@@ -185,7 +185,7 @@
       solvedLesson(currentLesson)
     }
     if(index == maxIndexLesson) {
-      alert('Berhasil menyelesaikan chapter {{$chapter->book->title}}')
+      alert('Berhasil menyelesaikan chapter {{$chapter->title}}')
       window.location.href = '{{route("member.explore")}}'
       return
     }

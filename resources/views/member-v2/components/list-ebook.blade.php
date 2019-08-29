@@ -16,7 +16,7 @@
 @section('style_class')bit-bg4 @stop
 
 @section('content')
-<div class="bg-1 col-12 d-flex justify-content-center" style="position: absolute; height: 50vh;">
+<div class="col-12 d-flex justify-content-center" style="position: absolute; height: 50vh;background-color:#ffb320;">
 	</div>
 	<div class="col-lg-12 pb-3">
 		@include('member-v2.partials.navbar-detail')
@@ -46,7 +46,7 @@
         <div class="row mb-5">
         @foreach($book->bookEbooks as $ebook)
 					@if(!$book->access)
-          <a href="#" class="col-lg-3 mb-3 hover">
+          <div class="col-lg-3 mb-3 hover">
 						<div class="shadow rounded p-3" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
 							<div style="overflow: hidden;" class="mb-2">
 								@if(count($ebook->book->imageBooks) > 0)
@@ -58,7 +58,7 @@
 							<span style="font-size: 20px; font-weight: bold;">{{ $ebook->book->title }}</span><br>
 							<span>{{ $ebook->book->article }}</span>
 						</div>
-					</a>
+					</div>
 					@else
 					<a href="{{route('chapter.list', ['slug' => $ebook->book->slug])}}" class="col-lg-3 mb-3 hover">
 						<div class="shadow rounded p-3" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">

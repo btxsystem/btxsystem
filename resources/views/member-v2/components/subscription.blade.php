@@ -11,6 +11,18 @@
 	background-color: transparent!important;
 	background: transparent!important;
 }
+div#example { 
+	background-color: #333;
+	padding: 10px;
+	border-radius: 2px;
+  -ms-transform: rotate(20deg); /* IE 9 */
+  -webkit-transform: rotate(20deg); /* Safari 3-8 */
+	transform: rotate(20deg);
+	width: 100px;
+	position: absolute;
+	right:-20;
+	top:-25;
+}
 </style>
 @stop
 
@@ -50,12 +62,12 @@
 			</div>			
 		</div>		
 	</div>
-	<div class="pt-5 pb-5" style="background-color:#4a4a4a;">
+	<div class="pt-5 pb-5" style="background-color:#ffb320;">
 		<div class="container pt-5">
 			<div class="row">
 				@foreach($ebooks as $ebook)
 				<div class="col-lg-6 mb-3">
-					<div class="shadow rounded p-3 border-hover" style="background-color:#333;">
+					<div class="shadow rounded p-3 border-hover bg-white">
 						<div class="row">
 							<div class="col-lg-3 d-flex align-items-center">
 								@if($ebook->id == 1 || $ebook->id == 3)
@@ -65,11 +77,21 @@
 								@endif
 							</div>
 							<div class="col-lg-9">
-								<h2 class="mb-1 text-identity-yellow" style="color: #fb6e10;">{{ucwords(str_replace('_', ' ', $ebook->title))}}</h2>
+								@php
+								$title = explode("_", $ebook->title)
+								@endphp
+								<h2 class="mb-1 text-dark" style="color: #fb6e10;">
+									@if(isset($title[1]))
+										<span>{{ucwords(str_replace('_', ' ', $title[1]))}}</span>
+										<div id="example" class="text-light" style="font-size:20px;vertical-align: text-top;margin-left:-3px">Renewal</div>
+									@else
+										<span>{{ucwords(str_replace('_', ' ', $ebook->title))}}</span>
+									@endif
+								</h2>
 								@if($ebook->id == 1 || $ebook->id == 3)
-								<span class="text-white">Pada modul ini anda akan mempelajari trading dari dasar. Pertama anda akan mengerti istilah-istilah yang digunakan dalam dunia trading, anda akan mempelajari cara membaca grafik dan membuat analisa dasar sendiri.<br></span><br>
+								<span class="text-dark">Pada modul ini anda akan mempelajari trading dari dasar. Pertama anda akan mengerti istilah-istilah yang digunakan dalam dunia trading, anda akan mempelajari cara membaca grafik dan membuat analisa dasar sendiri.<br></span><br>
 								@else
-								<span class="text-white">Pada modul ini anda akan mempelajari dunia trading lanjutan. Bagaimana cara membaca pasar dengan penggabungan dua atau lebih analisa, diantaranya analisa secara fundamental dan teknikal, serta mempelajari secara mendalam indikator-indikator teknikal.</span><br>
+								<span class="text-dark">Pada modul ini anda akan mempelajari dunia trading lanjutan. Bagaimana cara membaca pasar dengan penggabungan dua atau lebih analisa, diantaranya analisa secara fundamental dan teknikal, serta mempelajari secara mendalam indikator-indikator teknikal.</span><br>
 								@endif
 								@if($ebook->id == 3 || $ebook->id == 4)
 									<form action="{{route('member.ebook-renewal')}}" method="post">

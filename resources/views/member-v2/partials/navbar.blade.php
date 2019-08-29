@@ -1,4 +1,4 @@
-<nav class="navbar navbar-inverse bg-1">
+<nav class="navbar navbar-inverse" style="background-color:#ffb320;">
     <div class="container">
       <div class="navbar-header d-none d-sm-block">
           <a class="navbar-brand" href="{{ route('member.explore') }}">
