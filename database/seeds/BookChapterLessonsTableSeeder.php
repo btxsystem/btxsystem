@@ -14,13 +14,13 @@ class BookChapterLessonsTableSeeder extends Seeder
     {
         BookChapterLesson::insert([
             [
-                'chapter_id' => 1,
+                'book_Id' => 1,
                 'title' => 'Mulai Basic',
                 'content' => 'Lorems ipsum doler ismet',
                 'type' => 'paragraph'
             ],
             [
-                'chapter_id' => 2,
+                'book_Id' => 2,
                 'title' => 'Mulai Advanced',
                 'content' => 'Lorems ipsum doler ismet',
                 'type' => 'paragraph'

@@ -177,6 +177,7 @@
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script src="{{asset('assetsebook/js/helper.js')}}"></script>
 <script>
 let auth = "{{Auth::guard('nonmember')->user() || Auth::guard('user')->user()}}"
@@ -316,17 +317,18 @@ function submit() {
 			const {message, success} = result
 
 			if(!success) {
-				alert('Failed Regiester')
+				swal("Fail", "Cant't Register", "error");
 				return false
 			}
 
-			alert('Success register')
-			
-			if(auth != '') {
-				window.location.href = '{{ route("member.home") }}'
-			} else {
-				window.location.href = '{{ route("member.home") }}'
-			}
+			swal("Success", "Register Successfully", "success").then((value) => {
+				if(auth != '') {
+					window.location.href = '{{ route("member.home") }}'
+				} else {
+					window.location.href = '{{ route("member.home") }}'
+				}	
+			});
+
 		},
 		error: function(err) {
 			console.log(err)
