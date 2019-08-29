@@ -72,6 +72,12 @@ class RegisterController extends Controller
         
         $transaction  = (new TransactionFactoryRegister())->call()->createMember($builder);
       } else {
+        if($request->input('username') == '') {
+          return response()->json([
+            'success' => false,
+            'message' => 'Failed register'
+          ]);
+        }
         $builder = (new NonMemberBuilder())
           ->setFirstName($request->input('firstName'))
           ->setLastName($request->input('lastName'))

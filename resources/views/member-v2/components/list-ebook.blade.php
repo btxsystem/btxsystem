@@ -142,7 +142,7 @@
 						<div class="form-group">
 					    <label for="exampleInputPassword1">Username <small class="text-danger">*</small></label>
 					    <input type="text" class="form-control" id="username" placeholder="Username" required>
-							<span class="text-danger d-none" id="usernameErrorMessage">Username telah dipakai.</span>
+							<span class="text-danger d-none" id="usernameErrorMessage">Username tidak dapat digunakan.</span>
 							<span class="text-success d-none" id="usernameSuccessMessage">Username dapat digunakan.</span>
 					  </div>
 					  <div class="form-group">

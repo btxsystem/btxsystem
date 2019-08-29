@@ -31,6 +31,9 @@ class ExploreController extends Controller
   //     redirect()->route('member.login');
   //   }
   // }
+  protected function buildFailedValidationResponse(Request $request, array $errors) {
+    return ["success" => false, "code"=> 406 , "message" => "forbidden" , "errors" =>$errors];
+  }
 
   public function testMail()
   {
@@ -297,6 +300,10 @@ class ExploreController extends Controller
   public function checkUsername(Request $request)
   {
     $username = $request->input('username');
+
+    $this->validate($request, [
+      'username' => 'required|min:4'
+    ]);
 
     $check = NonMember::where('username', $username)->count();
 
