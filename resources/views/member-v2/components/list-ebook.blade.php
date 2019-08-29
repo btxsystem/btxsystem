@@ -56,7 +56,7 @@
 								@endif
 							</div>
 							<span style="font-size: 20px; font-weight: bold;">{{ $ebook->book->title }}</span><br>
-							<span>{{ $ebook->book->article }}</span>
+							{!! $ebook->book->article !!}
 						</div>
 					</div>
 					@else
@@ -70,7 +70,7 @@
 								@endif
 							</div>
 							<span style="font-size: 20px; font-weight: bold;">{{ $ebook->book->title }}</span><br>
-							<span>{{ $ebook->book->article }}</span>
+							{!! $ebook->book->article !!}
 						</div>
 					</a>
 					@endif

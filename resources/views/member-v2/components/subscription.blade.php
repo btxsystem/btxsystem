@@ -37,6 +37,7 @@ div#flag {
 .triangle{
 	overflow: hidden;
 	position: relative;
+	box-shadow: 0 2px 3px rgba(0, 0, 0, 0.3);
 }
 h2.plan-title {
 	text-align:center !important;		
