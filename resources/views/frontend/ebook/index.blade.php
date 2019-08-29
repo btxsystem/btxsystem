@@ -134,22 +134,21 @@
 			success: function (data) {
 				for (let index = 0; index < data.length; index++) {
                     if(index == 0){
-                        console.log(data[index].id);
-                        
-                        var str = data[index].id = 3 ? data[index].title.replace('renewal_', ' ') : data[index].title ;
+                        var str = data[index].id == 3 ? data[index].title.replace('renewal_', ' ') : data[index].title ;
                         str = str.toLowerCase().replace(/\b[a-z]/g, function(letter) {
                             return letter.toUpperCase();
                         });
                         $('#basic').text(str);
-                        data[index].id = 3 ? $('.renewal-basic').show() : $('.renewal-basic').hide() ;
+                        data[index].id == 3 ? $('.renewal-basic').show() : $('.renewal-basic').hide() ;
                         $('#description-basic').text(data[index].description);
                         $('#basic-value').val(data[index].id);
                     }else{
-                        var str = data[index].id = 4 ? data[index].title.replace('renewal_', ' ') : data[index].title ;
+                        var str = data[index].id == 4 ? data[index].title.replace('renewal_', ' ') : data[index].title ;
                         str = str.toLowerCase().replace(/\b[a-z]/g, function(letter) {
                             return letter.toUpperCase();
                         });
                         $('#advance').text(str);
+                        data[index].id == 4 ? $('.renewal-advance').show() : $('.renewal-advance').hide() ;
                         $('#advance-description').text(data[index].description);
                         $('#advance-value').val(data[index].id);
                     }
