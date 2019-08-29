@@ -49,11 +49,11 @@
                                         <div class="container">
                                             <div class="row">
                                                 <div class="col-lg-6 mb-3">
-                                                    <div class="bg-white shadow rounded p-3 border-hover">
+                                                    <div class="bg-white shadow rounded p-3 border-hover triangle">
+                                                        <div id="flag" class="renewal-basic" aria-hidden="true">
+                                                            <span>Renewal</span>
+                                                        </div>
                                                         <div class="row">
-                                                            <div id="flag" class="renewal-basic" aria-hidden="true">
-                                                                Renewal
-                                                            </div>
                                                             <div class="col-lg-3 d-flex align-items-center">
                                                                 <img src="http://ebook.bitrexgo.id/assetsebook/v2/img/1.png" class="mx-auto d-block">
                                                             </div>
@@ -69,11 +69,11 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6 mb-3">
-                                                    <div class="bg-white shadow rounded p-3 border-hover">
+                                                    <div class="bg-white shadow rounded p-3 border-hover triangle">
+                                                        <div id="flag" class="renewal-basic" aria-hidden="true">
+                                                            <span>Renewal</span>
+                                                        </div>
                                                         <div class="row">
-                                                            <div id="flag" class="renewal-advance" aria-hidden="true">
-                                                                Renewal
-                                                            </div>
                                                             <div class="col-lg-3 d-flex align-items-center">
                                                                 <img src="http://ebook.bitrexgo.id/assetsebook/v2/img/1.png" class="mx-auto d-block">
                                                             </div>
@@ -109,13 +109,26 @@
         padding: 10px;
         font-size: 11px !important;
         border-radius: 2px;
-        -ms-transform: rotate(40deg); /* IE 9 */
-        -webkit-transform: rotate(40deg); /* Safari 3-8 */
+        -ms-transform: rotate(40deg);
+        -webkit-transform: rotate(40deg);
         transform: rotate(40deg);
-        width: 60px;
-        position: absolute;
-        right:0;
-        top:4;
+        width: 160px;
+        text-align: center;
+        position: relative;
+        right: -77%;
+        height: 53px;
+        z-index: 0;
+        top: -42px;
+        background-color:#D4AF37;
+    }
+    #flag span {
+        position: relative;
+        left: 28px;
+        top: 18px;
+    }
+    .triangle{
+        overflow: hidden;
+        position: relative;
     }
 </style>  
 <script type="text/javascript">
