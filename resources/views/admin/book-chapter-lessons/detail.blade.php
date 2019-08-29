@@ -11,7 +11,7 @@ Lesson Overview
     <h1>{{$data->title}} Overview </h1>
     <ol class="breadcrumb">
         <li>
-            <a href="#">Lesson </a>
+            <a href="{{route('book.show', $data->book_id)}}">Book </a>
         </li>
         <li class="active">{{$data->title}} </li>
     </ol>
@@ -56,7 +56,7 @@ Lesson Overview
         $(document).on('click', '.fa-power-off', function (e) {
             e.preventDefault();
             var id = $(this).data('id');
-            var returnBack = "{{route('book-chapter.show', $data->chapter_id)}}" 
+            var returnBack = "{{route('book.show', $data->book_id)}}" 
             swal({
                     title: "Are you sure!",
                     type: "error",

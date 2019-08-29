@@ -24,7 +24,7 @@ Create Chapter Lesson
                         <form class="well form-horizontal" method="post" action="{{route('book-chapter-lesson.store')}}">
                             {{ csrf_field() }}
                            <fieldset>
-                           <input type="hidden" id="chapter_id" name="chapter_id" value="{{$data->id}}">
+                           <input type="hidden" id="book_id" name="book_id" value="{{$data->id}}">
                             <div class="form-group">
                                 <label class="col-md-2 control-label">Title</label>
                                 <div class="col-md-8 inputGroupContainer">
