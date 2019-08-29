@@ -18,7 +18,7 @@ class DatabaseSeeder extends Seeder
             EbookTableSeeder::class,
             BooksTableSeeder::class,
             BookEbookTableSeeder::class,
-            BookChaptersTableSeeder::class,
+            //BookChaptersTableSeeder::class,
             BookChapterLessonsTableSeeder::class,
             RewardsTableSeeder::class,
             VideosTableSeeder::class,

@@ -68,19 +68,6 @@ a.hover .shadow:hover {
 	padding-top: 100px;
 }
 
-div#flag { 
-	background-color: #333;
-	padding: 10px;
-	font-size: 13px !important;
-	border-radius: 2px;
-  -ms-transform: rotate(40deg); /* IE 9 */
-  -webkit-transform: rotate(40deg); /* Safari 3-8 */
-	transform: rotate(40deg);
-	width: 70px;
-	position: absolute;
-	right:0;
-	top:0;
-}
 
 @media (max-width: 450px) {
 	.detail-padding {

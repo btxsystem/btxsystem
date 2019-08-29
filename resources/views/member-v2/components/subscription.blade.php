@@ -11,6 +11,61 @@
 	background-color: transparent!important;
 	background: transparent!important;
 }
+div#flag { 
+	background-color: #333;
+	padding: 10px;
+	font-size: 14px !important;
+	border-radius: 2px;
+	-ms-transform: rotate(40deg);
+	-webkit-transform: rotate(40deg);
+	transform: rotate(40deg);
+	width: 160px;
+	text-align: center;
+	position: absolute;
+	right: -13%;
+	height: 73px;
+	z-index: 0;
+	top: -30;
+	background-color:#D4AF37;
+	z-index: 2;
+}
+#flag span {
+	position: relative;
+	left: 20px;
+	top: 28px;
+}
+.triangle{
+	overflow: hidden;
+	position: relative;
+}
+@media only screen and (win-width: 992px) {
+	div#flag { 
+		background-color: #333;
+		padding: 10px;
+		font-size: 16px !important;
+		border-radius: 2px;
+		-ms-transform: rotate(40deg);
+		-webkit-transform: rotate(40deg);
+		transform: rotate(40deg);
+		width: 160px;
+		text-align: center;
+		position: absolute;
+		right: -8%;
+		height: 73px;
+		z-index: 0;
+		top: -30;
+		background-color:#D4AF37;
+	}
+	#flag span {
+		position: relative;
+		left: 20px;
+		top: 28px;
+	}
+	.triangle{
+		overflow: hidden;
+		position: relative;
+	}
+}
 </style>
 @stop
 
@@ -55,7 +110,10 @@
 			<div class="row">
 				@foreach($ebooks as $ebook)
 				<div class="col-lg-6 mb-3">
-					<div class="shadow rounded p-3 border-hover bg-white">
+					<div class="shadow rounded p-3 border-hover bg-white triangle">
+						<div id="flag" aria-hidden="true">
+							<span>Renewal</span>
+						</div>
 						<div class="row">
 							<div class="col-lg-3 d-flex align-items-center">
 								@if($ebook->id == 1 || $ebook->id == 3)
@@ -71,7 +129,6 @@
 								<h2 class="mb-1 text-dark" style="color: #fb6e10;">
 									@if($ebook->access)
 										<span>{{ucwords(str_replace('_', ' ', $ebook->title))}}</span>
-										<div id="flag" class="text-light" style="font-size:20px;vertical-align: text-top;margin-left:-3px">Renewal</div>
 										<div class="clearfix"></div>
 									@else
 										<span>{{ucwords(str_replace('_', ' ', $ebook->title))}}</span>
