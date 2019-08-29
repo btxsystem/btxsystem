@@ -56,7 +56,7 @@
 								@endif
 							</div>
 							<span style="font-size: 20px; font-weight: bold;">{{ $ebook->book->title }}</span><br>
-							<span>{{ $ebook->book->article }}</span>
+							{!! $ebook->book->article !!}
 						</div>
 					</div>
 					@else
@@ -70,7 +70,7 @@
 								@endif
 							</div>
 							<span style="font-size: 20px; font-weight: bold;">{{ $ebook->book->title }}</span><br>
-							<span>{{ $ebook->book->article }}</span>
+							{!! $ebook->book->article !!}
 						</div>
 					</a>
 					@endif
@@ -142,7 +142,7 @@
 						<div class="form-group">
 					    <label for="exampleInputPassword1">Username <small class="text-danger">*</small></label>
 					    <input type="text" class="form-control" id="username" placeholder="Username" required>
-							<span class="text-danger d-none" id="usernameErrorMessage">Username telah dipakai.</span>
+							<span class="text-danger d-none" id="usernameErrorMessage">Username tidak dapat digunakan.</span>
 							<span class="text-success d-none" id="usernameSuccessMessage">Username dapat digunakan.</span>
 					  </div>
 					  <div class="form-group">
@@ -162,7 +162,7 @@
 					    <input type="number" class="form-control" id="phoneNumber" placeholder="Phone number" required>
 					  </div>
 						@endif
-					  <span>Total yang dibayar : IDR </span><b><span id="total_price"></span></b>
+					  <h4>Total yang dibayar : IDR </span><b><span id="total_price"></h4></b>
 		      </div>
 		      <div class="modal-footer justify-content-center">
 		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
