@@ -69,8 +69,8 @@
 								$title = explode("_", $ebook->title)
 								@endphp
 								<h2 class="mb-1 text-dark" style="color: #fb6e10;">
-									@if(isset($title[1]))
-										<span>{{ucwords(str_replace('_', ' ', $title[1]))}}</span>
+									@if($ebook->access)
+										<span>{{ucwords(str_replace('_', ' ', $ebook->title))}}</span>
 										<div id="flag" class="text-light" style="font-size:20px;vertical-align: text-top;margin-left:-3px">Renewal</div>
 										<div class="clearfix"></div>
 									@else
@@ -92,7 +92,14 @@
 								@else
 									<div class="pb-3">
 										@if($ebook->access)
-										<a href="{{route('member.ebook.detail', ['type' => strtolower($ebook->title), 'username' => $username])}}" class="btn btn-light text-dark btn-sm mt-3 px-5">Detail</a>
+										<form action="{{route('member.ebook-renewal')}}" method="post">
+											{{csrf_field()}}
+											<input type="hidden" name="ebook" value="{{$ebook->id}}">
+											<button type="submit" class="btn btn-identity-red text-white btn-sm mt-3 px-5">BUY</button>
+											@if(!$ebook->expired)
+												<a href="{{route('member.ebook.detail', ['type' => strtolower($ebook->id == 3 ? 'basic' : 'advanced')])}}" class="btn btn-light text-dark btn-sm mt-3 px-5">Detail</a>
+											@endif
+										</form>
 										@else
 										<a href="{{route('member.ebook.detail', ['type' => strtolower($ebook->title), 'username' => $username])}}" class="btn btn-identity-red btn-sm mt-3 px-5">BUY</a>
 										@endif

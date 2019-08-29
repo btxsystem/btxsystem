@@ -180,7 +180,7 @@ class ExploreController extends Controller
       $excludesEbooks = [3, 4];
     }
 
-    $ebooks = Ebook::whereNotIn('id', $excludesEbooks)
+    $ebooks = Ebook::whereNotIn('id', [3, 4])
     ->select('id', 'price', 'pv', 'bv', 'price_markup', 'description', 'title')
     ->orderBy('position', 'ASC')
     ->get();
@@ -198,7 +198,9 @@ class ExploreController extends Controller
     } else {
       redirect()->route('member.home');
     }
-
+    // return response()->json([
+    //   'data' => $ebooks
+    // ], 200);
     // $transactions = DB::table('non_members')
     //   ->join('transaction_non_members', 'non_members.id', '=', 'transaction_non_members.non_member_id')
     //   ->select('transaction_non_members.ebook_id')
