@@ -11,18 +11,6 @@
 	background-color: transparent!important;
 	background: transparent!important;
 }
-div#example { 
-	background-color: #333;
-	padding: 10px;
-	border-radius: 2px;
-  -ms-transform: rotate(20deg); /* IE 9 */
-  -webkit-transform: rotate(20deg); /* Safari 3-8 */
-	transform: rotate(20deg);
-	width: 100px;
-	position: absolute;
-	right:-20;
-	top:-25;
-}
 </style>
 @stop
 
@@ -83,7 +71,8 @@ div#example {
 								<h2 class="mb-1 text-dark" style="color: #fb6e10;">
 									@if(isset($title[1]))
 										<span>{{ucwords(str_replace('_', ' ', $title[1]))}}</span>
-										<div id="example" class="text-light" style="font-size:20px;vertical-align: text-top;margin-left:-3px">Renewal</div>
+										<div id="flag" class="text-light" style="font-size:20px;vertical-align: text-top;margin-left:-3px">Renewal</div>
+										<div class="clearfix"></div>
 									@else
 										<span>{{ucwords(str_replace('_', ' ', $ebook->title))}}</span>
 									@endif
