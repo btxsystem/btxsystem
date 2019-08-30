@@ -21,6 +21,7 @@ class TransactionController extends Controller
                                        ->join('ebooks','transaction_member.ebook_id','=','ebooks.id')
                                        ->where('employeers.id','=',Auth::id())
                                        ->select('ebooks.title','ebooks.price','transaction_member.created_at as date','ebooks.pv')
+                                       ->orderBy('transaction_member.created_at','desc')
                                        ->paginate(3);
         return response()->json(['transaction'=>$data]);
     }

@@ -34,6 +34,8 @@
             url: '{{route("member.select.prospected-member-transaction")}}',
             data: data,
             success:function(data){
+                console.log(data);
+                
                 if (data.transaction.data[0]==undefined) {
                     $('#bill').html('<div class="body" style="color:red;"><center><strong>You have not history!!!</strong></center></div>');    
                 }else{
