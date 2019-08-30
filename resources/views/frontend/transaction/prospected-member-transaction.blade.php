@@ -61,8 +61,9 @@
                 $('.ajax-load').show();
             }
         }).done(function(data){
-            if (data.transaction.data[0]==undefined) {
-                $('#bill').html('<div class="body" style="color:red;"><center><strong>You have not history!!!</strong></center></div>');    
+            if(data.transaction.data[0]==undefined){
+                $('.ajax-load').html("No more records found");
+                return;    
             }else{
                 $('.ajax-load').hide();
                 $.each(data.transaction.data, function(i, item) {
