@@ -52,7 +52,7 @@ class PaymentController extends Controller
     $data['ref_no'] = $transactionRef;
     $data['lang'] = 'UTF-8';
     // $data['code'] = $subs->created_at->format('dmYHi');
-    $data['code'] = $transaction->id;
+    $data['code'] = $transactionRef;
     $data['amount'] = (int) str_replace(".","",str_replace(",","",$orderAmount));
     $data['signature'] = $this->signature($data['code'], $data['amount']);
     $data['response_url'] = 'https://bitrexgo.id/response-pay';
