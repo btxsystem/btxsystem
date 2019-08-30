@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\BookChapterLesson;
-use App\Models\BookChapter;
+use App\Models\Book;
 use Alert;
 use Validator;
 
@@ -28,7 +28,7 @@ class BookChapterLessonController extends Controller
      */
     public function create($id)
     {
-        $data = BookChapter::find($id);
+        $data = Book::find($id);
         return view('admin.book-chapter-lessons.create', compact('data'));
     }
 
@@ -40,6 +40,7 @@ class BookChapterLessonController extends Controller
      */
     public function store(Request $request)
     {
+        // return $request->all();
         $request->validate([
             'title' => 'required',
             'content' => 'required',
@@ -48,7 +49,7 @@ class BookChapterLessonController extends Controller
 
         $data = new BookChapterLesson;
         $data->title = $request->title;
-        $data->chapter_id = $request->chapter_id;
+        $data->book_id = $request->book_id;
         $data->slug = \Str::slug($request->title) .'-'. date('YmdHis');
         $data->content = $request->content;
         $data->type = 'paragraph';
@@ -57,7 +58,7 @@ class BookChapterLessonController extends Controller
 
         Alert::success('Sukses Menambah Data Book', 'Sukses');
 
-        return redirect()->route('book-chapter.show', $request->chapter_id);
+        return redirect()->route('book.show', $request->book_id);
     }
 
     /**
@@ -125,5 +126,7 @@ class BookChapterLessonController extends Controller
         } else {
             Alert::error('Gagal Delete Data Book Chapter', 'Gagal');
         }
+
+        return back();
     }
 }

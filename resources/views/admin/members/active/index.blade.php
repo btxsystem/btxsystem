@@ -11,7 +11,7 @@ List Of Users Active
     <h1>Users Active</h1>
     <ol class="breadcrumb">
         <li>
-            <a href="#">Admin Management</a>
+            <a href="#">Members</a>
         </li>
         <li class="active">Users Active</li>
     </ol>
@@ -20,7 +20,7 @@ List Of Users Active
                 <div class="row">
                     <div class="col-md-12">
                         <!-- BEGIN SAMPLE TABLE PORTLET-->
-                        <a class="btn btn-large btn-primary" href="{{ route('members.active.create') }}" data-toggle="modal"><i class="fa fa-plus" style="margin-right: 10px;"></i>Add</a>
+                        <a class="btn btn-large btn-primary" href="{{ route('members.create-data') }}" data-toggle="modal"><i class="fa fa-plus" style="margin-right: 10px;"></i>Add</a>
                         <div class="portlet box primary" style="margin-top: 15px;">
                             <div class="portlet-title">
                                 <div class="caption">
@@ -73,8 +73,8 @@ List Of Users Active
                   {data: 'name', name: 'name'},
                   {data: 'status', name: 'status', searchable: false},
                   {data: 'hp', name: 'hp'},
-                  {data: 'rank', name: 'rank', searchable: false},
-                  {data: 'action', name: 'action', orderable: false, searchable: false},
+                  {data: 'rank', name: 'rank', searchable: false, className: 'text-center'},
+                  {data: 'action', name: 'action', orderable: false, searchable: false, className: 'text-center'},
               ]
           });
           

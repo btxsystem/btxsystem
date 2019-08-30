@@ -72,6 +72,11 @@ Route::group(['prefix' => 'select', 'as'=> 'select.'], function () {
     Route::get('book/{id}/image-data','Admin\BookController@imageData')->name('book.imageData');
 
     Route::get('book/delete/{id}', 'Admin\BookController@destroy')->name('deleteBook');
+
+        // Book Chapter Lesson
+    Route::get('book/{id}/create/lessons','Admin\BookChapterLessonController@create')->name('book.create.lesson');
+    Route::resource('book-chapter-lesson', 'Admin\BookChapterLessonController');
+    Route::get('chapter-lesson/delete/{id}', 'Admin\BookChapterLessonController@destroy')->name('deleteChapterLesson');
     
     // Book Image
     Route::post('update-image', 'Admin\BookImageController@updateImage')->name('updateDataImage');
@@ -103,9 +108,14 @@ Route::group(['prefix' => 'select', 'as'=> 'select.'], function () {
     });
 
     Route::group(['prefix'=>'members','as'=>'members.'], function(){
+        Route::get('/create-data', ['as' => 'create-data', 'uses' => 'Admin\MemberController@create']);
+        Route::get('/show-data/{id}', ['as' => 'show', 'uses' => 'Admin\MemberController@show']);
+        Route::get('/edit-data/{id}', ['as' => 'edit-data', 'uses' => 'Admin\MemberController@edit']);
+        Route::patch('/update-member/{id}', ['as' => 'update-data', 'uses' => 'Admin\MemberController@update']);
+
         Route::group(['prefix'=>'active','as'=>'active.'], function(){
             Route::get('', ['as' => 'index', 'uses' => 'Admin\MemberController@index']);
-            Route::get('create', ['as' => 'create', 'uses' => 'Admin\MemberController@create']);
+            Route::post('', ['as' => 'store', 'uses' => 'Admin\MemberController@store']);
             Route::get('/{id}/nonactive', ['as' => 'nonactive', 'uses' => 'Admin\MemberController@nonactive']);
         });
 

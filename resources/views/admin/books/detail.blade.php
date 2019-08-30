@@ -47,10 +47,10 @@ Detail Book
                 <div class="portlet-title">
                     <div class="caption">
                         <i class="fa fa-book"></i> &nbsp;
-                        Chapter List
+                        Lesson List
                     </div>
                     <div class="pull-right">
-                        <a style=" color: white; text-decoration: none !important" href="#addChapterModal" data-toggle="modal"><i style="font-size:15px;" class="fa fa-plus"></i>&nbsp; &nbsp;<strong>Add New Chapters</strong></a>
+                        <a style=" color: white; text-decoration: none; margin-right: 20px; !important" href="{{ route('book.create.lesson', $data->id) }}"><i style="font-size:15px;" class="fa fa-plus"></i>&nbsp; &nbsp;<strong>Add New Lesson</strong></a>
                      </div>
                 </div>
                 
@@ -97,37 +97,6 @@ Detail Book
 
 
 <!--section ends-->
-<div id="addChapterModal" class="modal fade">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h4 class="modal-title">Book Chapter</h4>
-                </div>
-                <div class="modal-body">
-                    <form class="well form-horizontal" action="{{ route('book-chapter.store') }}" method="post">  
-                        {{ csrf_field() }}
-                        <fieldset>
-                        <input id="book_id" name="book_id" value="{{$data->id}}" type="hidden">
-                            <div class="form-group">
-                                <label class="col-md-2 control-label">Title</label>
-                                <div class="col-md-9 inputGroupContainer">
-                                    <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-piggy-bank"></i></span>
-                                    <input id="title" name="title" placeholder="Title" class="form-control" required="true" value="" type="text">
-                                </div>
-                                </div>
-                            </div>
-                        </fieldset>
-                        <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary">Submit</button>
-                            </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-</div>
-
-<!--section ends-->
 <div id="addImageModal" class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -167,37 +136,6 @@ Detail Book
         </div>
 </div>
 
-
-<div id="editChapterModal" class="modal fade">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h4 class="modal-title">Book Chapter</h4>
-                </div>
-                <div class="modal-body">
-                    <form id="edit_chapter" class="well form-horizontal" method="POST" action="{{url('backoffice/update-chapter/')}}">
-                                {{ csrf_field() }}
-                        <fieldset>
-                        <input id="chapter_id_edit" name="chapter_id" type="hidden">
-                        <input id="book_id_edit" name="book_id" type="hidden">
-                            <div class="form-group">
-                                <label class="col-md-2 control-label">Title</label>
-                                <div class="col-md-9 inputGroupContainer">
-                                    <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-piggy-bank"></i></span>
-                                    <input id="title_edit" name="title" placeholder="Title" class="form-control" required="true" value="" type="text">
-                                </div>
-                                </div>
-                            </div>
-                        </fieldset>
-                        <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary">Submit</button>
-                            </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-</div>
 
 
 <!--section ends-->
@@ -290,25 +228,6 @@ Detail Book
                   { data: 'action', name: 'action', orderable: false, searchable: false, className: "text-center" },
               ]
           });
-        });
-
-        $(document).on('click','.edit-chapter',function(){
-   
-            var id = $(this).data('id');
-           
-            var url =   "{{url('backoffice/book-chapter/')}}" +'/'+ id +'/edit';
-            console.log(url)
-
-            $.get(url, function (data) {
-                //success data
-                console.log(data);
-                $('#chapter_id_edit').val(data.id);
-                $('#book_id_edit').val(data.book_id);
-                $('#title_edit').val(data.title);
-
-                $('#btn-save').val("update");
-                $('#editChapterModal').modal('show');
-            }) 
         });
 
         $(document).on('click','.edit-image',function(){

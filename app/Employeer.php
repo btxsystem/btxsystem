@@ -56,6 +56,10 @@ class Employeer extends Authenticatable
         return $this->hasOne( 'App\Employeer', 'id', 'parent_id' );
     }
 
+    public function sponsor(){
+        return $this->hasOne( 'App\Employeer', 'id', 'sponsor_id' );
+    }
+
     public function rank(){
         return $this->belongsTo('App\Rank');
     }

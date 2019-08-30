@@ -1,6 +1,6 @@
 @extends('frontend.default')
 @section('title')
-    Pv
+    PV History
     @parent
 @stop
 @section('content')
