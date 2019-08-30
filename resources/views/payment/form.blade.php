@@ -3,7 +3,7 @@
 
 <form method="post" name="ePayment" action="https://sandbox.ipay88.co.id/epayment/entry.asp">
 <input type="hidden" name="MerchantCode" value="{{$data['merchant_code']}}">
-<input type="hidden" name="PaymentId" value="{{$data['payment_id']}}">
+<!-- <input type="hidden" name="PaymentId" value="{{$data['payment_id']}}"> -->
 <input type="hidden" name="RefNo" value="{{$data['ref_no']}}">
 <input type="hidden" name="Amount" value="{{$data['amount']}}">
 <input type="hidden" name="Currency" value="IDR">

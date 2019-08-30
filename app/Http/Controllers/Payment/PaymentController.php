@@ -42,8 +42,8 @@ class PaymentController extends Controller
         $orderAmount = (int) $transaction->ebook->price;
     }
       
-    $data['merchant_key'] = "O4VOsESgvq";
-    $data['merchant_code'] = "ID00902";
+    $data['merchant_key'] = "tbaoVEHjP7";
+    $data['merchant_code'] = "ID01085";
     $data['currency'] = "IDR";
     $data['payment_id'] = 1;
     $data['product_desc'] = 'Ebook Bitrexgo Basic';
@@ -70,8 +70,8 @@ class PaymentController extends Controller
 
   public function signature($code, $amount)
   {
-    $MechantKey = "O4VOsESgvq";
-    $MerchantCode = "ID00902";
+    $MechantKey = "tbaoVEHjP7";
+    $MerchantCode = "ID01085";
     $RefNo = $code;
     $amount = $amount; 
     $currency = "IDR";
