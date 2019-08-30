@@ -62,16 +62,16 @@
                 $('.ajax-load').show();
             }
         }).done(function(data){
-            if(data.cash.data[0]==undefined){
+            if(data.transaction.data[0]==undefined){
                 $('.ajax-load').html("No more records found");
                 return;
             }
             $('.ajax-load').hide();
-            $.each(data.cash.data, function(i, item) {
+            $.each(data.transaction.data, function(i, item) {
                 date = moment(item.created_at).format('MMMM Do Y');
                 price = addCommas(item.price);
                 pv = addCommas(item.pv);
-                $('#bill').append('<div class="card ke-'+i+'" style="border: 1px solid #ccc; box-shadow: 1px 1px 3px 0px  rgba(0,0,0,0.3);"><div class="body"><div class="row"><strong class="col-sm-4" id="date">Date Time: '+date+'</strong></div><hr><div class="row"><div class="col" id="type">Ebook: '+ item.title +'</div><div class="col" id="pv">Pv: '+pv+'</div><hr></div><div class="row"><div class="col" id="price">Nominal: '+price+'</div></div></div></div>'); 
+                $('#bill').append('<div class="card ke-'+i+'" style="border: 1px solid #ccc; box-shadow: 1px 1px 3px 0px  rgba(0,0,0,0.3);"><div class="body"><div class="row"><strong class="col-sm-4" id="date">Date Time: '+date+'</strong></div><hr><div class="row"><div class="col" id="type">Ebook: '+ item.title +'</div><div class="col" id="price">Nominal: '+price+'</div><hr></div><div class="row"><div class="col" id="pv">Pv: '+pv+'</div></div></div></div>');
             });
         })
         .fail(function(jqXHR, ajaxOptions, thrownError){
