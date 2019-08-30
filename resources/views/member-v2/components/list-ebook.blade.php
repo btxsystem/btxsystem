@@ -56,7 +56,7 @@
 								@endif
 							</div>
 							<span style="font-size: 20px; font-weight: bold;">{{ $ebook->book->title }}</span><br>
-							<span>{{ $ebook->book->article }}</span>
+							{!! $ebook->book->article !!}
 						</div>
 					</div>
 					@else
@@ -70,7 +70,7 @@
 								@endif
 							</div>
 							<span style="font-size: 20px; font-weight: bold;">{{ $ebook->book->title }}</span><br>
-							<span>{{ $ebook->book->article }}</span>
+							{!! $ebook->book->article !!}
 						</div>
 					</a>
 					@endif
@@ -134,14 +134,16 @@
 							@else
 							<input type="text" class="form-control" id="referralCode" aria-describedby="emailHelp" placeholder="Referral" required>
 							@endif
-							<span class="text-white d-none" id="referralErrorMessage">Referral tidak ditemukan.</span>
+							<span class="text-danger d-none" id="referralErrorMessage">Referral tidak ditemukan.</span>
+							<span class="text-success d-none" id="referralSuccessMessage">Referral dapat digunakan.</span>
 					  </div>
 						@endif
 						@if(!Auth::guard('nonmember')->user() && !Auth::guard('user')->user())
 						<div class="form-group">
 					    <label for="exampleInputPassword1">Username <small class="text-danger">*</small></label>
 					    <input type="text" class="form-control" id="username" placeholder="Username" required>
-							<span class="text-white d-none" id="usernameErrorMessage">Username telah dipakai.</span>
+							<span class="text-danger d-none" id="usernameErrorMessage">Username tidak dapat digunakan.</span>
+							<span class="text-success d-none" id="usernameSuccessMessage">Username dapat digunakan.</span>
 					  </div>
 					  <div class="form-group">
 					    <label for="exampleInputPassword1">First Name <small class="text-danger">*</small></label>
@@ -160,11 +162,11 @@
 					    <input type="number" class="form-control" id="phoneNumber" placeholder="Phone number" required>
 					  </div>
 						@endif
-					  <span>Total yang dibayar : IDR </span><b><span id="total_price"></span></b>
+					  <h4>Total yang dibayar : IDR </span><b><span id="total_price"></h4></b>
 		      </div>
 		      <div class="modal-footer justify-content-center">
 		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-		        <button type="button" class="btn btn-identity-red" onclick="submit()">Submit</button>
+		        <button type="button" class="btn btn-identity-red" onclick="submit()" id="register">Submit</button>
 		      </div>
 		    </div>
 		  </div>
@@ -219,14 +221,24 @@ function checkUsername () {
 			if(!success) {
 				//alert(message)
 				$('#username').val('')
+				$('#usernameSuccessMessage').addClass('d-none')
 				$('#usernameErrorMessage').removeClass('d-none')
+				$('#username').addClass('is-valid')
+				$('#username').addClass('is-invalid')
 				return false
 			}
 
+			$('#usernameSuccessMessage').removeClass('d-none')
 			$('#usernameErrorMessage').addClass('d-none')
+			$('#username').removeClass('is-invalid')
+			$('#username').addClass('is-valid')
 			//window.location.reload()
 		},
 		error: function(err) {
+			$('#usernameSuccessMessage').addClass('d-none')
+			$('#usernameErrorMessage').removeClass('d-none')
+			$('#username').addClass('is-valid')
+			$('#username').addClass('is-invalid')
 			console.log(err)
 		}});
 }
@@ -249,21 +261,32 @@ function checkReferral () {
 			if(!success) {
 				//alert(message)
 				$('#referralCode').val('')
+				$('#referralSuccessMessage').addClass('d-none')
 				$('#referralErrorMessage').removeClass('d-none')
+				$('#referralCode').addClass('is-valid')
+				$('#referralCode').addClass('is-invalid')
 				return false
 			}
 
+			$('#referralSuccessMessage').removeClass('d-none')
 			$('#referralErrorMessage').addClass('d-none')
+			$('#referralCode').removeClass('is-invalid')
+			$('#referralCode').addClass('is-valid')
 
 			//alert(message)
 			//window.location.reload()
 		},
 		error: function(err) {
-			console.log(err)
+			$('#referralSuccessMessage').addClass('d-none')
+			$('#referralErrorMessage').removeClass('d-none')
+			$('#referralCode').addClass('is-valid')
+			$('#referralCode').addClass('is-invalid')
+			$('#register').prop('disabled', true)
 		}});
 }
 
 function submit() {
+	$('#register').prop('disabled', true)
 	let required = [
 		{
 			field: 'referralCode',
@@ -290,6 +313,7 @@ function submit() {
 
 	if(errors.length > 0) {
 		alert('Some field are required')
+		$('#register').prop('disabled', false)
 		return false;
 	}
 
@@ -323,15 +347,16 @@ function submit() {
 
 			swal("Success", "Register Successfully", "success").then((value) => {
 				if(auth != '') {
-					window.location.href = '{{ route("member.home") }}'
+					window.location.href = '{{ route("payment") }}?transactionRef=' + result.data.transaction_ref
 				} else {
-					window.location.href = '{{ route("member.home") }}'
+					window.location.href = '{{ route("payment") }}?transactionRef=' + result.data.transaction_ref
 				}	
 			});
-
+			$('#register').prop('disabled', false)
 		},
 		error: function(err) {
 			console.log(err)
+			$('#register').prop('disabled', false)
 			alert('Failed Register')
 		}});
 }

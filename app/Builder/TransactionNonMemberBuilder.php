@@ -4,6 +4,8 @@ namespace App\Builder;
 
 class TransactionNonMemberBuilder
 {
+  public $transactionRef = null;
+
   public $memberId = 0;
 
   public $nonMemberId = 0;
@@ -17,6 +19,17 @@ class TransactionNonMemberBuilder
   public $ebookId = 0;
 
   public $identifiedBy = ['id' => 0];
+
+  public function getTransactionRef()
+  {
+    return $this->transactionRef;
+  }
+
+  public function setTransactionRef($value)
+  {
+    $this->transactionRef = $value;
+    return $this;
+  }
 
   public function getMemberId()
   {

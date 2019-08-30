@@ -69,9 +69,10 @@
             <li> <a href="{{ route('member.reward') }}"><i class="zmdi zmdi-star-half col-blue"></i><span>My Rewards</span> </a> </li>
             <li><a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-money col-green"></i><span>Income and expenses</span> </a>
                 <ul class="ml-menu">
-                    <li><a href="{{route('member.bitrex-money.bitrex-points')}}">Bitrex Points</a> </li>
-                    <li><a href="{{route('member.bitrex-money.bitrex-cash')}}">Bitrex Value</a> </li>
-                    <li><a href="{{route('member.bitrex-money.pv')}}">Bitrex Pv</a> </li>
+                    <li><a href="{{route('member.bitrex-money.bitrex-points')}}">History Bitrex Points</a> </li>
+                    <li><a href="{{route('member.bitrex-money.bitrex-cash')}}">History Bitrex Value</a> </li>
+                    <li><a href="{{route('member.bitrex-money.pv')}}">History My PV</a> </li>
+                    <li><a href="{{route('member.bitrex-money.pv-pairing')}}">History PV Pairing</a> </li>
                 </ul>
             </li>
             <li><a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-shopping-cart col-orange"></i><span>Transaction</span> </a>

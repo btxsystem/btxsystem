@@ -18,8 +18,29 @@
                 <form action="{{route('member.ebook.store')}}" method="POST">
                     @csrf
                     <input type="text" name="id" id="id" hidden>
+                    <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
+						<div class="form-line">
+							<input class="form-control" name="price" id="price" type="text" readonly>
+						</div>
+                    </div>
+                    <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
+						<h5 class="card-inside-title">Payment</h5>
+						<div class="demo-radio-button">
+							<input name="payment" type="radio" value="0" id="bp" class="with-gap radio-col-red" />
+							<label for="bp">Bitrex Points</label>
+							<input name="payment" type="radio" value="1" id="transfer" class="with-gap radio-col-red" />
+							<label for="transfer">Ipay</label>
+						</div>
+                    </div>
+                    <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="form-line">
+                            <input class="form-control" name="my-bp" id="my-bp" type="text" readonly>
+                        </div>
+                    </div>
+                    
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Buy</button>
+                        <a class="btn btn-secondary" data-dismiss="modal">Close</a>
+                        <button type="button" class="btn btn-primary" id="pay">Pay</button>
                     </div>
                 </form>
             </div>
@@ -50,7 +71,7 @@
                                             <div class="row">
                                                 <div class="col-lg-6 mb-3">
                                                     <div class="bg-white shadow rounded p-3 border-hover triangle">
-                                                        <div id="flag" class="renewal-basic" aria-hidden="true">
+                                                        <div id="flag" class="renewal-basic" style="display:none">
                                                             <span>Renewal</span>
                                                         </div>
                                                         <div class="row">
@@ -70,7 +91,7 @@
                                                 </div>
                                                 <div class="col-lg-6 mb-3">
                                                     <div class="bg-white shadow rounded p-3 border-hover triangle">
-                                                        <div id="flag" class="renewal-advance" aria-hidden="true">
+                                                        <div id="flag" class="renewal-advance" style="display:none">
                                                             <span>Renewal</span>
                                                         </div>
                                                         <div class="row">
@@ -132,13 +153,46 @@
     }
 </style>  
 <script type="text/javascript">
-    $(document).ready(function () {
+    var price_basic = 0;
+    var price_advance = 0;
+    var cek = 0;
+    var disable = false;
+    $(document).ready(function () {    
+        $.ajax({
+            type: 'GET',
+            url: '{{route("member.select.bitrex-points")}}',
+            success: function (data) {
+                cek = price_basic != 0 ? price_basic : price_advance;
+                cek = cek / 1000;
+                btrx_points = data.bitrex_points;
+                if (cek < btrx_points) {
+                    $('#bp').attr('disabled',true);
+                    disable = true;
+                }else{
+                    $('#pay').attr('type','submit');
+                }
+            },
+            error: function() { 
+                console.log("Error");
+            }
+        });
+
         $('#cart1').click(function(){
             $('#id').val($('#basic-value').val());
+            $('#price').attr('value', 'Price: IDR '+addCommas(price_basic));
         });
 
         $('#cart2').click(function(){
             $('#id').val($('#advance-value').val());
+            $('#price').attr('value', 'Price: IDR '+addCommas(price_advance));
+        });
+
+        $('input[type=radio][name=payment]').change(function() {
+            if (this.value == 0) {
+                $('#pay').attr('type','submit'); 
+            }else{
+                $('#pay').attr('type','submit');
+            };
         });
 
         $.ajax({
@@ -155,6 +209,7 @@
                         data[index].id == 3 ? $('.renewal-basic').show() : $('.renewal-basic').hide() ;
                         $('#description-basic').text(data[index].description);
                         $('#basic-value').val(data[index].id);
+                        price_basic = data[index].price;
                     }else{
                         var str = data[index].id == 4 ? data[index].title.replace('renewal_', ' ') : data[index].title ;
                         str = str.toLowerCase().replace(/\b[a-z]/g, function(letter) {
@@ -164,6 +219,7 @@
                         data[index].id == 4 ? $('.renewal-advance').show() : $('.renewal-advance').hide() ;
                         $('#advance-description').text(data[index].description);
                         $('#advance-value').val(data[index].id);
+                        price_advance = data[index].price;
                     }
                 }
 			},

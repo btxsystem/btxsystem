@@ -27,7 +27,21 @@ class TransactionServiceRegister implements TransactionService
       return false;
     }
 
+    $prefixRef = 'BITREX01';
+
+    $checkRef = TransactionNonMember::where('transaction_ref', $prefixRef . (time() + rand(100, 500)))->first();
+
+    $afterCheckRef = $prefixRef . (time() + rand(100, 500));
+
+    while($checkRef) {
+      $afterCheckRef = $prefixRef . (time() + rand(100, 500));
+      if(!$checkRef) {
+        break;
+      }
+    }
+
     $transaction = new TransactionNonMember();
+    $transaction->transaction_ref = $builder->getTransactionRef() ?? $afterCheckRef;
     $transaction->member_id = $builder->getMemberId();
     $transaction->ebook_id = $builder->getEbookId();
     $transaction->non_member_id = $builder->getNonMemberId();
@@ -40,7 +54,7 @@ class TransactionServiceRegister implements TransactionService
       return false;
     }
 
-    return true;
+    return $transaction;
   }
 
   /**
@@ -67,7 +81,7 @@ class TransactionServiceRegister implements TransactionService
       return false;
     }
 
-    return true;
+    return $transaction;
   }
 
   /**
