@@ -116,7 +116,8 @@ class RegisterController extends Controller
   
         return response()->json([
           'success' => false,
-          'message' => 'Failed register'
+          'message' => 'Failed register',
+          'data' => ''
         ]);
       }    
   
@@ -124,14 +125,16 @@ class RegisterController extends Controller
   
       return response()->json([
         'success' => true,
-        'message' => 'Success register'
+        'message' => 'Success register',
+        'data' => $transaction
       ]);
     } catch(\Exception $e) {
       DB::rollback();
   
       return response()->json([
         'success' => false,
-        'message' => 'Failed register'
+        'message' => 'Failed register',
+        'data' => ''
       ]);
     }
     
