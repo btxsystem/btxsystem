@@ -31,7 +31,7 @@ class NonMemberController extends Controller
     }
     // Tambah logic member
     
-    return redirect()->route('member.home', ['redirect' => ''])->with([
+    return redirect()->route('member.home', ['redirect' => '/ebook'])->with([
       'message' => 'Username atau Password salah'
     ]);
     //return view('member-v2.components.login');

@@ -166,7 +166,7 @@
 		      </div>
 		      <div class="modal-footer justify-content-center">
 		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-		        <button type="button" class="btn btn-identity-red" onclick="submit()">Submit</button>
+		        <button type="button" class="btn btn-identity-red" onclick="submit()" id="register">Submit</button>
 		      </div>
 		    </div>
 		  </div>
@@ -235,6 +235,10 @@ function checkUsername () {
 			//window.location.reload()
 		},
 		error: function(err) {
+			$('#usernameSuccessMessage').addClass('d-none')
+			$('#usernameErrorMessage').removeClass('d-none')
+			$('#username').addClass('is-valid')
+			$('#username').addClass('is-invalid')
 			console.log(err)
 		}});
 }
@@ -273,11 +277,16 @@ function checkReferral () {
 			//window.location.reload()
 		},
 		error: function(err) {
-			console.log(err)
+			$('#referralSuccessMessage').addClass('d-none')
+			$('#referralErrorMessage').removeClass('d-none')
+			$('#referralCode').addClass('is-valid')
+			$('#referralCode').addClass('is-invalid')
+			$('#register').prop('disabled', true)
 		}});
 }
 
 function submit() {
+	$('#register').prop('disabled', true)
 	let required = [
 		{
 			field: 'referralCode',
@@ -304,6 +313,7 @@ function submit() {
 
 	if(errors.length > 0) {
 		alert('Some field are required')
+		$('#register').prop('disabled', false)
 		return false;
 	}
 
@@ -337,15 +347,16 @@ function submit() {
 
 			swal("Success", "Register Successfully", "success").then((value) => {
 				if(auth != '') {
-					window.location.href = '{{ route("member.home") }}'
+					window.location.href = '{{ route("payment") }}?transactionRef=' + result.data.transaction_ref
 				} else {
-					window.location.href = '{{ route("member.home") }}'
+					window.location.href = '{{ route("payment") }}?transactionRef=' + result.data.transaction_ref
 				}	
 			});
-
+			$('#register').prop('disabled', false)
 		},
 		error: function(err) {
 			console.log(err)
+			$('#register').prop('disabled', false)
 			alert('Failed Register')
 		}});
 }
