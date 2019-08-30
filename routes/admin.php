@@ -19,7 +19,8 @@ Auth::routes(['register' => false]);*/
 Route::group(['prefix' => 'select', 'as'=> 'select.'], function () {
     Route::get('sponsor', ['as' => 'sponsor', 'uses' => 'MembershipController@select']);
     Route::get('permissions', ['as' => 'permissions', 'uses' => 'Admin\RolesController@select']);
-    Route::get('username', ['as' => 'username', 'uses' => 'Admin\MemberController@select']);
+    Route::get('username', ['as' => 'username', 'uses' => 'MembershipController@select']);
+    // Route::get('username', ['as' => 'username', 'uses' => 'Admin\MemberController@select']);
     Route::get('/{id}/upline', ['as' => 'upline', 'uses' => 'MembershipController@select_upline']);
 });
 
@@ -112,6 +113,12 @@ Route::group(['prefix' => 'select', 'as'=> 'select.'], function () {
         Route::get('/show-data/{id}', ['as' => 'show', 'uses' => 'Admin\MemberController@show']);
         Route::get('/edit-data/{id}', ['as' => 'edit-data', 'uses' => 'Admin\MemberController@edit']);
         Route::patch('/update-member/{id}', ['as' => 'update-data', 'uses' => 'Admin\MemberController@update']);
+        Route::get('topup', ['as' => 'topup', 'uses' => 'Admin\MemberController@topup']);
+
+        // Datatable for member
+        Route::get('/{id}/point-history','Admin\MemberController@historyPointData')->name('points.history');
+        Route::get('/{id}/cash-history','Admin\MemberController@historyCashData')->name('cash.history');
+
 
         Route::group(['prefix'=>'active','as'=>'active.'], function(){
             Route::get('', ['as' => 'index', 'uses' => 'Admin\MemberController@index']);

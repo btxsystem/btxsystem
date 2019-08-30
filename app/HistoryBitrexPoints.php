@@ -8,7 +8,7 @@ class HistoryBitrexPoints extends Model
 {
     protected $table = 'history_bitrex_point';
 
-    protected $fillable = [
+    protected $guraded = [
         'id',
         'id_member',
         'nominal',
