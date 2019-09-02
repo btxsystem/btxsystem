@@ -94,6 +94,11 @@ Route::get('/logout', 'Auth\LoginController@logout');
 
 Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
 
+    Route::group(['prefix' => 'shipping', 'as'=> 'shipping.'], function () {
+        Route::get('province', ['as' => 'province', 'uses' => 'ShippingController@getProvince']);
+        Route::get('city', ['as' => 'city', 'uses' => 'ShippingController@getCity']);
+    });
+
     Route::get('', ['as' => 'dashboard', 'uses' => 'Member\DashboardController@index']);
     Route::get('tree', ['as' => 'tree', 'uses' => 'Member\DashboardController@tree']);
     Route::get('prospected-member', ['as' => 'prospected-member', 'uses' => 'Member\ProspectedMemberController@index']);
