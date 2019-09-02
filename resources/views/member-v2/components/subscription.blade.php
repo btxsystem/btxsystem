@@ -167,6 +167,7 @@ h2.plan-title {
 												<a href="{{route('member.ebook.detail', ['type' => strtolower($ebook->title)])}}" class="btn btn-secondary text-white btn-sm mt-3 px-5">Detail</a>
 											@endif
 										</form>
+										Berakhir dalam {{$ebook->countdown_days}}
 										@else
 										<form action="">
 											<a href="{{route('member.ebook.detail', ['type' => strtolower($ebook->title), 'username' => $username])}}" class="btn btn-identity-red btn-sm mt-3 px-5">BUY</a>

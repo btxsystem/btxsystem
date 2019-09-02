@@ -91,7 +91,7 @@ class PaymentController extends Controller
     $data['merchant_code'] = "ID01085";
     $data['currency'] = "IDR";
     $data['payment_id'] = 1;
-    $data['product_desc'] = 'Ebook Bitrexgo Basic';
+    $data['product_desc'] = "Ebook Bitrexgo {$productDesc}";
     $data['user_name'] = 'Asep Yayat';
     $data['user_email'] = 'asepmedia18@gmail.com';
     $data['ref_no'] = $transactionRef;
