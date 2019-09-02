@@ -150,9 +150,10 @@ h2.plan-title {
 								<span class="text-dark">Pada modul ini anda akan mempelajari dunia trading lanjutan. Bagaimana cara membaca pasar dengan penggabungan dua atau lebih analisa, diantaranya analisa secara fundamental dan teknikal, serta mempelajari secara mendalam indikator-indikator teknikal.</span><br>
 								@endif
 								@if($ebook->id == 3 || $ebook->id == 4)
-									<form action="{{route('member.ebook-renewal')}}" method="post">
+									<form action="{{route('payment')}}" method="post">
 										{{csrf_field()}}
-										<input type="hidden" name="ebook" value="{{$ebook->id == 3 ? 1 : 2}}">
+										<input type="hidden" name="ebook" value="{{$ebook->id}}">
+										<input type="text" name="transactionRef" value="">
 										<button type="submit" class="btn btn-identity-red text-white btn-sm mt-3 px-5">BUY</button>
 										<a href="{{route('member.ebook.detail', ['type' => strtolower($ebook->id == 3 ? 'basic' : 'advanced')])}}" class="btn btn-secondary text-white btn-sm mt-3 px-5">Detail</a>
 									</form>
