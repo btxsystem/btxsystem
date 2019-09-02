@@ -6,7 +6,7 @@
 
 @section('content')
 
-<div class="modal fade" id="register" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="register" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -16,7 +16,7 @@
 				</button>
 			</div>
 			<div class="modal-body">
-				<form action="{{route('member.register-downline')}}" method="POST">
+				<form action="{{route('member.register-downline')}}" method="POST" class="formTree">
 					@csrf
 					<input type="text" name="parent" id="parent" value="" hidden>
 					<input type="text" name="position" id="position" value="" hidden>
@@ -65,6 +65,26 @@
 							<label for="female">Female</label>
 						</div>
 					</div>
+					<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
+						<h5 class="card-inside-title">Choose a shipping method</h5>
+						<div class="demo-radio-button">
+							<input name="method" type="radio" value="1" id="shipping" class="with-gap radio-col-red" checked />
+							<label for="shipping">Shipping</label>
+							<input name="method" type="radio" value="0" id="pickup" class="with-gap radio-col-red" />
+							<label for="pickup">Pickup</label>
+						</div>
+					</div>
+					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 shipping-form">
+						<div class="form-group">
+							<select id="province" name="province" class="form-group "></select>
+						</div>
+						<div class="form-group" style="display:none">
+							<select id="city" name="city" class=" city"></select>
+						</div>
+						<div class="form-group" style="display:none">
+							<select id="district" name="district" class=" district"></select>
+						</div>
+					</div>
 					<div class="modal-footer">
 						<a class="btn btn-secondary" data-dismiss="modal">Close</a>
 						<input type="submit" class="btn btn-primary register" value="Register">
@@ -93,7 +113,6 @@
 		</div>
 	</div>
 </div>
-	
 
 <section class="content ecommerce-page">
 	<div class="block-header">
@@ -159,14 +178,46 @@
 		margin-right: auto;
 		margin-left: auto;
 	}
+
+	.formTree .select2-container {
+		width: 100% !important;
+	}
+
 </style>
 <script>
 	$(document).ready(function() {
 		var element = document.querySelector('#bah');
 		$('#upline').hide();
 		panzoom(element);
+		$.ajax({
+			type: 'GET',
+			url: '/member/shipping/province',
+			success: function (data) {
+				$('#province').select2({
+					placeholder: 'Province',
+					data: data,
+				});
+			},
+			error: function() { 
+				console.log("Error");
+			}
+		});
 	});
-	
+
+	$('#province').on('change', function(){
+		console.log('aaaa');
+		
+		$('.city').show();
+	})
+
+	$('#shipping').change(function(){
+		$('.shipping-form').show();
+	});
+
+	$('#pickup').change(function(){
+		$('.shipping-form').hide();
+	});
+
 	$('#username').keyup(function(){
 		var text = this.value;
 		$.ajax({

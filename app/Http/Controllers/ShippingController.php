@@ -9,19 +9,22 @@ use Steevenz\Rajaongkir;
 
 class ShippingController extends Controller
 {
-    public function getProvince(Request $req)
+    public function getProvince()
     {
         $config['api_key'] = '36c8c1ee70aa09f3bc85fe0f2d3ee62f';
         $config['account_type'] = 'pro';
 
-        $id = $req->input('id');
         $rajaongkir = new Rajaongkir($config);
 
-        $data = $id ? $rajaongkir->getProvince($id) : $rajaongkir->getProvinces();
+        $data = [];
 
+        foreach ($rajaongkir->getProvinces() as $key => $province) {
+           $data[$key]['id'] = $province['province_id'];
+           $data[$key]['text'] = $province['province'];
+        }
         return $data;
     }
-    
+
     public function getCity(Request $req)
     {
         $config['api_key'] = '36c8c1ee70aa09f3bc85fe0f2d3ee62f';

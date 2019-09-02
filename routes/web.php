@@ -97,6 +97,7 @@ Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
     Route::group(['prefix' => 'shipping', 'as'=> 'shipping.'], function () {
         Route::get('province', ['as' => 'province', 'uses' => 'ShippingController@getProvince']);
         Route::get('city', ['as' => 'city', 'uses' => 'ShippingController@getCity']);
+        Route::get('subdistrict', ['as' => 'subdistrict', 'uses' => 'ShippingController@getSubDistrict']);
     });
 
     Route::get('', ['as' => 'dashboard', 'uses' => 'Member\DashboardController@index']);
@@ -160,7 +161,7 @@ Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
 //     Route::get('explore/{type}/{username}', 'MemberV2\ExploreController@detail')->name('member.ebook.referral');
 //     Route::get('explore/{type}', 'MemberV2\ExploreController@detail')->name('member.ebook.detail');
 //     Route::get('explores', 'MemberV2\ExploreController@index')->name('member.explore');
-//     // Route::get('/member/{username}', 'MemberV2\ExploreController@subscription')->name('member.subscription.referral');
+//     Route::get('/member/{username}', 'MemberV2\ExploreController@subscription')->name('member.subscription.referral');
 //     Route::get('/ebook', 'MemberV2\ExploreController@subscription')->name('member.home');
 //     // Route::get('chapters/{slug}', 'MemberV2\ExploreController@chapters')->name('chapter.list')->middleware('ebook.access');
 //     Route::get('book/{slug}', 'MemberV2\ExploreController@bookDetail')->name('book.detail')->middleware('ebook.access');
@@ -213,7 +214,7 @@ Route::domain('ebook.bitrexgo.id')->group(function () {
     Route::post('renewalEbook', 'MemberV2\RegisterController@renewalEbook')->name('member.ebook-renewal');
 });
 
-Route::post('/payment', ['as' => 'payment', 'uses' => 'Payment\PaymentController@payment']);
+Route::get('/payment', ['as' => 'payment', 'uses' => 'Payment\PaymentController@payment']);
 Route::post('/response-pay', ['as' => 'response.pay', 'uses' => 'Payment\PaymentController@responsePayment']);
 Route::post('/backend-response-pay', ['as' => 'backend.response.pay', 'uses' => 'Payment\PaymentController@backendResponsePayment']);
 
