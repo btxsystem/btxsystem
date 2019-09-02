@@ -114,18 +114,18 @@
                 Customers
         </a>
     </li>
-    <li>
+    <!-- <li>
         <a href="{{ route('tree.index') }}">
             <i class="livicon" data-name="share" data-size="18" data-c="#F89A14" data-hc="#F89A14"
                data-loop="true"></i>
             Tree
         </a>
-    </li>
+    </li> -->
     <li>
         <a href="{{ route('new.tree.index') }}">
             <i class="livicon" data-name="share" data-size="18" data-c="#F89A14" data-hc="#F89A14"
                data-loop="true"></i>
-            New Tree
+            Tree
         </a>
     </li>
     <li >

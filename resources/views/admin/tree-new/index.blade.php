@@ -6,7 +6,7 @@ Tree
 @stop
 {{-- Page content --}}
 @section('content')
-
+<!-- 
 <div class="modal fade" id="register" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
@@ -74,7 +74,7 @@ Tree
 			</div>
 		</div>
 	</div>
-</div>
+</div> -->
 
 <div class="modal fade" id="warning" tabindex="-1" role="dialog" aria-labelledby="modal-warning" aria-hidden="true">
 	<div class="modal-dialog" role="document">
@@ -103,6 +103,25 @@ Tree
 				<h2>Tree
 				<small class="text-muted">Bitrexgo</small>
 				</h2>
+			</div>
+		</div>
+	</div>
+	<div class="container-fluid">        
+		<div class="row clearfix">
+			<div class="col-lg-12 col-md-12">
+				<div class="card">
+					<div class="container-fluid">
+						<div class="row">
+							<div class="col-md-12">
+								<br>
+								<div class="chart" id="tree">
+									<button id="search" class='btn btn-primary'></button>
+								</div>
+								
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
