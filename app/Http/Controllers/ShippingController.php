@@ -59,7 +59,10 @@ class ShippingController extends Controller
     }
 
     public function getKurir(){
-        $kurir = ['jne','jnt'];
+        $kurir = [
+            text =>'jne',
+            'jnt'
+        ];
         return $kurir;
     }
 
