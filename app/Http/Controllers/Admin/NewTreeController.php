@@ -9,7 +9,7 @@ use App\Employeer;
 use DB;
 use Alert;
 
-class TreeController extends Controller
+class NewTreeController extends Controller
 {
     public function index(){
         $data = Auth::user();
@@ -17,7 +17,9 @@ class TreeController extends Controller
 
     public function tree(){
         $data = Auth::user();
-    	return view('admin.tree.index')->with('profile',$data);
+
+        // return $data;
+    	return view('admin.tree-new.index')->with('profile',$data);
     }
 
     public function getTree(){
@@ -41,5 +43,5 @@ class TreeController extends Controller
             }
         };
         return response()->json($user);
-    }   
+    }  
 }

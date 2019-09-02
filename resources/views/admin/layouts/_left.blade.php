@@ -121,6 +121,13 @@
             Tree
         </a>
     </li>
+    <li>
+        <a href="{{ route('new.tree.index') }}">
+            <i class="livicon" data-name="share" data-size="18" data-c="#F89A14" data-hc="#F89A14"
+               data-loop="true"></i>
+            New Tree
+        </a>
+    </li>
     <li >
         <a href="#">
             <i class="livicon" data-name="medal" data-size="18" data-c="#6CC66C" data-hc="#6CC66C"
