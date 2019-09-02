@@ -179,6 +179,7 @@
 
         $('#cart1').click(function(){
             $('#id').val($('#basic-value').val());
+            $('#my-bp').attr('value', 'Bitrex Points: '+addCommas(btrx_points));
             $('#price').attr('value', 'Price: IDR '+addCommas(price_basic));
         });
 

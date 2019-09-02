@@ -12,4 +12,9 @@ class TransactionNonMember extends Model
   {
       return $this->hasOne('\App\Models\Ebook', 'id', 'ebook_id');
   }
+
+  public function member()
+  {
+      return $this->hasOne('\App\Employeer', 'id', 'member_id');
+  }
 }
