@@ -266,6 +266,9 @@ class MemberController extends Controller
             ->addColumn('nominal', function ($data) {
                 return currency($data->nominal);
             })
+            ->addColumn('points', function ($data) {
+                return $data->points ? $data->points : 0;
+            })
             ->addColumn('info', function ($data) {
                 return $this->getStatusInfoTransaction($data);
             })

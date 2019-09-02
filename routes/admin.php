@@ -132,6 +132,12 @@ Route::group(['prefix' => 'select', 'as'=> 'select.'], function () {
         });
     });
 
+    Route::group(['prefix'=>'new.tree','as'=>'new.tree.'], function(){
+            Route::get('index', ['as' => 'index', 'uses' => 'Admin\NewTreeController@tree']);
+            Route::get('create', ['as' => 'create', 'uses' => 'Admin\NewTreeController@create']);
+            Route::get('select', ['as' => 'select', 'uses' => 'Admin\NewTreeController@getTree']);
+    });
+
     Route::group(['prefix'=>'tree','as'=>'tree.'], function(){
             Route::get('index', ['as' => 'index', 'uses' => 'Admin\TreeController@tree']);
             Route::get('create', ['as' => 'create', 'uses' => 'Admin\TreeController@create']);
