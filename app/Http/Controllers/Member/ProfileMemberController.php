@@ -98,6 +98,7 @@ class ProfileMemberController extends Controller
         $rewards = DB::table('got_rewards')->join('gift_rewards','got_rewards.reward_id','=','gift_rewards.id')
                                            ->where('member_id',$member->id)
                                            ->select('gift_rewards.id','gift_rewards.description','gift_rewards.nominal','got_rewards.status','got_rewards.created_at')
+                                           ->orderBy('got_rewards.created_at','desc')
                                            ->paginate(4);
         return response()->json($rewards, 200);
     }

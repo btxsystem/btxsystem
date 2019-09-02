@@ -25,7 +25,7 @@ class PvController extends Controller
     }
 
     public function historyPvPairing(){
-        $data = DB::table('history_pv_pairing')->select('total_pairing','fail_pairing', 'left', 'midle', 'right','created_at')->where('id_member',Auth::id())->paginate(4);
+        $data = DB::table('history_pv_pairing')->select('total_pairing','fail_pairing', 'left', 'midle', 'right','created_at')->where('id_member',Auth::id())->orderBy('created_at','desc')->paginate(4);
         return response()->json($data, 200);
     }
 

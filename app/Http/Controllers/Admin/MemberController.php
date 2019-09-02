@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Employeer;
+use App\HistoryBitrexPoints;
 use DataTables;
 use Alert;
 use Illuminate\Support\Facades\DB;
@@ -102,12 +103,7 @@ class MemberController extends Controller
             'parent_id' => 'required',
             'sponsor_id' => 'required'
         ]);
-
- 
-         
         DB::beginTransaction();
-
- 
         try{
     
             $data = new Employeer;
@@ -165,7 +161,7 @@ class MemberController extends Controller
     public function show($id)
     {
         $data = Employeer::findOrFail($id);
-        // return $data;
+        // return $data->load('point_histories');
 
         return view('admin.members.detail', compact('data'));
 
@@ -174,8 +170,6 @@ class MemberController extends Controller
     public function edit($id)
     {
         $data = Employeer::with('sponsor')->findOrFail($id);
-
-        // return $data;
 
         return view('admin.members.edit', compact('data'));
 
@@ -192,20 +186,11 @@ class MemberController extends Controller
             'nik' => 'required',
             'gender' => 'required',
         ]);
-
- 
-         
         DB::beginTransaction();
-        
-       
- 
         try{
-    
-           
             $data = Employeer::with('sponsor')->findOrFail($id);
 
             $data->nik = $request->nik;
-            // $data->username = $request->username;
             $data->first_name = $request->first_name;
             $data->last_name = $request->last_name;
             $data->email = $request->email;
@@ -215,7 +200,6 @@ class MemberController extends Controller
             $data->gender = $request->gender;
             $data->phone_number = $request->phone_number;
             $data->no_rec = $request->no_rec;
-            // $data->position = $request->position;
 
 
             if ($request->hasFile('src')) {
@@ -225,26 +209,83 @@ class MemberController extends Controller
                 $image->move('upload/member/image/', $imageName);
                 $data->src = $uploadPath;
             }
-
             $data->save();
-
-    
- 
             DB::commit();
             
             Alert::success('Sukses Menambah Data Member', 'Sukses');
             return redirect()->route('members.show', $data->id);
-            // return view('admin.members.active.detail');
  
         }catch(\Exception $e){
-            throw $e;
+            // throw $e;
             DB::rollback();
             
             Alert::error('Gagal Menambah Data Member', 'Gagal');
-            // return \redirect()->back();
+            return \redirect()->back();
         }
     }
 
+    public function topup(Request $request)
+    {
+        DB::beginTransaction();
+        try{
+            $point = $request->nominal / 1000;
+            $member = Employeer::where('id', $request->name)->first();
+            $member->update([
+                'bitrex_points' => $member->bitrex_points + $point
+            ]);
+
+            $topup = new HistoryBitrexPoints;
+            $topup->id_member = $request->name;
+            $topup->nominal = $request->nominal;
+            $topup->points = $point;
+            $topup->description = $request->description;
+            $topup->info = 1;
+            $topup->save();
+    
+ 
+            DB::commit();
+            
+            Alert::success('Sukses Melakukan Topup', 'Sukses');
+            return redirect()->route('members.show', $member->id);
+ 
+        }catch(\Exception $e){
+            // throw $e;
+            DB::rollback();
+            
+            Alert::error('Gagal Melakukan Topup', 'Gagal');
+            return \redirect()->back();
+        }
+    }
+
+    public function historyPointData($id)
+    {
+        $data = Employeer::findOrFail($id);
+     
+        return Datatables::of($data->point_histories)
+            ->addIndexColumn()
+            ->addColumn('nominal', function ($data) {
+                return currency($data->nominal);
+            })
+            ->addColumn('info', function ($data) {
+                return $this->getStatusInfoTransaction($data);
+            })
+            ->make(true);
+    }
+
+    public function historyCashData($id)
+    {
+        $data = Employeer::findOrFail($id);
+     
+        return Datatables::of($data->cash_histories)
+            ->addIndexColumn()
+            ->addColumn('nominal', function ($data) {
+                return currency($data->nominal);
+            })
+            ->addColumn('info', function ($data) {
+                return $this->getStatusInfoTransaction($data);
+            })
+            ->make(true);
+    }
 
     public function htmlAction($row)
     {
@@ -263,6 +304,20 @@ class MemberController extends Controller
 
         }
        
+    }
+
+    public function getStatusInfoTransaction($data)
+    {
+        switch($data->info) {
+            case 1; 
+            return 'Credit';
+            break;
+
+            case 0;
+            return 'Debit';
+            break;
+
+        } 
     }
 
 }
