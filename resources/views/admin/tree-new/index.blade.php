@@ -106,25 +106,29 @@ Tree
 			</div>
 		</div>
 	</div>
-	<div class="container-fluid">        
-		<div class="row clearfix">
-			<div class="col-lg-12 col-md-12">
-				<div class="card">
-					<div class="container-fluid">
-						<div class="row">
-							<div class="col-md-12">
+    <div class="container">
+        <table class="table table-striped">
+           <tbody>
+              <tr>
+                 <td colspan="1">
+                       <fieldset>
+                            <div class="form-group">
 								<br>
-								<div class="chart" id="tree">
-									<button id="search" class='btn btn-primary'></button>
+								<div class="col-md-12 inputGroupContainer">
+									<div class="input-group">
+										<span class="input-group-addon"><i class="fa fa-male"></i></span>
+										<select name="sponsor_id" id="sponsor_id" class="form-control cari" value="{{old('sponsor_id')}}"></select>
+									</div>
 								</div>
-								
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+								<br><br>
+                            </div>
+                       </fieldset>
+                    </form>
+                 </td>
+              </tr>
+           </tbody>
+        </table>
+    </div>
 	<div class="container-fluid">        
 		<div class="row clearfix">
 			<div class="col-lg-12 col-md-12">
@@ -187,7 +191,33 @@ Tree
 	<script src="{{asset('assets2/js/number.js')}}"></script>
 	<script src="{{ asset('assets/tree/panzoom.js') }}"></script>
 	<script src="{{ asset('assets/tree/d3.js') }}"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.cari').select2({
+            placeholder: "Select member...",
+            ajax: {
+                url: '{{ route("select.sponsor") }}',
+                dataType: 'json',
+                data: function (params) {
+                    return {
+                        q: $.trim(params.term)
+                    };
+                },
+                processResults: function (data) {
+                    return {
+                        results: data
+                    };
+                },
+                cache: true
+                },
+                minimumInputLength: 2,
+            });
+        });
+    
+    </script>
+
 	<script>
+	var dataUser = '';
 $(document).ready(function() {
 		var element = document.querySelector('#bah');
 		$('#upline').hide();
@@ -209,20 +239,31 @@ $(document).ready(function() {
 		});
 	})
 
+
+	$('.cari').on('select2:select', function (e) {
+    	// var dataUser = ;
+		$.ajax({
+			
+			type: 'GET',
+
+			url: '/member/select/child-tree/'+e.params.data.text,
+			success: function (data) {
+				$('#bah').empty('g');
+				tree(data);
+			},
+			error: function() { 
+				console.log("Error");
+			}
+		});
+	});
+
+
+
 	var svg = d3.select("#tree").append("svg")
 		.attr("width",1190).attr("height",600)
 		.append("g").attr("transform", "translate(-750,-50)")
 		.attr('id', 'bah');
-	$.ajax({
-		type: 'GET',
-		url: '{{route("member.select.tree")}}',
-		success: function (data) {
-			tree(data);
-		},
-		error: function() { 
-			console.log("Error");
-		}
-	});
+
 
 	var tree_submit = (a, parent, position) => {
 		if(a!="available"){
