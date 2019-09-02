@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use DB;
 use App\Models\TransactionNonMember;
 use App\Models\TransactionMember;
+use App\Models\Ebook;
 
 class PaymentController extends Controller
 {
@@ -16,30 +17,74 @@ class PaymentController extends Controller
     date_default_timezone_set('Asia/Jakarta');
 
     $transactionRef = $request->input('transactionRef') ?? '';	
+    $ebook = $request->input('ebook') ?? '';
+    $productDesc = '';
 
     if($transactionRef == '') {
       redirect()->route('member.home');
     }
 
-    $orderAmount = 0;
-    $orderType = substr($transactionRef, 0, 8);
+    // renewal
+    if($ebook ) {
+      //non member
+      if($user = Auth::guard('nonmember')->user()) {
+        $check = TransactionNonMember::where([
+          'ebook_id' => $ebook,
+          'non_member_id' => $user->id
+        ])->first();
 
-    if($orderType == 'BITREX01') {
-      $transaction = TransactionNonMember::where('transaction_ref', $transactionRef)
-        ->with([
-          'ebook'
-        ])
-        ->first();
+        $updatePrice = Ebook::where([
+          'id' => $ebook == 1 ? 3 : 4,
+        ])->first();
 
-        $orderAmount = (int) $transaction->ebook->price + (int) ($transaction->ebook->price_markup);
-    } else if($orderType == 'BITREX02') {
-      $transaction = TransactionMember::where('transaction_ref', $transactionRef)
-        ->with([
-          'ebook'
-        ])
-        ->first();
+        $transactionRef = $check->transaction_ref;
+        $orderAmount = (int) $updatePrice->price + (int) $updatePrice->price_markup;
+        $productDesc = ucwords($check->ebook->name);
+          
+      } else if($user = Auth::guard('user')->user()) {
+        $check = TransactionMember::where([
+          'ebook_id' => $ebook,
+          'member_id' => $user->id
+        ])->first();
 
-        $orderAmount = (int) $transaction->ebook->price;
+        $updatePrice = Ebook::where([
+          'id' => $ebook == 1 ? 3 : 4,
+        ])->first();
+
+        $transactionRef = $check->transaction_ref;
+        $orderAmount = (int) $updatePrice->price;  
+        $productDesc = ucwords($check->ebook->name);
+      }
+    } else {
+      $check = TransactionNonMember::where([
+        'transaction_ref' => $transactionRef
+      ])->first();
+
+      if(!$check) {
+        redirect()->route('member.home');
+      }
+      $orderAmount = 0;
+      $orderType = substr($transactionRef, 0, 8);
+  
+      if($orderType == 'BITREX01') {
+        $transaction = TransactionNonMember::where('transaction_ref', $transactionRef)
+          ->with([
+            'ebook'
+          ])
+          ->first();
+  
+          $orderAmount = (int) $transaction->ebook->price + (int) ($transaction->ebook->price_markup);
+          $productDesc = ucwords($transaction->ebook->name);
+      } else if($orderType == 'BITREX02') {
+        $transaction = TransactionMember::where('transaction_ref', $transactionRef)
+          ->with([
+            'ebook'
+          ])
+          ->first();
+  
+          $orderAmount = (int) $transaction->ebook->price;
+          $productDesc = ucwords($transaction->ebook->name);
+      }
     }
       
     $data['merchant_key'] = "tbaoVEHjP7";
@@ -53,7 +98,7 @@ class PaymentController extends Controller
     $data['lang'] = 'UTF-8';
     // $data['code'] = $subs->created_at->format('dmYHi');
     $data['code'] = $transactionRef;
-    $data['amount'] = (int) str_replace(".","",str_replace(",","",$orderAmount));
+    $data['amount'] = (int) str_replace(".","",str_replace(",","",number_format($orderAmount, 2, ".", "")));
     $data['signature'] = $this->signature($data['code'], $data['amount']);
     $data['response_url'] = 'https://bitrexgo.id/response-pay';
     $data['backend_url'] = 'https://bitrexgo.id/backend-response-pay'; 
@@ -61,11 +106,35 @@ class PaymentController extends Controller
     // return response()->json([
     //   'data' => $data
     // ]);
+
+    // $form = "
+    //   <form method=\"post\" id=\"payment\" name=\"ePayment\" action=\"https://sandbox.ipay88.co.id/epayment/entry.asp\">        
+    //     <input type=\"hidden\" name=\"MerchantCode\" value=\"$data[merchant_code]\">
+    //     <input type=\"hidden\" name=\"RefNo\" value=\"$data[code]\">
+    //     <input type=\"hidden\" name=\"Amount\" value=\"$data[amount]\">
+    //     <input type=\"hidden\" name=\"Currency\" value=\"IDR\">
+    //     <input type=\"hidden\" name=\"ProdDesc\" value=\"$data[product_desc]\">
+    //     <input type=\"hidden\" name=\"UserName\" value=\"Asep Yayat\">
+    //     <input type=\"hidden\" name=\"UserEmail\" value=\"asepmedia18@gmail.com\">
+    //     <input type=\"hidden\" name=\"UserContact\" value=\"0126500100\">
+    //     <input type=\"hidden\" name=\"Remark\" value=\"\">
+    //     <input type=\"hidden\" name=\"Lang\" value=\"UTF-8\">
+    //     <input type=\"hidden\" name=\"Signature\" value=\"$data[signature]=\">
+    //     <input type=\"hidden\" name=\"ResponseURL\" value=\"$data[response_url]\"> 
+    //     <input type=\"hidden\" name=\"BackendURL\" value=\"$data[backend_url]\"> 
+    //     <input type=\"submit\" value=\"Proceed with Payment\" name=\"Submit\"> 
+    //     </form> 
+    //     <script language=\"JavaScript\" type=\"text/javascript\">
+    //     document.getElementById('payment').submit();
+    //     </script
+    // ";
+
+    // echo $form;
     
     return view('payment.form')
       ->with([
         'data' => $data
-      ]);
+    ]);
   }
 
   public function signature($code, $amount)
@@ -105,6 +174,7 @@ class PaymentController extends Controller
     $signature_plaintext = $merchant_key . $merchant_code . $payment_id . $code . $amount . $currency . $status;
     $sinature_result = $this->signature($signature_plaintext, $amount);
     try {
+      DB::beginTransaction();
       $orderType = substr($code, 0, 8);
 
       if($orderType == 'BITREX01') {
@@ -118,8 +188,17 @@ class PaymentController extends Controller
             'status' => $status
           ]);
       }
+
+      if(!$transaction) {
+        DB::rollback();
+      }
+
+      DB::transaction();
+
     } catch (\Illuminate\Database\QueryException $e) {
-        return $e->getMessage();
+        DB::rollback();
+        return redirect()->route('member.home');
+        //return $e->getMessage();
     }
     return redirect()->route('member.home');
   }

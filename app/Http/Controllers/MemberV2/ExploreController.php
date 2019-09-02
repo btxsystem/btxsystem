@@ -107,18 +107,26 @@ class ExploreController extends Controller
     }  
     ])->where('title', $type)->get();
 
-    $referral = $request->input('username') ?? \Session::get('referral');
+    if($user = Auth::guard('nonmember')->user()) {
+      $referral  = TransactionNonMember::where([
+        'non_member_id' => $user->id,
+      ])->with([
+        'member'
+      ])->first()->member->username;
+    } else {
+      $referral = $request->input('username') ?? \Session::get('referral');
 
     
-    if(Employeer::where('username', $username)->count() > 0 || \Session::has('referral')) {
-      if(\Session::has('referral')) {
-        $referral = \Session::get('referral');
-        if($referral != $username) {
-          // \Session::forget('referral');
+      if(Employeer::where('username', $username)->count() > 0 || \Session::has('referral')) {
+        if(\Session::has('referral')) {
+          $referral = \Session::get('referral');
+          if($referral != $username) {
+            // \Session::forget('referral');
+          }
+        } else {
+          $referral = $username;
+          \Session::put('referral', $username);
         }
-      } else {
-        $referral = $username;
-        \Session::put('referral', $username);
       }
     }
 
@@ -188,19 +196,28 @@ class ExploreController extends Controller
     ->orderBy('position', 'ASC')
     ->get();
 
-    $referral = '';
-    
-    if(Employeer::where('username', $username)->count() > 0 || \Session::has('referral')) {
-      if(\Session::has('referral')) {
-        $referral = \Session::get('referral');
-        \Session::forget('referral');
-      } else {
-        $referral = $username;
-        \Session::put('referral', $username);
-      }
+    if($user = Auth::guard('nonmember')->user()) {
+      $referral  = TransactionNonMember::where([
+        'non_member_id' => $user->id,
+      ])->with([
+        'member'
+      ])->first()->member->username;
     } else {
-      redirect()->route('member.home');
+      if(Employeer::where('username', $username)->count() > 0 || \Session::has('referral')) {
+        if(\Session::has('referral')) {
+          $referral = \Session::get('referral');
+          \Session::forget('referral');
+        } else {
+          $referral = $username;
+          \Session::put('referral', $username);
+        }
+      } else {
+        redirect()->route('member.home');
+      }
     }
+
+    $referral = '';
+  
     // return response()->json([
     //   'data' => $ebooks
     // ], 200);

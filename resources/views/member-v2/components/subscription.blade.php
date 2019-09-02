@@ -159,7 +159,7 @@ h2.plan-title {
 								@else
 									<div>
 										@if($ebook->access)
-										<form action="{{route('member.ebook-renewal')}}" method="post">
+										<form action="{{route('payment')}}" method="post">
 											{{csrf_field()}}
 											<input type="hidden" name="ebook" value="{{$ebook->id}}">
 											<button type="submit" class="btn btn-identity-red text-white btn-sm mt-3 px-5">BUY</button>
