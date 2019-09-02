@@ -78,10 +78,10 @@
 						<div class="form-group">
 							<select id="province" name="province" class="form-group "></select>
 						</div>
-						<div class="form-group" style="display:none">
-							<select id="city" name="city" class=" city"></select>
+						<div class="form-group city-form" style="display:none">
+							<select id="city" name="city" class="city"></select>
 						</div>
-						<div class="form-group" style="display:none">
+						<div class="form-group district-form" style="display:none">
 							<select id="district" name="district" class=" district"></select>
 						</div>
 					</div>
@@ -205,9 +205,39 @@
 	});
 
 	$('#province').on('change', function(){
-		console.log('aaaa');
-		
-		$('.city').show();
+		let id = this.value;		
+		$('.city-form').show();
+		$.ajax({
+			type: 'GET',
+			url: '/member/shipping/city/'+id,
+			success: function (data) {
+				$('#city').select2({
+					placeholder: 'City',
+					data: data,
+				});
+			},
+			error: function() { 
+				console.log("Error");
+			}
+		});
+	})
+
+	$('#city').change(function(){
+		let id = this.id;
+		$.ajax({
+			type: 'GET',
+			url: '/member/shipping/subdistrict/'+id,
+			success: function (data) {
+				$('#city').select2({
+					placeholder: 'Subdistrict',
+					data: data,
+				});
+			},
+			error: function() { 
+				console.log("Error");
+			}
+		});
+		$('.district-form').show();
 	})
 
 	$('#shipping').change(function(){

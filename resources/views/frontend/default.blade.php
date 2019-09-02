@@ -57,7 +57,7 @@
 <script src="{{asset('assets2/bundles/sparkline.bundle.js')}}"></script> <!-- Sparkline Plugin Js -->
 <script src="{{asset('assets2/bundles/knob.bundle.js')}}"></script> <!-- Jquery Knob Plugin Js -->
 
-{{-- <script src="{{asset('assets2/bundles/mainscripts.bundle.js')}}"></script> --}}
+{<script src="{{asset('assets2/bundles/mainscripts.bundle.js')}}"></script>
 <script src="{{asset('assets2/js/pages/index.js')}}"></script>
 <script src="{{asset('assets2/js/moment.js')}}"></script>
 <script src="{{asset('assets2/js/number.js')}}"></script>

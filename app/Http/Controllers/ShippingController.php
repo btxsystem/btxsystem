@@ -25,44 +25,45 @@ class ShippingController extends Controller
         return $data;
     }
 
-    public function getCity(Request $req)
+    public function getCity($id)
     {
         $config['api_key'] = '36c8c1ee70aa09f3bc85fe0f2d3ee62f';
         $config['account_type'] = 'pro';
-
-        $id = $req->input('id');
-        $provinceId = $req->input('province_id') ? $req->input('province_id') : null;
+        $provinceId = $id ;
         $rajaongkir = new Rajaongkir($config);
 
-        $data = $id ? $rajaongkir->getCity($id) : $rajaongkir->getCities($provinceId);
+        $data = []; 
+        foreach ($rajaongkir->getCities($provinceId) as $key => $city) {
+            $data[$key]['id'] = $city['city_id'];
+            $data[$key]['text'] = $city['city_name'];
+        }
 
         return $data;
     }
 
-    public function getSubDistrict(Request $req)
+    public function getSubDistrict($id)
     {
         $config['api_key'] = '36c8c1ee70aa09f3bc85fe0f2d3ee62f';
         $config['account_type'] = 'pro';
 
-        $id = $req->input('id');
-        $cityId = $req->input('city_id');
+        $rajaongkir = new Rajaongkir($config);
 
-        if($cityId || $id) {
+        $data = []; 
+        
+        foreach ($rajaongkir->getSubdistricts($id) as $key => $subdistrict) {
+            $data[$key]['id'] = $subdistrict['subdistrict_id'];
+            $data[$key]['text'] = $subdistrict['subdistrict_name'];
+        }
 
-            $rajaongkir = new Rajaongkir($config);
-
-            $data = $id ? $rajaongkir->getSubdistrict($id) : $rajaongkir->getSubdistricts($cityId);
-
-            return $data;
-        }  
-
-        return response()->json([
-            'success' => false,
-            'message' => 'City id needed !!'
-        ], 400);
+        return $data;
     }
 
-    public function getCost(Request $req)
+    public function getKurir(){
+        $kurir = ['jne','jnt'];
+        return $kurir;
+    }
+
+    public function getCost($id)
     {
         $config['api_key'] = '36c8c1ee70aa09f3bc85fe0f2d3ee62f';
         $config['account_type'] = 'pro';
@@ -76,9 +77,7 @@ class ShippingController extends Controller
         // Berate satuan gram;
 
         $originID = 2127;
-        $kurir = 'jne';
-        $destID = $req->input('dest_id');
-        $berat = $req->input('berat');
+        $berat = 1000;
         
 
         $rajaongkir = new Rajaongkir($config);
@@ -86,7 +85,7 @@ class ShippingController extends Controller
 
         if ($originID && $destID && $berat && $kurir) {
 
-            $data =  $rajaongkir->getCost(['subdistrict' => $originID], ['subdistrict' => $destID], $berat, $kurir);
+            $data =  $rajaongkir->getCost(['subdistrict' => $originID], ['subdistrict' => $id], $berat, $kurir);
 
             return $data;
         }
