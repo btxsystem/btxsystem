@@ -24,7 +24,9 @@ class PaymentController extends Controller
       redirect()->route('member.home');
     }
 
+    // renewal
     if($ebook ) {
+      //non member
       if($user = Auth::guard('nonmember')->user()) {
         $check = TransactionNonMember::where([
           'ebook_id' => $ebook,
@@ -38,7 +40,7 @@ class PaymentController extends Controller
         $transactionRef = $check->transaction_ref;
         $orderAmount = (int) $updatePrice->price + (int) $updatePrice->price_markup;
         $productDesc = ucwords($check->ebook->name);
-        
+          
       } else if($user = Auth::guard('user')->user()) {
         $check = TransactionMember::where([
           'ebook_id' => $ebook,
@@ -172,6 +174,7 @@ class PaymentController extends Controller
     $signature_plaintext = $merchant_key . $merchant_code . $payment_id . $code . $amount . $currency . $status;
     $sinature_result = $this->signature($signature_plaintext, $amount);
     try {
+      DB::beginTransaction();
       $orderType = substr($code, 0, 8);
 
       if($orderType == 'BITREX01') {
@@ -185,8 +188,17 @@ class PaymentController extends Controller
             'status' => $status
           ]);
       }
+
+      if(!$transaction) {
+        DB::rollback();
+      }
+
+      DB::transaction();
+
     } catch (\Illuminate\Database\QueryException $e) {
-        return $e->getMessage();
+        DB::rollback();
+        return redirect()->route('member.home');
+        //return $e->getMessage();
     }
     return redirect()->route('member.home');
   }

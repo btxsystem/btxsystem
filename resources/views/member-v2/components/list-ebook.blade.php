@@ -174,7 +174,7 @@
 	<!-- End Modal -->
 	<form action="{{route('payment')}}" method="post" id="submitPayment">
 		{{csrf_field()}}
-		<input type="text" name="transactionRef" id="transactionRef">
+		<input type="hidden" name="transactionRef" id="transactionRef">
 	</form>
 
 @stop
@@ -349,7 +349,7 @@ function submit() {
 				return false
 			}
 
-			swal("Success", "Register Successfully", "success").then((value) => {
+			swal("Success", "Transaction Successfully", "success").then((value) => {
 				$('#transactionRef').val(result.data.transaction_ref)
 				$('#submitPayment').submit()
 				// if(auth != '') {

@@ -16,7 +16,6 @@
 <input type="hidden" name="Signature" value="{{$data['signature']}}">
 <input type="hidden" name="ResponseURL" value="{{$data['response_url']}}">
 <input type="hidden" name="BackendURL" value="{{$data['backend_url']}}">
-<input type="submit" value="Proceed with Payment" name="Submit"> 
 </form>
 <script>
 let form = document.getElementById('payment')
