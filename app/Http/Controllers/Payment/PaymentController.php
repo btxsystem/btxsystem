@@ -193,8 +193,8 @@ class PaymentController extends Controller
         DB::rollback();
       }
 
-      DB::transaction();
-
+      DB::commit();
+      return redirect()->route('member.home');
     } catch (\Illuminate\Database\QueryException $e) {
         DB::rollback();
         return redirect()->route('member.home');
