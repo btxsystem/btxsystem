@@ -96,8 +96,10 @@ Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
 
     Route::group(['prefix' => 'shipping', 'as'=> 'shipping.'], function () {
         Route::get('province', ['as' => 'province', 'uses' => 'ShippingController@getProvince']);
-        Route::get('city', ['as' => 'city', 'uses' => 'ShippingController@getCity']);
-        Route::get('subdistrict', ['as' => 'subdistrict', 'uses' => 'ShippingController@getSubDistrict']);
+        Route::get('city/{id}', ['as' => 'city', 'uses' => 'ShippingController@getCity']);
+        Route::get('subdistrict/{id}', ['as' => 'subdistrict', 'uses' => 'ShippingController@getSubDistrict']);
+        Route::get('kurir', ['as' => 'kurir', 'uses' => 'ShippingController@getKurir']);
+        Route::get('cost/{id}', ['as' => 'cost', 'uses' => 'ShippingController@getCost']);
     });
 
     Route::get('', ['as' => 'dashboard', 'uses' => 'Member\DashboardController@index']);

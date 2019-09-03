@@ -25,78 +25,72 @@ class ShippingController extends Controller
         return $data;
     }
 
-    public function getCity(Request $req)
+    public function getCity($id)
     {
         $config['api_key'] = '36c8c1ee70aa09f3bc85fe0f2d3ee62f';
         $config['account_type'] = 'pro';
-
-        $id = $req->input('id');
-        $provinceId = $req->input('province_id') ? $req->input('province_id') : null;
+        $provinceId = $id ;
         $rajaongkir = new Rajaongkir($config);
 
-        $data = $id ? $rajaongkir->getCity($id) : $rajaongkir->getCities($provinceId);
+        $data = []; 
+        foreach ($rajaongkir->getCities($provinceId) as $key => $city) {
+            $data[$key]['id'] = $city['city_id'];
+            $data[$key]['text'] = $city['city_name'];
+        }
 
         return $data;
     }
 
-    public function getSubDistrict(Request $req)
+    public function getSubDistrict($id)
     {
         $config['api_key'] = '36c8c1ee70aa09f3bc85fe0f2d3ee62f';
         $config['account_type'] = 'pro';
-
-        $id = $req->input('id');
-        $cityId = $req->input('city_id');
-
-        if($cityId || $id) {
-
-            $rajaongkir = new Rajaongkir($config);
-
-            $data = $id ? $rajaongkir->getSubdistrict($id) : $rajaongkir->getSubdistricts($cityId);
-
-            return $data;
-        }  
-
-        return response()->json([
-            'success' => false,
-            'message' => 'City id needed !!'
-        ], 400);
-    }
-
-    public function getCost(Request $req)
-    {
-        $config['api_key'] = '36c8c1ee70aa09f3bc85fe0f2d3ee62f';
-        $config['account_type'] = 'pro';
-
-        // $originID = $req->input('origin_id'); 
-        // Origin id di set 2127(Kode District Penjaringan)
-
-        // $kurir = $req->input('kurir');
-        // Kurir untuk sementara hanya available dengan JNE
-
-        // Berate satuan gram;
-
-        $originID = 2127;
-        $kurir = 'jne';
-        $destID = $req->input('dest_id');
-        $berat = $req->input('berat');
-        
 
         $rajaongkir = new Rajaongkir($config);
 
-
-        if ($originID && $destID && $berat && $kurir) {
-
-            $data =  $rajaongkir->getCost(['subdistrict' => $originID], ['subdistrict' => $destID], $berat, $kurir);
-
-            return $data;
+        $data = []; 
+        
+        foreach ($rajaongkir->getSubdistricts($id) as $key => $subdistrict) {
+            $data[$key]['id'] = $subdistrict['subdistrict_id'];
+            $data[$key]['text'] = $subdistrict['subdistrict_name'];
         }
 
-        return response()->json([
-            'success' => false,
-            'message' => 'Mohon lengkapi data, Data Origin, Data Tujuan, Derat, dan Kurir'
-        ], 400);
-    
+        return $data;
+    }
 
+    public function getCost($id)
+    {
+        $config['api_key'] = '36c8c1ee70aa09f3bc85fe0f2d3ee62f';
+        $config['account_type'] = 'pro';
 
+        $originID = 2127;
+        $berat = 1000;
+        $kurir = array(
+            'jne' => 'jne' ,
+            'pos' => 'pos' ,
+            'tiki' => 'tiki' ,
+            'jnt' => 'jnt' ,
+            'wahana' => 'wahana',
+            'ninja' => 'ninja'
+        );
+
+        $rajaongkir = new Rajaongkir($config);
+        $datas = [];
+        $data = [];
+        $index = 0;
+
+        foreach ($kurir as $key => $kur) {
+            $datas[$key] =  $rajaongkir->getCost(['subdistrict' => $originID], ['subdistrict' => $berat], 1, $kur);
+        }
+
+        foreach ($datas as $key => $value) {
+            for ($i=0; $i<count($value['costs']); $i++) { 
+                $data[$index]['id'] = $value['costs'][$i]['cost'][0]['value'];
+                $data[$index]['text'] = $value['code'].' '.$value['costs'][$i]['service'].' ('.$value['costs'][$i]['cost'][0]['etd'].')';
+                $index++;
+            }
+        }
+        
+        return($data);
     }
 }
