@@ -99,6 +99,7 @@ Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
         Route::get('city/{id}', ['as' => 'city', 'uses' => 'ShippingController@getCity']);
         Route::get('subdistrict/{id}', ['as' => 'subdistrict', 'uses' => 'ShippingController@getSubDistrict']);
         Route::get('kurir', ['as' => 'kurir', 'uses' => 'ShippingController@getKurir']);
+        Route::get('cost/{id}', ['as' => 'cost', 'uses' => 'ShippingController@getCost']);
     });
 
     Route::get('', ['as' => 'dashboard', 'uses' => 'Member\DashboardController@index']);

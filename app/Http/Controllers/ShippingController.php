@@ -58,47 +58,39 @@ class ShippingController extends Controller
         return $data;
     }
 
-    public function getKurir(){
-        $kurir = [
-            text =>'jne',
-            'jnt'
-        ];
-        return $kurir;
-    }
-
     public function getCost($id)
     {
         $config['api_key'] = '36c8c1ee70aa09f3bc85fe0f2d3ee62f';
         $config['account_type'] = 'pro';
 
-        // $originID = $req->input('origin_id'); 
-        // Origin id di set 2127(Kode District Penjaringan)
-
-        // $kurir = $req->input('kurir');
-        // Kurir untuk sementara hanya available dengan JNE
-
-        // Berate satuan gram;
-
         $originID = 2127;
         $berat = 1000;
-        
+        $kurir = array(
+            'jne' => 'jne' ,
+            'pos' => 'pos' ,
+            'tiki' => 'tiki' ,
+            'jnt' => 'jnt' ,
+            'wahana' => 'wahana',
+            'ninja' => 'ninja'
+        );
 
         $rajaongkir = new Rajaongkir($config);
+        $datas = [];
+        $data = [];
+        $index = 0;
 
-
-        if ($originID && $destID && $berat && $kurir) {
-
-            $data =  $rajaongkir->getCost(['subdistrict' => $originID], ['subdistrict' => $id], $berat, $kurir);
-
-            return $data;
+        foreach ($kurir as $key => $kur) {
+            $datas[$key] =  $rajaongkir->getCost(['subdistrict' => $originID], ['subdistrict' => $berat], 1, $kur);
         }
 
-        return response()->json([
-            'success' => false,
-            'message' => 'Mohon lengkapi data, Data Origin, Data Tujuan, Derat, dan Kurir'
-        ], 400);
-    
-
-
+        foreach ($datas as $key => $value) {
+            for ($i=0; $i<count($value['costs']); $i++) { 
+                $data[$index]['id'] = $value['costs'][$i]['cost'][0]['value'];
+                $data[$index]['text'] = $value['code'].' '.$value['costs'][$i]['service'].' ('.$value['costs'][$i]['cost'][0]['etd'].')';
+                $index++;
+            }
+        }
+        
+        return($data);
     }
 }

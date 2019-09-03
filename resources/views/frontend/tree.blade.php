@@ -76,13 +76,19 @@
 					</div>
 					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 shipping-form">
 						<div class="form-group">
-							<select id="province" name="province" class="form-group "></select>
+							<select id="province" name="province" class="province"></select>
 						</div>
 						<div class="form-group city-form" style="display:none">
 							<select id="city" name="city" class="city"></select>
 						</div>
 						<div class="form-group district-form" style="display:none">
-							<select id="district" name="district" class=" district"></select>
+							<select id="district" name="district" class="district"></select>
+						</div>
+						<div class="form-group kurir-form" style="display:none">
+							<select id="kurir" name="kurir" class="kurir"></select>
+						</div>
+						<div class="cost-form form-line" style="display:none">
+							<input class="cost form-control" name="cost" id="cost" type="number">
 						</div>
 					</div>
 					<div class="modal-footer">
@@ -189,6 +195,9 @@
 		var element = document.querySelector('#bah');
 		$('#upline').hide();
 		panzoom(element);
+		$('#province').select2({
+			placeholder: 'Province',
+		});
 		$.ajax({
 			type: 'GET',
 			url: '/member/shipping/province',
@@ -202,10 +211,23 @@
 				console.log("Error");
 			}
 		});
+		$('.dropdown-toggle').remove();
+		$('div').removeClass('btn-group');
+		$('.div').removeClass('bootstrap-select');
+		$('#city').select2({
+			placeholder: 'City',
+		});
+		$('#district').select2({
+			placeholder: 'District',
+		});
+		$('#kurir').select2({
+			placeholder: 'Kurir',
+			data: data,
+		});
 	});
 
-	$('#province').on('change', function(){
-		let id = this.value;		
+	$('#province').change(function(){
+		let id = this.value;
 		$('.city-form').show();
 		$.ajax({
 			type: 'GET',
@@ -223,12 +245,12 @@
 	})
 
 	$('#city').change(function(){
-		let id = this.id;
+		let id = this.value;
 		$.ajax({
 			type: 'GET',
 			url: '/member/shipping/subdistrict/'+id,
 			success: function (data) {
-				$('#city').select2({
+				$('#district').select2({
 					placeholder: 'Subdistrict',
 					data: data,
 				});
@@ -239,6 +261,29 @@
 		});
 		$('.district-form').show();
 	})
+
+	$('#district').change(function() {
+		let id = this.value;
+		$.ajax({
+			type: 'GET',
+			url: '/member/shipping/cost/'+id,
+			success: function (data) {
+				$('#kurir').select2({
+					placeholder: 'Kurir',
+					data: data,
+				});
+			},
+			error: function() { 
+				console.log("Error");
+			}
+		});
+		$('.kurir-form').show();
+	});
+
+	$('#kurir').change(function(){
+		$('.cost-form').show();
+		$('#cost').val(this.value);
+	});
 
 	$('#shipping').change(function(){
 		$('.shipping-form').show();
