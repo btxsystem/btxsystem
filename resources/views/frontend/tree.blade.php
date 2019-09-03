@@ -78,17 +78,17 @@
 						<div class="form-group">
 							<select id="province" name="province" class="province"></select>
 						</div>
-						<div class="form-group city-form" style="display:none">
+						<div class="form-group city-form">
 							<select id="city" name="city" class="city"></select>
 						</div>
-						<div class="form-group district-form" style="display:none">
+						<div class="form-group district-form">
 							<select id="district" name="district" class="district"></select>
 						</div>
-						<div class="form-group kurir-form" style="display:none">
+						<div class="form-group kurir-form">
 							<select id="kurir" name="kurir" class="kurir"></select>
 						</div>
 						<div class="cost-form form-line" style="display:none">
-							<input class="cost form-control" name="cost" id="cost" type="number">
+							<input class="cost form-control" name="cost" id="cost" type="text">
 						</div>
 					</div>
 					<div class="modal-footer">
@@ -198,6 +198,7 @@
 		$('#province').select2({
 			placeholder: 'Province',
 		});
+		$('#province').html('<option disabled>Province<option>');
 		$.ajax({
 			type: 'GET',
 			url: '/member/shipping/province',
@@ -228,7 +229,10 @@
 
 	$('#province').change(function(){
 		let id = this.value;
-		$('.city-form').show();
+		$('#city').empty().trigger('change');
+		$('#district').empty().trigger('change');
+		$('#kurir').empty().trigger('change');
+		$('#city').html('<option disabled>City<option>');
 		$.ajax({
 			type: 'GET',
 			url: '/member/shipping/city/'+id,
@@ -246,6 +250,9 @@
 
 	$('#city').change(function(){
 		let id = this.value;
+		$('#district').empty().trigger('change');
+		$('#kurir').empty().trigger('change');
+		$('#district').html('<option disabled>District<option>');
 		$.ajax({
 			type: 'GET',
 			url: '/member/shipping/subdistrict/'+id,
@@ -259,11 +266,12 @@
 				console.log("Error");
 			}
 		});
-		$('.district-form').show();
 	})
 
 	$('#district').change(function() {
 		let id = this.value;
+		$('#kurir').empty().trigger('change');
+		$('#kurir').html('<option disabled>Kurir<option>');
 		$.ajax({
 			type: 'GET',
 			url: '/member/shipping/cost/'+id,
@@ -277,16 +285,17 @@
 				console.log("Error");
 			}
 		});
-		$('.kurir-form').show();
 	});
 
 	$('#kurir').change(function(){
 		$('.cost-form').show();
-		$('#cost').val(this.value);
+		$('#cost').val(Math.ceil(this.value/1000) + ' Points');
 	});
 
 	$('#shipping').change(function(){
 		$('.shipping-form').show();
+		$('#province').prop('required',true);
+		$('#city').prop('required',true);
 	});
 
 	$('#pickup').change(function(){
