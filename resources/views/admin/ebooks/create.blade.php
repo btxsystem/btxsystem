@@ -37,42 +37,74 @@ Create Book
 
                             <div class="form-group">
                                 <label class="col-md-2 control-label">Price</label>
-                                <div class="col-md-8 inputGroupContainer">
+                                <div class="col-md-3 inputGroupContainer">
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-money"></i></span>
                                         <input id="price" name="price" placeholder="Price" class="form-control" required="true" value="{{old('price')}}" type="number">
+                                    </div>
+                                </div>
+                                <label class="col-md-2 control-label">Price Renewal</label>
+                                <div class="col-md-3 inputGroupContainer">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-money"></i></span>
+                                        <input id="price_renewal" name="price_renewal" placeholder="Price Renewal" class="form-control" required="true" value="{{old('price_renewal')}}" type="number">
                                     </div>
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-md-2 control-label">Markup Price</label>
-                                <div class="col-md-8 inputGroupContainer">
+                                <div class="col-md-3 inputGroupContainer">
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-money"></i></span>
                                         <input id="price_markup" name="price_markup" placeholder="Markup" class="form-control" required="true" value="{{old('price_markup')}}" type="number">
+                                    </div>
+                                </div>
+
+                                <label class="col-md-2 control-label">Markup Price Renewal</label>
+                                <div class="col-md-3 inputGroupContainer">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-money"></i></span>
+                                        <input id="price_markup_renewal" name="price_markup_renewal" placeholder="Markup Renewal" class="form-control" required="true" value="{{old('price_markup_renewal')}}" type="number">
                                     </div>
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-md-2 control-label">Point Value</label>
-                                <div class="col-md-8 inputGroupContainer">
+                                <div class="col-md-3 inputGroupContainer">
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-balance-scale"></i></span>
                                         <input id="pv" name="pv" placeholder="Point" class="form-control" required="true" value="{{old('pv')}}" type="number">
+                                    </div>
+                                </div>
+
+                                <label class="col-md-2 control-label">Point Value Renewal</label>
+                                <div class="col-md-3 inputGroupContainer">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-balance-scale"></i></span>
+                                        <input id="pv_renewal" name="pv_renewal" placeholder="Point Renewal" class="form-control" required="true" value="{{old('pv_renewal')}}" type="number">
                                     </div>
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-md-2 control-label">Bonus Value</label>
-                                <div class="col-md-8 inputGroupContainer">
+                                <div class="col-md-3 inputGroupContainer">
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-area-chart"></i></span>
                                         <input id="bv" name="bv" placeholder="Bonus" class="form-control" required="true" value="{{old('bv')}}" type="number">
                                     </div>
                                     <p class="text-danger">{{ $errors->first('bv') }}</p>
+                                </div>
+
+                                <label class="col-md-2 control-label">Bonus Value Renewal</label>
+                                <div class="col-md-3 inputGroupContainer">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-area-chart"></i></span>
+                                        <input id="bv_renewal" name="bv_renewal" placeholder="Bonus Renewal" class="form-control" required="true" value="{{old('bv_renewal')}}" type="number">
+                                    </div>
+                                    <p class="text-danger">{{ $errors->first('bv_renewal') }}</p>
                                 </div>
                             </div>
 

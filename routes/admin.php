@@ -118,6 +118,7 @@ Route::group(['prefix' => 'select', 'as'=> 'select.'], function () {
         // Datatable for member
         Route::get('/{id}/point-history','Admin\MemberController@historyPointData')->name('points.history');
         Route::get('/{id}/cash-history','Admin\MemberController@historyCashData')->name('cash.history');
+        Route::get('/{id}/my-pv','Admin\MemberController@historyMyPV')->name('my.pv');
 
 
         Route::group(['prefix'=>'active','as'=>'active.'], function(){

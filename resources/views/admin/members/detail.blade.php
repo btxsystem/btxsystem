@@ -179,6 +179,29 @@
                 </div>
             </div>
 
+            <div class="portlet box primary" style="margin-top: 55px;">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="fa fa-book"></i> &nbsp;
+                        My PV
+                    </div>
+                </div>
+                
+                <div class="portlet-body flip-scroll">
+                    <table class="table pv-table table-bordered table-striped table-condensed flip-content" >
+                        <thead class="flip-content">
+                            <tr>
+                                <th width="5%">No</th>
+                                <th class="text-center" width="20%">Title</th>
+                                <th class="text-center" width="25%">Price</th>
+                                <th class="text-center" width="20%">Point Value</th>
+                                <th width="15%">Bitrax Value</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+
         </div>
     </div>
  </section>
@@ -259,6 +282,26 @@
                   { data: 'description', name: 'description' },                  
                   { data: 'created_at', name: 'created_at', className: "text-center"  },                  
                   { data: 'info', name: 'info', className: "text-center"  },                  
+
+              ]
+          });  
+        });
+
+        $(document).ready(function () {
+          var table = $('.pv-table').DataTable({
+              destroy: true,
+              processing: true,
+              serverSide: true,
+              ajax: {
+                url: "{{ route('members.my.pv', $data->id) }}", 
+              },
+              
+              columns: [
+                  { data: 'DT_RowIndex', name: 'DT_RowIndex',orderable: false, searchable: false },
+                  { data: 'ebook.title', name: 'title', className: "text-center"  },                                  
+                  { data: 'ebook.price', name: 'price', className: "text-center"   },                                
+                  { data: 'ebook.pv', name: 'pv', className: "text-center"   },                                                 
+                  { data: 'ebook.bv', name: 'bv', className: "text-center"   },                                                 
 
               ]
           });  

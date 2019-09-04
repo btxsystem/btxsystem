@@ -256,7 +256,7 @@ class MemberController extends Controller
             return \redirect()->back();
         }
     }
-
+    
     public function historyPointData($id)
     {
         $data = Employeer::findOrFail($id);
@@ -280,6 +280,22 @@ class MemberController extends Controller
         $data = Employeer::findOrFail($id);
      
         return Datatables::of($data->cash_histories)
+            ->addIndexColumn()
+            ->addColumn('nominal', function ($data) {
+                return currency($data->nominal);
+            })
+            ->addColumn('info', function ($data) {
+                return $this->getStatusInfoTransaction($data);
+            })
+            ->make(true);
+    }
+
+    public function historyMyPV($id)
+    {
+        $data = Employeer::with(('transaction_member.ebook'))->findOrFail($id);
+        // return $data->load('transaction_member.ebook');
+     
+        return Datatables::of($data->transaction_member)
             ->addIndexColumn()
             ->addColumn('nominal', function ($data) {
                 return currency($data->nominal);

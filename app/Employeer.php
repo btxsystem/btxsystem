@@ -70,6 +70,11 @@ class Employeer extends Authenticatable
         return $this->hasMany('App\HistoryBitrexCash','id_member');
     }
 
+    public function transaction_member()
+    {
+        return $this->hasMany('App\Models\TransactionMember','member_id');
+    }
+
     public function rank(){
         return $this->belongsTo('App\Rank');
     }
