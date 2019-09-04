@@ -138,7 +138,7 @@ Tree
 							<div class="col-md-12">
 								<br>
 								<div class="chart" id="tree">
-									<button id="upline" class='btn btn-primary zmdi zmdi-chevron-up' onclick=location.reload()></button>
+									<a id="upline" onclick=location.reload()></a>
 								</div>
 								
 							</div>
