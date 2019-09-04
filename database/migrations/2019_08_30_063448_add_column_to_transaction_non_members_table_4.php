@@ -28,7 +28,7 @@ class AddColumnToTransactionNonMembersTable4 extends Migration
     {
         Schema::table('transaction_non_members', function (Blueprint $table) {
             //
-            $table->date('transaction_ref');
+            $table->dropColumn('transaction_ref');
         });
     }
 }
