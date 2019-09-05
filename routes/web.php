@@ -102,6 +102,15 @@ Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
         Route::get('cost/{id}', ['as' => 'cost', 'uses' => 'ShippingController@getCost']);
     });
 
+    Route::group(['prefix' => 'bonus', 'as'=> 'bonus.'], function () {
+        Route::get('', ['as' => 'index', 'uses' => 'Member\MyBonusController@index']);  
+    });
+
+    Route::group(['prefix' => 'history-bonus', 'as'=> 'history-bonus.'], function () {
+        Route::get('sponsor', ['as' => 'sponsor', 'uses' => 'Member\MybonusController@sponsor']);
+        Route::get('sales-profit', ['as' => 'sales-profit', 'uses' => 'Member\MybonusController@profit']);
+    });
+
     Route::get('', ['as' => 'dashboard', 'uses' => 'Member\DashboardController@index']);
     Route::get('tree', ['as' => 'tree', 'uses' => 'Member\DashboardController@tree']);
     Route::get('prospected-member', ['as' => 'prospected-member', 'uses' => 'Member\ProspectedMemberController@index']);

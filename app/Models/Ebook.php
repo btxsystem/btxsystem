@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Ebook extends Model
 {
@@ -21,7 +22,8 @@ class Ebook extends Model
 
   protected $appends = [
     'access',
-    'expired'
+    'expired',
+    'countdown_days'
   ];
 
 
@@ -88,6 +90,41 @@ class Ebook extends Model
       return $expired;
     } else {
       return false;
+    }
+  }
+
+  public function getCountdownDaysAttribute()
+  {
+    if(!$this->access) {
+      return 0;
+    }
+
+    if(\Auth::guard('nonmember')->user()) {
+      $memberTransaction = $this->transaction()
+        ->where('non_member_id', \Auth::guard('nonmember')
+        ->user()->id)
+        ->first();
+
+      $created = new Carbon(date('Y-m-d'));
+      $now = Carbon::create($memberTransaction->expired_at);
+      $difference = ($created->diff($now)->days < 1)
+          ? '1 Hari'
+          : $created->diff($now)->days . ' Hari';  
+
+    } else if(\Auth::guard('user')->user()){
+      $userTransaction = $this->transactionMember()
+        ->where('member_id', \Auth::guard('user')
+        ->user()->id)
+        ->first();
+
+      $created = new Carbon(date('Y-m-d'));
+      $now = Carbon::create($userTransaction->expired_at);
+      $difference = ($created->diff($now)->days < 1)
+          ? '1 Hari'
+          : $created->diff($now)->days . ' Hari';  
+      return $difference;      
+    } else {
+      return 0;
     }
   }
 

@@ -19,10 +19,7 @@ class PaymentController extends Controller
     $transactionRef = $request->input('transactionRef') ?? '';	
     $ebook = $request->input('ebook') ?? '';
     $productDesc = '';
-
-    if($transactionRef == '') {
-      redirect()->route('member.home');
-    }
+    $user = null;
 
     // renewal
     if($ebook ) {
@@ -37,9 +34,9 @@ class PaymentController extends Controller
           'id' => $ebook == 1 ? 3 : 4,
         ])->first();
 
-        $transactionRef = $check->transaction_ref;
+        $transactionRef = $check->transaction_ref ?? 'BITREX001' . (time() + $user->id);
         $orderAmount = (int) $updatePrice->price + (int) $updatePrice->price_markup;
-        $productDesc = ucwords($check->ebook->name);
+        $productDesc = "Renewal Ebook " .  ucwords($check->ebook->title);
           
       } else if($user = Auth::guard('user')->user()) {
         $check = TransactionMember::where([
@@ -51,11 +48,21 @@ class PaymentController extends Controller
           'id' => $ebook == 1 ? 3 : 4,
         ])->first();
 
-        $transactionRef = $check->transaction_ref;
+        $transactionRef = $check->transaction_ref ?? 'BITREX002' . (time() + $user->id);
         $orderAmount = (int) $updatePrice->price;  
-        $productDesc = ucwords($check->ebook->name);
+        $productDesc = "Renewal Ebook " .  ucwords($check->ebook->title);
+
+        // return response()->json([
+        //   'a' => $transactionRef,
+        //   'b' => $orderAmount,
+        //   'c' => $productDesc
+        // ]);
       }
     } else {
+      if($transactionRef == '') {
+        redirect()->route('member.home');
+      }
+
       $check = TransactionNonMember::where([
         'transaction_ref' => $transactionRef
       ])->first();
@@ -91,9 +98,9 @@ class PaymentController extends Controller
     $data['merchant_code'] = "ID01085";
     $data['currency'] = "IDR";
     $data['payment_id'] = 1;
-    $data['product_desc'] = 'Ebook Bitrexgo Basic';
-    $data['user_name'] = 'Asep Yayat';
-    $data['user_email'] = 'asepmedia18@gmail.com';
+    $data['product_desc'] = "Ebook Bitrexgo {$productDesc}";
+    $data['user_name'] = $user ?? $user->username;
+    $data['user_email'] = $user ?? $user->email;
     $data['ref_no'] = $transactionRef;
     $data['lang'] = 'UTF-8';
     // $data['code'] = $subs->created_at->format('dmYHi');
@@ -169,6 +176,10 @@ class PaymentController extends Controller
     $status = $req->get('Status');
     $errdesc = $req->get('ErrDesc');
     $signature = $req->get('Signature');
+
+    if($code == '') {
+      return redirect()->route('member.home');
+    }
     
     $merchant_key = "rMRMh6Qmcy";
     $signature_plaintext = $merchant_key . $merchant_code . $payment_id . $code . $amount . $currency . $status;

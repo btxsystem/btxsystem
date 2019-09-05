@@ -30,6 +30,7 @@ class CreateProcedureUpgradeLevel extends Migration
                 SET max_sp_recursion_depth=255;
                 set parent = (select parent_id from `employeers` where id = idm);
                 set cek = (select sum(id_member) from pv_rank where id_member = parent);
+                set time_zone = "+07:00";
                 IF parent is not null THEN
                     IF cek is null THEN
                         IF (select position from `employeers` where id = idm) = 0 THEN

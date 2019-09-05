@@ -219,7 +219,7 @@
 			placeholder: 'City',
 		});
 		$('#district').select2({
-			placeholder: 'District',
+			placeholder: 'Subistrict',
 		});
 		$('#kurir').select2({
 			placeholder: 'Kurir',
@@ -252,7 +252,7 @@
 		let id = this.value;
 		$('#district').empty().trigger('change');
 		$('#kurir').empty().trigger('change');
-		$('#district').html('<option disabled>District<option>');
+		$('#district').html('<option disabled>Subdistrict<option>');
 		$.ajax({
 			type: 'GET',
 			url: '/member/shipping/subdistrict/'+id,

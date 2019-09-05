@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddColumnToTransactionNonMembersTable4 extends Migration
+class AddColumnToEmployeersTable2 extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,8 @@ class AddColumnToTransactionNonMembersTable4 extends Migration
      */
     public function up()
     {
-        Schema::table('transaction_non_members', function (Blueprint $table) {
-            //
-            $table->string('transaction_ref')->nullable();
+        Schema::table('employeers', function (Blueprint $table) {
+            $table->timestamp('expired_at')->nullable();
         });
     }
 
@@ -26,9 +25,8 @@ class AddColumnToTransactionNonMembersTable4 extends Migration
      */
     public function down()
     {
-        Schema::table('transaction_non_members', function (Blueprint $table) {
-            //
-            $table->dropColumn('transaction_ref');
+        Schema::table('employeers', function (Blueprint $table) {
+            $table->dropColumn('expired_at');
         });
     }
 }
