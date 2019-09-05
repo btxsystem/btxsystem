@@ -88,11 +88,19 @@ class PvController extends Controller
                 }
                 
                 $has_pairing = $bonus_pairing / 100000;
-                if ($pairing->rank_id == null || $pairing->rank_id == 0 || $pairing->rank_id < 1) {
+                if ($pairing->rank_id == null || $pairing->rank_id < 1) {
                     $has_pairing = 0;
                     $fail_pairing = $bonus_pairing / 100000 ;
                     $bonus_pairing = 0;
                     $max = false;
+                    try {
+                        DB::beginTransaction();
+                        DB::table('pairings')->where('id_member', $pairing->id_member)->update(['pv_left' => $pairing->pv_left,'pv_midle' => $pairing->pv_midle, 'pv_right' => $pairing->pv_right, 'updated_at' => Carbon::now()]);   
+                        DB::commit();
+                    } catch (\Exception $e) {
+                        DB::rollback();
+                        return 'gagal';
+                    }
                 }elseif($pairing->rank_id <= 3 && $bonus_pairing >= 3500000){
                     $has_pairing = 35;
                     $fail_pairing = ($bonus_pairing - 3500000) / 100000 ;
@@ -116,7 +124,7 @@ class PvController extends Controller
                     DB::beginTransaction();
                     DB::table('history_pv_pairing')->insert(['id_member' => $pairing->id_member, 'total_pairing' => $has_pairing, 'fail_pairing' => $fail_pairing , 'left' => $left_pairing, 'midle' => $midle_pairing, 'right' => $right_pairing, 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()]);
                     DB::table('pairings')->where('id_member', $pairing->id_member)->update(['pv_left' => $pairing->pv_left,'pv_midle' => $pairing->pv_midle, 'pv_right' => $pairing->pv_right, 'updated_at' => Carbon::now()]);
-                    DB::table('history_bitrex_cash')->insert(['id_member' => $pairing->id_member, 'nominal' => $bonus_pairing - ($bonus_pairing * $pajak), 'created_at' => Carbon::now(), 'updated_at' => Carbon::now(), 'description' => 'Bonus pairing', 'info' => 1]);
+                    DB::table('history_bitrex_cash')->insert(['id_member' => $pairing->id_member, 'nominal' => $bonus_pairing - ($bonus_pairing * $pajak), 'created_at' => Carbon::now(), 'updated_at' => Carbon::now(), 'description' => 'Bonus Pairing', 'info' => 1]);
                     DB::table('employeers')->where('id', $pairing->id_member)->update(['bitrex_cash' => $pairing->bitrex_cash += $bonus_pairing + ($bonus_pairing * $pajak), 'updated_at' => Carbon::now()]);
                     DB::table('history_pajak')->insert(['id_member' => $pairing->id_member, 'id_bonus' => 3, 'persentase' => $pajak, 'nominal' => $bonus_pairing - ($bonus_pairing * $pajak), 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()]);   
                     DB::commit();

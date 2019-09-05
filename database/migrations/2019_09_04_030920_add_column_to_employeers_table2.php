@@ -14,7 +14,6 @@ class AddColumnToEmployeersTable2 extends Migration
     public function up()
     {
         Schema::table('employeers', function (Blueprint $table) {
-            $table->renameColumn('verification', 'verify_npwp');
             $table->timestamp('expired_at')->nullable();
         });
     }
@@ -27,7 +26,6 @@ class AddColumnToEmployeersTable2 extends Migration
     public function down()
     {
         Schema::table('employeers', function (Blueprint $table) {
-            $table->renameColumn('verify_npwp','verification');
             $table->dropColumn('expired_at');
         });
     }

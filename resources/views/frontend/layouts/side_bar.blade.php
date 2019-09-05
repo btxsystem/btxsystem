@@ -47,7 +47,6 @@
 </div>
     
 <aside id="leftsidebar" class="sidebar">
-    <!-- User Info -->
     <div class="user-info" style="background:#b92240;">
         <div class="image">
             <img src="{{asset('img/1.jpg')}}" width="48" height="48" alt="User" />
@@ -57,8 +56,6 @@
             <div class="email" style="color:white">{{isset($profile->email) ? $profile->email : $profile['email'] }}</div>
         </div>
     </div>
-    <!-- #User Info --> 
-    <!-- Menu -->
     <div class="menu">
         <ul class="list">
             <li class="header">Menu</li>
@@ -67,12 +64,13 @@
             <li> <a href="{{ route('member.prospected-member') }}"><i class="zmdi zmdi-accounts col-purple"></i><span>Prospected Member</span> </a> </li>
             <li> <a href="{{ route('member.ebook.index') }}"><i class="zmdi zmdi-book col-red"></i><span>Ebook</span> </a> </li>
             <li> <a href="{{ route('member.reward') }}"><i class="zmdi zmdi-star-half col-blue"></i><span>My Rewards</span> </a> </li>
+            <li> <a href="{{ route('member.bonus.index') }}"><i class="zmdi zmdi-ticket-star col-red"></i><span>My Bonus</span> </a> </li>
             <li><a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-money col-green"></i><span>Income and expenses</span> </a>
                 <ul class="ml-menu">
-                    <li><a href="{{route('member.bitrex-money.bitrex-points')}}">History Bitrex Points</a> </li>
-                    <li><a href="{{route('member.bitrex-money.bitrex-cash')}}">History Bitrex Value</a> </li>
-                    <li><a href="{{route('member.bitrex-money.pv')}}">History My PV</a> </li>
-                    <li><a href="{{route('member.bitrex-money.pv-pairing')}}">History PV Pairing</a> </li>
+                    <li><a href="{{route('member.bitrex-money.bitrex-points')}}">Bitrex Points</a> </li>
+                    <li><a href="{{route('member.bitrex-money.bitrex-cash')}}">Bitrex Value</a> </li>
+                    <li><a href="{{route('member.bitrex-money.pv')}}">Personal PV</a> </li>
+                    <li><a href="{{route('member.bitrex-money.pv-pairing')}}">PV Pairing</a> </li>
                 </ul>
             </li>
             <li><a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-shopping-cart col-orange"></i><span>Transaction</span> </a>
@@ -86,5 +84,4 @@
             <li> <a data-toggle="modal" data-target="#change-password"><i class="zmdi zmdi-key col-red"></i><span>Change Password</span> </a> </li> 
         </ul>
     </div>
-    <!-- #Menu --> 
 </aside>

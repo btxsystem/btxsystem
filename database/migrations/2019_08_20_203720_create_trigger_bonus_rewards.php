@@ -18,6 +18,7 @@ class CreateTriggerBonusRewards extends Migration
             FOR EACH ROW BEGIN
                 set @rank = (SELECT rank_id FROM `employeers` WHERE employeers.id = new.id_member);
                 set @result = (SELECT count(*) FROM `got_rewards` WHERE got_rewards.member_id = new.id_member);
+                set time_zone = "+07:00";
                 IF new.pv_left >= 1000000 and new.pv_midle >= 1000000 and new.pv_right >= 1000000 and @rank = 8 and MOD(@result, 8) = 7 THEN
                     INSERT INTO got_rewards (`member_id`, `reward_id`,  `created_at`, `updated_at`) VALUES (new.id_member, 8, now(), now());
                     UPDATE pv_rewards SET updated_at = now(), pv_rewards.pv_left = pv_rewards.pv_left - 1000000, pv_rewards.pv_midle = pv_rewards.pv_midle - 1000000 , pv_rewards.pv_right = pv_rewards.pv_right - 1000000  WHERE pv_rewards.id_member = new.id_member;

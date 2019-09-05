@@ -19,7 +19,6 @@
 <!-- Custom Css -->
 <link rel="stylesheet" href="{{asset('assets2/css/ecommerce.css')}}">
 <link rel="stylesheet" href="{{asset('assets2/css/main.css')}}">
-{{-- <link rel="stylesheet" href="{{asset('assets2/css/modal.css')}}"> --}}
 <link rel="stylesheet" href="{{asset('assets2/css/color_skins.css')}}">
 <link rel="stylesheet" href="{{asset('assets2/css/datatable.css')}}">
 <link rel="stylesheet" href="{{asset('assets2/css/raw.css')}}">
@@ -57,7 +56,7 @@
 <script src="{{asset('assets2/bundles/sparkline.bundle.js')}}"></script> <!-- Sparkline Plugin Js -->
 <script src="{{asset('assets2/bundles/knob.bundle.js')}}"></script> <!-- Jquery Knob Plugin Js -->
 
-{<script src="{{asset('assets2/bundles/mainscripts.bundle.js')}}"></script>
+<script src="{{asset('assets2/bundles/mainscripts.bundle.js')}}"></script>
 <script src="{{asset('assets2/js/pages/index.js')}}"></script>
 <script src="{{asset('assets2/js/moment.js')}}"></script>
 <script src="{{asset('assets2/js/number.js')}}"></script>
@@ -72,8 +71,9 @@
 <script src="{{asset('assets2/js/datatable.js')}}"></script>
 <script src="{{asset('assets2/js/raw-order.js')}}"></script>
 <script src="{{asset('assets2/js/responsive.js')}}"></script>
-<!-- Jquery DataTable Plugin Js --> 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+
+<!-- Jquery sweet alert --> 
+<script src="{{asset('assets2/js/sweet.js')}}"></script>
 
 <!-- tree -->
 <script type="text/javascript" src="{{ asset('assets/tree/Treant.js') }}" ></script>

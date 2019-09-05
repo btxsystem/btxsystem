@@ -71,62 +71,62 @@
                 </ul>
             </div>
         </div>
-     </section>
-        <div class="container-fluid">
-            <div class="row clearfix training_" hidden="true">
-                <a href="#" data-toggle="modal" data-target="#training">
-                <div class="col-lg-12 col-md-12">
-                    <div class="card product-report">
-                        <div id="area_chart" class="graph">
-                            <div class="body">
-                                <div class="col-lg-12 col-md-12 col-sm-12">
-                                    <div class="icon l-turquoise"><i class="zmdi zmdi-book"></i></div>
-                                    <div class="col-in">
-                                        <h4 class="counter m-b-0">Training</h4>
-                                        <small class="text-muted m-t-0 description"></small>
-                                    </div>
+    </section>
+    <div class="container-fluid">
+        <div class="row clearfix training_" hidden="true">
+            <a href="#" data-toggle="modal" data-target="#training">
+            <div class="col-lg-12 col-md-12">
+                <div class="card product-report">
+                    <div id="area_chart" class="graph">
+                        <div class="body">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="icon l-turquoise"><i class="zmdi zmdi-book"></i></div>
+                                <div class="col-in">
+                                    <h4 class="counter m-b-0">Training</h4>
+                                    <small class="text-muted m-t-0 description"></small>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </a>
                 </div>
+            </a>
             </div>
-        
-            <div class="row clearfix">
+        </div>
+    
+        <div class="row clearfix">
             <div class="col-lg-4 col-sm-6 col-md-6">
                 <div class="card l-parpl">
                     <div class="body">
-                    <div class="row">
-                        <div class="col-sm-6 col-7">
-                        <h3 class="m-t-0 bitrex-points">{{$profile['bitrex_points']}}</h3>
-                        <p class="m-b-0">Bitrex Points</p>
+                        <div class="row">
+                            <div class="col-sm-6 col-7">
+                                <h3 class="m-t-0 bitrex-points">{{$profile['bitrex_points']}}</h3>
+                                <p class="m-b-0">Bitrex Points</p>
+                            </div>
+                            <div class="col-sm-6 col-5 pl-0">
+                                <img src="{{url('img/coin.png')}}" class="img-fluid" style="opacity: 0.3;">
+                            </div>
                         </div>
-                        <div class="col-sm-6 col-5 pl-0">
-                        <img src="{{url('img/coin.png')}}" class="img-fluid" style="opacity: 0.3;">
-                        </div>
-                    </div>
                     </div>
                 </div>
             </div>
             <div class="col-lg-4 col-sm-6 col-md-6">
                 <div class="card l-amber">
                     <div class="body">
-                    <div class="row">
-                        <div class="col-sm-6 col-7">
-                        <h4>IDR</h4>
-                        <h3 class="m-t-0 bitrex-cash">{{$profile['bitrex_cash']}}</h3>
-                        <p class="m-b-0">Bitrex Value</p>
+                        <div class="row">
+                            <div class="col-sm-6 col-7">
+                                <h4>IDR</h4>
+                                <h3 class="m-t-0 bitrex-cash">{{$profile['bitrex_cash']}}</h3>
+                                <p class="m-b-0">Bitrex Value</p>
+                            </div>
+                            <div class="col-sm-6 col-5 pl-0">
+                                <img src="{{url('img/money-bag.png')}}" class="img-fluid" style="opacity: 0.3;">
+                            </div>
                         </div>
-                        <div class="col-sm-6 col-5 pl-0">
-                        <img src="{{url('img/money-bag.png')}}" class="img-fluid" style="opacity: 0.3;">
-                        </div>
-                    </div>
                     </div>
                 </div>
             </div>
-            </div>
-            <div class="row clearfix">
+        </div>
+        <div class="row clearfix">
             <div class="col-lg-12 col-md-12">
                 <div class="card product-report">
                     <div class="header">
@@ -160,8 +160,8 @@
                     </div>
                 </div>
             </div>
-            </div>
         </div>
+    </div>
 </section>
 @stop
 
