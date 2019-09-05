@@ -4,10 +4,14 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Employeer;
+use App\Models\Ebook;
 use App\HistoryBitrexPoints;
+use App\Models\TransactionMember;
 use DataTables;
 use Alert;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
+
 
 class MemberController extends Controller
 {
@@ -160,10 +164,11 @@ class MemberController extends Controller
 
     public function show($id)
     {
-        $data = Employeer::findOrFail($id);
-        // return $data->load('point_histories');
+        $data = Employeer::with('ebooks.transactionMember')->findOrFail($id);
 
-        return view('admin.members.detail', compact('data'));
+        $ebooks = Ebook::orderBy('id', 'desc')->get();
+
+        return view('admin.members.detail', compact('data','ebooks'));
 
     }
 
@@ -253,6 +258,33 @@ class MemberController extends Controller
             DB::rollback();
             
             Alert::error('Gagal Melakukan Topup', 'Gagal');
+            return \redirect()->back();
+        }
+    }
+
+    public function buyProduct(Request $request)
+    {
+        DB::beginTransaction();
+        try{
+            $buy = new TransactionMember;
+            $buy->member_id = $request->member_id;
+            $buy->ebook_id = $request->ebook_id;
+            $buy->status = 1;
+            $buy->expired_at = Carbon::now()->addYears(1)->toDateString();
+
+            $buy->save();
+    
+ 
+            DB::commit();
+            
+            Alert::success('Sukses Melakukan Pembelian Product', 'Sukses');
+            return redirect()->route('members.show', $request->member_id);
+ 
+        }catch(\Exception $e){
+            // throw $e;
+            DB::rollback();
+            
+            Alert::error('Gagal Melakukan Pembelian Product', 'Gagal');
             return \redirect()->back();
         }
     }

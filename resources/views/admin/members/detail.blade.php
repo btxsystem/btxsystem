@@ -185,6 +185,9 @@
                         <i class="fa fa-book"></i> &nbsp;
                         My PV
                     </div>
+                    <div class="pull-right">
+                        <a style=" color: white; text-decoration: none !important;" onMouseOut="this.style.color='white'" onMouseOver="this.style.color='#f06262'" href="#buyProduct" data-toggle="modal"><i style="font-size:15px;" class="fa fa-cart-plus"></i>&nbsp; &nbsp;<strong>Buy Product</strong></a>
+                     </div>
                 </div>
                 
                 <div class="portlet-body flip-scroll">
@@ -230,6 +233,41 @@
                                 <label class="col-md-3 control-label">Description</label>
                                 <div class="col-md-8 inputGroupContainer">
                                     <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-book"></i></span><textarea name="description" id="description" cols="30" rows="10" placeholder="Description" class="form-control" required="true" value=""></textarea></div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+</div>
+
+
+<!--section ends-->
+<div id="buyProduct" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title">Buy Product For {{$data->username}} / {{$data->id_member}}</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="well form-horizontal" action="{{ route('members.buy-product') }}">  
+                        {{ csrf_field() }}
+                        <fieldset>
+                        <input id="member_id" name="member_id" value="{{$data->id}}" type="hidden">
+                        <div class="form-group">
+                                <label class="col-md-3 control-label">Ebook</label>
+                                <div class="col-md-8 inputGroupContainer">
+                                <select name="ebook_id" id="ebook_id" class="form-control" value="{{old('ebook_id')}}">
+                                            {{-- @foreach($ebooks->whereNotIn('id', $data->ebooks->pluck('id')) as $ebook) --}}
+                                            @foreach($ebooks as $ebook)
+                                            <option value="{{$ebook->id}}">{{$ebook->title}} - {{currency($ebook->price)}}</option>
+                                            @endforeach
+                                </select>
                                 </div>
                             </div>
                         </fieldset>

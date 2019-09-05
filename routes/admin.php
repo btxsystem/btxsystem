@@ -114,6 +114,7 @@ Route::group(['prefix' => 'select', 'as'=> 'select.'], function () {
         Route::get('/edit-data/{id}', ['as' => 'edit-data', 'uses' => 'Admin\MemberController@edit']);
         Route::patch('/update-member/{id}', ['as' => 'update-data', 'uses' => 'Admin\MemberController@update']);
         Route::get('topup', ['as' => 'topup', 'uses' => 'Admin\MemberController@topup']);
+        Route::get('buy-product', ['as' => 'buy-product', 'uses' => 'Admin\MemberController@buyProduct']);
 
         // Datatable for member
         Route::get('/{id}/point-history','Admin\MemberController@historyPointData')->name('points.history');
