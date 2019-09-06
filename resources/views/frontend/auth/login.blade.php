@@ -479,6 +479,7 @@
     </div>
     <!-- end main-content -->
     
+
 @include('frontend.auth.footer')
 
 <script>

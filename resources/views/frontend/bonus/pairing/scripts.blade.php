@@ -2,7 +2,7 @@
     <script>
         $(document).ready(function () {
             $.ajax({
-                url: '{{route("member.select.bonus-sponsor")}}',
+                url: '{{route("member.select.bonus-pairing")}}',
                 data: data,
                 success:function(data){
                     data = data.data;
@@ -18,7 +18,6 @@
                 }
             });
         });
-
         var page = 1;
         $(window).scroll(function() {
             if($(window).scrollTop() + $(window).height() >= $(document).height()) {
@@ -28,7 +27,7 @@
         });
         function loadMoreData(page){
             $.ajax({
-                url: '/member/select/bonus-sponsor?page=' + page,
+                url: '/member/select/bonus-pairing?page=' + page,
                 beforeSend: function(){
                     $('.ajax-load').show();
                 }

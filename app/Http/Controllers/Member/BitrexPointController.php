@@ -19,7 +19,7 @@ class BitrexPointController extends Controller
 
     public function getHistoryPoints(){
         $data = Auth::user();
-        $history = HistoryBitrexPoints::where('id_member',$data->id)->orderBy('created_at','desc')->paginate(3);
+        $history = HistoryBitrexPoints::where('id_member',$data->id)->orderBy('created_at','desc')->paginate(4);
         return response()->json(['points'=>$history]); 
     }
 

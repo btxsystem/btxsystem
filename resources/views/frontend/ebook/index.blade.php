@@ -71,6 +71,9 @@
                                             <div class="row">
                                                 <div class="col-lg-6 mb-3">
                                                     <div class="bg-white shadow rounded p-3 border-hover triangle">
+                                                        <div id="basic-expired" style="color:black">
+                                                            <span id="clock-basic"></span>
+                                                        </div>
                                                         <div id="flag" class="renewal-basic" style="display:none">
                                                             <span>Renewal</span>
                                                         </div>
@@ -91,6 +94,9 @@
                                                 </div>
                                                 <div class="col-lg-6 mb-3">
                                                     <div class="bg-white shadow rounded p-3 border-hover triangle">
+                                                        <div id="basic-expired" style="color:black">
+                                                            <span id="clock-advance"></span>
+                                                        </div>
                                                         <div id="flag" class="renewal-advance" style="display:none">
                                                             <span>Renewal</span>
                                                         </div>
@@ -123,111 +129,5 @@
 </section>
 @stop
 
-@section('footer_scripts')
-<style>
-    div#flag { 
-        background-color: #333;
-        padding: 10px;
-        font-size: 11px !important;
-        border-radius: 2px;
-        -ms-transform: rotate(40deg);
-        -webkit-transform: rotate(40deg);
-        transform: rotate(40deg);
-        width: 160px;
-        text-align: center;
-        position: relative;
-        right: -77%;
-        height: 53px;
-        z-index: 0;
-        top: -42px;
-        background-color: #D4AF37;
-    }
-    #flag span {
-        position: relative;
-        left: 28px;
-        top: 18px;
-    }
-    .triangle{
-        overflow: hidden;
-        position: relative;
-    }
-</style>  
-<script type="text/javascript">
-    var price_basic = 0;
-    var price_advance = 0;
-    var cek = 0;
-    var disable = false;
-    $(document).ready(function () {    
-        $.ajax({
-            type: 'GET',
-            url: '{{route("member.select.bitrex-points")}}',
-            success: function (data) {
-                cek = price_basic != 0 ? price_basic : price_advance;
-                cek = cek / 1000;
-                btrx_points = data.bitrex_points;
-                if (cek < btrx_points) {
-                    $('#bp').attr('disabled',true);
-                    disable = true;
-                }else{
-                    $('#pay').attr('type','submit');
-                }
-            },
-            error: function() { 
-                console.log("Error");
-            }
-        });
-
-        $('#cart1').click(function(){
-            $('#id').val($('#basic-value').val());
-            $('#my-bp').attr('value', 'Bitrex Points: '+addCommas(btrx_points));
-            $('#price').attr('value', 'Price: IDR '+addCommas(price_basic));
-        });
-
-        $('#cart2').click(function(){
-            $('#id').val($('#advance-value').val());
-            $('#price').attr('value', 'Price: IDR '+addCommas(price_advance));
-        });
-
-        $('input[type=radio][name=payment]').change(function() {
-            if (this.value == 0) {
-                $('#pay').attr('type','submit'); 
-            }else{
-                $('#pay').attr('type','submit');
-            };
-        });
-
-        $.ajax({
-			type: 'GET',
-			url: '{{route("member.select.ebook")}}',
-			success: function (data) {
-				for (let index = 0; index < data.length; index++) {
-                    if(index == 0){
-                        var str = data[index].id == 3 ? data[index].title.replace('renewal_', ' ') : data[index].title ;
-                        str = str.toLowerCase().replace(/\b[a-z]/g, function(letter) {
-                            return letter.toUpperCase();
-                        });
-                        $('#basic').text(str);
-                        data[index].id == 3 ? $('.renewal-basic').show() : $('.renewal-basic').hide() ;
-                        $('#description-basic').text(data[index].description);
-                        $('#basic-value').val(data[index].id);
-                        price_basic = data[index].price;
-                    }else{
-                        var str = data[index].id == 4 ? data[index].title.replace('renewal_', ' ') : data[index].title ;
-                        str = str.toLowerCase().replace(/\b[a-z]/g, function(letter) {
-                            return letter.toUpperCase();
-                        });
-                        $('#advance').text(str);
-                        data[index].id == 4 ? $('.renewal-advance').show() : $('.renewal-advance').hide() ;
-                        $('#advance-description').text(data[index].description);
-                        $('#advance-value').val(data[index].id);
-                        price_advance = data[index].price;
-                    }
-                }
-			},
-			error: function() { 
-				console.log("Error");
-			}
-        });
-    });
-</script>
-@stop
+@extends('frontend.ebook.style')
+@extends('frontend.ebook.scripts')

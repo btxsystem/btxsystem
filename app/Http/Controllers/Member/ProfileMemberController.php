@@ -108,4 +108,9 @@ class ProfileMemberController extends Controller
         DB::table('got_rewards')->where('reward_id', $id)->update(['status' => 1, 'updated_at' => Carbon::now()]);
         return redirect()->route('member.reward');
     }
+
+    public function getExpiredMember(){
+        $time = DB::table('employeers')->where('id',Auth::id())->select('expired_at')->first();
+        return response()->json($time, 200);
+    }
 }

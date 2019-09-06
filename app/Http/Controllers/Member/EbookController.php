@@ -47,4 +47,16 @@ class EbookController extends Controller
         $cek = TransactionMember::create($data);
         return redirect()->route('member.ebook.index');
     }
+
+    public function getExpiredEbook(){
+        $ebook['basic'] = DB::table('transaction_member')->where('member_id',Auth::id())->where('status',1)
+                                                         ->where('ebook_id',1)->orWhere('ebook_id',3)
+                                                         ->orderBy('expired_at', 'DESC')->select('expired_at')
+                                                         ->first();
+        $ebook['advance'] = DB::table('transaction_member')->where('member_id',Auth::id())->where('status',1)
+                                                         ->where('ebook_id',2)->orWhere('ebook_id',4)
+                                                         ->orderBy('expired_at', 'DESC')->select('expired_at')
+                                                         ->first();
+        return response()->json($ebook, 200);
+    }
 }

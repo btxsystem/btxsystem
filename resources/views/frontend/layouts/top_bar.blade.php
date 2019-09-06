@@ -6,8 +6,9 @@
         </div>
         <ul class="nav navbar-nav navbar-left">
             <li><a href="javascript:void(0);" class="ls-toggle-btn" data-close="true"><i class="zmdi zmdi-swap"></i></a></li>
+            <li><i class="zmdi"><span id="clock"></span></i></li>
         </ul>
-        <ul class="nav navbar-nav navbar-right">
+        <ul class="nav navbar-nav navbar-right"> 
            <li><a href="/logout" title="sign out"><i class="material-icons">input</i></a></li>
         </ul>
     </div>
