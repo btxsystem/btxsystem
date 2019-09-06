@@ -19,8 +19,6 @@
 <!-- Custom Css -->
 <link rel="stylesheet" href="{{asset('assets2/css/ecommerce.css')}}">
 <link rel="stylesheet" href="{{asset('assets2/css/main.css')}}">
-{{-- <link rel="stylesheet" href="{{asset('assets2/css/modal.css')}}"> --}}
-<link rel="stylesheet" href="{{asset('assets2/plugins/bootstrap-select/css/bootstrap-select.css')}}">
 <link rel="stylesheet" href="{{asset('assets2/css/color_skins.css')}}">
 <link rel="stylesheet" href="{{asset('assets2/css/datatable.css')}}">
 <link rel="stylesheet" href="{{asset('assets2/css/raw.css')}}">
@@ -32,6 +30,9 @@
 <!-- tree -->
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/tree/Treant.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/tree/basic-example.css') }}">
+
+<!-- select 2 -->
+<link rel="stylesheet" type="text/css" href="{{ asset('assets2/css/select2.css') }}">
 
 </head>
 
@@ -70,8 +71,9 @@
 <script src="{{asset('assets2/js/datatable.js')}}"></script>
 <script src="{{asset('assets2/js/raw-order.js')}}"></script>
 <script src="{{asset('assets2/js/responsive.js')}}"></script>
-<!-- Jquery DataTable Plugin Js --> 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+
+<!-- Jquery sweet alert --> 
+<script src="{{asset('assets2/js/sweet.js')}}"></script>
 
 <!-- tree -->
 <script type="text/javascript" src="{{ asset('assets/tree/Treant.js') }}" ></script>
@@ -79,6 +81,9 @@
 <script type="text/javascript" src="{{ asset('assets/tree/raphael.js') }}" ></script>
 <script src="{{ asset('assets/tree/panzoom.js') }}"></script>
 <script src="{{ asset('assets/tree/d3.js') }}"></script>
+
+<!-- select2 -->
+<script type="text/javascript" src="{{ asset('assets2/js/select2.js') }}" ></script>
 
 <script type="text/javascript">
 

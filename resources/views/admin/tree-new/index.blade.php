@@ -1,12 +1,13 @@
-@extends('frontend.default')
+@extends('layouts.admin')
+{{-- Page title --}}
 @section('title')
-    Tree
-    @parent
+Tree
+@parent
 @stop
-
+{{-- Page content --}}
 @section('content')
-
-<div class="modal fade" id="register" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- 
+<div class="modal fade" id="register" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -16,7 +17,7 @@
 				</button>
 			</div>
 			<div class="modal-body">
-				<form action="{{route('member.register-downline')}}" method="POST" class="formTree">
+				<form action="{{route('member.register-downline')}}" method="POST">
 					@csrf
 					<input type="text" name="parent" id="parent" value="" hidden>
 					<input type="text" name="position" id="position" value="" hidden>
@@ -65,32 +66,6 @@
 							<label for="female">Female</label>
 						</div>
 					</div>
-					<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
-						<h5 class="card-inside-title">Choose a shipping method</h5>
-						<div class="demo-radio-button">
-							<input name="method" type="radio" value="1" id="shipping" class="with-gap radio-col-red" checked />
-							<label for="shipping">Shipping</label>
-							<input name="method" type="radio" value="0" id="pickup" class="with-gap radio-col-red" />
-							<label for="pickup">Pickup</label>
-						</div>
-					</div>
-					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 shipping-form">
-						<div class="form-group">
-							<select id="province" name="province" class="province"></select>
-						</div>
-						<div class="form-group city-form">
-							<select id="city" name="city" class="city"></select>
-						</div>
-						<div class="form-group district-form">
-							<select id="district" name="district" class="district"></select>
-						</div>
-						<div class="form-group kurir-form">
-							<select id="kurir" name="kurir" class="kurir"></select>
-						</div>
-						<div class="cost-form form-line" style="display:none">
-							<input class="cost form-control" name="cost" id="cost" type="text">
-						</div>
-					</div>
 					<div class="modal-footer">
 						<a class="btn btn-secondary" data-dismiss="modal">Close</a>
 						<input type="submit" class="btn btn-primary register" value="Register">
@@ -99,7 +74,7 @@
 			</div>
 		</div>
 	</div>
-</div>
+</div> -->
 
 <div class="modal fade" id="warning" tabindex="-1" role="dialog" aria-labelledby="modal-warning" aria-hidden="true">
 	<div class="modal-dialog" role="document">
@@ -119,6 +94,7 @@
 		</div>
 	</div>
 </div>
+	
 
 <section class="content ecommerce-page">
 	<div class="block-header">
@@ -130,6 +106,29 @@
 			</div>
 		</div>
 	</div>
+    <div class="container">
+        <table class="table table-striped">
+           <tbody>
+              <tr>
+                 <td colspan="1">
+                       <fieldset>
+                            <div class="form-group">
+								<br>
+								<div class="col-md-12 inputGroupContainer">
+									<div class="input-group">
+										<span class="input-group-addon"><i class="fa fa-male"></i></span>
+										<select name="sponsor_id" id="sponsor_id" class="form-control cari" value="{{old('sponsor_id')}}"></select>
+									</div>
+								</div>
+								<br><br>
+                            </div>
+                       </fieldset>
+                    </form>
+                 </td>
+              </tr>
+           </tbody>
+        </table>
+    </div>
 	<div class="container-fluid">        
 		<div class="row clearfix">
 			<div class="col-lg-12 col-md-12">
@@ -139,7 +138,7 @@
 							<div class="col-md-12">
 								<br>
 								<div class="chart" id="tree">
-									<button id="upline" class='btn btn-primary zmdi zmdi-chevron-up' onclick=location.reload()></button>
+									<a id="upline" onclick=location.reload()></a>
 								</div>
 								
 							</div>
@@ -153,155 +152,78 @@
 @stop
 
 @section('footer_scripts')
-<style>
-	rect {
-		fill: #ebebeb;
-		stroke: #ebebeb;
-		width: 150px;
-		height: 190px;
-		stroke-width: 2;
-	}
-	path {
-		fill: none;
-		stroke: #666;
-	}
-	text {
-		dominant-baseline: middle;
-		text-anchor: middle;
-	}
-	.bigger {
-		font-size: 13px;
-	}
-	.link {
-		text-decoration: none;
-		background: red;
-		padding: 20px;
-	}
-	.img-fluid {
-		width: 60px;
-		height: 60px;
-		display: block;
-		margin-right: auto;
-		margin-left: auto;
-	}
+		<style>
+			
+			rect {
+				fill: #eeeeee;
+				stroke: #ebebeb;
+				width: 150px;
+				height: 190px;
+				stroke-width: 2;
+			}
+			path {
+				fill: none;
+				stroke: #666;
+			}
+			text {
+				dominant-baseline: middle;
+				text-anchor: middle;
+			}
+			.bigger {
+				font-size: 13px;
+			}
+			.link {
+				text-decoration: none;
+				background: red;
+				padding: 20px;
+			}
+			.img-fluid {
+				width: 60px;
+				height: 60px;
+				display: block;
+				margin-right: auto;
+				margin-left: auto;
+			}
+		</style>
+    <script type="text/javascript" src="{{ asset('assets/tree/Treant.js') }}" ></script>
+    <script type="text/javascript" src="{{ asset('assets/tree/basic-example.js') }}" ></script>
+    <script type="text/javascript" src="{{ asset('assets/tree/raphael.js') }}" ></script>
+	<script src="{{asset('assets2/js/number.js')}}"></script>
+	<script src="{{ asset('assets/tree/panzoom.js') }}"></script>
+	<script src="{{ asset('assets/tree/d3.js') }}"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.cari').select2({
+            placeholder: "Select member...",
+            ajax: {
+                url: '{{ route("select.sponsor") }}',
+                dataType: 'json',
+                data: function (params) {
+                    return {
+                        q: $.trim(params.term)
+                    };
+                },
+                processResults: function (data) {
+                    return {
+                        results: data
+                    };
+                },
+                cache: true
+                },
+                minimumInputLength: 2,
+            });
+        });
+    
+    </script>
 
-	.formTree .select2-container {
-		width: 100% !important;
-	}
-
-</style>
-<script>
-	$(document).ready(function() {
+	<script>
+	var dataUser = '';
+$(document).ready(function() {
 		var element = document.querySelector('#bah');
 		$('#upline').hide();
 		panzoom(element);
-		$('#province').select2({
-			placeholder: 'Province',
-		});
-		$('#province').html('<option disabled>Province<option>');
-		$.ajax({
-			type: 'GET',
-			url: '/member/shipping/province',
-			success: function (data) {
-				$('#province').select2({
-					placeholder: 'Province',
-					data: data,
-				});
-			},
-			error: function() { 
-				console.log("Error");
-			}
-		});
-		$('.dropdown-toggle').remove();
-		$('div').removeClass('btn-group');
-		$('.div').removeClass('bootstrap-select');
-		$('#city').select2({
-			placeholder: 'City',
-		});
-		$('#district').select2({
-			placeholder: 'Subistrict',
-		});
-		$('#kurir').select2({
-			placeholder: 'Kurir',
-			data: data,
-		});
 	});
-
-	$('#province').change(function(){
-		let id = this.value;
-		$('#city').empty().trigger('change');
-		$('#district').empty().trigger('change');
-		$('#kurir').empty().trigger('change');
-		$('#city').html('<option disabled>City<option>');
-		$.ajax({
-			type: 'GET',
-			url: '/member/shipping/city/'+id,
-			success: function (data) {
-				$('#city').select2({
-					placeholder: 'City',
-					data: data,
-				});
-			},
-			error: function() { 
-				console.log("Error");
-			}
-		});
-	})
-
-	$('#city').change(function(){
-		let id = this.value;
-		$('#district').empty().trigger('change');
-		$('#kurir').empty().trigger('change');
-		$('#district').html('<option disabled>Subdistrict<option>');
-		$.ajax({
-			type: 'GET',
-			url: '/member/shipping/subdistrict/'+id,
-			success: function (data) {
-				$('#district').select2({
-					placeholder: 'Subdistrict',
-					data: data,
-				});
-			},
-			error: function() { 
-				console.log("Error");
-			}
-		});
-	})
-
-	$('#district').change(function() {
-		let id = this.value;
-		$('#kurir').empty().trigger('change');
-		$('#kurir').html('<option disabled>Kurir<option>');
-		$.ajax({
-			type: 'GET',
-			url: '/member/shipping/cost/'+id,
-			success: function (data) {
-				$('#kurir').select2({
-					placeholder: 'Kurir',
-					data: data,
-				});
-			},
-			error: function() { 
-				console.log("Error");
-			}
-		});
-	});
-
-	$('#kurir').change(function(){
-		$('.cost-form').show();
-		$('#cost').val(Math.ceil(this.value/1000) + ' Points');
-	});
-
-	$('#shipping').change(function(){
-		$('.shipping-form').show();
-		$('#province').prop('required',true);
-		$('#city').prop('required',true);
-	});
-
-	$('#pickup').change(function(){
-		$('.shipping-form').hide();
-	});
-
+	
 	$('#username').keyup(function(){
 		var text = this.value;
 		$.ajax({
@@ -317,20 +239,31 @@
 		});
 	})
 
+
+	$('.cari').on('select2:select', function (e) {
+    	// var dataUser = ;
+		$.ajax({
+			
+			type: 'GET',
+
+			url: '/member/select/child-tree/'+e.params.data.text,
+			success: function (data) {
+				$('#bah').empty('g');
+				tree(data);
+			},
+			error: function() { 
+				console.log("Error");
+			}
+		});
+	});
+
+
+
 	var svg = d3.select("#tree").append("svg")
 		.attr("width",1190).attr("height",600)
 		.append("g").attr("transform", "translate(-750,-50)")
 		.attr('id', 'bah');
-	$.ajax({
-		type: 'GET',
-		url: '{{route("member.select.tree")}}',
-		success: function (data) {
-			tree(data);
-		},
-		error: function() { 
-			console.log("Error");
-		}
-	});
+
 
 	var tree_submit = (a, parent, position) => {
 		if(a!="available"){
@@ -440,5 +373,5 @@
 			.classed("img-fluid", true);
 	}
 
-</script>
+    </script>
 @stop

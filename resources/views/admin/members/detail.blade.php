@@ -170,7 +170,6 @@
                             <tr>
                                 <th width="5%">No</th>
                                 <th class="text-center" width="20%">Transaction</th>
-                                <th class="text-center" width="15%">Point</th>
                                 <th class="text-center" width="25%">Description</th>
                                 <th class="text-center" width="20%">Time</th>
                                 <th width="15%">Info</th>
@@ -256,8 +255,7 @@
               
               columns: [
                   { data: 'DT_RowIndex', name: 'DT_RowIndex',orderable: false, searchable: false },
-                  { data: 'nominal', name: 'nominal', className: "text-center"  },                  
-                  { data: 'points', name: 'points', className: "text-center"  },                  
+                  { data: 'nominal', name: 'nominal', className: "text-center"  },                                  
                   { data: 'description', name: 'description' },                  
                   { data: 'created_at', name: 'created_at', className: "text-center"  },                  
                   { data: 'info', name: 'info', className: "text-center"  },                  
