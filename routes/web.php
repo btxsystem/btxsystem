@@ -206,10 +206,10 @@ Route::domain('ebook.bitrexgo.id')->group(function () {
     Route::get('testMail', 'MemberV2\ExploreController@testMail');
 
     Route::post('renewalEbook', 'MemberV2\RegisterController@renewalEbook')->name('member.ebook-renewal');
+
+    Route::get('/{username}', 'MemberV2\ExploreController@subscription')->name('member.subscription.referral');
 });
 
 Route::post('/payment', ['as' => 'payment', 'uses' => 'Payment\PaymentController@payment']);
 Route::post('/response-pay', ['as' => 'response.pay', 'uses' => 'Payment\PaymentController@responsePayment']);
 Route::post('/backend-response-pay', ['as' => 'backend.response.pay', 'uses' => 'Payment\PaymentController@backendResponsePayment']);
-
-Route::get('/{username}', 'MemberV2\ExploreController@subscription')->name('member.subscription.referral');
