@@ -34,6 +34,13 @@ class PvController extends Controller
         return view('frontend.pv-pairing')->with('profile',$data);
     }
 
+    public function issetUser($a){
+        $data = DB::table('employeers')->where('username',$a)->get();
+        $status['referal'] = count($data) > 0 ? true : false;
+        $status['username'] = count($data) > 0 ? false : true;
+        return response()->json($status, 200);
+    }
+
     public function generate(){
         $pairings = DB::table('pairings')->join('employeers','pairings.id_member','=','employeers.id')
                                          ->select('pairings.pv_left','pairings.pv_midle','pairings.pv_right','pairings.id_member','employeers.rank_id','employeers.bitrex_cash','employeers.verification')

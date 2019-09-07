@@ -91,6 +91,7 @@ Route::redirect('/', '/login');
 Route::get('/login', 'Auth\LoginController@getLogin')->middleware('guest');
 Route::post('/login', 'Auth\LoginController@postLogin');
 Route::get('/logout', 'Auth\LoginController@logout');
+Route::get('user/{user}', ['as' => 'user', 'uses' => 'Member\PvController@issetUser']);
 
 Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
 

@@ -498,4 +498,28 @@
         scrollTop: $("#myEvent").offset().top - 130
     }, 1000);
   });
+  $("#referal").keyup(function(){
+    $.ajax({
+			type: 'GET',
+			url: '/user/'+this.value,
+			success: function (data) {
+        data.referal ? $(".alert-referal").html("<span style=color:green>Referal tersedia</span>") : $(".alert-referal").html("<span style=color:red>Referal tidak tersedia</span>");
+			},
+			error: function() { 
+				console.log("Error");
+			}
+		});
+  })
+  $("#username").keyup(function(){
+    $.ajax({
+			type: 'GET',
+			url: '/user/'+this.value,
+			success: function (data) {
+        data.username ? $(".alert-username").html("<span style=color:green>Username dapat digunakan</span>") : $(".alert-username").html("<span style=color:red>Username tidak dapat digunakan</span>");
+			},
+			error: function() { 
+				console.log("Error");
+			}
+		});
+  })
 </script>

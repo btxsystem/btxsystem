@@ -37,13 +37,37 @@
                 </button>
             </div>
             <div class="modal-body" style="height: auto;">
-                <input class="form-control" type="text" placeholder="Referal">
-                <input class="form-control" type="text" placeholder="First Name">
-                <input class="form-control" type="text" placeholder="Last Name">
-                <input class="form-control" type="text" placeholder="Username">
-                <input class="form-control" type="text" placeholder="Email">
-                <input class="form-control" type="text" placeholder="NIK/Passport">
-                <input class="form-control" type="text" placeholder="Birthdate">
+                <form action="" method="post">
+                    <div class="input-group col-md-12">
+                        <input class="form-control" type="text" name="referal" id="referal" placeholder="Referal" required>
+                        <p class="alert-referal"></p>
+                    </div>
+                    <br>
+                    <div class="input-group col-md-12">
+                        <input class="form-control" type="text" name="first_name" minlength="2" placeholder="First Name" required>
+                    </div>
+                    <br>
+                    <div class="input-group col-md-12">
+                        <input class="form-control" type="text" placeholder="Last Name" name="last_name">
+                    </div>
+                    <br>
+                    <div class="input-group col-md-12">
+                        <input class="form-control" type="text" id="username" placeholder="Username" name="username" required>
+                        <p class="alert-username"></p>
+                    </div>
+                    <br>
+                    <div class="input-group col-md-12">
+                        <input class="form-control" type="text" placeholder="Email">
+                    </div>
+                    <br>
+                    <div class="input-group col-md-12">
+                        <input class="form-control" type="text" placeholder="NIK/Passport">
+                    </div>
+                    <br>
+                    <div class="input-group col-md-12">
+                        <input class="form-control" type="text" placeholder="Birthdate">
+                    </div>
+                </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn" style="border-radius: 5px; background-color: #b92240; color: #fff;">Join</button>
