@@ -481,7 +481,9 @@
     
 
 @include('frontend.auth.footer')
-
+<script src="{{asset('assets2/js/moment.js')}}"></script>
+<script src="{{asset('assets2/js/pages/forms/basic-form-elements.js')}}"></script>
+<script src="{{asset('assets2/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js')}}"></script>
 <script>
   $("#product").click(function() {
     $('html, body').animate({
@@ -504,7 +506,8 @@
 			url: '/user/'+this.value,
 			success: function (data) {
         data.referal ? $(".alert-referal").html("<span style=color:green>Referal tersedia</span>") : $(".alert-referal").html("<span style=color:red>Referal tidak tersedia</span>");
-			},
+        data.referal ? $(".btn-join").attr("disabled", false) : $(".btn-join").attr("disabled", true);
+      },
 			error: function() { 
 				console.log("Error");
 			}
@@ -516,7 +519,8 @@
 			url: '/user/'+this.value,
 			success: function (data) {
         data.username ? $(".alert-username").html("<span style=color:green>Username dapat digunakan</span>") : $(".alert-username").html("<span style=color:red>Username tidak dapat digunakan</span>");
-			},
+        data.username ? $(".btn-join").attr("disabled", false) : $(".btn-join").attr("disabled", true);
+      },
 			error: function() { 
 				console.log("Error");
 			}

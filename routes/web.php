@@ -92,6 +92,7 @@ Route::get('/login', 'Auth\LoginController@getLogin')->middleware('guest');
 Route::post('/login', 'Auth\LoginController@postLogin');
 Route::get('/logout', 'Auth\LoginController@logout');
 Route::get('user/{user}', ['as' => 'user', 'uses' => 'Member\PvController@issetUser']);
+Route::post('register-auto', ['as' => 'register-auto', 'uses' => 'Member\ProfileMemberController@registerAuto']);
 
 Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
 

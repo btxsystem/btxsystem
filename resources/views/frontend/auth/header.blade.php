@@ -17,6 +17,7 @@
   <link href="{{asset('assets3/css/color4.css')}}" rel="alternate stylesheet" title="color4" media="all">
   <link href="{{asset('assets3/css/color5.css')}}" rel="alternate stylesheet" title="color5" media="all">
   <script src="{{asset('assets3/js/jquery-1.11.3.min.js')}}"></script>
+  <link rel="stylesheet" href="{{asset('assets2/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css')}}">
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
 
@@ -37,7 +38,8 @@
                 </button>
             </div>
             <div class="modal-body" style="height: auto;">
-                <form action="" method="post">
+              <form action="{{route('register-auto')}}" method="post">
+                @csrf
                     <div class="input-group col-md-12">
                         <input class="form-control" type="text" name="referal" id="referal" placeholder="Referal" required>
                         <p class="alert-referal"></p>
@@ -57,21 +59,21 @@
                     </div>
                     <br>
                     <div class="input-group col-md-12">
-                        <input class="form-control" type="text" placeholder="Email">
+                        <input class="form-control" type="email" placeholder="Email" name="email" id="email" required>
                     </div>
                     <br>
                     <div class="input-group col-md-12">
-                        <input class="form-control" type="text" placeholder="NIK/Passport">
+                        <input class="form-control" type="text" placeholder="NIK/Passport" name="passport" id="passport" required>
                     </div>
                     <br>
                     <div class="input-group col-md-12">
-                        <input class="form-control" type="text" placeholder="Birthdate">
+                        <input type="text" name="birthdate" class="datepicker form-control" placeholder="Birthdate" required>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="Submit" class="btn btn-join" style="border-radius: 5px; background-color: #b92240; color: #fff;">Join</button>
+                      <button type="button" class="btn" style="border-radius: 5px; background-color: orange; color: #fff; margin-top: -5px;" data-dismiss="modal">Close</button>
                     </div>
                 </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn" style="border-radius: 5px; background-color: #b92240; color: #fff;">Join</button>
-                <button type="button" class="btn" style="border-radius: 5px; background-color: orange; color: #fff; margin-top: -5px;" data-dismiss="modal">Close</button>
             </div>
             </div>
         </div>
