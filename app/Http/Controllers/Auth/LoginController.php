@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Employeer;
 use Auth;
 use Alert;
+use Carbon\Carbon;
 
 class LoginController extends Controller
 {
@@ -16,15 +17,15 @@ class LoginController extends Controller
   }
   public function postLogin(Request $request)
   {
-      // Validate the form data
     $this->validate($request, [
       'username' => 'required',
       'password' => 'required'
     ]);
-      // Attempt to log the user in
-      // Passwordnya pake bcrypt
     if (Auth::guard('user')->attempt(['username' => $request->username, 'password' => $request->password])) {
-        // if successful, then redirect to their intended location
+      if (Auth::user()->expired_at <= Carbon::now() || Auth::user()->expired_at==null) {
+        Auth::guard('user')->logout();
+        return view('frontend.expired-member');
+      }
       return redirect()->route('member.dashboard');
     }
     return view('frontend.auth.login');

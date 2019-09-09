@@ -41,7 +41,8 @@ class Employeer extends Authenticatable
         'pv',
         'src',
         'is_update',
-        'nik'
+        'nik',
+        'expired_at'
     ];
 
     public function getName(){

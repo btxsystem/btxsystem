@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use DB;
 use App\Employeer;
+use Carbon\Carbon;
 
 class DashboardController extends Controller
 {

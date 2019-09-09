@@ -34,6 +34,7 @@
             url: '{{route("member.select.history-pv-pairing")}}',
             data: data,
             success:function(data){
+                console.log(data.data);
                 if (data.data[0]==undefined) {
                     $('#bill').html('<div class="body" style="color:red;"><center><strong>History is currently empty</strong></center></div>');    
                 }else{
@@ -44,7 +45,10 @@
                         left = addCommas(item.left);
                         midle = addCommas(item.midle);
                         right = addCommas(item.right);
-                        $('#bill').append('<div class="card ke-'+i+'" style="border: 1px solid #ccc; box-shadow: 1px 1px 3px 0px  rgba(0,0,0,0.3);"><div class="body"><div class="row"><strong class="col-sm-4" id="date">Date Time: '+date+'</strong></div><hr><div class="row"><div class="col" id="pv_l">Total PV L: '+left+'</div><div class="col" id="total">Total Pairing: '+total_pairing+'</div><hr></div><div class="row"><div class="col" id="pv_m">Total PV M: '+midle+'</div><div class="col" id="fail">Flash Out: '+failed_pairing+'</div><hr></div><div class="row"><div class="col" id="pv_r">Total PV R: '+right+'</div></div>'); 
+                        current_left = addCommas(item.current_left);
+                        current_midle = addCommas(item.current_midle);
+                        current_right = addCommas(item.current_right);
+                        $('#bill').append('<div class="card ke-'+i+'" style="border: 1px solid #ccc; box-shadow: 1px 1px 3px 0px  rgba(0,0,0,0.3);"><div class="body"><div class="row"><strong class="col-sm-4" id="date">Date Time: '+date+'</strong></div><hr><div class="row"><div class="col">Before</div><div class="col">Pairing</div><div class="col">Current</div></div><hr><div class="row"><div class="col" id="pv_l">Total PV L: '+left+'</div><div class="col" id="total">Total Pairing: '+total_pairing+'</div><div class="col" id="current_left">Total PV L: '+current_left+'</div><hr></div><div class="row"><div class="col" id="pv_m">Total PV M: '+midle+'</div><div class="col" id="fail">Flash Out: '+failed_pairing+'</div><div class="col" id="current_midle">Total PV M: '+current_midle+'</div><hr></div><div class="row"><div class="col" id="pv_r">Total PV R: '+right+'</div><div class="col"></div><div class="col" id="current_right">Total PV R: '+current_right+'</div></div>'); 
                     });
                 }
             }
@@ -77,7 +81,10 @@
                 left = addCommas(item.left);
                 midle = addCommas(item.midle);
                 right = addCommas(item.right);
-                $('#bill').append('<div class="card ke-'+i+'" style="border: 1px solid #ccc; box-shadow: 1px 1px 3px 0px  rgba(0,0,0,0.3);"><div class="body"><div class="row"><strong class="col-sm-4" id="date">Date Time: '+date+'</strong></div><hr><div class="row"><div class="col" id="pv_l">Total PV L: '+left+'</div><div class="col" id="total">Total Pairing: '+total_pairing+'</div><hr></div><div class="row"><div class="col" id="pv_m">Total PV M: '+midle+'</div><div class="col" id="fail">Flash Out: '+failed_pairing+'</div><hr></div><div class="row"><div class="col" id="pv_r">Total PV R: '+right+'</div></div>'); 
+                current_left = addCommas(item.current_left);
+                current_midle = addCommas(item.current_midle);
+                current_right = addCommas(item.current_right);
+                $('#bill').append('<div class="card ke-'+i+'" style="border: 1px solid #ccc; box-shadow: 1px 1px 3px 0px  rgba(0,0,0,0.3);"><div class="body"><div class="row"><strong class="col-sm-4" id="date">Date Time: '+date+'</strong></div><hr><div class="row"><div class="col">Before</div><div class="col">Pairing</div><div class="col">Current</div></div><hr><div class="row"><div class="col" id="pv_l">Total PV L: '+left+'</div><div class="col" id="total">Total Pairing: '+total_pairing+'</div><div class="col" id="current_left">Total PV L: '+current_left+'</div><hr></div><div class="row"><div class="col" id="pv_m">Total PV M: '+midle+'</div><div class="col" id="fail">Flash Out: '+failed_pairing+'</div><div class="col" id="current_midle">Total PV M: '+current_midle+'</div><hr></div><div class="row"><div class="col" id="pv_r">Total PV R: '+right+'</div><div class="col"></div><div class="col" id="current_right">Total PV R: '+current_right+'</div></div>'); 
             });
         })
         .fail(function(jqXHR, ajaxOptions, thrownError){
