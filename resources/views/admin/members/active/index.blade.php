@@ -30,13 +30,12 @@ List Of Users Active
                             </div>
                             
                             <div class="portlet-body flip-scroll">
-                                <table class="table data-table table-bordered table-striped table-condensed flip-content" >
+                                <table class="table membership-table table-bordered table-striped table-condensed flip-content" >
                                     <thead class="flip-content">
                                         <tr>
                                             <th>No</th>
                                             <th>Id Member</th>
                                             <th>Name</th>
-                                            <th>Status</th>
                                             <th>HP</th>
                                             <th>Rank</th>
                                             <th>Action</th>
@@ -59,7 +58,7 @@ List Of Users Active
           var table = $('.data-table').DataTable({
               destroy: true,
               processing: true,
-              serverSide: true,
+              serverSide: false,
               ajax: {
                 url: "{{ route('members.active.index') }}", 
               },
@@ -71,7 +70,6 @@ List Of Users Active
                   },
                   {data: 'id_member', name: 'id_member'},
                   {data: 'name', name: 'name'},
-                  {data: 'status', name: 'status', searchable: false},
                   {data: 'hp', name: 'hp'},
                   {data: 'rank', name: 'rank', searchable: false, className: 'text-center'},
                   {data: 'action', name: 'action', orderable: false, searchable: false, className: 'text-center'},

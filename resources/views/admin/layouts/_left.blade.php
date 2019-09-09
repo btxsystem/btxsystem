@@ -167,7 +167,29 @@
             <li>
                 <a href="{{ route('bitrex-money.cash') }}">
                     <i class="fa fa-angle-double-right"></i>
-                    Bitrex Cash
+                    Bitrex Value
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li >
+        <a href="#">
+            <i class="livicon" data-name="map" data-size="18" data-c="#6CC66C" data-hc="#6CC66C"
+               data-loop="true"></i>
+            <span class="title">Report</span>
+            <span class="fa arrow"></span>
+        </a>
+        <ul class="sub-menu">
+            <li>
+                <a href="{{ route('report.transaction-member') }}">
+                    <i class="fa fa-angle-double-right"></i>
+                    Transaction Member
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('report.membership') }}">
+                    <i class="fa fa-angle-double-right"></i>
+                    Membership
                 </a>
             </li>
         </ul>

@@ -105,7 +105,8 @@ class MemberController extends Controller
             'nik' => 'required',
             'gender' => 'required',
             'parent_id' => 'required',
-            'sponsor_id' => 'required'
+            'sponsor_id' => 'required',
+            'src' => 'mimes:jpeg,bmp,png|max:4096'
         ]);
         DB::beginTransaction();
         try{
@@ -176,6 +177,8 @@ class MemberController extends Controller
     {
         $data = Employeer::with('sponsor')->findOrFail($id);
 
+        // return $data;
+
         return view('admin.members.edit', compact('data'));
 
     }
@@ -185,20 +188,19 @@ class MemberController extends Controller
         $request->validate([
             'username' => 'max:255|unique:employeers'.$id,
             'first_name' => 'required|max:255',
-            'email' => 'required|email|unique:users|max:255',
             'password' => 'min:6',
             'birthdate' => 'required',
-            'nik' => 'required',
             'gender' => 'required',
+            'src' => 'mimes:jpeg,bmp,png|max:4096'
         ]);
         DB::beginTransaction();
         try{
             $data = Employeer::with('sponsor')->findOrFail($id);
 
-            $data->nik = $request->nik;
+            $data->nik = $data->nik;
             $data->first_name = $request->first_name;
             $data->last_name = $request->last_name;
-            $data->email = $request->email;
+            $data->email = $data->email;
             $data->birthdate = $request->birthdate;
             $data->npwp_number = $request->npwp_number;
             $data->is_married = $request->is_married;
@@ -221,7 +223,7 @@ class MemberController extends Controller
             return redirect()->route('members.show', $data->id);
  
         }catch(\Exception $e){
-            // throw $e;
+            throw $e;
             DB::rollback();
             
             Alert::error('Gagal Menambah Data Member', 'Gagal');

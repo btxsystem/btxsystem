@@ -1,19 +1,19 @@
 @extends('layouts.admin')
 
 @section('title')
-Registration User
+Registration Member
 @parent
 @stop
 
 @section('content')
 
 <section class="content-header">
-    <h1>Registration Users</h1>
+    <h1>Registration Member</h1>
     <ol class="breadcrumb">
         <li>
             <a href="#">Admin Management</a>
         </li>
-        <li class="active">Registrationsss Users</li>
+        <li class="active">Registrations Member</li>
     </ol>
 
     <div class="container">
@@ -197,7 +197,7 @@ Registration User
                                     <span class="input-group-addon"><i class="fa fa-cc-mastercard"></i></span>
                                     <input id="src" name="src" class="form-control" value="" type="file">
                                 </div>
-                                <small class="text-danger">{{ $errors->first('no_rec') }}</small>
+                                <small class="text-danger">{{ $errors->first('src') }}</small>
                             </div>
                             </div>
                                                         

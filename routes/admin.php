@@ -157,6 +157,11 @@ Route::group(['prefix' => 'select', 'as'=> 'select.'], function () {
         Route::get('/{id}/detail/username', ['as' => 'username', 'uses' => 'Admin\BitrexPointController@getUsername']);
     });
 
+    Route::group(['prefix'=>'report','as'=>'report.'], function(){
+        Route::get('transaction-member', ['as' => 'transaction-member', 'uses' => 'Admin\ReportController@transactionMember']);
+        Route::get('membership', ['as' => 'membership', 'uses' => 'Admin\ReportController@membership']);
+    });
+
     Route::group(['prefix'=>'event','as'=>'event.'], function(){
             Route::get('', ['as' => 'index', 'uses' => 'Admin\EventController@index']);
     });

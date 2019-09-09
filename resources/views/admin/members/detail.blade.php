@@ -133,7 +133,7 @@
                 <div class="portlet-title">
                     <div class="caption">
                         <i class="fa fa-book"></i> &nbsp;
-                        Point Histories
+                        Bitrex Point Histories
                     </div>
                     <div class="pull-right">
                         <a style=" color: white; text-decoration: none !important;" onMouseOut="this.style.color='white'" onMouseOver="this.style.color='#f06262'" href="#addTopUpModal" data-toggle="modal"><i style="font-size:15px;" class="fa fa-money"></i>&nbsp; &nbsp;<strong>Topup</strong></a>
@@ -160,7 +160,7 @@
                 <div class="portlet-title">
                     <div class="caption">
                         <i class="fa fa-book"></i> &nbsp;
-                        Cash Histories
+                        Bitrex Value Histories
                     </div>
                 </div>
                 
@@ -183,7 +183,7 @@
                 <div class="portlet-title">
                     <div class="caption">
                         <i class="fa fa-book"></i> &nbsp;
-                        My PV
+                        Point Value Histories
                     </div>
                     <div class="pull-right">
                         <a style=" color: white; text-decoration: none !important;" onMouseOut="this.style.color='white'" onMouseOver="this.style.color='#f06262'" href="#buyProduct" data-toggle="modal"><i style="font-size:15px;" class="fa fa-cart-plus"></i>&nbsp; &nbsp;<strong>Buy Product</strong></a>

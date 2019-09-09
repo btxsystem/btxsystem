@@ -36,7 +36,6 @@ List Of Users Nonactive
                                             <th>No</th>
                                             <th>Id Member</th>
                                             <th>Name</th>
-                                            <th>Status</th>
                                             <th>HP</th>
                                             <th>Rank</th>
                                             <th>Action</th>
@@ -61,7 +60,7 @@ List Of Users Nonactive
           var table = $('.data-table').DataTable({
               destroy: true,
               processing: true,
-              serverSide: true,
+              serverSide: false,
               ajax: {
                 url: "{{ route('members.nonactive.index') }}", 
               },
@@ -73,7 +72,6 @@ List Of Users Nonactive
                   },
                   {data: 'id_member', name: 'id_member'},
                   {data: 'name', name: 'name'},
-                  {data: 'status', name: 'status', searchable: false},
                   {data: 'hp', name: 'hp'},
                   {data: 'rank', name: 'rank', searchable: false, className:'text-center'},
                   {data: 'action', name: 'action', orderable: false, searchable: false, className:'text-center'},
