@@ -167,7 +167,85 @@
             <li>
                 <a href="{{ route('bitrex-money.cash') }}">
                     <i class="fa fa-angle-double-right"></i>
-                    Bitrex Cash
+                    Bitrex Value
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li >
+        <a href="#">
+            <i class="livicon" data-name="gift" data-size="18" data-c="#6CC66C" data-hc="#6CC66C"
+               data-loop="true"></i>
+            <span class="title">Bonus</span>
+            <span class="fa arrow"></span>
+        </a>
+        <ul class="sub-menu">
+            <li>
+                <a href="{{ route('bonus.sponsor') }}">
+                    <i class="fa fa-angle-double-right"></i>
+                    Sponsor
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('bonus.pairing') }}">
+                    <i class="fa fa-angle-double-right"></i>
+                    Pairing
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('bonus.profit') }}">
+                    <i class="fa fa-angle-double-right"></i>
+                    Profit
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('bonus.reward') }}">
+                    <i class="fa fa-angle-double-right"></i>
+                    Reward
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li >
+        <a href="#">
+            <i class="livicon" data-name="map" data-size="18" data-c="#6CC66C" data-hc="#6CC66C"
+               data-loop="true"></i>
+            <span class="title">Report</span>
+            <span class="fa arrow"></span>
+        </a>
+        <ul class="sub-menu">
+            <li>
+                <a href="{{ route('report.transaction-member') }}">
+                    <i class="fa fa-angle-double-right"></i>
+                    Transaction Member
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('report.membership') }}">
+                    <i class="fa fa-angle-double-right"></i>
+                    Membership
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li >
+        <a href="#">
+            <i class="livicon" data-name="grid" data-size="18" data-c="#6CC66C" data-hc="#6CC66C"
+               data-loop="true"></i>
+            <span class="title">CMS</span>
+            <span class="fa arrow"></span>
+        </a>
+        <ul class="sub-menu">
+            <li>
+                <a href="{{ route('report.transaction-member') }}">
+                    <i class="fa fa-angle-double-right"></i>
+                    Transaction Member
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('report.membership') }}">
+                    <i class="fa fa-angle-double-right"></i>
+                    Membership
                 </a>
             </li>
         </ul>

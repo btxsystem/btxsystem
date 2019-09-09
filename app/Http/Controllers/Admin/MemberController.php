@@ -4,32 +4,30 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Employeer;
+use App\Models\Ebook;
 use App\HistoryBitrexPoints;
+use App\Models\TransactionMember;
 use DataTables;
 use Alert;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
+
 
 class MemberController extends Controller
 {
-    public function index(){
+    public function index()
+    {
         if (request()->ajax()) {
-
             $data = Employeer::where('status', 1)
                              ->with('rank')
-                             ->select('id','id_member','first_name','last_name','rank_id','phone_number','status');
+                             ->select('id','id_member','username','first_name','last_name','rank_id','phone_number','status');
                                     
             return Datatables::of($data)
                     ->addIndexColumn()
-                    ->editColumn('name', function($data) {
-                        return $data->first_name.' '.$data->last_name;
-                    })
                     ->editColumn('status', function($data) {
                         return $data->status == 1 ? 'Active' : 'Nonactive' ;
                     })
-                    ->editColumn('hp', function($data) {
-                        return $data->phone_number;
-                    })
-                    ->editColumn('rank', function($data) {
+                    ->editColumn('ranking', function($data) {
                         return $data->rank ? $data->rank->name : '-';
                     })
                     ->addColumn('action', function($row) {
@@ -46,20 +44,14 @@ class MemberController extends Controller
         if (request()->ajax()) {
             $data = Employeer::where('status', 0)
                              ->with('rank')
-                             ->select('id','id_member','first_name','last_name','rank_id','phone_number','status');
-
+                             ->select('id','id_member','username','first_name','last_name','rank_id','phone_number','status');
+                                    
             return Datatables::of($data)
                     ->addIndexColumn()
-                    ->editColumn('name', function($data) {
-                        return $data->first_name.' '.$data->last_name;
-                    })
                     ->editColumn('status', function($data) {
                         return $data->status == 1 ? 'Active' : 'Nonactive' ;
                     })
-                    ->editColumn('hp', function($data) {
-                        return $data->phone_number;
-                    })
-                    ->editColumn('rank', function($data) {
+                    ->editColumn('ranking', function($data) {
                         return $data->rank ? $data->rank->name : '-';
                     })
                     ->addColumn('action', function($row) {
@@ -101,7 +93,8 @@ class MemberController extends Controller
             'nik' => 'required',
             'gender' => 'required',
             'parent_id' => 'required',
-            'sponsor_id' => 'required'
+            'sponsor_id' => 'required',
+            'src' => 'mimes:jpeg,bmp,png|max:4096'
         ]);
         DB::beginTransaction();
         try{
@@ -160,16 +153,19 @@ class MemberController extends Controller
 
     public function show($id)
     {
-        $data = Employeer::findOrFail($id);
-        // return $data->load('point_histories');
+        $data = Employeer::with('ebooks.transactionMember')->findOrFail($id);
 
-        return view('admin.members.detail', compact('data'));
+        $ebooks = Ebook::orderBy('id', 'desc')->get();
+
+        return view('admin.members.detail', compact('data','ebooks'));
 
     }
 
     public function edit($id)
     {
         $data = Employeer::with('sponsor')->findOrFail($id);
+
+        // return $data;
 
         return view('admin.members.edit', compact('data'));
 
@@ -180,20 +176,19 @@ class MemberController extends Controller
         $request->validate([
             'username' => 'max:255|unique:employeers'.$id,
             'first_name' => 'required|max:255',
-            'email' => 'required|email|unique:users|max:255',
             'password' => 'min:6',
             'birthdate' => 'required',
-            'nik' => 'required',
             'gender' => 'required',
+            'src' => 'mimes:jpeg,bmp,png|max:4096'
         ]);
         DB::beginTransaction();
         try{
             $data = Employeer::with('sponsor')->findOrFail($id);
 
-            $data->nik = $request->nik;
+            $data->nik = $data->nik;
             $data->first_name = $request->first_name;
             $data->last_name = $request->last_name;
-            $data->email = $request->email;
+            $data->email = $data->email;
             $data->birthdate = $request->birthdate;
             $data->npwp_number = $request->npwp_number;
             $data->is_married = $request->is_married;
@@ -216,7 +211,7 @@ class MemberController extends Controller
             return redirect()->route('members.show', $data->id);
  
         }catch(\Exception $e){
-            // throw $e;
+            throw $e;
             DB::rollback();
             
             Alert::error('Gagal Menambah Data Member', 'Gagal');
@@ -257,6 +252,33 @@ class MemberController extends Controller
         }
     }
 
+    public function buyProduct(Request $request)
+    {
+        DB::beginTransaction();
+        try{
+            $buy = new TransactionMember;
+            $buy->member_id = $request->member_id;
+            $buy->ebook_id = $request->ebook_id;
+            $buy->status = 1;
+            $buy->expired_at = Carbon::now()->addYears(1)->toDateString();
+
+            $buy->save();
+    
+ 
+            DB::commit();
+            
+            Alert::success('Sukses Melakukan Pembelian Product', 'Sukses');
+            return redirect()->route('members.show', $request->member_id);
+ 
+        }catch(\Exception $e){
+            // throw $e;
+            DB::rollback();
+            
+            Alert::error('Gagal Melakukan Pembelian Product', 'Gagal');
+            return \redirect()->back();
+        }
+    }
+    
     public function historyPointData($id)
     {
         $data = Employeer::findOrFail($id);
@@ -280,6 +302,22 @@ class MemberController extends Controller
         $data = Employeer::findOrFail($id);
      
         return Datatables::of($data->cash_histories)
+            ->addIndexColumn()
+            ->addColumn('nominal', function ($data) {
+                return currency($data->nominal);
+            })
+            ->addColumn('info', function ($data) {
+                return $this->getStatusInfoTransaction($data);
+            })
+            ->make(true);
+    }
+
+    public function historyMyPV($id)
+    {
+        $data = Employeer::with(('transaction_member.ebook'))->findOrFail($id);
+        // return $data->load('transaction_member.ebook');
+     
+        return Datatables::of($data->transaction_member)
             ->addIndexColumn()
             ->addColumn('nominal', function ($data) {
                 return currency($data->nominal);

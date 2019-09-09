@@ -61,6 +61,11 @@ class Employeer extends Authenticatable
         return $this->hasOne( 'App\Employeer', 'id', 'sponsor_id' );
     }
 
+    public function ebooks()
+    {
+      return $this->belongsToMany('\App\Models\Ebook', 'transaction_member', 'member_id', 'ebook_id');
+    }
+
     public function point_histories()
     {
         return $this->hasMany('App\HistoryBitrexPoints','id_member');
@@ -71,8 +76,13 @@ class Employeer extends Authenticatable
         return $this->hasMany('App\HistoryBitrexCash','id_member');
     }
 
+    public function transaction_member()
+    {
+        return $this->hasMany('App\Models\TransactionMember','member_id');
+    }
+
     public function rank(){
-        return $this->belongsTo('App\Rank');
+        return $this->belongsTo('App\Rank','rank_id');
     }
 
     public function pv_down(){

@@ -20,7 +20,7 @@ class EbookController extends Controller
     public function index()
     {
         if (request()->ajax()) {
-            $data = Ebook::all();
+            $data = Ebook::orderBy('id','desc');
 
             return Datatables::of($data)
                     ->addIndexColumn()
@@ -76,10 +76,25 @@ class EbookController extends Controller
         }
 
         $ebook->save();
+        $ebook->position = $ebook->id;
+        $ebook->save();
+       
+
+        $ebook_renewal = new Ebook;
+        $ebook_renewal->title = $request->title .' '. 'Renewal';
+        $ebook_renewal->slug = \Str::slug($ebook_renewal->title) .'-'. date('YmdHis') ;
+        $ebook_renewal->price = $request->price_renewal;
+        $ebook_renewal->price_markup = $request->price_markup_renewal;
+        $ebook_renewal->pv = $request->pv_renewal;
+        $ebook_renewal->bv = $request->bv_renewal;
+        $ebook_renewal->description = $request->description;
+        $ebook_renewal->src = $ebook->src;
+        $ebook_renewal->position = $ebook->id;
+        $ebook_renewal->save();
 
         Alert::success('Sukses Menambah Data Ebook', 'Sukses');
 
-        return redirect()->route('ebook.show', $ebook->id);
+        return redirect()->route('ebook.index');
     }
 
     /**
@@ -91,9 +106,6 @@ class EbookController extends Controller
     public function show($id)
     {
         $data = Ebook::with('books')->findOrFail($id);
-        // return $data->load('videos');
-
-        // return 'a';
 
         return view('admin.ebooks.detail', compact('data'));
     }

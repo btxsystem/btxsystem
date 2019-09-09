@@ -1,19 +1,19 @@
 @extends('layouts.admin')
 
 @section('title')
-Registration User
+Update Member
 @parent
 @stop
 
 @section('content')
 
 <section class="content-header">
-    <h1>Registration Users</h1>
+    <h1>Update Member</h1>
     <ol class="breadcrumb">
         <li>
             <a href="#">Admin Management</a>
         </li>
-        <li class="active">Registrationsss Users</li>
+        <li class="active">Update Member</li>
     </ol>
 
     <div class="container">
@@ -60,7 +60,7 @@ Registration User
                                 <div class="col-md-8 inputGroupContainer">
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-envelope-square"></i></span>
-                                    <input id="email" name="email" placeholder="Email" class="form-control" value="{{$data->email}}" type="email"> 
+                                    <input id="email" name="email" placeholder="Email" class="form-control" value="{{$data->email}}" type="email" disabled> 
                                 </div>
                                 <small class="text-danger">{{ $errors->first('email') }}</small>
                                 </div>
@@ -82,7 +82,7 @@ Registration User
                                 <div class="col-md-8 inputGroupContainer">
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                                        <input id="nik" name="nik" placeholder="NIK" class="form-control" value="{{$data->nik}}" type="text">
+                                        <input id="nik" name="nik" placeholder="NIK" class="form-control" value="{{$data->nik}}" type="text" disabled>
                                     </div>
                                     <small class="text-danger">{{ $errors->first('nik') }}</small>
                                 </div>
@@ -162,7 +162,7 @@ Registration User
                                 </div>
                                 </div>
 
-                                <div class="form-group">
+                                <!-- <div class="form-group">
                                 <label class="col-md-2 control-label">Sponsor</label>
                                 <div class="col-md-8 inputGroupContainer">
                                     <div class="input-group">
@@ -212,7 +212,7 @@ Registration User
                                     </div>
                                     <small class="text-danger">{{ $errors->first('position') }}</small>
                                 </div>
-                                </div>
+                                </div> -->
 
                                 <div class="form-group">
                                 <label class="col-md-2 control-label">Pict</label>
@@ -229,7 +229,7 @@ Registration User
                                 <div class="form-group">
                                     <label class="col-md-2 control-label"></label>
                                     <div class="col-md-8 inputGroupContainer">
-                                        <button type="submit" class="btn btn-primary btn-block">Register</button>
+                                        <button type="submit" class="btn btn-primary btn-block">Update</button>
                                     </div>
                                 </div>
                                                             
