@@ -81,7 +81,7 @@ class Employeer extends Authenticatable
     }
 
     public function rank(){
-        return $this->belongsTo('App\Rank');
+        return $this->belongsTo('App\Rank','rank_id');
     }
 
     public function pv_down(){

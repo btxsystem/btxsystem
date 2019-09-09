@@ -162,6 +162,13 @@ Route::group(['prefix' => 'select', 'as'=> 'select.'], function () {
         Route::get('membership', ['as' => 'membership', 'uses' => 'Admin\ReportController@membership']);
     });
 
+    Route::group(['prefix'=>'bonus','as'=>'bonus.'], function(){
+        Route::get('sponsor', ['as' => 'sponsor', 'uses' => 'Admin\BonusController@bonusSponsor']);
+        Route::get('pairing', ['as' => 'pairing', 'uses' => 'Admin\BonusController@bonusPairing']);
+        Route::get('profit', ['as' => 'profit', 'uses' => 'Admin\BonusController@bonusProfit']);
+        Route::get('reward', ['as' => 'reward', 'uses' => 'Admin\BonusController@bonusReward']);
+    });
+
     Route::group(['prefix'=>'event','as'=>'event.'], function(){
             Route::get('', ['as' => 'index', 'uses' => 'Admin\EventController@index']);
     });

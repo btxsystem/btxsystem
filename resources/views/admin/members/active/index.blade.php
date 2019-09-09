@@ -30,12 +30,12 @@ List Of Users Active
                             </div>
                             
                             <div class="portlet-body flip-scroll">
-                                <table class="table membership-table table-bordered table-striped table-condensed flip-content" >
+                                <table class="table membership-table table-bordered table-striped table-condensed flip-content active-user" >
                                     <thead class="flip-content">
                                         <tr>
                                             <th>No</th>
                                             <th>Id Member</th>
-                                            <th>Name</th>
+                                            <th>Username</th>
                                             <th>HP</th>
                                             <th>Rank</th>
                                             <th>Action</th>
@@ -55,10 +55,10 @@ List Of Users Active
 @section('footer_scripts')
     <script type="text/javascript">
         $(document).ready(function () {
-          var table = $('.data-table').DataTable({
+          var table = $('.active-user').DataTable({
               destroy: true,
               processing: true,
-              serverSide: false,
+              serverSide: true,
               ajax: {
                 url: "{{ route('members.active.index') }}", 
               },
@@ -69,9 +69,9 @@ List Of Users Active
                       orderable: false, searchable: false
                   },
                   {data: 'id_member', name: 'id_member'},
-                  {data: 'name', name: 'name'},
-                  {data: 'hp', name: 'hp'},
-                  {data: 'rank', name: 'rank', searchable: false, className: 'text-center'},
+                  {data: 'username', name: 'username'},
+                  {data: 'phone_number', name: 'phone_number'},
+                  {data: 'ranking', name: 'rank.name'},
                   {data: 'action', name: 'action', orderable: false, searchable: false, className: 'text-center'},
               ]
           });

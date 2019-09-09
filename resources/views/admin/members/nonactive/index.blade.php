@@ -30,7 +30,7 @@ List Of Users Nonactive
                             </div>
                             
                             <div class="portlet-body flip-scroll">
-                                <table class="table data-table table-bordered table-striped table-condensed flip-content" >
+                                <table class="table data-table table-bordered table-striped table-condensed flip-content nonactive-user" >
                                     <thead class="flip-content">
                                         <tr>
                                             <th>No</th>
@@ -57,7 +57,7 @@ List Of Users Nonactive
     <script type="text/javascript">
     
     $(document).ready(function () {
-          var table = $('.data-table').DataTable({
+          var table = $('.nonactive-user').DataTable({
               destroy: true,
               processing: true,
               serverSide: false,
@@ -71,10 +71,10 @@ List Of Users Nonactive
                       orderable: false, searchable: false
                   },
                   {data: 'id_member', name: 'id_member'},
-                  {data: 'name', name: 'name'},
-                  {data: 'hp', name: 'hp'},
-                  {data: 'rank', name: 'rank', searchable: false, className:'text-center'},
-                  {data: 'action', name: 'action', orderable: false, searchable: false, className:'text-center'},
+                  {data: 'username', name: 'username'},
+                  {data: 'phone_number', name: 'phone_number'},
+                  {data: 'ranking', name: 'rank.name'},
+                  {data: 'action', name: 'action', orderable: false, searchable: false, className: 'text-center'},
               ]
           });
           
