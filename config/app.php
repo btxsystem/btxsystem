@@ -57,10 +57,6 @@ return [
     | ahead and set this to a sensible default for you out of the box.
     |
     */
-<<<<<<< HEAD
-=======
-    // 'timezone' => 'UTC',
->>>>>>> 8939dc6b91669fcbaf5fe460b0e77ae4de8bc8ed
     'timezone' => 'Asia/Jakarta',
     /*
     |--------------------------------------------------------------------------
