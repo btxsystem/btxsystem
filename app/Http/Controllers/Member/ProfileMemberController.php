@@ -224,7 +224,7 @@ class ProfileMemberController extends Controller
                 Employeer::create($member);
             }
         }
-        return redirect()->route('login');
+        return redirect()->back();
     }
 
     public function registerAuto(Request $request){
@@ -338,5 +338,6 @@ class ProfileMemberController extends Controller
                 Employeer::create($member);
             }
         }
+        return redirect()->back();
     }
 }
