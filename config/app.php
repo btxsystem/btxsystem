@@ -160,6 +160,8 @@ return [
         App\Providers\HelperServiceProvider::class,
         //Barryvdh\Cors\ServiceProvider::class,
 
+        Maatwebsite\Excel\ExcelServiceProvider::class,
+
     ],
     /*
     |--------------------------------------------------------------------------
@@ -212,5 +214,7 @@ return [
         'Nestable'     => Nestable\Facades\NestableService::class,
         'Helper'       => App\Helper::class,
         'Alert'        => UxWeb\SweetAlert\SweetAlert::class,
+        'Excel'        => Maatwebsite\Excel\ExcelServiceProvider::class,
+        
     ],
 ];

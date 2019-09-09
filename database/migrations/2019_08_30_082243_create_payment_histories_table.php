@@ -15,7 +15,8 @@ class CreatePaymentHistoriesTable extends Migration
     {
         Schema::create('payment_histories', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('ref_no')->nullable();
+            $table->bigInteger('ebook_id')->unsigned();
+            $table->string('ref_no')->nullable();
             $table->integer('payment_id')->nullable();
             $table->bigInteger('amount')->nullable();
             $table->string('currency')->nullable();
@@ -25,6 +26,8 @@ class CreatePaymentHistoriesTable extends Migration
             $table->text('err_desc')->nullable();
             $table->integer('status')->nullable()->comment('1 = Success, 0 = Fail, 6 = Waiting to Payment');
             $table->timestamps();
+
+            $table->foreign('ebook_id')->references('id')->on('ebooks')->onDelete('cascade');
         });
     }
 

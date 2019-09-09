@@ -20,7 +20,7 @@ class PvController extends Controller
 
     public function getHistoryPv(){
         $data = Auth::user();
-        $history = DB::table('history_pv')->select('pv','pv_today','created_at as date')->where('id_member',$data->id)->orderBy('created_at','desc')->paginate(3);
+        $history = DB::table('history_pv')->select('pv','pv_today','created_at as date')->where('id_member',$data->id)->orderBy('created_at','desc')->paginate(4);
         return response()->json(['pv'=>$history]); 
     }
 
@@ -32,6 +32,13 @@ class PvController extends Controller
     public function pvHistory(){
         $data = Auth::user();
         return view('frontend.pv-pairing')->with('profile',$data);
+    }
+
+    public function issetUser($a){
+        $data = DB::table('employeers')->where('username',$a)->get();
+        $status['referal'] = count($data) > 0 ? true : false;
+        $status['username'] = count($data) > 0 ? false : true;
+        return response()->json($status, 200);
     }
 
     public function generate(){
