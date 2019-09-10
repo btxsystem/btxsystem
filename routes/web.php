@@ -126,6 +126,9 @@ Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
         Route::post('', ['as' => 'store', 'uses' => 'Member\EbookController@store'] );
     });
 
+    
+    Route::post('register-auto', ['as' => 'register-auto', 'uses' => 'Member\ProfileMemberController@registerAuto']);
+
     Route::group(['prefix' => 'select', 'as'=> 'select.'], function () {
         Route::get('daily-retail', ['as' => 'daily-retail', 'uses' => 'Member\DashboardController@getAutoRetailDaily']);
         Route::get('training', ['as' => 'training', 'uses' => 'Member\DashboardController@getTraining']);
@@ -161,6 +164,11 @@ Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
 
     Route::group(['prefix' => 'profile', 'as'=> 'profile.'], function () {
         Route::get('', ['as' => 'index', 'uses' => 'Member\ProfileMemberController@index']);
+        Route::post('reset-password', ['as' => 'reset-password', 'uses' => 'Member\ProfileMemberController@resetPassword']);
+    });
+
+    Route::group(['prefix' => 'add-member', 'as'=> 'add-member.'], function () {
+        Route::get('', ['as' => 'index', 'uses' => 'Member\AddNewMemberController@index']);
         Route::post('reset-password', ['as' => 'reset-password', 'uses' => 'Member\ProfileMemberController@resetPassword']);
     });
 
