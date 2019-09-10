@@ -150,6 +150,7 @@ Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
         Route::get('bonus-pairing', ['as' => 'bonus-pairing', 'uses' => 'Member\MyBonusController@bonusPairing']);
         Route::get('expired-member', ['as' => 'expired-member', 'uses' => 'Member\ProfileMemberController@getExpiredMember']);
         Route::get('expired-ebook', ['as' => 'expired-ebook', 'uses' => 'Member\EbookController@getExpiredEbook']);
+        Route::get('exp-three-month', ['as' => 'exp-three-month', 'uses' => 'Member\ProfileMemberController@expNotif']);
     });
 
     Route::group(['prefix' => 'transaction', 'as'=> 'transaction.'], function () {
