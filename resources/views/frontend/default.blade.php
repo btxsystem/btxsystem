@@ -75,6 +75,10 @@
 <!-- Jquery sweet alert --> 
 <script src="{{asset('assets2/js/sweet.js')}}"></script>
 
+<!-- Jquery countdown -->
+<script src="{{asset('assets2/js/countdown.js')}}"></script>
+<script src="{{asset('assets2/js/countdown.min.js')}}"></script>
+
 <!-- tree -->
 <script type="text/javascript" src="{{ asset('assets/tree/Treant.js') }}" ></script>
 <script type="text/javascript" src="{{ asset('assets/tree/basic-example.js') }}" ></script>
@@ -105,44 +109,54 @@ $(document).ready(function(){
     });
 
     $('#new_password').keyup(function (event) {
-            var charCode = (event.which) ? event.which : event.keyCode;
-            min_length = $('#new_password').val().length;
-            
-            if (forhide>=3){
-                $('#submit').enabled;
-            }
+        var charCode = (event.which) ? event.which : event.keyCode;
+        min_length = $('#new_password').val().length;
+        
+        if (forhide>=3){
+            $('#submit').enabled;
+        }
 
-            if (min_length < 6) {
-                $('#message_new_password').html( "<p id='new_message'>Minimum password 6 characters</p>" );   
-            }else{    
-                if ($('#new_password').val() === $('#old_password').val()) {
-                    $('#message_new_password').html( "<p id='new_message'>New password must be difference</p>" );    
-                }else{
-                    $('#new_message').remove();
-                    forhide++;
-                }
-            }
-        });
-
-        $('#confirm_new_password').keyup(function () {
-            var charCode = (event.which) ? event.which : event.keyCode;
-            min_length = $('#confirm_new_password').val().length;
-            
-            if (forhide>=3){
-                $('#submit').attr("disabled", false);
-            }
-
-            if (min_length < 6) {
-                $('#message_confirm_new_password').html( "<p id='confirm_new_message'>Minimum password 6 characters</p>" );   
+        if (min_length < 6) {
+            $('#message_new_password').html( "<p id='new_message'>Minimum password 6 characters</p>" );   
+        }else{    
+            if ($('#new_password').val() === $('#old_password').val()) {
+                $('#message_new_password').html( "<p id='new_message'>New password must be difference</p>" );    
             }else{
-                if ($('#new_password').val() != $('#confirm_new_password').val()) {
-                    $('#message_confirm_new_password').html( "<p id='confirm_new_message'>Password doesn't match</p>" );       
-                }else{
-                    $('#confirm_new_message').remove();
-                    forhide++;
-                }
+                $('#new_message').remove();
+                forhide++;
             }
+        }
     });
+
+    $('#confirm_new_password').keyup(function () {
+        var charCode = (event.which) ? event.which : event.keyCode;
+        min_length = $('#confirm_new_password').val().length;
+        
+        if (forhide>=3){
+            $('#submit').attr("disabled", false);
+        }
+
+        if (min_length < 6) {
+            $('#message_confirm_new_password').html( "<p id='confirm_new_message'>Minimum password 6 characters</p>" );   
+        }else{
+            if ($('#new_password').val() != $('#confirm_new_password').val()) {
+                $('#message_confirm_new_password').html( "<p id='confirm_new_message'>Password doesn't match</p>" );       
+            }else{
+                $('#confirm_new_message').remove();
+                forhide++;
+            }
+        }
+    });
+    
+    $.ajax({
+        url: '{{route("member.select.expired-member")}}',
+        data: data,
+        success:function(data){
+            $('#clock').countdown(data.expired_at, function(event) {
+                $(this).html(event.strftime('%D days %H:%M:%S'));
+            });
+        }
+    })
 })
     
 </script>

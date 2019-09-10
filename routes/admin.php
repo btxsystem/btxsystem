@@ -114,10 +114,12 @@ Route::group(['prefix' => 'select', 'as'=> 'select.'], function () {
         Route::get('/edit-data/{id}', ['as' => 'edit-data', 'uses' => 'Admin\MemberController@edit']);
         Route::patch('/update-member/{id}', ['as' => 'update-data', 'uses' => 'Admin\MemberController@update']);
         Route::get('topup', ['as' => 'topup', 'uses' => 'Admin\MemberController@topup']);
+        Route::get('buy-product', ['as' => 'buy-product', 'uses' => 'Admin\MemberController@buyProduct']);
 
         // Datatable for member
         Route::get('/{id}/point-history','Admin\MemberController@historyPointData')->name('points.history');
         Route::get('/{id}/cash-history','Admin\MemberController@historyCashData')->name('cash.history');
+        Route::get('/{id}/my-pv','Admin\MemberController@historyMyPV')->name('my.pv');
 
 
         Route::group(['prefix'=>'active','as'=>'active.'], function(){
@@ -153,6 +155,18 @@ Route::group(['prefix' => 'select', 'as'=> 'select.'], function () {
 
         Route::get('/{id}/detail', ['as' => 'detail', 'uses' => 'Admin\BitrexPointController@detail']);
         Route::get('/{id}/detail/username', ['as' => 'username', 'uses' => 'Admin\BitrexPointController@getUsername']);
+    });
+
+    Route::group(['prefix'=>'report','as'=>'report.'], function(){
+        Route::get('transaction-member', ['as' => 'transaction-member', 'uses' => 'Admin\ReportController@transactionMember']);
+        Route::get('membership', ['as' => 'membership', 'uses' => 'Admin\ReportController@membership']);
+    });
+
+    Route::group(['prefix'=>'bonus','as'=>'bonus.'], function(){
+        Route::get('sponsor', ['as' => 'sponsor', 'uses' => 'Admin\BonusController@bonusSponsor']);
+        Route::get('pairing', ['as' => 'pairing', 'uses' => 'Admin\BonusController@bonusPairing']);
+        Route::get('profit', ['as' => 'profit', 'uses' => 'Admin\BonusController@bonusProfit']);
+        Route::get('reward', ['as' => 'reward', 'uses' => 'Admin\BonusController@bonusReward']);
     });
 
     Route::group(['prefix'=>'event','as'=>'event.'], function(){

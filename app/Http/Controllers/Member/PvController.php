@@ -20,12 +20,13 @@ class PvController extends Controller
 
     public function getHistoryPv(){
         $data = Auth::user();
-        $history = DB::table('history_pv')->select('pv','pv_today','created_at as date')->where('id_member',$data->id)->orderBy('created_at','desc')->paginate(3);
+        $history = DB::table('history_pv')->select('pv','pv_today','created_at as date')->where('id_member',$data->id)->orderBy('created_at','desc')->paginate(4);
         return response()->json(['pv'=>$history]); 
     }
 
     public function historyPvPairing(){
-        $data = DB::table('history_pv_pairing')->select('total_pairing','fail_pairing', 'left', 'midle', 'right','created_at')->where('id_member',Auth::id())->orderBy('created_at','desc')->paginate(4);
+        $data = DB::table('history_pv_pairing')->select('total_pairing','fail_pairing', 'left', 'midle', 'right','created_at','current_left','current_midle','current_right')
+                                               ->where('id_member',Auth::id())->orderBy('created_at','desc')->paginate(4);
         return response()->json($data, 200);
     }
 
@@ -34,10 +35,19 @@ class PvController extends Controller
         return view('frontend.pv-pairing')->with('profile',$data);
     }
 
+    public function issetUser($a){
+        $data = DB::table('employeers')->where('username',$a)->get();
+        $status['referal'] = count($data) > 0 ? true : false;
+        $status['username'] = count($data) > 0 ? false : true;
+        return response()->json($status, 200);
+    }
+
     public function generate(){
+        
         $pairings = DB::table('pairings')->join('employeers','pairings.id_member','=','employeers.id')
                                          ->select('pairings.pv_left','pairings.pv_midle','pairings.pv_right','pairings.id_member','employeers.rank_id','employeers.bitrex_cash','employeers.verification')
                                          ->get();
+
         foreach ($pairings as $key => $pairing) {
             
             $bonus = 0;
@@ -122,7 +132,7 @@ class PvController extends Controller
            if($bonus_pairing>0){
                 try {
                     DB::beginTransaction();
-                    DB::table('history_pv_pairing')->insert(['id_member' => $pairing->id_member, 'total_pairing' => $has_pairing, 'fail_pairing' => $fail_pairing , 'left' => $left_pairing, 'midle' => $midle_pairing, 'right' => $right_pairing, 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()]);
+                    DB::table('history_pv_pairing')->insert(['id_member' => $pairing->id_member, 'total_pairing' => $has_pairing, 'fail_pairing' => $fail_pairing , 'left' => $left_pairing, 'midle' => $midle_pairing, 'right' => $right_pairing, 'created_at' => Carbon::now(), 'updated_at' => Carbon::now(), 'current_left' => $pairing->pv_left, 'current_midle' => $pairing->pv_midle, 'current_right' => $pairing->pv_right]);
                     DB::table('pairings')->where('id_member', $pairing->id_member)->update(['pv_left' => $pairing->pv_left,'pv_midle' => $pairing->pv_midle, 'pv_right' => $pairing->pv_right, 'updated_at' => Carbon::now()]);
                     DB::table('history_bitrex_cash')->insert(['id_member' => $pairing->id_member, 'nominal' => $bonus_pairing - ($bonus_pairing * $pajak), 'created_at' => Carbon::now(), 'updated_at' => Carbon::now(), 'description' => 'Bonus Pairing', 'info' => 1]);
                     DB::table('employeers')->where('id', $pairing->id_member)->update(['bitrex_cash' => $pairing->bitrex_cash += $bonus_pairing + ($bonus_pairing * $pajak), 'updated_at' => Carbon::now()]);

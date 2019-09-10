@@ -2,9 +2,10 @@
     <script>
         $(document).ready(function () {
             $.ajax({
-                url: '{{route("member.history-bonus.sponsor")}}',
+                url: '{{route("member.select.bonus-sponsor")}}',
                 data: data,
                 success:function(data){
+                    data = data.data;
                     if (data[0]==undefined) {
                         $('#bill').html('<div class="body" style="color:red;"><center><strong>History is currently empty</strong></center></div>');    
                     }else{
@@ -27,11 +28,12 @@
         });
         function loadMoreData(page){
             $.ajax({
-                url: '/member/history-bonus/sales-profit?page=' + page,
+                url: '/member/select/bonus-sponsor?page=' + page,
                 beforeSend: function(){
                     $('.ajax-load').show();
                 }
             }).done(function(data){
+                data = data.data;
                 if(data[0]==undefined){
                     $('.ajax-load').html("No more records found");
                     return;

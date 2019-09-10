@@ -133,7 +133,7 @@
                 <div class="portlet-title">
                     <div class="caption">
                         <i class="fa fa-book"></i> &nbsp;
-                        Point Histories
+                        Bitrex Point Histories
                     </div>
                     <div class="pull-right">
                         <a style=" color: white; text-decoration: none !important;" onMouseOut="this.style.color='white'" onMouseOver="this.style.color='#f06262'" href="#addTopUpModal" data-toggle="modal"><i style="font-size:15px;" class="fa fa-money"></i>&nbsp; &nbsp;<strong>Topup</strong></a>
@@ -160,7 +160,7 @@
                 <div class="portlet-title">
                     <div class="caption">
                         <i class="fa fa-book"></i> &nbsp;
-                        Cash Histories
+                        Bitrex Value Histories
                     </div>
                 </div>
                 
@@ -173,6 +173,32 @@
                                 <th class="text-center" width="25%">Description</th>
                                 <th class="text-center" width="20%">Time</th>
                                 <th width="15%">Info</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+
+            <div class="portlet box primary" style="margin-top: 55px;">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="fa fa-book"></i> &nbsp;
+                        Point Value Histories
+                    </div>
+                    <div class="pull-right">
+                        <a style=" color: white; text-decoration: none !important;" onMouseOut="this.style.color='white'" onMouseOver="this.style.color='#f06262'" href="#buyProduct" data-toggle="modal"><i style="font-size:15px;" class="fa fa-cart-plus"></i>&nbsp; &nbsp;<strong>Buy Product</strong></a>
+                     </div>
+                </div>
+                
+                <div class="portlet-body flip-scroll">
+                    <table class="table pv-table table-bordered table-striped table-condensed flip-content" >
+                        <thead class="flip-content">
+                            <tr>
+                                <th width="5%">No</th>
+                                <th class="text-center" width="20%">Title</th>
+                                <th class="text-center" width="25%">Price</th>
+                                <th class="text-center" width="20%">Point Value</th>
+                                <th width="15%">Bitrax Value</th>
                             </tr>
                         </thead>
                     </table>
@@ -207,6 +233,41 @@
                                 <label class="col-md-3 control-label">Description</label>
                                 <div class="col-md-8 inputGroupContainer">
                                     <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-book"></i></span><textarea name="description" id="description" cols="30" rows="10" placeholder="Description" class="form-control" required="true" value=""></textarea></div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+</div>
+
+
+<!--section ends-->
+<div id="buyProduct" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title">Buy Product For {{$data->username}} / {{$data->id_member}}</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="well form-horizontal" action="{{ route('members.buy-product') }}">  
+                        {{ csrf_field() }}
+                        <fieldset>
+                        <input id="member_id" name="member_id" value="{{$data->id}}" type="hidden">
+                        <div class="form-group">
+                                <label class="col-md-3 control-label">Ebook</label>
+                                <div class="col-md-8 inputGroupContainer">
+                                <select name="ebook_id" id="ebook_id" class="form-control" value="{{old('ebook_id')}}">
+                                            {{-- @foreach($ebooks->whereNotIn('id', $data->ebooks->pluck('id')) as $ebook) --}}
+                                            @foreach($ebooks as $ebook)
+                                            <option value="{{$ebook->id}}">{{$ebook->title}} - {{currency($ebook->price)}}</option>
+                                            @endforeach
+                                </select>
                                 </div>
                             </div>
                         </fieldset>
@@ -259,6 +320,26 @@
                   { data: 'description', name: 'description' },                  
                   { data: 'created_at', name: 'created_at', className: "text-center"  },                  
                   { data: 'info', name: 'info', className: "text-center"  },                  
+
+              ]
+          });  
+        });
+
+        $(document).ready(function () {
+          var table = $('.pv-table').DataTable({
+              destroy: true,
+              processing: true,
+              serverSide: true,
+              ajax: {
+                url: "{{ route('members.my.pv', $data->id) }}", 
+              },
+              
+              columns: [
+                  { data: 'DT_RowIndex', name: 'DT_RowIndex',orderable: false, searchable: false },
+                  { data: 'ebook.title', name: 'title', className: "text-center"  },                                  
+                  { data: 'ebook.price', name: 'price', className: "text-center"   },                                
+                  { data: 'ebook.pv', name: 'pv', className: "text-center"   },                                                 
+                  { data: 'ebook.bv', name: 'bv', className: "text-center"   },                                                 
 
               ]
           });  

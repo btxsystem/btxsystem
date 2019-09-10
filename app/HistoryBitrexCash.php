@@ -22,4 +22,9 @@ class HistoryBitrexCash extends Model
 	     'updated_at'
 	 ];
 
+	 public function member()
+	 {
+	   return $this->belongsTo('\App\Employeer', 'id_member');
+	 }
+
 }

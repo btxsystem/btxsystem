@@ -57,7 +57,7 @@ return [
     | ahead and set this to a sensible default for you out of the box.
     |
     */
-    'timezone' => 'UTC',
+    'timezone' => 'Asia/Jakarta',
     /*
     |--------------------------------------------------------------------------
     | Application Locale Configuration
@@ -159,6 +159,8 @@ return [
         App\Providers\HelperServiceProvider::class,
         //Barryvdh\Cors\ServiceProvider::class,
 
+        Maatwebsite\Excel\ExcelServiceProvider::class,
+
     ],
     /*
     |--------------------------------------------------------------------------
@@ -211,5 +213,7 @@ return [
         'Nestable'     => Nestable\Facades\NestableService::class,
         'Helper'       => App\Helper::class,
         'Alert'        => UxWeb\SweetAlert\SweetAlert::class,
+        'Excel'        => Maatwebsite\Excel\Facades\Excel::class,
+        
     ],
 ];

@@ -91,6 +91,8 @@ Route::redirect('/', '/login');
 Route::get('/login', 'Auth\LoginController@getLogin')->middleware('guest');
 Route::post('/login', 'Auth\LoginController@postLogin');
 Route::get('/logout', 'Auth\LoginController@logout');
+Route::get('user/{user}', ['as' => 'user', 'uses' => 'Member\PvController@issetUser']);
+Route::post('register-auto', ['as' => 'register-auto', 'uses' => 'Member\ProfileMemberController@registerAuto']);
 
 Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
 
@@ -109,6 +111,7 @@ Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
     Route::group(['prefix' => 'history-bonus', 'as'=> 'history-bonus.'], function () {
         Route::get('sponsor', ['as' => 'sponsor', 'uses' => 'Member\MybonusController@sponsor']);
         Route::get('sales-profit', ['as' => 'sales-profit', 'uses' => 'Member\MybonusController@profit']);
+        Route::get('pairing', ['as' => 'pairing', 'uses' => 'Member\MybonusController@pairing']);
     });
 
     Route::get('', ['as' => 'dashboard', 'uses' => 'Member\DashboardController@index']);
@@ -141,6 +144,13 @@ Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
         Route::get('reward', ['as' => 'reward', 'uses' => 'Member\ProfileMemberController@getRewards']);
         Route::get('bitrex-points', ['as' => 'bitrex-points', 'uses' => 'Member\BitrexPointController@getBitrexPoints']);
         Route::get('history-pv-pairing', ['as' => 'history-pv-pairing', 'uses' => 'Member\PvController@historyPvPairing']);
+        Route::get('bonus', ['as' => 'bonus', 'uses' => 'Member\MyBonusController@bonus']);
+        Route::get('bonus-sponsor', ['as' => 'bonus-sponsor', 'uses' => 'Member\MyBonusController@bonusSponsor']);
+        Route::get('bonus-profit', ['as' => 'bonus-profit', 'uses' => 'Member\MyBonusController@bonusProfit']);
+        Route::get('bonus-pairing', ['as' => 'bonus-pairing', 'uses' => 'Member\MyBonusController@bonusPairing']);
+        Route::get('expired-member', ['as' => 'expired-member', 'uses' => 'Member\ProfileMemberController@getExpiredMember']);
+        Route::get('expired-ebook', ['as' => 'expired-ebook', 'uses' => 'Member\EbookController@getExpiredEbook']);
+        Route::get('exp-three-month', ['as' => 'exp-three-month', 'uses' => 'Member\ProfileMemberController@expNotif']);
     });
 
     Route::group(['prefix' => 'transaction', 'as'=> 'transaction.'], function () {

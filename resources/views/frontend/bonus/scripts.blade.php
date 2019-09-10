@@ -2,7 +2,7 @@
     <script>
         $(document).ready(function () {
             $.ajax({
-                url: '{{route("member.bonus.index")}}',
+                url: '{{route("member.select.bonus")}}',
                 data: data,
                 success:function(data){
                     $('.bonus-sponsor').text(addCommas(data.sponsor.nominal == null ? 0 : data.sponsor.nominal));

@@ -35,6 +35,25 @@
     </div>
 </div>
 
+<div class="modal fade" id="exp" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="train" style="color:red">Warning</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h5 style="color:red">Your member account will expire in less than three months</h5>
+            </div>
+            <div class="modal-footer">
+                <a class="btn btn-secondary" data-dismiss="modal">Close</a>
+            </div>
+        </div>
+    </div>
+</div>
+
 <section class="content profile-page">
     <section class="boxs-simple">
         <div class="profile-header">
@@ -185,6 +204,14 @@
                             }
                         });
                     });
+                }
+            });
+
+            $.ajax({
+                url: '{{route("member.select.exp-three-month")}}',
+                data: data,
+                success:function(data){
+                    data.darurat ? $('#exp').modal('show') : $('#exp').modal('hide'); 
                 }
             });
 
