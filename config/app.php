@@ -213,7 +213,7 @@ return [
         'Nestable'     => Nestable\Facades\NestableService::class,
         'Helper'       => App\Helper::class,
         'Alert'        => UxWeb\SweetAlert\SweetAlert::class,
-        'Excel'        => Maatwebsite\Excel\ExcelServiceProvider::class,
+        'Excel'        => Maatwebsite\Excel\Facades\Excel::class,
         
     ],
 ];

@@ -150,6 +150,7 @@ class ProfileMemberController extends Controller
                 'bitrex_points' => 0,
                 'pv' => 0,
                 'nik' => $data->passport,
+                'expired_at' => Carbon::now()->addMonths(2)
             ];
             Employeer::create($member);
         }else{
@@ -182,6 +183,7 @@ class ProfileMemberController extends Controller
                     'bitrex_points' => 0,
                     'pv' => 0,
                     'nik' => $data->passport,
+                    'expired_at' => Carbon::now()->addMonths(2)
                 ];
                 Employeer::create($member);
             }elseif (!$midle) {
@@ -201,6 +203,7 @@ class ProfileMemberController extends Controller
                     'bitrex_points' => 0,
                     'pv' => 0,
                     'nik' => $data->passport,
+                    'expired_at' => Carbon::now()->addMonths(2)
                 ];
                 Employeer::create($member);
             }else {
@@ -220,6 +223,7 @@ class ProfileMemberController extends Controller
                     'bitrex_points' => 0,
                     'pv' => 0,
                     'nik' => $data->passport,
+                    'expired_at' => Carbon::now()->addMonths(2)
                 ];
                 Employeer::create($member);
             }
@@ -228,7 +232,7 @@ class ProfileMemberController extends Controller
     }
 
     public function registerAuto(Request $request){
-        $sponsor = Employeer::where('username',$request->referal)->select('id')->first();
+        $sponsor = $request->referal ? Employeer::where('username',$request->referal)->select('id')->first() : Employeer::where('username',Auth::user()->username)->select('id')->first() ;
         $isHaveChild = Employeer::where('parent_id',$sponsor->id)->select('position')->get();
         if (count($isHaveChild) == 3) {
             $pv = DB::table('pv_rank')->where('id_member',$sponsor->id)->select('pv_left', 'pv_midle', 'pv_right')->first();
@@ -264,6 +268,7 @@ class ProfileMemberController extends Controller
                 'bitrex_points' => 0,
                 'pv' => 0,
                 'nik' => $request->passport,
+                'expired_at' => Carbon::now()->addMonths(2)
             ];
             Employeer::create($member);
         }else{
@@ -296,6 +301,7 @@ class ProfileMemberController extends Controller
                     'bitrex_points' => 0,
                     'pv' => 0,
                     'nik' => $request->passport,
+                    'expired_at' => Carbon::now()->addMonths(2)
                 ];
                 Employeer::create($member);
             }elseif (!$midle) {
@@ -315,6 +321,7 @@ class ProfileMemberController extends Controller
                     'bitrex_points' => 0,
                     'pv' => 0,
                     'nik' => $request->passport,
+                    'expired_at' => Carbon::now()->addMonths(2)
                 ];
                 Employeer::create($member);
             }else {
@@ -334,10 +341,16 @@ class ProfileMemberController extends Controller
                     'bitrex_points' => 0,
                     'pv' => 0,
                     'nik' => $request->passport,
+                    'expired_at' => Carbon::now()->addMonths(2)
                 ];
                 Employeer::create($member);
             }
         }
         return redirect()->back();
+    }
+
+    public function expNotif(){
+        $notif['darurat'] = Auth::user()->expired_at <= Carbon::now()->addMonths(3);
+        return $notif;
     }
 }

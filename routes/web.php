@@ -126,6 +126,9 @@ Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
         Route::post('', ['as' => 'store', 'uses' => 'Member\EbookController@store'] );
     });
 
+    
+    Route::post('register-auto', ['as' => 'register-auto', 'uses' => 'Member\ProfileMemberController@registerAuto']);
+
     Route::group(['prefix' => 'select', 'as'=> 'select.'], function () {
         Route::get('daily-retail', ['as' => 'daily-retail', 'uses' => 'Member\DashboardController@getAutoRetailDaily']);
         Route::get('training', ['as' => 'training', 'uses' => 'Member\DashboardController@getTraining']);
@@ -150,6 +153,7 @@ Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
         Route::get('bonus-pairing', ['as' => 'bonus-pairing', 'uses' => 'Member\MyBonusController@bonusPairing']);
         Route::get('expired-member', ['as' => 'expired-member', 'uses' => 'Member\ProfileMemberController@getExpiredMember']);
         Route::get('expired-ebook', ['as' => 'expired-ebook', 'uses' => 'Member\EbookController@getExpiredEbook']);
+        Route::get('exp-three-month', ['as' => 'exp-three-month', 'uses' => 'Member\ProfileMemberController@expNotif']);
     });
 
     Route::group(['prefix' => 'transaction', 'as'=> 'transaction.'], function () {
@@ -160,6 +164,11 @@ Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
 
     Route::group(['prefix' => 'profile', 'as'=> 'profile.'], function () {
         Route::get('', ['as' => 'index', 'uses' => 'Member\ProfileMemberController@index']);
+        Route::post('reset-password', ['as' => 'reset-password', 'uses' => 'Member\ProfileMemberController@resetPassword']);
+    });
+
+    Route::group(['prefix' => 'add-member', 'as'=> 'add-member.'], function () {
+        Route::get('', ['as' => 'index', 'uses' => 'Member\AddNewMemberController@index']);
         Route::post('reset-password', ['as' => 'reset-password', 'uses' => 'Member\ProfileMemberController@resetPassword']);
     });
 
@@ -181,7 +190,7 @@ Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
 //     Route::get('explore/{type}/{username}', 'MemberV2\ExploreController@detail')->name('member.ebook.referral');
 //     Route::get('explore/{type}', 'MemberV2\ExploreController@detail')->name('member.ebook.detail');
 //     Route::get('explores', 'MemberV2\ExploreController@index')->name('member.explore');
-//     Route::get('/member/{username}', 'MemberV2\ExploreController@subscription')->name('member.subscription.referral');
+//     // Route::get('/member/{username}', 'MemberV2\ExploreController@subscription')->name('member.subscription.referral');
 //     Route::get('/ebook', 'MemberV2\ExploreController@subscription')->name('member.home');
 //     // Route::get('chapters/{slug}', 'MemberV2\ExploreController@chapters')->name('chapter.list')->middleware('ebook.access');
 //     Route::get('book/{slug}', 'MemberV2\ExploreController@bookDetail')->name('book.detail')->middleware('ebook.access');
@@ -203,6 +212,8 @@ Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
 //     Route::get('testMail', 'MemberV2\ExploreController@testMail');
 
 //     Route::post('renewalEbook', 'MemberV2\RegisterController@renewalEbook')->name('member.ebook-renewal');
+
+//     Route::get('/{username}', 'MemberV2\ExploreController@subscription')->name('member.subscription.referral');
 // });
 
 Route::domain('ebook.bitrexgo.id')->group(function () {
@@ -236,6 +247,6 @@ Route::domain('ebook.bitrexgo.id')->group(function () {
     Route::get('/{username}', 'MemberV2\ExploreController@subscription')->name('member.subscription.referral');
 });
 
-Route::get('/payment', ['as' => 'payment', 'uses' => 'Payment\PaymentController@payment']);
+Route::post('/payment', ['as' => 'payment', 'uses' => 'Payment\PaymentController@payment']);
 Route::post('/response-pay', ['as' => 'response.pay', 'uses' => 'Payment\PaymentController@responsePayment']);
 Route::post('/backend-response-pay', ['as' => 'backend.response.pay', 'uses' => 'Payment\PaymentController@backendResponsePayment']);
