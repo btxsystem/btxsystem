@@ -27,7 +27,7 @@ class CreateTriggerBonusRetail extends Migration
                     END IF;
                     set @ppn = @pajak * NEW.income;
                     INSERT INTO history_pajak(`id_member`,`id_bonus`,`persentase`,`nominal`,`created_at`,`updated_at`)VALUES (NEW.member_id, 1, @pajak, @ppn, now(), now());
-                    INSERT INTO history_bitrex_cash (`id_member`, `nominal`, `created_at`, `updated_at` , `description`, `info`) VALUES (NEW.member_id, NEW.income - @ppn, now(), now(), CONCAT("Bonus Sales Profit from ", @username), 1);
+                    INSERT INTO history_bitrex_cash (`id_member`, `nominal`, `created_at`, `updated_at` , `description`, `info`, `type`) VALUES (NEW.member_id, NEW.income - @ppn, now(), now(), CONCAT("Bonus Sales Profit from ", @username), 1, 3);
                     UPDATE employeers SET bitrex_cash = bitrex_cash + (NEW.income + @ppn), updated_at = now() WHERE id = NEW.member_id;
             END
         ');
