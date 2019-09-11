@@ -45,7 +45,6 @@ class CreateTriggerBonusSponsorFromNonMember extends Migration
         DB::unprepared('
         CREATE TRIGGER tr_bonus_sponsor_from_non_member AFTER INSERT ON `transaction_non_members` 
             FOR EACH ROW BEGIN
-                DECLARE bonus_bv decimal(15, 0);
                 set time_zone = "+07:00";
                 SET @bonus_bv = (SELECT bv FROM `ebooks` WHERE id = NEW.ebook_id);
                 SET @bonus_pv = (SELECT pv FROM `ebooks` WHERE id = NEW.ebook_id);
@@ -60,7 +59,7 @@ class CreateTriggerBonusSponsorFromNonMember extends Migration
                 ELSE
                     set @pajak = 0.025;
                 END IF;
-                set @ppn = @pajak * (bonus_bv * 0.2);
+                set @ppn = @pajak * (@bonus_bv * 0.2);
                 IF @sponsor is NULL THEN 
                     SET @sponsor = NEW.member_id;
                 END IF;
