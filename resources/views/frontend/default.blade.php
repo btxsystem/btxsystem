@@ -26,6 +26,8 @@
 
 <link rel="stylesheet" href="{{asset('assets2/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css')}}">
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 
 <!-- tree -->
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/tree/Treant.css') }}">
@@ -88,7 +90,26 @@
 
 <!-- select2 -->
 <script type="text/javascript" src="{{ asset('assets2/js/select2.js') }}" ></script>
-
+<style>
+    span#clock{
+        background: #e8a47d;
+        border-radius: 5px;
+        color: #313131;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        padding-right: 5px;
+        padding-left: 5px;
+        font-family: sans-serif;
+        font-size: 14px;
+    }
+    @media only screen and (max-width: 480px) {
+    /* For mobile phones: */
+        span#clock{
+            margin-left: -9px;
+        }
+    }
+    
+</style>
 <script type="text/javascript">
 
 $(document).ready(function(){

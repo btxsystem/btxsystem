@@ -232,7 +232,7 @@ class ProfileMemberController extends Controller
     }
 
     public function registerAuto(Request $request){
-        $sponsor = Employeer::where('username',$request->referal)->select('id')->first();
+        $sponsor = $request->referal ? Employeer::where('username',$request->referal)->select('id')->first() : Employeer::where('username',Auth::user()->username)->select('id')->first() ;
         $isHaveChild = Employeer::where('parent_id',$sponsor->id)->select('position')->get();
         if (count($isHaveChild) == 3) {
             $pv = DB::table('pv_rank')->where('id_member',$sponsor->id)->select('pv_left', 'pv_midle', 'pv_right')->first();

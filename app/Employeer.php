@@ -36,6 +36,7 @@ class Employeer extends Authenticatable
         'parent_id',
         'sponsor_id',
         'rank_id',
+        'verification',
         'bitrex_cash',
         'bitrex_points',
         'pv',
