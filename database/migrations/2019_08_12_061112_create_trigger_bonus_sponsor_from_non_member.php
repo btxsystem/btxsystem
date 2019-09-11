@@ -45,7 +45,6 @@ class CreateTriggerBonusSponsorFromNonMember extends Migration
         DB::unprepared('
         CREATE TRIGGER tr_bonus_sponsor_from_non_member AFTER INSERT ON `transaction_non_members` 
             FOR EACH ROW BEGIN
-                DECLARE bonus_bv decimal(15, 0);
                 set time_zone = "+07:00";
                 SET @bonus_bv = (SELECT bv FROM `ebooks` WHERE id = NEW.ebook_id);
                 SET @bonus_pv = (SELECT pv FROM `ebooks` WHERE id = NEW.ebook_id);
@@ -60,13 +59,13 @@ class CreateTriggerBonusSponsorFromNonMember extends Migration
                 ELSE
                     set @pajak = 0.025;
                 END IF;
-                set @ppn = @pajak * (bonus_bv * 0.2);
+                set @ppn = @pajak * (@bonus_bv * 0.2);
                 IF @sponsor is NULL THEN 
                     SET @sponsor = NEW.member_id;
                 END IF;
                 SET @pv_now = (SELECT pv FROM `employeers` WHERE id = NEW.member_id);
                 INSERT INTO history_pajak(`id_member`,`id_bonus`,`persentase`,`nominal`,`created_at`,`updated_at`)VALUES (NEW.member_id, 2, @pajak, @ppn, now(), now());
-                INSERT INTO history_bitrex_cash (`id_member`, `nominal`, `created_at`, `updated_at` , `description`, `info`) VALUES (@sponsor, @bonus_bv * 0.2 - @ppn, now(), now(), CONCAT("Bonus Sponsor from ", @username), 1);
+                INSERT INTO history_bitrex_cash (`id_member`, `nominal`, `created_at`, `updated_at` , `description`, `info`, `type`) VALUES (@sponsor, @bonus_bv * 0.2 - @ppn, now(), now(), CONCAT("Bonus Sponsor from ", @username), 1, 0);
                 UPDATE employeers SET updated_at = now(), pv = pv + @bonus_pv WHERE id = NEW.member_id;
                 UPDATE employeers SET updated_at = now(), bitrex_cash = bitrex_cash + (@bonus_bv * 0.2 - @ppn) WHERE id = @sponsor;
                 INSERT INTO history_pv (`pv`, `pv_today`, `id_member`, `created_at`, `updated_at`) VALUES (@pv_now + @bonus_pv, @bonus_pv, NEW.member_id, now(), now());
