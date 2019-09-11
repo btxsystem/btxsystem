@@ -99,8 +99,8 @@ class PaymentController extends Controller
     $data['currency'] = "IDR";
     $data['payment_id'] = 1;
     $data['product_desc'] = "Ebook Bitrexgo {$productDesc}";
-    $data['user_name'] = $user ?? $user->username;
-    $data['user_email'] = $user ?? $user->email;
+    $data['user_name'] = 'asep';
+    $data['user_email'] = 'aseppmedia18@gmail.com';
     $data['ref_no'] = $transactionRef;
     $data['lang'] = 'UTF-8';
     // $data['code'] = $subs->created_at->format('dmYHi');
@@ -198,6 +198,8 @@ class PaymentController extends Controller
           ->update([
             'status' => $status
           ]);
+      } else {
+        $transaction = false;
       }
 
       if(!$transaction) {
