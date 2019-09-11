@@ -134,7 +134,7 @@ class RegisterController extends Controller
       return response()->json([
         'success' => false,
         'message' => 'Failed register',
-        'data' => ''
+        'data' => $e
       ]);
     }
     
