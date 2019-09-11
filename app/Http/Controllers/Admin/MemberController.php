@@ -65,7 +65,6 @@ class MemberController extends Controller
 
 
     public function create(){
-     
         return view('admin.members.create');
     }
 
@@ -143,11 +142,11 @@ class MemberController extends Controller
             return view('admin.members.active.index');
  
         }catch(\Exception $e){
-            throw $e;
+            // throw $e;
             DB::rollback();
             
             Alert::error('Gagal Menambah Data Member', 'Gagal');
-            // return \redirect()->back();
+            return \redirect()->back();
         }
     }
 
