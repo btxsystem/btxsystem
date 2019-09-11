@@ -9,7 +9,7 @@
             <li><i class="zmdi"><span id="clock"></span></i></li>
         </ul>
         <ul class="nav navbar-nav navbar-right"> 
-           <li><a href="/logout" title="sign out"><i class="material-icons">input</i></a></li>
+           <li style="font-size:13px"><a href="/logout" title="sign out" style="text-decoration:none"><strong>Logout</strong>&nbsp; <i class="fa fa-sign-out" style="color:red"></i></a></li>
         </ul>
     </div>
 </nav>
