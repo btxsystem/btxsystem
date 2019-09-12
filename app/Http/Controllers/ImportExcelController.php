@@ -12,6 +12,7 @@ use App\Imports\EmployeerImport;
 use App\Imports\TreeImport;
 use App\Imports\SponsorImport;
 use Excel;
+use DB;
 use App\Http\Controllers\Controller;
  
 class ImportExcelController extends Controller
