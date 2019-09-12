@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
             RewardsTableSeeder::class,
             VideosTableSeeder::class,
             VideoEbookTableSeeder::class,
+            TestimonialTableSeeder::class
         ]);
     }
 }

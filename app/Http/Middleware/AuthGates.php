@@ -18,6 +18,7 @@ class AuthGates
                 Session::flush();
                 Auth::guard('user')->logout();
                 return redirect('/login');
+                // return 'Masuk Middleware';
             }
         }
         

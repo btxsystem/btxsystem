@@ -14,7 +14,7 @@ class AddColumnTypeToHistoryBitrexCashTable extends Migration
     public function up()
     {
         Schema::table('history_bitrex_cash', function (Blueprint $table) {
-            $table->integer('type')->nullable()->comment('0: Sponsor 1: Pairing 2: Profit 3: Reward');;
+            $table->integer('type')->nullable()->comment('0: Sponsor 1: Pairing 2: Profit 3: Reward');
         });
     }
 
