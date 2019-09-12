@@ -20,7 +20,7 @@
 	</div>
 </form>
 
-<form method="post" action="" enctype="multipart/form-data">
+<form method="post" action="{{route('import.tree')}}" enctype="multipart/form-data">
 	<div class="modal-content">
 		<div class="modal-header">
 			<h5 class="modal-title" id="exampleModalLabel">Import Excel Tree</h5>
