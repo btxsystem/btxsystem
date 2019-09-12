@@ -248,6 +248,12 @@
                     Testimonial
                 </a>
             </li>
+            <li>
+                <a href="{{ route('cms.about-us.index') }}">
+                    <i class="fa fa-angle-double-right"></i>
+                    About Us
+                </a>
+            </li>
         </ul>
     </li>
     <li>
