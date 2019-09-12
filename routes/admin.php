@@ -169,6 +169,15 @@ Route::group(['prefix' => 'select', 'as'=> 'select.'], function () {
         Route::get('reward', ['as' => 'reward', 'uses' => 'Admin\BonusController@bonusReward']);
     });
 
+    Route::group(['prefix'=>'cms','as'=>'cms.'], function(){
+        Route::resource('our-products', 'Admin\OurProductController');
+        Route::resource('testimonials', 'Admin\TestimonialController');
+        Route::post('update-testimony', 'Admin\TestimonialController@update')->name('update-testimony');
+        Route::get('testimonials/published/{id}', ['as' => 'published', 'uses' => 'Admin\TestimonialController@published']);
+        Route::get('testimonials/unpublished/{id}', ['as' => 'unpublished', 'uses' => 'Admin\TestimonialController@unpublished']);
+
+    });
+
     Route::group(['prefix'=>'event','as'=>'event.'], function(){
             Route::get('', ['as' => 'index', 'uses' => 'Admin\EventController@index']);
     });

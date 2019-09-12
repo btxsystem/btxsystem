@@ -237,15 +237,15 @@
         </a>
         <ul class="sub-menu">
             <li>
-                <a href="{{ route('report.transaction-member') }}">
+                <a href="{{ route('cms.our-products.index') }}">
                     <i class="fa fa-angle-double-right"></i>
-                    Transaction Member
+                    Our Products
                 </a>
             </li>
             <li>
-                <a href="{{ route('report.membership') }}">
+                <a href="{{ route('cms.testimonials.index') }}">
                     <i class="fa fa-angle-double-right"></i>
-                    Membership
+                    Testimonial
                 </a>
             </li>
         </ul>
