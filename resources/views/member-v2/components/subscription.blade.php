@@ -192,11 +192,11 @@ h2.plan-title {
 					<div class="row mt-5	">
 						<div class="col-md-4">
 							<img src="https://www.ebook.bitrexgo.co.id/beta/img/preview-1.png"  class="img-fluid" alt="">
-							<h5 class="mt-2 text-center">Module</h5>
+							<h5 class="mt-2 text-left">Module</h5>
 						</div>
 						<div class="col-md-4">
 							<img src="https://www.ebook.bitrexgo.co.id/beta/img/preview-2.png"  class="img-fluid" alt="">
-							<h5 class="mt-2 text-center">Education Videos</h5>
+							<h5 class="mt-2 text-left">Education Videos</h5>
 						</div>
 						<!-- <div class="col-md-3">
 							<img src="https://www.ebook.bitrexgo.co.id/beta/img/preview-3.png"  class="img-fluid" alt="">
@@ -204,7 +204,7 @@ h2.plan-title {
 						</div> -->
 						<div class="col-md-4">
 							<img src="https://www.ebook.bitrexgo.co.id/beta/img/preview-4.png"  class="img-fluid" alt="">
-							<h5 class="mt-2 text-center">Smart Financial Community</h5>
+							<h5 class="mt-2 text-left">Smart Financial Community</h5>
 						</div>
 					</div>
 				</div>
