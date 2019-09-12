@@ -160,6 +160,7 @@ class VideoController extends Controller
         $data = Video::findOrFail($id);
 
         if ($data) { 
+            \File::delete(public_path($data->path));
             $data->delete(); 
             Alert::success('Success Delete Data Video', 'Success');
         } else {

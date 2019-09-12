@@ -171,10 +171,17 @@ Route::group(['prefix' => 'select', 'as'=> 'select.'], function () {
 
     Route::group(['prefix'=>'cms','as'=>'cms.'], function(){
         Route::resource('our-products', 'Admin\OurProductController');
+
         Route::resource('testimonials', 'Admin\TestimonialController');
         Route::post('update-testimony', 'Admin\TestimonialController@update')->name('update-testimony');
         Route::get('testimonials/published/{id}', ['as' => 'published', 'uses' => 'Admin\TestimonialController@published']);
         Route::get('testimonials/unpublished/{id}', ['as' => 'unpublished', 'uses' => 'Admin\TestimonialController@unpublished']);
+
+
+        Route::resource('about-us', 'Admin\AboutUsController');
+        Route::post('update-about', 'Admin\AboutUsController@update')->name('update-about');
+        Route::get('about-us/published/{id}', ['as' => 'published', 'uses' => 'Admin\AboutUsController@published']);
+        Route::get('about-us/unpublished/{id}', ['as' => 'unpublished', 'uses' => 'Admin\AboutUsController@unpublished']);
 
     });
 
