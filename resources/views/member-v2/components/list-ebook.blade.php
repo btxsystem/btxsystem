@@ -349,15 +349,18 @@ function submit() {
 				return false
 			}
 
-			swal("Success", "Transaction Successfully", "success").then((value) => {
-				$('#transactionRef').val(result.data.transaction_ref)
-				$('#submitPayment').submit()
-				// if(auth != '') {
-				// 	window.location.href = '{{ route("payment") }}?transactionRef=' + result.data.transaction_ref
-				// } else {
-				// 	window.location.href = '{{ route("payment") }}?transactionRef=' + result.data.transaction_ref
-				// }	
-			});
+			$('#transactionRef').val(result.data.transaction_ref)
+			$('#submitPayment').submit()
+
+			// swal("Success", "Transaction Successfully", "success").then((value) => {
+			// 	$('#transactionRef').val(result.data.transaction_ref)
+			// 	$('#submitPayment').submit()
+			// 	// if(auth != '') {
+			// 	// 	window.location.href = '{{ route("payment") }}?transactionRef=' + result.data.transaction_ref
+			// 	// } else {
+			// 	// 	window.location.href = '{{ route("payment") }}?transactionRef=' + result.data.transaction_ref
+			// 	// }	
+			// });
 			$('#register').prop('disabled', false)
 		},
 		error: function(err) {
