@@ -20,14 +20,10 @@ class ImportExcelController extends Controller
 
 	public function import_excel(Request $request) 
 	{
-        $path = $request->file('file');
-        $datas = $path->get();
-        foreach ($datas->toArray() as $key => $data) {
-            print($data->id_job_seeker.'</br>');
-            if ($key==100) {
-                return 0;
-            }  
-        }
-        //dd($datas);
+        if ($request->hasFile('file')) {
+            $file = $request->file('file'); //GET FILE
+            Excel::import(new EmployeerImport, $file); //IMPORT FILE 
+            return redirect()->back();
+        } 
 	}
 }
