@@ -45,7 +45,7 @@ class ImportExcelController extends Controller
                 $parent['position'] = 2;
             }
             Employeer::find($user['id'])->update($parent);
-            DB::table('transaction_member')->insert(['member_id' => $user->id, 'ebook_id' => 1, 'created_at' => now(), 'updated_at' => now(), 'status' => 1, 'expired_at' => now(), 'transaction_ref' => 1]);
+            //DB::table('transaction_member')->insert(['member_id' => $user->id, 'ebook_id' => 1, 'created_at' => now(), 'updated_at' => now(), 'status' => 1, 'expired_at' => now(), 'transaction_ref' => 1]);
         }
         return redirect()->back();
     }
