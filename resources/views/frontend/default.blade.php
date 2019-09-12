@@ -108,6 +108,25 @@
             margin-left: -9px;
         }
     }
+    .sidebar .user-info {
+        overflow: hidden;
+    }
+    .sidebar .user-info .image {
+        width: 20%;
+    }
+    .theme-orange .sidebar .user-info .info-container {
+        float: left;
+        width: 70%;
+        padding-top: 5px;
+    }
+    .sidebar .user-info .info-container .name {
+        color: white;
+        text-overflow: ellipsis;
+        display: -webkit-box !important;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+        height: 23px;
+    }
     
 </style>
 <script type="text/javascript">
