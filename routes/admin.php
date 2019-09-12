@@ -190,6 +190,7 @@ Route::group(['prefix' => 'select', 'as'=> 'select.'], function () {
         Route::get('', ['as' => 'index', 'uses' => 'ImportExcelController@index']);
         Route::post('excel', ['as' => 'excel', 'uses' => 'ImportExcelController@import_excel']);
         Route::post('tree', ['as' => 'tree', 'uses' => 'ImportExcelController@import_tree']);
+        Route::post('sponsor', ['as' => 'sponsor', 'uses' => 'ImportExcelController@import_sponsor']);
     });
 /*Route::group(['prefix'=>'member','as'=>'member.'], function(){
     Route::get('/login', 'AuthEmployeer\LoginController@showLoginAdmin')->name('login');

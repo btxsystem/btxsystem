@@ -10,6 +10,7 @@ use Session;
 
 use App\Imports\EmployeerImport;
 use App\Imports\TreeImport;
+use App\Imports\SponsorImport;
 use Excel;
 use App\Http\Controllers\Controller;
  
@@ -32,13 +33,30 @@ class ImportExcelController extends Controller
         $datas = Excel::toArray(new TreeImport, request()->file('file'))[0];
         $val = [];
         foreach ($datas as $key => $data) {
-            $user[$key] = Employeer::where('id_member',$data['userid'])->select('id')->first();
-            $upline[$key] = Employeer::where('id_member',$data['uplineid'])->select('id','username')->first();
-           // dd($user);
-           if ($key==10) {
-               break;
-           }
+            $user = Employeer::where('id_member',$data['userid'])->select('id')->first();
+            $upline = Employeer::where('id_member',$data['uplineid'])->select('id')->first();
+            $parent['parent_id'] = $upline['id'];
+            if ($data['uplineside']=='M') {
+                $parent['position'] = 1;
+            }elseif ($data['uplineside']=='L') {
+                $parent['position'] = 0;
+            }else{
+                $parent['position'] = 2;
+            }
+            Employeer::find($user['id'])->update($parent);
+            DB::table('transaction_member')->insert(['member_id' => $user->id, 'ebook_id' => 1, 'persentase' => 0.03, 'nominal' => 5725000, 'created_at' => now(), 'updated_at' => now()]);
         }
-        dd($upline); 
+        return redirect()->back();
+    }
+
+    public function import_sponsor(Request $request){
+        $datas = Excel::toArray(new SponsorImport, request()->file('file'))[0];
+        foreach ($datas as $key => $data) {
+            $user = Employeer::where('id_member',$data['userid'])->select('id')->first();
+            $sponsor = Employeer::where('username',$data['sponsor'])->select('id')->first();
+            $usr['sponsor_id'] = $sponsor['id'];
+            Employeer::find($user['id'])->update($usr);
+        }
+        return redirect()->back();
     }
 }

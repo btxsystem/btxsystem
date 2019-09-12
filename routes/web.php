@@ -169,7 +169,6 @@ Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
 
     Route::group(['prefix' => 'add-member', 'as'=> 'add-member.'], function () {
         Route::get('', ['as' => 'index', 'uses' => 'Member\AddNewMemberController@index']);
-        Route::post('reset-password', ['as' => 'reset-password', 'uses' => 'Member\ProfileMemberController@resetPassword']);
     });
 
     Route::group(['prefix' => 'income-and-expenses', 'as'=> 'bitrex-money.'], function () {
