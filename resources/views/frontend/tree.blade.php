@@ -168,9 +168,7 @@
 								</div>
 								<hr>
 								<div class="row col-md-12">
-									<div class="col-md-6">
-										<input type="text"> <button class="fa fa-search"></button>
-									</div>
+									<input type="text" class="search" placeholder="Search by Name / Username / Id Member">&nbsp;&nbsp;<button class="btn btn-primary">Search</button>
 								</div>
 								<hr>
 							</div>
@@ -198,6 +196,11 @@
 
 @section('footer_scripts')
 <style>
+
+	.search {
+		font-size: 14px;
+		width: 887px;
+	}
 	rect {
 		fill: #ebebeb;
 		stroke: #ebebeb;
