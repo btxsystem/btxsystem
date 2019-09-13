@@ -11,7 +11,7 @@
     <h1>{{$data->title}} Overview </h1>
     <ol class="breadcrumb">
         <li>
-            <a href="#">Ebook </a>
+            <a href="#">CMS </a>
         </li>
         <li class="active">{{$data->title}} </li>
     </ol>

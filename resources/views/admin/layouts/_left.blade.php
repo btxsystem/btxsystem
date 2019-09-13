@@ -41,28 +41,6 @@
             </ul>
         </li>
 
-        <!-- <li >
-            <a href="#">
-                <i class="livicon" data-name="notebook" data-size="18" data-c="#bdecb6" data-hc="#bdecb6" data-loop="true"></i>
-                <span class="title">Old Ebooks</span>
-                <span class="fa arrow"></span>
-            </a>
-            <ul class="sub-menu">
-                <li>
-                    <a href="{{ route('book.index') }}">
-                        <i class="fa fa-angle-double-right"></i>
-                        Books
-                    </a>
-                </li>
-                <li >
-                    <a href="{{ route('video.index') }}">
-                        <i class="fa fa-angle-double-right"></i>
-                        Videos
-                    </a>
-                </li>
-            </ul>
-        </li> -->
-
         <li >
             <a href="#">
                 <i class="livicon" data-name="notebook" data-size="18" data-c="#bdecb6" data-hc="#bdecb6" data-loop="true"></i>
@@ -114,13 +92,6 @@
                 Customers
         </a>
     </li>
-    <!-- <li>
-        <a href="{{ route('tree.index') }}">
-            <i class="livicon" data-name="share" data-size="18" data-c="#F89A14" data-hc="#F89A14"
-               data-loop="true"></i>
-            Tree
-        </a>
-    </li> -->
     <li>
         <a href="{{ route('new.tree.index') }}">
             <i class="livicon" data-name="share" data-size="18" data-c="#F89A14" data-hc="#F89A14"
@@ -243,9 +214,21 @@
                 </a>
             </li>
             <li>
+                <a href="{{ route('cms.our-headquarters.show') }}">
+                    <i class="fa fa-angle-double-right"></i>
+                    Our Headquarter
+                </a>
+            </li>
+            <li>
                 <a href="{{ route('cms.testimonials.index') }}">
                     <i class="fa fa-angle-double-right"></i>
                     Testimonial
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('cms.about-us.index') }}">
+                    <i class="fa fa-angle-double-right"></i>
+                    About Us
                 </a>
             </li>
         </ul>

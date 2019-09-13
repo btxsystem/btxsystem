@@ -17,7 +17,7 @@ class CreateProcedurePairings extends Migration
             CREATE PROCEDURE add_pv_pairing(idm INT, pv INT)
             BEGIN
                 DECLARE parent, cek int;
-                SET max_sp_recursion_depth=255;
+                SET max_sp_recursion_depth=10000;
                 set parent = (select parent_id from `employeers` where id = idm);
                 set cek = (select sum(id_member) from pairings where id_member = parent);
                 set time_zone = "+07:00";

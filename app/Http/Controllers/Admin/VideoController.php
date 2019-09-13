@@ -75,17 +75,21 @@ class VideoController extends Controller
         $video->title = $request->title;
         $video->path = $uploadPath;
         
-        $video->save();
+        if ($video->save()) {
 
-        VideoEbook::firstOrCreate([
-            'video_id' => $video->id,
-            'ebook_id' => $request->ebook_id
-        ]);
-        // $ebook->videos()->attach($video);
-        
-        Alert::success('Sukses Menambah Data Video', 'Sukses');
+            VideoEbook::firstOrCreate([
+                'video_id' => $video->id,
+                'ebook_id' => $request->ebook_id
+            ]);
+            // $ebook->videos()->attach($video);
+            
+            Alert::success('Sukses Menambah Data Video', 'Sukses');
 
-        return redirect()->route('ebook.show', $ebook->id);
+            return redirect()->route('ebook.show', $ebook->id);
+        }
+
+        Alert::error('Gagal Menambah Data', 'Gagal');
+        return \redirect()->back();
     }
 
     /**
@@ -140,13 +144,15 @@ class VideoController extends Controller
   
         $data->title = $request->title;
         $data->path = $uploadPath ? $uploadPath : $oldPath;
-        $data->save();
+        
+        if ($data->save())
+        {
+            Alert::success('Sukses Update Data Book', 'Sukses');
 
-       
-
-        Alert::success('Sukses Update Data Book', 'Sukses');
-
-        return redirect()->route('video.show', $id);
+            return redirect()->route('video.show', $id);
+        }
+        Alert::error('Gagal Menambah Data', 'Gagal');
+        return \redirect()->back();
     }
 
     /**
@@ -160,6 +166,7 @@ class VideoController extends Controller
         $data = Video::findOrFail($id);
 
         if ($data) { 
+            \File::delete(public_path($data->path));
             $data->delete(); 
             Alert::success('Success Delete Data Video', 'Success');
         } else {

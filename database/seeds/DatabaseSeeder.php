@@ -11,8 +11,8 @@ class DatabaseSeeder extends Seeder
             RanksTableSeeder::class,
             UsersTableSeeder::class,
             RoleUserTableSeeder::class,
-            EmployeersTableSeeder::class,
-            HistoryPvTableSeeder::class,
+            //EmployeersTableSeeder::class,
+            //HistoryPvTableSeeder::class,
             PermissionsTableSeeder::class,
             PermissionRoleTableSeeder::class,
             EbookTableSeeder::class,
@@ -23,7 +23,8 @@ class DatabaseSeeder extends Seeder
             RewardsTableSeeder::class,
             VideosTableSeeder::class,
             VideoEbookTableSeeder::class,
-            TestimonialTableSeeder::class
+            TestimonialTableSeeder::class,
+            AboutUsTableSeeder::class
         ]);
     }
 }
