@@ -160,6 +160,32 @@
                 <div class="portlet-title">
                     <div class="caption">
                         <i class="fa fa-book"></i> &nbsp;
+                        Transaction Member
+                    </div>
+                    <div class="pull-right">
+                        <a style=" color: white; text-decoration: none !important;" onMouseOut="this.style.color='white'" onMouseOver="this.style.color='#f06262'" href="#buyProduct" data-toggle="modal"><i style="font-size:15px;" class="fa fa-cart-plus"></i>&nbsp; &nbsp;<strong>Buy Product</strong></a>
+                     </div>
+                </div>
+                
+                <div class="portlet-body flip-scroll">
+                    <table class="table transaction-table table-bordered table-striped table-condensed flip-content" >
+                        <thead class="flip-content">
+                            <tr>
+                                <th width="5%">No</th>
+                                <th class="text-center" width="20%">Title</th>
+                                <th class="text-center" width="25%">Price</th>
+                                <th class="text-center" width="20%">Point Value</th>
+                                <th width="15%">Bitrax Value</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+
+            <div class="portlet box primary" style="margin-top: 55px;">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="fa fa-book"></i> &nbsp;
                         Bitrex Value Histories
                     </div>
                 </div>
@@ -178,27 +204,22 @@
                     </table>
                 </div>
             </div>
-
             <div class="portlet box primary" style="margin-top: 55px;">
                 <div class="portlet-title">
                     <div class="caption">
                         <i class="fa fa-book"></i> &nbsp;
                         Point Value Histories
                     </div>
-                    <div class="pull-right">
-                        <a style=" color: white; text-decoration: none !important;" onMouseOut="this.style.color='white'" onMouseOver="this.style.color='#f06262'" href="#buyProduct" data-toggle="modal"><i style="font-size:15px;" class="fa fa-cart-plus"></i>&nbsp; &nbsp;<strong>Buy Product</strong></a>
-                     </div>
                 </div>
                 
                 <div class="portlet-body flip-scroll">
                     <table class="table pv-table table-bordered table-striped table-condensed flip-content" >
                         <thead class="flip-content">
                             <tr>
-                                <th width="5%">No</th>
-                                <th class="text-center" width="20%">Title</th>
-                                <th class="text-center" width="25%">Price</th>
-                                <th class="text-center" width="20%">Point Value</th>
-                                <th width="15%">Bitrax Value</th>
+                                <th>No</th>
+                                <th class="text-center">PV</th>
+                                <th class="text-center">PV Today</th>
+                                <th class="text-center">Time</th>
                             </tr>
                         </thead>
                     </table>
@@ -331,7 +352,25 @@
               processing: true,
               serverSide: true,
               ajax: {
-                url: "{{ route('members.my.pv', $data->id) }}", 
+                url: "{{ route('members.pv.history', $data->id) }}", 
+              },
+              
+              columns: [
+                  { data: 'DT_RowIndex', name: 'DT_RowIndex',orderable: false, searchable: false },
+                  { data: 'pv', name: 'pv', className: "text-center"  },                                  
+                  { data: 'pv_today', name: 'pv_today' },                  
+                  { data: 'created_at', name: 'created_at', className: "text-center"  },                                 
+              ]
+          });  
+        });
+
+        $(document).ready(function () {
+          var table = $('.transaction-table').DataTable({
+              destroy: true,
+              processing: true,
+              serverSide: true,
+              ajax: {
+                url: "{{ route('members.transaction.member', $data->id) }}", 
               },
               
               columns: [

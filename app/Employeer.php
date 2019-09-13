@@ -77,6 +77,11 @@ class Employeer extends Authenticatable
         return $this->hasMany('App\HistoryBitrexCash','id_member');
     }
 
+    public function pv_histories()
+    {
+        return $this->hasMany('App\HistoryPv','id_member');
+    }
+
     public function transaction_member()
     {
         return $this->hasMany('App\Models\TransactionMember','member_id');
