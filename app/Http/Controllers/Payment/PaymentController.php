@@ -204,20 +204,43 @@ class PaymentController extends Controller
 
       if(!$transaction) {
         DB::rollback();
+        return redirect()->route('payment.failed');
       }
 
       DB::commit();
-      return redirect()->route('member.home');
+      
+      if($status == 1) {
+        return view('member.home');
+      } else if($status == 0) {
+        return view('payment.failed');
+      } else if($status == 6) {
+        return view('payment.waiting-transfer');
+      }
+
     } catch (\Illuminate\Database\QueryException $e) {
         DB::rollback();
-        return redirect()->route('member.home');
+        return view('payment.failed');
         //return $e->getMessage();
     }
-    return redirect()->route('member.home');
   }
 
   public function backendResponsePayment(Request $request)
   {
       echo "RECEIVEOK";
   }  
+
+  public function waitingTransfer()
+  {
+    return view('payment.waiting-transfer');
+  }
+
+  public function success()
+  {
+    return view('payment.success');
+  }
+
+  public function failed()
+  {
+    return view('payment.failed');
+  }
 }

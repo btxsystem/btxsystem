@@ -108,11 +108,18 @@ class ExploreController extends Controller
     ])->where('title', $type)->get();
 
     if($user = Auth::guard('nonmember')->user()) {
-      $referral  = TransactionNonMember::where([
+      $check  = TransactionNonMember::where([
         'non_member_id' => $user->id,
       ])->with([
         'member'
-      ])->first()->member->username;
+      ])->first();
+
+      if($check) {
+        $referral = $check->member->username;
+      } else {
+        $referral = '';
+      }
+
     } else {
       $referral = $request->input('username') ?? \Session::get('referral');
 
@@ -197,11 +204,17 @@ class ExploreController extends Controller
     ->get();
 
     if($user = Auth::guard('nonmember')->user()) {
-      $referral  = TransactionNonMember::where([
+      $check  = TransactionNonMember::where([
         'non_member_id' => $user->id,
       ])->with([
         'member'
-      ])->first()->member->username;
+      ])->first();
+
+      if($check) {
+        $referral = $check->member->username;
+      } else {
+        $referral = '';
+      }
     } else {
       if(Employeer::where('username', $username)->count() > 0 || \Session::has('referral')) {
         if(\Session::has('referral')) {
