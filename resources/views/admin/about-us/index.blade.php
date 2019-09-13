@@ -260,8 +260,6 @@ List Of About US
             var id = $(this).data('id');
             
             var url =   "{{url('backoffice/cms/about-us/')}}" +'/'+ id +'/edit';
-            // console.log('Image')
-            // console.log(url)
 
             $.get(url, function (data) {
                 //success data

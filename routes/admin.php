@@ -16,6 +16,8 @@ Route::get('permissions', ['as' => 'permissions', 'uses' => 'Admin\PermissionsCo
 Route::redirect('/home', '/admin');
 Auth::routes(['register' => false]);*/
 
+
+
 Route::group(['prefix' => 'select', 'as'=> 'select.'], function () {
     Route::get('sponsor', ['as' => 'sponsor', 'uses' => 'MembershipController@select']);
     Route::get('permissions', ['as' => 'permissions', 'uses' => 'Admin\RolesController@select']);
@@ -24,7 +26,7 @@ Route::group(['prefix' => 'select', 'as'=> 'select.'], function () {
     Route::get('/{id}/upline', ['as' => 'upline', 'uses' => 'MembershipController@select_upline']);
 });
 
-
+Route::group(['middleware' => 'admin'], function () {
     Route::group(['prefix'=>'admin-management','as'=>'admin-management.'], function(){
         Route::get('permissions', ['as' => 'permissions', 'uses' => 'Admin\PermissionsController@index']);
 
@@ -221,11 +223,4 @@ Route::group(['prefix' => 'select', 'as'=> 'select.'], function () {
         Route::post('tree', ['as' => 'tree', 'uses' => 'ImportExcelController@import_tree']);
         Route::post('sponsor', ['as' => 'sponsor', 'uses' => 'ImportExcelController@import_sponsor']);
     });
-/*Route::group(['prefix'=>'member','as'=>'member.'], function(){
-    Route::get('/login', 'AuthEmployeer\LoginController@showLoginAdmin')->name('login');
-    Route::post('/login/cek', 'AuthEmployeer\LoginController@login')->name('login.cek');
-    Route::get('/dashboard', 'Member\DashboardController@index')->name('dashboard');
-    Route::group(['prefix'=>'profile','as'=>'profile.'], function(){
-        Route::get('', ['as' => 'index', 'uses' => 'Member\ProfileMemberController@index']);
-    });
-});*/
+});
