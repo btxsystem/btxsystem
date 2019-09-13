@@ -168,7 +168,7 @@
 								</div>
 								<hr>
 								<div class="row col-md-12">
-									<input type="text" class="search" placeholder="Search by Name / Username / Id Member">&nbsp;&nbsp;<button class="btn btn-primary">Search</button>
+									<input type="text" class="search" placeholder="Search by Name / Username / Id Member">&nbsp;&nbsp;<button type="button" class="btn btn-primary" id="search-downline">Search</button>
 								</div>
 								<hr>
 							</div>
@@ -272,6 +272,10 @@
 			placeholder: 'Kurir',
 			data: data,
 		});
+	});
+
+	$('#search-downline').click(function(){
+		console.log($('.search').val());	
 	});
 
 	$('#province').change(function(){
