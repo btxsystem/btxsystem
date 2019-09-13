@@ -10,10 +10,12 @@ use DB;
 
 use App\Employeer;
 use App\Builder\NonMemberBuilder;
+use App\Builder\PaymentHistoryBuilder;
 use App\Builder\TransactionMemberBuilder;
 use App\Builder\TransactionNonMemberBuilder;
 
 use App\Factory\RegisterFactoryMake;
+use App\Factory\PaymentHistoryFactoryBuild;
 use App\Factory\TransactionFactoryRegister;
 
 use App\Models\TransactionMember;
@@ -23,6 +25,127 @@ use Carbon\Carbon;
 
 class RegisterController extends Controller
 { 
+  public function registerV3(Request $request)
+  {
+    try {
+      DB::beginTransaction();
+
+      $ebook = $request->input('ebook');
+      $income = $request->input('income');
+
+      if(Auth::guard('nonmember')->user()) {
+        $nonMember = true;
+  
+        $nonMemberId = Auth::guard('nonmember')->user()->id;
+  
+        $referralId = '';
+        $referralCode = $request->input('referralCode') ?? '';
+        
+        //cek referal code
+        if($referralCode != '') {
+          $referralUser = Employeer::where('username', $referralCode);
+          \Session::put('referral', $referralCode);
+          if($referralUser->count() > 0) {
+            $referralId = $referralUser->first()->id;
+          } else {
+            return response()->json([
+              'success' => false,
+              'message' => 'Failed register'
+            ]);
+          }
+        }
+  
+        $builder = (new TransactionNonMemberBuilder())
+        ->setMemberId($referralId)
+        ->setNonMemberId($nonMemberId)
+        ->setExpiredAt(date('Y-m-d'))
+        ->setIncome($income)
+        ->setEbookId($ebook)
+        ->setStatus(3);
+        
+        $transaction  = (new TransactionFactoryRegister())->call()->createNonMember($builder);
+
+        $builderPayment = (new PaymentHistoryBuilder())
+        ->setEbookId($ebook)
+        ->setNonMemberId($nonMemberId);
+
+        $payment  = (new PaymentHistoryFactoryBuild())->call()->nonMember($builderPayment);
+      } else if(Auth::guard('user')->user()) {
+        // logic users
+      } else {
+        $builder = (new NonMemberBuilder())
+          ->setFirstName($request->input('firstName'))
+          ->setLastName($request->input('lastName'))
+          ->setEmail($request->input('email'))
+          ->setUsername($request->input('username'))
+          ->setPassword('secret');
+          
+        $nonMember = (new RegisterFactoryMake())->call()->createNonMember($builder);
+
+        if($nonMember) {
+          $referralId = '';
+          $referralCode = $request->input('referralCode') ?? '';
+          
+          //cek referal code
+          if($referralCode != '') {
+            $referralUser = Employeer::where('username', $referralCode);
+            if($referralUser->count() > 0) {
+              $referralId = $referralUser->first()->id;
+            } else {
+              return response()->json([
+                'success' => false,
+                'message' => 'Failed register'
+              ]);
+            }
+          }
+    
+          $builderTrx = (new TransactionNonMemberBuilder())
+          ->setMemberId($referralId)
+          ->setNonMemberId($nonMember->id)
+          ->setExpiredAt(Carbon::create(date('Y-m-d'))->addYear(1))
+          ->setIncome($income)
+          ->setEbookId($ebook)
+          ->setStatus(3);
+          
+          $transaction  = (new TransactionFactoryRegister())->call()->createNonMember($builderTrx);
+        } else {
+          $transaction = false;
+        }
+
+        $builderPayment = (new PaymentHistoryBuilder())
+        ->setEbookId($ebook)
+        ->setNonMemberId($nonMember->id);
+
+        $payment  = (new PaymentHistoryFactoryBuild())->call()->nonMember($builderPayment);
+      }
+
+      if(!$nonMember || !$payment || !$transaction) {
+        DB::rollback();
+        
+        return response()->json([
+          'success' => false,
+          'message' => 'Failed register',
+          'data' => ''
+        ]);
+      }
+
+      DB::commit();
+
+      return response()->json([
+        'success' => true,
+        'message' => 'Success register',
+        'data' => $payment
+      ]);
+    } catch (\Exception $e) {
+      DB::rollback();
+  
+      return response()->json([
+        'success' => false,
+        'message' => 'Failed register',
+        'data' => $e
+      ]);
+    }
+  }
   /**
    * 
    */

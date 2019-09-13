@@ -71,11 +71,8 @@
                                             <div class="row">
                                                 <div class="col-lg-6 mb-3">
                                                     <div class="bg-white shadow rounded p-3 border-hover triangle">
-                                                        <div id="basic-expired" style="color:black">
+                                                        <div id="basic-expired" style="position:fixed">
                                                             <span id="clock-basic"></span>
-                                                        </div>
-                                                        <div id="flag" class="renewal-basic" style="display:none">
-                                                            <span>Renewal</span>
                                                         </div>
                                                         <div class="row">
                                                             <div class="col-lg-3 d-flex align-items-center">
@@ -86,19 +83,16 @@
                                                                 <h2 class="mb-0" style="color: #8543da;" id="basic"></h2>
                                                                 <br>
                                                                 <h5 style="color:black" id="description-basic"></h5><br>
-                                                                <a href="#" data-toggle="modal" data-target="#buy" class="btn btn-danger btn-sm mt-3 px-5" id="cart1">BUY</a>
-                                                                <a href="{{route('member.ebook.referral', ['type' => 'advance', 'username' => isset($profile->username) ? $profile->username : $profile['username']])}}" class="btn btn-danger btn-sm mt-3 px-5" id="view1">VIEW</a>
+                                                                <a href="#" data-toggle="modal" data-target="#buy" class="btn btn-danger btn-sm mt-3 px-5" id="cart1"></a>
+                                                                <a href="{{route('member.ebook.referral', ['type' => 'basic', 'username' => isset($profile->username) ? $profile->username : $profile['username']])}}" class="btn btn-primary btn-sm mt-3 px-5" id="view1">VIEW</a>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6 mb-3">
                                                     <div class="bg-white shadow rounded p-3 border-hover triangle">
-                                                        <div id="basic-expired" style="color:black">
+                                                        <div id="basic-expired" style="position:fixed">
                                                             <span id="clock-advance"></span>
-                                                        </div>
-                                                        <div id="flag" class="renewal-advance" style="display:none">
-                                                            <span>Renewal</span>
                                                         </div>
                                                         <div class="row">
                                                             <div class="col-lg-3 d-flex align-items-center">
@@ -109,8 +103,8 @@
                                                                 <h2 class="mb-0" style="color: #8543da;" id="advance"></h2>
                                                                 <br>
                                                                 <h5 style="color:black" id="advance-description"></h5><br>
-                                                                <a href="#" data-toggle="modal" data-target="#buy" class="btn btn-danger btn-sm mt-3 px-5" id="cart2">BUY</a>
-                                                                <a href="{{route('member.ebook.referral', ['type' => 'advance', 'username' => isset($profile->username) ? $profile->username : $profile['username']])}}" class="btn btn-danger btn-sm mt-3 px-5" id="view2">VIEW</a>
+                                                                <a href="#" data-toggle="modal" data-target="#buy" class="btn btn-danger btn-sm mt-3 px-5" id="cart2"></a>
+                                                                <a href="{{route('member.ebook.referral', ['type' => 'advance', 'username' => isset($profile->username) ? $profile->username : $profile['username']])}}" class="btn btn-primary btn-sm mt-3 px-5" id="view2">VIEW</a>
                                                             </div>
                                                         </div>
                                                     </div>

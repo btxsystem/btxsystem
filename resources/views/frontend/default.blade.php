@@ -102,6 +102,16 @@
         font-family: 'Times New Roman', Times, serif;
         font-size: 20px;
     }
+
+    .profile-page .profile{
+        font-size: 14px !important;
+        text-align: left !important;
+    }
+
+    .profile-page .profile-sub-header .box-list ul li a p {
+        padding-top: 10px;
+    }
+
     @media only screen and (max-width: 480px) {
     /* For mobile phones: */
         span#clock{
@@ -112,6 +122,11 @@
         .profile-page .profile-sub-header .box-list li p {
             display: grid;
             padding-top: 5px;
+        }
+
+        .profile-page .profile{
+            font-size: 13px !important;
+            text-align: center !important;
         }
     }
 

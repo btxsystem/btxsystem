@@ -137,6 +137,22 @@
 					<div class="container-fluid">
 						<div class="row">
 							<div class="col-md-12">
+								<h3>Detail Summary</h3>
+								<hr>
+								<div class="row col-md-12">
+									<h5>Name: Hendraaaaa</h5>
+								</div>
+								<div class="row col-md-12">
+									<h5>Username: Hendraaaaa</h5>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="card">
+					<div class="container-fluid">
+						<div class="row">
+							<div class="col-md-12">
 								<br>
 								<div class="chart" id="tree">
 									<button id="upline" class='btn btn-primary zmdi zmdi-chevron-up' onclick=location.reload()></button>

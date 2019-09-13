@@ -47,12 +47,17 @@ $(document).ready(function () {
         url: '{{route("member.select.expired-ebook")}}',
         data: data,
         success:function(data){
-            $('#clock-basic').countdown(data.basic.expired_at, function(event) {
-                $(this).html(event.strftime('%D days %H:%M:%S'));
-            });
-            $('#clock-advance').countdown(data.advance.expired_at, function(event) {
-                $(this).html(event.strftime('%D days %H:%M:%S'));
-            });
+            if (data.basic) {
+                $('#clock-basic').countdown(data.basic.expired_at, function(event) {
+                    $(this).html(event.strftime('%D days %H:%M:%S'));
+                });    
+            }
+            if (data.advance) {
+                    $('#clock-advance').countdown(data.advance.expired_at, function(event) {
+                    $(this).html(event.strftime('%D days %H:%M:%S'));
+                });    
+            }
+            
         }
     })
 
@@ -67,7 +72,7 @@ $(document).ready(function () {
                         return letter.toUpperCase();
                     });
                     $('#basic').text(str);
-                    data[index].id == 3 ? $('.renewal-basic').show() : $('.renewal-basic').hide() ;
+                    data[index].id == 3 ? $('#cart1').text('REFEAT ORDER') : $('#cart1').text('BUY') ;
                     $('#description-basic').text(data[index].description);
                     $('#basic-value').val(data[index].id);
                     price_basic = data[index].price;
@@ -77,7 +82,7 @@ $(document).ready(function () {
                         return letter.toUpperCase();
                     });
                     $('#advance').text(str);
-                    data[index].id == 4 ? $('.renewal-advance').show() : $('.renewal-advance').hide() ;
+                    data[index].id == 4 ? $('#cart2').text('REFEAT ORDER') : $('#cart2').text('BUY') ;
                     $('#advance-description').text(data[index].description);
                     $('#advance-value').val(data[index].id);
                     price_advance = data[index].price;

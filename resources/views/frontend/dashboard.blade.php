@@ -61,10 +61,10 @@
                 <div class="col-lg-3 col-md-4 col-12">
                     <div class="profile-image float-md-right"> <img src="{{asset('img/1.jpg')}}" alt=""> </div>
                 </div>
-                <div class="col-lg-6 col-md-8 col-12">
+                <div class="col-lg-6 col-md-8 col-12 profile">
                     <h4 class="m-t-5 m-b-0"><strong>{{$profile['name']}}</strong></h4>
+                    <br>
                     <span class="job_post"><b>ID : {{$profile['id_member']}}</b></span>
-                    <p>Phone Number {{$profile['phone_number']}}</p>
                 </div>                
             </div>
         </div>
@@ -77,15 +77,12 @@
                         </a>
                     </li>
                     <li>
-                        <a title="pv"><b class="zmdi zmdi">PV</b>
+                        <a title="pv"><b class="zmdi zmdi" style="font-size:15px">PV Group</b>
                             <p class="pv">{{number_format($profile['pv'])}}</p>
                         </a>
                     </li>
                     <li><a title="username"><i class="zmdi zmdi-account-circle"></i>
                         <p>{{$profile['username']}}</p>
-                    </a></li>
-                    <li><a title="npwp number"><i class="zmdi zmdi-account-box-o"></i>
-                        <p>{{$profile['npwp_number']}}</p>
                     </a></li>
                 </ul>
             </div>
@@ -118,7 +115,7 @@
                     <div class="body">
                         <div class="row">
                             <div class="col-sm-6 col-7">
-                                <h3 class="m-t-0 bitrex-points">{{$profile['bitrex_points']}}</h3>
+                                <h3 class="m-t-0 bitrex-points">{{number_format($profile['bitrex_points'],0,".",".")}}</h3>
                                 <p class="m-b-0">Bitrex Points</p>
                             </div>
                             <div class="col-sm-6 col-5 pl-0">
@@ -134,7 +131,7 @@
                         <div class="row">
                             <div class="col-sm-6 col-7">
                                 <h4>IDR</h4>
-                                <h3 class="m-t-0 bitrex-cash">{{$profile['bitrex_cash']}}</h3>
+                                <h3 class="m-t-0 bitrex-cash">{{number_format($profile['bitrex_cash'],0,".",".")}}</h3>
                                 <p class="m-b-0">Bitrex Value</p>
                             </div>
                             <div class="col-sm-6 col-5 pl-0">
@@ -145,11 +142,12 @@
                 </div>
             </div>
         </div>
+
         <div class="row clearfix">
             <div class="col-lg-12 col-md-12">
                 <div class="card product-report">
                     <div class="header">
-                        <h2>Daily Bonus</h2>
+                        <h2>My commission</h2>
                     </div>
                     <div class="body">
                     <div class="row clearfix m-b-15">
@@ -192,18 +190,7 @@
                 url: '{{route("member.select.daily-retail")}}',
                 data: data,
                 success:function(data){
-                    $('.auto-retail').append(data.bonus_retail.nominal);
-                    $('.auto-retail').each(function () {
-                        $(this).prop('Counter',0).animate({
-                            Counter: $(this).text()
-                        }, {
-                            duration: 2000,
-                            easing: 'swing',
-                            step: function (now) {
-                                $(this).text(Math.ceil(now));
-                            }
-                        });
-                    });
+                    $('.auto-retail').append(addCommas(data.bonus_retail.nominal));
                 }
             });
 
@@ -219,43 +206,8 @@
                 url: '{{route("member.select.daily-bonus-sponsor")}}',
                 data: data,
                 success:function(data){
-                    $('.sponsor').append(data.bonus_sponsor.nominal);
-                    $('.sponsor').each(function () {
-                        $(this).prop('Counter',0).animate({
-                            Counter: $(this).text()
-                        }, {
-                            duration: 2000,
-                            easing: 'swing',
-                            step: function (now) {
-                                $(this).text(Math.ceil(now));
-                            }
-                        });
-                    });
+                    $('.sponsor').append(addCommas(data.bonus_sponsor.nominal));
                 }
-            });
-
-            $('.bitrex-cash').each(function () {
-                $(this).prop('Counter',0).animate({
-                    Counter: $(this).text()
-                }, {
-                    duration: 2000,
-                    easing: 'swing',
-                    step: function (now) {
-                        $(this).text(Math.ceil(now));
-                    }
-                });
-            });
-
-            $('.bitrex-points').each(function () {
-                $(this).prop('Counter',0).animate({
-                    Counter: $(this).text()
-                }, {
-                    duration: 2000,
-                    easing: 'swing',
-                    step: function (now) {
-                        $(this).text(Math.ceil(now));
-                    }
-                });
             });
 
             $.ajax({
@@ -279,18 +231,7 @@
                 url: '{{route("member.select.daily-pairing")}}',
                 data: data,
                 success:function(data){
-                    $('.pairing').append(data.bonus_pairing.nominal);
-                    $('.pairing').each(function () {
-                        $(this).prop('Counter',0).animate({
-                            Counter: $(this).text()
-                        }, {
-                            duration: 2000,
-                            easing: 'swing',
-                            step: function (now) {
-                                $(this).text(Math.ceil(now));
-                            }
-                        });
-                    });
+                    $('.pairing').append(addCommas(data.bonus_pairing.nominal));
                 }
             });
 
