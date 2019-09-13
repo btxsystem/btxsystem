@@ -1,19 +1,22 @@
 @extends('layouts.admin')
 
 @section('title')
-Edit Book
+Edit Video
 @parent
 @stop
 
 @section('content')
 
 <section class="content-header">
-    <h1> Book</h1>
+    <h1> Edit Video</h1>
     <ol class="breadcrumb">
         <li>
-            <a href="#">Book Management</a>
+            <a href="{{ route('ebook.index') }}">Ebook </a>
         </li>
-        <li class="active">Edit Data Book</li>
+        <li>
+            <a href="{{ route('ebook.show', $data->videoEbook->ebook_id) }}">{{optional($data->videoEbook)->ebook_title}} </a>
+        </li>
+        <li class="active">{{$data->title}}</li>
     </ol>
 
     <div class="container">

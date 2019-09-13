@@ -45,7 +45,6 @@ class BookController extends Controller
     public function create($id)
     {
         $data = Ebook::find($id);
-
         return view('admin.books.create', compact('data'));
     }
 
@@ -85,8 +84,8 @@ class BookController extends Controller
      */
     public function show($id)
     {
-        $data = Book::with('lessons')->findOrFail($id);
-        // return $data;
+        $data = Book::with('lessons','bookEbook.ebook')->findOrFail($id);
+        // return $data->bookEbook;
         return view('admin.books.detail', compact('data'));
     }
 
@@ -98,7 +97,7 @@ class BookController extends Controller
      */
     public function edit($id)
     {
-        $data = Book::findOrFail($id);
+        $data = Book::with('lessons','bookEbook.ebook')->findOrFail($id);
 
         return view('admin.books.edit', compact('data'));
     }

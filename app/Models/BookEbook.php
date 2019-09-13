@@ -14,6 +14,10 @@ class BookEbook extends Model
   ];
   
   protected $guarded = [];
+
+  protected $appends = [
+    'ebook_title'
+  ];
   
   public function books()
   {
@@ -28,5 +32,10 @@ class BookEbook extends Model
   public function ebook()
   {
     return $this->hasOne('\App\Models\Ebook', 'id', 'ebook_id');
+  }
+
+  public function getEbookTitleAttribute()
+  {
+    return $this->ebook ? $this->ebook->title : '';
   }
 }

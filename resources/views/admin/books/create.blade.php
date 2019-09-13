@@ -8,12 +8,15 @@ Create Book
 @section('content')
 
 <section class="content-header">
-    <h1> Book</h1>
+    <h1>Create Book</h1>
     <ol class="breadcrumb">
         <li>
-            <a href="#">Book Management</a>
+            <a href="{{ route('ebook.index') }}">Ebook </a>
         </li>
-        <li class="active">Add Data Book</li>
+        <li>
+            <a href="{{ route('ebook.show', $data->id) }}">{{$data->title}} </a>
+        </li>
+        <li class="active">Create Book</li>
     </ol>
 
     <div class="container">
