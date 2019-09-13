@@ -92,21 +92,52 @@
 <script type="text/javascript" src="{{ asset('assets2/js/select2.js') }}" ></script>
 <style>
     span#clock{
-        background: #e8a47d;
+        background: black;
         border-radius: 5px;
-        color: #313131;
+        color: white;
         padding-top: 5px;
         padding-bottom: 5px;
         padding-right: 5px;
         padding-left: 5px;
-        font-family: sans-serif;
-        font-size: 14px;
+        font-family: 'Times New Roman', Times, serif;
+        font-size: 20px;
     }
     @media only screen and (max-width: 480px) {
     /* For mobile phones: */
         span#clock{
             margin-left: -9px;
+            font-size: 15px !important;
         }
+
+        .logout{
+            padding-right: 1px !important;
+        }
+
+        .profile-page .profile-sub-header .box-list li p {
+            display: grid;
+            padding-top: 5px;
+        }
+    }
+
+    
+    .sidebar .user-info {
+        overflow: hidden;
+    }
+    .sidebar .user-info .image {
+        width: 20%;
+    }
+    .theme-orange .sidebar .user-info .info-container {
+        float: left;
+        width: 70%;
+        padding-top: 5px;
+    }
+    .sidebar .user-info .info-container .name {
+        color: white;
+        text-overflow: ellipsis;
+        display: -webkit-box !important;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+        height: 23px;
     }
     
 </style>

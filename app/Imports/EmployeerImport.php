@@ -23,7 +23,7 @@ class EmployeerImport implements ToModel, WithHeadingRow, WithChunkReading
     {
         return new Employeer([
             'id_member'      => $row['id_job_seeker'],
-            'username'       => $row['username'] ? $row['username'] : 'Bitrex'.rand(10,100),
+            'username'       => $row['username'] ? $row['username'] : 'Bitrex'.rand(100000,999999),
             'first_name'     => $row['first_name'] ? $row['first_name'] : '-',
             'last_name'      => $row['last_name'] ? $row['last_name'] : '-',
             'email'          => $row['email'] ? $row['email'] : '-',
