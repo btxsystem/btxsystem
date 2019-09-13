@@ -183,6 +183,28 @@ Route::group(['prefix' => 'select', 'as'=> 'select.'], function () {
         Route::get('about-us/published/{id}', ['as' => 'published', 'uses' => 'Admin\AboutUsController@published']);
         Route::get('about-us/unpublished/{id}', ['as' => 'unpublished', 'uses' => 'Admin\AboutUsController@unpublished']);
 
+
+        Route::get('our-headquarters', ['as' => 'our-headquarters.show', 'uses' => 'Admin\OurHeadquarterController@show']);
+
+        Route::group(['prefix'=>'our-headquarters','as'=>'our-headquarters.'], function(){
+            Route::get('/', ['as' => 'show', 'uses' => 'Admin\OurHeadquarterController@show']);
+            Route::get('/edit/{id}', ['as' => 'edit', 'uses' => 'Admin\OurHeadquarterController@edit']);
+            Route::post('update-headquarters', ['as' => 'update', 'uses' => 'Admin\OurHeadquarterController@update']);
+        
+
+
+            Route::get('/images', ['as' => 'images', 'uses' => 'Admin\OurHeadquarterController@image']);
+            Route::post('/images', ['as' => 'images.upload', 'uses' => 'Admin\OurHeadquarterController@uploadAttachment']);
+            Route::get('/images/{id}/edit', ['as' => 'images.edit', 'uses' => 'Admin\OurHeadquarterController@editAttachment']);
+            Route::post('/update-images', ['as' => 'images.update', 'uses' => 'Admin\OurHeadquarterController@updateAttachment']);
+            Route::delete('/images/{id}', ['as' => 'images.delete', 'uses' => 'Admin\OurHeadquarterController@destroyAttachment']);
+
+            Route::get('images/published/{id}', ['as' => 'published', 'uses' => 'Admin\OurHeadquarterController@published']);
+            Route::get('images/unpublished/{id}', ['as' => 'unpublished', 'uses' => 'Admin\OurHeadquarterController@unpublished']);
+    
+        });
+
+
     });
 
     Route::group(['prefix'=>'event','as'=>'event.'], function(){

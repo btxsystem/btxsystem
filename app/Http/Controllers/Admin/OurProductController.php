@@ -9,7 +9,6 @@ use App\Models\OurProduct;
 use DataTables;
 use Auth;
 use Alert;
-use Validator;
 
 class OurProductController extends Controller
 {
