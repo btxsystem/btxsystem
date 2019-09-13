@@ -99,17 +99,27 @@
         padding-bottom: 5px;
         padding-right: 5px;
         padding-left: 5px;
-        font-family: monospace;
-        font-weight: bold;
-        font-size: 15px;
+        font-family: 'Times New Roman', Times, serif;
+        font-size: 20px;
     }
     @media only screen and (max-width: 480px) {
     /* For mobile phones: */
         span#clock{
             margin-left: -9px;
-            font-size: 16px !important;
+            font-size: 15px !important;
+        }
+
+        .logout{
+            padding-right: 1px !important;
+        }
+
+        .profile-page .profile-sub-header .box-list li p {
+            display: grid;
+            padding-top: 5px;
         }
     }
+
+    
     .sidebar .user-info {
         overflow: hidden;
     }
