@@ -82,6 +82,12 @@ class RegisterController extends Controller
           
         $nonMember = (new RegisterFactoryMake())->call()->createNonMember($builder);
 
+        $builderPayment = (new PaymentHistoryBuilder())
+        ->setEbookId($ebook)
+        ->setNonMemberId($nonMember->id);
+
+        $payment  = (new PaymentHistoryFactoryBuild())->call()->nonMember($builderPayment);
+
         if($nonMember) {
           $referralId = '';
           $referralCode = $request->input('referralCode') ?? '';
@@ -105,18 +111,13 @@ class RegisterController extends Controller
           ->setExpiredAt(Carbon::create(date('Y-m-d'))->addYear(1))
           ->setIncome($income)
           ->setEbookId($ebook)
+          ->setTransactionRef($payment->ref_no)
           ->setStatus(3);
           
           $transaction  = (new TransactionFactoryRegister())->call()->createNonMember($builderTrx);
         } else {
           $transaction = false;
-        }
-
-        $builderPayment = (new PaymentHistoryBuilder())
-        ->setEbookId($ebook)
-        ->setNonMemberId($nonMember->id);
-
-        $payment  = (new PaymentHistoryFactoryBuild())->call()->nonMember($builderPayment);
+        }        
       }
 
       if(!$nonMember || !$payment || !$transaction) {

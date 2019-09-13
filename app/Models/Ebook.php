@@ -162,16 +162,16 @@ class Ebook extends Model
         ->user()->id)
         ->first();
 
-      return $memberTransaction->status;
+      return $memberTransaction ? $memberTransaction->status : 3;
     } else if(\Auth::guard('user')->user()){
       $userTransaction = $this->transactionMember()
         ->where('member_id', \Auth::guard('user')
         ->user()->id)
         ->first();
 
-      return $userTransaction->status;
+      return $userTransaction ? $userTransaction->status : 3;
     } else {
-      return null;
+      return 3;
     }
   }
 
