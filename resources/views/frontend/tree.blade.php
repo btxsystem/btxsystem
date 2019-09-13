@@ -166,6 +166,13 @@
 										<h5 id="_pv_group"></h5>
 									</div>
 								</div>
+								<hr>
+								<div class="row col-md-12">
+									<div class="col-md-6">
+										<input type="text"> <button class="fa fa-search"></button>
+									</div>
+								</div>
+								<hr>
 							</div>
 						</div>
 					</div>
