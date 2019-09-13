@@ -256,12 +256,12 @@ class PaymentController extends Controller
 
       if($status == "1") {
         if($orderType == 'BITREX01') {
-          $trxNonMember = TransactionNonMember::where('transaction_ref', $code)->query();
+          $trxNonMember = TransactionNonMember::where('transaction_ref', $code);
           $trxNonMember->update([
             'expired_at' => Carbon::create($trxNonMember->first()->expired_at)->addYear(1)
           ]);
         } else if($orderType == 'BITREX02') {
-          $trxMember = TransactionMember::where('transaction_ref', $code)->query();
+          $trxMember = TransactionMember::where('transaction_ref', $code);
           $trxMember->update([
             'expired_at' => Carbon::create($trxMember->first()->expired_at)->addYear(1)
           ]);
