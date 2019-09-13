@@ -71,7 +71,23 @@ class RegisterController extends Controller
 
         $payment  = (new PaymentHistoryFactoryBuild())->call()->nonMember($builderPayment);
       } else if(Auth::guard('user')->user()) {
-        // logic users
+        $nonMember = true;
+  
+        $memberId = Auth::guard('user')->user()->id;
+    
+        $builder = (new TransactionMemberBuilder())
+        ->setMemberId($memberId)
+        ->setExpiredAt(Carbon::create(date('Y-m-d'))->addYear(1))
+        ->setEbookid($ebook)
+        ->setStatus(3);
+        
+        $transaction  = (new TransactionFactoryRegister())->call()->createMember($builder);
+
+        $builderPayment = (new PaymentHistoryBuilder())
+        ->setEbookId($ebook)
+        ->setMemberId($memberId);
+
+        $payment  = (new PaymentHistoryFactoryBuild())->call()->member($builderPayment);
       } else {
         $builder = (new NonMemberBuilder())
           ->setFirstName($request->input('firstName'))
