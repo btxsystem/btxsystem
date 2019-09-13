@@ -79,7 +79,7 @@ h2.plan-title {
 		display: inline-block;
 		font-weight: 100;
 		text-align: center;
-		font-size: 15px;
+		font-size: 20px;
 	}
 
 	.clockdiv > div{
@@ -98,7 +98,7 @@ h2.plan-title {
 
 	.smalltext{
 		padding-top: 5px;
-		font-size: 14px;
+		font-size: 15px;
 	}	
 }
 </style>
@@ -147,9 +147,9 @@ h2.plan-title {
 				<div class="col-lg-6 mb-3">
 					<div class="shadow rounded p-3 border-hover bg-white triangle">
 						@if($ebook->access)
-						<div id="flag" aria-hidden="true">
+						<!-- <div id="flag" aria-hidden="true">
 							<span class="text-light">Renewal</span>
-						</div>
+						</div> -->
 						@endif
 						<div class="row">
 							<div class="col-lg-3 d-flex align-items-center">
@@ -187,7 +187,7 @@ h2.plan-title {
 								@else
 									<div>
 										@if($ebook->access)
-										<div id="clockdiv{{$ebook->id}}" class="clockdiv">
+										<div id="clockdiv{{$ebook->id}}" class="clockdiv mt-2">
 											<div>
 												<span class="days"></span>
 												<div class="smalltext">Days</div>

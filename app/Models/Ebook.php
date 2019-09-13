@@ -21,8 +21,8 @@ class Ebook extends Model
   ];
 
   protected $appends = [
-    'access',
     'expired',
+    'access',
     'countdown_days',
     'expired_at',
     'status'
@@ -59,24 +59,11 @@ class Ebook extends Model
       return $this->hasOne('\App\Models\TransactionMember', 'ebook_id', 'id');
   }
 
-  public function getAccessAttribute()
-  {
-    if(\Auth::guard('nonmember')->user()) {
-      $memberTransaction = $this->transaction()->where('non_member_id', \Auth::guard('nonmember')->user()->id);
-      return $memberTransaction->count() > 0 ? $memberTransaction->first()->status == 1 ? true : false : false;
-    } else if(\Auth::guard('user')->user()){
-      $userTransaction = $this->transactionMember()->where('member_id', \Auth::guard('user')->user()->id);
-      return $userTransaction->count() > 0 ? $userTransaction->first()->status == 1 ? true : false : false;
-    } else {
-      return false;
-    }
-  }
-
   public function getExpiredAttribute()
   {
-    if(!$this->access) {
-      return false;
-    }
+    // if(!$this->access) {
+    //   return false;
+    // }
 
     if(\Auth::guard('nonmember')->user()) {
       $memberTransaction = $this->transaction()->where('non_member_id', \Auth::guard('nonmember')->user()->id)->first();
@@ -90,6 +77,30 @@ class Ebook extends Model
       $expired = $userTransaction->expired_at < date('Y-m-d');
 
       return $expired;
+    } else {
+      return false;
+    }
+  }
+
+  public function getAccessAttribute()
+  {
+    if(\Auth::guard('nonmember')->user()) {
+      $memberTransaction = $this->transaction()->where('non_member_id', \Auth::guard('nonmember')->user()->id)->first();
+
+      if($memberTransaction) {
+        return $memberTransaction->first()->status == 1 && !$this->expired ? true : false;
+      } else {
+        return false;
+      }
+
+    } else if(\Auth::guard('user')->user()){
+      $userTransaction = $this->transactionMember()->where('member_id', \Auth::guard('user')->user()->id);
+      // return $userTransaction->count() > 0 ? $userTransaction->first()->status == 1 ? true : false : false;
+      if($userTransaction) {
+        return $userTransaction->first()->status == 1 && !$this->expired ? true : false;
+      } else {
+        return false;
+      }
     } else {
       return false;
     }
