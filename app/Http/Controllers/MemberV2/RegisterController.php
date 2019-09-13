@@ -58,7 +58,7 @@ class RegisterController extends Controller
         $builder = (new TransactionNonMemberBuilder())
         ->setMemberId($referralId)
         ->setNonMemberId($nonMemberId)
-        ->setExpiredAt(date('Y-m-d'))
+        ->setExpiredAt(Carbon::create(date('Y-m-d')))
         ->setIncome($income)
         ->setEbookId($ebook)
         ->setStatus(3);
@@ -77,7 +77,7 @@ class RegisterController extends Controller
     
         $builder = (new TransactionMemberBuilder())
         ->setMemberId($memberId)
-        ->setExpiredAt(Carbon::create(date('Y-m-d'))->addYear(1))
+        ->setExpiredAt(Carbon::create(date('Y-m-d')))
         ->setEbookid($ebook)
         ->setStatus(3);
         
