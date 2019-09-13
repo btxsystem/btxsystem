@@ -171,7 +171,7 @@ class Ebook extends Model
 
       return $userTransaction ? $userTransaction->status : 3;
     } else {
-      return 3;
+      return null;
     }
   }
 
