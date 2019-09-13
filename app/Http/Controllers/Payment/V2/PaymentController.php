@@ -223,14 +223,14 @@ class PaymentController extends Controller
       DB::commit();
       
       if($status == "1") {
-        echo $tatus;
-        //return view('payment.success');
+        // echo $status;
+        return view('payment.success');
       } else if($status == "0") {
-        echo $tatus;
-        //return view('payment.failed');
+        // echo $tatus;
+        return view('payment.failed');
       } else if($status == "6") {
-        echo $tatus;
-        //return view('payment.waiting-transfer');
+        // echo $tatus;
+        return view('payment.waiting-transfer');
       }
 
     } catch (\Illuminate\Database\QueryException $e) {
