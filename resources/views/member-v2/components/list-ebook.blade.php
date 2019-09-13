@@ -327,7 +327,7 @@ function submit() {
 		}
 	});
 	$.ajax({
-		url: "{{ route('member.register-v2') }}",
+		url: "{{ route('member.register-v3') }}",
 		method: 'post',
 		data: {
 				referralCode: $('#referralCode').val(),

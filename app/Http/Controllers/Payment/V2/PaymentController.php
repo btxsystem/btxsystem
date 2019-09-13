@@ -10,6 +10,14 @@ use App\Models\TransactionNonMember;
 use App\Models\TransactionMember;
 use App\Models\Ebook;
 
+use App\Builder\PaymentHistoryBuilder;
+
+use App\Factory\RegisterFactoryMake;
+use App\Factory\PaymentHistoryFactoryBuild;
+
+use App\Models\PaymentHistoryMember;
+use App\Models\PaymentHistoryNonMember;
+
 class PaymentController extends Controller
 {
   public function payment(Request $request)
@@ -25,6 +33,80 @@ class PaymentController extends Controller
       ->with([
         'data' => $data
     ]);
+  }
+
+  public function rePayment(Request $request)
+  {
+    try {
+      $repeat = $request->input('repeat');
+      $ebook = Ebook::where('id', $request->input('ebook'))->first();
+      $orderAmount = 0;
+      $productDesc = '';
+    
+      if($user = Auth::guard('nonmember')->user()) {
+        $builderPayment = (new PaymentHistoryBuilder())
+          ->setEbookId($ebook->id)
+          ->setNonMemberId($user->id);
+
+        $payment = (new PaymentHistoryFactoryBuild())->call()->nonMember($builderPayment);
+
+        //repeat
+        if($repeat) {
+          $renewalEbookId = 0;
+
+          if($ebook->id == 1) {
+            $renewalEbookId = 3;
+          } else if($ebook->id == 2) {
+            $renewalEbookId = 4;
+          }
+
+          $renewalEbook = Ebook::where('id', $renewalEbookId)->first();
+
+          $orderAmount = (int) $renewalEbook->price + (int) ($renewalEbook->price_markup);
+          $productDesc = ucwords(str_replace("_", " ", $renewalEbook->title));
+        } else {
+          $orderAmount = (int) $ebook->price + (int) ($ebook->price_markup);
+          $productDesc = ucwords($ebook->title);
+        }
+
+      } else if($user = Auth::guard('user')->user()) {
+        //users
+      }
+
+      if(!$payment) {
+        return response()->json([
+          'success' => false
+        ]);
+      }
+
+      $data['merchant_key'] = "tbaoVEHjP7";
+      $data['merchant_code'] = "ID01085";
+      $data['currency'] = "IDR";
+      $data['payment_id'] = 1;
+      $data['product_desc'] = "Ebook Bitrexgo {$productDesc}";
+      $data['user_name'] = 'asep';
+      $data['user_email'] = 'aseppmedia18@gmail.com';
+      $data['ref_no'] = $payment->ref_no;
+      $data['lang'] = 'UTF-8';
+      // $data['code'] = $subs->created_at->format('dmYHi');
+      $data['code'] = $payment->ref_no;
+      $data['amount'] = (int) str_replace(".","",str_replace(",","",number_format($orderAmount, 2, ".", "")));
+      $data['signature'] = $this->signature($data['code'], $data['amount']);
+      $data['response_url'] = 'https://bitrexgo.id/response-pay';
+      $data['backend_url'] = 'https://bitrexgo.id/backend-response-pay'; 
+
+      // return response()->json([
+      //   'data' => $data
+      // ]);
+
+      return view('payment.form')
+        ->with([
+          'data' => $data
+      ]);
+
+    } catch (\Exception $e) {
+
+    }
   }
 
   public function signature($code, $amount)
@@ -69,38 +151,49 @@ class PaymentController extends Controller
     $sinature_result = $this->signature($signature_plaintext, $amount);
     try {
       DB::beginTransaction();
+      
       $orderType = substr($code, 0, 8);
 
       if($orderType == 'BITREX01') {
+        //
+        $paymentHistory = PaymentHistoryNonMember::where('ref_no', $code)->update([
+          'payment_id' => $payment_id,
+          'amount' => $amount,
+          'currency' => $currency,
+          'trans_id' => $transid,
+          'remark' => $remark,
+          'auth_code' => $authcode,
+          'err_desc' => $errdesc,  
+        ]);
+
         $transaction = TransactionNonMember::where('transaction_ref', $code)
-          ->update([
-            'status' => $status
-          ]);
+        ->update([
+          'status' => $status,        
+        ]);
       } else if($orderType == 'BITREX02') {
+        $paymentHistory = PaymentHistoryMember::where('ref_no', $code)->update([
+          'status' => $status,
+          'payment_id' => $payment_id,
+          'amount' => $amount,
+          'currency' => $currency,
+          'trans_id' => $transid,
+          'remark' => $remark,
+          'auth_code' => $authcode,
+          'err_desc' => $errdesc,            
+        ]);
+        
         $transaction = TransactionMember::where('transaction_ref', $code)
           ->update([
             'status' => $status
-          ]);
+        ]);
       } else {
+        $paymentHistory = false;
         $transaction = false;
       }
 
-      $paymentHistory = PaymentHistories::insert([
-        'ebook_id' => TransactionMember::where('transaction_ref', $code)->first()->ebook_id,
-        'ref_no' => $code,
-        'payment_id' => $payment_id,
-        'amount' => $amount,
-        'currency' => $currency,
-        'trans_id' => $transid,
-        'remark' => $remark,
-        'auth_code' => $authcode,
-        'err_desc' => $errdesc,
-        'status' => $status
-      ]);
-
-      if(!$transaction || $paymentHistory) {
+      if(!$paymentHistory || !$transaction) {
         DB::rollback();
-        return redirect()->route('payment.failed');
+        return view('payment.failed');
       }
 
       DB::commit();

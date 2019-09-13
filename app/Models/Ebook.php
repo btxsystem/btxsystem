@@ -24,7 +24,8 @@ class Ebook extends Model
     'access',
     'expired',
     'countdown_days',
-    'expired_at'
+    'expired_at',
+    'status'
   ];
 
 
@@ -150,6 +151,27 @@ class Ebook extends Model
       return $difference;      
     } else {
       return 0;
+    }
+  }
+  
+  public function getStatusAttribute()
+  {
+    if(\Auth::guard('nonmember')->user()) {
+      $memberTransaction = $this->transaction()
+        ->where('non_member_id', \Auth::guard('nonmember')
+        ->user()->id)
+        ->first();
+
+      return $memberTransaction->status;
+    } else if(\Auth::guard('user')->user()){
+      $userTransaction = $this->transactionMember()
+        ->where('member_id', \Auth::guard('user')
+        ->user()->id)
+        ->first();
+
+      return $userTransaction->status;
+    } else {
+      return null;
     }
   }
 

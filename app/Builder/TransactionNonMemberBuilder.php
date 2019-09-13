@@ -12,7 +12,7 @@ class TransactionNonMemberBuilder
 
   public $income = 0;
 
-  public $status = 1;
+  public $status = 0;
 
   public $expiredAt = null;
 
