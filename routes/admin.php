@@ -188,13 +188,13 @@ Route::group(['middleware' => 'admin'], function () {
 
         Route::get('our-headquarters', ['as' => 'our-headquarters.show', 'uses' => 'Admin\OurHeadquarterController@show']);
 
+        // OUre Headquarter
         Route::group(['prefix'=>'our-headquarters','as'=>'our-headquarters.'], function(){
             Route::get('/', ['as' => 'show', 'uses' => 'Admin\OurHeadquarterController@show']);
             Route::get('/edit/{id}', ['as' => 'edit', 'uses' => 'Admin\OurHeadquarterController@edit']);
             Route::post('update-headquarters', ['as' => 'update', 'uses' => 'Admin\OurHeadquarterController@update']);
         
-
-
+            // Images
             Route::get('/images', ['as' => 'images', 'uses' => 'Admin\OurHeadquarterController@image']);
             Route::post('/images', ['as' => 'images.upload', 'uses' => 'Admin\OurHeadquarterController@uploadAttachment']);
             Route::get('/images/{id}/edit', ['as' => 'images.edit', 'uses' => 'Admin\OurHeadquarterController@editAttachment']);
@@ -203,6 +203,23 @@ Route::group(['middleware' => 'admin'], function () {
 
             Route::get('images/published/{id}', ['as' => 'published', 'uses' => 'Admin\OurHeadquarterController@published']);
             Route::get('images/unpublished/{id}', ['as' => 'unpublished', 'uses' => 'Admin\OurHeadquarterController@unpublished']);
+    
+        });
+        // Event Promotion
+        Route::group(['prefix'=>'event-promotions','as'=>'event-promotions.'], function(){
+            Route::get('/', ['as' => 'show', 'uses' => 'Admin\EventPromotionController@show']);
+            Route::get('/edit/{id}', ['as' => 'edit', 'uses' => 'Admin\EventPromotionController@edit']);
+            Route::post('update-promotions', ['as' => 'update', 'uses' => 'Admin\EventPromotionController@update']);
+            
+            // Images
+            Route::get('/images', ['as' => 'images', 'uses' => 'Admin\EventPromotionController@image']);
+            Route::post('/images', ['as' => 'images.upload', 'uses' => 'Admin\EventPromotionController@uploadAttachment']);
+            Route::get('/images/{id}/edit', ['as' => 'images.edit', 'uses' => 'Admin\EventPromotionController@editAttachment']);
+            Route::post('/update-images', ['as' => 'images.update', 'uses' => 'Admin\EventPromotionController@updateAttachment']);
+            Route::delete('/images/{id}', ['as' => 'images.delete', 'uses' => 'Admin\EventPromotionController@destroyAttachment']);
+
+            Route::get('images/published/{id}', ['as' => 'published', 'uses' => 'Admin\EventPromotionController@published']);
+            Route::get('images/unpublished/{id}', ['as' => 'unpublished', 'uses' => 'Admin\EventPromotionController@unpublished']);
     
         });
 

@@ -220,6 +220,12 @@
                 </a>
             </li>
             <li>
+                <a href="{{ route('cms.event-promotions.show') }}">
+                    <i class="fa fa-angle-double-right"></i>
+                   Event Promotion
+                </a>
+            </li>
+            <li>
                 <a href="{{ route('cms.testimonials.index') }}">
                     <i class="fa fa-angle-double-right"></i>
                     Testimonial
@@ -233,7 +239,7 @@
             </li>
         </ul>
     </li>
-    <li>
+    <!-- <li>
         <a href="#">
             <i class="livicon" data-name="event" data-size="18" data-c="#F89A14" data-hc="#F89A14"
                data-loop="true"></i>
@@ -254,6 +260,6 @@
                 </a>
             </li>
         </ul>
-    </li>
+    </li> -->
     @include('admin/layouts/menu')
 </ul>
