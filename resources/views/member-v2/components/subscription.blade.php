@@ -181,7 +181,7 @@ h2.plan-title {
 										{{csrf_field()}}
 										<input type="hidden" name="ebook" value="{{$ebook->id}}">
 										<input type="text" name="transactionRef" value="">
-										<button type="submit" class="btn btn-identity-red text-white btn-sm mt-3 px-5">JOIN</button>
+										<button type="submit" class="btn btn-identity-red text-white btn-sm mt-3 px-5">BUY</button>
 										<a href="{{route('member.ebook.detail', ['type' => strtolower($ebook->id == 3 ? 'basic' : 'advanced')])}}" class="btn btn-secondary text-white btn-sm mt-3 px-5">Detail</a>
 									</form>
 								@else
@@ -208,14 +208,14 @@ h2.plan-title {
 										<form action="{{route('payment')}}" method="post">
 											{{csrf_field()}}
 											<input type="hidden" name="ebook" value="{{$ebook->id}}">
-											<button type="submit" class="btn btn-identity-red text-white btn-sm mt-3 px-5">JOIN</button>
+											<button type="submit" class="btn btn-identity-red text-white btn-sm mt-3 px-5">BUY</button>
 											@if(!$ebook->expired)
 												<a href="{{route('member.ebook.detail', ['type' => strtolower($ebook->title)])}}" class="btn btn-secondary text-white btn-sm mt-3 px-5">Detail</a>
 											@endif
 										</form>
 										@else
 										<form action="">
-											<a href="{{route('member.ebook.detail', ['type' => strtolower($ebook->title), 'username' => $username])}}" class="btn btn-identity-red btn-sm mt-3 px-5">JOIN</a>
+											<a href="{{route('member.ebook.detail', ['type' => strtolower($ebook->title), 'username' => $username])}}" class="btn btn-identity-red btn-sm mt-3 px-5">BUY</a>
 										</form>
 										@endif
 									</div>
