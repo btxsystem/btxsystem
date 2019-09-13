@@ -38,6 +38,7 @@ class PaymentController extends Controller
   public function payment(Request $request)
   {
     try {
+      DB::beginTransaction();
       $repeat = $request->input('repeat');
       $transactionRef = $request->input('transactionRef') ?? '';	
       $ebook = Ebook::where('id', $request->input('ebook'))->first();
@@ -50,6 +51,13 @@ class PaymentController extends Controller
           ->setNonMemberId($user->id);
 
         $payment = (new PaymentHistoryFactoryBuild())->call()->nonMember($builderPayment);
+
+        $transactionNonMember = TransactionNonMember::where([
+          'non_member_id' => $user->id,
+          'ebook_id' => $ebook->id
+        ])->update([
+          'transaction_ref' => $payment->ref_no
+        ]);
 
         //repeat
         if($repeat) {
@@ -82,6 +90,8 @@ class PaymentController extends Controller
       }
 
       if(!$payment) {
+        DB::rollback();
+
         return response()->json([
           'success' => false
         ]);
@@ -107,12 +117,16 @@ class PaymentController extends Controller
       //   'data' => $data
       // ]);
 
+      DB::commit();
+
       return view('payment.form')
         ->with([
           'data' => $data
       ]);
 
     } catch (\Exception $e) {
+      DB::rollback();
+
       return response()->json([
         'message' => $transactionRef
       ]);
