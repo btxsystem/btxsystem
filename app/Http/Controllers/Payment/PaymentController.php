@@ -223,7 +223,7 @@ class PaymentController extends Controller
       DB::commit();
       
       if($status == 1) {
-        return view('member.home');
+        return view('payment.success');
       } else if($status == 0) {
         return view('payment.failed');
       } else if($status == 6) {
