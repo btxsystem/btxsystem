@@ -252,7 +252,7 @@ Route::domain('ebook.bitrexgo.id')->group(function () {
 });
 
 
-Route::post('/rePayment', ['as' => 're.payment', 'uses' => 'Payment\V2\PaymentController@rePayment']);
+Route::post('/rePayment', ['as' => 're.payment', 'uses' => 'Payment\V2\PaymentController@payment']);
 
 Route::post('/payment', ['as' => 'payment', 'uses' => 'Payment\V2\PaymentController@payment']);
 Route::post('/response-pay', ['as' => 'response.pay', 'uses' => 'Payment\V2\PaymentController@responsePayment']);
