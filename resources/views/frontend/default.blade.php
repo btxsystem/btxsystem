@@ -106,11 +106,7 @@
     /* For mobile phones: */
         span#clock{
             margin-left: -9px;
-            font-size: 15px !important;
-        }
-
-        .logout{
-            padding-right: 1px !important;
+            font-size: 12px !important;
         }
 
         .profile-page .profile-sub-header .box-list li p {

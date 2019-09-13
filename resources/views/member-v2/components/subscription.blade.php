@@ -73,6 +73,33 @@ h2.plan-title {
 		overflow: hidden;
 		position: relative;
 	}
+	.clockdiv{
+		font-family: sans-serif;
+		color: #fff;
+		display: inline-block;
+		font-weight: 100;
+		text-align: center;
+		font-size: 15px;
+	}
+
+	.clockdiv > div{
+		padding: 10px;
+		border-radius: 3px;
+		background: #00BF96;
+		display: inline-block;
+	}
+
+	.clockdiv div > span{
+		padding: 15px;
+		border-radius: 3px;
+		background: #00816A;
+		display: inline-block;
+	}
+
+	.smalltext{
+		padding-top: 5px;
+		font-size: 14px;
+	}	
 }
 </style>
 @stop
@@ -160,6 +187,24 @@ h2.plan-title {
 								@else
 									<div>
 										@if($ebook->access)
+										<div id="clockdiv{{$ebook->id}}" class="clockdiv">
+											<div>
+												<span class="days"></span>
+												<div class="smalltext">Days</div>
+											</div>
+											<div>
+												<span class="hours"></span>
+												<div class="smalltext">Hours</div>
+											</div>
+											<div>
+												<span class="minutes"></span>
+												<div class="smalltext">Minutes</div>
+											</div>
+											<div>
+												<span class="seconds"></span>
+												<div class="smalltext">Seconds</div>
+											</div>
+										</div>										
 										<form action="{{route('payment')}}" method="post">
 											{{csrf_field()}}
 											<input type="hidden" name="ebook" value="{{$ebook->id}}">
@@ -168,7 +213,6 @@ h2.plan-title {
 												<a href="{{route('member.ebook.detail', ['type' => strtolower($ebook->title)])}}" class="btn btn-secondary text-white btn-sm mt-3 px-5">Detail</a>
 											@endif
 										</form>
-										Berakhir dalam {{$ebook->countdown_days}}
 										@else
 										<form action="">
 											<a href="{{route('member.ebook.detail', ['type' => strtolower($ebook->title), 'username' => $username])}}" class="btn btn-identity-red btn-sm mt-3 px-5">BUY</a>
@@ -380,5 +424,50 @@ function submit() {
 function showModalLogin() {
 	$('#modal-login').modal('show')
 }
+
+function getTimeRemaining(endtime) {
+  var t = Date.parse(endtime) - Date.parse(new Date());
+  var seconds = Math.floor((t / 1000) % 60);
+  var minutes = Math.floor((t / 1000 / 60) % 60);
+  var hours = Math.floor((t / (1000 * 60 * 60)) % 24);
+  var days = Math.floor(t / (1000 * 60 * 60 * 24));
+  return {
+    'total': t,
+    'days': days,
+    'hours': hours,
+    'minutes': minutes,
+    'seconds': seconds
+  };
+}
+
+function initializeClock(id, endtime) {
+  var clock = document.getElementById(id);
+  var daysSpan = clock.querySelector('.days');
+  var hoursSpan = clock.querySelector('.hours');
+  var minutesSpan = clock.querySelector('.minutes');
+  var secondsSpan = clock.querySelector('.seconds');
+
+  function updateClock() {
+    var t = getTimeRemaining(endtime);
+
+    daysSpan.innerHTML = t.days;
+    hoursSpan.innerHTML = ('0' + t.hours).slice(-2);
+    minutesSpan.innerHTML = ('0' + t.minutes).slice(-2);
+    secondsSpan.innerHTML = ('0' + t.seconds).slice(-2);
+
+    if (t.total <= 0) {
+      clearInterval(timeinterval);
+    }
+  }
+
+  updateClock();
+  var timeinterval = setInterval(updateClock, 1000);
+}
+
+<?php foreach($ebooks as $ebook){?>
+	<?php if($ebook->access){?>
+		initializeClock('clockdiv{{$ebook->id}}', '{{$ebook->expired_at}}');
+	<?php } ?>
+<?php } ?>
 </script>
 @stop
