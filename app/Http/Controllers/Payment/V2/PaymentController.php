@@ -18,6 +18,8 @@ use App\Factory\PaymentHistoryFactoryBuild;
 use App\Models\PaymentHistoryMember;
 use App\Models\PaymentHistoryNonMember;
 
+use Carbon\Carbon;
+
 class PaymentController extends Controller
 {
   // public function payment(Request $request)
@@ -249,19 +251,32 @@ class PaymentController extends Controller
         DB::rollback();
         return view('payment.failed');
       }
-
-      DB::commit();
       
+      $view = 'payment.failed';
+
       if($status == "1") {
-        // echo $status;
-        return view('payment.success');
+        if($orderType == 'BITREX01') {
+          $trxNonMember = TransactionNonMember::where('transaction_ref', $code)->query();
+          $trxNonMember->update([
+            'expired_at' => Carbon::create($trxNonMember->first()->expired_at)->addYear(1)
+          ]);
+        } else if($orderType == 'BITREX02') {
+          $trxMember = TransactionMember::where('transaction_ref', $code)->query();
+          $trxMember->update([
+            'expired_at' => Carbon::create($trxMember->first()->expired_at)->addYear(1)
+          ]);
+        }
+        $view = 'payment.success';
       } else if($status == "0") {
         // echo $tatus;
-        return view('payment.failed');
+        $view = 'payment.failed';
       } else if($status == "6") {
         // echo $tatus;
-        return view('payment.waiting-transfer');
+        $view = 'payment.waiting-transfer';
       }
+
+      DB::commit();
+      return view($view);
 
     } catch (\Illuminate\Database\QueryException $e) {
         DB::rollback();
