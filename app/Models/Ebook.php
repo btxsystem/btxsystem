@@ -97,16 +97,16 @@ class Ebook extends Model
       $memberTransaction = $this->transaction()->where('non_member_id', \Auth::guard('nonmember')->user()->id)->first();
 
       if($memberTransaction) {
-        return $memberTransaction->first()->status == 1 && !$this->expired ? true : false;
+        return $memberTransaction->status == 1 && !$this->expired ? true : false;
       } else {
         return false;
       }
 
     } else if(\Auth::guard('user')->user()){
-      $userTransaction = $this->transactionMember()->where('member_id', \Auth::guard('user')->user()->id);
+      $userTransaction = $this->transactionMember()->where('member_id', \Auth::guard('user')->user()->id)->first();
       // return $userTransaction->count() > 0 ? $userTransaction->first()->status == 1 ? true : false : false;
       if($userTransaction) {
-        return $userTransaction->first()->status == 1 && !$this->expired ? true : false;
+        return $userTransaction->status == 1 && !$this->expired ? true : false;
       } else {
         return false;
       }
