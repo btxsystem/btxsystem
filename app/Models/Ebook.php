@@ -23,7 +23,8 @@ class Ebook extends Model
   protected $appends = [
     'access',
     'expired',
-    'countdown_days'
+    'countdown_days',
+    'expired_at'
   ];
 
 
@@ -93,6 +94,30 @@ class Ebook extends Model
     }
   }
 
+  public function getExpiredAtAttribute() {
+    if(!$this->access) {
+      return 0;
+    }
+    
+    if(\Auth::guard('nonmember')->user()) {
+      $memberTransaction = $this->transaction()
+        ->where('non_member_id', \Auth::guard('nonmember')
+        ->user()->id)
+        ->first();
+
+      return $memberTransaction ? $memberTransaction->expired_at : 0;
+    } else if(\Auth::guard('user')->user()){
+      $userTransaction = $this->transactionMember()
+        ->where('member_id', \Auth::guard('user')
+        ->user()->id)
+        ->first();
+      
+      return $userTransaction ? $userTransaction->expired_at : 0;
+    } else {
+      return 0;
+    }    
+  }
+
   public function getCountdownDaysAttribute()
   {
     if(!$this->access) {
@@ -110,7 +135,7 @@ class Ebook extends Model
       $difference = ($created->diff($now)->days < 1)
           ? '1 Hari'
           : $created->diff($now)->days . ' Hari';  
-
+      return $difference;
     } else if(\Auth::guard('user')->user()){
       $userTransaction = $this->transactionMember()
         ->where('member_id', \Auth::guard('user')

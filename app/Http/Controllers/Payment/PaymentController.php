@@ -202,22 +202,58 @@ class PaymentController extends Controller
         $transaction = false;
       }
 
-      if(!$transaction) {
+      $paymentHistory = PaymentHistories::insert([
+        'ebook_id' => TransactionMember::where('transaction_ref', $code)->first()->ebook_id,
+        'ref_no' => $code,
+        'payment_id' => $payment_id,
+        'amount' => $amount,
+        'currency' => $currency,
+        'trans_id' => $transid,
+        'remark' => $remark,
+        'auth_code' => $authcode,
+        'err_desc' => $errdesc,
+        'status' => $status
+      ]);
+
+      if(!$transaction || $paymentHistory) {
         DB::rollback();
+        return redirect()->route('payment.failed');
       }
 
       DB::commit();
-      return redirect()->route('member.home');
+      
+      if($status == 1) {
+        return view('payment.success');
+      } else if($status == 0) {
+        return view('payment.failed');
+      } else if($status == 6) {
+        return view('payment.waiting-transfer');
+      }
+
     } catch (\Illuminate\Database\QueryException $e) {
         DB::rollback();
-        return redirect()->route('member.home');
+        return view('payment.failed');
         //return $e->getMessage();
     }
-    return redirect()->route('member.home');
   }
 
   public function backendResponsePayment(Request $request)
   {
       echo "RECEIVEOK";
   }  
+
+  public function waitingTransfer()
+  {
+    return view('payment.waiting-transfer');
+  }
+
+  public function success()
+  {
+    return view('payment.success');
+  }
+
+  public function failed()
+  {
+    return view('payment.failed');
+  }
 }

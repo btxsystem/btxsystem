@@ -1,0 +1,1 @@
+Transaction Successfully. <a href="{{route('member.home')}}">Ebook</a>
