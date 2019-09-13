@@ -39,6 +39,7 @@ class PaymentController extends Controller
   {
     try {
       $repeat = $request->input('repeat');
+      $transactionRef = $request->input('transactionRef') ?? '';	
       $ebook = Ebook::where('id', $request->input('ebook'))->first();
       $orderAmount = 0;
       $productDesc = '';
@@ -71,6 +72,13 @@ class PaymentController extends Controller
 
       } else if($user = Auth::guard('user')->user()) {
         //users
+      } else {
+        $orderAmount = (int) $ebook->price + (int) ($ebook->price_markup);
+        $productDesc = ucwords($ebook->title);
+
+        $payment = (object) [
+          'ref_no' => $transactionRef
+        ];
       }
 
       if(!$payment) {
@@ -105,7 +113,9 @@ class PaymentController extends Controller
       ]);
 
     } catch (\Exception $e) {
-
+      return response()->json([
+        'message' => $transactionRef
+      ]);
     }
   }
 
