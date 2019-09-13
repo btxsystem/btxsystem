@@ -49,6 +49,7 @@ class PvController extends Controller
         $tmp = [];
         foreach ($datas as $key => $data) {
             $tmp[$key] = $data;
+            
         }
         return response()->json($datas, 200);
     }
