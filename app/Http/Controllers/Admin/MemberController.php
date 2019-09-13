@@ -311,10 +311,18 @@ class MemberController extends Controller
             ->make(true);
     }
 
-    public function historyMyPV($id)
+    public function historyPV($id)
+    {
+        $data = Employeer::findOrFail($id);
+     
+        return Datatables::of($data->pv_histories)
+            ->addIndexColumn()
+            ->make(true);
+    }
+
+    public function transactionMember($id)
     {
         $data = Employeer::with(('transaction_member.ebook'))->findOrFail($id);
-        // return $data->load('transaction_member.ebook');
      
         return Datatables::of($data->transaction_member)
             ->addIndexColumn()
@@ -326,6 +334,8 @@ class MemberController extends Controller
             })
             ->make(true);
     }
+
+
 
     public function htmlAction($row)
     {

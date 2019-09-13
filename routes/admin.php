@@ -16,6 +16,8 @@ Route::get('permissions', ['as' => 'permissions', 'uses' => 'Admin\PermissionsCo
 Route::redirect('/home', '/admin');
 Auth::routes(['register' => false]);*/
 
+
+
 Route::group(['prefix' => 'select', 'as'=> 'select.'], function () {
     Route::get('sponsor', ['as' => 'sponsor', 'uses' => 'MembershipController@select']);
     Route::get('permissions', ['as' => 'permissions', 'uses' => 'Admin\RolesController@select']);
@@ -24,7 +26,7 @@ Route::group(['prefix' => 'select', 'as'=> 'select.'], function () {
     Route::get('/{id}/upline', ['as' => 'upline', 'uses' => 'MembershipController@select_upline']);
 });
 
-
+Route::group(['middleware' => 'admin'], function () {
     Route::group(['prefix'=>'admin-management','as'=>'admin-management.'], function(){
         Route::get('permissions', ['as' => 'permissions', 'uses' => 'Admin\PermissionsController@index']);
 
@@ -119,7 +121,8 @@ Route::group(['prefix' => 'select', 'as'=> 'select.'], function () {
         // Datatable for member
         Route::get('/{id}/point-history','Admin\MemberController@historyPointData')->name('points.history');
         Route::get('/{id}/cash-history','Admin\MemberController@historyCashData')->name('cash.history');
-        Route::get('/{id}/my-pv','Admin\MemberController@historyMyPV')->name('my.pv');
+        Route::get('/{id}/pv-history','Admin\MemberController@historyPV')->name('pv.history');
+        Route::get('/{id}/transaction','Admin\MemberController@transactionMember')->name('transaction.member');
 
 
         Route::group(['prefix'=>'active','as'=>'active.'], function(){
@@ -186,13 +189,13 @@ Route::group(['prefix' => 'select', 'as'=> 'select.'], function () {
 
         Route::get('our-headquarters', ['as' => 'our-headquarters.show', 'uses' => 'Admin\OurHeadquarterController@show']);
 
+        // OUre Headquarter
         Route::group(['prefix'=>'our-headquarters','as'=>'our-headquarters.'], function(){
             Route::get('/', ['as' => 'show', 'uses' => 'Admin\OurHeadquarterController@show']);
             Route::get('/edit/{id}', ['as' => 'edit', 'uses' => 'Admin\OurHeadquarterController@edit']);
             Route::post('update-headquarters', ['as' => 'update', 'uses' => 'Admin\OurHeadquarterController@update']);
         
-
-
+            // Images
             Route::get('/images', ['as' => 'images', 'uses' => 'Admin\OurHeadquarterController@image']);
             Route::post('/images', ['as' => 'images.upload', 'uses' => 'Admin\OurHeadquarterController@uploadAttachment']);
             Route::get('/images/{id}/edit', ['as' => 'images.edit', 'uses' => 'Admin\OurHeadquarterController@editAttachment']);
@@ -201,6 +204,23 @@ Route::group(['prefix' => 'select', 'as'=> 'select.'], function () {
 
             Route::get('images/published/{id}', ['as' => 'published', 'uses' => 'Admin\OurHeadquarterController@published']);
             Route::get('images/unpublished/{id}', ['as' => 'unpublished', 'uses' => 'Admin\OurHeadquarterController@unpublished']);
+    
+        });
+        // Event Promotion
+        Route::group(['prefix'=>'event-promotions','as'=>'event-promotions.'], function(){
+            Route::get('/', ['as' => 'show', 'uses' => 'Admin\EventPromotionController@show']);
+            Route::get('/edit/{id}', ['as' => 'edit', 'uses' => 'Admin\EventPromotionController@edit']);
+            Route::post('update-promotions', ['as' => 'update', 'uses' => 'Admin\EventPromotionController@update']);
+            
+            // Images
+            Route::get('/images', ['as' => 'images', 'uses' => 'Admin\EventPromotionController@image']);
+            Route::post('/images', ['as' => 'images.upload', 'uses' => 'Admin\EventPromotionController@uploadAttachment']);
+            Route::get('/images/{id}/edit', ['as' => 'images.edit', 'uses' => 'Admin\EventPromotionController@editAttachment']);
+            Route::post('/update-images', ['as' => 'images.update', 'uses' => 'Admin\EventPromotionController@updateAttachment']);
+            Route::delete('/images/{id}', ['as' => 'images.delete', 'uses' => 'Admin\EventPromotionController@destroyAttachment']);
+
+            Route::get('images/published/{id}', ['as' => 'published', 'uses' => 'Admin\EventPromotionController@published']);
+            Route::get('images/unpublished/{id}', ['as' => 'unpublished', 'uses' => 'Admin\EventPromotionController@unpublished']);
     
         });
 
@@ -221,11 +241,4 @@ Route::group(['prefix' => 'select', 'as'=> 'select.'], function () {
         Route::post('tree', ['as' => 'tree', 'uses' => 'ImportExcelController@import_tree']);
         Route::post('sponsor', ['as' => 'sponsor', 'uses' => 'ImportExcelController@import_sponsor']);
     });
-/*Route::group(['prefix'=>'member','as'=>'member.'], function(){
-    Route::get('/login', 'AuthEmployeer\LoginController@showLoginAdmin')->name('login');
-    Route::post('/login/cek', 'AuthEmployeer\LoginController@login')->name('login.cek');
-    Route::get('/dashboard', 'Member\DashboardController@index')->name('dashboard');
-    Route::group(['prefix'=>'profile','as'=>'profile.'], function(){
-        Route::get('', ['as' => 'index', 'uses' => 'Member\ProfileMemberController@index']);
-    });
-});*/
+});

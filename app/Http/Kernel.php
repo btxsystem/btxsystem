@@ -56,5 +56,6 @@ class Kernel extends HttpKernel
         'employeer'     => \App\Http\Middleware\Employeer::class,
         'cors'          =>  \App\Http\Middleware\Cors::class , 
         'ebook.access'          =>  \App\Http\Middleware\EbookAccess::class , 
+        'admin'         => \App\Http\Middleware\AdminMiddleware::class,
     ];
 }
