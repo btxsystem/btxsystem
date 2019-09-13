@@ -20,22 +20,22 @@ use App\Models\PaymentHistoryNonMember;
 
 class PaymentController extends Controller
 {
-  public function payment(Request $request)
-  {
-    date_default_timezone_set('Asia/Jakarta');
+  // public function payment(Request $request)
+  // {
+  //   date_default_timezone_set('Asia/Jakarta');
 
-    $transactionRef = $request->input('transactionRef') ?? '';	
-    $ebook = $request->input('ebook') ?? '';
-    $productDesc = '';
-    $user = null;
+  //   $transactionRef = $request->input('transactionRef') ?? '';	
+  //   $ebook = $request->input('ebook') ?? '';
+  //   $productDesc = '';
+  //   $user = null;
     
-    return view('payment.form')
-      ->with([
-        'data' => $data
-    ]);
-  }
+  //   return view('payment.form')
+  //     ->with([
+  //       'data' => $data
+  //   ]);
+  // }
 
-  public function rePayment(Request $request)
+  public function payment(Request $request)
   {
     try {
       $repeat = $request->input('repeat');
