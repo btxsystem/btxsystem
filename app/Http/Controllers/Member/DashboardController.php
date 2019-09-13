@@ -15,6 +15,7 @@ class DashboardController extends Controller
     {
         $data = Auth::user();
         $rank = DB::table('ranks')->select('name')->where('id','=',$data->rank_id)->first();
+        $pv_group = DB::table('pv_rank')->select('pv_left','pv_midle','pv_right')->where('id_member','=',$data->id)->first();
         $profile = array(
             "id_member" => $data->id_member,
             "username" =>  $data->username,
@@ -30,17 +31,15 @@ class DashboardController extends Controller
             "rank" => $rank ? $rank->name : '-' ,
             "bitrex_cash" => $data->bitrex_cash,
             "bitrex_points" => $data->bitrex_points,
-            "pv" => $data->pv
+            "pv" => $pv_group ? $pv_group->pv_left + $pv_group->pv_midle + $pv_group->pv_right : 0
         );
         return view('frontend.dashboard')->with('profile',$profile);
     }
 
     public function getAutoRetailDaily(){
         $id = Auth::id();
-        $now = \Carbon\Carbon::now()->format('d m Y');
-        $data = DB::table('history_bitrex_cash')->where('id_member',$id)->where('description','Bonus Retail')
-                                                ->where(DB::raw('DATE_FORMAT(created_at, "%d %m %Y")'), $now)
-                                                ->where('id_member', $id)->select(DB::raw('SUM(nominal) as nominal'))->first();
+        $data = DB::table('history_bitrex_cash')->where('id_member',$id)->where('type',2)
+                                                ->select(DB::raw('SUM(nominal) as nominal'))->first();
         if($data->nominal == null){
             $data->nominal = 0;
         }
@@ -49,10 +48,8 @@ class DashboardController extends Controller
 
     public function getBonusSponsorDaily(){
         $id = Auth::id();
-        $now = \Carbon\Carbon::now()->format('d m Y');
-        $data = DB::table('history_bitrex_cash')->where('id_member',$id)->where('description','Bonus sponsor')
-                                                ->where(DB::raw('DATE_FORMAT(created_at, "%d %m %Y")'), $now)
-                                                ->where('id_member', $id)->select(DB::raw('SUM(nominal) as nominal'))->first();
+        $data = DB::table('history_bitrex_cash')->where('id_member',$id)->where('type',0)
+                                                ->select(DB::raw('SUM(nominal) as nominal'))->first();
         if($data->nominal == null){
             $data->nominal = 0;
         }
@@ -61,10 +58,8 @@ class DashboardController extends Controller
 
     public function getBonusPairing(){
         $id = Auth::id();
-        $now = \Carbon\Carbon::now()->format('d m Y');
-        $data = DB::table('history_bitrex_cash')->where('id_member',$id)->where('description','Bonus pairing')
-                                                ->where(DB::raw('DATE_FORMAT(created_at, "%d %m %Y")'), $now)
-                                                ->where('id_member', $id)->select(DB::raw('SUM(nominal) as nominal'))->first();
+        $data = DB::table('history_bitrex_cash')->where('id_member',$id)->where('type',1)
+                                                ->select(DB::raw('SUM(nominal) as nominal'))->first();
         if($data->nominal == null){
             $data->nominal = 0;
         }
