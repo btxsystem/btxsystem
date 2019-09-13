@@ -155,6 +155,7 @@ Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
         Route::get('expired-ebook', ['as' => 'expired-ebook', 'uses' => 'Member\EbookController@getExpiredEbook']);
         Route::get('exp-three-month', ['as' => 'exp-three-month', 'uses' => 'Member\ProfileMemberController@expNotif']);
         Route::get('summary/{id}', ['as' => 'summary', 'uses' => 'Member\PvController@getSummary']);
+        Route::get('search-downline/{id}', ['as' => 'search-downline', 'uses' => 'Member\PvController@searchDownline']);
     });
 
     Route::group(['prefix' => 'transaction', 'as'=> 'transaction.'], function () {

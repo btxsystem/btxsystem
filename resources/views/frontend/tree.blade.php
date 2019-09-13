@@ -196,7 +196,12 @@
 
 @section('footer_scripts')
 <style>
-
+	@media only screen and (max-width: 480px) {
+    /* For mobile phones: */
+		.search {
+			width: 160px !important;
+		}
+    }
 	.search {
 		font-size: 14px;
 		width: 887px;
@@ -275,7 +280,18 @@
 	});
 
 	$('#search-downline').click(function(){
-		console.log($('.search').val());	
+		let data = $('.search').val();
+		$.ajax({
+			type: 'GET',
+			url: '/member/select/search-downline/'+data,
+			success: function (data) {
+				console.log(data);
+				
+			},
+			error: function() { 
+				console.log("Error");
+			}
+		});	
 	});
 
 	$('#province').change(function(){
