@@ -79,7 +79,37 @@ class PaymentController extends Controller
         }
 
       } else if($user = Auth::guard('user')->user()) {
-        //users
+        $builderPayment = (new PaymentHistoryBuilder())
+          ->setEbookId($ebook->id)
+          ->setMemberId($user->id);
+
+        $payment = (new PaymentHistoryFactoryBuild())->call()->member($builderPayment);
+
+        $transactionMember = TransactionMember::where([
+          'member_id' => $user->id,
+          'ebook_id' => $ebook->id
+        ])->update([
+          'transaction_ref' => $payment->ref_no
+        ]);
+
+        //repeat
+        if($repeat) {
+          $renewalEbookId = 0;
+
+          if($ebook->id == 1) {
+            $renewalEbookId = 3;
+          } else if($ebook->id == 2) {
+            $renewalEbookId = 4;
+          }
+
+          $renewalEbook = Ebook::where('id', $renewalEbookId)->first();
+
+          $orderAmount = (int) $renewalEbook->price + (int) ($renewalEbook->price_markup);
+          $productDesc = ucwords(str_replace("_", " ", $renewalEbook->title));
+        } else {
+          $orderAmount = (int) $ebook->price + (int) ($ebook->price_markup);
+          $productDesc = ucwords($ebook->title);
+        }
       } else {
         $orderAmount = (int) $ebook->price + (int) ($ebook->price_markup);
         $productDesc = ucwords($ebook->title);

@@ -13,14 +13,14 @@ class AuthGates
 {
     public function handle($request, Closure $next)
     {
-        if (Auth::guard('user')->check()) {
-            if (Auth::user()->expired_at <= Carbon::now() || Auth::user()->expired_at==null) {
-                Session::flush();
-                Auth::guard('user')->logout();
-                return redirect('/login');
-                // return 'Masuk Middleware';
-            }
-        }
+        // if (Auth::guard('user')->check()) {
+        //     if (Auth::user()->expired_at <= Carbon::now() || Auth::user()->expired_at==null) {
+        //         Session::flush();
+        //         Auth::guard('user')->logout();
+        //         return redirect('/login');
+        //         // return 'Masuk Middleware';
+        //     }
+        // }
         
         return $next($request);
     }
