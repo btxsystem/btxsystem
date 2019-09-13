@@ -67,14 +67,23 @@ class Ebook extends Model
 
     if(\Auth::guard('nonmember')->user()) {
       $memberTransaction = $this->transaction()->where('non_member_id', \Auth::guard('nonmember')->user()->id)->first();
+
+      if(!$memberTransaction) {
+        return false;
+      }
       
       $expired = $memberTransaction->expired_at < date('Y-m-d');
 
       return $expired;
     } else if(\Auth::guard('user')->user()){
       $userTransaction = $this->transactionMember()->where('member_id', \Auth::guard('user')->user()->id)->first();
+
+      if(!$userTransaction) {
+        return false;
+      }
       
       $expired = $userTransaction->expired_at < date('Y-m-d');
+      
 
       return $expired;
     } else {

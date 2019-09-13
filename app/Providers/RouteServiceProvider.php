@@ -40,6 +40,8 @@ class RouteServiceProvider extends ServiceProvider
         $this->mapWebRoutes();
 
         $this->mapAdminRoutes();
+
+        $this->mapEbookRoutes();
         
     }
 
@@ -80,4 +82,11 @@ class RouteServiceProvider extends ServiceProvider
              ->namespace($this->namespace)
              ->group(base_path('routes/admin.php'));
     }
+
+    protected function mapEbookRoutes(){
+
+        Route::middleware('ebook')
+            ->namespace($this->namespace)
+            ->group(base_path('routes/ebook.php'));
+     }
 }
