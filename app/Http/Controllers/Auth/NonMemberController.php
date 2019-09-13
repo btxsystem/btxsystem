@@ -24,7 +24,6 @@ class NonMemberController extends Controller
     ]);
 
     if (Auth::guard('nonmember')->attempt(['username' => $request->username, 'password' => $request->password])){
-      //dd(Auth::guard('nonmember')->user()->id);
       return redirect()->route('member.home');
     } else if (Auth::guard('user')->attempt(['username' => $request->username, 'password' => $request->password])) {
       return redirect()->route('member.home');

@@ -231,9 +231,9 @@ class ExploreController extends Controller
 
     $referral = '';
   
-    return response()->json([
-      'data' => $ebooks
-    ], 200);
+    // return response()->json([
+    //   'data' => $ebooks
+    // ], 200);
     // $transactions = DB::table('non_members')
     //   ->join('transaction_non_members', 'non_members.id', '=', 'transaction_non_members.non_member_id')
     //   ->select('transaction_non_members.ebook_id')
