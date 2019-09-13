@@ -10,7 +10,7 @@ class TransactionMemberBuilder
 
   public $ebookId = 0;
 
-  public $status = 1;
+  public $status = 0;
 
   public $identifiedBy = ['id' => 0];
 

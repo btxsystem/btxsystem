@@ -205,27 +205,18 @@ h2.plan-title {
 												<div class="smalltext">Seconds</div>
 											</div>
 										</div>										
-										<form action="{{route('re.payment')}}" method="post">
+										<form action="{{route('payment')}}" method="post">
 											{{csrf_field()}}
 											<input type="hidden" name="ebook" value="{{$ebook->id}}">
-                      <input type="hidden" name="repeat" value="true">
-											<button type="submit" class="btn btn-identity-red text-white btn-sm mt-3 px-5">REPEAT ORDER</button>
+											<button type="submit" class="btn btn-identity-red text-white btn-sm mt-3 px-5">BUY</button>
 											@if(!$ebook->expired)
-												<a href="{{route('member.ebook.detail', ['type' => strtolower($ebook->title)])}}" class="btn btn-secondary text-white btn-sm mt-3 px-5">VIEW</a>
+												<a href="{{route('member.ebook.detail', ['type' => strtolower($ebook->title)])}}" class="btn btn-secondary text-white btn-sm mt-3 px-5">Detail</a>
 											@endif
 										</form>
 										@else
-                      @if($ebook->status == 3)
-                        <form action="{{route('re.payment')}}" method="post">
-                          {{csrf_field()}}
-                          <input type="hidden" name="ebook" value="{{$ebook->id}}">
-                          <button type="submit" class="btn btn-identity-red text-white btn-sm mt-3 px-5">BUY</button>
-                        </form>
-                      @else
-                      <form action="">
-                        <a href="{{route('member.ebook.detail', ['type' => strtolower($ebook->title), 'username' => $username])}}" class="btn btn-identity-red btn-sm mt-3 px-5">BUY</a>
-                      </form>
-                      @endif
+										<form action="">
+											<a href="{{route('member.ebook.detail', ['type' => strtolower($ebook->title), 'username' => $username])}}" class="btn btn-identity-red btn-sm mt-3 px-5">BUY</a>
+										</form>
 										@endif
 									</div>
 								@endif

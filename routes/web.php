@@ -169,6 +169,7 @@ Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
 
     Route::group(['prefix' => 'add-member', 'as'=> 'add-member.'], function () {
         Route::get('', ['as' => 'index', 'uses' => 'Member\AddNewMemberController@index']);
+        Route::post('reset-password', ['as' => 'reset-password', 'uses' => 'Member\ProfileMemberController@resetPassword']);
     });
 
     Route::group(['prefix' => 'income-and-expenses', 'as'=> 'bitrex-money.'], function () {
@@ -198,6 +199,8 @@ Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
 //     Route::post('register', 'MemberV2\RegisterController@register')->name('member.register');
 
 //     Route::post('/v2/register', 'MemberV2\RegisterController@registerV2')->name('member.register-v2');
+
+//     Route::post('/v3/register', 'MemberV2\RegisterController@registerV3')->name('member.register-v3');
 
 //     Route::get('/v2/login', 'Auth\NonMemberController@getLogin')->middleware('guest')->name('member.login');
 //     Route::post('/v2/login', 'Auth\NonMemberController@postLogin')->name('member.login.post');
@@ -230,6 +233,8 @@ Route::domain('ebook.bitrexgo.id')->group(function () {
 
     Route::post('/v2/register', 'MemberV2\RegisterController@registerV2')->name('member.register-v2');
 
+    Route::post('/v3/register', 'MemberV2\RegisterController@registerV3')->name('member.register-v3');
+
     Route::get('/v2/login', 'Auth\NonMemberController@getLogin')->middleware('guest')->name('member.login');
     Route::post('/v2/login', 'Auth\NonMemberController@postLogin')->name('member.login.post');
     Route::get('/v2/logout', 'Auth\NonMemberController@logout')->name('member.logout');
@@ -246,6 +251,9 @@ Route::domain('ebook.bitrexgo.id')->group(function () {
     Route::get('/{username}', 'MemberV2\ExploreController@subscription')->name('member.subscription.referral');
 });
 
-Route::post('/payment', ['as' => 'payment', 'uses' => 'Payment\PaymentController@payment']);
-Route::post('/response-pay', ['as' => 'response.pay', 'uses' => 'Payment\PaymentController@responsePayment']);
-Route::post('/backend-response-pay', ['as' => 'backend.response.pay', 'uses' => 'Payment\PaymentController@backendResponsePayment']);
+
+Route::post('/rePayment', ['as' => 're.payment', 'uses' => 'Payment\V2\PaymentController@rePayment']);
+
+Route::post('/payment', ['as' => 'payment', 'uses' => 'Payment\V2\PaymentController@payment']);
+Route::post('/response-pay', ['as' => 'response.pay', 'uses' => 'Payment\V2\PaymentController@responsePayment']);
+Route::post('/backend-response-pay', ['as' => 'backend.response.pay', 'uses' => 'Payment\V2\PaymentController@backendResponsePayment']);

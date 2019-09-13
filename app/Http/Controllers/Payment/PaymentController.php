@@ -202,20 +202,20 @@ class PaymentController extends Controller
         $transaction = false;
       }
 
-      $paymentHistory = PaymentHistories::insert([
-        'ebook_id' => TransactionMember::where('transaction_ref', $code)->first()->ebook_id,
-        'ref_no' => $code,
-        'payment_id' => $payment_id,
-        'amount' => $amount,
-        'currency' => $currency,
-        'trans_id' => $transid,
-        'remark' => $remark,
-        'auth_code' => $authcode,
-        'err_desc' => $errdesc,
-        'status' => $status
-      ]);
+      // $paymentHistory = PaymentHistories::insert([
+      //   'ebook_id' => TransactionMember::where('transaction_ref', $code)->first()->ebook_id,
+      //   'ref_no' => $code,
+      //   'payment_id' => $payment_id,
+      //   'amount' => $amount,
+      //   'currency' => $currency,
+      //   'trans_id' => $transid,
+      //   'remark' => $remark,
+      //   'auth_code' => $authcode,
+      //   'err_desc' => $errdesc,
+      //   'status' => $status
+      // ]);
 
-      if(!$transaction || $paymentHistory) {
+      if(!$transaction) {
         DB::rollback();
         return redirect()->route('payment.failed');
       }
