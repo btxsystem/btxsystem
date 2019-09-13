@@ -175,6 +175,7 @@
 	<form action="{{route('payment')}}" method="post" id="submitPayment">
 		{{csrf_field()}}
 		<input type="hidden" name="transactionRef" id="transactionRef">
+		<input type="hidden" name="ebook" id="transactionEbook">
 	</form>
 
 @stop
@@ -349,7 +350,8 @@ function submit() {
 				return false
 			}
 
-			$('#transactionRef').val(result.data.transaction_ref)
+			$('#transactionRef').val(result.data.ref_no)
+			$('#transactionEbook').val(result.data.ebook_id)
 			$('#submitPayment').submit()
 
 			// swal("Success", "Transaction Successfully", "success").then((value) => {

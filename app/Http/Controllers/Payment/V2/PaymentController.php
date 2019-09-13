@@ -20,25 +20,26 @@ use App\Models\PaymentHistoryNonMember;
 
 class PaymentController extends Controller
 {
-  public function payment(Request $request)
-  {
-    date_default_timezone_set('Asia/Jakarta');
+  // public function payment(Request $request)
+  // {
+  //   date_default_timezone_set('Asia/Jakarta');
 
-    $transactionRef = $request->input('transactionRef') ?? '';	
-    $ebook = $request->input('ebook') ?? '';
-    $productDesc = '';
-    $user = null;
+  //   $transactionRef = $request->input('transactionRef') ?? '';	
+  //   $ebook = $request->input('ebook') ?? '';
+  //   $productDesc = '';
+  //   $user = null;
     
-    return view('payment.form')
-      ->with([
-        'data' => $data
-    ]);
-  }
+  //   return view('payment.form')
+  //     ->with([
+  //       'data' => $data
+  //   ]);
+  // }
 
-  public function rePayment(Request $request)
+  public function payment(Request $request)
   {
     try {
       $repeat = $request->input('repeat');
+      $transactionRef = $request->input('transactionRef') ?? '';	
       $ebook = Ebook::where('id', $request->input('ebook'))->first();
       $orderAmount = 0;
       $productDesc = '';
@@ -71,6 +72,13 @@ class PaymentController extends Controller
 
       } else if($user = Auth::guard('user')->user()) {
         //users
+      } else {
+        $orderAmount = (int) $ebook->price + (int) ($ebook->price_markup);
+        $productDesc = ucwords($ebook->title);
+
+        $payment = (object) [
+          'ref_no' => $transactionRef
+        ];
       }
 
       if(!$payment) {
@@ -105,7 +113,9 @@ class PaymentController extends Controller
       ]);
 
     } catch (\Exception $e) {
-
+      return response()->json([
+        'message' => $transactionRef
+      ]);
     }
   }
 
