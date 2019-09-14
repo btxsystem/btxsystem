@@ -71,22 +71,22 @@
                                         
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <!-- <div class="form-group">
                                     <label>
                                         <input type="checkbox" name="remember-me" id="remember-me" value="remember-me"
                                                class="square-blue"/>
                                         Keep me logged in
                                     </label>
-                                </div>
+                                </div> -->
                                 <p class="login button">
                                     <input type="submit" value="Log In" class="btn btn-success" />
                                 </p>
-                                <p class="change_link">
+                                <!-- <p class="change_link">
                                     <a href="#toforgot">
                                         <button type="button" class="btn btn-responsive botton-alignment btn-warning btn-sm">Forgot password</button>
                                     </a>
                                     
-                                </p>
+                                </p> -->
                             </form>
                         </div>
                         <div id="forgot" class="animate form">
@@ -97,7 +97,7 @@
                                     Enter your email address below and we'll send a special reset password link to your inbox.
                                 </p>
 
-                                <!-- CSRF Token -->
+                               
                                 <input type="hidden" name="_token" />
 
                                 <div class="form-group ">
