@@ -25,6 +25,10 @@ use Carbon\Carbon;
 
 class RegisterController extends Controller
 { 
+  protected function buildFailedValidationResponse(Request $request, array $errors){
+    return ["success" => false, "code"=> 406 , "message" => "forbidden" , "errors" =>$errors];
+  }
+
   public function registerV3(Request $request)
   {
     try {
@@ -34,6 +38,10 @@ class RegisterController extends Controller
       $income = $request->input('income');
 
       if(Auth::guard('nonmember')->user()) {
+        $this->validate($request, [
+          'username' => 'required|unique:non_members,username'
+        ]);
+
         $nonMember = true;
   
         $nonMemberId = Auth::guard('nonmember')->user()->id;
