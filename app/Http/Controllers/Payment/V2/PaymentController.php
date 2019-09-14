@@ -252,7 +252,7 @@ class PaymentController extends Controller
 
         $isRegister = false;
 
-        $checkIsRegister = TransactionNonMember::where('transaction_ref', 'BITREX011568374686')
+        $checkIsRegister = TransactionNonMember::where('transaction_ref', $code)
           ->with([
             'ebook',
             'nonMember'
@@ -270,11 +270,15 @@ class PaymentController extends Controller
     
         //if is new register
         if($isRegister) {
+          //generate random password
           $additionalParameter = (object) [
             'password' => 'secret12'
           ];
+
+          //send email
           Mail::to($checkIsRegister->nonMember->email)->send(new PurchaseEbookNonMemberMail($checkIsRegister, $additionalParameter));
         } else {
+          //send email
           Mail::to($checkIsRegister->nonMember->email)->send(new PurchaseEbookNonMemberMail($checkIsRegister, null));
         }
 
