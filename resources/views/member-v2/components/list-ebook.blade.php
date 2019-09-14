@@ -347,6 +347,7 @@ function submit() {
 
 			if(!success) {
 				swal("Fail", "Cant't Register", "error");
+				$('#register').prop('disabled', false)
 				return false
 			}
 
@@ -363,7 +364,7 @@ function submit() {
 			// 	// 	window.location.href = '{{ route("payment") }}?transactionRef=' + result.data.transaction_ref
 			// 	// }	
 			// });
-			$('#register').prop('disabled', false)
+			//$('#register').prop('disabled', false)
 		},
 		error: function(err) {
 			console.log(err)
