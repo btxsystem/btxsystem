@@ -281,7 +281,6 @@
 
 	$('#search-downline').click(function(){
 		let data = $('.search').val();
-		let 
 		$.ajax({
 			type: 'GET',
 			url: '/member/select/search-downline/'+data,
