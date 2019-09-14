@@ -24,6 +24,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
 
 use App\Mail\WelcomeMail;
+use App\Mail\PurchaseEbookMemberMail;
 use App\Mail\PurchaseEbookNonMemberMail;
 
 class PaymentController extends Controller
@@ -272,7 +273,7 @@ class PaymentController extends Controller
         if($isRegister) {
           //generate random password
           $additionalParameter = (object) [
-            'password' => 'secret12'
+            'password' => 'secret'
           ];
 
           //send email
@@ -298,6 +299,15 @@ class PaymentController extends Controller
           ->update([
             'status' => $status
         ]);
+
+        $checkIsRegister = TransactionMember::where('transaction_ref', $code)
+          ->with([
+            'ebook',
+            'member'
+          ])
+          ->first();
+
+        Mail::to($checkIsRegister->member->email)->send(new PurchaseEbookMemberMail($checkIsRegister, null));
       } else {
         $paymentHistory = false;
         $transaction = false;
