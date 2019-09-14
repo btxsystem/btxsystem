@@ -44,9 +44,9 @@
           </nav>
       </div>
       <div class="col-xl-9 col-lg-8 col-sm-7 mt10">
-        <nav aria-label="breadcrumb">
+        <!-- <nav aria-label="breadcrumb">
           <div id="breadcrumb"></div>
-        </nav>
+        </nav> -->
         <div id="lesson_content"></div>
         <div>
           <div class="s">
