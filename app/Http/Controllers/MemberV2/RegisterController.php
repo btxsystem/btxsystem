@@ -38,10 +38,6 @@ class RegisterController extends Controller
       $income = $request->input('income');
 
       if(Auth::guard('nonmember')->user()) {
-        $this->validate($request, [
-          'username' => 'required|unique:non_members,username'
-        ]);
-
         $nonMember = true;
   
         $nonMemberId = Auth::guard('nonmember')->user()->id;
@@ -97,6 +93,10 @@ class RegisterController extends Controller
 
         $payment  = (new PaymentHistoryFactoryBuild())->call()->member($builderPayment);
       } else {
+        $this->validate($request, [
+          'username' => 'required|unique:non_members,username'
+        ]);
+        
         $builder = (new NonMemberBuilder())
           ->setFirstName($request->input('firstName'))
           ->setLastName($request->input('lastName'))
