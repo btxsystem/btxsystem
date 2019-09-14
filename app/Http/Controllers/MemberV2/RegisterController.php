@@ -124,7 +124,7 @@ class RegisterController extends Controller
           $builderTrx = (new TransactionNonMemberBuilder())
           ->setMemberId($referralId)
           ->setNonMemberId($nonMember->id)
-          ->setExpiredAt(Carbon::create(date('Y-m-d'))->addYear(1))
+          ->setExpiredAt(date('Y-m-d'))
           ->setIncome($income)
           ->setEbookId($ebook)
           ->setTransactionRef($payment->ref_no)
