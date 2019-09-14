@@ -60,43 +60,51 @@ class RegisterController extends Controller
         }
   
         $builder = (new TransactionNonMemberBuilder())
-        ->setMemberId($referralId)
-        ->setNonMemberId($nonMemberId)
-        ->setExpiredAt(Carbon::create(date('Y-m-d')))
-        ->setIncome($income)
-        ->setEbookId($ebook)
-        ->setStatus(6);
+          ->setMemberId($referralId)
+          ->setNonMemberId($nonMemberId)
+          ->setExpiredAt(Carbon::create(date('Y-m-d')))
+          ->setIncome($income)
+          ->setEbookId($ebook)
+          ->setStatus(6); // pending
         
-        $transaction  = (new TransactionFactoryRegister())->call()->createNonMember($builder);
+        $transaction = (new TransactionFactoryRegister())
+          ->call()
+          ->createNonMember($builder);
 
         $builderPayment = (new PaymentHistoryBuilder())
-        ->setEbookId($ebook)
-        ->setNonMemberId($nonMemberId);
+          ->setEbookId($ebook)
+          ->setNonMemberId($nonMemberId);
 
-        $payment  = (new PaymentHistoryFactoryBuild())->call()->nonMember($builderPayment);
+        $payment = (new PaymentHistoryFactoryBuild())
+          ->call()
+          ->nonMember($builderPayment);
       } else if(Auth::guard('user')->user()) {
         $nonMember = true;
   
         $memberId = Auth::guard('user')->user()->id;
     
         $builder = (new TransactionMemberBuilder())
-        ->setMemberId($memberId)
-        ->setExpiredAt(Carbon::create(date('Y-m-d')))
-        ->setEbookid($ebook)
-        ->setStatus(6);
+          ->setMemberId($memberId)
+          ->setExpiredAt(Carbon::create(date('Y-m-d')))
+          ->setEbookid($ebook)
+          ->setStatus(6); // pending
         
-        $transaction  = (new TransactionFactoryRegister())->call()->createMember($builder);
+        $transaction  = (new TransactionFactoryRegister())
+          ->call()
+          ->createMember($builder);
 
         $builderPayment = (new PaymentHistoryBuilder())
-        ->setEbookId($ebook)
-        ->setMemberId($memberId);
+          ->setEbookId($ebook)
+          ->setMemberId($memberId);
 
-        $payment  = (new PaymentHistoryFactoryBuild())->call()->member($builderPayment);
+        $payment  = (new PaymentHistoryFactoryBuild())
+          ->call()
+          ->member($builderPayment);
       } else {
         $this->validate($request, [
           'username' => 'required|unique:non_members,username'
         ]);
-        
+
         $builder = (new NonMemberBuilder())
           ->setFirstName($request->input('firstName'))
           ->setLastName($request->input('lastName'))
@@ -104,13 +112,17 @@ class RegisterController extends Controller
           ->setUsername($request->input('username'))
           ->setPassword('secret');
           
-        $nonMember = (new RegisterFactoryMake())->call()->createNonMember($builder);
+        $nonMember = (new RegisterFactoryMake())
+          ->call()
+          ->createNonMember($builder);
 
         $builderPayment = (new PaymentHistoryBuilder())
-        ->setEbookId($ebook)
-        ->setNonMemberId($nonMember->id);
+          ->setEbookId($ebook)
+          ->setNonMemberId($nonMember->id);
 
-        $payment  = (new PaymentHistoryFactoryBuild())->call()->nonMember($builderPayment);
+        $payment = (new PaymentHistoryFactoryBuild())
+          ->call()
+          ->nonMember($builderPayment);
 
         if($nonMember) {
           $referralId = '';
@@ -136,9 +148,11 @@ class RegisterController extends Controller
           ->setIncome($income)
           ->setEbookId($ebook)
           ->setTransactionRef($payment->ref_no)
-          ->setStatus(6);
+          ->setStatus(6); // pending
           
-          $transaction  = (new TransactionFactoryRegister())->call()->createNonMember($builderTrx);
+          $transaction  = (new TransactionFactoryRegister())
+            ->call()
+            ->createNonMember($builderTrx);
         } else {
           $transaction = false;
         }        
