@@ -112,10 +112,10 @@ class PaymentController extends Controller
 
           $renewalEbook = Ebook::where('id', $renewalEbookId)->first();
 
-          $orderAmount = (int) $renewalEbook->price + (int) ($renewalEbook->price_markup);
+          $orderAmount = (int) $renewalEbook->price;
           $productDesc = ucwords(str_replace("_", " ", $renewalEbook->title));
         } else {
-          $orderAmount = (int) $ebook->price + (int) ($ebook->price_markup);
+          $orderAmount = (int) $ebook->price;
           $productDesc = ucwords($ebook->title);
         }
       } else {

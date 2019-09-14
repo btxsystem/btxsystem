@@ -226,7 +226,7 @@ h2.plan-title {
 											@endif
 										</form>
 										@else
-                      @if($ebook->status == 3)
+                      @if($ebook->status == 6)
                         <form action="{{route('re.payment')}}" method="post">
                           {{csrf_field()}}
                           <input type="hidden" name="ebook" value="{{$ebook->id}}">
