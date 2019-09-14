@@ -240,11 +240,6 @@ class PaymentController extends Controller
           'err_desc' => $errdesc,  
         ]);
 
-        $transaction = TransactionNonMember::where('transaction_ref', $code)
-        ->update([
-          'status' => $status,        
-        ]);
-
         $userData = PaymentHistoryNonMember::where('ref_no', $code)
         ->with([
           'nonMember'
@@ -268,7 +263,12 @@ class PaymentController extends Controller
             $isRegister = false;
           }
         }
-    
+        
+        $transaction = TransactionNonMember::where('transaction_ref', $code)
+        ->update([
+          'status' => $status,        
+        ]);
+
         //if is new register
         if($isRegister) {
           //generate random password
