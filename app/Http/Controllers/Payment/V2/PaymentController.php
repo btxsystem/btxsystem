@@ -18,27 +18,31 @@ use App\Factory\PaymentHistoryFactoryBuild;
 use App\Models\PaymentHistoryMember;
 use App\Models\PaymentHistoryNonMember;
 
+use Carbon\Carbon;
+
 class PaymentController extends Controller
 {
+  // public function payment(Request $request)
+  // {
+  //   date_default_timezone_set('Asia/Jakarta');
+
+  //   $transactionRef = $request->input('transactionRef') ?? '';	
+  //   $ebook = $request->input('ebook') ?? '';
+  //   $productDesc = '';
+  //   $user = null;
+    
+  //   return view('payment.form')
+  //     ->with([
+  //       'data' => $data
+  //   ]);
+  // }
+
   public function payment(Request $request)
   {
-    date_default_timezone_set('Asia/Jakarta');
-
-    $transactionRef = $request->input('transactionRef') ?? '';	
-    $ebook = $request->input('ebook') ?? '';
-    $productDesc = '';
-    $user = null;
-    
-    return view('payment.form')
-      ->with([
-        'data' => $data
-    ]);
-  }
-
-  public function rePayment(Request $request)
-  {
     try {
+      DB::beginTransaction();
       $repeat = $request->input('repeat');
+      $transactionRef = $request->input('transactionRef') ?? '';	
       $ebook = Ebook::where('id', $request->input('ebook'))->first();
       $orderAmount = 0;
       $productDesc = '';
@@ -49,6 +53,13 @@ class PaymentController extends Controller
           ->setNonMemberId($user->id);
 
         $payment = (new PaymentHistoryFactoryBuild())->call()->nonMember($builderPayment);
+
+        $transactionNonMember = TransactionNonMember::where([
+          'non_member_id' => $user->id,
+          'ebook_id' => $ebook->id
+        ])->update([
+          'transaction_ref' => $payment->ref_no
+        ]);
 
         //repeat
         if($repeat) {
@@ -70,10 +81,49 @@ class PaymentController extends Controller
         }
 
       } else if($user = Auth::guard('user')->user()) {
-        //users
+        $builderPayment = (new PaymentHistoryBuilder())
+          ->setEbookId($ebook->id)
+          ->setMemberId($user->id);
+
+        $payment = (new PaymentHistoryFactoryBuild())->call()->member($builderPayment);
+
+        $transactionMember = TransactionMember::where([
+          'member_id' => $user->id,
+          'ebook_id' => $ebook->id
+        ])->update([
+          'transaction_ref' => $payment->ref_no
+        ]);
+
+        //repeat
+        if($repeat) {
+          $renewalEbookId = 0;
+
+          if($ebook->id == 1) {
+            $renewalEbookId = 3;
+          } else if($ebook->id == 2) {
+            $renewalEbookId = 4;
+          }
+
+          $renewalEbook = Ebook::where('id', $renewalEbookId)->first();
+
+          $orderAmount = (int) $renewalEbook->price + (int) ($renewalEbook->price_markup);
+          $productDesc = ucwords(str_replace("_", " ", $renewalEbook->title));
+        } else {
+          $orderAmount = (int) $ebook->price + (int) ($ebook->price_markup);
+          $productDesc = ucwords($ebook->title);
+        }
+      } else {
+        $orderAmount = (int) $ebook->price + (int) ($ebook->price_markup);
+        $productDesc = ucwords($ebook->title);
+
+        $payment = (object) [
+          'ref_no' => $transactionRef
+        ];
       }
 
       if(!$payment) {
+        DB::rollback();
+
         return response()->json([
           'success' => false
         ]);
@@ -99,13 +149,19 @@ class PaymentController extends Controller
       //   'data' => $data
       // ]);
 
+      DB::commit();
+
       return view('payment.form')
         ->with([
           'data' => $data
       ]);
 
     } catch (\Exception $e) {
+      DB::rollback();
 
+      return response()->json([
+        'message' => $transactionRef
+      ]);
     }
   }
 
@@ -195,16 +251,32 @@ class PaymentController extends Controller
         DB::rollback();
         return view('payment.failed');
       }
+      
+      $view = 'payment.failed';
+
+      if($status == "1") {
+        if($orderType == 'BITREX01') {
+          $trxNonMember = TransactionNonMember::where('transaction_ref', $code);
+          $trxNonMember->update([
+            'expired_at' => Carbon::create($trxNonMember->first()->expired_at)->addYear(1)
+          ]);
+        } else if($orderType == 'BITREX02') {
+          $trxMember = TransactionMember::where('transaction_ref', $code);
+          $trxMember->update([
+            'expired_at' => Carbon::create($trxMember->first()->expired_at)->addYear(1)
+          ]);
+        }
+        $view = 'payment.success';
+      } else if($status == "0") {
+        // echo $tatus;
+        $view = 'payment.failed';
+      } else if($status == "6") {
+        // echo $tatus;
+        $view = 'payment.waiting-transfer';
+      }
 
       DB::commit();
-      
-      if($status == 1) {
-        return view('payment.success');
-      } else if($status == 0) {
-        return view('payment.failed');
-      } else if($status == 6) {
-        return view('payment.waiting-transfer');
-      }
+      return view($view);
 
     } catch (\Illuminate\Database\QueryException $e) {
         DB::rollback();

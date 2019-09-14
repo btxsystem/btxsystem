@@ -42,6 +42,26 @@ class PvController extends Controller
         return response()->json($status, 200);
     }
 
+    public function searchDownline($id){
+        $datas = DB::table('employeers')->where('id_member','like','%'.$id.'%')->orWhere('username','like','%'.$id.'%')
+                                       ->orWhere('first_name','like','%'.$id.'%')->orWhere('last_name','like','%'.$id.'%')
+                                       ->select('id','username','first_name','last_name')->get();
+        $tmp = [];
+        foreach ($datas as $key => $data) {
+            $tmp[$key] = $data;
+            
+        }
+        return response()->json($datas, 200);
+    }
+
+    public function getSummary($id){
+        $data['member'] = DB::table('employeers')->where('id',$id)->select('first_name','last_name','username', 'id_member')->first();
+        $data['pv_group'] = DB::table('pv_rank')->where('id_member',$id)->select('pv_left','pv_midle','pv_right')->first();
+        $data['pv_group'] = $data['pv_group'] ? $data['pv_group']->pv_left + $data['pv_group']->pv_midle + $data['pv_group']->pv_right : 0;
+        $data['pairings'] = DB::table('pairings')->where('id_member',$id)->select('pv_left','pv_midle','pv_right')->first();
+        return response()->json($data, 200);
+    }
+
     public function generate(){
         
         $pairings = DB::table('pairings')->join('employeers','pairings.id_member','=','employeers.id')

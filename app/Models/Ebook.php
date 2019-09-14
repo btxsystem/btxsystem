@@ -21,8 +21,8 @@ class Ebook extends Model
   ];
 
   protected $appends = [
-    'access',
     'expired',
+    'access',
     'countdown_days',
     'expired_at',
     'status'
@@ -59,37 +59,57 @@ class Ebook extends Model
       return $this->hasOne('\App\Models\TransactionMember', 'ebook_id', 'id');
   }
 
-  public function getAccessAttribute()
-  {
-    if(\Auth::guard('nonmember')->user()) {
-      $memberTransaction = $this->transaction()->where('non_member_id', \Auth::guard('nonmember')->user()->id);
-      return $memberTransaction->count() > 0 ? $memberTransaction->first()->status == 1 ? true : false : false;
-    } else if(\Auth::guard('user')->user()){
-      $userTransaction = $this->transactionMember()->where('member_id', \Auth::guard('user')->user()->id);
-      return $userTransaction->count() > 0 ? $userTransaction->first()->status == 1 ? true : false : false;
-    } else {
-      return false;
-    }
-  }
-
   public function getExpiredAttribute()
   {
-    if(!$this->access) {
-      return false;
-    }
+    // if(!$this->access) {
+    //   return false;
+    // }
 
     if(\Auth::guard('nonmember')->user()) {
       $memberTransaction = $this->transaction()->where('non_member_id', \Auth::guard('nonmember')->user()->id)->first();
+
+      if(!$memberTransaction) {
+        return false;
+      }
       
       $expired = $memberTransaction->expired_at < date('Y-m-d');
 
       return $expired;
     } else if(\Auth::guard('user')->user()){
       $userTransaction = $this->transactionMember()->where('member_id', \Auth::guard('user')->user()->id)->first();
+
+      if(!$userTransaction) {
+        return false;
+      }
       
       $expired = $userTransaction->expired_at < date('Y-m-d');
+      
 
       return $expired;
+    } else {
+      return false;
+    }
+  }
+
+  public function getAccessAttribute()
+  {
+    if(\Auth::guard('nonmember')->user()) {
+      $memberTransaction = $this->transaction()->where('non_member_id', \Auth::guard('nonmember')->user()->id)->first();
+
+      if($memberTransaction) {
+        return $memberTransaction->status == 1 && !$this->expired ? true : false;
+      } else {
+        return false;
+      }
+
+    } else if(\Auth::guard('user')->user()){
+      $userTransaction = $this->transactionMember()->where('member_id', \Auth::guard('user')->user()->id)->first();
+      // return $userTransaction->count() > 0 ? $userTransaction->first()->status == 1 ? true : false : false;
+      if($userTransaction) {
+        return $userTransaction->status == 1 && !$this->expired ? true : false;
+      } else {
+        return false;
+      }
     } else {
       return false;
     }
@@ -162,14 +182,14 @@ class Ebook extends Model
         ->user()->id)
         ->first();
 
-      return $memberTransaction->status;
+      return $memberTransaction ? $memberTransaction->status : null;
     } else if(\Auth::guard('user')->user()){
       $userTransaction = $this->transactionMember()
         ->where('member_id', \Auth::guard('user')
         ->user()->id)
         ->first();
 
-      return $userTransaction->status;
+      return $userTransaction ? $userTransaction->status : null;
     } else {
       return null;
     }

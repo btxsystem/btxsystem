@@ -58,7 +58,7 @@ class RegisterController extends Controller
         $builder = (new TransactionNonMemberBuilder())
         ->setMemberId($referralId)
         ->setNonMemberId($nonMemberId)
-        ->setExpiredAt(date('Y-m-d'))
+        ->setExpiredAt(Carbon::create(date('Y-m-d')))
         ->setIncome($income)
         ->setEbookId($ebook)
         ->setStatus(3);
@@ -71,7 +71,23 @@ class RegisterController extends Controller
 
         $payment  = (new PaymentHistoryFactoryBuild())->call()->nonMember($builderPayment);
       } else if(Auth::guard('user')->user()) {
-        // logic users
+        $nonMember = true;
+  
+        $memberId = Auth::guard('user')->user()->id;
+    
+        $builder = (new TransactionMemberBuilder())
+        ->setMemberId($memberId)
+        ->setExpiredAt(Carbon::create(date('Y-m-d')))
+        ->setEbookid($ebook)
+        ->setStatus(3);
+        
+        $transaction  = (new TransactionFactoryRegister())->call()->createMember($builder);
+
+        $builderPayment = (new PaymentHistoryBuilder())
+        ->setEbookId($ebook)
+        ->setMemberId($memberId);
+
+        $payment  = (new PaymentHistoryFactoryBuild())->call()->member($builderPayment);
       } else {
         $builder = (new NonMemberBuilder())
           ->setFirstName($request->input('firstName'))
@@ -81,6 +97,12 @@ class RegisterController extends Controller
           ->setPassword('secret');
           
         $nonMember = (new RegisterFactoryMake())->call()->createNonMember($builder);
+
+        $builderPayment = (new PaymentHistoryBuilder())
+        ->setEbookId($ebook)
+        ->setNonMemberId($nonMember->id);
+
+        $payment  = (new PaymentHistoryFactoryBuild())->call()->nonMember($builderPayment);
 
         if($nonMember) {
           $referralId = '';
@@ -105,18 +127,13 @@ class RegisterController extends Controller
           ->setExpiredAt(Carbon::create(date('Y-m-d'))->addYear(1))
           ->setIncome($income)
           ->setEbookId($ebook)
+          ->setTransactionRef($payment->ref_no)
           ->setStatus(3);
           
           $transaction  = (new TransactionFactoryRegister())->call()->createNonMember($builderTrx);
         } else {
           $transaction = false;
-        }
-
-        $builderPayment = (new PaymentHistoryBuilder())
-        ->setEbookId($ebook)
-        ->setNonMemberId($nonMember->id);
-
-        $payment  = (new PaymentHistoryFactoryBuild())->call()->nonMember($builderPayment);
+        }        
       }
 
       if(!$nonMember || !$payment || !$transaction) {
