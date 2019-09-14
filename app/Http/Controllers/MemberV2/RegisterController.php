@@ -61,7 +61,7 @@ class RegisterController extends Controller
         ->setExpiredAt(Carbon::create(date('Y-m-d')))
         ->setIncome($income)
         ->setEbookId($ebook)
-        ->setStatus(3);
+        ->setStatus(6);
         
         $transaction  = (new TransactionFactoryRegister())->call()->createNonMember($builder);
 
@@ -79,7 +79,7 @@ class RegisterController extends Controller
         ->setMemberId($memberId)
         ->setExpiredAt(Carbon::create(date('Y-m-d')))
         ->setEbookid($ebook)
-        ->setStatus(3);
+        ->setStatus(6);
         
         $transaction  = (new TransactionFactoryRegister())->call()->createMember($builder);
 
@@ -128,7 +128,7 @@ class RegisterController extends Controller
           ->setIncome($income)
           ->setEbookId($ebook)
           ->setTransactionRef($payment->ref_no)
-          ->setStatus(3);
+          ->setStatus(6);
           
           $transaction  = (new TransactionFactoryRegister())->call()->createNonMember($builderTrx);
         } else {
