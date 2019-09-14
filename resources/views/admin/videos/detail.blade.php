@@ -8,12 +8,15 @@ Detail Video
 @section('content')
 
 <section class="content-header">
-    <h1> Video</h1>
+    <h1> {{$data->title}} Overview</h1>
     <ol class="breadcrumb">
         <li>
-            <a href="#">Video Management</a>
+            <a href="{{ route('ebook.index') }}">Ebook </a>
         </li>
-        <li class="active">Detail Data Video</li>
+        <li>
+            <a href="{{ route('ebook.show', $data->videoEbook->ebook_id) }}">{{optional($data->videoEbook)->ebook_title}} </a>
+        </li>
+        <li class="active">{{$data->title}}</li>
     </ol>
 
     <div class="container">

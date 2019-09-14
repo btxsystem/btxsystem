@@ -28,7 +28,8 @@ class BookChapterLessonController extends Controller
      */
     public function create($id)
     {
-        $data = Book::find($id);
+        $data = Book::with('bookEbook')->find($id);
+
         return view('admin.book-chapter-lessons.create', compact('data'));
     }
 
@@ -40,7 +41,6 @@ class BookChapterLessonController extends Controller
      */
     public function store(Request $request)
     {
-        // return $request->all();
         $request->validate([
             'title' => 'required',
             'content' => 'required',
@@ -69,9 +69,7 @@ class BookChapterLessonController extends Controller
      */
     public function show($id)
     {
-       $data = BookChapterLesson::findOrFail($id);
-
-    //    return $data;
+       $data = BookChapterLesson::with('book.bookEbook')->findOrFail($id);
 
        return view('admin.book-chapter-lessons.detail', compact('data'));
     }
@@ -84,7 +82,7 @@ class BookChapterLessonController extends Controller
      */
     public function edit($id)
     {
-        $data = BookChapterLesson::findOrFail($id);
+        $data = BookChapterLesson::with('book.bookEbook')->findOrFail($id);
 
         return view('admin.book-chapter-lessons.edit', compact('data'));
     }

@@ -11,9 +11,18 @@ Create Chapter Lesson
     <h1> Chapter Lesson</h1>
     <ol class="breadcrumb">
         <li>
-            <a href="#">Chapter Lesson</a>
+            <a href="{{ route('ebook.index') }}">Ebook </a>
         </li>
-        <li class="active">Add Data Lesson</li>
+        <li>
+            <a href="{{ route('ebook.show', $data->bookEbook->ebook_id) }}">{{optional($data->bookEbook)->ebook_title}} </a>
+        </li>
+        <li>
+            <a href="{{ route('book.index') }}">Book </a>
+        </li>
+        <li>
+            <a href="{{ route('book.show', $data->id) }}">{{$data->title}} </a>
+        </li>
+        <li class="active">Create Lesson</li>
     </ol>
 
     <div class="container">

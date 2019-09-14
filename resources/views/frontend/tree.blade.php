@@ -135,6 +135,48 @@
 			<div class="col-lg-12 col-md-12">
 				<div class="card">
 					<div class="container-fluid">
+						<div>
+							<div class="col-md-12">
+								<h3>Detail Summary</h3>
+								<hr>
+								<div class="row col-md-12">
+									<div class="col-md-4">
+										<h5 id="_name"></h5>
+									</div>
+									<div class="col-md-4">
+										<h5 id="_username"></h5>
+									</div>
+									<div class="col-md-4">
+										<h5 id="_id_member"></h5>
+									</div>
+								</div>
+								<div class="row col-md-12">
+									<div class="col-md-4">
+										<h5 id="_pv_pairing_l"></h5>
+									</div>
+									<div class="col-md-4">
+										<h5 id="_pv_pairing_m"></h5>
+									</div>
+									<div class="col-md-4">
+										<h5 id="_pv_pairing_r"></h5>
+									</div>
+								</div>
+								<div class="row col-md-12">
+									<div class="col-md-6">
+										<h5 id="_pv_group"></h5>
+									</div>
+								</div>
+								<hr>
+								<div class="row col-md-12">
+									<input type="text" class="search" placeholder="Search by Name / Username / Id Member">&nbsp;&nbsp;<button type="button" class="btn btn-primary" id="search-downline">Search</button>
+								</div>
+								<hr>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="card">
+					<div class="container-fluid">
 						<div class="row">
 							<div class="col-md-12">
 								<br>
@@ -154,6 +196,16 @@
 
 @section('footer_scripts')
 <style>
+	@media only screen and (max-width: 480px) {
+    /* For mobile phones: */
+		.search {
+			width: 160px !important;
+		}
+    }
+	.search {
+		font-size: 14px;
+		width: 887px;
+	}
 	rect {
 		fill: #ebebeb;
 		stroke: #ebebeb;
@@ -225,6 +277,21 @@
 			placeholder: 'Kurir',
 			data: data,
 		});
+	});
+
+	$('#search-downline').click(function(){
+		let data = $('.search').val();
+		$.ajax({
+			type: 'GET',
+			url: '/member/select/search-downline/'+data,
+			success: function (data) {
+				console.log(data);
+				
+			},
+			error: function() { 
+				console.log("Error");
+			}
+		});	
 	});
 
 	$('#province').change(function(){
@@ -367,6 +434,19 @@
 	};
 
 	var tree = (data) => {
+		$.ajax({
+            url: 'select/summary/'+data.id,
+            success:function(data){
+				$('#_name').text('Name: ' + data.member.first_name + ' ' +data.member.last_name);
+				$('#_username').text('Username: ' + data.member.username);
+				$('#_id_member').text('Id Member: ' + data.member.id_member);
+				data.pairings ? $('#_pv_pairing_l').text('PV Pairing L' + data.pairings.pv_left) : $('#_pv_pairing_l').text('PV Pairing L: 0 ') ;
+				data.pairings ? $('#_pv_pairing_m').text('PV Pairing M' + data.pairings.pv_midle) : $('#_pv_pairing_m').text('PV Pairing M: 0 ');
+				data.pairings ? $('#_pv_pairing_r').text('PV Pairing R' + data.pairings.pv_right) : $('#_pv_pairing_r').text('PV Pairing R: 0 ');
+				data.group ? $('#_pv_group').text('PV Group' + data.pv_group) : $('#_pv_group').text('PV Group: 0 ');
+            }
+        });
+		
 		var treeStructure = d3.tree().size([2000,480]);
 		var root = d3.hierarchy(data).sort(function(a, b) {return a.data.position - b.data.position ;});
 		treeStructure(root);

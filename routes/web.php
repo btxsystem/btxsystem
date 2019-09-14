@@ -109,9 +109,9 @@ Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
     });
 
     Route::group(['prefix' => 'history-bonus', 'as'=> 'history-bonus.'], function () {
-        Route::get('sponsor', ['as' => 'sponsor', 'uses' => 'Member\MybonusController@sponsor']);
-        Route::get('sales-profit', ['as' => 'sales-profit', 'uses' => 'Member\MybonusController@profit']);
-        Route::get('pairing', ['as' => 'pairing', 'uses' => 'Member\MybonusController@pairing']);
+        Route::get('sponsor', ['as' => 'sponsor', 'uses' => 'Member\MyBonusController@sponsor']);
+        Route::get('sales-profit', ['as' => 'sales-profit', 'uses' => 'Member\MyBonusController@profit']);
+        Route::get('pairing', ['as' => 'pairing', 'uses' => 'Member\MyBonusController@pairing']);
     });
 
     Route::get('', ['as' => 'dashboard', 'uses' => 'Member\DashboardController@index']);
@@ -154,6 +154,8 @@ Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
         Route::get('expired-member', ['as' => 'expired-member', 'uses' => 'Member\ProfileMemberController@getExpiredMember']);
         Route::get('expired-ebook', ['as' => 'expired-ebook', 'uses' => 'Member\EbookController@getExpiredEbook']);
         Route::get('exp-three-month', ['as' => 'exp-three-month', 'uses' => 'Member\ProfileMemberController@expNotif']);
+        Route::get('summary/{id}', ['as' => 'summary', 'uses' => 'Member\PvController@getSummary']);
+        Route::get('search-downline/{id}', ['as' => 'search-downline', 'uses' => 'Member\PvController@searchDownline']);
     });
 
     Route::group(['prefix' => 'transaction', 'as'=> 'transaction.'], function () {

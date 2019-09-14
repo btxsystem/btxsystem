@@ -24,6 +24,11 @@ class BookChapterLesson extends Model
     return $this->hasOne(BookChapterLessonSolved::class, 'lesson_id', 'id');
   }
 
+  public function book()
+  {
+    return $this->belongsTo(Book::class, 'book_id');
+  }
+
   public function getSolvedAttribute()
   {
     if(\Auth::guard('nonmember')->user()) {

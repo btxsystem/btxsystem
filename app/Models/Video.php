@@ -19,6 +19,10 @@ class Video extends Model
         return $this->belongsToMany('\App\Models\Ebook', 'video_ebook', 'video_id', 'ebook_id');
     }
 
+    public function videoEbook()
+    {
+      return $this->hasOne('\App\Models\VideoEbook', 'video_id');
+    }
     public function getPathUrlAttribute()
     {
         return url($this->path);
