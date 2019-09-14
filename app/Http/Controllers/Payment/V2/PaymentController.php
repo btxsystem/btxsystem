@@ -21,8 +21,10 @@ use App\Models\PaymentHistoryNonMember;
 
 use Carbon\Carbon;
 
-use App\Mail\WelcomeMail;
 use Illuminate\Support\Facades\Mail;
+
+use App\Mail\WelcomeMail;
+use App\Mail\PurchaseEbookNonMemberMail;
 
 class PaymentController extends Controller
 {
@@ -248,7 +250,33 @@ class PaymentController extends Controller
         ])
         ->first();
 
-        Mail::to($userData->nonMember->email)->send(new WelcomeMail($userData->nonMember));
+        $isRegister = false;
+
+        $checkIsRegister = TransactionNonMember::where('transaction_ref', 'BITREX011568374686')
+          ->with([
+            'ebook',
+            'nonMember'
+          ])
+          ->first();
+    
+        if($checkIsRegister) {
+          //if new register
+          if($checkIsRegister->expired_at <= date('Y-m-d') && $checkIsRegister->status != 1) {
+            $isRegister = true;
+          } else {
+            $isRegister = false;
+          }
+        }
+    
+        //if is new register
+        if($isRegister) {
+          $additionalParameter = (object) [
+            'password' => 'secret12'
+          ];
+          Mail::to($checkIsRegister->nonMember->email)->send(new PurchaseEbookNonMemberMail($checkIsRegister, $additionalParameter));
+        } else {
+          Mail::to($checkIsRegister->nonMember->email)->send(new PurchaseEbookNonMemberMail($checkIsRegister, null));
+        }
 
       } else if($orderType == 'BITREX02') {
         $paymentHistory = PaymentHistoryMember::where('ref_no', $code)->update([

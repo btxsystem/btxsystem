@@ -17,4 +17,9 @@ class TransactionNonMember extends Model
   {
       return $this->hasOne('\App\Employeer', 'id', 'member_id');
   }
+
+  public function nonMember()
+  {
+      return $this->hasOne('\App\Models\NonMember', 'id', 'non_member_id');
+  }
 }
