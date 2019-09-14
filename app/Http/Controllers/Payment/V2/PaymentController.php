@@ -15,10 +15,14 @@ use App\Builder\PaymentHistoryBuilder;
 use App\Factory\RegisterFactoryMake;
 use App\Factory\PaymentHistoryFactoryBuild;
 
+use App\Models\NonMember;
 use App\Models\PaymentHistoryMember;
 use App\Models\PaymentHistoryNonMember;
 
 use Carbon\Carbon;
+
+use App\Mail\WelcomeMail;
+use Illuminate\Support\Facades\Mail;
 
 class PaymentController extends Controller
 {
@@ -46,6 +50,8 @@ class PaymentController extends Controller
       $ebook = Ebook::where('id', $request->input('ebook'))->first();
       $orderAmount = 0;
       $productDesc = '';
+      $email = 'asepmedia18@gmail.com';
+      $username = 'asep';
     
       if($user = Auth::guard('nonmember')->user()) {
         $builderPayment = (new PaymentHistoryBuilder())
@@ -119,6 +125,15 @@ class PaymentController extends Controller
         $payment = (object) [
           'ref_no' => $transactionRef
         ];
+
+        $userData = PaymentHistoryNonMember::where('ref_no', $transactionRef)
+        ->with([
+          'nonMember'
+        ])
+        ->first();
+
+        $email = $userData->nonMember->email;
+        $username = $userData->nonMember->username;
       }
 
       if(!$payment) {
@@ -134,8 +149,8 @@ class PaymentController extends Controller
       $data['currency'] = "IDR";
       $data['payment_id'] = 1;
       $data['product_desc'] = "Ebook Bitrexgo {$productDesc}";
-      $data['user_name'] = 'asep';
-      $data['user_email'] = 'aseppmedia18@gmail.com';
+      $data['user_name'] = $username;
+      $data['user_email'] = $email;
       $data['ref_no'] = $payment->ref_no;
       $data['lang'] = 'UTF-8';
       // $data['code'] = $subs->created_at->format('dmYHi');
@@ -226,6 +241,15 @@ class PaymentController extends Controller
         ->update([
           'status' => $status,        
         ]);
+
+        $userData = PaymentHistoryNonMember::where('ref_no', $code)
+        ->with([
+          'nonMember'
+        ])
+        ->first();
+
+        Mail::to($userData->nonMember->email)->send(new WelcomeMail($userData->nonMember));
+
       } else if($orderType == 'BITREX02') {
         $paymentHistory = PaymentHistoryMember::where('ref_no', $code)->update([
           'status' => $status,

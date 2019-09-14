@@ -145,6 +145,35 @@ h2.plan-title {
 			<div class="row">
 				@foreach($ebooks as $ebook)
 				<div class="col-lg-6 mb-3">
+					<div class="row">
+						@if(Auth::guard('nonmember')->user() || Auth::guard('user')->user())
+						<div class="col-8 mx-auto">
+							@if($ebook->access)
+							<div id="clockdiv{{$ebook->id}}" class="clockdiv mt-2">
+								<div>
+									<span class="days"></span>
+									<div class="smalltext">Days</div>
+								</div>
+								<div>
+									<span class="hours"></span>
+									<div class="smalltext">Hours</div>
+								</div>
+								<div>
+									<span class="minutes"></span>
+									<div class="smalltext">Minutes</div>
+								</div>
+								<div>
+									<span class="seconds"></span>
+									<div class="smalltext">Seconds</div>
+								</div>
+							</div>
+							@else
+							<div style="margin-top:115px">
+							</div>
+							@endif
+						</div>
+						@endif
+					</div>
 					<div class="shadow rounded p-3 border-hover bg-white triangle">
 						@if($ebook->access)
 						<!-- <div id="flag" aria-hidden="true">
@@ -186,25 +215,7 @@ h2.plan-title {
 									</form>
 								@else
 									<div>
-										@if($ebook->access)
-										<div id="clockdiv{{$ebook->id}}" class="clockdiv mt-2">
-											<div>
-												<span class="days"></span>
-												<div class="smalltext">Days</div>
-											</div>
-											<div>
-												<span class="hours"></span>
-												<div class="smalltext">Hours</div>
-											</div>
-											<div>
-												<span class="minutes"></span>
-												<div class="smalltext">Minutes</div>
-											</div>
-											<div>
-												<span class="seconds"></span>
-												<div class="smalltext">Seconds</div>
-											</div>
-										</div>										
+										@if($ebook->access)								
 										<form action="{{route('re.payment')}}" method="post">
 											{{csrf_field()}}
 											<input type="hidden" name="ebook" value="{{$ebook->id}}">

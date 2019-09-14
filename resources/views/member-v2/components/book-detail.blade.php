@@ -29,9 +29,9 @@
           </nav>
       </div>
       <div class="col-xl-9 col-lg-8 col-sm-7 mt10">
-        <nav aria-label="breadcrumb">
+        <!-- <nav aria-label="breadcrumb">
           <div id="breadcrumb"></div>
-        </nav>
+        </nav> -->
         <div id="lesson_content"></div>
         <div>
           <div class="s">
@@ -53,6 +53,7 @@
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <script>
+  $('#percentage-wrapper').removeClass('d-none')
   let lessons = [];
 
   <?php foreach($book->lessons as $k => $v){?>
@@ -75,9 +76,13 @@
 
     let sumPercentage = filterPercentage.length / lessons.length * 100;
 
-    percentage = sumPercentage
+    percentage = Math.ceil(sumPercentage)
+
+    $('#percentage-bar').css({
+      width: `${percentage}%`
+    }).html(`<span style="font-weight:bold">${percentage}%</span>`)
     
-    $('#percentage').html(`${percentage}%`)
+    // $('#percentage').html(`${percentage}%`)
     let initLessonList = ''
     lessons.map((v, i) => {
       initLessonList += `

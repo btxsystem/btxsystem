@@ -10,13 +10,18 @@
                </button>
                </a>
             </div>
-            <!-- <div class="col-md-5 col-7 prog-xs" style="padding: 0px;">
-               <div class="progress">
-                  <div class="progress-bar bg-warning" style="width:50%"></div>
+            <div class="col-md-5 col-7 prog-md" style="padding: 0px;">
+               <div class="progress d-none" id="percentage-wrapper">
+                  <div class="progress-bar bg-danger" id="percentage-bar" style="width:50%"></div>
                </div>
-            </div> -->
-            <!-- <ul class="nav navbar-nav navbar-right">
-               <li>
+            </div>
+            <ul class="nav navbar-nav navbar-right">
+               <!-- <li>
+                  <a href="#">
+                  <button class="btn btn-sm btn-transparent d-none d-sm-block">
+                     <img src="assets/img/flag.png" class="pr10"> REPORT
+                  </button>
+                  <button        <li>
                   <a href="#">
                   <button class="btn btn-sm btn-transparent d-none d-sm-block">
                      <img src="assets/img/flag.png" class="pr10"> REPORT
@@ -25,7 +30,11 @@
                      <img src="assets/img/flag.png">
                   </button>
                   </a>
-               </li>
-            </ul> -->
+               </li> class="btn btn-sm btn-transparent d-sm-none">
+                     <img src="assets/img/flag.png">
+                  </button>
+                  </a>
+               </li>  -->
+            </ul>
          </div>
       </nav>
