@@ -21,8 +21,11 @@ use App\Models\PaymentHistoryNonMember;
 
 use Carbon\Carbon;
 
-use App\Mail\WelcomeMail;
 use Illuminate\Support\Facades\Mail;
+
+use App\Mail\WelcomeMail;
+use App\Mail\PurchaseEbookMemberMail;
+use App\Mail\PurchaseEbookNonMemberMail;
 
 class PaymentController extends Controller
 {
@@ -248,7 +251,37 @@ class PaymentController extends Controller
         ])
         ->first();
 
-        Mail::to($userData->nonMember->email)->send(new WelcomeMail($userData->nonMember));
+        $isRegister = false;
+
+        $checkIsRegister = TransactionNonMember::where('transaction_ref', $code)
+          ->with([
+            'ebook',
+            'nonMember'
+          ])
+          ->first();
+    
+        if($checkIsRegister) {
+          //if new register
+          if($checkIsRegister->expired_at <= date('Y-m-d') && $checkIsRegister->status != 1) {
+            $isRegister = true;
+          } else {
+            $isRegister = false;
+          }
+        }
+    
+        //if is new register
+        if($isRegister) {
+          //generate random password
+          $additionalParameter = (object) [
+            'password' => 'secret'
+          ];
+
+          //send email
+          Mail::to($checkIsRegister->nonMember->email)->send(new PurchaseEbookNonMemberMail($checkIsRegister, $additionalParameter));
+        } else {
+          //send email
+          Mail::to($checkIsRegister->nonMember->email)->send(new PurchaseEbookNonMemberMail($checkIsRegister, null));
+        }
 
       } else if($orderType == 'BITREX02') {
         $paymentHistory = PaymentHistoryMember::where('ref_no', $code)->update([
@@ -266,6 +299,15 @@ class PaymentController extends Controller
           ->update([
             'status' => $status
         ]);
+
+        $checkIsRegister = TransactionMember::where('transaction_ref', $code)
+          ->with([
+            'ebook',
+            'member'
+          ])
+          ->first();
+
+        Mail::to($checkIsRegister->member->email)->send(new PurchaseEbookMemberMail($checkIsRegister, null));
       } else {
         $paymentHistory = false;
         $transaction = false;
