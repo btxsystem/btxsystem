@@ -20,15 +20,17 @@
                         <input class="form-control" name="nominal" id="nominal" type="number" min="5">
                         <label class="form-label">Nominal</label>
                     </div>
+                    <p class="notif" style="color:green">Minimum input bitrex points 10000, and Multiples 1000</p>
                 </div>
                 <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="form-line">
                         <input class="form-control" name="points" id="points" type="text" readonly>
                     </div>
+                    <p class="notif" style="color:green">Convert from IDR 1000</p>
                 </div>
                 <div class="modal-footer">
                     <a href="#" class="btn btn-secondary" data-dismiss="modal">Close</a>
-                    <button type="submit" class="btn btn-primary">Topup</a>
+                    <button type="submit" disabled=true class="btn btn-primary">Topup</a>
                 </div>
             </form>
         </div>
@@ -129,10 +131,11 @@
     $('#nominal').keyup(function(){
         var points = $('#nominal').val() / 1000; 
         $('#points').val(points);
-    })
-    $('#nominal').keyup(function(){
-        var points = $('#nominal').val() / 1000; 
-        $('#points').val(points);
+        if ($('#nominal').val() % 1000 == 0 && $('#nominal').val() >= 10000) {
+            $("button").prop('disabled',false);
+        }else{
+            $("button").prop('disabled',true);
+        }
     })
 </script>
 @stop
