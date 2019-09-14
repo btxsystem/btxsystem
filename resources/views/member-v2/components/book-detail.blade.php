@@ -36,7 +36,7 @@
         <div>
           <div class="s">
             <div>
-              <div class="d-flex align-items-center flex-column bd-highlight mb-3" style="height: 72vh;">
+              <div class="d-flex align-items-center flex-column bd-highlight mb-3">
                 <div class="mt-auto">
                   <button class="btn btn-identity text-white" id="next">Lanjutkan</button>
                 </div>
