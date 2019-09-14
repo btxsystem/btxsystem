@@ -11,7 +11,10 @@ Detail Book
     <h1>{{$data->title}} Overview </h1>
     <ol class="breadcrumb">
         <li>
-            <a href="#">Ebook </a>
+            <a href="{{ route('ebook.index') }}">Ebook </a>
+        </li>
+        <li>
+            <a href="{{ route('ebook.show', $data->bookEbook->ebook_id) }}">{{optional($data->bookEbook)->ebook_title}} </a>
         </li>
         <li class="active">{{$data->title}} </li>
     </ol>

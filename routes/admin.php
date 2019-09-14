@@ -76,7 +76,7 @@ Route::group(['middleware' => 'admin'], function () {
 
     Route::get('book/delete/{id}', 'Admin\BookController@destroy')->name('deleteBook');
 
-        // Book Chapter Lesson
+    // Book Chapter Lesson
     Route::get('book/{id}/create/lessons','Admin\BookChapterLessonController@create')->name('book.create.lesson');
     Route::resource('book-chapter-lesson', 'Admin\BookChapterLessonController');
     Route::get('chapter-lesson/delete/{id}', 'Admin\BookChapterLessonController@destroy')->name('deleteChapterLesson');

@@ -8,12 +8,18 @@ Edit Ebook
 @section('content')
 
 <section class="content-header">
-    <h1> Ebook</h1>
+    <h1> {{$data->title}} Edit</h1>
     <ol class="breadcrumb">
         <li>
-            <a href="#">Ebook</a>
+            <a href="{{ route('ebook.index') }}">Ebook </a>
         </li>
-        <li class="active">Edit Data Ebook</li>
+        <li>
+            <a href="{{ route('ebook.show', $data->book->bookEbook->ebook_id) }}">{{optional($data->book->bookEbook)->ebook_title}} </a>
+        </li>
+        <li>
+            <a href="{{ route('book.show', $data->book->id) }}">{{optional($data->book)->title}} </a>
+        </li>
+        <li class="active">{{$data->title}} </li>
     </ol>
 
     <div class="container">

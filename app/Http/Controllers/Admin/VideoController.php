@@ -100,7 +100,8 @@ class VideoController extends Controller
      */
     public function show($id)
     {
-        $data = Video::findOrFail($id);
+        $data = Video::with('videoEbook.ebook')->findOrFail($id);
+
         return view('admin.videos.detail', compact('data'));
     }
 
@@ -112,7 +113,7 @@ class VideoController extends Controller
      */
     public function edit($id)
     {
-        $data = Video::findOrFail($id);
+        $data = Video::with('videoEbook.ebook')->findOrFail($id);
 
         return view('admin.videos.edit', compact('data'));
     }
