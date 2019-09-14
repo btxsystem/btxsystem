@@ -109,9 +109,9 @@ Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
     });
 
     Route::group(['prefix' => 'history-bonus', 'as'=> 'history-bonus.'], function () {
-        Route::get('sponsor', ['as' => 'sponsor', 'uses' => 'Member\MybonusController@sponsor']);
+        Route::get('sponsor', ['as' => 'sponsor', 'uses' => 'Member\MyBonusController@sponsor']);
         Route::get('sales-profit', ['as' => 'sales-profit', 'uses' => 'Member\MyBonusController@profit']);
-        Route::get('pairing', ['as' => 'pairing', 'uses' => 'Member\MybonusController@pairing']);
+        Route::get('pairing', ['as' => 'pairing', 'uses' => 'Member\MyBonusController@pairing']);
     });
 
     Route::get('', ['as' => 'dashboard', 'uses' => 'Member\DashboardController@index']);
