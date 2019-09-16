@@ -13,7 +13,7 @@ class CreateProcedureRewards extends Migration
      */
     public function up()
     {
-        DB::unprepared(' 
+        /*DB::unprepared(' 
             CREATE PROCEDURE add_pv_reward(idm INT, pv INT)
             BEGIN
                 DECLARE parent, cek int;
@@ -42,14 +42,14 @@ class CreateProcedureRewards extends Migration
                     call add_pv_reward(parent, pv);  
                 END IF;
             END
-        ');
+        '); 
 
         DB::unprepared('
         CREATE TRIGGER tr_add_pv_reward AFTER INSERT ON `history_pv` 
             FOR EACH ROW BEGIN
                 call add_pv_reward(NEW.id_member, NEW.pv_today);
             END
-        ');
+        '); */
     }
 
     /**
