@@ -70,7 +70,7 @@ class MyBonusController extends Controller
 
     public function recursive($id){
         $data = Employeer::where('id',$id)->select('parent_id','id','sponsor_id','position')->first();
-        $rank = DB::table('pv_rank')->where('id_member',$data->id)->select('pv_left')->first();
+        $rank = DB::table('pv_rank')->where('id_member',$data->id)->select('pv_left','pv_midle','pv_right')->first();
         DB::table('employeers')->where('id', $data->id)->update(['pv' => 100, 'updated_at' => now()]);        
         DB::table('transaction_member')->insert(['member_id' => $data->id, 'ebook_id' => 1, 'created_at' => now(), 'updated_at' => now(), 'status' => 1, 'expired_at' => '2020-09-18', 'transaction_ref' => null]);
         if ($data->position == 0) {
