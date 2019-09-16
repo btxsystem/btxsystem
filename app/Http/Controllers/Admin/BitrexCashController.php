@@ -36,7 +36,7 @@ class BitrexCashController extends Controller
     }
 
     public function detail($id){
-        if (request()->ajax()) {
+        // if (request()->ajax()) {
             $data = DB::table('history_bitrex_cash')->select('id','id_member', 'nominal','description', 'created_at')->where('id_member',$id);
             return Datatables::of($data)
             ->addIndexColumn()         
@@ -47,7 +47,7 @@ class BitrexCashController extends Controller
                 return date('d-m-Y', strtotime($data->created_at));
             })  
             ->make(true);
-        }
+        // }
     }
 
    

@@ -69,7 +69,6 @@ List Of Bitrex Points
                                                     <thead class="flip-content">
                                                         <tr>
                                                             <th>No</th>
-                                                            <th>Id Member</th>
                                                             <th>Nominal</th>
                                                             <th>Description</th>
                                                             <th>Date</th>
@@ -118,7 +117,8 @@ List Of Bitrex Points
     });
 
     var detail = (id) => {
-        console.log('masuk'); 
+        // var url = id+"/cash/detail";
+        // console.log(url); 
         var table = $('.detail').DataTable({
               destroy: true,
               processing: true,
@@ -132,7 +132,6 @@ List Of Bitrex Points
                       data: 'DT_RowIndex', name: 'DT_RowIndex', 
                       orderable: false, searchable: false
                   },
-                  {data: 'id_member', name: 'id_member'},
                   {data: 'nominal', name: 'nominal'},
                   {data: 'description', name: 'description', searchable: false},
                   {data: 'created_at', name: 'created_at', orderable: false, searchable: false},
