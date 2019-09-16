@@ -242,6 +242,8 @@ class RegisterController extends Controller
     try {
       DB::beginTransaction();
 
+      $orderType = substr($code, 0, 8);
+      
       $temporaryTrx = TemporaryTransactionMember::where('transaction_ref', $code)->first();
 
       $view = 'payment.failed';
