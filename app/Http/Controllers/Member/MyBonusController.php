@@ -56,7 +56,7 @@ class MyBonusController extends Controller
     }
 
     public function generatePv(){
-        $datas = Employeer::select('parent_id','id','sponsor_id')->get();
+        $datas = Employeer::select('parent_id','id')->get();
         foreach ($datas as $key => $data) {
             if ($data->parent_id != null) {
                 $this->recursive($data->id);
