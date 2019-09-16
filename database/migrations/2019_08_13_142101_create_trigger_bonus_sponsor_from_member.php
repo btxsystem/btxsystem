@@ -13,7 +13,7 @@ class CreateTriggerBonusSponsorFromMember extends Migration
      */
     public function up()
     {
-        DB::unprepared('
+        /*DB::unprepared('
         CREATE TRIGGER tr_bonus_sponsor_from_member AFTER INSERT ON `transaction_member` 
             FOR EACH ROW BEGIN
                 DECLARE bonus_bv decimal(15, 0);
@@ -48,7 +48,7 @@ class CreateTriggerBonusSponsorFromMember extends Migration
                     UPDATE employeers SET expired_at = expired_at + INTERVAL @inter YEAR WHERE id = NEW.member_id;
                 END IF;
             END
-        ');
+        ');*/
     }
 
     /**

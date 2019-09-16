@@ -17,7 +17,7 @@
 
 @section('content')
 <div class="col-12 d-flex justify-content-center" style="position: absolute; height: 50vh;background-color:#ffb320;">
-	</div>
+</div>
 	<div class="col-lg-12 pb-3">
 		@include('member-v2.partials.navbar-detail')
 		<div class="detail-padding">

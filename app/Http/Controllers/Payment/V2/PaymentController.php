@@ -33,11 +33,11 @@ class PaymentController extends Controller
   // {
   //   date_default_timezone_set('Asia/Jakarta');
 
-  //   $transactionRef = $request->input('transactionRef') ?? '';	
+  //   $transactionRef = $request->input('transactionRef') ?? '';
   //   $ebook = $request->input('ebook') ?? '';
   //   $productDesc = '';
   //   $user = null;
-    
+
   //   return view('payment.form')
   //     ->with([
   //       'data' => $data
@@ -49,13 +49,13 @@ class PaymentController extends Controller
     try {
       DB::beginTransaction();
       $repeat = $request->input('repeat');
-      $transactionRef = $request->input('transactionRef') ?? '';	
+      $transactionRef = $request->input('transactionRef') ?? '';
       $ebook = Ebook::where('id', $request->input('ebook'))->first();
       $orderAmount = 0;
       $productDesc = '';
       $email = 'asepmedia18@gmail.com';
       $username = 'asep';
-    
+
       if($user = Auth::guard('nonmember')->user()) {
         $builderPayment = (new PaymentHistoryBuilder())
           ->setEbookId($ebook->id)
@@ -147,8 +147,8 @@ class PaymentController extends Controller
         ]);
       }
 
-      $data['merchant_key'] = "tbaoVEHjP7";
-      $data['merchant_code'] = "ID01085";
+      $data['merchant_key'] = env('IPAY_MERCHANT_KEY');
+      $data['merchant_code'] = env('IPAY_MERCHANT_CODE');
       $data['currency'] = "IDR";
       $data['payment_id'] = 1;
       $data['product_desc'] = "Ebook Bitrexgo {$productDesc}";
@@ -161,7 +161,7 @@ class PaymentController extends Controller
       $data['amount'] = (int) str_replace(".","",str_replace(",","",number_format($orderAmount, 2, ".", "")));
       $data['signature'] = $this->signature($data['code'], $data['amount']);
       $data['response_url'] = 'https://bitrexgo.id/response-pay';
-      $data['backend_url'] = 'https://bitrexgo.id/backend-response-pay'; 
+      $data['backend_url'] = 'https://bitrexgo.id/backend-response-pay';
 
       // return response()->json([
       //   'data' => $data
@@ -188,19 +188,19 @@ class PaymentController extends Controller
     $MechantKey = "tbaoVEHjP7";
     $MerchantCode = "ID01085";
     $RefNo = $code;
-    $amount = $amount; 
+    $amount = $amount;
     $currency = "IDR";
     $ipaySignature 	= "";
-    $encrypt		= sha1($MechantKey.$MerchantCode.$RefNo.$amount.$currency);		
-      
+    $encrypt		= sha1($MechantKey.$MerchantCode.$RefNo.$amount.$currency);
+
     for ($i=0; $i<strlen($encrypt); $i=$i+2){
       $ipaySignature .= chr(hexdec(substr($encrypt,$i,2)));
     }
-     
+
     $ipaySignature = base64_encode($ipaySignature);
-    
+
     return $ipaySignature;
-  }  
+  }
 
   public function responsePayment(Request $req)
   {
@@ -219,13 +219,13 @@ class PaymentController extends Controller
     if($code == '') {
       return redirect()->route('member.home');
     }
-    
-    $merchant_key = "rMRMh6Qmcy";
+
+    $merchant_key = env('IPAY_MERCHANT_KEY');
     $signature_plaintext = $merchant_key . $merchant_code . $payment_id . $code . $amount . $currency . $status;
     $sinature_result = $this->signature($signature_plaintext, $amount);
     try {
       DB::beginTransaction();
-      
+
       $orderType = substr($code, 0, 8);
 
       if($orderType == 'BITREX01') {
@@ -237,7 +237,7 @@ class PaymentController extends Controller
           'trans_id' => $transid,
           'remark' => $remark,
           'auth_code' => $authcode,
-          'err_desc' => $errdesc,  
+          'err_desc' => $errdesc,
         ]);
 
         $userData = PaymentHistoryNonMember::where('ref_no', $code)
@@ -254,7 +254,7 @@ class PaymentController extends Controller
             'nonMember'
           ])
           ->first();
-    
+
         if($checkIsRegister) {
           //if new register
           if($checkIsRegister->expired_at <= date('Y-m-d') && $checkIsRegister->status != 1) {
@@ -263,10 +263,10 @@ class PaymentController extends Controller
             $isRegister = false;
           }
         }
-        
+
         $transaction = TransactionNonMember::where('transaction_ref', $code)
         ->update([
-          'status' => $status,        
+          'status' => $status,
         ]);
 
         //if is new register
@@ -292,9 +292,9 @@ class PaymentController extends Controller
           'trans_id' => $transid,
           'remark' => $remark,
           'auth_code' => $authcode,
-          'err_desc' => $errdesc,            
+          'err_desc' => $errdesc,
         ]);
-        
+
         $transaction = TransactionMember::where('transaction_ref', $code)
           ->update([
             'status' => $status
@@ -317,7 +317,7 @@ class PaymentController extends Controller
         DB::rollback();
         return view('payment.failed');
       }
-      
+
       $view = 'payment.failed';
 
       if($status == "1") {
@@ -354,7 +354,7 @@ class PaymentController extends Controller
   public function backendResponsePayment(Request $request)
   {
       echo "RECEIVEOK";
-  }  
+  }
 
   public function waitingTransfer()
   {

@@ -29,7 +29,7 @@ Route::group(['prefix'=>'admin','as'=>'admin.'], function(){
             Route::put('{id}', ['as' => 'update', 'uses' => 'Admin\UsersController@update']);
             Route::delete('{id}', ['as' => 'delete', 'uses' => 'Admin\UsersController@destroy']);
         });
-        
+
         Route::group(['prefix' => 'roles', 'as' => 'roles.'], function () {
             Route::get('', ['as' => 'index', 'uses' => 'Admin\RolesController@index']);
             Route::get('create', ['as' => 'create', 'uses' => 'Admin\RolesController@create']);
@@ -74,7 +74,7 @@ Route::group(['prefix'=>'admin','as'=>'admin.'], function(){
         Route::get('/{id}/detail', ['as' => 'detail', 'uses' => 'Admin\BitrexPointController@detail']);
         Route::get('/{id}/detail/username', ['as' => 'username', 'uses' => 'Admin\BitrexPointController@getUsername']);
     });
-    
+
 });
 
 Route::group(['prefix'=>'member','as'=>'member.'], function(){
@@ -94,6 +94,8 @@ Route::get('/logout', 'Auth\LoginController@logout');
 Route::get('user/{user}', ['as' => 'user', 'uses' => 'Member\PvController@issetUser']);
 Route::post('register-auto', ['as' => 'register-auto', 'uses' => 'Member\ProfileMemberController@registerAuto']);
 
+Route::get('register-member', ['as' => 'register-member', 'uses' => 'Member\RegisterController@registerMember']);
+
 Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
 
     Route::group(['prefix' => 'shipping', 'as'=> 'shipping.'], function () {
@@ -105,7 +107,7 @@ Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
     });
 
     Route::group(['prefix' => 'bonus', 'as'=> 'bonus.'], function () {
-        Route::get('', ['as' => 'index', 'uses' => 'Member\MyBonusController@index']);  
+        Route::get('', ['as' => 'index', 'uses' => 'Member\MyBonusController@index']);
     });
 
     Route::group(['prefix' => 'history-bonus', 'as'=> 'history-bonus.'], function () {
@@ -126,7 +128,7 @@ Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
         Route::post('', ['as' => 'store', 'uses' => 'Member\EbookController@store'] );
     });
 
-    
+
     Route::post('register-auto', ['as' => 'register-auto', 'uses' => 'Member\ProfileMemberController@registerAuto']);
 
     Route::group(['prefix' => 'select', 'as'=> 'select.'], function () {
@@ -142,6 +144,7 @@ Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
         Route::get('daily-bonus-sponsor', ['as' => 'daily-bonus-sponsor', 'uses' => 'Member\DashboardController@getBonusSponsorDaily']);
         Route::get('daily-pairing', ['as' => 'daily-pairing', 'uses' => 'Member\DashboardController@getBonusPairing']);
         Route::get('generate', ['as' => 'generate', 'uses' => 'Member\PvController@generate']);
+        Route::get('generate-pv', ['as' => 'generate-pv', 'uses' => 'Member\MyBonusController@generatePv']);
         Route::get('my-transaction', ['as' => 'my-transaction', 'uses' => 'Member\TransactionController@myTransaction']);
         Route::get('prospected-member-transaction', ['as' => 'prospected-member-transaction', 'uses' => 'Member\TransactionController@prospectedMemberHistory']);
         Route::get('reward', ['as' => 'reward', 'uses' => 'Member\ProfileMemberController@getRewards']);
@@ -180,7 +183,7 @@ Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
         Route::get('pv', ['as' => 'pv', 'uses' => 'Member\PvController@index']);
         Route::get('pv-pairing', ['as' => 'pv-pairing', 'uses' => 'Member\PvController@pvHistory']);
     });
-    
+
 });
 
 //Auth::routes();

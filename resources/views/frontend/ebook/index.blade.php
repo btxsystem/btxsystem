@@ -37,7 +37,7 @@
                             <input class="form-control" name="my-bp" id="my-bp" type="text" readonly>
                         </div>
                     </div>
-                    
+
                     <div class="modal-footer">
                         <a class="btn btn-secondary" data-dismiss="modal">Close</a>
                         <button type="button" class="btn btn-primary" id="pay">Pay</button>
@@ -58,7 +58,7 @@
             </div>
         </div>
     </div>
-    <div class="container-fluid">        
+    <div class="container-fluid">
         <div class="row clearfix">
             <div class="col-lg-12 col-md-12">
                 <div class="card" style="background-color:#b92240">
@@ -70,10 +70,17 @@
                                         <div class="container">
                                             <div class="row">
                                                 <div class="col-lg-6 mb-3">
-                                                    <div class="bg-white shadow rounded p-3 border-hover triangle">
-                                                        <div id="basic-expired" style="position:fixed">
+                                                    <div class="row">
+                                                      <div class="col-10 mx-auto">
+                                                        <div id="basic-expired" class="ml-md-5 ml-3">
                                                             <span id="clock-basic"></span>
                                                         </div>
+                                                      </div>
+                                                    </div>
+                                                    <div class="bg-white shadow rounded p-3 border-hover triangle">
+                                                        <!-- <div id="basic-expired" style="position:fixed">
+                                                            <span id="clock-basic"></span>
+                                                        </div> -->
                                                         <div class="row">
                                                             <div class="col-lg-3 d-flex align-items-center">
                                                                 <img src="http://ebook.bitrexgo.id/assetsebook/v2/img/1.png" class="mx-auto d-block">
@@ -90,10 +97,17 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6 mb-3">
+                                                  <div class="row">
+                                                    <div class="col-10 co-lg-8 mx-auto">
+                                                      <div id="advance-expired" class="ml-md-5 ml-3">
+                                                          <span id="clock-advance"></span>
+                                                      </div>
+                                                    </div>
+                                                  </div>
                                                     <div class="bg-white shadow rounded p-3 border-hover triangle">
-                                                        <div id="basic-expired" style="position:fixed">
+                                                        <!-- <div id="advance-expired" style="position:fixed">
                                                             <span id="clock-advance"></span>
-                                                        </div>
+                                                        </div> -->
                                                         <div class="row">
                                                             <div class="col-lg-3 d-flex align-items-center">
                                                                 <img src="http://ebook.bitrexgo.id/assetsebook/v2/img/1.png" class="mx-auto d-block">

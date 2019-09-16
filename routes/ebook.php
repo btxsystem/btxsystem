@@ -1,5 +1,11 @@
 <?php
 // Route::group(['prefix' => 'asep'], function () {
+//     Route::group(['namespace' => 'Ebook\Api', 'prefix' => 'api/ebook'], function() {
+//       Route::get('/ebooks', 'EbookController@all')->name('api.ebook.ebooks');
+//     });
+
+//     Route::get('/home', 'Ebook\HomeController@index');
+
 //     // Route::get('/', 'MemberV2\ExploreController@home')->name('member.home');
 //     Route::get('explore/{type}/{username}', 'MemberV2\ExploreController@detail')->name('member.ebook.referral');
 //     Route::get('explore/{type}', 'MemberV2\ExploreController@detail')->name('member.ebook.detail');
@@ -33,6 +39,8 @@
 // });
 
 Route::domain('ebook.bitrexgo.id')->group(function () {
+  Route::get('/home', 'Ebook\HomeController@index');
+
   // Route::get('/', 'MemberV2\ExploreController@home')->name('member.home');
   Route::get('explore/{type}/{username}', 'MemberV2\ExploreController@detail')->name('member.ebook.referral');
   Route::get('explore/{type}', 'MemberV2\ExploreController@detail')->name('member.ebook.detail');
@@ -70,4 +78,5 @@ Route::post('/rePayment', ['as' => 're.payment', 'uses' => 'Payment\V2\PaymentCo
 
 Route::post('/payment', ['as' => 'payment', 'uses' => 'Payment\V2\PaymentController@payment']);
 Route::post('/response-pay', ['as' => 'response.pay', 'uses' => 'Payment\V2\PaymentController@responsePayment']);
+Route::post('/response-pay-member', ['as' => 'response.pay.member', 'uses' => 'Member\RegisterController@responsePayment']);
 Route::post('/backend-response-pay', ['as' => 'backend.response.pay', 'uses' => 'Payment\V2\PaymentController@backendResponsePayment']);
