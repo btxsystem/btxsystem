@@ -1,5 +1,5 @@
 <style>
-    div#flag { 
+    div#flag {
         background-color: #333;
         padding: 10px;
         font-size: 16px !important;
@@ -33,5 +33,64 @@
         color: #1C17D5;
         font-size: 14px;
     }
-</style>  
-    
+    .clockdiv{
+    	font-family: sans-serif;
+    	color: #fff;
+    	display: inline-block;
+    	font-weight: bold;
+    	text-align: center;
+    	font-size: 18px;
+    }
+
+    .clockdiv > div{
+    	padding: 6px;
+    	border-radius: 3px;
+    	background: #00BF96;
+    	display: inline-block;
+    }
+
+    .clockdiv div > span{
+    	padding: 8px;
+    	border-radius: 3px;
+    	background: #00816A;
+    	display: inline-block;
+    }
+
+    .smalltext{
+    	padding-top: 5px;
+    	font-size: 12px;
+    }
+    @media only screen and (min-width: 992px) {
+    	.triangle{
+    		overflow: hidden;
+    		position: relative;
+    	}
+    	.clockdiv{
+    		font-family: sans-serif;
+    		color: #fff;
+    		display: inline-block;
+    		font-weight: bold;
+    		text-align: center;
+    		font-size: 20px;
+    	}
+
+    	.clockdiv > div{
+    		padding: 10px;
+    		border-radius: 3px;
+    		background: #00BF96;
+    		display: inline-block;
+    	}
+
+    	.clockdiv div > span{
+    		padding: 15px;
+    		border-radius: 3px;
+    		background: #00816A;
+    		display: inline-block;
+    	}
+
+    	.smalltext{
+    		padding-top: 5px;
+    		font-size: 15px;
+    	}
+    }
+</style>

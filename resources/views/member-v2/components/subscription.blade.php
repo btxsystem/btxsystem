@@ -43,6 +43,59 @@ h2.plan-title {
 	text-align:center !important;		
 	margin-top: 5px !important;
 }
+div#flag { 
+	background-color: #333;
+	padding: 10px;
+	font-size: 16px !important;
+	border-radius: 2px;
+	-ms-transform: rotate(40deg);
+	-webkit-transform: rotate(40deg);
+	transform: rotate(40deg);
+	width: 160px;
+	text-align: center;
+	position: absolute;
+	right: -8%;
+	height: 73px;
+	z-index: 0;
+	top: -30;
+	background-color:#D4AF37;
+}
+#flag span {
+	position: relative;
+	left: 20px;
+	top: 28px;
+}
+.triangle{
+	overflow: hidden;
+	position: relative;
+}
+.clockdiv{
+	font-family: sans-serif;
+	color: #fff;
+	display: inline-block;
+	font-weight: bold;
+	text-align: center;
+	font-size: 18px;
+}
+
+.clockdiv > div{
+	padding: 6px;
+	border-radius: 3px;
+	background: #00BF96;
+	display: inline-block;
+}
+
+.clockdiv div > span{
+	padding: 8px;
+	border-radius: 3px;
+	background: #00816A;
+	display: inline-block;
+}
+
+.smalltext{
+	padding-top: 5px;
+	font-size: 12px;
+}	
 @media only screen and (min-width: 992px) {
 	h2.plan-title {
 		text-align:left !important;	
@@ -77,7 +130,7 @@ h2.plan-title {
 		font-family: sans-serif;
 		color: #fff;
 		display: inline-block;
-		font-weight: 100;
+		font-weight: bold;
 		text-align: center;
 		font-size: 20px;
 	}
@@ -99,7 +152,7 @@ h2.plan-title {
 	.smalltext{
 		padding-top: 5px;
 		font-size: 15px;
-	}	
+	}		
 }
 </style>
 @stop

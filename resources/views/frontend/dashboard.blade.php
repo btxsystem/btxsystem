@@ -18,7 +18,7 @@
             </div>
             <form action="{{route('member.profile.reset-password')}}" method="POST">
                 {{ method_field('post') }}
-                @csrf    
+                @csrf
                 <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <p class="note"></p>
                     <p class="location"></p>
@@ -65,7 +65,7 @@
                     <h4 class="m-t-5 m-b-0"><strong>{{$profile['name']}}</strong></h4>
                     <br>
                     <span class="job_post"><b>ID : {{$profile['id_member']}}</b></span>
-                </div>                
+                </div>
             </div>
         </div>
         <div class="profile-sub-header">
@@ -73,16 +73,16 @@
                 <ul class="text-center">
                     <li>
                         <a title="rank"><i class="zmdi zmdi-star-circle"></i>
-                            <p>{{$profile['rank']}}</p>
+                            <p class="text-profile-title">{{$profile['rank']}}</p>
                         </a>
                     </li>
                     <li>
                         <a title="pv"><b class="zmdi zmdi" style="font-size:15px">PV Group</b>
-                            <p class="pv">{{number_format($profile['pv'])}}</p>
+                            <p class="pv text-profile-title">{{number_format($profile['pv'])}}</p>
                         </a>
                     </li>
                     <li><a title="username"><i class="zmdi zmdi-account-circle"></i>
-                        <p>{{$profile['username']}}</p>
+                        <p class="text-profile-title">{{$profile['username']}}</p>
                     </a></li>
                 </ul>
             </div>
@@ -108,7 +108,7 @@
             </a>
             </div>
         </div>
-    
+
         <div class="row clearfix">
             <div class="col-lg-4 col-sm-6 col-md-6">
                 <div class="card l-parpl">
@@ -198,7 +198,7 @@
                 url: '{{route("member.select.exp-three-month")}}',
                 data: data,
                 success:function(data){
-                    data.darurat ? $('#exp').modal('show') : $('#exp').modal('hide'); 
+                    data.darurat ? $('#exp').modal('show') : $('#exp').modal('hide');
                 }
             });
 
@@ -238,4 +238,3 @@
         });
     </script>
 @stop
-
