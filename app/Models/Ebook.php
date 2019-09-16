@@ -25,7 +25,8 @@ class Ebook extends Model
     'access',
     'countdown_days',
     'expired_at',
-    'status'
+    'status',
+    'expired_timestamp'
   ];
 
 
@@ -193,6 +194,11 @@ class Ebook extends Model
     } else {
       return null;
     }
+  }
+
+  public function getExpiredTimestampAttribute()
+  {
+    return strtotime($this->expired_at);
   }
 
 }

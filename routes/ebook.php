@@ -1,5 +1,11 @@
 <?php
 // Route::group(['prefix' => 'asep'], function () {
+//     Route::group(['namespace' => 'Ebook\Api', 'prefix' => 'api/ebook'], function() {
+//       Route::get('/ebooks', 'EbookController@all')->name('api.ebook.ebooks');
+//     });
+
+//     Route::get('/home', 'Ebook\HomeController@index');
+
 //     // Route::get('/', 'MemberV2\ExploreController@home')->name('member.home');
 //     Route::get('explore/{type}/{username}', 'MemberV2\ExploreController@detail')->name('member.ebook.referral');
 //     Route::get('explore/{type}', 'MemberV2\ExploreController@detail')->name('member.ebook.detail');
@@ -33,6 +39,8 @@
 // });
 
 Route::domain('ebook.bitrexgo.id')->group(function () {
+  Route::get('/home', 'Ebook\HomeController@index');
+
   // Route::get('/', 'MemberV2\ExploreController@home')->name('member.home');
   Route::get('explore/{type}/{username}', 'MemberV2\ExploreController@detail')->name('member.ebook.referral');
   Route::get('explore/{type}', 'MemberV2\ExploreController@detail')->name('member.ebook.detail');

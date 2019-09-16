@@ -49,9 +49,9 @@
 <!-- Main Content -->
 @yield('content')
 
-<!-- Jquery Core Js --> 
-<script src="{{asset('assets2/bundles/libscripts.bundle.js')}}"></script> <!-- Lib Scripts Plugin Js --> 
-<script src="{{asset('assets2/bundles/vendorscripts.bundle.js')}}"></script> <!-- Lib Scripts Plugin Js --> 
+<!-- Jquery Core Js -->
+<script src="{{asset('assets2/bundles/libscripts.bundle.js')}}"></script> <!-- Lib Scripts Plugin Js -->
+<script src="{{asset('assets2/bundles/vendorscripts.bundle.js')}}"></script> <!-- Lib Scripts Plugin Js -->
 
 <script src="{{asset('assets2/bundles/jvectormap.bundle.js')}}"></script> <!-- JVectorMap Plugin Js -->
 <script src="{{asset('assets2/bundles/morrisscripts.bundle.js')}}"></script><!-- Morris Plugin Js -->
@@ -65,7 +65,7 @@
 {{-- <script src="{{asset('assets2/js/modal.js')}}"></script> --}}
 <script src="{{asset('assets2/js/pages/charts/jquery-knob.min.js')}}"></script>
 
-<!-- Date Picker --> 
+<!-- Date Picker -->
 <script src="{{asset('assets2/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js')}}"></script>
 <script src="{{asset('assets2/js/pages/forms/basic-form-elements.js')}}"></script>
 
@@ -74,7 +74,7 @@
 <script src="{{asset('assets2/js/raw-order.js')}}"></script>
 <script src="{{asset('assets2/js/responsive.js')}}"></script>
 
-<!-- Jquery sweet alert --> 
+<!-- Jquery sweet alert -->
 <script src="{{asset('assets2/js/sweet.js')}}"></script>
 
 <!-- Jquery countdown -->
@@ -112,6 +112,42 @@
         padding-top: 10px;
     }
 
+    .text-profile-title {
+      font-weight: bold;
+      font-size: 20px;
+    }
+
+    @media only screen and (min-width: 992px) {
+      .clockdiv{
+      	font-family: sans-serif;
+      	color: #fff;
+      	display: inline-block;
+      	font-weight: bold;
+      	text-align: center;
+      	font-size: 12px;
+        margin-top: -10px !important;
+      }
+
+      .clockdiv > div{
+      	padding: 3px;
+      	border-radius: 3px;
+      	background: #00BF96;
+      	display: inline-block;
+      }
+
+      .clockdiv div > span{
+      	padding: 9px;
+      	border-radius: 3px;
+      	background: #00816A;
+      	display: inline-block;
+      }
+
+      .smalltext{
+      	padding-top: 2px;
+      	font-size: 10px;
+      }
+    }
+
     @media only screen and (max-width: 480px) {
     /* For mobile phones: */
         span#clock{
@@ -130,7 +166,7 @@
         }
     }
 
-    
+
     .sidebar .user-info {
         overflow: hidden;
     }
@@ -150,12 +186,12 @@
         -webkit-box-orient: vertical;
         height: 23px;
     }
-    
+
 </style>
 <script type="text/javascript">
 
 $(document).ready(function(){
-    forhide = 0;    
+    forhide = 0;
     $('#old_password').keyup(function (event) {
         var charCode = (event.which) ? event.which : event.keyCode;
         min_length = $('#old_password').val().length;
@@ -174,16 +210,16 @@ $(document).ready(function(){
     $('#new_password').keyup(function (event) {
         var charCode = (event.which) ? event.which : event.keyCode;
         min_length = $('#new_password').val().length;
-        
+
         if (forhide>=3){
             $('#submit').enabled;
         }
 
         if (min_length < 6) {
-            $('#message_new_password').html( "<p id='new_message'>Minimum password 6 characters</p>" );   
-        }else{    
+            $('#message_new_password').html( "<p id='new_message'>Minimum password 6 characters</p>" );
+        }else{
             if ($('#new_password').val() === $('#old_password').val()) {
-                $('#message_new_password').html( "<p id='new_message'>New password must be difference</p>" );    
+                $('#message_new_password').html( "<p id='new_message'>New password must be difference</p>" );
             }else{
                 $('#new_message').remove();
                 forhide++;
@@ -194,34 +230,65 @@ $(document).ready(function(){
     $('#confirm_new_password').keyup(function () {
         var charCode = (event.which) ? event.which : event.keyCode;
         min_length = $('#confirm_new_password').val().length;
-        
+
         if (forhide>=3){
             $('#submit').attr("disabled", false);
         }
 
         if (min_length < 6) {
-            $('#message_confirm_new_password').html( "<p id='confirm_new_message'>Minimum password 6 characters</p>" );   
+            $('#message_confirm_new_password').html( "<p id='confirm_new_message'>Minimum password 6 characters</p>" );
         }else{
             if ($('#new_password').val() != $('#confirm_new_password').val()) {
-                $('#message_confirm_new_password').html( "<p id='confirm_new_message'>Password doesn't match</p>" );       
+                $('#message_confirm_new_password').html( "<p id='confirm_new_message'>Password doesn't match</p>" );
             }else{
                 $('#confirm_new_message').remove();
                 forhide++;
             }
         }
     });
-    
+
     $.ajax({
         url: '{{route("member.select.expired-member")}}',
         data: data,
         success:function(data){
             $('#clock').countdown(data.expired_at, function(event) {
-                $(this).html(event.strftime('%D days %H:%M:%S'));
+                $(this).html(`
+                  <span>${event.strftime('%D')}<span class="text-warning"> Days :</span></span>
+
+                  <span>${event.strftime('%H')}<span class="text-warning">h :</span></span>
+
+                  <span>${event.strftime('%M')}<span class="text-warning">m :</span></span>
+
+                  <span>${event.strftime('%S')}<span class="text-warning">s</span></span>
+
+                `);
             });
+            // $('#clock-countdown').countdown(data.expired_at, function(event) {
+            //     $(this).html(`
+            //       <div id="clockdiv" class="clockdiv mt-2">
+    				// 				<div>
+    				// 					<span class="days">${event.strftime('%D')}</span>
+    				// 					<div class=" smalltext">Days</div>
+    				// 				</div>
+    				// 				<div>
+    				// 					<span class="hours">${event.strftime('%H')}</span>
+    				// 					<div class=" smalltext">Hours</div>
+    				// 				</div>
+    				// 				<div>
+    				// 					<span class="minutes">${event.strftime('%M')}</span>
+    				// 					<div class=" smalltext">Minutes</div>
+    				// 				</div>
+    				// 				<div>
+    				// 					<span class="seconds">${event.strftime('%S')}</span>
+    				// 					<div class=" smalltext">Seconds</div>
+    				// 				</div>
+    				// 			</div>
+            //     `);
+            // });
         }
     })
 })
-    
+
 </script>
 @yield('footer_scripts')
 @include('sweet::alert')
