@@ -262,7 +262,9 @@ class RegisterController extends Controller
 
       $orderType = substr($code, 0, 8);
 
-      $temporaryTrx = TemporaryTransactionMember::where('transaction_ref', $code)->first();
+      $temporaryTrx = TemporaryTransactionMember::where('transaction_ref', $code)
+        ->with('member')
+        ->first();
 
       $view = 'payment.failed';
 
@@ -293,7 +295,7 @@ class RegisterController extends Controller
       DB::commit();
       return view($view);
 
-    } catch(\Exception $e) {
+    } catch(\Illuminate\Database\QueryException $e) {
       DB::rollback();
       return response()->json([
         'success' => false,
