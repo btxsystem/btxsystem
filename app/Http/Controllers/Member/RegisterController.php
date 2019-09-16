@@ -10,6 +10,8 @@ use App\Models\TransactionMember;
 use App\Models\TemporaryRegisterMember;
 use App\Models\TemporaryTransactionMember;
 
+use Carbon\Carbon;
+
 use DB;
 
 class RegisterController extends Controller
@@ -133,6 +135,22 @@ class RegisterController extends Controller
       DB::commit();
 
       if($ebook != null) {
+        // $createMember = findChild(
+        //   $saved->referral,
+        //   $saved->referral,
+        //   $saved
+        // );
+
+        // $createEbook = TransactionMember::insert([
+        //   'ebook_id' => 1,
+        //   'member_id' => 36,
+        //   'expired_at' => Carbon::now()->addYear(1),
+        //   'status' => 1
+        // ]);
+        // return response()->json([
+        //   'data' => $createMember,
+        //   'ebook' => $createEbook
+        // ]);
         return $this->paymentWithEbook($request, [
           'member' => $saved,
           'trx' => $trx
@@ -243,12 +261,18 @@ class RegisterController extends Controller
       DB::beginTransaction();
 
       $orderType = substr($code, 0, 8);
-      
+
       $temporaryTrx = TemporaryTransactionMember::where('transaction_ref', $code)->first();
 
       $view = 'payment.failed';
 
       if($status == "1") {
+        findChild(
+          $temporaryTrx->member->referral,
+          $temporaryTrx->member->referral,
+          $temporaryTrx->member
+        );
+
         if($orderType == 'BITREX003') { //with ebbook
           //
         } else if($orderType == 'BITREX004') { //witout ebbook
@@ -271,6 +295,10 @@ class RegisterController extends Controller
 
     } catch(\Exception $e) {
       DB::rollback();
+      return response()->json([
+        'success' => false,
+        'error' => $e
+      ]);
     }
   }  
 }
