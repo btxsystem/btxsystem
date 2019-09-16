@@ -11,7 +11,7 @@
                </a>
             </div>
             <div class="col-md-5 col-7" style="padding: 0px;">
-               <div class="progress d-none" id="percentage-wrapper" style="height:13px!important">
+               <div class="progress d-none" id="percentage-wrapper" style="height:20px!important">
                   <div class="progress-bar bg-danger" id="percentage-bar" style="width:50%"></div>
                </div>
             </div>

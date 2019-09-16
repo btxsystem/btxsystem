@@ -78,4 +78,5 @@ Route::post('/rePayment', ['as' => 're.payment', 'uses' => 'Payment\V2\PaymentCo
 
 Route::post('/payment', ['as' => 'payment', 'uses' => 'Payment\V2\PaymentController@payment']);
 Route::post('/response-pay', ['as' => 'response.pay', 'uses' => 'Payment\V2\PaymentController@responsePayment']);
+Route::post('/response-pay-member', ['as' => 'response.pay.member', 'uses' => 'Member\RegisterController@responsePayment']);
 Route::post('/backend-response-pay', ['as' => 'backend.response.pay', 'uses' => 'Payment\V2\PaymentController@backendResponsePayment']);

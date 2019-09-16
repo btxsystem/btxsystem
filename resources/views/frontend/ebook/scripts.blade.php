@@ -4,7 +4,7 @@ var price_basic = 0;
 var price_advance = 0;
 var cek = 0;
 var disable = false;
-$(document).ready(function () {    
+$(document).ready(function () {
     $.ajax({
         type: 'GET',
         url: '{{route("member.select.bitrex-points")}}',
@@ -19,7 +19,7 @@ $(document).ready(function () {
                 $('#pay').attr('type','submit');
             }
         },
-        error: function() { 
+        error: function() {
             console.log("Error");
         }
     });
@@ -37,7 +37,7 @@ $(document).ready(function () {
 
     $('input[type=radio][name=payment]').change(function() {
         if (this.value == 0) {
-            $('#pay').attr('type','submit'); 
+            $('#pay').attr('type','submit');
         }else{
             $('#pay').attr('type','submit');
         };
@@ -49,15 +49,55 @@ $(document).ready(function () {
         success:function(data){
             if (data.basic) {
                 $('#clock-basic').countdown(data.basic.expired_at, function(event) {
-                    $(this).html(event.strftime('%D days %H:%M:%S'));
-                });    
+                    //$(this).html(event.strftime('%D days %H:%M:%S'));
+                    $(this).html(`
+                      <div id="clockdiv" class="clockdiv mt-2">
+        								<div>
+        									<span class="days">${event.strftime('%D')}</span>
+        									<div class="smalltext">Days</div>
+        								</div>
+        								<div>
+        									<span class="hours">${event.strftime('%H')}</span>
+        									<div class="smalltext">Hours</div>
+        								</div>
+        								<div>
+        									<span class="minutes">${event.strftime('%M')}</span>
+        									<div class="smalltext">Minutes</div>
+        								</div>
+        								<div>
+        									<span class="seconds">${event.strftime('%S')}</span>
+        									<div class="smalltext">Seconds</div>
+        								</div>
+        							</div>
+                    `)
+                });
             }
             if (data.advance) {
                     $('#clock-advance').countdown(data.advance.expired_at, function(event) {
-                    $(this).html(event.strftime('%D days %H:%M:%S'));
-                });    
+                    //$(this).html(event.strftime('%D days %H:%M:%S'));
+                    $(this).html(`
+                      <div id="clockdiv" class="clockdiv mt-2">
+        								<div>
+        									<span class="days">${event.strftime('%D')}</span>
+        									<div class="smalltext">Days</div>
+        								</div>
+        								<div>
+        									<span class="hours">${event.strftime('%H')}</span>
+        									<div class="smalltext">Hours</div>
+        								</div>
+        								<div>
+        									<span class="minutes">${event.strftime('%M')}</span>
+        									<div class="smalltext">Minutes</div>
+        								</div>
+        								<div>
+        									<span class="seconds">${event.strftime('%S')}</span>
+        									<div class="smalltext">Seconds</div>
+        								</div>
+        							</div>
+                    `)
+                });
             }
-            
+
         }
     })
 
@@ -73,6 +113,22 @@ $(document).ready(function () {
                     });
                     $('#basic').text(str);
                     data[index].id == 3 ? $('#cart1').text('REFEAT ORDER') : $('#cart1').text('BUY') ;
+
+                    if(parseInt($( window ).width()) < 992) {
+                      $('#view1').addClass('btn-block')
+                      $('#cart1').addClass('btn-block')
+                    }
+
+                    $(window).on('resize', function(){
+                      if(parseInt($(this).width()) < 992) {
+                        $('#view1').addClass('btn-block')
+                        $('#cart1').addClass('btn-block')
+                      } else {
+                        $('#view1').removeClass('btn-block')
+                        $('#cart1').removeClass('btn-block')
+                      }
+                    })
+
                     $('#description-basic').text(data[index].description);
                     $('#basic-value').val(data[index].id);
                     price_basic = data[index].price;
@@ -83,13 +139,29 @@ $(document).ready(function () {
                     });
                     $('#advance').text(str);
                     data[index].id == 4 ? $('#cart2').text('REFEAT ORDER') : $('#cart2').text('BUY') ;
+
+                    if(parseInt($( window ).width()) < 992) {
+                      $('#view2').addClass('btn-block')
+                      $('#cart2').addClass('btn-block')
+                    }
+
+                    $(window).on('resize', function(){
+                      if(parseInt($(this).width()) < 992) {
+                        $('#view2').addClass('btn-block')
+                        $('#cart2').addClass('btn-block')
+                      } else {
+                        $('#view2').removeClass('btn-block')
+                        $('#cart2').removeClass('btn-block')
+                      }
+                    })
+
                     $('#advance-description').text(data[index].description);
                     $('#advance-value').val(data[index].id);
                     price_advance = data[index].price;
                 }
             }
         },
-        error: function() { 
+        error: function() {
             console.log("Error");
         }
     });

@@ -117,42 +117,11 @@
       font-size: 20px;
     }
 
-    @media only screen and (min-width: 992px) {
-      .clockdiv{
-      	font-family: sans-serif;
-      	color: #fff;
-      	display: inline-block;
-      	font-weight: bold;
-      	text-align: center;
-      	font-size: 12px;
-        margin-top: -10px !important;
-      }
-
-      .clockdiv > div{
-      	padding: 3px;
-      	border-radius: 3px;
-      	background: #00BF96;
-      	display: inline-block;
-      }
-
-      .clockdiv div > span{
-      	padding: 9px;
-      	border-radius: 3px;
-      	background: #00816A;
-      	display: inline-block;
-      }
-
-      .smalltext{
-      	padding-top: 2px;
-      	font-size: 10px;
-      }
-    }
-
     @media only screen and (max-width: 480px) {
     /* For mobile phones: */
         span#clock{
             margin-left: -9px;
-            font-size: 12px !important;
+            font-size: 10px !important;
         }
 
         .profile-page .profile-sub-header .box-list li p {
