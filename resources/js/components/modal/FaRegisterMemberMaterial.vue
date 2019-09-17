@@ -20,114 +20,142 @@
       </form>
     <form @submit.prevent="doRegister()">
 
-      <div class="input-group col-md-12">
-        <input autocomplete="off" class="form-control" type="text" v-model="form.referral" placeholder="Referal" required v-on:input="checkReferral">
-          <p class="alert-referal" v-if="form.referral != ''">
-            {{referral ? 'Referral ditemukan' : 'Referral tidak ditemukan'}}
-          </p>
+      <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="form-line">
+          <input autocomplete="off" class="form-control" type="text" v-model="form.referral" placeholder="Referal" required v-on:input="checkReferral">
+            <p class="alert-referal" v-if="form.referral != ''">
+              {{referral ? 'Referral ditemukan' : 'Referral tidak ditemukan'}}
+            </p>
+        </div>
       </div>
       <br>
-      <div class="input-group col-md-12">
+      <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="form-line">
           <input autocomplete="off" class="form-control" type="text" v-model="form.firstName"  minlength="2" placeholder="First Name" required>
+        </div>
       </div>
       <br>
-      <div class="input-group col-md-12">
+      <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="form-line">
           <input autocomplete="off" class="form-control" type="text" placeholder="Last Name" v-model="form.lastName" >
+        </div>
       </div>
       <br>
-      <div class="input-group col-md-12">
+      <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="form-line">
           <input class="form-control" type="text" v-on:input="checkUsername" id="username" placeholder="Username" v-model="form.username" required>
           <p class="alert-username" v-if="form.username != ''">
             {{username ? 'Username dapat digunakan' : 'Username tidak dapat digunakan'}}
           </p>
+        </div>
       </div>
       <br>
-      <div class="input-group col-md-12">
+      <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="form-line">
           <input autocomplete="off" class="form-control" type="email" placeholder="Email" v-model="form.email" id="email" required>
+        </div>
       </div>
       <br>
-      <div class="input-group col-md-12">
+      <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="form-line">
           <input autocomplete="off" class="form-control" type="text" placeholder="NIK/Passport" v-model="form.passport" id="passport" required>
+        </div>
       </div>
       <br>
-      <div class="input-group col-md-12">
+      <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="form-line">
           <input autocomplete="off" type="date" v-model="form.birthdate"  class="datepicker form-control" placeholder="Birthdate" required>
+        </div>
       </div>
       <br/>
-      <div class="input-group col-md-12">
-        <h5 class="card-inside-title">Choose a pack</h5>
-        <div class="form-group demo-radio-button">
-          <input autocomplete="off" name="pack" type="radio" value="0" id="starterpack" class="with-gap radio-col-red" checked />
-          <label for="shipping">Starter Pack</label>
+      <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="form-line">
+          <h5 class="card-inside-title">Choose a pack</h5>
+          <div class="demo-radio-button">
+            <input autocomplete="off" name="pack" type="radio" value="0" id="starterpack" class="with-gap radio-col-red" checked />
+            <label for="shipping">Starter Pack</label>
+          </div>
         </div>
-        <input type="hidden" id="choosepack">
       </div>
       <!-- {{form}} -->
-      <div class="input-group col-md-12">
-        <h5 class="card-inside-title">Choose a ebook</h5>
-        <div class="form-group demo-radio-button">
-          <span v-for="(ebook, index) in ebooks" :key="index" class="d-inline">
-            <input v-on:click="selectedEbookPack(ebook)" name="ebook" type="checkbox" value="1" :id="`${ebook.title}`" class="with-gap radio-col-red"/>
-            <label for="shipping">{{ ebook.title }}</label>
-            &nbsp;&nbsp;&nbsp;&nbsp;
-          </span>
-          <!-- <input name="method" type="radio" value="1" id="starterpackebook" class="with-gap radio-col-red" />
-          <label for="pickup">Starter Pack + Ebook</label> -->
+      <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="form-line">
+          <h5 class="card-inside-title">Choose a ebook</h5>
+          <div class="demo-radio-button">
+            <span v-for="(ebook, index) in ebooks" v-on:click="selectedEbookPack(ebook)" :key="index" class="d-inline">
+              <input name="ebook" type="checkbox" value="1" :id="`${ebook.title}`" class="with-gap radio-col-red" :checked="form.ebooks.includes(ebook)"/>
+              <label for="shipping">{{ ebook.title }}</label>
+              &nbsp;&nbsp;&nbsp;&nbsp;
+            </span>
+            <!-- <input name="method" type="radio" value="1" id="starterpackebook" class="with-gap radio-col-red" />
+            <label for="pickup">Starter Pack + Ebook</label> -->
+          </div>
         </div>
       </div>
 
-      <div class="input-group col-md-12">
-        <h5 class="card-inside-title">Choose a shipping method</h5>
-        <div class="form-group demo-radio-button">
-          <span v-for="(data, index) in shipping" :key="index">
-            <input v-on:click="selectedShippingMethod(data.value)" name="method" type="radio" :value="data.value" class="with-gap radio-col-red" />
-            <label for="shipping">{{ data.title }}</label>&nbsp;&nbsp;&nbsp;&nbsp;
-          </span>
+      <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="form-line">
+          <h5 class="card-inside-title">Choose a shipping method</h5>
+          <div class="demo-radio-button">
+            <span v-for="(data, index) in shipping" v-on:click="selectedShippingMethod(data.value)" :key="index">
+              <input name="method" type="radio" :value="data.value" class="with-gap radio-col-red" :checked="data.value == form.shipping"/>
+              <label for="shipping">{{ data.title }}</label>&nbsp;&nbsp;&nbsp;&nbsp;
+            </span>
+          </div>
+          <input type="hidden" id="choosepack">
         </div>
-        <input type="hidden" id="choosepack">
       </div>
 
       <div v-if="form.shipping == 1">
-        <div class="input-group col-md-12" id="shipping-form">
-          <div class="form-group">
-             <multiselect v-model="form.province" :options="rajaongkir.province" :searchable="true" :close-on-select="true" @select="onChangeProvince" :show-labels="false" label="text" track-by="id" placeholder="Province"></multiselect>
+        <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
+          <div class="form-line">
+            <div class="form-group">
+              <multiselect v-model="form.province" :options="rajaongkir.province" :searchable="true" :close-on-select="true" @select="onChangeProvince" :show-labels="false" label="text" track-by="id" placeholder="Province"></multiselect>
+            </div>
+            <div class="form-group city-form">
+              <multiselect v-model="form.city" :options="rajaongkir.city" :searchable="true" @select="onChangeCity" :close-on-select="true" :show-labels="false" label="text" track-by="id" placeholder="City"></multiselect>
+            </div>
+            <div class="form-group district-form">
+              <multiselect v-model="form.subdistrict" @select="onChangeDistrict" :options="rajaongkir.subdistrict" :searchable="true" :close-on-select="true" :show-labels="false" label="text" track-by="id" placeholder="District"></multiselect>
+            </div>
+            <div class="form-group kurir-form">
+              <multiselect v-model="form.kurir" @select="onChangeKurir" :options="rajaongkir.kurir" :searchable="false" :close-on-select="true" :show-labels="false" placeholder="Kurir" label="text" track-by="text"></multiselect>
+            </div>
+            <div class="form-group address-form">
+              <textarea class="form-control" placeholder="Address" v-model="form.description"></textarea>
+            </div>
+            <!-- <div class="cost-form form-line" style="display:none">
+              <input style="width:100%;" class="cost form-control" name="cost" id="cost" type="text">
+            </div> -->
           </div>
-          <div class="form-group city-form">
-             <multiselect v-model="form.city" :options="rajaongkir.city" :searchable="true" @select="onChangeCity" :close-on-select="true" :show-labels="false" label="text" track-by="id" placeholder="City"></multiselect>
-          </div>
-          <div class="form-group district-form">
-            <multiselect v-model="form.subdistrict" @select="onChangeDistrict" :options="rajaongkir.subdistrict" :searchable="true" :close-on-select="true" :show-labels="false" label="text" track-by="id" placeholder="District"></multiselect>
-          </div>
-          <div class="form-group kurir-form">
-            <multiselect v-model="form.kurir" @select="onChangeKurir" :options="rajaongkir.kurir" :searchable="false" :close-on-select="true" :show-labels="false" placeholder="Kurir" label="text" track-by="text"></multiselect>
-          </div>
-          <div class="form-group address-form">
-            <textarea class="form-control" placeholder="Address" v-model="form.description"></textarea>
-          </div>
-          <!-- <div class="cost-form form-line" style="display:none">
-            <input style="width:100%;" class="cost form-control" name="cost" id="cost" type="text">
-          </div> -->
         </div>
       </div>
       <div v-else-if="form.shipping == 0">
-        <span>B-G 168, Jl. Pluit Indah Raya, Pluit, Penjaringan, North Jakarta City, Jakarta 14450</span>
+        <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
+          <div class="form-lisne">
+            <h4>Alamat Bitrexgo : B-G 168, Jl. Pluit Indah Raya, Pluit, Penjaringan, North Jakarta City, Jakarta 14450</h4>
+          </div>
+        </div>
       </div>
-      <div class="input-group col-md-12">
+
+      <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <h5 class="card-inside-title">Choose a payment method</h5>
-          <div class="form-group demo-radio-button">
+          <div class="demo-radio-button">
           <span v-for="(data, index) in payments" v-on:click="selectedPaymentMethod(data.value)" :key="index">
             <input name="payment" type="radio" :value="data.value" class="with-gap radio-col-red" :checked="data.value == form.payment"/>
             <label for="shipping">{{ data.title }}</label>&nbsp;&nbsp;&nbsp;&nbsp;
           </span>
         </div>
       </div>
-
-      <div class="input-group col-md-12">
-        <div v-if="form.shipping == 1">
-          <h4>Total Price : {{parseInt(form.kurir != null ? form.kurir.id : 0) + totalPriceWithEbook + 280000}}</h4>
-        </div>
-        <div v-else-if="form.shipping == 0">
-          <h4>Total Price Ebook : {{totalPriceWithEbook + 280000}}</h4>
+      
+      <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="form-lsine">
+          <div v-if="form.shipping == 1">
+            <h4>Total Price : {{parseInt(form.kurir != null ? form.kurir.id : 0) + totalPriceWithEbook + 280000 | toIDR}}</h4>
+          </div>
+          <div v-else-if="form.shipping == 0">
+            <h4>Total Price Ebook : {{totalPriceWithEbook + 280000 | toIDR}}</h4>
+          </div>
         </div>
       </div>
 
@@ -161,13 +189,13 @@ export default {
         birthdate: '',
         ebooks: [],
         shipping: null,
+        payment: null,
         postalFee: 0,
         description: '',
         province: '',
         city: '',
         subdistrict: '',
-        kurir: null,
-        payment: null
+        kurir: null
       },
       ebooks: [
         {

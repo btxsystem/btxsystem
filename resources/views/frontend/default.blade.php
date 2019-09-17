@@ -3,6 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta name="csrf-token" content="{{ csrf_token() }}">
+
 <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 <meta name="description" content="Responsive Bootstrap 4 and web Application ui kit.">
 
@@ -88,6 +90,7 @@
 <script src="{{ asset('assets/tree/panzoom.js') }}"></script>
 <script src="{{ asset('assets/tree/d3.js') }}"></script>
 
+<script defer src="{{ asset('js/app.js') }}"></script>
 <!-- select2 -->
 <script type="text/javascript" src="{{ asset('assets2/js/select2.js') }}" ></script>
 <style>
