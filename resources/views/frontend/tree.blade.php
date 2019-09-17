@@ -440,10 +440,10 @@
 				$('#_name').text('Name: ' + data.member.first_name + ' ' +data.member.last_name);
 				$('#_username').text('Username: ' + data.member.username);
 				$('#_id_member').text('Id Member: ' + data.member.id_member);
-				data.pairings ? $('#_pv_pairing_l').text('PV Pairing L' + data.pairings.pv_left) : $('#_pv_pairing_l').text('PV Pairing L: 0 ') ;
-				data.pairings ? $('#_pv_pairing_m').text('PV Pairing M' + data.pairings.pv_midle) : $('#_pv_pairing_m').text('PV Pairing M: 0 ');
-				data.pairings ? $('#_pv_pairing_r').text('PV Pairing R' + data.pairings.pv_right) : $('#_pv_pairing_r').text('PV Pairing R: 0 ');
-				data.group ? $('#_pv_group').text('PV Group' + data.pv_group) : $('#_pv_group').text('PV Group: 0 ');
+				data.pairings ? $('#_pv_pairing_l').text('PV Pairing L: ' + data.pairings.pv_left) : $('#_pv_pairing_l').text('PV Pairing L: 0 ') ;
+				data.pairings ? $('#_pv_pairing_m').text('PV Pairing M: ' + data.pairings.pv_midle) : $('#_pv_pairing_m').text('PV Pairing M: 0 ');
+				data.pairings ? $('#_pv_pairing_r').text('PV Pairing R: ' + data.pairings.pv_right) : $('#_pv_pairing_r').text('PV Pairing R: 0 ');
+				data.group ? $('#_pv_group').text('PV Group: ' + data.pv_group) : $('#_pv_group').text('PV Group: 0 ');
             }
         });
 		
