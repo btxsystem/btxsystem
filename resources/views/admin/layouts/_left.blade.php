@@ -99,6 +99,13 @@
             Tree
         </a>
     </li>
+    <li>
+        <a href="{{ route('transfer-confirmation.index') }}">
+            <i class="livicon" data-name="money" data-size="18" data-c="#6CC66C" data-hc="#6CC66C"
+               data-loop="true"></i>
+            Transfer Confirmation
+        </a>
+    </li>
     <li >
         <a href="#">
             <i class="livicon" data-name="medal" data-size="18" data-c="#6CC66C" data-hc="#6CC66C"
@@ -157,7 +164,7 @@
                     Income
                 </a>
             </li>
-            <!-- <li>
+            <li>
                 <a href="{{ route('bonus.sponsor') }}">
                     <i class="fa fa-angle-double-right"></i>
                     Sponsor
@@ -180,7 +187,7 @@
                     <i class="fa fa-angle-double-right"></i>
                     Reward
                 </a>
-            </li> -->
+            </li>
         </ul>
     </li>
     <li >
