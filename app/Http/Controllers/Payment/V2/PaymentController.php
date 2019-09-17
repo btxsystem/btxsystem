@@ -212,6 +212,7 @@ class PaymentController extends Controller
   {
     $merchant_code = $req->get('MerchantCode');
     $payment_id = $req->get('PaymentId');
+    $prodDesc = $req->get('ProdDesc');
     $code = $req->get('RefNo');
     $amount = $req->get('Amount');
     $currency = $req->get('Currency');
@@ -274,7 +275,7 @@ class PaymentController extends Controller
           }
         }
         
-        $isExpired = $checkIsRegister->expired_at <= now() ? true : false;
+        $isExpired = $checkIsRegister->expired_at < now() ? true : false;
 
         $transaction = TransactionNonMember::where('transaction_ref', $code)
         ->update([
@@ -315,7 +316,7 @@ class PaymentController extends Controller
         $checkIsRegister = TransactionNonMember::where('transaction_ref', $code)
           ->first();
 
-        $isExpired = $checkIsRegister->expired_at <= now() ? true : false;
+        $isExpired = $checkIsRegister->expired_at < now() ? true : false;
 
         $transaction = TransactionNonMember::where('transaction_ref', $code)
         ->update([
@@ -364,7 +365,10 @@ class PaymentController extends Controller
       }
 
       DB::commit();
-      return view($view);
+      return view($view)->with([
+        'prodDesc' => $prodDesc,
+        'code' => $code
+      ]);
 
     } catch (\Illuminate\Database\QueryException $e) {
         DB::rollback();
