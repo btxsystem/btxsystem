@@ -57,6 +57,9 @@ class PaymentController extends Controller
       $username = 'asep';
 
       if($user = Auth::guard('nonmember')->user()) {
+        $email = $user->email;
+        $username = $user->username;
+
         $builderPayment = (new PaymentHistoryBuilder())
           ->setEbookId($ebook->id)
           ->setNonMemberId($user->id);
@@ -90,6 +93,9 @@ class PaymentController extends Controller
         }
 
       } else if($user = Auth::guard('user')->user()) {
+        $email = $user->email;
+        $username = $user->username;
+        
         $builderPayment = (new PaymentHistoryBuilder())
           ->setEbookId($ebook->id)
           ->setMemberId($user->id);
@@ -185,8 +191,8 @@ class PaymentController extends Controller
 
   public function signature($code, $amount)
   {
-    $MechantKey = "tbaoVEHjP7";
-    $MerchantCode = "ID01085";
+    $MechantKey = env('IPAY_MERCHANT_KEY');
+    $MerchantCode = env('IPAY_MERCHANT_CODE');
     $RefNo = $code;
     $amount = $amount;
     $currency = "IDR";
@@ -206,6 +212,7 @@ class PaymentController extends Controller
   {
     $merchant_code = $req->get('MerchantCode');
     $payment_id = $req->get('PaymentId');
+    $prodDesc = $req->get('ProdDesc');
     $code = $req->get('RefNo');
     $amount = $req->get('Amount');
     $currency = $req->get('Currency');
@@ -218,6 +225,10 @@ class PaymentController extends Controller
 
     if($code == '') {
       return redirect()->route('member.home');
+    }
+
+    if (!isset($transid)) {
+      return view('payment.failed');
     }
 
     $merchant_key = env('IPAY_MERCHANT_KEY');
@@ -263,10 +274,12 @@ class PaymentController extends Controller
             $isRegister = false;
           }
         }
+        
+        $isExpired = $checkIsRegister->expired_at < now() ? true : false;
 
         $transaction = TransactionNonMember::where('transaction_ref', $code)
         ->update([
-          'status' => $status,
+          'status' => $status == "0" ? $isExpired == false ? 1 : 6 : $status,
         ]);
 
         //if is new register
@@ -295,9 +308,19 @@ class PaymentController extends Controller
           'err_desc' => $errdesc,
         ]);
 
-        $transaction = TransactionMember::where('transaction_ref', $code)
-          ->update([
-            'status' => $status
+        // $transaction = TransactionMember::where('transaction_ref', $code)
+        //   ->update([
+        //     'status' => $status == "0" ? 6 : $status
+        // ]);
+
+        $checkIsRegister = TransactionNonMember::where('transaction_ref', $code)
+          ->first();
+
+        $isExpired = $checkIsRegister->expired_at < now() ? true : false;
+
+        $transaction = TransactionNonMember::where('transaction_ref', $code)
+        ->update([
+          'status' => $status == "0" ? $isExpired == false ? 1 : 6 : $status,
         ]);
 
         $checkIsRegister = TransactionMember::where('transaction_ref', $code)
@@ -342,7 +365,10 @@ class PaymentController extends Controller
       }
 
       DB::commit();
-      return view($view);
+      return view($view)->with([
+        'prodDesc' => $prodDesc,
+        'code' => $code
+      ]);
 
     } catch (\Illuminate\Database\QueryException $e) {
         DB::rollback();

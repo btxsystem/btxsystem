@@ -24,6 +24,7 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 
 Vue.component('home-component', require('./components/ebook/HomeComponent.vue').default)
 Vue.component('fa-register-member-component', require('./components/modal/FARegisterMember.vue').default)
+Vue.component('fa-register-member-material-component', require('./components/modal/FaRegisterMemberMaterial.vue').default)
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -38,6 +39,11 @@ Vue.use(VueCountdownTimer)
 import Multiselect from 'vue-multiselect'
 import 'vue-multiselect/dist/vue-multiselect.min.css'
 Vue.component('multiselect', Multiselect)
+
+Vue.filter('toIDR', function (value) {
+    return "IDR " + value.toString().replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1\.")
+  
+  })
 
 const app = new Vue({
     el: '#app',

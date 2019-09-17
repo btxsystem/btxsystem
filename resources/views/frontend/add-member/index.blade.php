@@ -21,7 +21,10 @@
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-md-12">
-                                <form action="{{route('member.register-auto')}}" method="post">
+                            <div id="app">
+                            <fa-register-member-material-component/>
+                            </div>
+                                <!-- <form action="{{route('member.register-auto')}}" method="post">
                                     @csrf
                                     <div class="row">
                                         <div class="form-group form-float col-lg-6 col-md-6 col-sm-6 col-xs-6">
@@ -86,7 +89,7 @@
                                             <button type="submit" id="goto-join" class="btn btn-primary" style="cursor: pointer;">JOIN</button>
                                         </div>
                                     </div>                           
-                                </form>
+                                </form> -->
                             </div>
                         </div>
                     </div>
