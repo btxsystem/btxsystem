@@ -154,8 +154,6 @@ class MemberController extends Controller
     {
         $data = Employeer::with('ebooks.transactionMember','transaction')->findOrFail($id);
 
-        return $data;
-
         $ebooks = Ebook::orderBy('id', 'desc')->get();
 
         return view('admin.members.detail', compact('data','ebooks'));
