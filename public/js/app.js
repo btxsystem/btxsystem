@@ -2089,7 +2089,6 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 //
 //
 //
-//
 
 
 
@@ -2165,10 +2164,6 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       referral: false,
       username: false
     };
-  },
-  mounted: function mounted() {
-    var token = document.head.querySelector('meta[name="csrf-token"]').content;
-    $('#token').val(token);
   },
   created: function created() {
     this.getProvince();
@@ -2320,13 +2315,14 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         _this8.payment = res.data.data.data;
 
         if (_this8.form.payment == 'transfer') {
-          window.location.href = '/transaction/payment/BITREX009218';
+          alert('Register Successfully'); //window.location.href = '/transaction/payment/BITREX009218'
         } else if (_this8.form.payment == 'ipay') {
           var form = document.getElementById('payment');
-          setTimeout(function () {
-            form.submit();
-            _this8.isLoading = false;
-          }, 1000);
+          alert('Register Successfully');
+          _this8.isLoading = false; // setTimeout(() => {
+          //   form.submit()
+          //   this.isLoading = false
+          // }, 1000)
         }
       })["catch"](function (err) {
         console.log(err);
@@ -23633,18 +23629,14 @@ var render = function() {
       _c(
         "form",
         {
-          attrs: {
-            method: "post",
-            id: "payment",
-            name: "ePayment",
-            action: "register-member"
+          on: {
+            submit: function($event) {
+              $event.preventDefault()
+              return _vm.doRegister()
+            }
           }
         },
         [
-          _c("input", {
-            attrs: { type: "hidden", id: "token", name: "_token" }
-          }),
-          _vm._v(" "),
           _c("div", { staticClass: "input-group col-md-12" }, [
             _c("input", {
               directives: [
@@ -23658,7 +23650,6 @@ var render = function() {
               staticClass: "form-control",
               attrs: {
                 autocomplete: "off",
-                name: "referral",
                 type: "text",
                 placeholder: "Referal",
                 required: ""
@@ -23707,7 +23698,6 @@ var render = function() {
               staticClass: "form-control",
               attrs: {
                 autocomplete: "off",
-                name: "firstName",
                 type: "text",
                 minlength: "2",
                 placeholder: "First Name",
@@ -23740,7 +23730,6 @@ var render = function() {
               staticClass: "form-control",
               attrs: {
                 autocomplete: "off",
-                name: "lastName",
                 type: "text",
                 placeholder: "Last Name"
               },
@@ -23770,7 +23759,6 @@ var render = function() {
               ],
               staticClass: "form-control",
               attrs: {
-                name: "username",
                 type: "text",
                 id: "username",
                 placeholder: "Username",
@@ -23820,7 +23808,6 @@ var render = function() {
               staticClass: "form-control",
               attrs: {
                 autocomplete: "off",
-                name: "email",
                 type: "email",
                 placeholder: "Email",
                 id: "email",
@@ -23853,7 +23840,6 @@ var render = function() {
               staticClass: "form-control",
               attrs: {
                 autocomplete: "off",
-                name: "passport",
                 type: "text",
                 placeholder: "NIK/Passport",
                 id: "passport",
@@ -23883,10 +23869,9 @@ var render = function() {
                   expression: "form.birthdate"
                 }
               ],
-              staticClass: "datepicker form-control",
+              staticClass: "form-control",
               attrs: {
                 autocomplete: "off",
-                name: "date",
                 type: "date",
                 placeholder: "Birthdate",
                 required: ""
@@ -23920,11 +23905,11 @@ var render = function() {
                   _c("input", {
                     staticClass: "with-gap radio-col-red",
                     attrs: {
-                      name: "ebook[]",
+                      name: "ebook",
                       type: "checkbox",
+                      value: "1",
                       id: "" + ebook.title
                     },
-                    domProps: { value: ebook.id },
                     on: {
                       click: function($event) {
                         return _vm.selectedEbookPack(ebook)
@@ -23973,9 +23958,7 @@ var render = function() {
                 ])
               }),
               0
-            ),
-            _vm._v(" "),
-            _c("input", { attrs: { type: "text", id: "choosepack" } })
+            )
           ]),
           _vm._v(" "),
           _vm.form.shipping == 1
@@ -24157,11 +24140,12 @@ var render = function() {
                   [
                     _c("input", {
                       staticClass: "with-gap radio-col-red",
-                      attrs: { name: "payment", type: "radio" },
-                      domProps: {
-                        value: data.value,
-                        checked: data.value == _vm.form.payment
-                      }
+                      attrs: {
+                        name: "payment",
+                        type: "radio",
+                        valuealue: data.value
+                      },
+                      domProps: { checked: data.value == _vm.form.payment }
                     }),
                     _vm._v(" "),
                     _c("label", { attrs: { for: "shipping" } }, [
