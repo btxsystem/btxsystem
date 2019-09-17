@@ -138,6 +138,12 @@ class RegisterController extends Controller
         $trx->save();
       }
 
+      findChild(
+        $checkReferral->id,
+        $checkReferral->id,
+        $saved
+      );
+
       if(!$saved || !$trx) {
         DB::rollback();
         return response()->json([
