@@ -94,7 +94,11 @@ Route::get('/logout', 'Auth\LoginController@logout');
 Route::get('user/{user}', ['as' => 'user', 'uses' => 'Member\PvController@issetUser']);
 Route::post('register-auto', ['as' => 'register-auto', 'uses' => 'Member\ProfileMemberController@registerAuto']);
 
-Route::get('register-member', ['as' => 'register-member', 'uses' => 'Member\RegisterController@registerMember']);
+Route::post('register-member', ['as' => 'register-member', 'uses' => 'Member\RegisterController@registerMember']);
+
+Route::group(['namespace' => 'Ebook\Api', 'prefix' => 'api/ebook'], function() {
+  Route::get('/ebooks', 'EbookController@all')->name('api.ebook.ebooks');
+});
 
 Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
 

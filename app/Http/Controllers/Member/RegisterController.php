@@ -23,10 +23,12 @@ class RegisterController extends Controller
     $lastName = $request->input('lastName') ?? '';
     $username = $request->input('username') ?? '';
     $email = $request->input('email') ?? '';
-    $nik = $request->input('nik') ?? '';
-    $birthdate = $request->input('birth_date') ?? null;
+    $nik = $request->input('passport') ?? '';
+    $birthdate = $request->input('birthdate') ?? null;
 
     //shipping
+    $shipping = $request->input('shipping') ?? 0;
+    $postalFee = $request->input('postalFee') ?? 0;
     $description = $request->input('description') ?? '';
     $cityId = $request->input('cityId') ?? '';
     $cityName = $request->input('cityName') ?? '';
@@ -36,7 +38,7 @@ class RegisterController extends Controller
     $subdistrictName = $request->input('subdistrictName') ?? '';
     $type = $request->input('type') ?? '';
     $userId = $request->input('userId') ?? '';
-    $ebook = $request->input('ebook') ?? null;
+    $ebooks = $request->input('ebooks') ?? [];
 
     try {
       DB::beginTransaction();
@@ -50,8 +52,8 @@ class RegisterController extends Controller
         ]);
       }
 
-      if($ebook != null) {
-        $checkEbook = Ebook::where('id', $ebook)->whereIn('title', ['basic', 'advanced'])->first();
+      if(count($ebooks) > 0) {
+        $checkEbook = Ebook::where('id', 1)->whereIn('title', ['basic', 'advanced'])->first();
         if(!$checkEbook) {
           return response()->json([
             'success' => false,
@@ -59,7 +61,7 @@ class RegisterController extends Controller
           ]);
         }
       }
-      
+
       // $saved = TemporaryRegisterMember::insert([
       //   'referral' => $checkReferral->id,
       //   'first_name' => $firstName,
@@ -94,8 +96,10 @@ class RegisterController extends Controller
       // $saved->province_name = $provinceName;
       $saved->subdistrict_id = $subdistrictId;
       $saved->subdistrict_name = $subdistrictName;
-      $saved->type = $type;
+      $saved->type = $shipping;
       $saved->save();
+
+
 
       if(!$saved) {
         DB::rollback();
@@ -105,7 +109,7 @@ class RegisterController extends Controller
         ]);
       }
 
-      $prefixRef = $ebook != null ? 'BITREX003' : 'BITREX004';
+      $prefixRef = $ebooks != null ? 'BITREX003' : 'BITREX004';
 
       $checkRef = DB::table('temporary_transaction_members')->where('transaction_ref', $prefixRef . (time() + rand(100, 500)))->first();
 
@@ -118,11 +122,21 @@ class RegisterController extends Controller
         }
       }
 
-      $trx = new TemporaryTransactionMember();
-      $trx->ebook_id = $ebook;
-      $trx->member_Id = $saved->id;
-      $trx->transaction_ref = $afterCheckRef;
-      $trx->save();
+      if(count($ebooks) > 0) {
+        foreach ($ebooks as $ebook) {
+          $trx = new TemporaryTransactionMember();
+          $trx->ebook_id = $ebook['id'];
+          $trx->member_Id = $saved->id;
+          $trx->transaction_ref = $afterCheckRef;
+          $trx->save();
+        }
+      } else {
+        $trx = new TemporaryTransactionMember();
+        $trx->ebook_id = null;
+        $trx->member_Id = $saved->id;
+        $trx->transaction_ref = $afterCheckRef;
+        $trx->save();
+      }
 
       if(!$saved || !$trx) {
         DB::rollback();
@@ -134,7 +148,7 @@ class RegisterController extends Controller
 
       DB::commit();
 
-      if($ebook != null) {
+      if(count($ebooks) > 0) {
         // $createMember = findChild(
         //   $saved->referral,
         //   $saved->referral,
@@ -153,15 +167,20 @@ class RegisterController extends Controller
         // ]);
         return $this->paymentWithEbook($request, [
           'member' => $saved,
-          'trx' => $trx
+          'trx' => $trx,
+          'ebooks' => $ebooks,
+          'shipping' => $shipping,
+          'postalFee' => $postalFee
         ]);
       } else {
         return $this->paymentWithoutEbook($request, [
           'member' => $saved,
-          'trx' => $trx
+          'trx' => $trx,
+          'shipping' => $shipping,
+          'postalFee' => $postalFee
         ]);
       }
-      
+
       // return response()->json([
       //   'success' => true,
       //   'message' => '',
@@ -183,8 +202,20 @@ class RegisterController extends Controller
   public function paymentWithEbook(Request $request, $params)
   {
     $priceProduct = 280000;
-    $ebook = Ebook::where('id', $params['trx']['ebook_id'])->first();
-    $orderAmount = $ebook->price + $priceProduct;
+
+    $ebookIds = [];
+    foreach ($params['ebooks'] as $ebook) {
+      $ebookIds[] = $ebook['id'];
+    }
+
+    $ebookPrice = Ebook::whereIn('id', $ebookIds)
+        ->sum('price');
+
+    $orderAmount = $ebookPrice + $priceProduct;
+
+    if($params['shipping'] != 0) {
+      $orderAmount = $orderAmount + (int) $params['postalFee'];
+    }
 
     $data['merchant_key'] = env('IPAY_MERCHANT_KEY');
     $data['merchant_code'] = env('IPAY_MERCHANT_CODE');
@@ -200,11 +231,21 @@ class RegisterController extends Controller
     $data['amount'] = (int) str_replace(".","",str_replace(",","",number_format($orderAmount, 2, ".", "")));
     $data['signature'] = $this->signature($data['code'], $data['amount']);
     $data['response_url'] = 'https://bitrexgo.id/response-pay-member';
-    $data['backend_url'] = 'https://bitrexgo.id/backend-response-pay'; 
+    $data['backend_url'] = 'https://bitrexgo.id/backend-response-pay';
 
-    return view('payment.form')
-      ->with([
-        'data' => $data
+    // return view('payment.form')
+    //   ->with([
+    //     'data' => $data
+    // ]);
+    return response()->json([
+      'success' => true,
+      'message' => '',
+      'data' => [
+        'member' => $params['member'],
+        'trx' => $params['trx'],
+        'data' => $data,
+        'shipping' => $params['shipping']
+      ]
     ]);
   }
 
@@ -215,7 +256,8 @@ class RegisterController extends Controller
       'message' => '',
       'data' => [
         'member' => $params['member'],
-        'trx' => $params['trx']
+        'trx' => $params['trx'],
+        'shipping' => $params['shipping']
       ]
     ]);
   }
@@ -225,19 +267,19 @@ class RegisterController extends Controller
     $MechantKey = env('IPAY_MERCHANT_KEY');
     $MerchantCode = env('IPAY_MERCHANT_CODE');
     $RefNo = $code;
-    $amount = $amount; 
+    $amount = $amount;
     $currency = "IDR";
     $ipaySignature 	= "";
-    $encrypt		= sha1($MechantKey.$MerchantCode.$RefNo.$amount.$currency);		
-      
+    $encrypt		= sha1($MechantKey.$MerchantCode.$RefNo.$amount.$currency);
+
     for ($i=0; $i<strlen($encrypt); $i=$i+2){
       $ipaySignature .= chr(hexdec(substr($encrypt,$i,2)));
     }
-     
+
     $ipaySignature = base64_encode($ipaySignature);
-    
+
     return $ipaySignature;
-  } 
+  }
 
   public function responsePayment(Request $req)
   {
@@ -252,7 +294,7 @@ class RegisterController extends Controller
     $status = $req->get('Status');
     $errdesc = $req->get('ErrDesc');
     $signature = $req->get('Signature');
-    
+
     $merchant_key = env('IPAY_MERCHANT_KEY');
     $signature_plaintext = $merchant_key . $merchant_code . $payment_id . $code . $amount . $currency . $status;
     $sinature_result = $this->signature($signature_plaintext, $amount);
@@ -302,5 +344,5 @@ class RegisterController extends Controller
         'error' => $e
       ]);
     }
-  }  
+  }
 }

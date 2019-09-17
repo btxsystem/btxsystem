@@ -32,7 +32,7 @@ class ShippingController extends Controller
         $provinceId = $id ;
         $rajaongkir = new Rajaongkir($config);
 
-        $data = []; 
+        $data = [];
         foreach ($rajaongkir->getCities($provinceId) as $key => $city) {
             $data[$key]['id'] = $city['city_id'];
             $data[$key]['text'] = $city['city_name'];
@@ -48,8 +48,8 @@ class ShippingController extends Controller
 
         $rajaongkir = new Rajaongkir($config);
 
-        $data = []; 
-        
+        $data = [];
+
         foreach ($rajaongkir->getSubdistricts($id) as $key => $subdistrict) {
             $data[$key]['id'] = $subdistrict['subdistrict_id'];
             $data[$key]['text'] = $subdistrict['subdistrict_name'];
@@ -80,17 +80,17 @@ class ShippingController extends Controller
         $index = 0;
 
         foreach ($kurir as $key => $kur) {
-            $datas[$key] =  $rajaongkir->getCost(['subdistrict' => $originID], ['subdistrict' => $berat], 1, $kur);
+            $datas[$key] =  $rajaongkir->getCost(['subdistrict' => $originID], ['subdistrict' => $id], $berat, $kur);
         }
 
         foreach ($datas as $key => $value) {
-            for ($i=0; $i<count($value['costs']); $i++) { 
+            for ($i=0; $i<count($value['costs']); $i++) {
                 $data[$index]['id'] = $value['costs'][$i]['cost'][0]['value'];
                 $data[$index]['text'] = $value['code'].' '.$value['costs'][$i]['service'].' ('.$value['costs'][$i]['cost'][0]['etd'].')';
                 $index++;
             }
         }
-        
+
         return($data);
     }
 }
