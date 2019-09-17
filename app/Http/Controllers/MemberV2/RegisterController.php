@@ -144,7 +144,7 @@ class RegisterController extends Controller
           $builderTrx = (new TransactionNonMemberBuilder())
           ->setMemberId($referralId)
           ->setNonMemberId($nonMember->id)
-          ->setExpiredAt(date('Y-m-d H:i:s'))
+          ->setExpiredAt(date('Y-m-d'))
           ->setIncome($income)
           ->setEbookId($ebook)
           ->setTransactionRef($payment->ref_no)
