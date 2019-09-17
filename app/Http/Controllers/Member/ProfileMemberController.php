@@ -107,6 +107,8 @@ class ProfileMemberController extends Controller
 
     public function rewardClime(){
         $data = DB::table('got_rewards')->where('member_id',Auth::id())->get();
+        $total = count($data)/8;
+        $data['session'] = $total;
         return($data);
     }
 
