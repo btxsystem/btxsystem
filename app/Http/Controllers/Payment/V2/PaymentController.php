@@ -226,6 +226,10 @@ class PaymentController extends Controller
       return redirect()->route('member.home');
     }
 
+    if (!isset($transid)) {
+      return view('payment.failed');
+    }
+
     $merchant_key = env('IPAY_MERCHANT_KEY');
     $signature_plaintext = $merchant_key . $merchant_code . $payment_id . $code . $amount . $currency . $status;
     $sinature_result = $this->signature($signature_plaintext, $amount);
