@@ -55,6 +55,7 @@ class ProfileMemberController extends Controller
     }
 
     public function register(Request $request){
+        $price = (int) ceil($request['kurir']/1000) + 280;
         $sponsor = Auth::user();
         $data = [
             'id_member' => invoiceNumbering(),
@@ -73,7 +74,8 @@ class ProfileMemberController extends Controller
             'pv' => 0,
             'nik' => $request->nik,
         ];
-
+        $input['bitrex_points'] = $sponsor->bitrex_points - $price;
+        Employeer::find($sponsor->id)->update($input);
         Employeer::create($data);
         return redirect()->route('member.tree');
     }
@@ -108,6 +110,7 @@ class ProfileMemberController extends Controller
     public function rewardClime(){
         $data = DB::table('got_rewards')->where('member_id',Auth::id())->get();
         $total = count($data)/8;
+        
         $data['session'] = $total;
         return($data);
     }
