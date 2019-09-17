@@ -16,10 +16,10 @@
 				</button>
 			</div>
 			<div class="modal-body">
-				<div id="app">
+				<!-- <div id="app">
 					<fa-register-member-material-component/>
-				</div>
-				<!-- <form action="{{route('member.register-downline')}}" method="POST" class="formTree">
+				</div> -->
+				<form action="{{route('member.register-downline')}}" method="POST" class="formTree">
 					@csrf
 					<input type="text" name="parent" id="parent" value="" hidden>
 					<input type="text" name="position" id="position" value="" hidden>
@@ -98,7 +98,7 @@
 						<a class="btn btn-secondary" data-dismiss="modal">Close</a>
 						<input type="submit" class="btn btn-primary register" value="Register">
 					</div>
-				</form> -->
+				</form>
 			</div>
 		</div>
 	</div>

@@ -48,7 +48,7 @@ class RegisterController extends Controller
       if(!$checkReferral) {
         return response()->json([
           'success' => false,
-          'message' => ''
+          'message' => 'gaada referral'
         ]);
       }
 
@@ -57,7 +57,7 @@ class RegisterController extends Controller
         if(!$checkEbook) {
           return response()->json([
             'success' => false,
-            'message' => ''
+            'message' => 'gaada ebooks'
           ]);
         }
       }
@@ -105,7 +105,7 @@ class RegisterController extends Controller
         DB::rollback();
         return response()->json([
           'success' => false,
-          'message' => ''
+          'message' => 'gabisa saved tmp'
         ]);
       }
 
@@ -142,7 +142,7 @@ class RegisterController extends Controller
         DB::rollback();
         return response()->json([
           'success' => false,
-          'message' => ''
+          'message' => 'gabisa save duaduanya'
         ]);
       }
 
