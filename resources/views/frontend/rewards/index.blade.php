@@ -34,7 +34,7 @@
                             @foreach ($ranks as $key => $rank)
                                 @if ($key%2==0)
                                     <tr class="xl-blue">
-                                        <td><img src="{{url('img/1'.$key.'.png')}}" style="width: 60px"></td>
+                                        <td><img src="{{url('img/1'.$key.'.png')}}" style="width: 60px; border-radius: 50%;"></td>
                                         <td>{{$rank->pv_needed_left}}</td>
                                         <td>{{$rank->pv_needed_midle}}</td>
                                         <td>{{$rank->pv_needed_right}}</td>
@@ -46,7 +46,7 @@
                                     </tr>
                                 @else
                                     <tr class="xl-turquoise">
-                                        <td><img src="{{url('img/1'.$key.'.png')}}" style="width: 60px"></td>
+                                        <td><img src="{{url('img/1'.$key.'.png')}}" style="width: 60px; border-radius: 50%;"></td>
                                         <td>{{$rank->pv_needed_left}}</td>
                                         <td>{{$rank->pv_needed_midle}}</td>
                                         <td>{{$rank->pv_needed_right}}</td>
