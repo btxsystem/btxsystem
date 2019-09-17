@@ -90,6 +90,10 @@ class Employeer extends Authenticatable
         return $this->hasMany('App\HistoryPv','id_member');
     }
 
+    public function transaction(){
+        return $this->hasOne( 'App\Models\Transaction', 'user_id');
+    }
+
     public function transaction_member()
     {
         return $this->hasMany('App\Models\TransactionMember','member_id');
