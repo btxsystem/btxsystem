@@ -73,7 +73,10 @@ class BonusController extends Controller
     public function general()
     {
         if (request()->ajax()) {
-                    $data = Employeer::orderBy('id','desc')->get();
+                    // $data = HistoryBitrexCash::orderBy('id','desc')->select('history_bitrex_cash.*');
+                    $data = Employeer::query();
+
+
                     return   Datatables::of($data)
                                 ->addIndexColumn()
                                 ->make(true);
