@@ -34,21 +34,27 @@
                             @foreach ($ranks as $key => $rank)
                                 @if ($key%2==0)
                                     <tr class="xl-blue">
-                                        <td>{{$rank->name}}</td>
+                                        <td><img src="{{url('img/1'.$key.'.png')}}" style="width: 60px"></td>
                                         <td>{{$rank->pv_needed_left}}</td>
                                         <td>{{$rank->pv_needed_midle}}</td>
                                         <td>{{$rank->pv_needed_right}}</td>
                                         <td>{{$rewards[$key]->description}}</td>
-                                        <td><button class="btn btn-primary" type="submit">Clime</button></td>
+                                        <td>
+                                            <button class="btn btn-primary" style="cursor:pointer; display:none" type="submit">Clime</button>
+                                            <button type="button" style="cursor:no-drop" class="btn btn-secondary">Unlock</button>
+                                        </td>
                                     </tr>
                                 @else
                                     <tr class="xl-turquoise">
-                                        <td>{{$rank->name}}</td>
+                                        <td><img src="{{url('img/1'.$key.'.png')}}" style="width: 60px"></td>
                                         <td>{{$rank->pv_needed_left}}</td>
                                         <td>{{$rank->pv_needed_midle}}</td>
                                         <td>{{$rank->pv_needed_right}}</td>
                                         <td>{{$rewards[$key]->description}}</td>
-                                        <td><button class="btn btn-primary" type="submit">Clime</button></td>
+                                        <td>
+                                            <button class="btn btn-primary" style="cursor:pointer; display:none" type="submit">Clime</button>
+                                            <button type="button" style="cursor:no-drop" class="btn btn-secondary">Unlock</button>
+                                        </td>
                                     </tr>
                                 @endif
                             @endforeach

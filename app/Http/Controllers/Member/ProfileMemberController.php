@@ -92,7 +92,8 @@ class ProfileMemberController extends Controller
         $data = Auth::user();
         $ranks = DB::table('ranks')->select('name','pv_needed_left','pv_needed_midle','pv_needed_right')->get();
         $rewards = DB::table('gift_rewards')->select('id','description','nominal')->get();
-        return view('frontend.rewards.index',['profile'=>$data, 'ranks'=> $ranks, 'rewards'=> $rewards]);
+        $myRewards = DB::table('got_rewards')->where('member_id', Auth::id())->select('reward_id')->get();
+        return view('frontend.rewards.index',['profile'=>$data, 'ranks'=> $ranks, 'rewards'=> $rewards, 'my_rewards'=> $myRewards]);
     }
 
     public function getRewards(){
