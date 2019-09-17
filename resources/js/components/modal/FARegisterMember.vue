@@ -21,37 +21,37 @@
     <form method="post" id="payment" name="ePayment" action="register-member">
       <input type="hidden" id="token" name="_token">
       <div class="input-group col-md-12">
-        <input autocomplete="off" class="form-control" type="text" v-model="form.referral" placeholder="Referal" required v-on:input="checkReferral">
+        <input autocomplete="off" name="referral" class="form-control" type="text" v-model="form.referral" placeholder="Referal" required v-on:input="checkReferral">
           <p class="alert-referal" v-if="form.referral != ''">
             {{referral ? 'Referral ditemukan' : 'Referral tidak ditemukan'}}
           </p>
       </div>
       <br>
       <div class="input-group col-md-12">
-          <input autocomplete="off" class="form-control" type="text" v-model="form.firstName"  minlength="2" placeholder="First Name" required>
+          <input autocomplete="off" name="firstName" class="form-control" type="text" v-model="form.firstName"  minlength="2" placeholder="First Name" required>
       </div>
       <br>
       <div class="input-group col-md-12">
-          <input autocomplete="off" class="form-control" type="text" placeholder="Last Name" v-model="form.lastName" >
+          <input autocomplete="off" name="lastName" class="form-control" type="text" placeholder="Last Name" v-model="form.lastName" >
       </div>
       <br>
       <div class="input-group col-md-12">
-          <input class="form-control" type="text" v-on:input="checkUsername" id="username" placeholder="Username" v-model="form.username" required>
+          <input class="form-control" name="username" type="text" v-on:input="checkUsername" id="username" placeholder="Username" v-model="form.username" required>
           <p class="alert-username" v-if="form.username != ''">
             {{username ? 'Username dapat digunakan' : 'Username tidak dapat digunakan'}}
           </p>
       </div>
       <br>
       <div class="input-group col-md-12">
-          <input autocomplete="off" class="form-control" type="email" placeholder="Email" v-model="form.email" id="email" required>
+          <input autocomplete="off" name="email" class="form-control" type="email" placeholder="Email" v-model="form.email" id="email" required>
       </div>
       <br>
       <div class="input-group col-md-12">
-          <input autocomplete="off" class="form-control" type="text" placeholder="NIK/Passport" v-model="form.passport" id="passport" required>
+          <input autocomplete="off" name="passport" class="form-control" type="text" placeholder="NIK/Passport" v-model="form.passport" id="passport" required>
       </div>
       <br>
       <div class="input-group col-md-12">
-          <input autocomplete="off" type="date" v-model="form.birthdate"  class="datepicker form-control" placeholder="Birthdate" required>
+          <input autocomplete="off" name="date"  type="date" v-model="form.birthdate"  class="datepicker form-control" placeholder="Birthdate" required>
       </div>
       <br/>
       <div class="input-group col-md-12">
@@ -67,7 +67,7 @@
         <h5 class="card-inside-title">Choose a ebook</h5>
         <div class="form-group demo-radio-button">
           <span v-for="(ebook, index) in ebooks" :key="index" class="d-inline">
-            <input v-on:click="selectedEbookPack(ebook)" name="ebook" type="checkbox" value="1" :id="`${ebook.title}`" class="with-gap radio-col-red"/>
+            <input v-on:click="selectedEbookPack(ebook)" name="ebook[]" type="checkbox" :value="ebook.id" :id="`${ebook.title}`" class="with-gap radio-col-red"/>
             <label for="shipping">{{ ebook.title }}</label>
             &nbsp;&nbsp;&nbsp;&nbsp;
           </span>
@@ -116,7 +116,7 @@
         <h5 class="card-inside-title">Choose a payment method</h5>
           <div class="form-group demo-radio-button">
           <span v-for="(data, index) in payments" v-on:click="selectedPaymentMethod(data.value)" :key="index">
-            <input name="payment" type="radio" v-bind:valuealue="data.value" class="with-gap radio-col-red" :checked="data.value == form.payment"/>
+            <input name="payment" type="radio" v-bind:value="data.value" class="with-gap radio-col-red" :checked="data.value == form.payment"/>
             <label for="shipping">{{ data.title }}</label>&nbsp;&nbsp;&nbsp;&nbsp;
           </span>
         </div>

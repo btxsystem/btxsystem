@@ -23658,6 +23658,7 @@ var render = function() {
               staticClass: "form-control",
               attrs: {
                 autocomplete: "off",
+                name: "referral",
                 type: "text",
                 placeholder: "Referal",
                 required: ""
@@ -23706,6 +23707,7 @@ var render = function() {
               staticClass: "form-control",
               attrs: {
                 autocomplete: "off",
+                name: "firstName",
                 type: "text",
                 minlength: "2",
                 placeholder: "First Name",
@@ -23738,6 +23740,7 @@ var render = function() {
               staticClass: "form-control",
               attrs: {
                 autocomplete: "off",
+                name: "lastName",
                 type: "text",
                 placeholder: "Last Name"
               },
@@ -23767,6 +23770,7 @@ var render = function() {
               ],
               staticClass: "form-control",
               attrs: {
+                name: "username",
                 type: "text",
                 id: "username",
                 placeholder: "Username",
@@ -23816,6 +23820,7 @@ var render = function() {
               staticClass: "form-control",
               attrs: {
                 autocomplete: "off",
+                name: "email",
                 type: "email",
                 placeholder: "Email",
                 id: "email",
@@ -23848,6 +23853,7 @@ var render = function() {
               staticClass: "form-control",
               attrs: {
                 autocomplete: "off",
+                name: "passport",
                 type: "text",
                 placeholder: "NIK/Passport",
                 id: "passport",
@@ -23880,6 +23886,7 @@ var render = function() {
               staticClass: "datepicker form-control",
               attrs: {
                 autocomplete: "off",
+                name: "date",
                 type: "date",
                 placeholder: "Birthdate",
                 required: ""
@@ -23913,11 +23920,11 @@ var render = function() {
                   _c("input", {
                     staticClass: "with-gap radio-col-red",
                     attrs: {
-                      name: "ebook",
+                      name: "ebook[]",
                       type: "checkbox",
-                      value: "1",
                       id: "" + ebook.title
                     },
+                    domProps: { value: ebook.id },
                     on: {
                       click: function($event) {
                         return _vm.selectedEbookPack(ebook)
@@ -24150,12 +24157,11 @@ var render = function() {
                   [
                     _c("input", {
                       staticClass: "with-gap radio-col-red",
-                      attrs: {
-                        name: "payment",
-                        type: "radio",
-                        valuealue: data.value
-                      },
-                      domProps: { checked: data.value == _vm.form.payment }
+                      attrs: { name: "payment", type: "radio" },
+                      domProps: {
+                        value: data.value,
+                        checked: data.value == _vm.form.payment
+                      }
                     }),
                     _vm._v(" "),
                     _c("label", { attrs: { for: "shipping" } }, [
