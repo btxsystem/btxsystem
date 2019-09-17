@@ -81,7 +81,7 @@ class PvController extends Controller
             $right_pairing = $pairing->pv_right;
 
             $pajak = $pairing->verification == 1 ? 0.025 : 0.03;
-            while (($max) && (($pairing->pv_left >= 100 and $pairing->pv_midle >= 100) || ($pairing->pv_left >= 100 and $pairing->pv_right >= 100) || ($pairing->pv_right >= 100 and $pairing->pv_midle >= 100))) {
+            while (($pairing->pv_left >= 100 and $pairing->pv_midle >= 100) || ($pairing->pv_left >= 100 and $pairing->pv_right >= 100) || ($pairing->pv_right >= 100 and $pairing->pv_midle >= 100)) {
                 if (($pairing->pv_right <= $pairing->pv_left) and ($pairing->pv_right <= $pairing->pv_midle)) {
                     if (($pairing->pv_left <= $pairing->pv_midle)) {
                         $tamp = $pairing->pv_left % 100;
@@ -115,39 +115,33 @@ class PvController extends Controller
                     $bonus_pairing += $bonus*100000;
                     $pairing->pv_midle = $pairing->pv_midle - (100 * $bonus);
                     $pairing->pv_right = $pairing->pv_right - (100 * $bonus);
+                }    
+            }
+            $has_pairing = $bonus_pairing / 100000;
+            if ($pairing->rank_id == null || $pairing->rank_id < 1) {
+                $has_pairing = 0;
+                $fail_pairing = $bonus_pairing / 100000 ;
+                $bonus_pairing = 0;
+                try {
+                    DB::beginTransaction();
+                    DB::table('pairings')->where('id_member', $pairing->id_member)->update(['pv_left' => $pairing->pv_left,'pv_midle' => $pairing->pv_midle, 'pv_right' => $pairing->pv_right, 'updated_at' => Carbon::now()]);   
+                    DB::commit();
+                } catch (\Exception $e) {
+                    DB::rollback();
+                    return 'gagal';
                 }
-                
-                $has_pairing = $bonus_pairing / 100000;
-                if ($pairing->rank_id == null || $pairing->rank_id < 1) {
-                    $has_pairing = 0;
-                    $fail_pairing = $bonus_pairing / 100000 ;
-                    $bonus_pairing = 0;
-                    $max = false;
-                    try {
-                        DB::beginTransaction();
-                        DB::table('pairings')->where('id_member', $pairing->id_member)->update(['pv_left' => $pairing->pv_left,'pv_midle' => $pairing->pv_midle, 'pv_right' => $pairing->pv_right, 'updated_at' => Carbon::now()]);   
-                        DB::commit();
-                    } catch (\Exception $e) {
-                        DB::rollback();
-                        return 'gagal';
-                    }
-                }elseif($pairing->rank_id <= 3 && $bonus_pairing >= 3500000){
-                    $has_pairing = 35;
-                    $fail_pairing = ($bonus_pairing - 3500000) / 100000 ;
-                    $bonus_pairing = 3500000;
-                    $max = false;
-                }elseif($pairing->rank_id <= 6 && $bonus_pairing >= 7000000){
-                    $has_pairing = 70;
-                    $fail_pairing = ($bonus_pairing - 7000000) / 100000 ;
-                    $bonus_pairing = 7000000;
-                    $max = false;
-                }elseif($pairing->rank_id <= 8 && $bonus_pairing >= 10000000){
-                    $has_pairing = 100;
-                    $fail_pairing = ($bonus_pairing - 10000000) / 100000 ;
-                    $bonus_pairing = 10000000;
-                    $max = false;
-                }
-                    
+            }elseif($pairing->rank_id <= 3 && $bonus_pairing >= 3500000){
+                $has_pairing = 35;
+                $fail_pairing = ($bonus_pairing - 3500000) / 100000 ;
+                $bonus_pairing = 3500000;
+            }elseif($pairing->rank_id <= 6 && $bonus_pairing >= 7000000){
+                $has_pairing = 70;
+                $fail_pairing = ($bonus_pairing - 7000000) / 100000 ;
+                $bonus_pairing = 7000000;
+            }elseif($pairing->rank_id <= 8 && $bonus_pairing >= 10000000){
+                $has_pairing = 100;
+                $fail_pairing = ($bonus_pairing - 10000000) / 100000 ;
+                $bonus_pairing = 10000000;
             }
            if($bonus_pairing>0){
                 try {
