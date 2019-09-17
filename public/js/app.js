@@ -41002,7 +41002,12 @@ var render = function() {
                 }
               ],
               staticClass: "form-control",
-              attrs: { type: "text", placeholder: "Referal", required: "" },
+              attrs: {
+                autocomplete: "off",
+                type: "text",
+                placeholder: "Referal",
+                required: ""
+              },
               domProps: { value: _vm.form.referral },
               on: {
                 input: [
@@ -41046,6 +41051,7 @@ var render = function() {
               ],
               staticClass: "form-control",
               attrs: {
+                autocomplete: "off",
                 type: "text",
                 minlength: "2",
                 placeholder: "First Name",
@@ -41076,7 +41082,11 @@ var render = function() {
                 }
               ],
               staticClass: "form-control",
-              attrs: { type: "text", placeholder: "Last Name" },
+              attrs: {
+                autocomplete: "off",
+                type: "text",
+                placeholder: "Last Name"
+              },
               domProps: { value: _vm.form.lastName },
               on: {
                 input: function($event) {
@@ -41151,6 +41161,7 @@ var render = function() {
               ],
               staticClass: "form-control",
               attrs: {
+                autocomplete: "off",
                 type: "email",
                 placeholder: "Email",
                 id: "email",
@@ -41182,6 +41193,7 @@ var render = function() {
               ],
               staticClass: "form-control",
               attrs: {
+                autocomplete: "off",
                 type: "text",
                 placeholder: "NIK/Passport",
                 id: "passport",
@@ -41212,7 +41224,12 @@ var render = function() {
                 }
               ],
               staticClass: "datepicker form-control",
-              attrs: { type: "date", placeholder: "Birthdate", required: "" },
+              attrs: {
+                autocomplete: "off",
+                type: "date",
+                placeholder: "Birthdate",
+                required: ""
+              },
               domProps: { value: _vm.form.birthdate },
               on: {
                 input: function($event) {
@@ -41242,10 +41259,10 @@ var render = function() {
                   _c("input", {
                     staticClass: "with-gap radio-col-red",
                     attrs: {
-                      name: "method",
+                      name: "ebook",
                       type: "checkbox",
                       value: "1",
-                      id: "basic"
+                      id: "" + ebook.title
                     },
                     on: {
                       click: function($event) {
@@ -41520,7 +41537,8 @@ var staticRenderFns = [
         _c("input", {
           staticClass: "with-gap radio-col-red",
           attrs: {
-            name: "method",
+            autocomplete: "off",
+            name: "pack",
             type: "radio",
             value: "0",
             id: "starterpack",

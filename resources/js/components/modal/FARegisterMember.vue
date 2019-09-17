@@ -21,18 +21,18 @@
     <form @submit.prevent="doRegister()">
 
       <div class="input-group col-md-12">
-        <input class="form-control" type="text" v-model="form.referral" placeholder="Referal" required v-on:input="checkReferral">
+        <input autocomplete="off" class="form-control" type="text" v-model="form.referral" placeholder="Referal" required v-on:input="checkReferral">
           <p class="alert-referal" v-if="form.referral != ''">
             {{referral ? 'Referral ditemukan' : 'Referral tidak ditemukan'}}
           </p>
       </div>
       <br>
       <div class="input-group col-md-12">
-          <input class="form-control" type="text" v-model="form.firstName"  minlength="2" placeholder="First Name" required>
+          <input autocomplete="off" class="form-control" type="text" v-model="form.firstName"  minlength="2" placeholder="First Name" required>
       </div>
       <br>
       <div class="input-group col-md-12">
-          <input class="form-control" type="text" placeholder="Last Name" v-model="form.lastName" >
+          <input autocomplete="off" class="form-control" type="text" placeholder="Last Name" v-model="form.lastName" >
       </div>
       <br>
       <div class="input-group col-md-12">
@@ -43,21 +43,21 @@
       </div>
       <br>
       <div class="input-group col-md-12">
-          <input class="form-control" type="email" placeholder="Email" v-model="form.email" id="email" required>
+          <input autocomplete="off" class="form-control" type="email" placeholder="Email" v-model="form.email" id="email" required>
       </div>
       <br>
       <div class="input-group col-md-12">
-          <input class="form-control" type="text" placeholder="NIK/Passport" v-model="form.passport" id="passport" required>
+          <input autocomplete="off" class="form-control" type="text" placeholder="NIK/Passport" v-model="form.passport" id="passport" required>
       </div>
       <br>
       <div class="input-group col-md-12">
-          <input type="date" v-model="form.birthdate"  class="datepicker form-control" placeholder="Birthdate" required>
+          <input autocomplete="off" type="date" v-model="form.birthdate"  class="datepicker form-control" placeholder="Birthdate" required>
       </div>
       <br/>
       <div class="input-group col-md-12">
         <h5 class="card-inside-title">Choose a pack</h5>
         <div class="demo-radio-button">
-          <input name="method" type="radio" value="0" id="starterpack" class="with-gap radio-col-red" checked />
+          <input autocomplete="off" name="pack" type="radio" value="0" id="starterpack" class="with-gap radio-col-red" checked />
           <label for="shipping">Starter Pack</label>
         </div>
         <input type="hidden" id="choosepack">
@@ -67,7 +67,7 @@
         <h5 class="card-inside-title">Choose a ebook</h5>
         <div class="demo-radio-button">
           <span v-for="(ebook, index) in ebooks" :key="index" class="d-inline">
-            <input v-on:click="selectedEbookPack(ebook)" name="method" type="checkbox" value="1" id="basic" class="with-gap radio-col-red"/>
+            <input v-on:click="selectedEbookPack(ebook)" name="ebook" type="checkbox" value="1" :id="`${ebook.title}`" class="with-gap radio-col-red"/>
             <label for="shipping">{{ ebook.title }}</label>
             &nbsp;&nbsp;&nbsp;&nbsp;
           </span>
