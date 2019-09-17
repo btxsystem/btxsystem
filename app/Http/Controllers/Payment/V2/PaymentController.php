@@ -371,6 +371,12 @@ class PaymentController extends Controller
             ]);
           } else {
             TransactionNonMember::insert([
+              'income' => $trxNonMember->latest('id')->income,
+              'member_id' => $trxNonMember->latest('id')->member_id,
+              'non_member_id' => $trxNonMember->latest('id')->non_member_id,
+              'ebook_id' => $trxNonMember->latest('id')->ebook_id,
+              'status' => $trxNonMember->latest('id')->status,
+              'transaction_ref' => $trxNonMember->latest('id')->transaction_ref,
               'expired_at' => Carbon::create($trxNonMember->latest('id')->expired_at)->addYear(1)
             ]);
           }
@@ -383,6 +389,10 @@ class PaymentController extends Controller
             ]);
           } else {
             TransactionMember::insert([
+              'member_id' => $trxNonMember->latest('id')->member_id,
+              'ebook_id' => $trxNonMember->latest('id')->ebook_id,
+              'status' => $trxNonMember->latest('id')->status,
+              'transaction_ref' => $trxNonMember->latest('id')->transaction_ref,
               'expired_at' => Carbon::create($trxMember->latest('id')->expired_at)->addYear(1)
             ]);
           }
