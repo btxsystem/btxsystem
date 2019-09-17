@@ -21,8 +21,8 @@ class Da extends Migration
                 set time_zone = "+07:00";
                 SET bonus_bv = (SELECT bv FROM `ebooks` WHERE id = NEW.ebook_id);
                 SET bonus_pv = (SELECT pv FROM `ebooks` WHERE id = NEW.ebook_id);
-                SET @sponsor = (SELECT sponsor_id FROM `employeers` WHERE id = NEW.member_id);
-                set @verif = (SELECT verification FROM `employeers` WHERE employeers.id = @sponsor);
+                SET sponsor = (SELECT sponsor_id FROM `employeers` WHERE id = NEW.member_id);
+                set @verif = (SELECT verification FROM `employeers` WHERE employeers.id = sponsor);
                 set @username = (SELECT username FROM `employeers` WHERE employeers.id = new.member_id);
                 set @pajak = 0.0;
                 set @condition1 = (SELECT count(id) FROM `transaction_member` WHERE member_id = new.member_id);
@@ -58,6 +58,6 @@ class Da extends Migration
      */
     public function down()
     {
-        
+        DB::unprepared('DROP TRIGGER IF EXISTS `tr_bonus_sponsor_from_member`');
     }
 }
