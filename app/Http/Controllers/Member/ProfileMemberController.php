@@ -92,8 +92,7 @@ class ProfileMemberController extends Controller
         $data = Auth::user();
         $ranks = DB::table('ranks')->select('name','pv_needed_left','pv_needed_midle','pv_needed_right')->get();
         $rewards = DB::table('gift_rewards')->select('id','description','nominal')->get();
-        $myRewards = DB::table('got_rewards')->where('member_id', Auth::id())->select('reward_id')->get();
-        return view('frontend.rewards.index',['profile'=>$data, 'ranks'=> $ranks, 'rewards'=> $rewards, 'my_rewards'=> $myRewards]);
+        return view('frontend.rewards.index',['profile'=>$data, 'ranks'=> $ranks, 'rewards'=> $rewards]);
     }
 
     public function getRewards(){
@@ -104,6 +103,11 @@ class ProfileMemberController extends Controller
                                            ->orderBy('got_rewards.created_at','desc')
                                            ->paginate(4);
         return response()->json($rewards, 200);
+    }
+
+    public function rewardClime(){
+        $data = DB::table('got_rewards')->where('member_id',Auth::id())->get();
+        return($data);
     }
 
     public function getMyRewards($id){

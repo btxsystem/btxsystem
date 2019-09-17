@@ -39,7 +39,7 @@
                                         <td>{{$rank->pv_needed_midle}}</td>
                                         <td>{{$rank->pv_needed_right}}</td>
                                         <td>{{$rewards[$key]->description}}</td>
-                                        <td>
+                                        <td class="reward-status-{{$key}}">
                                             <button class="btn btn-primary" style="cursor:pointer; display:none" type="submit">Clime</button>
                                             <button type="button" style="cursor:no-drop" class="btn btn-secondary">Unlock</button>
                                         </td>
@@ -51,7 +51,7 @@
                                         <td>{{$rank->pv_needed_midle}}</td>
                                         <td>{{$rank->pv_needed_right}}</td>
                                         <td>{{$rewards[$key]->description}}</td>
-                                        <td>
+                                        <td class="reward-status-{{$key}}">
                                             <button class="btn btn-primary" style="cursor:pointer; display:none" type="submit">Clime</button>
                                             <button type="button" style="cursor:no-drop" class="btn btn-secondary">Unlock</button>
                                         </td>
@@ -71,10 +71,19 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $.ajax({
-            url: '{{route("member.select.reward")}}',
+            url: '{{route("member.select.reward-clime")}}',
             data: data,
             success:function(data){
-                console.log(data);         
+                if (data.length <= 8) {
+                    $.each(data, function(i, item){
+                        if (item.status == 0) {
+                            
+                        }
+                        console.log(item.status);
+                    });
+                }else{
+                    console.log('seasson 2');
+                }         
             }
         });
     });

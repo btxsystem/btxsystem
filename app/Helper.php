@@ -71,7 +71,7 @@ function findChild($id, $sponsor, $data){
             'bitrex_points' => 0,
             'pv' => 0,
             'nik' => $data->nik,
-            'expired_at' => Carbon::now()->addMonths(2)
+            'expired_at' => Carbon::now()->addYears(1)
         ];
         Employeer::create($member);
     }else{
@@ -104,7 +104,7 @@ function findChild($id, $sponsor, $data){
                 'bitrex_points' => 0,
                 'pv' => 0,
                 'nik' => $data->nik,
-                'expired_at' => Carbon::now()->addMonths(2)
+                'expired_at' => Carbon::now()->addYears(1)
             ];
             Employeer::create($member);
         }elseif (!$midle) {
@@ -124,7 +124,7 @@ function findChild($id, $sponsor, $data){
                 'bitrex_points' => 0,
                 'pv' => 0,
                 'nik' => $data->nik,
-                'expired_at' => Carbon::now()->addMonths(2)
+                'expired_at' => Carbon::now()->addYears(1)
             ];
             Employeer::create($member);
         }else {
@@ -144,7 +144,7 @@ function findChild($id, $sponsor, $data){
                 'bitrex_points' => 0,
                 'pv' => 0,
                 'nik' => $data->nik,
-                'expired_at' => Carbon::now()->addMonths(2)
+                'expired_at' => Carbon::now()->addYears(1)
             ];
             Employeer::create($member);
         }

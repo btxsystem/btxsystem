@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use DB;
 use App\Models\TransactionMember;
 use App\Models\Ebook;
+use Carbon\Carbon;
 
 class EbookController extends Controller
 {
@@ -42,7 +43,7 @@ class EbookController extends Controller
             'member_id' => Auth::user()->id,
             'ebook_id' => $request->id,
             'status' => 1,
-            'expired_at' => '2020-03-05'
+            'expired_at' => Carbon::now()->addYears(1)
         ];
         $cek = TransactionMember::create($data);
         return redirect()->route('member.ebook.index');
