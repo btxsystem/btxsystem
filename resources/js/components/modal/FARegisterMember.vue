@@ -189,10 +189,10 @@ export default {
         }
       ],
       payments: [
-        {
-          value: 'transfer',
-          title: 'Transfer'
-        },
+        // {
+        //   value: 'transfer',
+        //   title: 'Transfer'
+        // },
         {
           value: 'ipay',
           title: 'Ipay88'
