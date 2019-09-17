@@ -2314,8 +2314,14 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         console.log(res);
         console.log(res.data.data);
         _this8.payment = res.data.data.data;
-        var form = document.getElementById('payment');
-        form.submit();
+
+        if (_this8.form.payment == 'transfer') {
+          window.location.href = '/transaction/payment/BITREX009218';
+        } else if (_this8.form.payment == 'ipay') {
+          var form = document.getElementById('payment');
+          form.submit();
+        }
+
         _this8.isLoading = false;
       })["catch"](function (err) {
         console.log(err);

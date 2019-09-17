@@ -368,8 +368,12 @@ export default {
         console.log(res)
         console.log(res.data.data)
         this.payment = res.data.data.data
-        let form = document.getElementById('payment')
-        form.submit()
+        if(this.form.payment == 'transfer') {
+          window.location.href = '/transaction/payment/BITREX009218'
+        } else if(this.form.payment == 'ipay') {
+          let form = document.getElementById('payment')
+          form.submit()
+        }
         this.isLoading = false
       }).catch(err => {
         console.log(err)
