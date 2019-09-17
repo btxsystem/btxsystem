@@ -278,7 +278,7 @@ class PaymentController extends Controller
 
         if($checkIsRegister) {
           //if new register
-          if($checkIsRegister->expired_at <= date('Y-m-d') && $checkIsRegister->status != 1) {
+          if($checkIsRegister->expired_at < now() && $checkIsRegister->status != 1) {
             $isRegister = true;
           } else {
             $isRegister = false;
@@ -367,17 +367,17 @@ class PaymentController extends Controller
           $trxNonMember = TransactionNonMember::where('transaction_ref', $code);
           if(!$isRenewal) {
             $trxNonMember->update([
-              'expired_at' => Carbon::create($trxNonMember->latest('id')->expired_at)->addYear(1)
+              'expired_at' => Carbon::create($trxNonMember->latest('id')->first()->expired_at)->addYear(1)
             ]);
           } else {
             TransactionNonMember::insert([
-              'income' => $trxNonMember->latest('id')->income,
-              'member_id' => $trxNonMember->latest('id')->member_id,
-              'non_member_id' => $trxNonMember->latest('id')->non_member_id,
-              'ebook_id' => $trxNonMember->latest('id')->ebook_id,
-              'status' => $trxNonMember->latest('id')->status,
-              'transaction_ref' => $trxNonMember->latest('id')->transaction_ref,
-              'expired_at' => Carbon::create($trxNonMember->latest('id')->expired_at)->addYear(1)
+              'income' => $trxNonMember->latest('id')->first()->income,
+              'member_id' => $trxNonMember->latest('id')->first()->member_id,
+              'non_member_id' => $trxNonMember->latest('id')->first()->non_member_id,
+              'ebook_id' => $trxNonMember->latest('id')->first()->ebook_id,
+              'status' => $trxNonMember->latest('id')->first()->status,
+              'transaction_ref' => $trxNonMember->latest('id')->first()->transaction_ref,
+              'expired_at' => Carbon::create($trxNonMember->latest('id')->first()->expired_at)->addYear(1)
             ]);
           }
 
@@ -385,15 +385,15 @@ class PaymentController extends Controller
           $trxMember = TransactionMember::where('transaction_ref', $code);
           if(!$isRenewal) {
             $trxMember->update([
-              'expired_at' => Carbon::create($trxMember->latest('id')->expired_at)->addYear(1)
+              'expired_at' => Carbon::create($trxMember->latest('id')->first()->expired_at)->addYear(1)
             ]);
           } else {
             TransactionMember::insert([
-              'member_id' => $trxNonMember->latest('id')->member_id,
-              'ebook_id' => $trxNonMember->latest('id')->ebook_id,
-              'status' => $trxNonMember->latest('id')->status,
-              'transaction_ref' => $trxNonMember->latest('id')->transaction_ref,
-              'expired_at' => Carbon::create($trxMember->latest('id')->expired_at)->addYear(1)
+              'member_id' => $trxNonMember->latest('id')->first()->member_id,
+              'ebook_id' => $trxNonMember->latest('id')->first()->ebook_id,
+              'status' => $trxNonMember->latest('id')->first()->status,
+              'transaction_ref' => $trxNonMember->latest('id')->first()->transaction_ref,
+              'expired_at' => Carbon::create($trxMember->latest('id')->first()->expired_at)->addYear(1)
             ]);
           }
         }
