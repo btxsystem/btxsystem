@@ -23,6 +23,8 @@ window.Vue = require('vue');
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 
 Vue.component('home-component', require('./components/ebook/HomeComponent.vue').default)
+Vue.component('fa-register-member-component', require('./components/modal/FARegisterMember.vue').default)
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -32,6 +34,11 @@ Vue.component('home-component', require('./components/ebook/HomeComponent.vue').
 import store from './store'
 import VueCountdownTimer from 'vuejs-countdown-timer'
 Vue.use(VueCountdownTimer)
+
+import Multiselect from 'vue-multiselect'
+import 'vue-multiselect/dist/vue-multiselect.min.css'
+Vue.component('multiselect', Multiselect)
+
 const app = new Vue({
     el: '#app',
     store
