@@ -48,7 +48,7 @@ class RegisterController extends Controller
       if(!$checkReferral) {
         return response()->json([
           'success' => false,
-          'message' => ''
+          'message' => 'gaada referral'
         ]);
       }
 
@@ -57,7 +57,7 @@ class RegisterController extends Controller
         if(!$checkEbook) {
           return response()->json([
             'success' => false,
-            'message' => ''
+            'message' => 'gaada ebooks'
           ]);
         }
       }
@@ -105,7 +105,7 @@ class RegisterController extends Controller
         DB::rollback();
         return response()->json([
           'success' => false,
-          'message' => ''
+          'message' => 'gabisa saved tmp'
         ]);
       }
 
@@ -138,11 +138,31 @@ class RegisterController extends Controller
         $trx->save();
       }
 
+      $idNewMember = findChild(
+        $checkReferral->id,
+        $checkReferral->id,
+        $saved
+      );
+
+      if(count($ebooks) > 0) {
+        $books = [];
+        foreach ($ebooks as $ebook) {
+          $books[] = [
+            'transaction_ref' => $afterCheckRef,
+            'ebook_id' => $ebook['id'],
+            'expired_at' => '2040-09-07 00:00:00',
+            'member_id' => $idNewMember->id,
+            'status' => 1
+          ];
+        }
+        $trxMember = TransactionMember::insert($books);
+      }
+
       if(!$saved || !$trx) {
         DB::rollback();
         return response()->json([
           'success' => false,
-          'message' => ''
+          'message' => 'gabisa save duaduanya'
         ]);
       }
 
@@ -251,6 +271,28 @@ class RegisterController extends Controller
 
   public function paymentWithoutEbook(Request $request, $params)
   {
+    $orderAmount = 280000;
+
+    $data['merchant_key'] = env('IPAY_MERCHANT_KEY');
+    $data['merchant_code'] = env('IPAY_MERCHANT_CODE');
+    $data['currency'] = "IDR";
+    $data['payment_id'] = 1;
+    $data['product_desc'] = "Starter Pack";
+    $data['user_name'] = $params['member']['username'];
+    $data['user_email'] = $params['member']['email'];
+    $data['ref_no'] = $params['trx']['transaction_ref'];
+    $data['lang'] = 'UTF-8';
+    // $data['code'] = $subs->created_at->format('dmYHi');
+    $data['code'] = $params['trx']['transaction_ref'];
+    $data['amount'] = (int) str_replace(".","",str_replace(",","",number_format($orderAmount, 2, ".", "")));
+    $data['signature'] = $this->signature($data['code'], $data['amount']);
+    $data['response_url'] = 'https://bitrexgo.id/response-pay-member';
+    $data['backend_url'] = 'https://bitrexgo.id/backend-response-pay';
+
+    // return view('payment.form')
+    //   ->with([
+    //     'data' => $data
+    // ]);
     return response()->json([
       'success' => true,
       'message' => '',

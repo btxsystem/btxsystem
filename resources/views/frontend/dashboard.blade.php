@@ -182,7 +182,6 @@
 </section>
 @stop
 
-
 @section('footer_scripts')
     <script type="text/javascript">
         $(document).ready(function () {

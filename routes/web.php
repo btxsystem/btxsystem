@@ -152,6 +152,7 @@ Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
         Route::get('my-transaction', ['as' => 'my-transaction', 'uses' => 'Member\TransactionController@myTransaction']);
         Route::get('prospected-member-transaction', ['as' => 'prospected-member-transaction', 'uses' => 'Member\TransactionController@prospectedMemberHistory']);
         Route::get('reward', ['as' => 'reward', 'uses' => 'Member\ProfileMemberController@getRewards']);
+        Route::get('reward-clime', ['as' => 'reward-clime', 'uses' => 'Member\ProfileMemberController@rewardClime']);
         Route::get('bitrex-points', ['as' => 'bitrex-points', 'uses' => 'Member\BitrexPointController@getBitrexPoints']);
         Route::get('history-pv-pairing', ['as' => 'history-pv-pairing', 'uses' => 'Member\PvController@historyPvPairing']);
         Route::get('bonus', ['as' => 'bonus', 'uses' => 'Member\MyBonusController@bonus']);
