@@ -178,4 +178,16 @@ class Employeer extends Authenticatable
                 ->sum('nominal');
     }
 
+    public function scopeFilter($query, $request)
+    {
+        if ($request->has('search') && $request->search['value'] !== null) {
+            $query->where('id_member', 'like', '%'.$request->search['value'].'%');
+            $query->OrWhere('username', 'like', '%'.$request->search['value'].'%');
+            $query->OrWhere('first_name', 'like', '%'.$request->search['value'].'%');
+            $query->OrWhere('last_name', 'like', '%'.$request->search['value'].'%');
+            $query->OrWhere('npwp_number', 'like', '%'.$request->search['value'].'%');
+            $query->OrWhere('no_rec', 'like', '%'.$request->search['value'].'%');
+        }
+    }
+
 }

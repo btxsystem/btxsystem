@@ -82,7 +82,7 @@ Income Member
           var table = $('.sponsor').DataTable({
               destroy: true,
               processing: true,
-              serverSide: true,
+              serverSide: false,
               responsive: true,
               dom: 'Blfrtip',
               buttons: [

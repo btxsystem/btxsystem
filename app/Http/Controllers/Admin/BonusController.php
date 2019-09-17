@@ -70,14 +70,41 @@ class BonusController extends Controller
         return view('admin.bonus.reward');
     }
 
-    public function general()
+    // public function general()
+    // {
+    //     if (request()->ajax()) {
+    //                 $data = Employeer::orderBy('id','desc');
+    //                 return   Datatables::of($data)
+    //                             ->addIndexColumn()
+    //                             ->make(true);
+    //         }
+    //     return view('admin.bonus.general');
+    // }
+
+    public function general(Request $request)
     {
         if (request()->ajax()) {
-                    $data = Employeer::orderBy('id','desc')->get();
-                    return   Datatables::of($data)
-                                ->addIndexColumn()
-                                ->make(true);
-            }
+
+            $page = ($request->start > 0) ? (($request->start+$request->length)/$request->length) : 1;
+
+            $model = Employeer::orderBy('id','desc');
+            $filter = $model->filter($request);
+            $object = $filter->paginate($request->length, ['*'], 'page', $page);
+            $datas = $object->toArray();
+            
+            $datas['req'] = $request->all();
+            $datas['draw'] = (int)$request->draw;
+            $datas['recordsTotal'] = $model->count();
+            $datas['recordsFiltered'] = $object->total();
+            
+            $datas['data'] = $object->map(function($item, $index) use($object) {
+                $item->iteration = ($index + 1) + ($object->perPage() * ($object->currentPage() - 1));
+                return $item;
+            });
+
+            return $datas;
+
+        }
         return view('admin.bonus.general');
     }
 
