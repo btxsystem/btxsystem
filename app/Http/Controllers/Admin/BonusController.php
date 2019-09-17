@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\HistoryBitrexCash;
+use App\Employeer;
 use DataTables;
 
 class BonusController extends Controller
@@ -68,5 +69,19 @@ class BonusController extends Controller
         }
         return view('admin.bonus.reward');
     }
+
+    public function general()
+    {
+        if (request()->ajax()) {
+                    $data = Employeer::orderBy('id','desc')->get();
+                    return   Datatables::of($data)
+                                ->addIndexColumn()
+                                ->make(true);
+            }
+        return view('admin.bonus.general');
+    }
+
+
+
 
 }

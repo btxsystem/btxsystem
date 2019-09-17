@@ -1,18 +1,18 @@
 @extends('layouts/admin')
 @section('title')
-Bonus Sponsor
+Income Member
 @parent
 @stop
 
 @section('content')
 
 <section class="content-header">
-    <h1>Sponsor</h1>
+    <h1>Income Member</h1>
     <ol class="breadcrumb">
         <li>
             <a href="#">Bonus</a>
         </li>
-        <li class="active">Sponsor</li>
+        <li class="active">Income Member</li>
     </ol>
 </section>
     <section class="content">                
@@ -23,7 +23,7 @@ Bonus Sponsor
                 <div class="portlet-title">
                     <div class="caption">
                         <i class="livicon" data-name="permissions" data-size="16" data-loop="true" data-c="#fff" data-hc="white"></i>
-                        Sponsor Table
+                        Bonus Table
                     </div>
                 </div>
                 
@@ -31,9 +31,15 @@ Bonus Sponsor
                     <table id="sponsor" class="table data-table table-bordered table-striped table-condensed flip-content sponsor" >
                         <thead class="flip-content">
                             <tr>
+                                <th>ID Member</th>
                                 <th>Username</th>
-                                <th>Nominal</th>
-                                <th>Description</th>
+                                <th>NPWP</th>
+                                <th>NO REK</th>
+                                <th>B Sponsor</th>
+                                <th>B Pairing</th>
+                                <th>B Profit</th>
+                                <th>B Reward</th>
+                                <th>Total</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -45,47 +51,6 @@ Bonus Sponsor
     </div>
     </section>
 
-  
-    <!-- <div id="detail" class="modal fade">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h4 class="modal-title">Detail transactions</h4>
-                </div>
-                <div class="modal-body">
-                    <fieldset>
-                        <div class="portlet-title">
-                            <div class="caption">
-                                <i class="livicon" data-name="permissions" data-size="16" data-loop="true" data-c="#fff" data-hc="white"></i>
-                                Bitrex Cash Table
-                            </div>
-                        </div>
-                        
-                        <div class="portlet-body flip-scroll">
-                            <table class="table data-table table-bordered table-striped table-condensed flip-content detail" >
-                                <thead class="flip-content">
-                                    <tr>
-                                        <th>No</th>
-                                        <th>Id Member</th>
-                                        <th>Nominal</th>
-                                        <th>Description</th>
-                                        <th>Date</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                            </table>
-                        </div>
-                    </fieldset>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div>
-                </div>
-            </div>
-        </div>
-    </div>
-     -->
 
 @stop
 
@@ -139,38 +104,22 @@ Bonus Sponsor
                 }
               ],
               ajax: {
-                url: "{{ route('bonus.sponsor') }}", 
+                url: "{{ route('bonus.general') }}", 
               },
               columns: [
-                  {data: 'member.username', name: 'member.username', className: 'text-center'},
-                  {data: 'nominal', name: 'nominal', className: 'text-center'},
-                  {data: 'description', name: 'description', className: 'text-center'},
+                  {data: 'id_member', name: 'id_member', className: 'text-center'},
+                  {data: 'username', name: 'username', className: 'text-center'},
+                  {data: 'npwp_number', name: 'npwp_number', className: 'text-center'},
+                  {data: 'no_rec', name: 'no_rec', className: 'text-center'},
+                  {data: 'bonus_sponsor', name: 'bonus_sponsor', className: 'text-center'},
+                  {data: 'bonus_pairing', name: 'bonus_pairing', className: 'text-center'},
+                  {data: 'bonus_profit', name: 'bonus_profit', className: 'text-center'},
+                  {data: 'bonus_reward', name: 'bonus_reward', className: 'text-center'},
+                  {data: 'total_bonus', name: 'total_bonus', className: 'text-center'},
               ]
           });
           $(".transaction_wrapper > .dt-buttons").appendTo("div.panel-heading");
     });
-
-
-    var detail = (id) => {
-        console.log('masuk'); 
-        var table = $('.detail').DataTable({
-              destroy: true,
-              processing: true,
-              serverSide: true,
-              ajax: {
-                url: id+"/cash/detail"
-              },
-              columns: [
-                  {
-                      data: 'DT_RowIndex', name: 'DT_RowIndex', 
-                      orderable: false, searchable: false
-                  },
-                  {data: 'nominal', name: 'nominal'},
-                  {data: 'description', name: 'description', searchable: false},
-                  {data: 'created_at', name: 'created_at', orderable: false, searchable: false},
-              ]    
-        });    
-    };
       </script>
 
 @stop

@@ -170,6 +170,7 @@ Route::group(['middleware' => 'admin'], function () {
         Route::get('pairing', ['as' => 'pairing', 'uses' => 'Admin\BonusController@bonusPairing']);
         Route::get('profit', ['as' => 'profit', 'uses' => 'Admin\BonusController@bonusProfit']);
         Route::get('reward', ['as' => 'reward', 'uses' => 'Admin\BonusController@bonusReward']);
+        Route::get('general', ['as' => 'general', 'uses' => 'Admin\BonusController@general']);
     });
 
     Route::group(['prefix'=>'cms','as'=>'cms.'], function(){
