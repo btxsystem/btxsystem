@@ -118,6 +118,10 @@ Route::group(['middleware' => 'admin'], function () {
         Route::get('topup', ['as' => 'topup', 'uses' => 'Admin\MemberController@topup']);
         Route::get('buy-product', ['as' => 'buy-product', 'uses' => 'Admin\MemberController@buyProduct']);
 
+        // Transaction
+        Route::get('/transaction', ['as' => 'transaction', 'uses' => 'Admin\TransactionController@index']);
+
+
         // Datatable for member
         Route::get('/{id}/point-history','Admin\MemberController@historyPointData')->name('points.history');
         Route::get('/{id}/cash-history','Admin\MemberController@historyCashData')->name('cash.history');
@@ -136,6 +140,8 @@ Route::group(['middleware' => 'admin'], function () {
             Route::get('/{id}/active', ['as' => 'active', 'uses' => 'Admin\MemberController@active']);
         });
     });
+
+
 
     Route::group(['prefix'=>'new.tree','as'=>'new.tree.'], function(){
             Route::get('index', ['as' => 'index', 'uses' => 'Admin\NewTreeController@tree']);

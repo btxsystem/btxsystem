@@ -35,9 +35,16 @@ class BitrexCashController extends Controller
         return view('admin.bitrex-money.bitrex-cash.index');
     }
 
-    public function detail($id){
-        // if (request()->ajax()) {
-            $data = DB::table('history_bitrex_cash')->select('id','id_member', 'nominal','description', 'created_at')->where('id_member',$id);
+    public function detail(Request $request, $id){
+        if (request()->ajax()) {
+            if($request->from_date)
+            {
+                $data = DB::table('history_bitrex_cash')->whereBetween('created_at', [$request->from_date, $request->to_date])->select('id','id_member', 'nominal','description', 'created_at')->where('id_member','=',$id);
+            }
+            else {
+                $data = DB::table('history_bitrex_cash')->select('id','id_member', 'nominal','description', 'created_at')->where('id_member','=',$id);
+            }
+            // $data = DB::table('history_bitrex_cash')->select('id','id_member', 'nominal','description', 'created_at')->where('id_member',$id);
             return Datatables::of($data)
             ->addIndexColumn()         
             ->editColumn('nominal', function($data){
@@ -47,7 +54,7 @@ class BitrexCashController extends Controller
                 return date('d-m-Y', strtotime($data->created_at));
             })  
             ->make(true);
-        // }
+        }
     }
 
    

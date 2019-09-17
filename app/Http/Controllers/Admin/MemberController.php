@@ -152,7 +152,9 @@ class MemberController extends Controller
 
     public function show($id)
     {
-        $data = Employeer::with('ebooks.transactionMember')->findOrFail($id);
+        $data = Employeer::with('ebooks.transactionMember','transaction')->findOrFail($id);
+
+        return $data;
 
         $ebooks = Ebook::orderBy('id', 'desc')->get();
 
@@ -163,8 +165,6 @@ class MemberController extends Controller
     public function edit($id)
     {
         $data = Employeer::with('sponsor')->findOrFail($id);
-
-        // return $data;
 
         return view('admin.members.edit', compact('data'));
 
