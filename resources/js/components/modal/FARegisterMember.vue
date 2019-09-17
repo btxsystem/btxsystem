@@ -3,20 +3,20 @@
     <loading :active.sync="isLoading"
       :can-cancel="true"></loading>
       <form method="post" id="payment" name="ePayment" action="https://sandbox.ipay88.co.id/epayment/entry.asp">
-      <input type="hidden" name="MerchantCode" v-model="payment.merchant_code">
+      <input type="hidden" name="MerchantCode" v-bind:value="payment.merchant_code">
       <!-- <input type="hidden" name="PaymentId" value="52"> -->
-      <input type="hidden" name="RefNo" v-model="payment.ref_no">
-      <input type="hidden" name="Amount" v-model="payment.amount">
+      <input type="hidden" name="RefNo" v-bind:value="payment.ref_no">
+      <input type="hidden" name="Amount" v-bind:value="`${payment.amount}`">
       <input type="hidden" name="Currency" value="IDR">
-      <input type="hidden" name="ProdDesc" v-model="payment.product_desc">
-      <input type="hidden" name="UserName" v-model="payment.user_name">
-      <input type="hidden" name="UserEmail" v-model="payment.user_email">
+      <input type="hidden" name="ProdDesc" v-bind:value="payment.product_desc">
+      <input type="hidden" name="UserName" v-bind:value="payment.user_name">
+      <input type="hidden" name="UserEmail" v-bind:value="payment.user_email">
       <input type="hidden" name="UserContact" value="0126500100">
       <input type="hidden" name="Remark" value="">
       <input type="hidden" name="Lang" value="UTF-8">
-      <input type="hidden" name="Signature" v-model="payment.signature">
-      <input type="hidden" name="ResponseURL" v-model="payment.response_url">
-      <input type="hidden" name="BackendURL" v-model="payment.backend_url">
+      <input type="hidden" name="Signature" v-bind:value="payment.signature">
+      <input type="hidden" name="ResponseURL" v-bind:value="payment.response_url">
+      <input type="hidden" name="BackendURL" v-bind:value="payment.backend_url">
       </form>
     <form @submit.prevent="doRegister()">
 
@@ -60,7 +60,7 @@
           <input autocomplete="off" name="pack" type="radio" value="0" id="starterpack" class="with-gap radio-col-red" checked />
           <label for="shipping">Starter Pack</label>
         </div>
-        <input type="hidden" id="choosepack">
+        <input type="text" id="choosepack">
       </div>
       <!-- {{form}} -->
       <div class="input-group col-md-12">
@@ -80,11 +80,11 @@
         <h5 class="card-inside-title">Choose a shipping method</h5>
         <div class="form-group demo-radio-button">
           <span v-for="(data, index) in shipping" :key="index">
-            <input v-on:click="selectedShippingMethod(data.value)" name="method" type="radio" :value="data.value" class="with-gap radio-col-red" />
+            <input v-on:click="selectedShippingMethod(data.value)" name="method" type="radio" v-bind:valuealue="data.value" class="with-gap radio-col-red" />
             <label for="shipping">{{ data.title }}</label>&nbsp;&nbsp;&nbsp;&nbsp;
           </span>
         </div>
-        <input type="hidden" id="choosepack">
+        <input type="text" id="choosepack">
       </div>
 
       <div v-if="form.shipping == 1">
@@ -116,7 +116,7 @@
         <h5 class="card-inside-title">Choose a payment method</h5>
           <div class="form-group demo-radio-button">
           <span v-for="(data, index) in payments" v-on:click="selectedPaymentMethod(data.value)" :key="index">
-            <input name="payment" type="radio" :value="data.value" class="with-gap radio-col-red" :checked="data.value == form.payment"/>
+            <input name="payment" type="radio" v-bind:valuealue="data.value" class="with-gap radio-col-red" :checked="data.value == form.payment"/>
             <label for="shipping">{{ data.title }}</label>&nbsp;&nbsp;&nbsp;&nbsp;
           </span>
         </div>
@@ -227,6 +227,7 @@ export default {
     }
   },
   created () {
+    
     this.getProvince()
     this.getEbooks()
   },
@@ -371,10 +372,13 @@ export default {
         if(this.form.payment == 'transfer') {
           window.location.href = '/transaction/payment/BITREX009218'
         } else if(this.form.payment == 'ipay') {
-          // let form = document.getElementById('payment')
-          // form.submit()
+          let form = document.getElementById('payment')
+          setTimeout(() => {
+            form.submit()
+            this.isLoading = false
+          }, 1000)
         }
-        this.isLoading = false
+        
       }).catch(err => {
         console.log(err)
         this.isLoading = false

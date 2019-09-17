@@ -2317,11 +2317,13 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
         if (_this8.form.payment == 'transfer') {
           window.location.href = '/transaction/payment/BITREX009218';
-        } else if (_this8.form.payment == 'ipay') {// let form = document.getElementById('payment')
-          // form.submit()
+        } else if (_this8.form.payment == 'ipay') {
+          var form = document.getElementById('payment');
+          setTimeout(function () {
+            form.submit();
+            _this8.isLoading = false;
+          }, 1000);
         }
-
-        _this8.isLoading = false;
       })["catch"](function (err) {
         console.log(err);
         _this8.isLoading = false;
@@ -23564,66 +23566,18 @@ var render = function() {
         },
         [
           _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.payment.merchant_code,
-                expression: "payment.merchant_code"
-              }
-            ],
             attrs: { type: "hidden", name: "MerchantCode" },
-            domProps: { value: _vm.payment.merchant_code },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.$set(_vm.payment, "merchant_code", $event.target.value)
-              }
-            }
+            domProps: { value: _vm.payment.merchant_code }
           }),
           _vm._v(" "),
           _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.payment.ref_no,
-                expression: "payment.ref_no"
-              }
-            ],
             attrs: { type: "hidden", name: "RefNo" },
-            domProps: { value: _vm.payment.ref_no },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.$set(_vm.payment, "ref_no", $event.target.value)
-              }
-            }
+            domProps: { value: _vm.payment.ref_no }
           }),
           _vm._v(" "),
           _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.payment.amount,
-                expression: "payment.amount"
-              }
-            ],
             attrs: { type: "hidden", name: "Amount" },
-            domProps: { value: _vm.payment.amount },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.$set(_vm.payment, "amount", $event.target.value)
-              }
-            }
+            domProps: { value: "" + _vm.payment.amount }
           }),
           _vm._v(" "),
           _c("input", {
@@ -23631,66 +23585,18 @@ var render = function() {
           }),
           _vm._v(" "),
           _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.payment.product_desc,
-                expression: "payment.product_desc"
-              }
-            ],
             attrs: { type: "hidden", name: "ProdDesc" },
-            domProps: { value: _vm.payment.product_desc },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.$set(_vm.payment, "product_desc", $event.target.value)
-              }
-            }
+            domProps: { value: _vm.payment.product_desc }
           }),
           _vm._v(" "),
           _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.payment.user_name,
-                expression: "payment.user_name"
-              }
-            ],
             attrs: { type: "hidden", name: "UserName" },
-            domProps: { value: _vm.payment.user_name },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.$set(_vm.payment, "user_name", $event.target.value)
-              }
-            }
+            domProps: { value: _vm.payment.user_name }
           }),
           _vm._v(" "),
           _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.payment.user_email,
-                expression: "payment.user_email"
-              }
-            ],
             attrs: { type: "hidden", name: "UserEmail" },
-            domProps: { value: _vm.payment.user_email },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.$set(_vm.payment, "user_email", $event.target.value)
-              }
-            }
+            domProps: { value: _vm.payment.user_email }
           }),
           _vm._v(" "),
           _c("input", {
@@ -23704,66 +23610,18 @@ var render = function() {
           }),
           _vm._v(" "),
           _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.payment.signature,
-                expression: "payment.signature"
-              }
-            ],
             attrs: { type: "hidden", name: "Signature" },
-            domProps: { value: _vm.payment.signature },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.$set(_vm.payment, "signature", $event.target.value)
-              }
-            }
+            domProps: { value: _vm.payment.signature }
           }),
           _vm._v(" "),
           _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.payment.response_url,
-                expression: "payment.response_url"
-              }
-            ],
             attrs: { type: "hidden", name: "ResponseURL" },
-            domProps: { value: _vm.payment.response_url },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.$set(_vm.payment, "response_url", $event.target.value)
-              }
-            }
+            domProps: { value: _vm.payment.response_url }
           }),
           _vm._v(" "),
           _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.payment.backend_url,
-                expression: "payment.backend_url"
-              }
-            ],
             attrs: { type: "hidden", name: "BackendURL" },
-            domProps: { value: _vm.payment.backend_url },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.$set(_vm.payment, "backend_url", $event.target.value)
-              }
-            }
+            domProps: { value: _vm.payment.backend_url }
           })
         ]
       ),
@@ -24081,8 +23939,11 @@ var render = function() {
                 return _c("span", { key: index }, [
                   _c("input", {
                     staticClass: "with-gap radio-col-red",
-                    attrs: { name: "method", type: "radio" },
-                    domProps: { value: data.value },
+                    attrs: {
+                      name: "method",
+                      type: "radio",
+                      valuealue: data.value
+                    },
                     on: {
                       click: function($event) {
                         return _vm.selectedShippingMethod(data.value)
@@ -24099,7 +23960,7 @@ var render = function() {
               0
             ),
             _vm._v(" "),
-            _c("input", { attrs: { type: "hidden", id: "choosepack" } })
+            _c("input", { attrs: { type: "text", id: "choosepack" } })
           ]),
           _vm._v(" "),
           _vm.form.shipping == 1
@@ -24281,11 +24142,12 @@ var render = function() {
                   [
                     _c("input", {
                       staticClass: "with-gap radio-col-red",
-                      attrs: { name: "payment", type: "radio" },
-                      domProps: {
-                        value: data.value,
-                        checked: data.value == _vm.form.payment
-                      }
+                      attrs: {
+                        name: "payment",
+                        type: "radio",
+                        valuealue: data.value
+                      },
+                      domProps: { checked: data.value == _vm.form.payment }
                     }),
                     _vm._v(" "),
                     _c("label", { attrs: { for: "shipping" } }, [
@@ -24377,7 +24239,7 @@ var staticRenderFns = [
         _c("label", { attrs: { for: "shipping" } }, [_vm._v("Starter Pack")])
       ]),
       _vm._v(" "),
-      _c("input", { attrs: { type: "hidden", id: "choosepack" } })
+      _c("input", { attrs: { type: "text", id: "choosepack" } })
     ])
   }
 ]

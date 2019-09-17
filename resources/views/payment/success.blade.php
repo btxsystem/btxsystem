@@ -34,7 +34,7 @@
   
                     </tbody>
                 </table>
-                <a type="button" href="{{route('member.home')}}" class="btn btn-default btn-lg btn-block">
+                <a type="button" href="{{route('member.home')}}" class="btn btn-danger btn-lg btn-block">
                   <span class="glyphicon glyphicon-chevron-left"></span> Back to Ebook
                 </a></td>
             </div>
