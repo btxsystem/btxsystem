@@ -138,11 +138,25 @@ class RegisterController extends Controller
         $trx->save();
       }
 
-      findChild(
+      $idNewMember = findChild(
         $checkReferral->id,
         $checkReferral->id,
         $saved
       );
+
+      if(count($ebooks) > 0) {
+        $books = [];
+        foreach ($ebooks as $ebook) {
+          $books[] = [
+            'transaction_ref' => $afterCheckRef,
+            'ebook_id' => $ebook['id'],
+            'expired_at' => '2040-09-07 00:00:00',
+            'member_id' => $idNewMember->id,
+            'status' => 1
+          ];
+        }
+        $trxMember = TransactionMember::insert($books);
+      }
 
       if(!$saved || !$trx) {
         DB::rollback();
