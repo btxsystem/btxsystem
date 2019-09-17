@@ -2089,7 +2089,6 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 //
 //
 //
-//
 
 
 
@@ -2165,10 +2164,6 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       referral: false,
       username: false
     };
-  },
-  mounted: function mounted() {
-    var token = document.head.querySelector('meta[name="csrf-token"]').content;
-    $('#token').val(token);
   },
   created: function created() {
     this.getProvince();
@@ -2320,13 +2315,14 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         _this8.payment = res.data.data.data;
 
         if (_this8.form.payment == 'transfer') {
-          window.location.href = '/transaction/payment/BITREX009218';
+          alert('Register Successfully'); //window.location.href = '/transaction/payment/BITREX009218'
         } else if (_this8.form.payment == 'ipay') {
           var form = document.getElementById('payment');
-          setTimeout(function () {
-            form.submit();
-            _this8.isLoading = false;
-          }, 1000);
+          alert('Register Successfully');
+          _this8.isLoading = false; // setTimeout(() => {
+          //   form.submit()
+          //   this.isLoading = false
+          // }, 1000)
         }
       })["catch"](function (err) {
         console.log(err);
@@ -23633,18 +23629,14 @@ var render = function() {
       _c(
         "form",
         {
-          attrs: {
-            method: "post",
-            id: "payment",
-            name: "ePayment",
-            action: "register-member"
+          on: {
+            submit: function($event) {
+              $event.preventDefault()
+              return _vm.doRegister()
+            }
           }
         },
         [
-          _c("input", {
-            attrs: { type: "hidden", id: "token", name: "_token" }
-          }),
-          _vm._v(" "),
           _c("div", { staticClass: "input-group col-md-12" }, [
             _c("input", {
               directives: [
@@ -23877,7 +23869,7 @@ var render = function() {
                   expression: "form.birthdate"
                 }
               ],
-              staticClass: "datepicker form-control",
+              staticClass: "form-control",
               attrs: {
                 autocomplete: "off",
                 type: "date",
@@ -23897,8 +23889,6 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("br"),
-          _vm._v(" "),
-          _vm._m(0),
           _vm._v(" "),
           _c("div", { staticClass: "input-group col-md-12" }, [
             _c("h5", { staticClass: "card-inside-title" }, [
@@ -23966,9 +23956,7 @@ var render = function() {
                 ])
               }),
               0
-            ),
-            _vm._v(" "),
-            _c("input", { attrs: { type: "text", id: "choosepack" } })
+            )
           ]),
           _vm._v(" "),
           _vm.form.shipping == 1
@@ -24223,34 +24211,7 @@ var render = function() {
     1
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "input-group col-md-12" }, [
-      _c("h5", { staticClass: "card-inside-title" }, [_vm._v("Choose a pack")]),
-      _vm._v(" "),
-      _c("div", { staticClass: "form-group demo-radio-button" }, [
-        _c("input", {
-          staticClass: "with-gap radio-col-red",
-          attrs: {
-            autocomplete: "off",
-            name: "pack",
-            type: "radio",
-            value: "0",
-            id: "starterpack",
-            checked: ""
-          }
-        }),
-        _vm._v(" "),
-        _c("label", { attrs: { for: "shipping" } }, [_vm._v("Starter Pack")])
-      ]),
-      _vm._v(" "),
-      _c("input", { attrs: { type: "text", id: "choosepack" } })
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

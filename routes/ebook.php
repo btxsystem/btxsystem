@@ -39,7 +39,7 @@
 // });
 
 Route::domain('ebook.bitrexgo.id')->group(function () {
-  Route::get('/', 'MemberV2\ExploreController@subscription')->name('member.home');
+  Route::get('/ebook', 'MemberV2\ExploreController@subscription')->name('member.home');
 
   // Route::get('/', 'MemberV2\ExploreController@home')->name('member.home');
   Route::get('explore/{type}/{username}', 'MemberV2\ExploreController@detail')->name('member.ebook.referral');

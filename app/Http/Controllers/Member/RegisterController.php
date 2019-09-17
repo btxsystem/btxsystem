@@ -233,20 +233,20 @@ class RegisterController extends Controller
     $data['response_url'] = 'https://bitrexgo.id/response-pay-member';
     $data['backend_url'] = 'https://bitrexgo.id/backend-response-pay';
 
-    return view('payment.form')
-      ->with([
-        'data' => $data
-    ]);
-    // return response()->json([
-    //   'success' => true,
-    //   'message' => '',
-    //   'data' => [
-    //     'member' => $params['member'],
-    //     'trx' => $params['trx'],
-    //     'data' => $data,
-    //     'shipping' => $params['shipping']
-    //   ]
+    // return view('payment.form')
+    //   ->with([
+    //     'data' => $data
     // ]);
+    return response()->json([
+      'success' => true,
+      'message' => '',
+      'data' => [
+        'member' => $params['member'],
+        'trx' => $params['trx'],
+        'data' => $data,
+        'shipping' => $params['shipping']
+      ]
+    ]);
   }
 
   public function paymentWithoutEbook(Request $request, $params)
@@ -269,19 +269,19 @@ class RegisterController extends Controller
     $data['response_url'] = 'https://bitrexgo.id/response-pay-member';
     $data['backend_url'] = 'https://bitrexgo.id/backend-response-pay';
 
-    return view('payment.form')
-      ->with([
-        'data' => $data
-    ]);
-    // return response()->json([
-    //   'success' => true,
-    //   'message' => '',
-    //   'data' => [
-    //     'member' => $params['member'],
-    //     'trx' => $params['trx'],
-    //     'shipping' => $params['shipping']
-    //   ]
+    // return view('payment.form')
+    //   ->with([
+    //     'data' => $data
     // ]);
+    return response()->json([
+      'success' => true,
+      'message' => '',
+      'data' => [
+        'member' => $params['member'],
+        'trx' => $params['trx'],
+        'shipping' => $params['shipping']
+      ]
+    ]);
   }
 
   public function signature($code, $amount)

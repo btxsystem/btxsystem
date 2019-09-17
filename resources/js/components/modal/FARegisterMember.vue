@@ -18,8 +18,8 @@
       <input type="hidden" name="ResponseURL" v-bind:value="payment.response_url">
       <input type="hidden" name="BackendURL" v-bind:value="payment.backend_url">
       </form>
-    <form method="post" id="payment" name="ePayment" action="register-member">
-      <input type="hidden" id="token" name="_token">
+    <form @submit.prevent="doRegister()">
+
       <div class="input-group col-md-12">
         <input autocomplete="off" class="form-control" type="text" v-model="form.referral" placeholder="Referal" required v-on:input="checkReferral">
           <p class="alert-referal" v-if="form.referral != ''">
@@ -51,17 +51,17 @@
       </div>
       <br>
       <div class="input-group col-md-12">
-          <input autocomplete="off" type="date" v-model="form.birthdate"  class="datepicker form-control" placeholder="Birthdate" required>
+          <input autocomplete="off" type="date" v-model="form.birthdate"  class="form-control" placeholder="Birthdate" required>
       </div>
       <br/>
-      <div class="input-group col-md-12">
+      <!-- <div class="input-group col-md-12">
         <h5 class="card-inside-title">Choose a pack</h5>
         <div class="form-group demo-radio-button">
           <input autocomplete="off" name="pack" type="radio" value="0" id="starterpack" class="with-gap radio-col-red" checked />
           <label for="shipping">Starter Pack</label>
         </div>
         <input type="text" id="choosepack">
-      </div>
+      </div> -->
       <!-- {{form}} -->
       <div class="input-group col-md-12">
         <h5 class="card-inside-title">Choose a ebook</h5>
@@ -84,7 +84,6 @@
             <label for="shipping">{{ data.title }}</label>&nbsp;&nbsp;&nbsp;&nbsp;
           </span>
         </div>
-        <input type="text" id="choosepack">
       </div>
 
       <div v-if="form.shipping == 1">
@@ -225,10 +224,6 @@ export default {
       referral: false,
       username: false
     }
-  },
-  mounted() {
-    let token = document.head.querySelector('meta[name="csrf-token"]').content;
-    $('#token').val(token)
   },
   created () {
     
@@ -374,13 +369,16 @@ export default {
         console.log(res.data.data)
         this.payment = res.data.data.data
         if(this.form.payment == 'transfer') {
-          window.location.href = '/transaction/payment/BITREX009218'
+          alert('Register Successfully')
+          //window.location.href = '/transaction/payment/BITREX009218'
         } else if(this.form.payment == 'ipay') {
           let form = document.getElementById('payment')
-          setTimeout(() => {
-            form.submit()
-            this.isLoading = false
-          }, 1000)
+          alert('Register Successfully')
+          this.isLoading = false
+          // setTimeout(() => {
+          //   form.submit()
+          //   this.isLoading = false
+          // }, 1000)
         }
         
       }).catch(err => {
