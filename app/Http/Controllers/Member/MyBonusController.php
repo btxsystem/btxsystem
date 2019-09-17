@@ -69,22 +69,21 @@ class MyBonusController extends Controller
 
     public function recursive($id){
         $data = Employeer::where('id',$id)->select('parent_id','id','position')->first();
-        $rank = DB::table('pv_rank')->where('id_member',$data->id)->select('pv_left','pv_midle','pv_right')->first();
         $rank_parent = DB::table('pv_rank')->where('id_member',$data->parent_id)->select('pv_left','pv_midle','pv_right')->first();
         if ($data->position == 0) {
-            if($rank==null){
+            if($rank_parent==null){
                 DB::table('pv_rank')->insert(['pv_left' => 100, 'pv_midle' => 0, 'pv_right' => 0, 'id_member' => $data->parent_id , 'created_at' => now(), 'updated_at' => now()]);
             }else{
                 DB::table('pv_rank')->where('id_member', $data->parent_id)->update(['pv_left' => $rank_parent->pv_left + 100, 'updated_at' => now()]);        
             }
         }elseif ($data->position == 1) {
-            if($rank==null){
+            if($rank_parent==null){
                 DB::table('pv_rank')->insert(['pv_left' => 0, 'pv_midle' => 100, 'pv_right' => 0, 'id_member' => $data->parent_id , 'created_at' => now(), 'updated_at' => now()]);
             }else{
                 DB::table('pv_rank')->where('id_member', $data->parent_id)->update(['pv_midle' => $rank_parent->pv_midle + 100, 'updated_at' => now()]);        
             }
         }elseif ($data->position == 2) {
-            if($rank==null){
+            if($rank_parent==null){
                 DB::table('pv_rank')->insert(['pv_left' => 0, 'pv_midle' => 0, 'pv_right' => 100, 'id_member' => $data->parent_id , 'created_at' => now(), 'updated_at' => now()]);
             }else{
                 DB::table('pv_rank')->where('id_member', $data->parent_id)->update(['pv_right' => $rank_parent->pv_right + 100, 'updated_at' => now()]);        
