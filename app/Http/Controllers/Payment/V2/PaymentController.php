@@ -57,6 +57,9 @@ class PaymentController extends Controller
       $username = 'asep';
 
       if($user = Auth::guard('nonmember')->user()) {
+        $email = $user->email;
+        $username = $user->username;
+
         $builderPayment = (new PaymentHistoryBuilder())
           ->setEbookId($ebook->id)
           ->setNonMemberId($user->id);
@@ -90,6 +93,9 @@ class PaymentController extends Controller
         }
 
       } else if($user = Auth::guard('user')->user()) {
+        $email = $user->email;
+        $username = $user->username;
+        
         $builderPayment = (new PaymentHistoryBuilder())
           ->setEbookId($ebook->id)
           ->setMemberId($user->id);
