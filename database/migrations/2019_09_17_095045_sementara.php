@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTriggerBonusSponsorFromMember extends Migration
+class Sementara extends Migration
 {
     /**
      * Run the migrations.
@@ -12,6 +12,18 @@ class CreateTriggerBonusSponsorFromMember extends Migration
      * @return void
      */
     public function up()
+    {
+        DB::unprepared('DROP TRIGGER IF EXISTS `tr_bonus_sponsor_from_member`');
+        DB::unprepared('DROP TRIGGER `tr_bonus_pairing`');
+        DB::unprepared('DROP TRIGGER `tr_add_pv_reward`');
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
     {
         DB::unprepared('
         CREATE TRIGGER tr_bonus_sponsor_from_member AFTER INSERT ON `transaction_member` 
@@ -49,15 +61,19 @@ class CreateTriggerBonusSponsorFromMember extends Migration
                 END IF;
             END
         ');
-    }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        DB::unprepared('DROP TRIGGER IF EXISTS `tr_bonus_sponsor_from_member`');
+        DB::unprepared('
+        CREATE TRIGGER tr_bonus_pairing AFTER INSERT ON `history_pv` 
+            FOR EACH ROW BEGIN
+                call add_pv_pairing(NEW.id_member, NEW.pv_today);
+            END
+        ');
+
+        DB::unprepared('
+        CREATE TRIGGER tr_add_pv_reward AFTER INSERT ON `history_pv` 
+            FOR EACH ROW BEGIN
+                call add_pv_reward(NEW.id_member, NEW.pv_today);
+            END
+        ');
     }
 }

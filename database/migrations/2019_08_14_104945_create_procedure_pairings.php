@@ -13,7 +13,7 @@ class CreateProcedurePairings extends Migration
      */
     public function up()
     {   
-        /*DB::unprepared(' 
+        DB::unprepared(' 
             CREATE PROCEDURE add_pv_pairing(idm INT, pv INT)
             BEGIN
                 DECLARE parent, cek int;
@@ -42,14 +42,14 @@ class CreateProcedurePairings extends Migration
                     call add_pv_pairing(parent, pv);  
                 END IF;
             END
-        '); */
+        ');
 
-        /*DB::unprepared('
+        DB::unprepared('
         CREATE TRIGGER tr_bonus_pairing AFTER INSERT ON `history_pv` 
             FOR EACH ROW BEGIN
                 call add_pv_pairing(NEW.id_member, NEW.pv_today);
             END
-        ');*/
+        ');
     }
 
     /**

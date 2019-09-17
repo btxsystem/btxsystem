@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTriggerBonusSponsorFromMember extends Migration
+class MakeTrigger extends Migration
 {
     /**
      * Run the migrations.
@@ -49,6 +49,20 @@ class CreateTriggerBonusSponsorFromMember extends Migration
                 END IF;
             END
         ');
+
+        DB::unprepared('
+        CREATE TRIGGER tr_bonus_pairing AFTER INSERT ON `history_pv` 
+            FOR EACH ROW BEGIN
+                call add_pv_pairing(NEW.id_member, NEW.pv_today);
+            END
+        ');
+
+        DB::unprepared('
+        CREATE TRIGGER tr_add_pv_reward AFTER INSERT ON `history_pv` 
+            FOR EACH ROW BEGIN
+                call add_pv_reward(NEW.id_member, NEW.pv_today);
+            END
+        ');
     }
 
     /**
@@ -58,6 +72,6 @@ class CreateTriggerBonusSponsorFromMember extends Migration
      */
     public function down()
     {
-        DB::unprepared('DROP TRIGGER IF EXISTS `tr_bonus_sponsor_from_member`');
+        //
     }
 }
