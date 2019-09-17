@@ -14,49 +14,49 @@
             </div>
         </div>
     </div>
-    <div class="body table-responsive">
-        <table class="table table-condensed">
-            <thead>
-                <tr class="l-red">
-                    <th>#</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Class name</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr class="l-red">
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>.l-pink</td>
-                </tr>
-                <tr class="l-turquoise">
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>.l-turquoise</td>
-                </tr>
-                <tr class="l-parpl">
-                    <th scope="row">3</th>
-                    <td>Larry</td>
-                    <td>the Bird</td>
-                    <td>.l-parpl</td>
-                </tr>
-                <tr class="l-blue">
-                    <th scope="row">4</th>
-                    <td>Larry</td>
-                    <td>Jellybean</td>
-                    <td>.l-blue</td>
-                </tr>
-                <tr class="l-blush">
-                    <th scope="row">5</th>
-                    <td>Larry</td>
-                    <td>Kikat</td>
-                    <td>.l-blush</td>
-                </tr>
-            </tbody>
-        </table>
+    
+    <div class="row clearfix">
+        <div class="col-lg-12 col-md-12">
+            <div class="card product-report">
+                <div class="body table-responsive">
+                    <table class="table table-condensed">
+                        <thead>
+                            <tr class="l-turquoise">
+                                <th>RANK</th>
+                                <th>LEFT</th>
+                                <th>MIDLE</th>
+                                <th>RIGHT</th>
+                                <th>REWARDS</th>
+                                <th>STATUS</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($ranks as $key => $rank)
+                                @if ($key%2==0)
+                                    <tr class="xl-blue">
+                                        <td>{{$rank->name}}</td>
+                                        <td>{{$rank->pv_needed_left}}</td>
+                                        <td>{{$rank->pv_needed_midle}}</td>
+                                        <td>{{$rank->pv_needed_right}}</td>
+                                        <td>{{$rewards[$key]->description}}</td>
+                                        <td><button class="btn btn-primary" type="submit">Clime</button></td>
+                                    </tr>
+                                @else
+                                    <tr class="xl-turquoise">
+                                        <td>{{$rank->name}}</td>
+                                        <td>{{$rank->pv_needed_left}}</td>
+                                        <td>{{$rank->pv_needed_midle}}</td>
+                                        <td>{{$rank->pv_needed_right}}</td>
+                                        <td>{{$rewards[$key]->description}}</td>
+                                        <td><button class="btn btn-primary" type="submit">Clime</button></td>
+                                    </tr>
+                                @endif
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
 </section>
 @stop
