@@ -14,15 +14,49 @@
             </div>
         </div>
     </div>
-    <div class="container-fluid">
-        <div class="row clearfix">
-            <div class="col-lg-12 col-md-12 col-sm-12" id="bill">
-                
-            </div>
-        </div>
-    </div>
-    <div class="ajax-load text-center" style="display:none">
-        <p>Loading...</p>
+    <div class="body table-responsive">
+        <table class="table table-condensed">
+            <thead>
+                <tr class="l-red">
+                    <th>#</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Class name</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="l-red">
+                    <th scope="row">1</th>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                    <td>.l-pink</td>
+                </tr>
+                <tr class="l-turquoise">
+                    <th scope="row">2</th>
+                    <td>Jacob</td>
+                    <td>Thornton</td>
+                    <td>.l-turquoise</td>
+                </tr>
+                <tr class="l-parpl">
+                    <th scope="row">3</th>
+                    <td>Larry</td>
+                    <td>the Bird</td>
+                    <td>.l-parpl</td>
+                </tr>
+                <tr class="l-blue">
+                    <th scope="row">4</th>
+                    <td>Larry</td>
+                    <td>Jellybean</td>
+                    <td>.l-blue</td>
+                </tr>
+                <tr class="l-blush">
+                    <th scope="row">5</th>
+                    <td>Larry</td>
+                    <td>Kikat</td>
+                    <td>.l-blush</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </section>
 @stop
@@ -34,56 +68,9 @@
             url: '{{route("member.select.reward")}}',
             data: data,
             success:function(data){
-                if (data.data[0]==undefined) {
-                    $('#bill').html('<div class="body" style="color:red;"><center><strong>History is currently empty</strong></center></div>');    
-                }else{
-                    $.each(data.data, function(i, item) {
-                        date = moment(item.created_at).format('MMMM Do Y');
-                        type = 'Income';
-                        color = 'green';
-                        nominal = addCommas(item.nominal);
-                        if (!item.status) {
-                            $('#bill').append('<div class="card ke-'+i+'" style="border: 1px solid #ccc; box-shadow: 1px 1px 3px 0px  rgba(0,0,0,0.3);"><div class="body"><div class="row"><strong class="col-sm-10" id="date">Date Time: '+date+'</strong><strong class="col-sm-2"><a href="/member/reward/'+item.id+'/update" class="btn btn-primary btn-sm"><small>Claim Reward</small></a></strong></div><hr><div class="row"><div class="col" id="type">Type: <b style="color:'+color+'">'+type+'</b></div><div class="col" id="nominal">Nominal: '+nominal+'</div><hr></div><div class="row"><div class="col" id="description">Description: '+item.description+'</div></div></div>'); 
-                        }else{
-                            $('#bill').append('<div class="card ke-'+i+'" style="border: 1px solid #ccc; box-shadow: 1px 1px 3px 0px  rgba(0,0,0,0.3);"><div class="body"><div class="row"><strong class="col-sm-10" id="date">Date Time: '+date+'</strong><strong class="col-sm-2"><a href="#" class="btn btn-light btn-sm"><small>Claimed</small></a></strong></div><hr><div class="row"><div class="col" id="type">Type: <b style="color:'+color+'">'+type+'</b></div><div class="col" id="nominal">Nominal: '+nominal+'</div><hr></div><div class="row"><div class="col" id="description">Description: '+item.description+'</div></div></div>');        
-                        }
-                    });
-                }
+                console.log(data);         
             }
         });
     });
-
-    var page = 1;
-    $(window).scroll(function() {
-        if($(window).scrollTop() + $(window).height() >= $(document).height()) {
-            page++;
-            loadMoreData(page);
-        }
-    });
-    function loadMoreData(page){
-        $.ajax({
-            url: '/member/select/reward?page=' + page,
-            beforeSend: function(){
-                $('.ajax-load').show();
-            }
-        }).done(function(data){
-            if(data.data[0]==undefined){
-                $('.ajax-load').html("No more records found");
-                return;
-            }
-            $('.ajax-load').hide();
-            $.each(data.data, function(i, item) {
-                date = moment(item.created_at).format('MMMM Do Y');
-                type = 'Income';
-                color = 'green';
-                nominal = addCommas(item.nominal);
-                $('#bill').append('<div class="card ke-'+i+'" style="border: 1px solid #ccc; box-shadow: 1px 1px 3px 0px  rgba(0,0,0,0.3);"><div class="body"><div class="row"><strong class="col-sm-4" id="date">Date Time: '+date+'</strong></div><hr><div class="row"><div class="col" id="type">Type: <b style="color:'+color+'">'+type+'</b></div><div class="col" id="nominal">Nominal: '+nominal+'</div><hr></div><div class="row"><div class="col" id="description">Description: '+item.description+'</div><div class="col" id="points">Point: '+item.points+'</div></div></div></div>'); 
-            });
-        })
-        .fail(function(jqXHR, ajaxOptions, thrownError){
-            $('.ajax-load').html("Server not responding");
-            return;
-        });
-    }
 </script>
 @stop
