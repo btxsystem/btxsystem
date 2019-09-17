@@ -23890,8 +23890,6 @@ var render = function() {
           _vm._v(" "),
           _c("br"),
           _vm._v(" "),
-          _vm._m(0),
-          _vm._v(" "),
           _c("div", { staticClass: "input-group col-md-12" }, [
             _c("h5", { staticClass: "card-inside-title" }, [
               _vm._v("Choose a ebook")
@@ -24213,34 +24211,7 @@ var render = function() {
     1
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "input-group col-md-12" }, [
-      _c("h5", { staticClass: "card-inside-title" }, [_vm._v("Choose a pack")]),
-      _vm._v(" "),
-      _c("div", { staticClass: "form-group demo-radio-button" }, [
-        _c("input", {
-          staticClass: "with-gap radio-col-red",
-          attrs: {
-            autocomplete: "off",
-            name: "pack",
-            type: "radio",
-            value: "0",
-            id: "starterpack",
-            checked: ""
-          }
-        }),
-        _vm._v(" "),
-        _c("label", { attrs: { for: "shipping" } }, [_vm._v("Starter Pack")])
-      ]),
-      _vm._v(" "),
-      _c("input", { attrs: { type: "text", id: "choosepack" } })
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

@@ -54,14 +54,14 @@
           <input autocomplete="off" type="date" v-model="form.birthdate"  class="form-control" placeholder="Birthdate" required>
       </div>
       <br/>
-      <div class="input-group col-md-12">
+      <!-- <div class="input-group col-md-12">
         <h5 class="card-inside-title">Choose a pack</h5>
         <div class="form-group demo-radio-button">
           <input autocomplete="off" name="pack" type="radio" value="0" id="starterpack" class="with-gap radio-col-red" checked />
           <label for="shipping">Starter Pack</label>
         </div>
         <input type="text" id="choosepack">
-      </div>
+      </div> -->
       <!-- {{form}} -->
       <div class="input-group col-md-12">
         <h5 class="card-inside-title">Choose a ebook</h5>
