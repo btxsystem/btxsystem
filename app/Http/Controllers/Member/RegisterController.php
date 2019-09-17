@@ -233,33 +233,55 @@ class RegisterController extends Controller
     $data['response_url'] = 'https://bitrexgo.id/response-pay-member';
     $data['backend_url'] = 'https://bitrexgo.id/backend-response-pay';
 
-    // return view('payment.form')
-    //   ->with([
-    //     'data' => $data
-    // ]);
-    return response()->json([
-      'success' => true,
-      'message' => '',
-      'data' => [
-        'member' => $params['member'],
-        'trx' => $params['trx'],
-        'data' => $data,
-        'shipping' => $params['shipping']
-      ]
+    return view('payment.form')
+      ->with([
+        'data' => $data
     ]);
+    // return response()->json([
+    //   'success' => true,
+    //   'message' => '',
+    //   'data' => [
+    //     'member' => $params['member'],
+    //     'trx' => $params['trx'],
+    //     'data' => $data,
+    //     'shipping' => $params['shipping']
+    //   ]
+    // ]);
   }
 
   public function paymentWithoutEbook(Request $request, $params)
   {
-    return response()->json([
-      'success' => true,
-      'message' => '',
-      'data' => [
-        'member' => $params['member'],
-        'trx' => $params['trx'],
-        'shipping' => $params['shipping']
-      ]
+    $orderAmount = 280000;
+
+    $data['merchant_key'] = env('IPAY_MERCHANT_KEY');
+    $data['merchant_code'] = env('IPAY_MERCHANT_CODE');
+    $data['currency'] = "IDR";
+    $data['payment_id'] = 1;
+    $data['product_desc'] = "Starter Pack";
+    $data['user_name'] = $params['member']['username'];
+    $data['user_email'] = $params['member']['email'];
+    $data['ref_no'] = $params['trx']['transaction_ref'];
+    $data['lang'] = 'UTF-8';
+    // $data['code'] = $subs->created_at->format('dmYHi');
+    $data['code'] = $params['trx']['transaction_ref'];
+    $data['amount'] = (int) str_replace(".","",str_replace(",","",number_format($orderAmount, 2, ".", "")));
+    $data['signature'] = $this->signature($data['code'], $data['amount']);
+    $data['response_url'] = 'https://bitrexgo.id/response-pay-member';
+    $data['backend_url'] = 'https://bitrexgo.id/backend-response-pay';
+
+    return view('payment.form')
+      ->with([
+        'data' => $data
     ]);
+    // return response()->json([
+    //   'success' => true,
+    //   'message' => '',
+    //   'data' => [
+    //     'member' => $params['member'],
+    //     'trx' => $params['trx'],
+    //     'shipping' => $params['shipping']
+    //   ]
+    // ]);
   }
 
   public function signature($code, $amount)
