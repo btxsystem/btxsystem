@@ -374,6 +374,7 @@ export default {
         } else if(this.form.payment == 'ipay') {
           let form = document.getElementById('payment')
           alert('Register Successfully')
+          window.location.reload()
           this.isLoading = false
           // setTimeout(() => {
           //   form.submit()
