@@ -2317,9 +2317,8 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
         if (_this8.form.payment == 'transfer') {
           window.location.href = '/transaction/payment/BITREX009218';
-        } else if (_this8.form.payment == 'ipay') {
-          var form = document.getElementById('payment');
-          form.submit();
+        } else if (_this8.form.payment == 'ipay') {// let form = document.getElementById('payment')
+          // form.submit()
         }
 
         _this8.isLoading = false;

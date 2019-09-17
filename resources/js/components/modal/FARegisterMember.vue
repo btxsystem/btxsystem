@@ -371,8 +371,8 @@ export default {
         if(this.form.payment == 'transfer') {
           window.location.href = '/transaction/payment/BITREX009218'
         } else if(this.form.payment == 'ipay') {
-          let form = document.getElementById('payment')
-          form.submit()
+          // let form = document.getElementById('payment')
+          // form.submit()
         }
         this.isLoading = false
       }).catch(err => {
