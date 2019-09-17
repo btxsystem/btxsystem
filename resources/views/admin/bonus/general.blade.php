@@ -82,7 +82,7 @@ Income Member
           var table = $('.sponsor').DataTable({
               destroy: true,
               processing: true,
-              serverSide: false,
+              serverSide: true,
               responsive: true,
               dom: 'Blfrtip',
               buttons: [
@@ -107,15 +107,15 @@ Income Member
                 url: "{{ route('bonus.general') }}", 
               },
               columns: [
-                  {data: 'id_member', name: 'id_member', className: 'text-center'},
-                  {data: 'username', name: 'username', className: 'text-center'},
-                  {data: 'npwp_number', name: 'npwp_number', className: 'text-center'},
-                  {data: 'no_rec', name: 'no_rec', className: 'text-center'},
-                  {data: 'bonus_sponsor', name: 'bonus_sponsor', className: 'text-center'},
-                  {data: 'bonus_pairing', name: 'bonus_pairing', className: 'text-center'},
-                  {data: 'bonus_profit', name: 'bonus_profit', className: 'text-center'},
-                  {data: 'bonus_reward', name: 'bonus_reward', className: 'text-center'},
-                  {data: 'total_bonus', name: 'total_bonus', className: 'text-center'},
+                  {data: 'id_member', name: 'employeers.id_member', className: 'text-center'},
+                  {data: 'username', name: 'employeers.username', className: 'text-center'},
+                  {data: 'npwp_number', name: 'employeers.npwp_number', className: 'text-center'},
+                  {data: 'no_rec', name: 'employeers.no_rec', className: 'text-center'},
+                  {data: 'bonus_sponsor', name: 'bonus_sponsor', className: 'text-center', searchable: false, orderable: false},
+                  {data: 'bonus_pairing', name: 'bonus_pairing', className: 'text-center', searchable: false, orderable: false},
+                  {data: 'bonus_profit', name: 'bonus_profit', className: 'text-center', searchable: false, orderable: false},
+                  {data: 'bonus_reward', name: 'bonus_reward', className: 'text-center', searchable: false, orderable: false},
+                  {data: 'total_bonus', name: 'total_bonus', className: 'text-center', searchable: false, orderable: false},
               ]
           });
           $(".transaction_wrapper > .dt-buttons").appendTo("div.panel-heading");
