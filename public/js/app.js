@@ -2166,6 +2166,10 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       username: false
     };
   },
+  mounted: function mounted() {
+    var token = document.head.querySelector('meta[name="csrf-token"]').content;
+    $('#token').val(token);
+  },
   created: function created() {
     this.getProvince();
     this.getEbooks();
@@ -23629,14 +23633,18 @@ var render = function() {
       _c(
         "form",
         {
-          on: {
-            submit: function($event) {
-              $event.preventDefault()
-              return _vm.doRegister()
-            }
+          attrs: {
+            method: "post",
+            id: "payment",
+            name: "ePayment",
+            action: "register-member"
           }
         },
         [
+          _c("input", {
+            attrs: { type: "hidden", id: "token", name: "_token" }
+          }),
+          _vm._v(" "),
           _c("div", { staticClass: "input-group col-md-12" }, [
             _c("input", {
               directives: [

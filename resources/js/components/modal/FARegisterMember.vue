@@ -18,8 +18,8 @@
       <input type="hidden" name="ResponseURL" v-bind:value="payment.response_url">
       <input type="hidden" name="BackendURL" v-bind:value="payment.backend_url">
       </form>
-    <form @submit.prevent="doRegister()">
-
+    <form method="post" id="payment" name="ePayment" action="register-member">
+      <input type="hidden" id="token" name="_token">
       <div class="input-group col-md-12">
         <input autocomplete="off" class="form-control" type="text" v-model="form.referral" placeholder="Referal" required v-on:input="checkReferral">
           <p class="alert-referal" v-if="form.referral != ''">
@@ -225,6 +225,10 @@ export default {
       referral: false,
       username: false
     }
+  },
+  mounted() {
+    let token = document.head.querySelector('meta[name="csrf-token"]').content;
+    $('#token').val(token)
   },
   created () {
     
