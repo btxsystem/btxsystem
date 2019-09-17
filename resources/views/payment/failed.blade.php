@@ -9,7 +9,7 @@
             <div class="row">
               <div class="col-12">
                 <div class="p-4">
-                  <h1 class="text-center text-danger">Failed Successfully</h1>
+                  <h1 class="text-center text-danger">Transaction Failed</h1>
                 </div>
                 <hr/>
               </div>
@@ -18,7 +18,7 @@
                 <!-- <div class="text-center">
                     <h1>Receipt</h1>
                 </div> -->
-                <a type="button" href="{{route('member.home')}}" class="btn btn-default btn-lg btn-block">
+                <a type="button" href="{{route('member.home')}}" class="btn btn-danger btn-lg btn-block">
                   <span class="glyphicon glyphicon-chevron-left"></span> Back to Ebook
                 </a></td>
             </div>
