@@ -101,7 +101,7 @@
     </li>
     <li>
         <a href="{{ route('transfer-confirmation.index') }}">
-            <i class="livicon" data-name="money" data-size="18" data-c="#6CC66C" data-hc="#6CC66C"
+            <i class="fa fa-check-square" style="color: #6CC66C" data-name="money" data-size="18" data-c="#6CC66C" data-hc="#6CC66C"
                data-loop="true"></i>
             Transfer Confirmation
         </a>

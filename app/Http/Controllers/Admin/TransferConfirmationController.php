@@ -9,6 +9,7 @@ use App\Models\Testimonial;
 use DataTables;
 use Auth;
 use Alert;
+use DB;
 
 class TransferConfirmationController extends Controller
 {
@@ -46,17 +47,24 @@ class TransferConfirmationController extends Controller
 
     public function approve($id)
     {
-        $data = TransferConfirmation::findOrFail($id);
-        if ($data) { 
-    
+        // If Type *Register Member* update table transaction member
+
+        DB::beginTransaction();
+        try {
+            $data = TransferConfirmation::findOrFail($id);
             $data->update([
                 'status' => 1
             ]); 
+            // if($data->type == 'Register Member') {
+            //     return 'Masuk Sini'; 
+            // }
+            DB::commit();
             Alert::success('Success Update Data', 'Success');
-        } else {
+        } catch (Exception $e) {
+            DB::rollback();
             Alert::error('Gagal Update Data', 'Gagal');
+            return redirect()->back(); 
         }
-        return redirect()->back(); 
     }
 
     public function htmlAction($row)
