@@ -67,7 +67,11 @@ class Ebook extends Model
     // }
 
     if(\Auth::guard('nonmember')->user()) {
-      $memberTransaction = $this->transaction()->where('non_member_id', \Auth::guard('nonmember')->user()->id)->first();
+      $memberTransaction = $this->transaction()
+        ->where('non_member_id', \Auth::guard('nonmember')
+        ->user()->id)
+        ->latest('id')
+        ->first();
 
       if(!$memberTransaction) {
         return false;
@@ -77,7 +81,11 @@ class Ebook extends Model
 
       return $expired;
     } else if(\Auth::guard('user')->user()){
-      $userTransaction = $this->transactionMember()->where('member_id', \Auth::guard('user')->user()->id)->first();
+      $userTransaction = $this->transactionMember()
+        ->where('member_id', \Auth::guard('user')
+        ->user()->id)
+        ->latest('id')
+        ->first();
 
       if(!$userTransaction) {
         return false;
@@ -95,7 +103,11 @@ class Ebook extends Model
   public function getAccessAttribute()
   {
     if(\Auth::guard('nonmember')->user()) {
-      $memberTransaction = $this->transaction()->where('non_member_id', \Auth::guard('nonmember')->user()->id)->first();
+      $memberTransaction = $this->transaction()
+        ->where('non_member_id', \Auth::guard('nonmember')
+        ->user()->id)
+        ->latest('id')
+        ->first();
 
       if($memberTransaction) {
         return $memberTransaction->status == 1 && !$this->expired ? true : false;
@@ -104,7 +116,11 @@ class Ebook extends Model
       }
 
     } else if(\Auth::guard('user')->user()){
-      $userTransaction = $this->transactionMember()->where('member_id', \Auth::guard('user')->user()->id)->first();
+      $userTransaction = $this->transactionMember()
+        ->where('member_id', \Auth::guard('user')
+        ->user()->id)
+        ->latest('id')
+        ->first();
       // return $userTransaction->count() > 0 ? $userTransaction->first()->status == 1 ? true : false : false;
       if($userTransaction) {
         return $userTransaction->status == 1 && !$this->expired ? true : false;
@@ -125,6 +141,7 @@ class Ebook extends Model
       $memberTransaction = $this->transaction()
         ->where('non_member_id', \Auth::guard('nonmember')
         ->user()->id)
+        ->latest('id')
         ->first();
 
       return $memberTransaction ? $memberTransaction->expired_at : 0;
@@ -132,6 +149,7 @@ class Ebook extends Model
       $userTransaction = $this->transactionMember()
         ->where('member_id', \Auth::guard('user')
         ->user()->id)
+        ->latest('id')
         ->first();
       
       return $userTransaction ? $userTransaction->expired_at : 0;
@@ -150,6 +168,7 @@ class Ebook extends Model
       $memberTransaction = $this->transaction()
         ->where('non_member_id', \Auth::guard('nonmember')
         ->user()->id)
+        ->latest('id')
         ->first();
 
       $created = new Carbon(date('Y-m-d'));
@@ -162,6 +181,7 @@ class Ebook extends Model
       $userTransaction = $this->transactionMember()
         ->where('member_id', \Auth::guard('user')
         ->user()->id)
+        ->latest('id')
         ->first();
 
       $created = new Carbon(date('Y-m-d'));
@@ -181,6 +201,7 @@ class Ebook extends Model
       $memberTransaction = $this->transaction()
         ->where('non_member_id', \Auth::guard('nonmember')
         ->user()->id)
+        ->latest('id')
         ->first();
 
       return $memberTransaction ? $memberTransaction->status : null;
@@ -188,6 +209,7 @@ class Ebook extends Model
       $userTransaction = $this->transactionMember()
         ->where('member_id', \Auth::guard('user')
         ->user()->id)
+        ->latest('id')
         ->first();
 
       return $userTransaction ? $userTransaction->status : null;

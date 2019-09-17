@@ -21,7 +21,7 @@
     <form @submit.prevent="doRegister()">
 
       <div class="input-group col-md-12">
-        <input autocomplete="off" class="form-control" type="text" v-model="form.referral" placeholder="Referal" required v-on:input="checkReferral">
+        <input autocomplete="off" class="form-control" type="text" v-model="form.referral" placeholder="Sponsor Username" required v-on:input="checkReferral">
           <p class="alert-referal" v-if="form.referral != ''">
             {{referral ? 'Referral ditemukan' : 'Referral tidak ditemukan'}}
           </p>
