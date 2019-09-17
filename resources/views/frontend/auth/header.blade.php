@@ -4,6 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimal-ui">
   <title>Bitrexgo</title>
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+
   <link href="{{asset('assets3/img/favicon.png')}}" type="image/x-icon" rel="shortcut icon">
   <!-- <link href="http://templines.rocks/html/academica/assets/css/master.css" rel="stylesheet"> -->
   <link href="{{asset('assets3/css/master.css')}}" rel="stylesheet">
@@ -16,7 +18,10 @@
   <link href="{{asset('assets3/css/color3.css')}}" rel="alternate stylesheet" title="color3" media="all">
   <link href="{{asset('assets3/css/color4.css')}}" rel="alternate stylesheet" title="color4" media="all">
   <link href="{{asset('assets3/css/color5.css')}}" rel="alternate stylesheet" title="color5" media="all">
+  <link rel="stylesheet" type="text/css" href="http://localhost:8000/assets2/css/select2.css">
+
   <script src="{{asset('assets3/js/jquery-1.11.3.min.js')}}"></script>
+  <script defer src="{{asset('js/app.js')}}"></script>
   <link rel="stylesheet" href="{{asset('assets2/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css')}}">
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
@@ -27,7 +32,7 @@
 @include('sweet::alert')
 @extends('frontend.auth.style.header')
 
-
+<div id="app">
 <div class="modal fade" id="join" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -38,6 +43,7 @@
                 </button>
             </div>
             <div class="modal-body" style="height: auto;">
+              <fa-register-member-component/>
               <form action="{{route('register-auto')}}" method="post">
                 @csrf
                     <div class="input-group col-md-12">
@@ -68,6 +74,62 @@
                     <br>
                     <div class="input-group col-md-12">
                         <input type="text" name="birthdate" class="datepicker form-control" placeholder="Birthdate" required>
+                    </div>
+                    <div class="input-group col-md-12">
+                      <h5 class="card-inside-title">Choose a pack</h5>
+                      <div class="demo-radio-button">
+                        <input name="method" type="radio" value="0" id="starterpack" class="with-gap radio-col-red" checked />
+                        <label for="shipping">Starter Pack</label>
+                        <!-- <input name="method" type="radio" value="1" id="starterpackebook" class="with-gap radio-col-red" />
+                        <label for="pickup">Starter Pack + Ebook</label> -->
+                      </div>
+                      <input type="hidden" id="choosepack">
+                    </div>
+                    <div class="input-group col-md-12">
+                      <h5 class="card-inside-title">Choose a ebook</h5>
+                      <div class="demo-radio-button">
+                        <input name="method" type="checkbox" value="0" id="basic" class="with-gap radio-col-red" checked />
+                        <label for="shipping">Basic + Intermediate</label>
+                        <input name="method" type="checkbox" value="0" id="advanced" class="with-gap radio-col-red" checked />
+                        <label for="shipping">Advanced</label>
+                        <!-- <input name="method" type="radio" value="1" id="starterpackebook" class="with-gap radio-col-red" />
+                        <label for="pickup">Starter Pack + Ebook</label> -->
+                      </div>
+                      <input type="hidden" id="choosepack">
+                    </div>
+                    <div class="input-group col-md-12 mt-4">
+                      <h5 class="card-inside-title">Choose a shipping method</h5>
+                      <div class="demo-radio-button">
+                        <input name="method" type="radio" value="1" id="shipping" class="with-gap radio-col-red" />
+                        <label for="shipping">Shipping</label>
+                        <input name="method" type="radio" value="0" id="pickup" class="with-gap radio-col-red" />
+                        <label for="pickup">Pickup</label>
+                      </div>
+                    </div>
+                    <div class="input-group col-md-12" id="shipping-form">
+                      <div class="form-group">
+                        <select style="width:100%;" id="province" name="province" class="form-control province"></select>
+                      </div>
+                      <div class="form-group city-form">
+                        <select style="width:100%;" id="city" name="city" class="form-control city"></select>
+                      </div>
+                      <div class="form-group district-form">
+                        <select style="width:100%;" id="district" name="district" class="form-control district"></select>
+                      </div>
+                      <div class="form-group kurir-form">
+                        <select style="width:100%;" id="kurir" name="kurir" class="form-control kurir"></select>
+                      </div>
+                      <div class="form-group address-form">
+                        <textarea class="form-control" placeholder="Address"></textarea>
+                      </div>
+                      <!-- <div class="cost-form form-line" style="display:none">
+                        <input style="width:100%;" class="cost form-control" name="cost" id="cost" type="text">
+                      </div> -->
+                    </div>
+                    <div class="input-group col-md-12" id="pickup-form">
+                      <div class="form-group address-form">
+                        <p>Alamat Bitrexgo</p>
+                      </div>
                     </div>
                     <div class="modal-footer">
                       <button type="Submit" class="btn btn-join" style="border-radius: 5px; background-color: #b92240; color: #fff;">Join</button>

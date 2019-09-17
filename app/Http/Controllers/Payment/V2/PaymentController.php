@@ -346,7 +346,10 @@ class PaymentController extends Controller
 
     } catch (\Illuminate\Database\QueryException $e) {
         DB::rollback();
-        return view('payment.failed');
+        return response()->json([
+          'data' => $e
+        ]);
+        // return view('payment.failed');
         //return $e->getMessage();
     }
   }
