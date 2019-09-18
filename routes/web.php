@@ -96,6 +96,11 @@ Route::post('register-auto', ['as' => 'register-auto', 'uses' => 'Member\Profile
 
 Route::post('register-member', ['as' => 'register-member', 'uses' => 'Member\RegisterController@registerMember']);
 
+Route::get('/payment-confirm', ['as' => 'payment.confirm', 'uses' => 'Payment\V2\PaymentController@confirm']);
+
+Route::post('/payment-confirmation', ['as' => 'payment.confirmation', 'uses' => 'Member\TransactionController@paymentConfirmation']);
+Route::post('/response-pay-topup', ['as' => 'response.pay.topup', 'uses' => 'Member\TransactionController@responsePayment']);
+
 Route::group(['namespace' => 'Ebook\Api', 'prefix' => 'api/ebook'], function() {
   Route::get('/ebooks', 'EbookController@all')->name('api.ebook.ebooks');
 });

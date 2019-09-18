@@ -474,4 +474,9 @@ class PaymentController extends Controller
   {
     return view('payment.failed');
   }
+
+  public function confirm()
+  {
+    return view('payment.confirm');
+  }
 }
