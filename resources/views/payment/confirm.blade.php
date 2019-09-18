@@ -56,8 +56,8 @@
                     <input type="file" class="form-control" accept="image/*" name="image">
                   </div>
                   @if(\Session::has('message'))
-                    <a type="button" href="{{route('member.dashboard')}}" class="btn btn-danger btn-lg btn-block">
-                      <span class="glyphicon glyphicon-chevron-left"></span> Back to Dashboard
+                    <a type="button" href="{{route('member.dashboard')}}" class="btn btn-success btn-block">
+                       Back to Dashboard
                     </a>
                   @else
                     <button type="submit" class="btn btn-success btn-block">
