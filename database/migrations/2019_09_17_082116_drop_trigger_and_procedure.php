@@ -13,9 +13,9 @@ class DropTriggerAndProcedure extends Migration
      */
     public function up()
     {
-        DB::unprepared('DROP TRIGGER IF EXISTS `tr_bonus_sponsor_from_member`');
-        DB::unprepared('DROP TRIGGER `tr_bonus_pairing`');
-        DB::unprepared('DROP TRIGGER `tr_add_pv_reward`');
+       // DB::unprepared('DROP TRIGGER IF EXISTS `tr_bonus_sponsor_from_member`');
+       // DB::unprepared('DROP TRIGGER `tr_bonus_pairing`');
+       // DB::unprepared('DROP TRIGGER `tr_add_pv_reward`');
     }
 
     /**
