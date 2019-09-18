@@ -12,7 +12,7 @@ use Session;
 
 use App\Imports\EmployeerImport;
 use App\Imports\RewardsImport;
-use App\Import\RewardImport;
+use App\Imports\RewardImport;
 use App\Imports\TreeImport;
 use App\Imports\SponsorImport;
 use Excel;
