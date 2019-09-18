@@ -10,7 +10,7 @@
   color: #ffffff;
 }
 .slide .imgSlide {
-  background-image: url('http://templines.rocks/html/academica/assets/media/main-slider/1.jpg');
+  background-image: url('./../../img/BGcompro.jpg');
 }
 .slide .imgSlide .colFormSignup {
   width: 400px;
