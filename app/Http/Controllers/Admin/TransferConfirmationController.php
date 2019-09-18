@@ -202,7 +202,7 @@ class TransferConfirmationController extends Controller
                     $isRenewal = true;
                   }
 
-                  Mail::to($checkIsRegister->member->email)->send(new PurchaseEbookMemberMail($checkIsRegister, null));
+                  // Mail::to($checkIsRegister->member->email)->send(new PurchaseEbookMemberMail($checkIsRegister, null));
                 } else {
                   $isRenewal = true;
                   $paymentHistory = false;

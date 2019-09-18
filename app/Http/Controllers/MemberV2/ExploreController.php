@@ -171,16 +171,14 @@ class ExploreController extends Controller
 
       $expiredBasic = TransactionNonMember::where('non_member_id', $user->id)
         ->where('status', 1)
-        ->where('ebook_id', 1)
-        ->orWhere('ebook_id', 3)
+        ->whereIn('ebook_id', [1, 3])
         ->select('expired_at')
         ->latest('id')
         ->first();
 
       $expiredAdvanced = TransactionNonMember::where('non_member_id', $user->id)
         ->where('status', 1)
-        ->where('ebook_id', 2)
-        ->orWhere('ebook_id', 4)
+        ->whereIn('ebook_id', [2, 4])
         ->select('expired_at')
         ->latest('id')
         ->first();
