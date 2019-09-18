@@ -256,8 +256,8 @@ class RegisterController extends Controller
     $data['code'] = $params['trx']['transaction_ref'];
     $data['amount'] = (int) str_replace(".","",str_replace(",","",number_format($orderAmount, 2, ".", "")));
     $data['signature'] = $this->signature($data['code'], $data['amount']);
-    $data['response_url'] = 'https://bitrexgo.id/response-pay-member';
-    $data['backend_url'] = 'https://bitrexgo.id/backend-response-pay';
+    $data['response_url'] = url('response-pay-member');
+    $data['backend_url'] = url('backend-response-pay');
 
     if($params['method'] == 'transfer') {
       return view('payment.transfer')
@@ -300,8 +300,8 @@ class RegisterController extends Controller
     $data['code'] = $params['trx']['transaction_ref'];
     $data['amount'] = (int) str_replace(".","",str_replace(",","",number_format($orderAmount, 2, ".", "")));
     $data['signature'] = $this->signature($data['code'], $data['amount']);
-    $data['response_url'] = 'https://bitrexgo.id/response-pay-member';
-    $data['backend_url'] = 'https://bitrexgo.id/backend-response-pay';
+    $data['response_url'] = url('response-pay-member');
+    $data['backend_url'] = url('backend-response-pay');
 
     if($params['method'] == 'transfer') {
       return view('payment.transfer')

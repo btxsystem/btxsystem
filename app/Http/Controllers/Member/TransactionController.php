@@ -65,33 +65,33 @@ class TransactionController extends Controller
     public function paymentWithTransfer($request)
     {
         try {
-            
+
             DB::beginTransaction();
             $prefixRef = 'BITREX05';
 
             $checkRef = DB::table('history_bitrex_point')->where('transaction_ref', $prefixRef . (time() + rand(100, 500)))->first();
-    
+
             $afterCheckRef = $prefixRef . (time() + rand(100, 500));
-    
+
             while($checkRef) {
                 $afterCheckRef = $prefixRef . (time() + rand(100, 500));
                 if(!$checkRef) {
                     break;
                 }
-            }      
-            
+            }
+
             $save = DB::table('history_bitrex_point')->insert([
-                'id_member' => Auth::id(), 
-                'nominal' => $request->nominal, 
-                'points' => $request->points, 
-                'description' => 'Topup', 
-                'info' => 1, 
+                'id_member' => Auth::id(),
+                'nominal' => $request->nominal,
+                'points' => $request->points,
+                'description' => 'Topup',
+                'info' => 1,
                 'transaction_ref' => $afterCheckRef,
                 'status' => 6,
-                'created_at' => Carbon::now(), 
+                'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ]);
-                        
+
             DB::commit();
 
             return view('payment.transfer')->with([
@@ -105,7 +105,7 @@ class TransactionController extends Controller
             DB::rollback();
         }
     }
-    
+
     public function paymentWithIpay($request)
     {
         try {
@@ -113,9 +113,9 @@ class TransactionController extends Controller
             $prefixRef = 'BITREX05';
 
             $checkRef = DB::table('history_bitrex_point')->where('transaction_ref', $prefixRef . (time() + rand(100, 500)))->first();
-    
+
             $afterCheckRef = $prefixRef . (time() + rand(100, 500));
-    
+
             while($checkRef) {
                 $afterCheckRef = $prefixRef . (time() + rand(100, 500));
                 if(!$checkRef) {
@@ -124,19 +124,19 @@ class TransactionController extends Controller
             }
 
             $save = DB::table('history_bitrex_point')->insert([
-                'id_member' => Auth::id(), 
-                'nominal' => $request->nominal, 
-                'points' => $request->points, 
-                'description' => 'Topup', 
-                'info' => 1, 
+                'id_member' => Auth::id(),
+                'nominal' => $request->nominal,
+                'points' => $request->points,
+                'description' => 'Topup',
+                'info' => 1,
                 'transaction_ref' => $afterCheckRef,
                 'status' => 6,
-                'created_at' => Carbon::now(), 
+                'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ]);
 
             $orderAmount = (int) $request->nominal;
-            
+
             $data['merchant_key'] = env('IPAY_MERCHANT_KEY');
             $data['merchant_code'] = env('IPAY_MERCHANT_CODE');
             $data['currency'] = "IDR";
@@ -150,9 +150,9 @@ class TransactionController extends Controller
             $data['code'] = $afterCheckRef;
             $data['amount'] = (int) str_replace(".","",str_replace(",","",number_format($orderAmount, 2, ".", "")));
             $data['signature'] = $this->signature($data['code'], $data['amount']);
-            $data['response_url'] = 'https://bitrexgo.id/response-pay-topup';
-            $data['backend_url'] = 'https://bitrexgo.id/backend-response-pay';
-            
+            $data['response_url'] = url('response-pay-topup');
+            $data['backend_url'] = url('backend-response-pay');
+
             DB::commit();
 
             return view('payment.form')
@@ -180,7 +180,7 @@ class TransactionController extends Controller
             $amount = $request->input('amount');
 
             $imageName = null;
-    
+
             if($request->hasFile('image')) {
                 $this->validate($request, [
                     'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
@@ -189,7 +189,7 @@ class TransactionController extends Controller
                 request()->image->move(public_path('upload/transfer-confirmation/'), $imageName);
                 echo $imageName;
             }
-    
+
             DB::table('transfer_confirmations')->insert([
                 'type' => $type,
                 'status' => 0,
@@ -204,14 +204,14 @@ class TransactionController extends Controller
             DB::commit();
 
             return redirect()->back()->with([
-                'message' => 'Success Transfer Confirmation'
+                'message' => 'Transfer Confirmation Success. Please wait for our verification.'
             ]);
         } catch (\Exception $e){
             return redirect()->back()->with([
-                'error' => 'Failed Transfer Confirmation'
+                'error' => 'Transfer Confirmation Failed. Please try again.'
             ]);
         }
-        
+
     }
 
     public function signature($code, $amount)
@@ -223,15 +223,15 @@ class TransactionController extends Controller
       $currency = "IDR";
       $ipaySignature 	= "";
       $encrypt		= sha1($MechantKey.$MerchantCode.$RefNo.$amount.$currency);
-  
+
       for ($i=0; $i<strlen($encrypt); $i=$i+2){
         $ipaySignature .= chr(hexdec(substr($encrypt,$i,2)));
       }
-  
+
       $ipaySignature = base64_encode($ipaySignature);
-  
+
       return $ipaySignature;
-    }    
+    }
 
     public function responsePayment(Request $req)
     {
@@ -256,26 +256,25 @@ class TransactionController extends Controller
             if($status == "1") {
                 DB::beginTransaction();
                 $checkRef = HistoryBitrexPoints::where('transaction_ref', $code);
-    
+
                 $data = DB::table('employeers')->where('id',$checkRef->first()->id_member)->select('bitrex_points')->first();
-    
-                
+
+
                 DB::table('employeers')->where('id', $checkRef->first()->id_member)->update(['bitrex_points' => $data->bitrex_points + $checkRef->first()->points, 'updated_at' => Carbon::now()]);
-    
+
                 $checkRef->update([
                     'status' => 1
                 ]);
-    
+
                 DB::commit();
-    
+
                 return view('payment.success-topup')->with([
                     'prodDesc' => $prodDesc,
                     'code' => $code
                 ]);
             } else {
                 DB::rollback();
-                echo "Failed";
-                return;
+                return view('payment.failed-topup');
             }
 
         } catch(\Illuminate\Database\QueryException $e) {

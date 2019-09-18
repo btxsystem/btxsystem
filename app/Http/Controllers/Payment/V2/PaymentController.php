@@ -177,8 +177,8 @@ class PaymentController extends Controller
       $data['code'] = $payment->ref_no;
       $data['amount'] = (int) str_replace(".","",str_replace(",","",number_format($orderAmount, 2, ".", "")));
       $data['signature'] = $this->signature($data['code'], $data['amount']);
-      $data['response_url'] = 'https://bitrexgo.id/response-pay';
-      $data['backend_url'] = 'https://bitrexgo.id/backend-response-pay';
+      $data['response_url'] = url('response-pay');
+      $data['backend_url'] = url('backend-response-pay');
 
       // return response()->json([
       //   'data' => $data

@@ -9,7 +9,7 @@
             <div class="row">
               <div class="col-12">
                 <div class="p-4">
-                  <h1 class="text-center text-success">Transaction Successfull</h1>
+                  <h1 class="text-center text-danger">Transaction Failed</h1>
                 </div>
                 <hr/>
               </div>
@@ -19,21 +19,6 @@
                     <h1>Receipt</h1>
                 </div> -->
                 </span>
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th colspan=2>Product</th>
-                            <th colspan=2>Transaction Ref.</th>
-                         </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td colspan=2>{{ $prodDesc ?? '' }}</h4></td>
-                            <td colspan=2> {{ $code ?? '' }} </td>
-                        </tr>
-
-                    </tbody>
-                </table>
                 <a type="button" href="{{route('member.dashboard')}}" class="btn btn-danger btn-lg btn-block">
                   <span class="glyphicon glyphicon-chevron-left"></span> Back to Dashboard
                 </a></td>

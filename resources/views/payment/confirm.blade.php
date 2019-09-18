@@ -9,7 +9,7 @@
             <div class="row">
               <div class="col-12">
                 <div class="p-4">
-                  <h1 class="text-center text-info">Transaction Summary</h1>
+                  <h1 class="text-center text-info">Transfer Confirmation</h1>
                 </div>
                 <hr/>
               </div>
@@ -41,23 +41,29 @@
                     <input type="text" class="form-control" name="invoice_number" placeholder="Invoice / Transaction Ref." {{request()->get('ref')  ? 'readonly' : ''}} value="{{request()->get('ref') ?? ''}}"required>
                   </div>
                   <div class="form-group">
-                    <input type="text" class="form-control" name="account_name" placeholder="Account Name" value="" required>
+                    <input type="text" class="form-control" name="bank_name" placeholder="Bank Name" value="" required>
+                  </div>
+                  <div class="form-group">
+                    <input type="text" class="form-control" name="account_name" placeholder="Sender Account Name" value="" required>
+                  </div>
+                  <div class="form-group">
+                    <input type="number" class="form-control" name="account_number" placeholder="Sender Account Number" value="" required>
                   </div>
                   <div class="form-group">
                     <input type="number" class="form-control" name="amount" placeholder="Amount" value="" required>
                   </div>
                   <div class="form-group">
-                    <input type="number" class="form-control" name="account_number" placeholder="Account Number" value="" required>
-                  </div>
-                  <div class="form-group">
-                    <input type="text" class="form-control" name="bank_name" placeholder="Bank Name" value="" required>
-                  </div>
-                  <div class="form-group">
                     <input type="file" class="form-control" accept="image/*" name="image">
                   </div>
-                  <button type="submit" class="btn btn-danger btn-block">
-                    <span class="glyphicon glyphicon-chevron-left"></span> Confirmation Transfer
-                  </button>
+                  @if(\Session::has('message'))
+                    <a type="button" href="{{route('member.dashboard')}}" class="btn btn-danger btn-lg btn-block">
+                      <span class="glyphicon glyphicon-chevron-left"></span> Back to Dashboard
+                    </a>
+                  @else
+                    <button type="submit" class="btn btn-success btn-block">
+                      Submit
+                    </button>
+                  @endif
                 </form>
             </div>
         </div>
