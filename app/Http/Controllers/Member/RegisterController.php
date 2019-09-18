@@ -392,6 +392,7 @@ class RegisterController extends Controller
             $trxMember->expired_at = Carbon::create(date('Y-m-d H:i:s'))->addYear(1);
             $trxMember->member_id = $idNewMember->id;
             $trxMember->status = 1;
+            $trxMember->save();
           }
           //$trxMember = TransactionMember::insert($books);
 
