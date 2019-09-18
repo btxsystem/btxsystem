@@ -66,12 +66,12 @@ class TransferConfirmationController extends Controller
 
             if($data->type == 'topup_bitrex_point') {
                 $checkRef = HistoryBitrexPoints::where('transaction_ref', $data->invoice_number);
-    
+
                 $member = DB::table('employeers')->where('id',$checkRef->first()->id_member)->select('bitrex_points')->first();
-    
-                
+
+
                 DB::table('employeers')->where('id', $checkRef->first()->id_member)->update(['bitrex_points' => $member->bitrex_points + $checkRef->first()->points, 'updated_at' => Carbon::now()]);
-    
+
                 $checkRef->update([
                     'status' => 1
                 ]);
@@ -79,36 +79,36 @@ class TransferConfirmationController extends Controller
 
 
             if($data->type == 'ebook') {
-                $orderType = substr($code, 0, 8);
+                $orderType = substr($data->invoice_number, 0, 8);
                 $isRenewal = false;
-          
+
                 if($orderType == 'BITREX01') {
                   //
-                  $paymentHistory = PaymentHistoryNonMember::where('ref_no', $code)->update([
-                    'payment_id' => $payment_id,
-                    'amount' => $amount,
-                    'currency' => $currency,
-                    'trans_id' => $transid,
-                    'remark' => $remark,
-                    'auth_code' => $authcode,
-                    'err_desc' => $errdesc,
-                  ]);
-          
-                  $userData = PaymentHistoryNonMember::where('ref_no', $code)
+                  // $paymentHistory = PaymentHistoryNonMember::where('ref_no', $data->invoice_number)->update([
+                  //   'payment_id' => $payment_id,
+                  //   'amount' => $amount,
+                  //   'currency' => $currency,
+                  //   'trans_id' => $transid,
+                  //   'remark' => $remark,
+                  //   'auth_code' => $authcode,
+                  //   'err_desc' => $errdesc,
+                  // ]);
+
+                  $userData = PaymentHistoryNonMember::where('ref_no', $data->invoice_number)
                   ->with([
                     'nonMember'
                   ])
                   ->first();
-          
+
                   $isRegister = false;
-          
-                  $checkIsRegister = TransactionNonMember::where('transaction_ref', $code)
+
+                  $checkIsRegister = TransactionNonMember::where('transaction_ref', $data->invoice_number)
                     ->with([
                       'ebook',
                       'nonMember'
                     ])
                     ->first();
-          
+
                   if($checkIsRegister) {
                     //if new register
                     if($checkIsRegister->expired_at < now() && $checkIsRegister->status != 1) {
@@ -117,25 +117,23 @@ class TransferConfirmationController extends Controller
                       $isRegister = false;
                     }
                   }
-          
+
                   $isExpired = $checkIsRegister->expired_at < now() ? true : false;
-          
-                  $transaction = TransactionNonMember::where('transaction_ref', $code)
+
+                  $transaction = TransactionNonMember::where('transaction_ref', $data->invoice_number)
                   ->update([
-                    'status' => $status == "0"
-                      ? $isExpired == false ? 1 : 6
-                      : $isExpired == false ? 1 : $status,
+                    'status' => 1,
                   ]);
-          
+
                   //if is new register
                   if($isRegister) {
                     //generate random password
                     $additionalParameter = (object) [
                       'password' => 'secret'
                     ];
-          
+
                     $isRenewal = false;
-          
+
                     //send email
                     Mail::to($checkIsRegister->nonMember->email)->send(new PurchaseEbookNonMemberMail($checkIsRegister, $additionalParameter));
                   } else {
@@ -143,29 +141,29 @@ class TransferConfirmationController extends Controller
                     $isRenewal = true;
                     Mail::to($checkIsRegister->nonMember->email)->send(new PurchaseEbookNonMemberMail($checkIsRegister, null));
                   }
-          
+
                 } else if($orderType == 'BITREX02') {
-                  $paymentHistory = PaymentHistoryMember::where('ref_no', $code)->update([
-                    'status' => $status,
-                    'payment_id' => $payment_id,
-                    'amount' => $amount,
-                    'currency' => $currency,
-                    'trans_id' => $transid,
-                    'remark' => $remark,
-                    'auth_code' => $authcode,
-                    'err_desc' => $errdesc,
-                  ]);
-          
-                  // $transaction = TransactionMember::where('transaction_ref', $code)
+                  // $paymentHistory = PaymentHistoryMember::where('ref_no', $data->invoice_number)->update([
+                  //   'status' => $status,
+                  //   'payment_id' => $payment_id,
+                  //   'amount' => $amount,
+                  //   'currency' => $currency,
+                  //   'trans_id' => $transid,
+                  //   'remark' => $remark,
+                  //   'auth_code' => $authcode,
+                  //   'err_desc' => $errdesc,
+                  // ]);
+
+                  // $transaction = TransactionMember::where('transaction_ref', $data->invoice_number)
                   //   ->update([
                   //     'status' => $status == "0" ? 6 : $status
                   // ]);
-          
-                  $checkIsRegister = TransactionMember::where('transaction_ref', $code)
+
+                  $checkIsRegister = TransactionMember::where('transaction_ref', $data->invoice_number)
                     ->first();
-          
+
                   $isRegister = false;
-          
+
                   if($checkIsRegister) {
                     //if new register
                     if($checkIsRegister->expired_at < now() && $checkIsRegister->status != 1) {
@@ -174,7 +172,7 @@ class TransferConfirmationController extends Controller
                       $isRegister = false;
                     }
                   }
-          
+
                   if($checkIsRegister) {
                     //if new register
                     if($checkIsRegister->expired_at < now() && $checkIsRegister->status != 1) {
@@ -183,55 +181,50 @@ class TransferConfirmationController extends Controller
                       $isRegister = false;
                     }
                   }
-          
+
                   $isExpired = $checkIsRegister->expired_at < now() ? true : false;
-          
-                  $transaction = TransactionMember::where('transaction_ref', $code)
+
+                  $transaction = TransactionMember::where('transaction_ref', $data->invoice_number)
                   ->update([
-                    'status' => $status == "0"
-                      ? $isExpired == false ? 1 : 6
-                      : $isExpired == false ? 1 : $status,
+                    'status' => 1,
                   ]);
-          
-                  $checkIsRegister = TransactionMember::where('transaction_ref', $code)
+
+                  $checkIsRegister = TransactionMember::where('transaction_ref', $data->invoice_number)
                     ->with([
                       'ebook',
                       'member'
                     ])
                     ->first();
-          
+
                   if($isRegister) {
                     $isRenewal = false;
                   } else {
                     $isRenewal = true;
                   }
-          
+
                   Mail::to($checkIsRegister->member->email)->send(new PurchaseEbookMemberMail($checkIsRegister, null));
                 } else {
                   $isRenewal = true;
                   $paymentHistory = false;
                   $transaction = false;
                 }
-          
-                if(!$paymentHistory || !$transaction) {
-                  DB::rollback();
-                  return view('payment.failed');
-                }
-          
-                $view = 'payment.failed';
-          
-                if($status == "1") {
+
+                // if(!$paymentHistory || !$transaction) {
+                //   DB::rollback();
+                //   return view('payment.failed');
+                // }
+
                   if($orderType == 'BITREX01') {
-                    $trxNonMember = TransactionNonMember::where('transaction_ref', $code);
+                    $trxNonMember = TransactionNonMember::where('transaction_ref', $data->invoice_number);
                     if(!$isRenewal) {
                       $trxNonMember->update([
                         'expired_at' => Carbon::create($trxNonMember->latest('id')->first()->expired_at)->addYear(1)
                       ]);
                     } else {
-                      $getEbookIdByHistory = PaymentHistoryNonMember::where('ref_no', $code)->first();
-          
+                      $getEbookIdByHistory = PaymentHistoryNonMember::where('ref_no', $data->invoice_number)->first();
+
                       $newIncome = Ebook::where('id', $getEbookIdByHistory->ebook_id)->first();
-          
+
                       TransactionNonMember::insert([
                         'income' => $newIncome->price_markup,
                         'member_id' => $trxNonMember->latest('id')->first()->member_id,
@@ -242,16 +235,16 @@ class TransferConfirmationController extends Controller
                         'expired_at' => Carbon::create($trxNonMember->latest('id')->first()->expired_at)->addYear(1)
                       ]);
                     }
-          
+
                   } else if($orderType == 'BITREX02') {
-                    $trxMember = TransactionMember::where('transaction_ref', $code);
+                    $trxMember = TransactionMember::where('transaction_ref', $data->invoice_number);
                     if(!$isRenewal) {
                       $trxMember->update([
                         'expired_at' => Carbon::create($trxMember->latest('id')->first()->expired_at)->addYear(1)
                       ]);
                     } else {
-                      $getEbookIdByHistory = PaymentHistoryMember::where('ref_no', $code)->first();
-          
+                      $getEbookIdByHistory = PaymentHistoryMember::where('ref_no', $data->invoice_number)->first();
+
                       TransactionMember::insert([
                         'member_id' => $trxMember->latest('id')->first()->member_id,
                         'ebook_id' => $getEbookIdByHistory->ebook_id,
@@ -261,25 +254,25 @@ class TransferConfirmationController extends Controller
                       ]);
                     }
                   }
-            }
+                }
 
 
             $data->update([
                 'status' => 1
-            ]); 
+            ]);
             DB::commit();
             Alert::success('Success Update Data', 'Success');
         } catch (Exception $e) {
             DB::rollback();
             Alert::error('Gagal Update Data', 'Gagal');
-            return redirect()->back(); 
+            return redirect()->back();
         }
     }
 
     public function htmlAction($row)
     {
         switch($row->status) {
-            case 0; 
+            case 0;
             return '
                     <a data-id="'.$row->id.'"  class="btn btn-success fa fa-eye show-testimonial" title="Show Payment"></a>
                     <a data-id="'.$row->id.' "class="btn btn-default fa fa-check approve-payment" style="background-color: #b85ebd; color: #ffffff;" title="Approve Payment"></a>';
@@ -291,6 +284,6 @@ class TransferConfirmationController extends Controller
             break;
 
         }
-       
+
     }
 }
