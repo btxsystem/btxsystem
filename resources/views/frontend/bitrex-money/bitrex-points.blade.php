@@ -30,9 +30,9 @@
                 </div>
                 <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
                   <div class="demo-radio-button">
-                    <input name="method" type="radio" value="1" id="male" class="with-gap radio-col-red" checked />
+                    <input name="method" type="radio" value="transfer" id="male" class="with-gap radio-col-red" checked />
                     <label for="male">Transfer</label>
-                    <input name="method" type="radio" value="0" id="female" class="with-gap radio-col-red" />
+                    <input name="method" type="radio" value="ipay" id="female" class="with-gap radio-col-red" />
                     <label for="female">Ipay</label>
                   </div>
                 </div>
