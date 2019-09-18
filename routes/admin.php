@@ -191,6 +191,17 @@ Route::group(['middleware' => 'admin'], function () {
         Route::get('/approve/{id}', ['as' => 'approve', 'uses' => 'Admin\RewardClaimController@approve']);
     });
 
+    Route::group(['prefix'=>'starterpack-shipping','as'=>'starterpack-shipping.'], function(){
+        // Route::resource('testimonials', 'Admin\TestimonialController');
+        Route::get('', ['as' => 'index', 'uses' => 'Admin\StarterpackShippingController@index']);
+        Route::post('deliver', 'Admin\StarterpackShippingController@deliver')->name('deliver.starterpack');
+        // Route::post('update-testimony', 'Admin\TestimonialController@update')->name('update-testimony');
+        // Route::get('testimonials/published/{id}', ['as' => 'published', 'uses' => 'Admin\TestimonialController@published']);
+        // Route::get('testimonials/unpublished/{id}', ['as' => 'unpublished', 'uses' => 'Admin\TestimonialController@unpublished']);
+    });
+
+
+
     Route::group(['prefix'=>'cms','as'=>'cms.'], function(){
         Route::resource('our-products', 'Admin\OurProductController');
 
