@@ -118,6 +118,35 @@
 		// var element = document.querySelector('#bah');
 		// $('#upline').hide();
 		// panzoom(element);
+		$.ajax({
+			type: 'GET',
+			url: '{{route("api.ebook.ebooks")}}'
+		}).done(function(res) {
+			const {data} = res
+			let render = data.map((v, i) => {
+				return `
+					<input id="ebooks" type="checkbox" value="${v.id}" id="${v.title}" class="with-gap radio-col-red" name="ebooks[]"/>
+        	<label for="shipping">${v.title}</label>
+				`
+			})
+
+			$('#ebook-list').html(render)
+			
+		})
+
+		$('form#paymssent').submit(function(e) {
+			e.preventDefault();
+
+			let dataEbooks = [];
+			$("input[name='ebooks[]']:checked").each(function() {
+					dataEbooks.push($(this).val())
+			})
+			const data = {
+				ebooks: dataEbooks
+			}
+
+			console.log(data)
+		})
 		$('#province').select2({
 			placeholder: 'Province',
 		});

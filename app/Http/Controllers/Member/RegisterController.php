@@ -125,7 +125,7 @@ class RegisterController extends Controller
       if(count($ebooks) > 0) {
         foreach ($ebooks as $ebook) {
           $trx = new TemporaryTransactionMember();
-          $trx->ebook_id = $ebook['id'];
+          $trx->ebook_id = $ebook;
           $trx->member_Id = $saved->id;
           $trx->transaction_ref = $afterCheckRef;
           $trx->save();
@@ -138,25 +138,25 @@ class RegisterController extends Controller
         $trx->save();
       }
 
-      $idNewMember = findChild(
-        $checkReferral->id,
-        $checkReferral->id,
-        $saved
-      );
+      // $idNewMember = findChild(
+      //   $checkReferral->id,
+      //   $checkReferral->id,
+      //   $saved
+      // );
 
-      if(count($ebooks) > 0) {
-        $books = [];
-        foreach ($ebooks as $ebook) {
-          $books[] = [
-            'transaction_ref' => $afterCheckRef,
-            'ebook_id' => $ebook['id'],
-            'expired_at' => '2040-09-07 00:00:00',
-            'member_id' => $idNewMember->id,
-            'status' => 1
-          ];
-        }
-        $trxMember = TransactionMember::insert($books);
-      }
+      // if(count($ebooks) > 0) {
+      //   $books = [];
+      //   foreach ($ebooks as $ebook) {
+      //     $books[] = [
+      //       'transaction_ref' => $afterCheckRef,
+      //       'ebook_id' => $ebook,
+      //       'expired_at' => '2040-09-07 00:00:00',
+      //       'member_id' => $idNewMember->id,
+      //       'status' => 1
+      //     ];
+      //   }
+      //   $trxMember = TransactionMember::insert($books);
+      // }
 
       if(!$saved || !$trx) {
         DB::rollback();
@@ -210,7 +210,7 @@ class RegisterController extends Controller
       //   ]
       // ]);
 
-    } catch (\Exception $e) {
+    } catch (\Illuminate\Database\QueryException $e) {
       DB::rollback();
       return response()->json([
         'success' => false,
@@ -225,7 +225,7 @@ class RegisterController extends Controller
 
     $ebookIds = [];
     foreach ($params['ebooks'] as $ebook) {
-      $ebookIds[] = $ebook['id'];
+      $ebookIds[] = $ebook;
     }
 
     $ebookPrice = Ebook::whereIn('id', $ebookIds)
