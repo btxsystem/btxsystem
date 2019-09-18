@@ -25,7 +25,7 @@
 				<div class="bg-white shadow rounded p-3 mb-5">
 					<div class="row">
 						<div class="col-lg-4 pb-sm">
-							<img src="http://demo.viewpreview.online/assets/img/illustration6.png" class="w-100">
+							<img src="{{asset($books[0]->src)}}" class="w-100">
 						</div>
 						<div class="col-lg-8">
 							<!-- <img src="http://demo.viewpreview.online/assets/img/bookmark-green.png" class="float-right d-block"> -->

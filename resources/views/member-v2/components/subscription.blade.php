@@ -255,9 +255,9 @@ div#flag {
 						<div class="row">
 							<div class="col-lg-3 d-flex align-items-center">
 								@if($ebook->id == 1 || $ebook->id == 3)
-								<img src="{{asset('assetsebook/v2/img/basic-and-intermediate.jpeg')}}" class="mx-auto d-block img-fluid">
+								<img src="{{asset($ebook->src)}}" class="mx-auto d-block img-fluid">
 								@else
-								<img src="{{asset('assetsebook/v2/img/advance.jpeg')}}" class="mx-auto d-block img-fluid">
+								<img src="{{asset($ebook->src)}}" class="mx-auto d-block img-fluid">
 								@endif
 							</div>
 							<div class="col-lg-9">
