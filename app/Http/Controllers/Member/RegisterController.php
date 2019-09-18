@@ -253,10 +253,10 @@ class RegisterController extends Controller
     $data['response_url'] = 'https://bitrexgo.id/response-pay-member';
     $data['backend_url'] = 'https://bitrexgo.id/backend-response-pay';
 
-    // return view('payment.form')
-    //   ->with([
-    //     'data' => $data
-    // ]);
+    return view('payment.form')
+      ->with([
+        'data' => $data
+    ]);
     return response()->json([
       'success' => true,
       'message' => '',
@@ -289,10 +289,10 @@ class RegisterController extends Controller
     $data['response_url'] = 'https://bitrexgo.id/response-pay-member';
     $data['backend_url'] = 'https://bitrexgo.id/backend-response-pay';
 
-    // return view('payment.form')
-    //   ->with([
-    //     'data' => $data
-    // ]);
+    return view('payment.form')
+      ->with([
+        'data' => $data
+    ]);
     return response()->json([
       'success' => true,
       'message' => '',
