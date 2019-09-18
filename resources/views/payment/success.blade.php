@@ -9,7 +9,7 @@
             <div class="row">
               <div class="col-12">
                 <div class="p-4">
-                  <h1 class="text-center text-success">Transaction Successfull</h1>
+                  <h1 class="text-center text-success">Transaction Successful</h1>
                 </div>
                 <hr/>
               </div>
