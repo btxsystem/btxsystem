@@ -192,13 +192,12 @@
                     <li><a id="about" href="#">About Us</a></li>
                     <li><a id="product" href="#">Our Product</a></li>
                     <li><a id="event" href="#">Event</a></li>
-<<<<<<< HEAD
+
                     <!-- <li><a data-toggle="modal" data-target="#join"><button class="btn btn-effect btn-info btn-buy" style="background: #b92240; margin-top: -10px;">JOIN</button></a></li> -->
                     <li><a href="#"><button class="btn btn-effect btn-info btn-buy" style="background: #b92240; margin-top: -10px;" disabled>JOIN</button></a></li>
-=======
-                    <li><a data-toggle="modal" data-target="#join"><button class="btn btn-effect btn-info btn-buy" style="background: #b92240; margin-top: -10px;">JOIN</button></a></li>
+                    {{-- <li><a data-toggle="modal" data-target="#join"><button class="btn btn-effect btn-info btn-buy" style="background: #b92240; margin-top: -10px;">JOIN</button></a></li> --}}
                     <!-- <li><a href="#"><button class="btn btn-effect btn-info btn-buy" style="background: #b92240; margin-top: -10px;">JOIN</button></a></li> -->
->>>>>>> 0ed26680dfe3a3e8b9fd159e4584a16618a1b7d8
+
                   </ul>
                 </div>
               </nav>
