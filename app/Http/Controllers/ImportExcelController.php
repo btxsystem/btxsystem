@@ -116,4 +116,19 @@ class ImportExcelController extends Controller
          }
         return redirect()->back();
     }
+    public function oldBonus(Request $request){
+        $history_data = Excel::toArray(new RewardImport, request()->file('file'))[0];
+        foreach ($history_data as $key => $data2) {
+            $user = Employeer::where('id_member',$data2['member_id'])->select('id')->first();
+            $dt2['id_member'] = $user['id'];
+            $dt2['nominal'] = $data2['fix_amount'];
+            $dt2['description'] = $data2['description'];
+            $dt['created_at'] = now();
+            $dt['updated_at'] = now();
+            $dt2['info'] = 1;
+            $dt2['type'] = 4;
+            HistoryBitrexCash::insert($dt2);
+         }
+        return redirect()->back();
+    }
 }
