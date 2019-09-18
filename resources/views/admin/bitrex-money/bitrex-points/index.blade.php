@@ -149,7 +149,7 @@ List Of Bitrex Points
                   },
                   {data: 'id_member', name: 'id_member'},
                   {data: 'username', name: 'username'},
-                  {data: 'points', name: 'points', searchable: false},
+                  {data: 'bitrex_points', name: 'bitrex_points', searchable: false},
                   {data: 'action', name: 'action', orderable: false, searchable: false},
               ]
           });
