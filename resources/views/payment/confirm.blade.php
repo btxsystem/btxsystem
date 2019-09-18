@@ -33,8 +33,7 @@
                 <form action="{{route('payment.confirmation')}}" method="post" enctype="multipart/form-data">
                   {{csrf_field()}}
                   <div class="form-group">
-                    <select class="form-control" name="type">
-                      <option>Jenis Tagihan</option>
+                    <select class="form-control" name="type" required>
                       <option value="topup_bitrex_point">Topup Bitrex Point</option>
                     </select>
                   </div>
@@ -54,7 +53,7 @@
                     <input type="text" class="form-control" name="bank_name" placeholder="Bank Name" value="" required>
                   </div>
                   <div class="form-group">
-                    <input type="file" class="form-control" name="image">
+                    <input type="file" class="form-control" accept="image/*" name="image">
                   </div>
                   <button type="submit" class="btn btn-danger btn-block">
                     <span class="glyphicon glyphicon-chevron-left"></span> Confirmation Transfer
