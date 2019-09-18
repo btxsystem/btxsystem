@@ -268,7 +268,7 @@ class TransactionController extends Controller
     
                 DB::commit();
     
-                return view('success-topup')->with([
+                return view('payment.success-topup')->with([
                     'prodDesc' => $prodDesc,
                     'code' => $code
                 ]);
