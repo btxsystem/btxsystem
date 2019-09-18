@@ -266,10 +266,14 @@ Route::group(['middleware' => 'admin'], function () {
             Route::get('', ['as' => 'index', 'uses' => 'Admin\PromotionController@index']);
     });
 
+    //generate
     Route::group(['prefix'=>'import','as'=>'import.'], function(){
         Route::get('', ['as' => 'index', 'uses' => 'ImportExcelController@index']);
         Route::post('excel', ['as' => 'excel', 'uses' => 'ImportExcelController@import_excel']);
         Route::post('tree', ['as' => 'tree', 'uses' => 'ImportExcelController@import_tree']);
         Route::post('sponsor', ['as' => 'sponsor', 'uses' => 'ImportExcelController@import_sponsor']);
+        Route::post('bonus1', ['as' => 'bonus1', 'uses' => 'ImportExcelController@import_bonus1']);
+        Route::get('generate-pv', ['as' => 'generate-pv', 'uses' => 'Member\MyBonusController@generatePv']);
+        Route::post('curse', ['as' => 'curse', 'uses' => 'ImportExcelController@curse']);
     });
 });
