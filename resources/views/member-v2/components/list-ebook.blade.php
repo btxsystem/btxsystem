@@ -197,12 +197,14 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script src="{{asset('assetsebook/js/helper.js')}}"></script>
-<?php if($books[0]->id == 1) { ?>
 <script>
 (function(w,d,t,h,l,b,p,o,a,m){w['TraducationFxObject']=o;w[o]=w[o]||function(){
 w[o].h=h;w[o].b=b;return (w[o].q=w[o].q||[]).push(arguments)};a=d.createElement(t),
 m=d.getElementsByTagName(t)[0];a.async=1;a.src=h+l+'?b='+b+'&p='+p.join(',');a.crossorigin='use-credentials';m.parentNode.insertBefore(a,m)
 })(window,document,'script','https://embedder.traducationfx.com/','embedder.js','PCyAlXfaqVU',['modal'],'TraducationFX');
+</script>
+<?php if($books[0]->id == 1) { ?>
+<script>
 
 TraducationFX('settings', 'configure', {
     langCode: 'id'
@@ -215,10 +217,6 @@ TraducationFX('video', 'configure', {
 TraducationFX('video', 'embed');
 </script>  
 <script>
-(function(w,d,t,h,l,b,p,o,a,m){w['TraducationFxObject']=o;w[o]=w[o]||function(){
-w[o].h=h;w[o].b=b;return (w[o].q=w[o].q||[]).push(arguments)};a=d.createElement(t),
-m=d.getElementsByTagName(t)[0];a.async=1;a.src=h+l+'?b='+b+'&p='+p.join(',');a.crossorigin='use-credentials';m.parentNode.insertBefore(a,m)
-})(window,document,'script','https://embedder.traducationfx.com/','embedder.js','PCyAlXfaqVU',['modal'],'TraducationFX');
 
 TraducationFX('settings', 'configure', {
     langCode: 'id'
@@ -233,10 +231,6 @@ TraducationFX('video', 'embed');
 <?php } ?>
 <?php if($books[0]->id == 2) { ?>
 <script>
-(function(w,d,t,h,l,b,p,o,a,m){w['TraducationFxObject']=o;w[o]=w[o]||function(){
-w[o].h=h;w[o].b=b;return (w[o].q=w[o].q||[]).push(arguments)};a=d.createElement(t),
-m=d.getElementsByTagName(t)[0];a.async=1;a.src=h+l+'?b='+b+'&p='+p.join(',');a.crossorigin='use-credentials';m.parentNode.insertBefore(a,m)
-})(window,document,'script','https://embedder.traducationfx.com/','embedder.js','PCyAlXfaqVU',['modal'],'TraducationFX');
 
 TraducationFX('settings', 'configure', {
     langCode: 'id'
@@ -249,10 +243,6 @@ TraducationFX('video', 'configure', {
 TraducationFX('video', 'embed');
 </script>
 <script>
-(function(w,d,t,h,l,b,p,o,a,m){w['TraducationFxObject']=o;w[o]=w[o]||function(){
-w[o].h=h;w[o].b=b;return (w[o].q=w[o].q||[]).push(arguments)};a=d.createElement(t),
-m=d.getElementsByTagName(t)[0];a.async=1;a.src=h+l+'?b='+b+'&p='+p.join(',');a.crossorigin='use-credentials';m.parentNode.insertBefore(a,m)
-})(window,document,'script','https://embedder.traducationfx.com/','embedder.js','PCyAlXfaqVU',['modal'],'TraducationFX');
 
 TraducationFX('settings', 'configure', {
     langCode: 'id'
