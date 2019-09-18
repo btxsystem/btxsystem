@@ -402,7 +402,7 @@ class PaymentController extends Controller
             $newIncome = Ebook::where('id', $getEbookIdByHistory->ebook_id)->first();
 
             TransactionNonMember::insert([
-              'income' => $newIncome->income,
+              'income' => $newIncome->price_markup,
               'member_id' => $trxNonMember->latest('id')->first()->member_id,
               'non_member_id' => $trxNonMember->latest('id')->first()->non_member_id,
               'ebook_id' => $getEbookIdByHistory->ebook_id,
