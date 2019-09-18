@@ -81,7 +81,9 @@
 				</div>
 				<hr>
 				<div class="row mb-5">
-        @foreach($book->videoEbooks as $video)
+				<div id="trfx-embed"></div>
+				<div id="trfx-embed-2"></div>
+        <!-- @foreach($book->videoEbooks as $video)
           <div class="col-lg-4 mb-3 hover">
 						<div class="embed-responsive embed-responsive-16by9">
 							<video controls>
@@ -91,7 +93,7 @@
 						</div><br/>
 						<span style="font-size: 20px; font-weight: bold;">{{ $video->videos[0]->title }}</span>
 					</div>
-				@endforeach
+				@endforeach -->
 				</div>
 				@endif
         @endforeach
@@ -195,6 +197,74 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script src="{{asset('assetsebook/js/helper.js')}}"></script>
+<?php if($books[0]->id == 1) { ?>
+<script>
+(function(w,d,t,h,l,b,p,o,a,m){w['TraducationFxObject']=o;w[o]=w[o]||function(){
+w[o].h=h;w[o].b=b;return (w[o].q=w[o].q||[]).push(arguments)};a=d.createElement(t),
+m=d.getElementsByTagName(t)[0];a.async=1;a.src=h+l+'?b='+b+'&p='+p.join(',');a.crossorigin='use-credentials';m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://embedder.traducationfx.com/','embedder.js','PCyAlXfaqVU',['modal'],'TraducationFX');
+
+TraducationFX('settings', 'configure', {
+    langCode: 'id'
+});
+TraducationFX('video', 'configure', {
+    containerId: 'trfx-embed',
+    playlistKey: 'GMFE0LClS3s',
+    layout: 'vertical-tabs'
+});
+TraducationFX('video', 'embed');
+</script>  
+<script>
+(function(w,d,t,h,l,b,p,o,a,m){w['TraducationFxObject']=o;w[o]=w[o]||function(){
+w[o].h=h;w[o].b=b;return (w[o].q=w[o].q||[]).push(arguments)};a=d.createElement(t),
+m=d.getElementsByTagName(t)[0];a.async=1;a.src=h+l+'?b='+b+'&p='+p.join(',');a.crossorigin='use-credentials';m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://embedder.traducationfx.com/','embedder.js','PCyAlXfaqVU',['modal'],'TraducationFX');
+
+TraducationFX('settings', 'configure', {
+    langCode: 'id'
+});
+TraducationFX('video', 'configure', {
+    containerId: 'trfx-embed-2',
+    playlistKey: 'aOsg9RGyoZM',
+    layout: 'vertical-tabs'
+});
+TraducationFX('video', 'embed');
+</script>
+<?php } ?>
+<?php if($books[0]->id == 2) { ?>
+<script>
+(function(w,d,t,h,l,b,p,o,a,m){w['TraducationFxObject']=o;w[o]=w[o]||function(){
+w[o].h=h;w[o].b=b;return (w[o].q=w[o].q||[]).push(arguments)};a=d.createElement(t),
+m=d.getElementsByTagName(t)[0];a.async=1;a.src=h+l+'?b='+b+'&p='+p.join(',');a.crossorigin='use-credentials';m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://embedder.traducationfx.com/','embedder.js','PCyAlXfaqVU',['modal'],'TraducationFX');
+
+TraducationFX('settings', 'configure', {
+    langCode: 'id'
+});
+TraducationFX('video', 'configure', {
+    containerId: 'trfx-embed',
+    playlistKey: 'LsyYK1bzoXu',
+    layout: 'vertical-tabs'
+});
+TraducationFX('video', 'embed');
+</script>
+<script>
+(function(w,d,t,h,l,b,p,o,a,m){w['TraducationFxObject']=o;w[o]=w[o]||function(){
+w[o].h=h;w[o].b=b;return (w[o].q=w[o].q||[]).push(arguments)};a=d.createElement(t),
+m=d.getElementsByTagName(t)[0];a.async=1;a.src=h+l+'?b='+b+'&p='+p.join(',');a.crossorigin='use-credentials';m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://embedder.traducationfx.com/','embedder.js','PCyAlXfaqVU',['modal'],'TraducationFX');
+
+TraducationFX('settings', 'configure', {
+    langCode: 'id'
+});
+TraducationFX('video', 'configure', {
+    containerId: 'trfx-embed-2',
+    playlistKey: 'noClRzzV5n9',
+    layout: 'vertical-tabs'
+});
+TraducationFX('video', 'embed');
+</script>
+<?php } ?>
 <script>
 let auth = "{{Auth::guard('nonmember')->user() || Auth::guard('user')->user()}}"
 $('#username').on('change', function() {
