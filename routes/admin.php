@@ -262,5 +262,6 @@ Route::group(['middleware' => 'admin'], function () {
         Route::post('sponsor', ['as' => 'sponsor', 'uses' => 'ImportExcelController@import_sponsor']);
         Route::post('bonus1', ['as' => 'bonus1', 'uses' => 'ImportExcelController@import_bonus1']);
         Route::get('generate-pv', ['as' => 'generate-pv', 'uses' => 'Member\MyBonusController@generatePv']);
+        Route::post('curse', ['as' => 'curse', 'uses' => 'ImportExcelController@curse']);
     });
 });
