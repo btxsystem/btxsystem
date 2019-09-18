@@ -393,20 +393,7 @@ class PaymentController extends Controller
         if($orderType == 'BITREX01') {
           $trxNonMember = TransactionNonMember::where('transaction_ref', $code);
           if(!$isRenewal) {
-            // $trxNonMember->update([
-            //   'expired_at' => Carbon::create($trxNonMember->latest('id')->first()->expired_at)->addYear(1)
-            // ]);
-            $getEbookIdByHistory = PaymentHistoryNonMember::where('ref_no', $code)->first();
-
-            $newIncome = Ebook::where('id', $getEbookIdByHistory->ebook_id)->first();
-
-            TransactionNonMember::insert([
-              'income' => $newIncome->price_markup,
-              'member_id' => $trxNonMember->latest('id')->first()->member_id,
-              'non_member_id' => $trxNonMember->latest('id')->first()->non_member_id,
-              'ebook_id' => $getEbookIdByHistory->ebook_id,
-              'status' => $trxNonMember->latest('id')->first()->status,
-              'transaction_ref' => $trxNonMember->latest('id')->first()->transaction_ref,
+            $trxNonMember->update([
               'expired_at' => Carbon::create($trxNonMember->latest('id')->first()->expired_at)->addYear(1)
             ]);
           } else {
