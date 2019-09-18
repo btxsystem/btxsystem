@@ -14,7 +14,7 @@ use Carbon\Carbon;
 
 use DB;
 
-use App\Mail\WelcomeMail;
+use Illuminate\Support\Facades\Mail;
 use App\Mail\RegisterMemberMail;
 
 class RegisterController extends Controller
