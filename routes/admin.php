@@ -179,6 +179,12 @@ Route::group(['middleware' => 'admin'], function () {
         Route::get('general', ['as' => 'general', 'uses' => 'Admin\BonusController@general']);
     });
 
+    Route::group(['prefix'=>'transfer-confirmation','as'=>'transfer-confirmation.'], function(){
+        Route::get('', ['as' => 'index', 'uses' => 'Admin\TransferConfirmationController@index']);
+        Route::get('/{id}/show', ['as' => 'edit', 'uses' => 'Admin\TransferConfirmationController@show']);
+        Route::get('/approve/{id}', ['as' => 'approve', 'uses' => 'Admin\TransferConfirmationController@approve']);
+    });
+
     Route::group(['prefix'=>'cms','as'=>'cms.'], function(){
         Route::resource('our-products', 'Admin\OurProductController');
 

@@ -196,7 +196,7 @@ List Of Bitrex Points
                         orderable: false, searchable: false
                     },
                     {data: 'nominal', name: 'nominal'},
-                    {data: 'description', name: 'description', searchable: false},
+                    {data: 'description', name: 'description'},
                     {data: 'created_at', name: 'created_at', orderable: false, searchable: false},
                 ]
             });  

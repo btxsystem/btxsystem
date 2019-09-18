@@ -156,6 +156,10 @@
         <script type="text/javascript" src="{{ asset('assets/js/pages/table-responsive.js') }}"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
 
+        <script>
+        const BASE_URL = '{{url("/")}}'
+        </script>
+
 
         @yield('footer_scripts')
         @include('sweet::alert')
