@@ -65,18 +65,20 @@ List Of Bitrex Points
                                 
                                     <br/>
                                     <div class="row input-daterange">
-                                        <div class="col-md-12">
-                                            <div class="col-md-4">
-                                                <input type="text" name="from_date" id="from_date" class="form-control" placeholder="From Date" readonly />
+        
+                                            <div class="col-md-5">
+                                                <input type="text" name="from_date" id="from_date" class="form-control"  placeholder="From Date" readonly />
                                             </div>
-                                            <div class="col-md-4">
+                                            <div class="col-md-5">
                                                 <input type="text" name="to_date" id="to_date" class="form-control" placeholder="To Date" readonly />
                                             </div>
-                                            <div class="col-md-4">
-                                                <button type="button" name="filter" id="filter" class="btn btn-primary">Filter</button> &nbsp;
-                                                <button type="button" name="refresh" id="refresh" class="btn btn-default">Refresh</button>
+                                            <div class="col-md-2">
+                                                <div class="pull-right">
+                                                    <button type="button" name="filter" id="filter" style="width: 50px;" class="btn btn-primary"><i class="fa fa-search"></i></button> &nbsp;
+                                                    <button type="button" name="refresh" id="refresh" style="width: 50px;" class="btn btn-default"><i class="fa fa-refresh"></i></button>
+                                                </div>
                                             </div>
-                                        </div>
+                        
                                     </div>
                                     <br/>
                                 </div>

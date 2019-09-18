@@ -21,6 +21,7 @@ class RegisterController extends Controller
 {
   public function registerMember(Request $request)
   {
+    $method = $request->input('method') ?? 'transfer';
     $referral = $request->input('referral') ?? '';
     $firstName = $request->input('firstName') ?? '';
     $lastName = $request->input('lastName') ?? '';
@@ -193,14 +194,16 @@ class RegisterController extends Controller
           'trx' => $trx,
           'ebooks' => $ebooks,
           'shipping' => $shipping,
-          'postalFee' => $postalFee
+          'postalFee' => $postalFee,
+          'method' => $method
         ]);
       } else {
         return $this->paymentWithoutEbook($request, [
           'member' => $saved,
           'trx' => $trx,
           'shipping' => $shipping,
-          'postalFee' => $postalFee
+          'postalFee' => $postalFee,
+          'method' => $method
         ]);
       }
 
@@ -253,13 +256,21 @@ class RegisterController extends Controller
     $data['code'] = $params['trx']['transaction_ref'];
     $data['amount'] = (int) str_replace(".","",str_replace(",","",number_format($orderAmount, 2, ".", "")));
     $data['signature'] = $this->signature($data['code'], $data['amount']);
-    $data['response_url'] = 'https://bitrexgo.id/response-pay-member';
-    $data['backend_url'] = 'https://bitrexgo.id/backend-response-pay';
+    $data['response_url'] = url('response-pay-member');
+    $data['backend_url'] = url('backend-response-pay');
 
-    return view('payment.form')
-      ->with([
+    if($params['method'] == 'transfer') {
+      return view('payment.transfer')
+        ->with([
         'data' => $data
     ]);
+    } else {
+      return view('payment.form')
+        ->with([
+        'data' => $data
+      ]);
+    }
+
     return response()->json([
       'success' => true,
       'message' => '',
@@ -289,13 +300,21 @@ class RegisterController extends Controller
     $data['code'] = $params['trx']['transaction_ref'];
     $data['amount'] = (int) str_replace(".","",str_replace(",","",number_format($orderAmount, 2, ".", "")));
     $data['signature'] = $this->signature($data['code'], $data['amount']);
-    $data['response_url'] = 'https://bitrexgo.id/response-pay-member';
-    $data['backend_url'] = 'https://bitrexgo.id/backend-response-pay';
+    $data['response_url'] = url('response-pay-member');
+    $data['backend_url'] = url('backend-response-pay');
 
-    return view('payment.form')
-      ->with([
+    if($params['method'] == 'transfer') {
+      return view('payment.transfer')
+        ->with([
         'data' => $data
-    ]);
+      ]);
+    } else {
+      return view('payment.form')
+        ->with([
+        'data' => $data
+      ]);
+    }
+
     return response()->json([
       'success' => true,
       'message' => '',

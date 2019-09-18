@@ -9,7 +9,7 @@
             <div class="row">
               <div class="col-12">
                 <div class="p-4">
-                  <h1 class="text-center text-success">Transaction Successful</h1>
+                  <h1 class="text-center text-info">Transaction Summary</h1>
                 </div>
                 <hr/>
               </div>
@@ -18,7 +18,6 @@
                 <!-- <div class="text-center">
                     <h1>Receipt</h1>
                 </div> -->
-                </span>
                 <table class="table table-hover">
                     <thead>
                         <tr>
@@ -31,11 +30,14 @@
                             <td colspan=2>{{ $prodDesc ?? '' }}</h4></td>
                             <td colspan=2> {{ $code ?? '' }} </td>
                         </tr>
-
+                        <tr>
+                          <td colspan=2 class="left-right"></td>
+                          <td colspan=2 class="left-right">Total : IDR {{$total}}</td>
+                        </tr>
                     </tbody>
                 </table>
-                <a type="button" href="{{route('member.home')}}" class="btn btn-danger btn-lg btn-block">
-                  <span class="glyphicon glyphicon-chevron-left"></span> Back to Ebook
+                <a type="button" href="{{route('payment.confirm', ['ref' => $code])}}" class="btn btn-danger btn-lg btn-block">
+                  <span class="glyphicon glyphicon-chevron-left"></span> Confirmation Transfer
                 </a></td>
             </div>
         </div>
