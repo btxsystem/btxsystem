@@ -403,7 +403,7 @@ class RegisterController extends Controller
             'password' => 'password'
           ];
 
-          Mail::to($idNewMember)
+          Mail::to($idNewMember->email)
             ->send(new RegisterMemberMail($dataEmail, null));
           // $trxMember = TransactionMember::where('transaction_ref', $code);
           // $trxMember->update([
