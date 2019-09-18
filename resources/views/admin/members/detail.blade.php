@@ -74,6 +74,9 @@
                         </div> 
 
                         <div class="form-group">
+                                <label class="control-label col-md-4">Sponsor &nbsp; </label>: &nbsp;{{ $data->sponsor ? $data->sponsor->username : '-' }}
+                        </div>  
+                        <div class="form-group">
                                 <label class="control-label col-md-4">Email &nbsp; </label>: &nbsp;{{ $data->email }}
                         </div>  
 
