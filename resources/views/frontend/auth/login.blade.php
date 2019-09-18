@@ -113,7 +113,7 @@
             <div class="col-xs-12">
               <div class="wrap-title">
                 <h2 class="ui-title-block">Our <strong>Product</strong></h2>
-                <div class="ui-subtitle-block ui-subtitle-block_mod-b">Bitrexgo is one of the best education platform for Foreign Exchange Trading in Indonesia.</div>
+                <!-- <div class="ui-subtitle-block ui-subtitle-block_mod-b">Bitrexgo is one of the best education platform for Foreign Exchange Trading in Indonesia.</div> -->
               </div>
               <div class="posts-wrap">
                 <article class="post post_mod-a clearfix wow zoomIn" data-wow-duration="1s">
@@ -122,9 +122,9 @@
                   </div>
                   <div class="entry-main">
                     <h3 class="entry-title ui-title-inner decor decor_mod-b"><a href="javascript:void(0);">Basic to Advanced Financial Education</a></h3>
-                    <!-- <div class="entry-content">
+                    <div class="entry-content hidden">
                       <p>Bitrexgo is one of the best education platform for Foreign Exchange Trading in Indonesia</p>
-                    </div> -->
+                    </div>
                   </div>
                 </article>
                 <!-- end post -->
@@ -133,10 +133,10 @@
                     <div class="entry-thumbnail"> <a href="javascript:void(0);" ><img class="img-responsive" src="{{asset('img/2.jpg')}}" style="width: 100%;" width="250" height="250" alt="Foto"/></a> </div>
                   </div>
                   <div class="entry-main">
-                    <h3 class="entry-title ui-title-inner decor decor_mod-b"><a href="javascript:void(0);">Education Videos</a></h3>
-                    <!-- <div class="entry-content">
+                    <h3 class="entry-title ui-title-inner decor decor_mod-b"><a href="javascript:void(0);">Education Videos &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></h3>
+                    <div class="entry-content hidden">
                       <p>Bitrexgo is one of the best education platform for Foreign Exchange Trading in Indonesia</p>
-                    </div> -->
+                    </div>
                   </div>
                 </article>
                 <!-- end post -->
@@ -146,9 +146,9 @@
                   </div>
                   <div class="entry-main">
                     <h3 class="entry-title ui-title-inner decor decor_mod-b"><a href="javascript:void(0);">Online & Offline Learning</a></h3>
-                    <!-- <div class="entry-content">
+                    <div class="entry-content hidden">
                       <p>Bitrexgo is one of the best education platform for Foreign Exchange Trading in Indonesia</p>
-                    </div> -->
+                    </div>
                   </div>
                 </article>
                 <!-- end post -->
@@ -158,9 +158,9 @@
                   </div>
                   <div class="entry-main">
                     <h3 class="entry-title ui-title-inner decor decor_mod-b"><a href="javascript:void(0);">Smart Financial Community</a></h3>
-                    <!-- <div class="entry-content">
+                    <div class="entry-content hidden">
                       <p>Bitrexgo is one of the best education platform for Foreign Exchange Trading in Indonesia</p>
-                    </div> -->
+                    </div>
                   </div>
                 </article>
                 <!-- end post -->
