@@ -351,18 +351,18 @@ class RegisterController extends Controller
         ->with('member')
         ->get();
 
-      $idNewMember = findChild(
-          $temporaryTrx[0]->member->referral,
-          $temporaryTrx[0]->member->referral,
-          $temporaryTrx[0]->member
-        );
+      // $idNewMember = findChild(
+      //     $temporaryTrx[0]->member->referral,
+      //     $temporaryTrx[0]->member->referral,
+      //     $temporaryTrx[0]->member
+      //   );
 
-      return response()->json([
-        'trx' => $temporaryTrx,
-        'status' => $status,
-        'member' => $idNewMember,
-        'prodDesc' => $prodDesc
-      ]);
+      // return response()->json([
+      //   'trx' => $temporaryTrx,
+      //   'status' => $status,
+      //   'member' => $idNewMember,
+      //   'prodDesc' => $prodDesc
+      // ]);
 
       $view = 'payment.failed';
 
