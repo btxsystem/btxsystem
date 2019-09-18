@@ -101,7 +101,6 @@ class TestimonialController extends Controller
      */
     public function update(Request $request)
     {
-        // return $request->all();
         $data = Testimonial::findOrFail($request->id);
 
         if ($data) {

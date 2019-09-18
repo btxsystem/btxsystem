@@ -13,6 +13,19 @@ use Auth;
 use Alert;
 use DB;
 
+use App\Models\TransactionNonMember;
+use App\Models\TransactionMember;
+use App\Models\Ebook;
+use App\Builder\PaymentHistoryBuilder;
+use App\Factory\RegisterFactoryMake;
+use App\Factory\PaymentHistoryFactoryBuild;
+use App\Models\NonMember;
+use App\Models\PaymentHistoryMember;
+use App\Models\PaymentHistoryNonMember;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\PurchaseEbookMemberMail;
+use App\Mail\PurchaseEbookNonMemberMail;
+
 class TransferConfirmationController extends Controller
 {
 
@@ -63,6 +76,194 @@ class TransferConfirmationController extends Controller
                     'status' => 1
                 ]);
             }
+
+
+            if($data->type == 'ebook') {
+                $orderType = substr($code, 0, 8);
+                $isRenewal = false;
+          
+                if($orderType == 'BITREX01') {
+                  //
+                  $paymentHistory = PaymentHistoryNonMember::where('ref_no', $code)->update([
+                    'payment_id' => $payment_id,
+                    'amount' => $amount,
+                    'currency' => $currency,
+                    'trans_id' => $transid,
+                    'remark' => $remark,
+                    'auth_code' => $authcode,
+                    'err_desc' => $errdesc,
+                  ]);
+          
+                  $userData = PaymentHistoryNonMember::where('ref_no', $code)
+                  ->with([
+                    'nonMember'
+                  ])
+                  ->first();
+          
+                  $isRegister = false;
+          
+                  $checkIsRegister = TransactionNonMember::where('transaction_ref', $code)
+                    ->with([
+                      'ebook',
+                      'nonMember'
+                    ])
+                    ->first();
+          
+                  if($checkIsRegister) {
+                    //if new register
+                    if($checkIsRegister->expired_at < now() && $checkIsRegister->status != 1) {
+                      $isRegister = true;
+                    } else {
+                      $isRegister = false;
+                    }
+                  }
+          
+                  $isExpired = $checkIsRegister->expired_at < now() ? true : false;
+          
+                  $transaction = TransactionNonMember::where('transaction_ref', $code)
+                  ->update([
+                    'status' => $status == "0"
+                      ? $isExpired == false ? 1 : 6
+                      : $isExpired == false ? 1 : $status,
+                  ]);
+          
+                  //if is new register
+                  if($isRegister) {
+                    //generate random password
+                    $additionalParameter = (object) [
+                      'password' => 'secret'
+                    ];
+          
+                    $isRenewal = false;
+          
+                    //send email
+                    Mail::to($checkIsRegister->nonMember->email)->send(new PurchaseEbookNonMemberMail($checkIsRegister, $additionalParameter));
+                  } else {
+                    //send email
+                    $isRenewal = true;
+                    Mail::to($checkIsRegister->nonMember->email)->send(new PurchaseEbookNonMemberMail($checkIsRegister, null));
+                  }
+          
+                } else if($orderType == 'BITREX02') {
+                  $paymentHistory = PaymentHistoryMember::where('ref_no', $code)->update([
+                    'status' => $status,
+                    'payment_id' => $payment_id,
+                    'amount' => $amount,
+                    'currency' => $currency,
+                    'trans_id' => $transid,
+                    'remark' => $remark,
+                    'auth_code' => $authcode,
+                    'err_desc' => $errdesc,
+                  ]);
+          
+                  // $transaction = TransactionMember::where('transaction_ref', $code)
+                  //   ->update([
+                  //     'status' => $status == "0" ? 6 : $status
+                  // ]);
+          
+                  $checkIsRegister = TransactionMember::where('transaction_ref', $code)
+                    ->first();
+          
+                  $isRegister = false;
+          
+                  if($checkIsRegister) {
+                    //if new register
+                    if($checkIsRegister->expired_at < now() && $checkIsRegister->status != 1) {
+                      $isRegister = true;
+                    } else {
+                      $isRegister = false;
+                    }
+                  }
+          
+                  if($checkIsRegister) {
+                    //if new register
+                    if($checkIsRegister->expired_at < now() && $checkIsRegister->status != 1) {
+                      $isRegister = true;
+                    } else {
+                      $isRegister = false;
+                    }
+                  }
+          
+                  $isExpired = $checkIsRegister->expired_at < now() ? true : false;
+          
+                  $transaction = TransactionMember::where('transaction_ref', $code)
+                  ->update([
+                    'status' => $status == "0"
+                      ? $isExpired == false ? 1 : 6
+                      : $isExpired == false ? 1 : $status,
+                  ]);
+          
+                  $checkIsRegister = TransactionMember::where('transaction_ref', $code)
+                    ->with([
+                      'ebook',
+                      'member'
+                    ])
+                    ->first();
+          
+                  if($isRegister) {
+                    $isRenewal = false;
+                  } else {
+                    $isRenewal = true;
+                  }
+          
+                  Mail::to($checkIsRegister->member->email)->send(new PurchaseEbookMemberMail($checkIsRegister, null));
+                } else {
+                  $isRenewal = true;
+                  $paymentHistory = false;
+                  $transaction = false;
+                }
+          
+                if(!$paymentHistory || !$transaction) {
+                  DB::rollback();
+                  return view('payment.failed');
+                }
+          
+                $view = 'payment.failed';
+          
+                if($status == "1") {
+                  if($orderType == 'BITREX01') {
+                    $trxNonMember = TransactionNonMember::where('transaction_ref', $code);
+                    if(!$isRenewal) {
+                      $trxNonMember->update([
+                        'expired_at' => Carbon::create($trxNonMember->latest('id')->first()->expired_at)->addYear(1)
+                      ]);
+                    } else {
+                      $getEbookIdByHistory = PaymentHistoryNonMember::where('ref_no', $code)->first();
+          
+                      $newIncome = Ebook::where('id', $getEbookIdByHistory->ebook_id)->first();
+          
+                      TransactionNonMember::insert([
+                        'income' => $newIncome->price_markup,
+                        'member_id' => $trxNonMember->latest('id')->first()->member_id,
+                        'non_member_id' => $trxNonMember->latest('id')->first()->non_member_id,
+                        'ebook_id' => $getEbookIdByHistory->ebook_id,
+                        'status' => $trxNonMember->latest('id')->first()->status,
+                        'transaction_ref' => $trxNonMember->latest('id')->first()->transaction_ref,
+                        'expired_at' => Carbon::create($trxNonMember->latest('id')->first()->expired_at)->addYear(1)
+                      ]);
+                    }
+          
+                  } else if($orderType == 'BITREX02') {
+                    $trxMember = TransactionMember::where('transaction_ref', $code);
+                    if(!$isRenewal) {
+                      $trxMember->update([
+                        'expired_at' => Carbon::create($trxMember->latest('id')->first()->expired_at)->addYear(1)
+                      ]);
+                    } else {
+                      $getEbookIdByHistory = PaymentHistoryMember::where('ref_no', $code)->first();
+          
+                      TransactionMember::insert([
+                        'member_id' => $trxMember->latest('id')->first()->member_id,
+                        'ebook_id' => $getEbookIdByHistory->ebook_id,
+                        'status' => $trxMember->latest('id')->first()->status,
+                        'transaction_ref' => $trxMember->latest('id')->first()->transaction_ref,
+                        'expired_at' => Carbon::create($trxMember->latest('id')->first()->expired_at)->addYear(1)
+                      ]);
+                    }
+                  }
+            }
+
+
             $data->update([
                 'status' => 1
             ]); 
