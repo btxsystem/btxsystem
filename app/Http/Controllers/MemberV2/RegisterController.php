@@ -102,7 +102,8 @@ class RegisterController extends Controller
           ->member($builderPayment);
       } else {
         $this->validate($request, [
-          'username' => 'required|unique:non_members,username'
+          'username' => 'required|unique:non_members,username',
+          'email' => 'required|unique:non_members,email'
         ]);
 
         $builder = (new NonMemberBuilder())
