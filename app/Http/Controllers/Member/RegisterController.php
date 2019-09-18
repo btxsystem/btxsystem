@@ -389,19 +389,31 @@ class RegisterController extends Controller
           }
           $trxMember = TransactionMember::insert($books);
 
+          $password = strtolower(str_random(8));
+
           $dataEmail = (object) [
             'member' => $idNewMember,
-            'password' => 'password'
+            'password' => $password
           ];
+
+          Employeer::where('id', $idNewMember->id)->update([
+            'password' => password_hash($password, PASSWORD_BCRYPT)
+          ]);
 
           Mail::to($idNewMember->email)
             ->send(new RegisterMemberMail($dataEmail, null));
             
         } else if($orderType == 'BITREX04') { //witout ebbook
+          $password = strtolower(str_random(8));
+
           $dataEmail = (object) [
             'member' => $idNewMember,
-            'password' => 'password'
+            'password' => $password
           ];
+
+          Employeer::where('id', $idNewMember->id)->update([
+            'password' => password_hash($password, PASSWORD_BCRYPT)
+          ]);
 
           Mail::to($idNewMember->email)
             ->send(new RegisterMemberMail($dataEmail, null));
