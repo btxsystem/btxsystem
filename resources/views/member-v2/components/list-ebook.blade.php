@@ -29,8 +29,8 @@
 						</div>
 						<div class="col-lg-8">
 							<!-- <img src="http://demo.viewpreview.online/assets/img/bookmark-green.png" class="float-right d-block"> -->
-							<h3>Menjadi Seorang Trader Forex</h3>
-							<span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</span>
+							<h3>{{ ucwords($books[0]->title) }}</h3>
+							<span>{!! $books[0]->description !!}</span>
 						</div>
 					</div>
 				</div>

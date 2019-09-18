@@ -86,7 +86,7 @@ class ExploreController extends Controller
    */
   public function detail(Request $request, $type = 'basic', $username = null)
   {
-    $books = Ebook::whereIn('id', [1, 2])->select('id', 'title', 'price', 'pv', 'price_markup', 'bv')->with([
+    $books = Ebook::whereIn('id', [1, 2])->select('id', 'title', 'price', 'pv', 'price_markup', 'bv', 'description')->with([
       'bookEbooks' => function($q) {
         $q->select('id', 'book_id', 'ebook_id')->with([
           'book' => function($q) {
