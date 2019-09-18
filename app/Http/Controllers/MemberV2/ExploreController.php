@@ -136,6 +136,53 @@ class ExploreController extends Controller
         }
       }
     }
+    $expiredBasic = null;
+    $expiredAdvanced = null;
+    $access = null;
+
+    if($user = Auth::guard('nonmember')->user()) {
+      $expiredBasic = TransactionNonMember::where('non_member_id', $user->id)
+        ->where('status', 1)
+        ->whereIn('ebook_id', [1, 3])
+        ->select('expired_at')
+        ->latest('id')
+        ->first();
+
+      $expiredAdvanced = TransactionNonMember::where('non_member_id', $user->id)
+        ->where('status', 1)
+        ->whereIn('ebook_id', [2, 4])
+        ->select('expired_at')
+        ->latest('id')
+        ->first();
+
+      if($books[0]->id == 1) {
+        $access = $expiredBasic;
+      } else if($books[0]->id == 2) {
+        $access = $expiredAdvanced;
+      }
+    } else if($user = Auth::guard('user')->user()) {
+      $expiredBasic = TransactionMember::where('member_id', $user->id)
+        ->where('status', 1)
+        ->where('ebook_id', 1)
+        ->orWhere('ebook_id', 3)
+        ->select('expired_at')
+        ->latest('id')
+        ->first();
+
+      $expiredAdvanced = TransactionMember::where('member_id', $user->id)
+        ->where('status', 1)
+        ->where('ebook_id', 2)
+        ->orWhere('ebook_id', 4)
+        ->select('expired_at')
+        ->latest('id')
+        ->first();
+
+        if($books[0]->id == 1) {
+          $access = $expiredBasic;
+        } else if($books[0]->id == 2) {
+          $access = $expiredAdvanced;
+        }
+    }
 
     // return response()->json([
     //   'data' => $books
@@ -143,7 +190,10 @@ class ExploreController extends Controller
 
     return view($this->pathView . '.components.list-ebook')->with([
       'books' => $books,
-      'username' => $referral
+      'username' => $referral,
+      'expiredBasic' => $expiredBasic,
+      'expiredAdvanced' => $expiredAdvanced,
+      'access' => $access
     ]);
   }
 
@@ -353,7 +403,6 @@ class ExploreController extends Controller
         }
       ])
       ->first();
-
     if(!$book) {
       return redirect()->route('member.home');
     }
@@ -362,7 +411,7 @@ class ExploreController extends Controller
     //   'data' => $chapter
     // ], 200);
     return view($this->pathView . '.components.book-detail')->with([
-      'book' => $book
+      'book' => $book,
     ]);;
   }
 
@@ -444,6 +493,11 @@ class ExploreController extends Controller
   }
 
   public function videoBasic()
+  {
+    return view('member-v2.components.video-basic');
+  }
+
+  public function videoAdvanced()
   {
     return view('member-v2.components.video-basic');
   }

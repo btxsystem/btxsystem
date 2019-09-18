@@ -293,7 +293,7 @@ div#flag {
 											<input type="hidden" name="ebook" value="{{$ebook->id}}">
                       <input type="hidden" name="repeat" value="true">
 											<button onclick="changeValueRepeat('{{json_encode($ebook)}}')" data-toggle="modal" data-target="#repeatModal" type="button" class="btn btn-identity-red text-white btn-sm mt-3 px-5">REPEAT ORDER</button>
-											@if($expired_basic != null)
+											@if($ebook->id == 1 && $expired_basic != null || $ebook->id == 2 && $expired_advanced!= null)
 												<a href="{{route('member.ebook.detail', ['type' => strtolower($ebook->title)])}}" class="btn btn-secondary text-white btn-sm mt-3 px-5">VIEW</a>
 											@endif
 										</form>
