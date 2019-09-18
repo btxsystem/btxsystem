@@ -244,7 +244,7 @@ class RegisterController extends Controller
     $data['merchant_code'] = env('IPAY_MERCHANT_CODE');
     $data['currency'] = "IDR";
     $data['payment_id'] = 1;
-    $data['product_desc'] = "Staterpack + Ebook";
+    $data['product_desc'] = "Starter Pack + Ebook";
     $data['user_name'] = $params['member']['username'];
     $data['user_email'] = $params['member']['email'];
     $data['ref_no'] = $params['trx']['transaction_ref'];
