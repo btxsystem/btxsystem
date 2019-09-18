@@ -18,11 +18,11 @@
   <link href="{{asset('assets3/css/color3.css')}}" rel="alternate stylesheet" title="color3" media="all">
   <link href="{{asset('assets3/css/color4.css')}}" rel="alternate stylesheet" title="color4" media="all">
   <link href="{{asset('assets3/css/color5.css')}}" rel="alternate stylesheet" title="color5" media="all">
-  <link rel="stylesheet" type="text/css" href="http://localhost:8000/assets2/css/select2.css">
+  <link rel="stylesheet" type="text/css" href="{{asset('assets2/css/select2.css')}}">
 
   <script src="{{asset('assets3/js/jquery-1.11.3.min.js')}}"></script>
-  <script defer src="{{asset('js/app.js')}}"></script>
-  <link rel="stylesheet" href="{{asset('assets2/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css')}}">
+<!--   <script defer src="{{asset('js/app.js')}}"></script>
+ -->  <link rel="stylesheet" href="{{asset('assets2/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css')}}">
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
 
@@ -43,20 +43,20 @@
                 </button>
             </div>
             <div class="modal-body" style="height: auto;">
-              <fa-register-member-component/>
-              <form action="{{route('register-auto')}}" method="post">
+<!--               <fa-register-member-component/>
+ -->              <form action="{{route('register-member')}}" method="post" id="payment">
                 @csrf
                     <div class="input-group col-md-12">
-                        <input class="form-control" type="text" name="referal" id="referal" placeholder="Referal" required>
+                        <input class="form-control" type="text" name="referral" id="referal" placeholder="Sponsor Username" required>
                         <p class="alert-referal"></p>
                     </div>
                     <br>
                     <div class="input-group col-md-12">
-                        <input class="form-control" type="text" name="first_name" minlength="2" placeholder="First Name" required>
+                        <input class="form-control" type="text" name="firstName" minlength="2" placeholder="First Name" required>
                     </div>
                     <br>
                     <div class="input-group col-md-12">
-                        <input class="form-control" type="text" placeholder="Last Name" name="last_name">
+                        <input class="form-control" type="text" placeholder="Last Name" name="lastName">
                     </div>
                     <br>
                     <div class="input-group col-md-12">
@@ -69,7 +69,7 @@
                     </div>
                     <br>
                     <div class="input-group col-md-12">
-                        <input class="form-control" type="text" placeholder="NIK/Passport" name="passport" id="passport" required>
+                        <input class="form-control" type="number" placeholder="NIK/Passport" name="passport" id="passport" required>
                     </div>
                     <br>
                     <div class="input-group col-md-12">
@@ -78,7 +78,7 @@
                     <div class="input-group col-md-12">
                       <h5 class="card-inside-title">Choose a pack</h5>
                       <div class="demo-radio-button">
-                        <input name="method" type="radio" value="0" id="starterpack" class="with-gap radio-col-red" checked />
+                        <input name="pack" type="radio" value="0" id="starterpack" class="with-gap radio-col-red" checked />
                         <label for="shipping">Starter Pack</label>
                         <!-- <input name="method" type="radio" value="1" id="starterpackebook" class="with-gap radio-col-red" />
                         <label for="pickup">Starter Pack + Ebook</label> -->
@@ -88,10 +88,11 @@
                     <div class="input-group col-md-12">
                       <h5 class="card-inside-title">Choose a ebook</h5>
                       <div class="demo-radio-button">
-                        <input name="method" type="checkbox" value="0" id="basic" class="with-gap radio-col-red" checked />
+                        <div id="ebook-list"></div>
+                        <!-- <input name="method" type="checkbox" value="0" id="basic" class="with-gap radio-col-red" checked />
                         <label for="shipping">Basic + Intermediate</label>
                         <input name="method" type="checkbox" value="0" id="advanced" class="with-gap radio-col-red" checked />
-                        <label for="shipping">Advanced</label>
+                        <label for="shipping">Advanced</label> -->
                         <!-- <input name="method" type="radio" value="1" id="starterpackebook" class="with-gap radio-col-red" />
                         <label for="pickup">Starter Pack + Ebook</label> -->
                       </div>
@@ -100,9 +101,9 @@
                     <div class="input-group col-md-12 mt-4">
                       <h5 class="card-inside-title">Choose a shipping method</h5>
                       <div class="demo-radio-button">
-                        <input name="method" type="radio" value="1" id="shipping" class="with-gap radio-col-red" />
+                        <input name="shipping" type="radio" value="1" id="shipping" class="with-gap radio-col-red" />
                         <label for="shipping">Shipping</label>
-                        <input name="method" type="radio" value="0" id="pickup" class="with-gap radio-col-red" />
+                        <input name="shipping" type="radio" value="0" id="pickup" class="with-gap radio-col-red" />
                         <label for="pickup">Pickup</label>
                       </div>
                     </div>
@@ -120,8 +121,9 @@
                         <select style="width:100%;" id="kurir" name="kurir" class="form-control kurir"></select>
                       </div>
                       <div class="form-group address-form">
-                        <textarea class="form-control" placeholder="Address"></textarea>
+                        <textarea class="form-control" name="description" placeholder="Address"></textarea>
                       </div>
+                      <input id="cost" type="hidden" name="postalFee" value=0>
                       <!-- <div class="cost-form form-line" style="display:none">
                         <input style="width:100%;" class="cost form-control" name="cost" id="cost" type="text">
                       </div> -->
@@ -129,6 +131,14 @@
                     <div class="input-group col-md-12" id="pickup-form">
                       <div class="form-group address-form">
                         <p>Alamat Bitrexgo</p>
+                      </div>
+                    </div>
+                    <div class="input-group col-md-12">
+                      <div class="form-group address-form">
+                        <h4 class="hidden">Starter Pack : <span id="cost-starter">0</span></h4>
+                        <h4 class="hidden">Total Ebook : <span id="cost-ebook">0</span></h4>
+                        <h4 class="hidden">Total Postal Fee : <span id="cost-postal">0</span></h4>
+                        <h4>Grand Total : <span id="grand-total"></span></h4>
                       </div>
                     </div>
                     <div class="modal-footer">

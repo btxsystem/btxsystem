@@ -110,14 +110,73 @@
 <!--COLOR SWITCHER -->
 <script src="{{asset('assets3/js/bootstrap-select.js')}}"></script>
 <script src="{{asset('assets3/js/dmss.js')}}"></script>
-<script type="text/javascript" src="http://localhost:8000/assets2/js/select2.js" ></script>
+<script type="text/javascript" src="{{asset('assets2/js/select2.js')}}" ></script>
 <script>
+	let priceEbook = 0;
+	let postalFee = 0;
 	$(document).ready(function() {
     $('#shipping-form').hide();
     $('#pickup-form').hide();
 		// var element = document.querySelector('#bah');
 		// $('#upline').hide();
 		// panzoom(element);
+		$.ajax({
+			type: 'GET',
+			url: '{{route("api.ebook.ebooks")}}'
+		}).done(function(res) {
+			const {data} = res
+			let render = data.map((v, i) => {
+				return `
+					<input id="ebooks" type="checkbox" value="${v.id}" id="${v.title}" class="with-gap radio-col-red" data-price="${v.price}" ${v.title == 'basic' ? 'checked' : ''} name="ebooks[]"/>
+        	<label for="shipping">${v.title}</label>
+				`
+			})
+
+			$('#ebook-list').html(`
+				<div id="checkboxEbook">
+					${render}
+				</div>
+			`)
+
+			$('#checkboxEbook input[type=checkbox]').change(function(index) {
+				
+				if($(this).prop('checked')) {
+					priceEbook = priceEbook + parseInt($(this).data('price'))
+				} else {
+					priceEbook = priceEbook - parseInt($(this).data('price'))
+				}
+
+				if(priceEbook != 0) {
+					$('#cost-ebook').parent().removeClass('hidden')
+				} else {
+					$('#cost-ebook').parent().addClass('hidden')
+				}
+
+				if(postalFee != 0) {
+					$('#cost-postal').parent().removeClass('hidden')
+				} else {
+					$('#cost-postal').parent().addClass('hidden')
+				}
+
+				$('#cost-ebook').html(toIDR(priceEbook))
+				$('#grand-total').html(toIDR(priceEbook + postalFee + 280000))
+			})
+			
+		})
+
+		$('form#paymssent').submit(function(e) {
+			e.preventDefault();
+
+			let dataEbooks = [];
+			$("input[name='ebooks[]']:checked").each(function() {
+					dataEbooks.push($(this).val())
+			})
+			const data = {
+				ebooks: dataEbooks
+			}
+
+			console.log(data)
+		})
 		$('#province').select2({
 			placeholder: 'Province',
 		});
@@ -226,7 +285,18 @@
 
 	$('#kurir').change(function(){
 		$('.cost-form').show();
-		$('#cost').val(Math.ceil(this.value/1000) + ' Points');
+		//$('#cost').val(Math.ceil(this.value/1000) + ' Points');
+		$('#cost').val(Math.ceil(this.value))
+		postalFee = Math.ceil(this.value)
+
+		if(postalFee != 0) {
+			$('#cost-postal').parent().removeClass('hidden')
+		} else {
+			$('#cost-postal').parent().addClass('hidden')
+		}
+		
+		$('#cost-postal').html(toIDR(postalFee))
+		$('#grand-total').html(toIDR(priceEbook + postalFee + 280000))
 	});
 
 	$('#shipping').change(function(){
@@ -248,6 +318,10 @@
 	$('#starterpackebook').change(function(){
 		$('#choosepack').val(1)
 	});
+
+	function toIDR(value) {
+		return "IDR " + value.toString().replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1\.")
+	}
 </script>
 </body>
 </html>

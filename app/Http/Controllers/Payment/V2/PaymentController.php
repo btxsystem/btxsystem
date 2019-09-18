@@ -63,6 +63,8 @@ class PaymentController extends Controller
         } else if($ebook->id == 2) {
           $ebookId = 4;
         }
+      } else {
+        $ebookId = $ebook->id;
       }
 
       if($user = Auth::guard('nonmember')->user()) {
@@ -189,11 +191,11 @@ class PaymentController extends Controller
           'data' => $data
       ]);
 
-    } catch (\Exception $e) {
+    } catch (\Illuminate\Database\QueryException $e) {
       DB::rollback();
 
       return response()->json([
-        'message' => $transactionRef
+        'message' => $e
       ]);
     }
   }
@@ -328,12 +330,32 @@ class PaymentController extends Controller
         //     'status' => $status == "0" ? 6 : $status
         // ]);
 
-        $checkIsRegister = TransactionNonMember::where('transaction_ref', $code)
+        $checkIsRegister = TransactionMember::where('transaction_ref', $code)
           ->first();
+
+        $isRegister = false;
+
+        if($checkIsRegister) {
+          //if new register
+          if($checkIsRegister->expired_at < now() && $checkIsRegister->status != 1) {
+            $isRegister = true;
+          } else {
+            $isRegister = false;
+          }
+        }  
+
+        if($checkIsRegister) {
+          //if new register
+          if($checkIsRegister->expired_at < now() && $checkIsRegister->status != 1) {
+            $isRegister = true;
+          } else {
+            $isRegister = false;
+          }
+        }
 
         $isExpired = $checkIsRegister->expired_at < now() ? true : false;
 
-        $transaction = TransactionNonMember::where('transaction_ref', $code)
+        $transaction = TransactionMember::where('transaction_ref', $code)
         ->update([
           'status' => $status == "0" 
             ? $isExpired == false ? 1 : 6 
@@ -347,7 +369,12 @@ class PaymentController extends Controller
           ])
           ->first();
         
-        $isRenewal = false;
+        if($isRegister) {
+          $isRenewal = false;
+        } else {
+          $isRenewal = true;
+        }
+        
         Mail::to($checkIsRegister->member->email)->send(new PurchaseEbookMemberMail($checkIsRegister, null));
       } else {
         $isRenewal = true;
@@ -370,11 +397,15 @@ class PaymentController extends Controller
               'expired_at' => Carbon::create($trxNonMember->latest('id')->first()->expired_at)->addYear(1)
             ]);
           } else {
+            $getEbookIdByHistory = PaymentHistoryNonMember::where('ref_no', $code)->first();
+
+            $newIncome = Ebook::where('id', $getEbookIdByHistory->ebook_id)->first();
+
             TransactionNonMember::insert([
-              'income' => $trxNonMember->latest('id')->first()->income,
+              'income' => $newIncome->price_markup,
               'member_id' => $trxNonMember->latest('id')->first()->member_id,
               'non_member_id' => $trxNonMember->latest('id')->first()->non_member_id,
-              'ebook_id' => $trxNonMember->latest('id')->first()->ebook_id,
+              'ebook_id' => $getEbookIdByHistory->ebook_id,
               'status' => $trxNonMember->latest('id')->first()->status,
               'transaction_ref' => $trxNonMember->latest('id')->first()->transaction_ref,
               'expired_at' => Carbon::create($trxNonMember->latest('id')->first()->expired_at)->addYear(1)
@@ -388,11 +419,13 @@ class PaymentController extends Controller
               'expired_at' => Carbon::create($trxMember->latest('id')->first()->expired_at)->addYear(1)
             ]);
           } else {
+            $getEbookIdByHistory = PaymentHistoryMember::where('ref_no', $code)->first();
+            
             TransactionMember::insert([
-              'member_id' => $trxNonMember->latest('id')->first()->member_id,
-              'ebook_id' => $trxNonMember->latest('id')->first()->ebook_id,
-              'status' => $trxNonMember->latest('id')->first()->status,
-              'transaction_ref' => $trxNonMember->latest('id')->first()->transaction_ref,
+              'member_id' => $trxMember->latest('id')->first()->member_id,
+              'ebook_id' => $getEbookIdByHistory->ebook_id,
+              'status' => $trxMember->latest('id')->first()->status,
+              'transaction_ref' => $trxMember->latest('id')->first()->transaction_ref,
               'expired_at' => Carbon::create($trxMember->latest('id')->first()->expired_at)->addYear(1)
             ]);
           }
