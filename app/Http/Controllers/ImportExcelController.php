@@ -75,14 +75,14 @@ class ImportExcelController extends Controller
            GotReward::insert($dt);
         }
         $history_data = Excel::toArray(new RewardImport, request()->file('file'))[0];
-        foreach ($history_data as $key => $data) {
-            $user = Employeer::where('id_member',$data['member_id'])->select('id')->first();
-            $dt['id_member'] = $user['id'];
-            $dt['nominal'] = $data['fix_amount'];
-            $dt['description'] = $data['description'];
-            $dt['info'] = 1;
-            $dt['type'] = 3;
-            HistoryBitrexCash::insert($dt);
+        foreach ($history_data as $key => $data2) {
+            $user = Employeer::where('id_member',$data2['member_id'])->select('id')->first();
+            $dt2['id_member'] = $user['id'];
+            $dt2['nominal'] = $data2['fix_amount'];
+            $dt2['description'] = $data2['description'];
+            $dt2['info'] = 1;
+            $dt2['type'] = 3;
+            HistoryBitrexCash::insert($dt2);
          }
         return redirect()->back();
     }
