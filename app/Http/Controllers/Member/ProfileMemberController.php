@@ -9,6 +9,7 @@ use App\Employeer;
 use App\Models\TransactionMember;
 use DB;
 use Carbon\Carbon;
+use Alert;
 
 class ProfileMemberController extends Controller
 {
@@ -67,6 +68,7 @@ class ProfileMemberController extends Controller
                 $price = 280;
                 $sponsor = Auth::user();
                 $idMember = invoiceNumbering();
+                
                 $data = [
                     'id_member' => $idMember,
                     'username' => $request->username,
@@ -125,15 +127,24 @@ class ProfileMemberController extends Controller
                 }
 
                 $input['bitrex_points'] = $sponsor->bitrex_points - $price;
+
+                if($sponsor->bitrex_points < $price) {
+                    DB::rollback();
+                    Alert::error('Bitrex Point tidak cukup', 'Error')->persistent("OK");
+                    return redirect()->route('member.tree');
+                }
+
                 Employeer::find($sponsor->id)->update($input);
                 DB::commit();
                 // return response()->json([
                 //     'data' => $price
                 // ]);
+                Alert::success('Berhasil Register Member Tree', 'Success')->persistent("OK");
                 return redirect()->route('member.tree');
             }
         } catch(\Illuminate\Database\QueryException $e) {
             DB::rollback();
+            Alert::error('Kesalahan teknis', 'Error')->persistent("OK");
             return redirect()->route('member.tree');
         }
     }
