@@ -274,8 +274,7 @@ class TransactionController extends Controller
                 ]);
             } else {
                 DB::rollback();
-                echo "Failed";
-                return;
+                return view('payment.failed-topup');
             }
 
         } catch(\Illuminate\Database\QueryException $e) {
