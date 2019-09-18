@@ -255,7 +255,8 @@
 
 	$('#kurir').change(function(){
 		$('.cost-form').show();
-		$('#cost').val(Math.ceil(this.value/1000) + ' Points');
+		//$('#cost').val(Math.ceil(this.value/1000) + ' Points');
+		$('#cost').val(Math.ceil(this.value))
 	});
 
 	$('#shipping').change(function(){

@@ -14,6 +14,9 @@ use Carbon\Carbon;
 
 use DB;
 
+use App\Mail\WelcomeMail;
+use App\Mail\RegisterMemberMail;
+
 class RegisterController extends Controller
 {
   public function registerMember(Request $request)
@@ -385,7 +388,23 @@ class RegisterController extends Controller
             ];
           }
           $trxMember = TransactionMember::insert($books);
+
+          $dataEmail = (object) [
+            'member' => $idNewMember,
+            'password' => 'password'
+          ];
+
+          Mail::to($idNewMember)
+            ->send(new RegisterMemberMail($dataEmail, null));
+            
         } else if($orderType == 'BITREX04') { //witout ebbook
+          $dataEmail = (object) [
+            'member' => $idNewMember,
+            'password' => 'password'
+          ];
+
+          Mail::to($idNewMember)
+            ->send(new RegisterMemberMail($dataEmail, null));
           // $trxMember = TransactionMember::where('transaction_ref', $code);
           // $trxMember->update([
           //   'expired_at' => Carbon::create($trxMember->first()->expired_at)->addYear(1)
