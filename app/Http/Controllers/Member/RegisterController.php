@@ -394,7 +394,7 @@ class RegisterController extends Controller
             'password' => 'password'
           ];
 
-          Mail::to($idNewMember)
+          Mail::to($idNewMember->email)
             ->send(new RegisterMemberMail($dataEmail, null));
             
         } else if($orderType == 'BITREX04') { //witout ebbook

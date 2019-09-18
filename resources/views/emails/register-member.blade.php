@@ -66,6 +66,27 @@
       <td>: <strong>{{$data->member->phone_number}}</strong></td>
     </tr>
   </table>
+  @if($additional != null)
+  <h3>EBOOK ACCESS</h3>
+  <table>
+    <tr>
+      <td>Username</td>
+      <td>: <strong>{{$data->member->username}}</strong></td>
+    </tr>
+    <tr>
+      <td>Password</td>
+      <td>: <strong>{{$data->password}}</strong></td>
+    </tr>
+    <!-- <tr>
+      <td>Ebook Type</td>
+      <td>: <strong>{{ucwords(str_replace("_", " ", $data->ebook->title))}}</strong></td>
+    </tr> -->
+    <tr>
+      <td>Login URL</td>
+      <td>: <strong><a href="http://ebook.bitrexgo.id/ebook">http://ebook.bitrexgo.id/ebook</a></strong></td>
+    </tr>
+  </table>  
+  @endif
   <br/>
   <br/>
   <i>Please contact Bitrexgo Customer Service for further information:</i><br/>
