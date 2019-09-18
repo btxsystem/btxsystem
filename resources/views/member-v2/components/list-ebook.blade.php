@@ -47,7 +47,7 @@
         @foreach($book->bookEbooks as $ebook)
 					@if(!$book->access)
           <div class="col-lg-3 mb-3 hover">
-						<div class="shadow rounded p-3" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+						<div class="shadow rounded p-3">
 							<div style="overflow: hidden;" class="mb-2">
 								@if(count($ebook->book->imageBooks) > 0)
 								<img src="{{asset($ebook->book->imageBooks[0]->image->src)}}" class="img-fluid w-100">
@@ -56,12 +56,11 @@
 								@endif
 							</div>
 							<span style="font-size: 20px; font-weight: bold;">{{ $ebook->book->title }}</span><br>
-							{!! $ebook->book->article !!}
 						</div>
 					</div>
 					@else
 					<a href="{{route('book.detail', ['slug' => $ebook->book->slug])}}" class="col-lg-3 mb-3 hover">
-						<div class="shadow rounded p-3" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+						<div class="shadow rounded p-3" >
 							<div style="overflow: hidden;" class="mb-2">
 								@if(count($ebook->book->imageBooks) > 0)
 								<img src="{{asset($ebook->book->imageBooks[0]->image->src)}}" class="img-fluid w-100">
@@ -70,7 +69,6 @@
 								@endif
 							</div>
 							<span style="font-size: 20px; font-weight: bold;">{{ $ebook->book->title }}</span><br>
-							{!! $ebook->book->article !!}
 						</div>
 					</a>
 					@endif
