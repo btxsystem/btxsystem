@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\TransferConfirmation;
+use App\HistoryBitrexPoints;
 use App\Models\Testimonial;
 use DataTables;
 use Auth;
@@ -48,12 +49,22 @@ class TransferConfirmationController extends Controller
         DB::beginTransaction();
         try {
             $data = TransferConfirmation::findOrFail($id);
+
+            if($data->type == 'topup_bitrex_point') {
+                $checkRef = HistoryBitrexPoints::where('transaction_ref', $data->invoice_number);
+    
+                $data = DB::table('employeers')->where('id',$checkRef->first()->id_member)->select('bitrex_points')->first();
+    
+                
+                DB::table('employeers')->where('id', $checkRef->first()->id_member)->update(['bitrex_points' => $data->bitrex_points + $checkRef->first()->points, 'updated_at' => Carbon::now()]);
+    
+                $checkRef->update([
+                    'status' => 1
+                ]);
+            }
             $data->update([
                 'status' => 1
             ]); 
-            // if($data->type == 'Register Member') {
-            //     return 'Masuk Sini'; 
-            // }
             DB::commit();
             Alert::success('Success Update Data', 'Success');
         } catch (Exception $e) {
