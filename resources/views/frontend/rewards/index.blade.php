@@ -40,8 +40,6 @@
                                         <td>{{$rank->pv_needed_right}}</td>
                                         <td>{{$rewards[$key]->description}}</td>
                                         <td class="reward-status-{{$key}}">
-                                            <button class="btn btn-primary" style="cursor:pointer; display:none" type="submit">Clime</button>
-                                            <button type="button" style="cursor:no-drop" class="btn btn-secondary">Unlock</button>
                                         </td>
                                     </tr>
                                 @else
@@ -52,8 +50,6 @@
                                         <td>{{$rank->pv_needed_right}}</td>
                                         <td>{{$rewards[$key]->description}}</td>
                                         <td class="reward-status-{{$key}}">
-                                            <button class="btn btn-primary" style="cursor:pointer; display:none" type="submit">Clime</button>
-                                            <button type="button" style="cursor:no-drop" class="btn btn-secondary">Unlock</button>
                                         </td>
                                     </tr>
                                 @endif
@@ -69,21 +65,56 @@
 
 @section('footer_scripts')  
 <script type="text/javascript">
+    let claim = (e) => {
+        $.ajax({
+            type:'POST',
+            url: '{{route("member.claim-reward")}}',
+            data: { "_token": "{{ csrf_token() }}", "id": e},
+            success:function(data){
+                location.reload();
+            }
+        });
+    }
+
     $(document).ready(function () {
+        let over = 0;
         $.ajax({
             url: '{{route("member.select.reward-clime")}}',
             data: data,
             success:function(data){
-                if (data.length <= 8) {
+                let leng = Object.keys(data).length;
+                if (leng <= 8 && leng > 0) {
+                    over ++;
                     $.each(data, function(i, item){
-                        if (item.status == 0) {
-                            
+                        if (item.status == 2) {
+                            $('.reward-status-'+i).html('<button type="button" style="cursor:no-drop" class="btn btn-success fa fa-check">Climed</button>');
+                        }else if(item.status == 1){
+                            $('.reward-status-'+i).html('<button type="button" style="cursor:no-drop" class="btn btn-secondary">Waiting approval</button>');
+                        }else if(item.status == 0){
+                            $('.reward-status-'+i).html('<button type="button" style="cursor:pointer" class="btn btn-primary" onclick="claim('+item.reward_id+')">Claim</button>');
                         }
-                        console.log(item.status);
+                    });
+                }else if(leng > 8){
+                    $.each(data, function(i, item){
+                        if (item.status == 2) {
+                            $('.reward-status-'+i).html('<button type="button" style="cursor:no-drop" class="btn btn-success fa fa-check">Climed</button>');
+                        }else if(item.status == 1){
+                            $('.reward-status-'+i).html('<button type="button" style="cursor:no-drop" class="btn btn-secondary">Waiting approval</button>');
+                        }else if(item.status == 0){
+                            $('.reward-status-'+i).html('<button type="button" style="cursor:pointer" class="btn btn-primary" onclick="claim('+item.reward_id+')">Claim</button>');
+                        }
                     });
                 }else{
-                    console.log('seasson 2');
-                }         
+                    for (let index = 0; index < 8; index++) {
+                        $('.reward-status-'+index).html('<button type="button" style="cursor:no-drop" class="btn btn-secondary">Unlock</button>');
+                    }
+                }
+                //if (over < 8) {
+                //    for (let index = 8; index < over; index++) {
+                //        over ++; 
+                //        $('.reward-status-'+index).html('<button type="button" style="cursor:no-drop" class="btn btn-secondary">Unlock</button>'); 
+                //    }
+                //}         
             }
         });
     });
