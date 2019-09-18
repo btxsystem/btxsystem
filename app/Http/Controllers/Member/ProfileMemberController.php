@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Employeer;
+use App\Models\TransactionMember;
 use DB;
 use Carbon\Carbon;
 
@@ -55,29 +56,86 @@ class ProfileMemberController extends Controller
     }
 
     public function register(Request $request){
-        $price = (int) ceil($request['kurir']/1000) + 280;
-        $sponsor = Auth::user();
-        $data = [
-            'id_member' => invoiceNumbering(),
-            'username' => $request->username,
-            'first_name' => $request->first_name,
-            'last_name' => $request->last_name,
-            'email' => $request->email,
-            'password' => bcrypt('password'),//bcrypt('Mbitrex'.rand(100,1000)),
-            'birthdate' => $request->birthdate,
-            'gender' => $request->gender,
-            'position' => $request->position,
-            'parent_id' => $request->parent,
-            'sponsor_id' => $sponsor->id,
-            'bitrex_cash' => 0,
-            'bitrex_points' => 0,
-            'pv' => 0,
-            'nik' => $request->nik,
-        ];
-        $input['bitrex_points'] = $sponsor->bitrex_points - $price;
-        Employeer::find($sponsor->id)->update($input);
-        Employeer::create($data);
-        return redirect()->route('member.tree');
+        try {
+            DB::beginTransaction();
+            $method = $request->input('payment_method') ?? 'point';
+            if($method == 'point') {
+                // return response()->json([
+                //     'data' => $request->all()
+                // ]);
+                $ebooks = $request->input('ebooks') ?? [];
+                $price = 280;
+                $sponsor = Auth::user();
+                $idMember = invoiceNumbering();
+                $data = [
+                    'id_member' => $idMember,
+                    'username' => $request->username,
+                    'first_name' => $request->first_name,
+                    'last_name' => $request->last_name,
+                    'email' => $request->email,
+                    'password' => bcrypt('password'),//bcrypt('Mbitrex'.rand(100,1000)),
+                    'birthdate' => $request->birthdate,
+                    'gender' => $request->gender,
+                    'position' => $request->position,
+                    'parent_id' => $request->parent,
+                    'sponsor_id' => $sponsor->id,
+                    'bitrex_cash' => 0,
+                    'bitrex_points' => 0,
+                    'pv' => 0,
+                    'nik' => $request->nik,
+                ];
+
+                Employeer::create($data);
+                $employeer = Employeer::where('id_member', $idMember)->first();
+                
+                $totalPriceEbook = 0;
+
+                if(count($ebooks) > 0) {
+                    $totalPriceEbook = DB::table('ebooks')
+                        ->whereIn('id', $ebooks)
+                        ->sum('price');
+                    $price = ((int) $price + (int) ($totalPriceEbook / 1000));
+                }
+
+                if($request->input('shipping_method') == "1") {
+                    $price = (int) $price + (int) + $request->input('cost');
+                }
+
+                foreach($ebooks as $ebook) {
+                    $prefixRef = 'BITREX02';
+
+                    $checkRef = TransactionMember::where('transaction_ref', $prefixRef . (time() + rand(100, 500)))->first();
+              
+                    $afterCheckRef = $prefixRef . (time() + rand(100, 500));
+              
+                    while($checkRef) {
+                      $afterCheckRef = $prefixRef . (time() + rand(100, 500));
+                      if(!$checkRef) {
+                        break;
+                      }
+                    }
+
+                    $trxMember = new TransactionMember();
+                    $trxMember->transaction_ref = $afterCheckRef;
+                    $trxMember->ebook_id = (int) $ebook;
+                    $trxMember->expired_at = Carbon::create(date('Y-m-d H:i:s'))->addYear(1);
+                    $trxMember->member_id = $employeer->id;
+                    $trxMember->status = 1;
+                    $trxMember->save();
+                }
+
+                $input['bitrex_points'] = $sponsor->bitrex_points - $price;
+                Employeer::find($sponsor->id)->update($input);
+                DB::commit();
+                // return response()->json([
+                //     'data' => $price
+                // ]);
+                return redirect()->route('member.tree');
+            }
+        } catch(\Illuminate\Database\QueryException $e) {
+            DB::rollback();
+            return redirect()->route('member.tree');
+        }
     }
 
     public function isSameUsername($user){
