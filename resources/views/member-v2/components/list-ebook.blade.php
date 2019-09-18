@@ -38,14 +38,14 @@
 				<div class="d-flex align-items-center">
 					<!-- <img src="http://demo.viewpreview.online/assets/img/star.png" class="img-fluid mr-3"> -->
 					<span class="text-bold">{{ ucwords($book->title) }} Module</span>
-					@if(!$book->access)
+					@if($access == null)
 					<button class="btn btn-identity-red text-white px-5 ml-3" onclick="selectedSubscription(JSON.stringify({'price': '{{$book->price}}', 'price_markup': '{{$book->price_markup}}', 'id': '{{$book->id}}'}))">BUY</button>
 					@endif
 				</div>
 				<hr>
         <div class="row mb-5">
         @foreach($book->bookEbooks as $ebook)
-					@if(!$book->access)
+				@if($access == null)
           <div class="col-lg-3 mb-3 hover">
 						<div class="shadow rounded p-3">
 							<div style="overflow: hidden;" class="mb-2">
@@ -74,15 +74,22 @@
 					@endif
         @endforeach
         </div>
-				@if($book->access)
+				@if($access != null)
 				<div class="d-flex align-items-center">
 					<!-- <img src="http://demo.viewpreview.online/assets/img/star.png" class="img-fluid mr-3"> -->
 					<span class="text-bold">{{ ucwords($book->title) }} Videos</span>
 				</div>
 				<hr>
 				<div class="row mb-5">
-				<div id="trfx-embed"></div>
-				<div id="trfx-embed-2"></div>
+				@if($book->id == 1)
+				<div class="embed-responsive embed-responsive-16by9">
+					<iframe class="embed-responsive-item" src="{{route('member.video.ebook')}}" allowfullscreen></iframe>
+				</div>
+				@elseif($book->id == 2)
+				<div class="embed-responsive embed-responsive-16by9">
+					<iframe class="embed-responsive-item" src="{{route('member.video.ebook.advanced')}}" allowfullscreen></iframe>
+				</div>
+				@endif;
         <!-- @foreach($book->videoEbooks as $video)
           <div class="col-lg-4 mb-3 hover">
 						<div class="embed-responsive embed-responsive-16by9">
