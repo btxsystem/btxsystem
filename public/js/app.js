@@ -2131,10 +2131,11 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         value: 0,
         title: 'Pickup'
       }],
-      payments: [{
-        value: 'transfer',
-        title: 'Transfer'
-      }, {
+      payments: [// {
+      //   value: 'transfer',
+      //   title: 'Transfer'
+      // },
+      {
         value: 'ipay',
         title: 'Ipay88'
       }],
@@ -2319,6 +2320,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         } else if (_this8.form.payment == 'ipay') {
           var form = document.getElementById('payment');
           alert('Register Successfully');
+          window.location.reload();
           _this8.isLoading = false; // setTimeout(() => {
           //   form.submit()
           //   this.isLoading = false
@@ -23651,7 +23653,7 @@ var render = function() {
               attrs: {
                 autocomplete: "off",
                 type: "text",
-                placeholder: "Referal",
+                placeholder: "Sponsor Username",
                 required: ""
               },
               domProps: { value: _vm.form.referral },
@@ -23889,6 +23891,8 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("br"),
+          _vm._v(" "),
+          _vm._m(0),
           _vm._v(" "),
           _c("div", { staticClass: "input-group col-md-12" }, [
             _c("h5", { staticClass: "card-inside-title" }, [
@@ -24164,11 +24168,13 @@ var render = function() {
                     _vm._v(
                       "Total Price : " +
                         _vm._s(
-                          parseInt(
-                            _vm.form.kurir != null ? _vm.form.kurir.id : 0
-                          ) +
-                            _vm.totalPriceWithEbook +
-                            280000
+                          _vm._f("toIDR")(
+                            parseInt(
+                              _vm.form.kurir != null ? _vm.form.kurir.id : 0
+                            ) +
+                              _vm.totalPriceWithEbook +
+                              280000
+                          )
                         )
                     )
                   ])
@@ -24178,7 +24184,9 @@ var render = function() {
                   _c("h4", [
                     _vm._v(
                       "Total Price Ebook : " +
-                        _vm._s(_vm.totalPriceWithEbook + 280000)
+                        _vm._s(
+                          _vm._f("toIDR")(_vm.totalPriceWithEbook + 280000)
+                        )
                     )
                   ])
                 ])
@@ -24211,7 +24219,30 @@ var render = function() {
     1
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "input-group col-md-12" }, [
+      _c("div", { staticClass: "form-group demo-radio-button" }, [
+        _c("input", {
+          staticClass: "with-gap radio-col-red",
+          attrs: {
+            autocomplete: "off",
+            name: "pack",
+            type: "radio",
+            value: "0",
+            id: "starterpack",
+            checked: ""
+          }
+        }),
+        _vm._v(" "),
+        _c("label", { attrs: { for: "shipping" } }, [_vm._v("Starter Pack")])
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 

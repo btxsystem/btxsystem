@@ -14,6 +14,9 @@ use Carbon\Carbon;
 
 use DB;
 
+use Illuminate\Support\Facades\Mail;
+use App\Mail\RegisterMemberMail;
+
 class RegisterController extends Controller
 {
   public function registerMember(Request $request)
@@ -109,7 +112,7 @@ class RegisterController extends Controller
         ]);
       }
 
-      $prefixRef = $ebooks != null ? 'BITREX003' : 'BITREX004';
+      $prefixRef = $ebooks != null ? 'BITREX03' : 'BITREX04';
 
       $checkRef = DB::table('temporary_transaction_members')->where('transaction_ref', $prefixRef . (time() + rand(100, 500)))->first();
 
@@ -125,7 +128,7 @@ class RegisterController extends Controller
       if(count($ebooks) > 0) {
         foreach ($ebooks as $ebook) {
           $trx = new TemporaryTransactionMember();
-          $trx->ebook_id = $ebook['id'];
+          $trx->ebook_id = $ebook;
           $trx->member_Id = $saved->id;
           $trx->transaction_ref = $afterCheckRef;
           $trx->save();
@@ -138,25 +141,25 @@ class RegisterController extends Controller
         $trx->save();
       }
 
-      $idNewMember = findChild(
-        $checkReferral->id,
-        $checkReferral->id,
-        $saved
-      );
+      // $idNewMember = findChild(
+      //   $checkReferral->id,
+      //   $checkReferral->id,
+      //   $saved
+      // );
 
-      if(count($ebooks) > 0) {
-        $books = [];
-        foreach ($ebooks as $ebook) {
-          $books[] = [
-            'transaction_ref' => $afterCheckRef,
-            'ebook_id' => $ebook['id'],
-            'expired_at' => '2040-09-07 00:00:00',
-            'member_id' => $idNewMember->id,
-            'status' => 1
-          ];
-        }
-        $trxMember = TransactionMember::insert($books);
-      }
+      // if(count($ebooks) > 0) {
+      //   $books = [];
+      //   foreach ($ebooks as $ebook) {
+      //     $books[] = [
+      //       'transaction_ref' => $afterCheckRef,
+      //       'ebook_id' => $ebook,
+      //       'expired_at' => '2040-09-07 00:00:00',
+      //       'member_id' => $idNewMember->id,
+      //       'status' => 1
+      //     ];
+      //   }
+      //   $trxMember = TransactionMember::insert($books);
+      // }
 
       if(!$saved || !$trx) {
         DB::rollback();
@@ -210,7 +213,7 @@ class RegisterController extends Controller
       //   ]
       // ]);
 
-    } catch (\Exception $e) {
+    } catch (\Illuminate\Database\QueryException $e) {
       DB::rollback();
       return response()->json([
         'success' => false,
@@ -225,7 +228,7 @@ class RegisterController extends Controller
 
     $ebookIds = [];
     foreach ($params['ebooks'] as $ebook) {
-      $ebookIds[] = $ebook['id'];
+      $ebookIds[] = $ebook;
     }
 
     $ebookPrice = Ebook::whereIn('id', $ebookIds)
@@ -241,7 +244,7 @@ class RegisterController extends Controller
     $data['merchant_code'] = env('IPAY_MERCHANT_CODE');
     $data['currency'] = "IDR";
     $data['payment_id'] = 1;
-    $data['product_desc'] = "Staterpack + Ebook";
+    $data['product_desc'] = "Starter Pack + Ebook";
     $data['user_name'] = $params['member']['username'];
     $data['user_email'] = $params['member']['email'];
     $data['ref_no'] = $params['trx']['transaction_ref'];
@@ -253,10 +256,10 @@ class RegisterController extends Controller
     $data['response_url'] = 'https://bitrexgo.id/response-pay-member';
     $data['backend_url'] = 'https://bitrexgo.id/backend-response-pay';
 
-    // return view('payment.form')
-    //   ->with([
-    //     'data' => $data
-    // ]);
+    return view('payment.form')
+      ->with([
+        'data' => $data
+    ]);
     return response()->json([
       'success' => true,
       'message' => '',
@@ -289,10 +292,10 @@ class RegisterController extends Controller
     $data['response_url'] = 'https://bitrexgo.id/response-pay-member';
     $data['backend_url'] = 'https://bitrexgo.id/backend-response-pay';
 
-    // return view('payment.form')
-    //   ->with([
-    //     'data' => $data
-    // ]);
+    return view('payment.form')
+      ->with([
+        'data' => $data
+    ]);
     return response()->json([
       'success' => true,
       'message' => '',
@@ -333,6 +336,7 @@ class RegisterController extends Controller
     $remark = $req->get('Remark');
     $transid = $req->get('TransId');
     $authcode = $req->get('AuthCode');
+    $prodDesc = $req->get('ProdDesc');
     $status = $req->get('Status');
     $errdesc = $req->get('ErrDesc');
     $signature = $req->get('Signature');
@@ -348,20 +352,71 @@ class RegisterController extends Controller
 
       $temporaryTrx = TemporaryTransactionMember::where('transaction_ref', $code)
         ->with('member')
-        ->first();
+        ->get();
+
+      // $idNewMember = findChild(
+      //     $temporaryTrx[0]->member->referral,
+      //     $temporaryTrx[0]->member->referral,
+      //     $temporaryTrx[0]->member
+      //   );
+
+      // return response()->json([
+      //   'trx' => $temporaryTrx,
+      //   'status' => $status,
+      //   'member' => $idNewMember,
+      //   'prodDesc' => $prodDesc
+      // ]);
 
       $view = 'payment.failed';
 
       if($status == "1") {
-        findChild(
-          $temporaryTrx->member->referral,
-          $temporaryTrx->member->referral,
-          $temporaryTrx->member
+        $idNewMember = findChild(
+          $temporaryTrx[0]->member->referral,
+          $temporaryTrx[0]->member->referral,
+          $temporaryTrx[0]->member
         );
 
-        if($orderType == 'BITREX003') { //with ebbook
-          //
-        } else if($orderType == 'BITREX004') { //witout ebbook
+        if($orderType == 'BITREX03') { //with ebbook
+          $books = [];
+          foreach ($temporaryTrx as $trx) {
+            $books[] = [
+              'transaction_ref' => $code,
+              'ebook_id' => $trx->ebook_id,
+              'expired_at' => Carbon::create(date('Y-m-d H:i:s'))->addYear(1),
+              'member_id' => $idNewMember->id,
+              'status' => 1
+            ];
+          }
+          $trxMember = TransactionMember::insert($books);
+
+          $password = strtolower(str_random(8));
+
+          $dataEmail = (object) [
+            'member' => $idNewMember,
+            'password' => $password
+          ];
+
+          Employeer::where('id', $idNewMember->id)->update([
+            'password' => password_hash($password, PASSWORD_BCRYPT)
+          ]);
+
+          Mail::to($idNewMember->email)
+            ->send(new RegisterMemberMail($dataEmail, null));
+            
+        } else if($orderType == 'BITREX04') { //witout ebbook
+          $password = strtolower(str_random(8));
+
+          $dataEmail = (object) [
+            'member' => $idNewMember,
+            'password' => $password
+          ];
+
+          Employeer::where('id', $idNewMember->id)->update([
+            'password' => password_hash($password, PASSWORD_BCRYPT)
+          ]);
+
+          Mail::to($idNewMember->email)
+            ->send(new RegisterMemberMail($dataEmail, null));
           // $trxMember = TransactionMember::where('transaction_ref', $code);
           // $trxMember->update([
           //   'expired_at' => Carbon::create($trxMember->first()->expired_at)->addYear(1)
@@ -377,7 +432,10 @@ class RegisterController extends Controller
       }
 
       DB::commit();
-      return view($view);
+      return view($view)->with([
+        'prodDesc' => $prodDesc,
+        'code' => $code
+      ]);
 
     } catch(\Illuminate\Database\QueryException $e) {
       DB::rollback();
