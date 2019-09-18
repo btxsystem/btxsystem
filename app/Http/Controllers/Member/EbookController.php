@@ -62,19 +62,27 @@ class EbookController extends Controller
     public function getExpiredEbook(){
         $ebook['basic'] = DB::table('transaction_member')->where('member_id',Auth::id())->where('status',1)
 <<<<<<< HEAD
+<<<<<<< HEAD
                                                          ->where('id', 1)->orWhere('id',3)
 =======
                                                          ->whereIn('id', [1 , 3])
 >>>>>>> c71536e7a61e699989570cb6cf9e4094a28d32cd
+=======
+                                                         ->whereIn('id', [1 , 3])
+>>>>>>> fc1764bcf09001226ccbbe7652e1f069e744ce46
                                                          ->select('expired_at')
                                                          ->latest('id')
                                                          ->first();
         $ebook['advance'] = DB::table('transaction_member')->where('member_id',Auth::id())->where('status',1)
 <<<<<<< HEAD
+<<<<<<< HEAD
                                                          ->where('id', 2)->orWhere('id',4)
 =======
                                                          ->whereIn('id', [2 , 4])
 >>>>>>> c71536e7a61e699989570cb6cf9e4094a28d32cd
+=======
+                                                         ->whereIn('id', [2 , 4])
+>>>>>>> fc1764bcf09001226ccbbe7652e1f069e744ce46
                                                          ->select('expired_at')
                                                          ->latest('id')
                                                          ->first();
