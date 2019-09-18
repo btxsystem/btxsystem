@@ -127,7 +127,7 @@
 			const {data} = res
 			let render = data.map((v, i) => {
 				return `
-					<input id="ebooks" type="checkbox" value="${v.id}" id="${v.title}" class="with-gap radio-col-red" data-price="${v.price}" checked=name="ebooks[]"/>
+					<input id="ebooks" type="checkbox" value="${v.id}" id="${v.title}" class="with-gap radio-col-red" data-price="${v.price}" ${v.title == 'basic' ? 'checked' : ''} name="ebooks[]"/>
         	<label for="shipping">${v.title}</label>
 				`
 			})
