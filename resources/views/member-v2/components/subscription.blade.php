@@ -201,8 +201,27 @@ div#flag {
 					<div class="row">
 						@if(Auth::guard('nonmember')->user() || Auth::guard('user')->user())
 						<div class="col-8 mx-auto">
-							@if($ebook->access)
-							<div id="clockdiv{{$ebook->id}}" class="clockdiv mt-2">
+							@if($expired_basic != null && $ebook->id == 1)
+							<div id="clockdiv_basic" class="clockdiv mt-2">
+								<div>
+									<span class="days"></span>
+									<div class="smalltext">Days</div>
+								</div>
+								<div>
+									<span class="hours"></span>
+									<div class="smalltext">Hours</div>
+								</div>
+								<div>
+									<span class="minutes"></span>
+									<div class="smalltext">Minutes</div>
+								</div>
+								<div>
+									<span class="seconds"></span>
+									<div class="smalltext">Seconds</div>
+								</div>
+							</div>
+							@elseif($expired_advanced != null && $ebook->id == 2)
+							<div id="clockdiv_advanced" class="clockdiv mt-2">
 								<div>
 									<span class="days"></span>
 									<div class="smalltext">Days</div>
@@ -538,8 +557,11 @@ function initializeClock(id, endtime) {
 }
 
 <?php foreach($ebooks as $ebook){?>
-	<?php if($ebook->access){?>
-		initializeClock('clockdiv{{$ebook->id}}', '{{$ebook->expired_at}}');
+	<?php if($expired_basic != null && $ebook->id == 1) {?>
+		initializeClock('clockdiv_basic', '{{$expired_basic->expired_at}}');
+	<?php } ?>
+	<?php if($expired_advanced != null && $ebook->id == 2) {?>
+		initializeClock('clockdiv_advanced', '{{$expired_advanced->expired_at}}');
 	<?php } ?>
 <?php } ?>
 </script>

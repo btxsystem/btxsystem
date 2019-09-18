@@ -65,6 +65,15 @@ class ProfileMemberController extends Controller
                 //     'data' => $request->all()
                 // ]);
                 $ebooks = $request->input('ebooks') ?? [];
+                $term_one = $request->input('term_one') ?? '';
+                $term_two = $request->input('term_two') ?? '';
+
+                if($term_one == '' || $term_two == '') {
+                    DB::rollback();
+                    Alert::error('Kode etik Bitrexgo belum di Centang', 'Error')->persistent("OK");
+                    return redirect()->route('member.tree');
+                }
+
                 $price = 280;
                 $sponsor = Auth::user();
                 $idMember = invoiceNumbering();

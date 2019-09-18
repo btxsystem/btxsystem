@@ -139,23 +139,23 @@
                 <table class="table table-borderless">
                   <tr>
                     <td> <h4>Starter Pack</h4> </td>
-                    <td> <h4><span id="cost-starter">0</span></h4> </td>
-                    <td> <h4>Point</h4> </td>
+                    <td class="text-right"> <h4><span id="cost-starter">0</span></h4> </td>
+                    <td> <h4>Points</h4> </td>
                   </tr>
                   <tr>
                     <td> <h4>Total Ebook</h4> </td>
-                    <td> <h4><span id="cost-ebook">0</span></h4> </td>
-                    <td> <h4>Point</h4> </td>
+                    <td class="text-right"> <h4><span id="cost-ebook">0</span></h4> </td>
+                    <td> <h4>Points</h4> </td>
                   </tr>
                   <tr>
                     <td> <h4>Total Shipping</h4> </td>
-                    <td> <h4><span id="cost-postal">0</span></h4> </td>
-                    <td> <h4>Point</h4> </td>
+                    <td class="text-right"> <h4><span id="cost-postal">0</span></h4> </td>
+                    <td> <h4>Points</h4> </td>
                   </tr>
                   <tr>
                     <td> <h4>Grand Total</h4> </td>
-                    <td> <h4><span id="grand-total">0</span></h4> </td>
-                    <td> <h4>Point</h4> </td>
+                    <td class="text-right"> <h4><span id="grand-total">0</span></h4> </td>
+                    <td> <h4>Points</h4> </td>
                   </tr>
                 </table>
               </div>
@@ -581,7 +581,7 @@
 		}
 
 		$('#cost-postal').html(toPrice(postalFee / 1000))
-		$('#grand-total').html(toPrice((priceEbook + postalFee + 280000) / 1000) + ' Points')
+		$('#grand-total').html(toPrice((priceEbook + postalFee + 280000) / 1000))
 
     grandTotal = (priceEbook + postalFee + 280000) / 1000;
 

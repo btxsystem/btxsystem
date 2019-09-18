@@ -104,7 +104,7 @@ class ExploreController extends Controller
       $q->with([
         'videos'
       ]);
-    }  
+    }
     ])->where('title', $type)->get();
 
     if($user = Auth::guard('nonmember')->user()) {
@@ -123,7 +123,7 @@ class ExploreController extends Controller
     } else {
       $referral = $request->input('username') ?? \Session::get('referral');
 
-    
+
       if(Employeer::where('username', $username)->count() > 0 || \Session::has('referral')) {
         if(\Session::has('referral')) {
           $referral = \Session::get('referral');
@@ -157,12 +157,33 @@ class ExploreController extends Controller
   public function subscription(Request $request, $username = null)
   {
     $excludesEbooks = [3, 4];
-    
+    $userId = 0;
+
+    $expiredBasic = null;
+    $expiredAdvanced = null;
+
     if($user = Auth::guard('nonmember')->user()) {
+      $userId = $user->id;
       $transaction = TransactionNonMember::select('ebook_id')->where([
         'non_member_id' => $user->id,
         'status' => 1
       ])->get();
+
+      $expiredBasic = TransactionNonMember::where('member_id', $user->id)
+        ->where('status', 1)
+        ->where('ebook_id', 1)
+        ->orWhere('ebook_id', 3)
+        ->select('expired_at')
+        ->latest('id')
+        ->first();
+
+      $expiredAdvanced = TransactionNonMember::where('member_id', $user->id)
+        ->where('status', 1)
+        ->where('ebook_id', 2)
+        ->orWhere('ebook_id', 4)
+        ->select('expired_at')
+        ->latest('id')
+        ->first();
 
       foreach($transaction as $trx) {
         if(count($transaction) == 1) {
@@ -176,10 +197,27 @@ class ExploreController extends Controller
         }
       }
     } else if($user = Auth::guard('user')->user()) {
+      $userId = $user->id;
       $transaction = TransactionMember::select('ebook_id')->where([
         'member_id' => $user->id,
         'status' => 1
       ])->get();
+
+      $expiredBasic = TransactionMember::where('member_id', $user->id)
+        ->where('status', 1)
+        ->where('ebook_id', 1)
+        ->orWhere('ebook_id', 3)
+        ->select('expired_at')
+        ->latest('id')
+        ->first();
+
+      $expiredAdvanced = TransactionMember::where('member_id', $user->id)
+        ->where('status', 1)
+        ->where('ebook_id', 2)
+        ->orWhere('ebook_id', 4)
+        ->select('expired_at')
+        ->latest('id')
+        ->first();
 
       foreach($transaction as $trx) {
         if(count($transaction) == 1) {
@@ -202,6 +240,7 @@ class ExploreController extends Controller
     ->select('id', 'price', 'pv', 'bv', 'price_markup', 'description', 'title')
     ->orderBy('position', 'ASC')
     ->get();
+
 
     if($user = Auth::guard('nonmember')->user()) {
       $check  = TransactionNonMember::where([
@@ -230,9 +269,11 @@ class ExploreController extends Controller
     }
 
     $referral = '';
-  
+
     // return response()->json([
-    //   'data' => $ebooks
+    //   'data' => $ebooks,
+    //   'expired_basic' => $expiredBasic,
+    //   'expired_advanced' => $expiredAdvanced
     // ], 200);
     // $transactions = DB::table('non_members')
     //   ->join('transaction_non_members', 'non_members.id', '=', 'transaction_non_members.non_member_id')
@@ -240,9 +281,12 @@ class ExploreController extends Controller
     //   ->where('transaction_non_members.non_member_id', Auth::guard('nonmember')->user()->id)
     //   ->get();
 
+
     return view($this->pathView . '.components.subscription')->with([
       'username' => $referral,
-      'ebooks' => $ebooks
+      'ebooks' => $ebooks,
+      'expired_basic' => $expiredBasic,
+      'expired_advanced' => $expiredAdvanced
     ]);
   }
 
@@ -325,7 +369,7 @@ class ExploreController extends Controller
   }
 
   /**
-   * 
+   *
    */
   public function checkUsername(Request $request)
   {
@@ -351,7 +395,7 @@ class ExploreController extends Controller
   }
 
   /**
-   * 
+   *
    */
   public function checkReferral(Request $request)
   {

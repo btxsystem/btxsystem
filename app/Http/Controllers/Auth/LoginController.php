@@ -27,6 +27,8 @@ class LoginController extends Controller
         return view('frontend.expired-member');
       }
       return redirect()->route('member.dashboard');
+    } else if (Auth::guard('nonmember')->attempt(['username' => $request->username, 'password' => $request->password])){
+      return redirect()->route('member.home');
     }
     return view('frontend.auth.login');
   }
