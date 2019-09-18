@@ -113,7 +113,7 @@ class BookController extends Controller
         $data = Book::findOrFail($id);
         $data->title = $request->title;
         $data->slug = \Str::slug($request->title) .'-'. date('YmdHis');
-        $data->article = $request->article;
+        $data->article = $request->article ? $request->article : '';
         $data->save();
 
         Alert::success('Sukses Update Data Book', 'Sukses');
