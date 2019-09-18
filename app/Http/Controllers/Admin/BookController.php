@@ -58,14 +58,13 @@ class BookController extends Controller
     {
         $request->validate([
             'title' => 'required',
-            'article' => 'required',
         ]);
 
         $ebook = Ebook::findOrFail($request->ebook_id);
         $book = new Book;
         $book->title = $request->title;
         $book->slug = \Str::slug($request->title) .'-'. date('YmdHis');
-        $book->article = $request->article;
+        $book->article = $request->article ? $request->article : '';
         $book->save();
 
         $ebook->books()->attach($book);
