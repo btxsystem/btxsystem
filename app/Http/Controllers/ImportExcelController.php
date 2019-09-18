@@ -98,7 +98,7 @@ class ImportExcelController extends Controller
         }
         $history_data = Excel::toArray(new RewardImport, request()->file('file'))[0];
         foreach ($history_data as $key => $data2) {
-            $user = Employeer::where('id_member',$data2['member_id'])->select('id')->first();
+            $user = Employeer::where('id_member',$data2['mamber_id'])->select('id')->first();
             $dt2['id_member'] = $user['id'];
             $dt2['nominal'] = 5000000;
             $dt2['description'] = 'Cruise bonus *before tax';
