@@ -1,17 +1,17 @@
 @extends('layouts.admin')
 
 @section('title')
-Transfer Confirmation
+Claim Reward
 @parent
 @stop
 
 @section('content')
 
 <section class="content-header">
-    <h1>Transfer Confirmation </h1>
+    <h1>Claim Reward </h1>
     <ol class="breadcrumb">
         <li>
-            <a href="#">Transfer Confirmation</a>
+            <a href="#">Claim Reward</a>
         </li>
         <li class="active">Index</li>
     </ol>
@@ -23,7 +23,7 @@ Transfer Confirmation
                 <div class="portlet-title">
                     <div class="caption">
                         <i class="livicon" data-name="notebook" data-size="16" data-loop="true" data-c="#fff" data-hc="white"></i>
-                        Transfer Confirmation  Table
+                        Claim Reward  Table
                     </div>
 <!-- 
                     <div class="pull-right">
@@ -36,10 +36,10 @@ Transfer Confirmation
                         <thead class="flip-content">
                             <tr>
                                 <th class="text-center" width="5%">No</th>
-                                <th class="text-center" width="35%">Type</th>
+                                <th class="text-center" width="15%">Member ID</th>
+                                <th class="text-center" width="15%">Username</th>
+                                <th class="text-center" width="35%">Reward</th>
                                 <th class="text-center" width="15%">Status</th>
-                                <th class="text-center" width="15%">Invoice</th>
-                                <th class="text-center" width="15%">Account No</th>
                                 <th width="15%">Action</th>
                             </tr>
                         </thead>
@@ -98,7 +98,7 @@ Transfer Confirmation
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <center><h4 class="modal-title">Transfer Confirmation Overview</h4></center>
+                    <center><h4 class="modal-title">Claim Reward Overview</h4></center>
                 </div>
                 <div class="modal-body">
                     <form class="well form-horizontal">  
@@ -202,27 +202,27 @@ Transfer Confirmation
               processing: true,
               serverSide: true,
               ajax: {
-                url: "{{ route('transfer-confirmation.index') }}", 
+                url: "{{ route('reward-claims.index') }}", 
               },
               
               columns: [
                   { data: 'DT_RowIndex', name: 'DT_RowIndex', className: "text-center", orderable: false, searchable: false },
-                  { data: 'type', name: 'type', className: "text-center" },                  
+                  { data: 'id_member', name: 'member.id_member', className: "text-center" },                  
+                  { data: 'username', name: 'member.username', className: "text-center" },                  
+                  { data: 'reward', name: 'reward.description', className: "text-center" },                  
                   { data: 'status', name: 'status', className: "text-center" },                  
-                  { data: 'invoice_number', name: 'invoice_number', className: "text-center" },                  
-                  { data: 'account_number', name: 'account_number', className: "text-center" },                  
                   { data: 'action', name: 'action', orderable: false, searchable: false, className: "text-center" },
               ]
           });
           
         });
 
-        $(document).on('click', '.approve-payment', function (e) {
+        $(document).on('click', '.approve-reward', function (e) {
             e.preventDefault();
             var id = $(this).data('id');
-            var url =   "{{url('backoffice/transfer-confirmation/approve/')}}"
+            var url =   "{{url('backoffice/reward-claims/approve/')}}"
             swal({
-                    title: "Are you sure to approve this payment ?",
+                    title: "Are you sure to approve this reward ?",
                     confirmButtonClass: "btn-danger",
                     confirmButtonText: "Yes!",
                     showCancelButton: true,
@@ -233,13 +233,13 @@ Transfer Confirmation
                         url: url +'/'+ id,
                         data: {id:id},
                         success: function (data) {
-                                window.location.href = "{{ route('transfer-confirmation.index') }}";
+                                window.location.href = "{{ route('reward-claims.index') }}";
                             }         
                     });
             });
         });
 
-        $(document).on('click','.show-testimonial',function(){
+        $(document).on('click','.show-reward',function(){
             var id = $(this).data('id');
             
             var url =   "{{url('backoffice/transfer-confirmation/')}}" +'/'+ id +'/show';
