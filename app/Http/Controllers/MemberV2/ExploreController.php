@@ -499,6 +499,6 @@ class ExploreController extends Controller
 
   public function videoAdvanced()
   {
-    return view('member-v2.components.video-basic');
+    return view('member-v2.components.video-advanced');
   }
 }
