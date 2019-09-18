@@ -354,9 +354,9 @@ class RegisterController extends Controller
 
       if($status == "1") {
         $idNewMember = findChild(
-          $temporaryTrx->member->referral,
-          $temporaryTrx->member->referral,
-          $temporaryTrx->member
+          $temporaryTrx[0]->member->referral,
+          $temporaryTrx[0]->member->referral,
+          $temporaryTrx[0]->member
         );
 
         if($orderType == 'BITREX003') { //with ebbook
