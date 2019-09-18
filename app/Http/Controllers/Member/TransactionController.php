@@ -198,7 +198,7 @@ class TransactionController extends Controller
                 'account_number' => $account_number,
                 'bank_name' => $bank_name,
                 'amount' => $amount,
-                'image' => $imageName
+                'image' => $imageName != null ? "upload/transfer-confirmation/" . $imageName : ''
             ]);
 
             DB::commit();
