@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class MakeTrigger extends Migration
+class ForGenerate extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,19 @@ class MakeTrigger extends Migration
      */
     public function up()
     {
-     /*   DB::unprepared('
+        DB::unprepared('DROP TRIGGER IF EXISTS `tr_bonus_sponsor_from_member`');
+        DB::unprepared('DROP TRIGGER `tr_bonus_pairing`');
+        DB::unprepared('DROP TRIGGER `tr_add_pv_reward`');
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        DB::unprepared('
         CREATE TRIGGER tr_bonus_sponsor_from_member AFTER INSERT ON `transaction_member` 
             FOR EACH ROW BEGIN
                 DECLARE bonus_bv decimal(15, 0);
@@ -63,16 +75,5 @@ class MakeTrigger extends Migration
                 call add_pv_reward(NEW.id_member, NEW.pv_today);
             END
         ');
-        */
-    }
-
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        //
     }
 }

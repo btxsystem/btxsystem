@@ -54,20 +54,29 @@ class Employeer extends Authenticatable
         'expired_at'
     ];
 
-    public function getName(){
+    public function getName()
+    {
         return $this->first_name.' '.$this->last_name;
     }
 
-    public function children(){
-        return $this->hasMany( 'App\Employeer', 'parent_id', 'id' );
+    public function children()
+    {
+        return $this->hasMany( 'App\Employeer', 'parent_id', 'id');
     }
       
-    public function parent(){
-        return $this->hasOne( 'App\Employeer', 'id', 'parent_id' );
+    public function parent()
+    {
+        return $this->hasOne( 'App\Employeer', 'id', 'parent_id');
     }
 
-    public function sponsor(){
-        return $this->hasOne( 'App\Employeer', 'id', 'sponsor_id' );
+    public function sponsor()
+    {
+        return $this->hasOne( 'App\Employeer', 'id', 'sponsor_id');
+    }
+    
+    public function address()
+    {
+        return $this->hasOne( 'App\Models\Address', 'user_id');
     }
 
     public function ebooks()
