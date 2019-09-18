@@ -162,6 +162,16 @@
 					    <input type="number" class="form-control" id="phoneNumber" placeholder="Phone number" required>
 					  </div>
 						@endif
+						<div class="form-group">
+							<div class="form-check form-check-inline">
+								<input class="form-check-input" type="radio" name="payment_method" id="payment_method" value="transfer" checked>
+								<label class="form-check-label" for="inlineRadio1">Transfer</label>
+							</div>
+							<div class="form-check form-check-inline">
+								<input class="form-check-input" type="radio" name="payment_method" id="payment_method" value="ipay">
+								<label class="form-check-label" for="inlineRadio1">VA / OVO</label>
+							</div>
+					  </div>
 					  <h4>Total yang dibayar : IDR </span><b><span id="total_price"></h4></b>
 		      </div>
 		      <div class="modal-footer justify-content-center">
@@ -175,6 +185,7 @@
 	<form action="{{route('payment')}}" method="post" id="submitPayment">
 		{{csrf_field()}}
 		<input type="hidden" name="transactionRef" id="transactionRef">
+		<input type="hidden" name="payment_method" id="payment_method_selected">
 		<input type="hidden" name="ebook" id="transactionEbook">
 	</form>
 
@@ -350,6 +361,8 @@ function submit() {
 				$('#register').prop('disabled', false)
 				return false
 			}
+
+			$('#payment_method_selected').val($("input[name='payment_method']:checked").val());
 
 			$('#transactionRef').val(result.data.ref_no)
 			$('#transactionEbook').val(result.data.ebook_id)

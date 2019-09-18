@@ -49,6 +49,7 @@ class PaymentController extends Controller
     try {
       DB::beginTransaction();
       $repeat = $request->input('repeat');
+      $payment_method = $request->input('payment_method') ?? 'transfer';
       $transactionRef = $request->input('transactionRef') ?? '';
       $ebook = Ebook::where('id', $request->input('ebook'))->first();
       $orderAmount = 0;
@@ -106,7 +107,7 @@ class PaymentController extends Controller
       } else if($user = Auth::guard('user')->user()) {
         $email = $user->email;
         $username = $user->username;
-        
+
         $builderPayment = (new PaymentHistoryBuilder())
           ->setEbookId($ebookId)
           ->setMemberId($user->id);
@@ -186,10 +187,19 @@ class PaymentController extends Controller
 
       DB::commit();
 
-      return view('payment.form')
-        ->with([
-          'data' => $data
-      ]);
+      if($payment_method == 'transfer') {
+        return view('payment.transfer')->with([
+            'transactionRef' => $payment->ref_no,
+            'prodDesc' => "Ebook Bitrexgo {$productDesc}",
+            'code' => $payment->ref_no,
+            'total' => number_format($orderAmount, 2)
+        ]);
+      } else if($payment_method == 'ipay') {
+        return view('payment.form')
+          ->with([
+            'data' => $data
+        ]);
+      }
 
     } catch (\Illuminate\Database\QueryException $e) {
       DB::rollback();
@@ -286,13 +296,13 @@ class PaymentController extends Controller
             $isRegister = false;
           }
         }
-        
+
         $isExpired = $checkIsRegister->expired_at < now() ? true : false;
 
         $transaction = TransactionNonMember::where('transaction_ref', $code)
         ->update([
-          'status' => $status == "0" 
-            ? $isExpired == false ? 1 : 6 
+          'status' => $status == "0"
+            ? $isExpired == false ? 1 : 6
             : $isExpired == false ? 1 : $status,
         ]);
 
@@ -342,7 +352,7 @@ class PaymentController extends Controller
           } else {
             $isRegister = false;
           }
-        }  
+        }
 
         if($checkIsRegister) {
           //if new register
@@ -357,8 +367,8 @@ class PaymentController extends Controller
 
         $transaction = TransactionMember::where('transaction_ref', $code)
         ->update([
-          'status' => $status == "0" 
-            ? $isExpired == false ? 1 : 6 
+          'status' => $status == "0"
+            ? $isExpired == false ? 1 : 6
             : $isExpired == false ? 1 : $status,
         ]);
 
@@ -368,13 +378,13 @@ class PaymentController extends Controller
             'member'
           ])
           ->first();
-        
+
         if($isRegister) {
           $isRenewal = false;
         } else {
           $isRenewal = true;
         }
-        
+
         Mail::to($checkIsRegister->member->email)->send(new PurchaseEbookMemberMail($checkIsRegister, null));
       } else {
         $isRenewal = true;
@@ -420,7 +430,7 @@ class PaymentController extends Controller
             ]);
           } else {
             $getEbookIdByHistory = PaymentHistoryMember::where('ref_no', $code)->first();
-            
+
             TransactionMember::insert([
               'member_id' => $trxMember->latest('id')->first()->member_id,
               'ebook_id' => $getEbookIdByHistory->ebook_id,

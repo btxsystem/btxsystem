@@ -34,6 +34,7 @@
                   {{csrf_field()}}
                   <div class="form-group">
                     <select class="form-control" name="type" required>
+                      <option value="ebook">Ebook</option>
                       <option value="topup_bitrex_point">Topup Bitrex Point</option>
                     </select>
                   </div>
