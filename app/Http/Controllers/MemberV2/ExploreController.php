@@ -235,7 +235,7 @@ class ExploreController extends Controller
     }
 
     $ebooks = Ebook::whereNotIn('id', [3, 4])
-    ->select('id', 'price', 'pv', 'bv', 'price_markup', 'description', 'title')
+    ->select('id', 'price', 'pv', 'bv', 'price_markup', 'description', 'title', 'src')
     ->orderBy('position', 'ASC')
     ->get();
 
