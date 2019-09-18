@@ -127,10 +127,15 @@ class TransferConfirmationController extends Controller
 
                   //if is new register
                   if($isRegister) {
+                    $newPassword = strtolower(str_random(8));
                     //generate random password
                     $additionalParameter = (object) [
-                      'password' => 'secret'
+                      'password' => $newPassword
                     ];
+          
+                    DB::table('non_members')->where('id', $checkIsRegister->nonMember->id)->update([
+                      'password' => password_hash($newPassword, PASSWORD_BCRYPT)
+                    ]);
 
                     $isRenewal = false;
 
