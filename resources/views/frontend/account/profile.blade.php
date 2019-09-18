@@ -6,7 +6,7 @@
 
 @section('content')
 <!-- Top Bar -->
-<div class="modal fade" id="edit-profile" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<!-- <div class="modal fade" id="edit-profile" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
         <div class="modal-header">
@@ -34,8 +34,39 @@
         </div>
         </div>
     </div>
+</div> -->
+<!-- Update Profile-->
+<div class="modal fade" id="edit-profile" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="topup">Update Profile</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <form action="/action_page.php">
+            <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="form-line">
+                    <input class="form-control" id="nominal" type="number" min="5">
+                    <label class="form-label">Nominal</label>
+                </div>
+            </div>
+            <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="form-line">
+                    <input class="form-control" id="points" type="text" readonly>
+                </div>
+            </div>
+        </form>
+        <div class="modal-footer">
+            <a href="#" class="btn btn-secondary" data-dismiss="modal">Close</a>
+            <a href="#" class="btn btn-primary">Topup</a>
+        </div>
+        </div>
+    </div>
 </div>
-    
+
+<br/><br/><br/>
 <section class="content profile-page">
     <div class="container-fluid">        
         <div class="row clearfix">
@@ -48,7 +79,23 @@
                         </div>
                     </div>
                     <div class="body">
+                        <p class="text-default">ID Member : {{$profile['id_member']}}</p>
+                        <hr>
+                        <p class="text-default">Username : {{$profile['username']}}</p>
+                        <hr>
+                        <p class="text-default">Name : {{$profile['name']}}</p>
+                        <hr>
+                        <p class="text-default">Email : {{$profile['email']}}</p>
+                        <hr>
                         <p class="text-default">Birth Date : {{$profile['birthdate']}}</p>
+                        <hr>
+                        <p class="text-default">Mobile Number : {{$profile['phone_number']}}</p>
+                        <hr>
+                        <p class="text-default">NPWP : {{$profile['npwp_number']}}</p>
+                        <hr>
+                        <p class="text-default">Rek Number : {{$profile['no_rec']}}</p>
+                        <hr>
+                        <p class="text-default">Marital Status : {{$profile['is_married']}}</p>
                         <hr>
                         <p class="text-default">Gender : {{$profile['gender']}}</p>
                         <hr>
