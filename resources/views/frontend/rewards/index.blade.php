@@ -14,15 +14,55 @@
             </div>
         </div>
     </div>
-    <div class="container-fluid">
-        <div class="row clearfix">
-            <div class="col-lg-12 col-md-12 col-sm-12" id="bill">
-                
+    
+    <div class="row clearfix">
+        <div class="col-lg-12 col-md-12">
+            <div class="card product-report">
+                <div class="body table-responsive">
+                    <table class="table table-condensed">
+                        <thead>
+                            <tr class="l-turquoise">
+                                <th>RANK</th>
+                                <th>LEFT</th>
+                                <th>MIDLE</th>
+                                <th>RIGHT</th>
+                                <th>REWARDS</th>
+                                <th>STATUS</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($ranks as $key => $rank)
+                                @if ($key%2==0)
+                                    <tr class="xl-blue">
+                                        <td><img src="{{url('img/1'.$key.'.png')}}" style="width: 60px; border-radius: 50%;"></td>
+                                        <td>{{$rank->pv_needed_left}}</td>
+                                        <td>{{$rank->pv_needed_midle}}</td>
+                                        <td>{{$rank->pv_needed_right}}</td>
+                                        <td>{{$rewards[$key]->description}}</td>
+                                        <td class="reward-status-{{$key}}">
+                                            <button class="btn btn-primary" style="cursor:pointer; display:none" type="submit">Clime</button>
+                                            <button type="button" style="cursor:no-drop" class="btn btn-secondary">Unlock</button>
+                                        </td>
+                                    </tr>
+                                @else
+                                    <tr class="xl-turquoise">
+                                        <td><img src="{{url('img/1'.$key.'.png')}}" style="width: 60px; border-radius: 50%;"></td>
+                                        <td>{{$rank->pv_needed_left}}</td>
+                                        <td>{{$rank->pv_needed_midle}}</td>
+                                        <td>{{$rank->pv_needed_right}}</td>
+                                        <td>{{$rewards[$key]->description}}</td>
+                                        <td class="reward-status-{{$key}}">
+                                            <button class="btn btn-primary" style="cursor:pointer; display:none" type="submit">Clime</button>
+                                            <button type="button" style="cursor:no-drop" class="btn btn-secondary">Unlock</button>
+                                        </td>
+                                    </tr>
+                                @endif
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="ajax-load text-center" style="display:none">
-        <p>Loading...</p>
     </div>
 </section>
 @stop
@@ -31,59 +71,21 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $.ajax({
-            url: '{{route("member.select.reward")}}',
+            url: '{{route("member.select.reward-clime")}}',
             data: data,
             success:function(data){
-                if (data.data[0]==undefined) {
-                    $('#bill').html('<div class="body" style="color:red;"><center><strong>History is currently empty</strong></center></div>');    
-                }else{
-                    $.each(data.data, function(i, item) {
-                        date = moment(item.created_at).format('MMMM Do Y');
-                        type = 'Income';
-                        color = 'green';
-                        nominal = addCommas(item.nominal);
-                        if (!item.status) {
-                            $('#bill').append('<div class="card ke-'+i+'" style="border: 1px solid #ccc; box-shadow: 1px 1px 3px 0px  rgba(0,0,0,0.3);"><div class="body"><div class="row"><strong class="col-sm-10" id="date">Date Time: '+date+'</strong><strong class="col-sm-2"><a href="/member/reward/'+item.id+'/update" class="btn btn-primary btn-sm"><small>Claim Reward</small></a></strong></div><hr><div class="row"><div class="col" id="type">Type: <b style="color:'+color+'">'+type+'</b></div><div class="col" id="nominal">Nominal: '+nominal+'</div><hr></div><div class="row"><div class="col" id="description">Description: '+item.description+'</div></div></div>'); 
-                        }else{
-                            $('#bill').append('<div class="card ke-'+i+'" style="border: 1px solid #ccc; box-shadow: 1px 1px 3px 0px  rgba(0,0,0,0.3);"><div class="body"><div class="row"><strong class="col-sm-10" id="date">Date Time: '+date+'</strong><strong class="col-sm-2"><a href="#" class="btn btn-light btn-sm"><small>Claimed</small></a></strong></div><hr><div class="row"><div class="col" id="type">Type: <b style="color:'+color+'">'+type+'</b></div><div class="col" id="nominal">Nominal: '+nominal+'</div><hr></div><div class="row"><div class="col" id="description">Description: '+item.description+'</div></div></div>');        
+                if (data.length <= 8) {
+                    $.each(data, function(i, item){
+                        if (item.status == 0) {
+                            
                         }
+                        console.log(item.status);
                     });
-                }
+                }else{
+                    console.log('seasson 2');
+                }         
             }
         });
     });
-
-    var page = 1;
-    $(window).scroll(function() {
-        if($(window).scrollTop() + $(window).height() >= $(document).height()) {
-            page++;
-            loadMoreData(page);
-        }
-    });
-    function loadMoreData(page){
-        $.ajax({
-            url: '/member/select/reward?page=' + page,
-            beforeSend: function(){
-                $('.ajax-load').show();
-            }
-        }).done(function(data){
-            if(data.data[0]==undefined){
-                $('.ajax-load').html("No more records found");
-                return;
-            }
-            $('.ajax-load').hide();
-            $.each(data.data, function(i, item) {
-                date = moment(item.created_at).format('MMMM Do Y');
-                type = 'Income';
-                color = 'green';
-                nominal = addCommas(item.nominal);
-                $('#bill').append('<div class="card ke-'+i+'" style="border: 1px solid #ccc; box-shadow: 1px 1px 3px 0px  rgba(0,0,0,0.3);"><div class="body"><div class="row"><strong class="col-sm-4" id="date">Date Time: '+date+'</strong></div><hr><div class="row"><div class="col" id="type">Type: <b style="color:'+color+'">'+type+'</b></div><div class="col" id="nominal">Nominal: '+nominal+'</div><hr></div><div class="row"><div class="col" id="description">Description: '+item.description+'</div><div class="col" id="points">Point: '+item.points+'</div></div></div></div>'); 
-            });
-        })
-        .fail(function(jqXHR, ajaxOptions, thrownError){
-            $('.ajax-load').html("Server not responding");
-            return;
-        });
-    }
 </script>
 @stop

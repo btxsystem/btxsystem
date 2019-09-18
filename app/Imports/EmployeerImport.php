@@ -47,7 +47,7 @@ class EmployeerImport implements ToModel, WithHeadingRow, WithChunkReading
             'pv'             => 0,
             'is_update'      => 1,
             'nik'            => $row['id_card_number'] ? $row['id_card_number'] : '-',
-            'expired_at'     => $row['expired'] ? \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['expired']) : now() ,
+            'expired_at'     => '2020-09-18 00:00:00' ,
         ]);
     }
 

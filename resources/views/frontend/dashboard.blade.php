@@ -154,7 +154,7 @@
                         <div class="col-lg-4 col-md-4 col-sm-5">
                             <div class="icon l-amber"><i class="zmdi zmdi-chart-donut"></i></div>
                             <div class="col-in">
-                                <small class="text-muted m-t-0">Retail</small> <br><br>
+                                <small class="text-muted m-t-0">Sales Profit</small> <br><br>
                                 <h4 class="counter m-b-0">IDR <b class="auto-retail"></b> </h4>
                             </div>
                         </div>
@@ -181,7 +181,6 @@
     </div>
 </section>
 @stop
-
 
 @section('footer_scripts')
     <script type="text/javascript">

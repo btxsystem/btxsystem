@@ -42,7 +42,7 @@ class CreateProcedureRewards extends Migration
                     call add_pv_reward(parent, pv);  
                 END IF;
             END
-        ');
+        '); 
 
         DB::unprepared('
         CREATE TRIGGER tr_add_pv_reward AFTER INSERT ON `history_pv` 

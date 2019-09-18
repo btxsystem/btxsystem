@@ -152,6 +152,12 @@
         </a>
         <ul class="sub-menu">
             <li>
+                <a href="{{ route('bonus.general') }}">
+                    <i class="fa fa-angle-double-right"></i>
+                    Income
+                </a>
+            </li>
+            <!-- <li>
                 <a href="{{ route('bonus.sponsor') }}">
                     <i class="fa fa-angle-double-right"></i>
                     Sponsor
@@ -174,7 +180,7 @@
                     <i class="fa fa-angle-double-right"></i>
                     Reward
                 </a>
-            </li>
+            </li> -->
         </ul>
     </li>
     <li >

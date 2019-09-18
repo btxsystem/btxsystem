@@ -55,6 +55,7 @@ class ProfileMemberController extends Controller
     }
 
     public function register(Request $request){
+        $price = (int) ceil($request['kurir']/1000) + 280;
         $sponsor = Auth::user();
         $data = [
             'id_member' => invoiceNumbering(),
@@ -73,7 +74,8 @@ class ProfileMemberController extends Controller
             'pv' => 0,
             'nik' => $request->nik,
         ];
-
+        $input['bitrex_points'] = $sponsor->bitrex_points - $price;
+        Employeer::find($sponsor->id)->update($input);
         Employeer::create($data);
         return redirect()->route('member.tree');
     }
@@ -90,7 +92,9 @@ class ProfileMemberController extends Controller
 
     public function rewards(){
         $data = Auth::user();
-        return view('frontend.rewards.index')->with('profile',$data);
+        $ranks = DB::table('ranks')->select('name','pv_needed_left','pv_needed_midle','pv_needed_right')->get();
+        $rewards = DB::table('gift_rewards')->select('id','description','nominal')->get();
+        return view('frontend.rewards.index',['profile'=>$data, 'ranks'=> $ranks, 'rewards'=> $rewards]);
     }
 
     public function getRewards(){
@@ -103,19 +107,27 @@ class ProfileMemberController extends Controller
         return response()->json($rewards, 200);
     }
 
+    public function rewardClime(){
+        $data = DB::table('got_rewards')->where('member_id',Auth::id())->get();
+        $total = count($data)/8;
+        
+        $data['session'] = $total;
+        return($data);
+    }
+
     public function getMyRewards($id){
         $member = Auth::user();
         if($id==1){
             $pajak = $member->verification == 1 ? 0.025 : 0.03;
            try {
                 DB::beginTransaction();
-                DB::table('got_rewards')->where('reward_id', $id)->update(['status' => 1, 'updated_at' => now()]);
+                DB::table('got_rewards')->where('reward_id', $id)->andWhere('member_id', Auth::id())->update(['status' => 1, 'updated_at' => now()]);
                 DB::table('history_bitrex_cash')->insert(['id_member' => $member->id, 'nominal' => 3000000 - (3000000 * $pajak), 'created_at' => now(), 'updated_at' => now(), 'description' => 'Bonus Rewards', 'info' => 1, 'type' => 3]);
                 DB::table('employeers')->where('id', $member->id)->update(['bitrex_cash' => $member->bitrex_cash += 3000000 - (3000000 * $pajak), 'updated_at' => now()]);
-                DB::table('history_pajak')->insert(['id_member' => $member->id, 'id_bonus' => 4, 'persentase' => $pajak, 'nominal' => 3000000 - (3000000 * $pajak), 'created_at' => now(), 'updated_at' => now()]);
-           } catch (\Throwable $th) {
+                DB::table('history_pajak')->insert(['id_member' => $member->id, 'id_bonus' => 4, 'persentase' => $pajak, 'nominal' => 3000000 * $pajak, 'created_at' => now(), 'updated_at' => now()]);
+                return 'yes';
+            } catch (\Throwable $th) {
                 DB::rollback();
-                return 'gagal';
            }
         }else{
             DB::table('got_rewards')->where('reward_id', $id)->update(['status' => 1, 'updated_at' => now()]);
