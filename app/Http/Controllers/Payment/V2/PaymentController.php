@@ -397,11 +397,15 @@ class PaymentController extends Controller
               'expired_at' => Carbon::create($trxNonMember->latest('id')->first()->expired_at)->addYear(1)
             ]);
           } else {
+            $getEbookIdByHistory = PaymentHistoryNonMember::where('ref_no', $code)->first();
+
+            $newIncome = Ebook::where('id', $getEbookIdByHistory->ebook_id)->first();
+
             TransactionNonMember::insert([
-              'income' => $trxNonMember->latest('id')->first()->income,
+              'income' => $newIncome->income,
               'member_id' => $trxNonMember->latest('id')->first()->member_id,
               'non_member_id' => $trxNonMember->latest('id')->first()->non_member_id,
-              'ebook_id' => $trxNonMember->latest('id')->first()->ebook_id,
+              'ebook_id' => $getEbookIdByHistory->ebook_id,
               'status' => $trxNonMember->latest('id')->first()->status,
               'transaction_ref' => $trxNonMember->latest('id')->first()->transaction_ref,
               'expired_at' => Carbon::create($trxNonMember->latest('id')->first()->expired_at)->addYear(1)
@@ -415,9 +419,11 @@ class PaymentController extends Controller
               'expired_at' => Carbon::create($trxMember->latest('id')->first()->expired_at)->addYear(1)
             ]);
           } else {
+            $getEbookIdByHistory = PaymentHistoryMember::where('ref_no', $code)->first();
+            
             TransactionMember::insert([
               'member_id' => $trxMember->latest('id')->first()->member_id,
-              'ebook_id' => $trxMember->latest('id')->first()->ebook_id,
+              'ebook_id' => $getEbookIdByHistory->ebook_id,
               'status' => $trxMember->latest('id')->first()->status,
               'transaction_ref' => $trxMember->latest('id')->first()->transaction_ref,
               'expired_at' => Carbon::create($trxMember->latest('id')->first()->expired_at)->addYear(1)
