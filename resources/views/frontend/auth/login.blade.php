@@ -193,7 +193,7 @@
             <div class="col-xs-12">
               <div class="video-block"> <a class="video-block__link" href="https://www.youtube.com/watch?v=wh6lxMpffCo" rel="prettyPhoto"><i class="icon stroke icon-Play"></i></a>
                 <h2 class="video-block__title">Bitrexgo Video</h2>
-                <div class="video-block__subtitle">Bitrexgo is one of the best education platform for Foreign Exchange Trading in Indonesia.</div>
+                <!-- <div class="video-block__subtitle">Bitrexgo is one of the best education platform for Foreign Exchange Trading in Indonesia.</div> -->
               </div>
             </div>
             <!-- end col -->
@@ -232,21 +232,21 @@
               <div class="posts-wrap">
                 <article class="post post_mod-b clearfix wow zoomIn" data-wow-duration="1s">
                   <div class="entry-media">
-                    <div class="entry-thumbnail"> <a href="javascript:void(0);" ><img class="img-responsive" src="https://bitrexgo.co.id/assets1/images/pic1.jpg" width="370" height="220" alt="Foto"/></a> </div>
+                    <div class="entry-thumbnail"> <a href="javascript:void(0);" ><img style="height:200px;object-fit:cover" class="img-responsive" src="{{asset('img/hq1.jpg')}}" width="370" height="220" alt="Foto"/></a> </div>
                   </div>
                 </article>
                 <!-- end post -->
 
                 <article class="post post_mod-b clearfix wow zoomIn" data-wow-duration="1s" data-wow-delay=".5s">
                   <div class="entry-media">
-                    <div class="entry-thumbnail"> <a href="javascript:void(0);" ><img class="img-responsive" src="https://bitrexgo.co.id/assets1/images/service-0.png" width="370" height="220" alt="Foto"/></a> </div>
+                    <div class="entry-thumbnail"> <a href="javascript:void(0);" ><img style="height:200px;object-fit:cover" class="img-responsive" src="{{asset('img/hq2.jpg')}}" width="370" height="220" alt="Foto"/></a> </div>
                   </div>
                 </article>
                 <!-- end post -->
 
                 <article class="post post_mod-b clearfix wow zoomIn" data-wow-duration="1s" data-wow-delay="1s">
                   <div class="entry-media">
-                    <div class="entry-thumbnail"> <a href="javascript:void(0);" ><img class="img-responsive" src="https://bitrexgo.co.id/assets1/images/pic1.jpg" width="370" height="220" alt="Foto"/></a> </div>
+                    <div class="entry-thumbnail"> <a href="javascript:void(0);" ><img style="height:200px;object-fit:cover" class="img-responsive" src="{{asset('img/hq3.jpg')}}" width="370" height="220" alt="Foto"/></a> </div>
                   </div>
                 </article>
                 <!-- end post -->
@@ -308,7 +308,7 @@
             <div class="col-xs-12">
               <div class="video-block"> <a class="video-block__link" href="https://www.youtube.com/watch?v=wh6lxMpffCo" rel="prettyPhoto"><i class="icon stroke icon-Play"></i></a>
                 <h2 class="video-block__title">Bitrexgo Slide</h2>
-                <div class="video-block__subtitle">Bitrexgo is one of the best education platform for Foreign Exchange Trading in Indonesia.</div>
+                <!-- <div class="video-block__subtitle">Bitrexgo is one of the best education platform for Foreign Exchange Trading in Indonesia.</div> -->
               </div>
             </div>
             <!-- end col -->
@@ -327,7 +327,7 @@
                 <div class="subscribe__icon-wrap"> <i class="icon_bg stroke icon-Imbox"></i><i class="icon stroke icon-Imbox"></i> </div>
                 <div class="subscribe__inner">
                   <h2 class="subscribe__title">SUBMIT TESTIMONY FOR BITREXGO</h2>
-                  <div class="subscribe__description">Bitrexgo is one of the best education for Foreign Exchange Trading.</div>
+                  <!-- <div class="subscribe__description">Bitrexgo is one of the best education for Foreign Exchange Trading.</div> -->
                 </div>
               </div>
               <!-- end col -->
