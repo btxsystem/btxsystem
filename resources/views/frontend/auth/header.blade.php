@@ -133,13 +133,14 @@
                         <p>Alamat Bitrexgo</p>
                       </div>
                     </div>
-                    <!-- <div class="input-group col-md-12">
+                    <div class="input-group col-md-12">
                       <div class="form-group address-form">
-                        <h4>Total Ebook : <span id="cost-ebook">0</span></h4>
-                        <h4>Total Postal Fee : <span id="cost-postal">0</span></h4>
+                        <h4 class="hidden">Starter Pack : <span id="cost-starter">0</span></h4>
+                        <h4 class="hidden">Total Ebook : <span id="cost-ebook">0</span></h4>
+                        <h4 class="hidden">Total Postal Fee : <span id="cost-postal">0</span></h4>
                         <h4>Grand Total : <span id="grand-total"></span></h4>
                       </div>
-                    </div> -->
+                    </div>
                     <div class="modal-footer">
                       <button type="Submit" class="btn btn-join" style="border-radius: 5px; background-color: #b92240; color: #fff;">Join</button>
                       <button type="button" class="btn" style="border-radius: 5px; background-color: orange; color: #fff; margin-top: -5px;" data-dismiss="modal">Close</button>
