@@ -21,6 +21,7 @@ class VerifyCsrfToken extends Middleware
     protected $except = [
         'backend-response-pay',
         'response-pay-member',
+        'response-pay-topup',
         'response-pay'
     ]; 
 }
