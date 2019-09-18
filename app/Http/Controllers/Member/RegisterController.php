@@ -348,19 +348,29 @@ class RegisterController extends Controller
 
       $temporaryTrx = TemporaryTransactionMember::where('transaction_ref', $code)
         ->with('member')
-        ->first();
+        ->get();
 
       $view = 'payment.failed';
 
       if($status == "1") {
-        findChild(
+        $idNewMember = findChild(
           $temporaryTrx->member->referral,
           $temporaryTrx->member->referral,
           $temporaryTrx->member
         );
 
         if($orderType == 'BITREX003') { //with ebbook
-          //
+          $books = [];
+          foreach ($temporaryTrx as $trx) {
+            $books[] = [
+              'transaction_ref' => $code,
+              'ebook_id' => $trx->ebook_id,
+              'expired_at' => Carbon::create(now())->addYear(1),
+              'member_id' => $idNewMember->id,
+              'status' => 1
+            ];
+          }
+          $trxMember = TransactionMember::insert($books);
         } else if($orderType == 'BITREX004') { //witout ebbook
           // $trxMember = TransactionMember::where('transaction_ref', $code);
           // $trxMember->update([
