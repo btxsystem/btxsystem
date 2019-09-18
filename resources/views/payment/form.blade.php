@@ -1,7 +1,7 @@
 <html>
 <body>
 
-<form method="post" id="payment" name="ePayment" action="https://sandbox.ipay88.co.id/epayment/entry.asp">
+<form method="post" id="payment" name="ePayment" action="{{env('IPAY_POST') ?? 'https://sandbox.ipay88.co.id/epayment/entry.asp'}}">
 <input type="hidden" name="MerchantCode" value="{{$data['merchant_code']}}">
 <!-- <input type="hidden" name="PaymentId" value="{{$data['payment_id']}}"> -->
 <input type="hidden" name="RefNo" value="{{$data['ref_no']}}">
