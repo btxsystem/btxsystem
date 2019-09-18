@@ -281,6 +281,9 @@
 		dominant-baseline: middle;
 		text-anchor: middle;
 	}
+  rect {
+    cursor: pointer;
+  }
 	.bigger {
 		font-size: 13px;
 	}
@@ -397,6 +400,7 @@
           $(this).prop('checked', true)
           priceEbook = priceEbook + parseInt($(this).data('price'))
           $('#cost-ebook').html(priceEbook / 1000 + ' Points')
+          $('#grand-total').html((priceEbook + postalFee + 280000) / 1000 + ' Points')
         }
       })
 
