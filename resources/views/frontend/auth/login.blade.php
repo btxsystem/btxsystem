@@ -18,7 +18,7 @@
                       </div>
                     </div>
                     <div class="find-course__wrap-btn">
-                      <button type="submit" class="btn btn-effect btn-info" disabled>SUBMIT</button>
+                      <button type="submit" class="btn btn-effect btn-info">SUBMIT</button>
                     </div>
                   </form>
                 </section>

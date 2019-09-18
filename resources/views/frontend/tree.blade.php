@@ -23,6 +23,11 @@
 					@csrf
 					<input type="text" name="parent" id="parent" value="" hidden>
 					<input type="text" name="position" id="position" value="" hidden>
+          <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
+						<div class="forms-line">
+							<input class="form-control" disabled value="{{Auth::user()->username}}" type="text" min="3" required>
+						</div>
+					</div>
 					<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div class="form-line">
 							<input class="form-control" name="username" id="username" type="text" min="3" required>
@@ -56,7 +61,7 @@
 					</div>
 					<div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div class="form-line">
-							<input type="text" name="birthdate" class="datepicker form-control" placeholder="Birthdate" required>
+							<input type="date" name="birthdate" class="form-control" placeholder="Birthdate" required>
 						</div>
 					</div>
 					<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -68,12 +73,29 @@
 							<label for="female">Female</label>
 						</div>
 					</div>
+          <div class="dropdown-divider"></div>
+          <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
+						<div class="demo-radio-button">
+							<input name="pack" type="radio" value="1" id="pack" class="with-gap radio-col-red" checked />
+							<label for="shipping">Starter Pack</label>
+						</div>
+					</div>
+          <div class="dropdown-divider"></div>
+          <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
+						<h5 class="card-inside-title">Choose a ebook</h5>
+						<div class="demo-radio-button">
+							<!-- <input name="method" type="radio" value="1" id="shipping" class="with-gap radio-col-red" checked />
+							<label for="shipping">Shipping</label> -->
+              <div id="ebook-list"></div>
+						</div>
+					</div>
+          <div class="dropdown-divider"></div>
 					<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<h5 class="card-inside-title">Choose a shipping method</h5>
 						<div class="demo-radio-button">
-							<input name="method" type="radio" value="1" id="shipping" class="with-gap radio-col-red" checked />
+							<input name="shipping_method" type="radio" value="1" id="shipping" class="with-gap radio-col-red" checked />
 							<label for="shipping">Shipping</label>
-							<input name="method" type="radio" value="0" id="pickup" class="with-gap radio-col-red" />
+							<input name="shipping_method" type="radio" value="0" id="pickup" class="with-gap radio-col-red" />
 							<label for="pickup">Pickup</label>
 						</div>
 					</div>
@@ -87,6 +109,12 @@
 						<div class="form-group district-form">
 							<select id="district" name="district" class="district"></select>
 						</div>
+            <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
+  						<div class="form-line">
+  							<input class="form-control" name="address" id="address" type="text" min="3" required>
+  							<label class="form-label">Address</label>
+  						</div>
+  					</div>
 						<div class="form-group kurir-form">
 							<select id="kurir" name="kurir" class="kurir"></select>
 						</div>
@@ -95,12 +123,20 @@
 							<input class="form-control" id="starter" type="text">
 						</div>
 					</div>
-					<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
-						<div class="form-line">
-							<input class="form-control" name="address" id="address" type="text" min="3" required>
-							<label class="form-label">Address</label>
-						</div>
-					</div>
+          <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="demo-radio-button">
+							<input name="payment_method" type="radio" value="point" id="payment_method" class="with-gap radio-col-red" checked />
+              <label for="payment_method">Bitrex Point</label>
+            </div>
+          </div>
+          <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="form-group address-form">
+              <h4 class="hidden">Starter Pack : <span id="cost-starter">0</span></h4>
+              <h4 class="hidden">Total Ebook : <span id="cost-ebook">0</span></h4>
+              <h4 class="hidden">Total Shipping : <span id="cost-postal">0</span></h4>
+              <h4>Grand Total : <span id="grand-total"></span></h4>
+            </div>
+          </div>
 					<div class="modal-footer">
 						<a class="btn btn-secondary" data-dismiss="modal">Close</a>
 						<input type="submit" class="btn btn-primary register" value="Register">
@@ -140,7 +176,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="container-fluid">        
+	<div class="container-fluid">
 		<div class="row clearfix">
 			<div class="col-lg-12 col-md-12">
 				<div class="card">
@@ -193,7 +229,7 @@
 								<div class="chart" id="tree">
 									<button id="upline" class='btn btn-primary zmdi zmdi-chevron-up' onclick=location.reload()></button>
 								</div>
-								
+
 							</div>
 						</div>
 					</div>
@@ -253,13 +289,79 @@
 
 </style>
 <script>
+  let priceEbook = 0
+  let postalFee = 0
+  let grandTotal = 0;
+  let bitrexPoint = '{{Auth::user()->bitrex_points}}'
 	$(document).ready(function() {
+    $('.register').prop('disabled', true)
+    $('#cost-starter').html('280 Points')
 		var element = document.querySelector('#bah');
 		$('#upline').hide();
 		panzoom(element);
 		$('#province').select2({
 			placeholder: 'Province',
 		});
+    $.ajax({
+			type: 'GET',
+			url: '{{route("api.ebook.ebooks")}}'
+		}).done(function(res) {
+      console.log(res)
+			const {data} = res
+			let render = data.map((v, i) => {
+				// return `
+				// 	<input id="ebooks" type="checkbox" value="${v.id}" id="${v.title}" class="with-gap radio-col-red" data-price="${v.price}" ${v.title == 'basic' ? 'checked' : ''} name="ebooks[]"/>
+        // 	<label for="shipping">${v.title}</label>
+				// `
+        return `
+        <div class="form-check">
+          <input class="form-check-input" data-price="${v.price}" type="checkbox" name="ebooks[]" value="${v.id}" id="${v.title}">
+          <label class="form-check-label" for="${v.title}">
+            ${v.title}
+          </label>
+        </div>
+        `
+			})
+
+			$('#ebook-list').html(`
+				<div id="checkboxEbook">
+					${render}
+				</div>
+			`)
+
+			$('#checkboxEbook input[type=checkbox]').change(function(index) {
+
+				if($(this).prop('checked')) {
+					priceEbook = priceEbook + parseInt($(this).data('price'))
+				} else {
+					priceEbook = priceEbook - parseInt($(this).data('price'))
+				}
+
+				if(priceEbook != 0) {
+					$('#cost-ebook').parent().removeClass('hidden')
+				} else {
+					$('#cost-ebook').parent().addClass('hidden')
+				}
+
+				if(postalFee != 0) {
+					$('#cost-postal').parent().removeClass('hidden')
+				} else {
+					$('#cost-postal').parent().addClass('hidden')
+				}
+
+				$('#cost-ebook').html(priceEbook / 1000 + ' Points')
+				$('#grand-total').html((priceEbook + postalFee + 280000) / 1000 + ' Points')
+
+        grandTotal = (priceEbook + postalFee + 280000) / 1000;
+
+        if(bitrexPoint < grandTotal) {
+          $('.register').prop('disabled', true)
+        } else {
+          $('.register').prop('disabled', false)
+        }
+			})
+
+		})
 		$('#province').html('<option disabled>Province<option>');
 		$.ajax({
 			type: 'GET',
@@ -270,7 +372,7 @@
 					data: data,
 				});
 			},
-			error: function() { 
+			error: function() {
 				console.log("Error");
 			}
 		});
@@ -296,12 +398,12 @@
 			url: '/member/select/search-downline/'+data,
 			success: function (data) {
 				console.log(data);
-				
+
 			},
-			error: function() { 
+			error: function() {
 				console.log("Error");
 			}
-		});	
+		});
 	});
 
 	$('#province').change(function(){
@@ -319,7 +421,7 @@
 					data: data,
 				});
 			},
-			error: function() { 
+			error: function() {
 				console.log("Error");
 			}
 		});
@@ -339,7 +441,7 @@
 					data: data,
 				});
 			},
-			error: function() { 
+			error: function() {
 				console.log("Error");
 			}
 		});
@@ -358,16 +460,37 @@
 					data: data,
 				});
 			},
-			error: function() { 
+			error: function() {
 				console.log("Error");
 			}
 		});
 	});
 
 	$('#kurir').change(function(){
-		$('.cost-form').show();
-		$('#cost').val('Total ongkir: '+Math.ceil(this.value/1000) + ' Points');
-		$('#starter').val('Join Member: '+280 + ' Points');
+		// $('.cost-form').show();
+		// $('#cost').val('Total ongkir: '+Math.ceil(this.value/1000) + ' Points');
+		// $('#starter').val('Join Member: '+280 + ' Points');
+    $('#cost').val(Math.ceil(this.value/1000))
+    $('#cost-starter').html('280 Points')
+    postalFee = Math.ceil(this.value)
+
+		if(postalFee != 0) {
+			$('#cost-postal').parent().removeClass('hidden')
+		} else {
+			$('#cost-postal').parent().addClass('hidden')
+		}
+
+		$('#cost-postal').html(postalFee / 1000 + ' Points')
+		$('#grand-total').html((priceEbook + postalFee + 280000) / 1000 + ' Points')
+
+    grandTotal = (priceEbook + postalFee + 280000) / 1000;
+
+    if(bitrexPoint < grandTotal) {
+      $('.register').prop('disabled', true)
+    } else {
+      $('.register').prop('disabled', false)
+    }
+
 	});
 
 	$('#shipping').change(function(){
@@ -389,7 +512,7 @@
 				data.username ? $('#username_danger').text('username you entered already exists') : $('#username_danger').empty();
 				data.username ? $(".register").prop('disabled', true) : $(".register").prop('disabled', false);
 			},
-			error: function() { 
+			error: function() {
 				console.log("Error");
 			}
 		});
@@ -405,7 +528,7 @@
 		success: function (data) {
 			tree(data);
 		},
-		error: function() { 
+		error: function() {
 			console.log("Error");
 		}
 	});
@@ -420,7 +543,7 @@
 					$('#upline').show();
 					tree(data)
 				},
-				error: function() { 
+				error: function() {
 					console.log("Error");
 				}
 			});
@@ -432,12 +555,12 @@
 					if (data.bitrex_points >= 280) {
 						$('#register').modal('show');
 						$('#parent').attr('value',parent);
-						$('#position').attr('value',position);		
+						$('#position').attr('value',position);
 					}else{
 						$('#warning').modal('show');
 					}
 				},
-				error: function() { 
+				error: function() {
 					console.log("Error");
 				}
 			});
@@ -457,12 +580,12 @@
 				data.group ? $('#_pv_group').text('PV Group: ' + data.pv_group) : $('#_pv_group').text('PV Group: 0 ');
             }
         });
-		
+
 		var treeStructure = d3.tree().size([2000,480]);
 		var root = d3.hierarchy(data).sort(function(a, b) {return a.data.position - b.data.position ;});
 		treeStructure(root);
 		var information = treeStructure(root);
-		
+
 		var connections = svg.append("g").selectAll("path")
 			.data(information.links());
 
@@ -471,7 +594,7 @@
 				return "M" + d.source.x + "," + d.source.y + " v 150 H" +
 				d.target.x + " V" + d.target.y;
 			});
-			
+
 		var rectangles = svg.append("g").selectAll("rect")
 			.data(information.descendants());
 		rectangles.enter().append("rect")
@@ -480,7 +603,7 @@
 			.attr("href","#")
 			.attr("x", function(d){return d.x-75;})
 			.attr("y", function(d){return d.y-50;});
-			
+
 		var names = svg.append("g").selectAll("text")
 			.data(information.descendants());
 		names.enter().append("text")
@@ -530,6 +653,8 @@
 			.attr("y", function(d){return d.y-40;})
 			.classed("img-fluid", true);
 	}
-
+  function toIDR(value) {
+		return "IDR " + value.toString().replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1\.")
+	}
 </script>
 @stop

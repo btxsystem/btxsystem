@@ -9,6 +9,10 @@ use DB;
 use App\HistoryBitrexPoints;
 use Carbon\Carbon;
 
+use Illuminate\Support\Facades\Mail;
+use App\Mail\PurchaseBitrexPointMail;
+use App\Mail\PurchaseBitrexPointTransferMail;
+
 class TransactionController extends Controller
 {
     public function index()
@@ -92,6 +96,14 @@ class TransactionController extends Controller
                 'updated_at' => Carbon::now()
             ]);
 
+            $dataOrder = (object) [
+                'amount' =>   $request->nominal,
+                'ref_no' => $afterCheckRef
+            ];
+                
+            Mail::to('asepmedia18@gmail.com')
+            ->send(new PurchaseBitrexPointTransferMail($dataOrder, null));
+
             DB::commit();
 
             return view('payment.transfer')->with([
@@ -103,6 +115,7 @@ class TransactionController extends Controller
 
         } catch (\Exception $e) {
             DB::rollback();
+            return redirect()->back();
         }
     }
 
@@ -266,6 +279,15 @@ class TransactionController extends Controller
                     'status' => 1
                 ]);
 
+                $dataOrder = (object) [
+                    'amount' =>   $amount,
+                    'point' => $data->bitrex_points
+                ];
+                    
+                Mail::to('asepmedia18@gmail.com')
+                ->send(new PurchaseBitrexPointMail($dataOrder, null));
+                
+                
                 DB::commit();
 
                 return view('payment.success-topup')->with([
