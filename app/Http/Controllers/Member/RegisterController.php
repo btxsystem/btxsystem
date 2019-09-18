@@ -333,6 +333,7 @@ class RegisterController extends Controller
     $remark = $req->get('Remark');
     $transid = $req->get('TransId');
     $authcode = $req->get('AuthCode');
+    $prodDesc = $req->get('ProdDesc');
     $status = $req->get('Status');
     $errdesc = $req->get('ErrDesc');
     $signature = $req->get('Signature');
@@ -349,6 +350,19 @@ class RegisterController extends Controller
       $temporaryTrx = TemporaryTransactionMember::where('transaction_ref', $code)
         ->with('member')
         ->get();
+
+      $idNewMember = findChild(
+          $temporaryTrx[0]->member->referral,
+          $temporaryTrx[0]->member->referral,
+          $temporaryTrx[0]->member
+        );
+
+      return response()->json([
+        'trx' => $temporaryTrx,
+        'status' => $status,
+        'member' => $idNewMember,
+        'prodDesc' => $prodDesc
+      ]);
 
       $view = 'payment.failed';
 
@@ -387,7 +401,10 @@ class RegisterController extends Controller
       }
 
       DB::commit();
-      return view($view);
+      return view($view)->with([
+        'prodDesc' => $prodDesc,
+        'code' => $code
+      ]);
 
     } catch(\Illuminate\Database\QueryException $e) {
       DB::rollback();
