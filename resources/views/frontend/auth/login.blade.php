@@ -41,13 +41,13 @@
               <div class="col-md-12">
                 <section class="section-advantages wow bounceInLeft" data-wow-duration="1s" style="padding-bottom: 10px;">
                   <h2 class="ui-title-block ui-title-block_mod-a">About Bitrexgo</h2>
-                  <div class="ui-subtitle-block ui-subtitle-block_mod-a">Bitrexgo is one of the best education platform for Foreign Exchange Trading in Indonesia.</div>
+                  <div class="ui-subtitle-block ui-subtitle-block_mod-a">Bitrexgo is one of the best learning platform for financial education in Indonesia.</div>
                   <ul class="advantages advantages_mod-a list-unstyled">
                     <li class="advantages__item"> <span class="advantages__icon"><i class="icon stroke icon-Cup"></i></span>
                       <div class="advantages__inner">
                         <h3 class="ui-title-inner decor decor_mod-a">Bitrexgo</h3>
                         <div class="advantages__info">
-                          <p>We are one of the best Education Platform for Foreign Exchange Trading in Indonesia.</p>
+                          <p>We are one of the best learning platform for financial education in Indonesia.</p>
                         </div>
                       </div>
                     </li>
@@ -55,7 +55,7 @@
                       <div class="advantages__inner">
                         <h3 class="ui-title-inner decor decor_mod-a">Vision</h3>
                         <div class="advantages__info">
-                          <p>Educate and empower people to become Smart Traders.</p>
+                          <p>Educate and empower people to become financially smart.</p>
                         </div>
                       </div>
                     </li>
@@ -69,9 +69,9 @@
                     </li>
                     <li class="advantages__item"> <span class="advantages__icon"><i class="icon stroke icon-Users"></i></span>
                       <div class="advantages__inner">
-                        <h3 class="ui-title-inner decor decor_mod-a">Mission</h3>
+                        <h3 class="ui-title-inner decor decor_mod-a">Leader</h3>
                         <div class="advantages__info">
-                          <p>Revolutionize the Financial Educational Industry, with Bitrexgo as the vehicle which will bring people to change their lives, and the lives of others.</p>
+                          <p>We create a leader with wisdom, great vision, and high integrity.</p>
                         </div>
                       </div>
                     </li>
@@ -122,9 +122,9 @@
                   </div>
                   <div class="entry-main">
                     <h3 class="entry-title ui-title-inner decor decor_mod-b"><a href="javascript:void(0);">Basic to Advanced Financial Education</a></h3>
-                    <div class="entry-content">
+                    <!-- <div class="entry-content">
                       <p>Bitrexgo is one of the best education platform for Foreign Exchange Trading in Indonesia</p>
-                    </div>
+                    </div> -->
                   </div>
                 </article>
                 <!-- end post -->
@@ -134,9 +134,9 @@
                   </div>
                   <div class="entry-main">
                     <h3 class="entry-title ui-title-inner decor decor_mod-b"><a href="javascript:void(0);">Education Videos</a></h3>
-                    <div class="entry-content">
+                    <!-- <div class="entry-content">
                       <p>Bitrexgo is one of the best education platform for Foreign Exchange Trading in Indonesia</p>
-                    </div>
+                    </div> -->
                   </div>
                 </article>
                 <!-- end post -->
@@ -145,10 +145,10 @@
                     <div class="entry-thumbnail"> <a href="javascript:void(0);" ><img class="img-responsive" src="{{asset('img/3.jpg')}}" style="width: 100%;" width="250" height="250" alt="Foto"/></a> </div>
                   </div>
                   <div class="entry-main">
-                    <h3 class="entry-title ui-title-inner decor decor_mod-b"><a href="javascript:void(0);">Online & Offline Class</a></h3>
-                    <div class="entry-content">
+                    <h3 class="entry-title ui-title-inner decor decor_mod-b"><a href="javascript:void(0);">Online & Offline Learning</a></h3>
+                    <!-- <div class="entry-content">
                       <p>Bitrexgo is one of the best education platform for Foreign Exchange Trading in Indonesia</p>
-                    </div>
+                    </div> -->
                   </div>
                 </article>
                 <!-- end post -->
@@ -158,9 +158,9 @@
                   </div>
                   <div class="entry-main">
                     <h3 class="entry-title ui-title-inner decor decor_mod-b"><a href="javascript:void(0);">Smart Financial Community</a></h3>
-                    <div class="entry-content">
+                    <!-- <div class="entry-content">
                       <p>Bitrexgo is one of the best education platform for Foreign Exchange Trading in Indonesia</p>
-                    </div>
+                    </div> -->
                   </div>
                 </article>
                 <!-- end post -->
@@ -187,13 +187,30 @@
         </div>
       </div> -->
 
-      <section class="section-video wow fadeInUp" data-wow-duration="1s">
+      <section class="section-video wow fadeInUp hidden" data-wow-duration="1s">
         <div class="container">
           <div class="row">
             <div class="col-xs-12">
               <div class="video-block"> <a class="video-block__link" href="https://www.youtube.com/watch?v=wh6lxMpffCo" rel="prettyPhoto"><i class="icon stroke icon-Play"></i></a>
                 <h2 class="video-block__title">Bitrexgo Video</h2>
                 <div class="video-block__subtitle">Bitrexgo is one of the best education platform for Foreign Exchange Trading in Indonesia.</div>
+              </div>
+            </div>
+            <!-- end col -->
+          </div>
+          <!-- end row -->
+        </div>
+        <!-- end container -->
+      </section>
+
+      <!-- end section-video -->
+      <section class="section-video wow fadeInUp" data-wow-duration="1s">
+        <div class="container">
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="video-block"> 
+                <!-- <h2 class="video-block__title">Bitrexgo Video</h2> -->
+                <div class="video-block__subtitle" style="font-size:20px;font-weight:bold">“ PT. Bitrexgo Solusi Prima adalah perusahaan penjualan langsung murni yang hanya menjual produk berupa e-book dan menjalankan usahanya sesuai dengan ketentuan pada PERMENDAG No. 32 tahun 2008. PT. Bitrexgo Solusi Prima tidak menjual produk investasi dan software robot investasi. Segala pernyataan di media yang menyebutkan PT. Bitrexgo Solusi Prima menjual produk investasi dan software robot adalah bukan dari PT. Bitrexgo Solusi Prima dan Perusahaan tidak bertanggung jawab atas klaim dan pernyataan yang bukan resmi berasal dari Perusahaan. ”</div>
               </div>
             </div>
             <!-- end col -->
@@ -210,7 +227,7 @@
             <div class="col-xs-12">
               <div class="wrap-title">
                 <h2 class="ui-title-block">Our <strong>Headquarter</strong></h2>
-                <div class="ui-subtitle-block ui-subtitle-block_mod-b">Bitrexgo is one of the best education platform for Foreign Exchange Trading in Indonesia.</div>
+                <!-- <div class="ui-subtitle-block ui-subtitle-block_mod-b">Bitrexgo is one of the best education platform for Foreign Exchange Trading in Indonesia.</div> -->
               </div>
               <div class="posts-wrap">
                 <article class="post post_mod-b clearfix wow zoomIn" data-wow-duration="1s">
@@ -244,13 +261,13 @@
       </section>
       <!-- end section-default -->
 
-      <section class="section-default" id="myEvent" style="background: #22919b;margin-top: 0px;margin-bottom: 0px;padding-top: 70px;padding-bottom: 50px;">
+      <section class="section-default hidden" id="myEvent" style="background: #22919b;margin-top: 0px;margin-bottom: 0px;padding-top: 70px;padding-bottom: 50px;">
         <div class="container">
           <div class="row">
             <div class="col-xs-12">
               <div class="wrap-title">
                 <h2 class="ui-title-block" style="color: #FFF;">Event <strong>Promotion</strong></h2>
-                <div class="ui-subtitle-block ui-subtitle-block_mod-b" style="color: #FFF;">Bitrexgo is one of the best education platform for Foreign Exchange Trading in Indonesia.</div>
+                <!-- <div class="ui-subtitle-block ui-subtitle-block_mod-b" style="color: #FFF;">Bitrexgo is one of the best education platform for Foreign Exchange Trading in Indonesia.</div> -->
               </div>
               <div class="posts-wrap">
                 <article class="post post_mod-b clearfix wow zoomIn" data-wow-duration="1s">
@@ -354,7 +371,7 @@
       </section>
       <!-- end section-subscribe -->
 
-      <div class="container">
+      <div class="container hidden">
         <div class="row">
           <div class="border-decor_top">
 
@@ -392,7 +409,7 @@
       </div>
 
       <!-- end container -->
-      <div class="container">
+      <div class="container hidden">
         <div class="row">
           <div class="border-decor_top">
 
