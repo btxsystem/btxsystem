@@ -331,6 +331,26 @@ class PaymentController extends Controller
         $checkIsRegister = TransactionMember::where('transaction_ref', $code)
           ->first();
 
+        $isRegister = false;
+
+        if($checkIsRegister) {
+          //if new register
+          if($checkIsRegister->expired_at < now() && $checkIsRegister->status != 1) {
+            $isRegister = true;
+          } else {
+            $isRegister = false;
+          }
+        }  
+
+        if($checkIsRegister) {
+          //if new register
+          if($checkIsRegister->expired_at < now() && $checkIsRegister->status != 1) {
+            $isRegister = true;
+          } else {
+            $isRegister = false;
+          }
+        }
+
         $isExpired = $checkIsRegister->expired_at < now() ? true : false;
 
         $transaction = TransactionMember::where('transaction_ref', $code)
@@ -347,7 +367,12 @@ class PaymentController extends Controller
           ])
           ->first();
         
-        $isRenewal = false;
+        if($isRegister) {
+          $isRenewal = false;
+        } else {
+          $isRenewal = true;
+        }
+        
         Mail::to($checkIsRegister->member->email)->send(new PurchaseEbookMemberMail($checkIsRegister, null));
       } else {
         $isRenewal = true;
@@ -389,10 +414,10 @@ class PaymentController extends Controller
             ]);
           } else {
             TransactionMember::insert([
-              'member_id' => $trxNonMember->latest('id')->first()->member_id,
-              'ebook_id' => $trxNonMember->latest('id')->first()->ebook_id,
-              'status' => $trxNonMember->latest('id')->first()->status,
-              'transaction_ref' => $trxNonMember->latest('id')->first()->transaction_ref,
+              'member_id' => $trxMember->latest('id')->first()->member_id,
+              'ebook_id' => $trxMember->latest('id')->first()->ebook_id,
+              'status' => $trxMember->latest('id')->first()->status,
+              'transaction_ref' => $trxMember->latest('id')->first()->transaction_ref,
               'expired_at' => Carbon::create($trxMember->latest('id')->first()->expired_at)->addYear(1)
             ]);
           }
