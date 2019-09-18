@@ -129,7 +129,7 @@ $(document).ready(function () {
                       }
                     })
 
-                    $('#description-basic').text(data[index].description);
+                    $('#description-basic').html(data[index].description);
                     $('#basic-value').val(data[index].id);
                     price_basic = data[index].price;
                 }else{
@@ -155,7 +155,7 @@ $(document).ready(function () {
                       }
                     })
 
-                    $('#advance-description').text(data[index].description);
+                    $('#advance-description').html(data[index].description);
                     $('#advance-value').val(data[index].id);
                     price_advance = data[index].price;
                 }
