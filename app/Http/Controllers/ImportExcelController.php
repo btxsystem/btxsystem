@@ -5,10 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
  
 use App\Employeer;
+use App\HistoryBitrexCash;
+use App\Models\GotReward;
  
 use Session;
 
 use App\Imports\EmployeerImport;
+use App\Imports\RewardsImport;
+use App\Import\RewardImport;
 use App\Imports\TreeImport;
 use App\Imports\SponsorImport;
 use Excel;
@@ -58,6 +62,28 @@ class ImportExcelController extends Controller
             $usr['sponsor_id'] = $sponsor['id'];
             Employeer::find($user['id'])->update($usr);
         }
+        return redirect()->back();
+    }
+
+    public function import_bonus1(Request $request){
+        $datas = Excel::toArray(new RewardsImport, request()->file('file'))[0];
+        foreach ($datas as $key => $data) {
+           $user = Employeer::where('id_member',$data['member_id'])->select('id')->first();
+           $dt['member_id'] = $user['id'];
+           $dt['reward_id'] = 1;
+           $dt['status'] = 2;
+           GotReward::insert($dt);
+        }
+        $history_data = Excel::toArray(new RewardImport, request()->file('file'))[0];
+        foreach ($history_data as $key => $data) {
+            $user = Employeer::where('id_member',$data['member_id'])->select('id')->first();
+            $dt['member_id'] = $user['id'];
+            $dt['nominal'] = $data['fix_amount'];
+            $dt['description'] = $data['description'];
+            $dt['info'] = 1;
+            $dt['type'] = 3;
+            HistoryBitrexCash::insert($dt);
+         }
         return redirect()->back();
     }
 }

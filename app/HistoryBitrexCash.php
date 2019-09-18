@@ -16,6 +16,8 @@ class HistoryBitrexCash extends Model
        'nominal',
 	   'description', 
 	   'created_at',
+	   'info',
+	   'type'
     ];
 
 	 protected $hidden = [

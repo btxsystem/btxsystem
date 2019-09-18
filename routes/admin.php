@@ -260,6 +260,7 @@ Route::group(['middleware' => 'admin'], function () {
         Route::post('excel', ['as' => 'excel', 'uses' => 'ImportExcelController@import_excel']);
         Route::post('tree', ['as' => 'tree', 'uses' => 'ImportExcelController@import_tree']);
         Route::post('sponsor', ['as' => 'sponsor', 'uses' => 'ImportExcelController@import_sponsor']);
+        Route::post('bonus1', ['as' => 'bonus1', 'uses' => 'ImportExcelController@import_bonus1']);
         Route::get('generate-pv', ['as' => 'generate-pv', 'uses' => 'Member\MyBonusController@generatePv']);
     });
 });
