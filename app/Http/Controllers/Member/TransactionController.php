@@ -141,7 +141,7 @@ class TransactionController extends Controller
             $data['merchant_code'] = env('IPAY_MERCHANT_CODE');
             $data['currency'] = "IDR";
             $data['payment_id'] = 1;
-            $data['product_desc'] = "Topup {$request->points} Point";
+            $data['product_desc'] = "Topup {$request->points} Bitrex Point";
             $data['user_name'] = Auth::user()->username;
             $data['user_email'] = Auth::user()->email;
             $data['ref_no'] = $afterCheckRef;
@@ -178,6 +178,8 @@ class TransactionController extends Controller
             $account_number = $request->input('account_number');
             $bank_name = $request->input('bank_name');
             $amount = $request->input('amount');
+
+            $imageName = null;
     
             if($request->hasFile('image')) {
                 $this->validate($request, [
@@ -196,6 +198,7 @@ class TransactionController extends Controller
                 'account_number' => $account_number,
                 'bank_name' => $bank_name,
                 'amount' => $amount,
+                'image' => $imageName
             ]);
 
             DB::commit();
@@ -250,21 +253,30 @@ class TransactionController extends Controller
         $sinature_result = $this->signature($signature_plaintext, $amount);
 
         try {
-            DB::beginTransaction();
-            $checkRef = HistoryBitrexPoints::where('transaction_ref', $code);
-
-            $data = DB::table('employeers')->where('id',$checkRef->first()->id_member)->select('bitrex_points')->first();
-
-            
-            DB::table('employeers')->where('id', $checkRef->first()->id_member)->update(['bitrex_points' => $data->bitrex_points + $checkRef->first()->points, 'updated_at' => Carbon::now()]);
-
-            $checkRef->update([
-                'status' => 1
-            ]);
-
-            DB::commit();
-
-            return $checkRef->first();
+            if($status == "1") {
+                DB::beginTransaction();
+                $checkRef = HistoryBitrexPoints::where('transaction_ref', $code);
+    
+                $data = DB::table('employeers')->where('id',$checkRef->first()->id_member)->select('bitrex_points')->first();
+    
+                
+                DB::table('employeers')->where('id', $checkRef->first()->id_member)->update(['bitrex_points' => $data->bitrex_points + $checkRef->first()->points, 'updated_at' => Carbon::now()]);
+    
+                $checkRef->update([
+                    'status' => 1
+                ]);
+    
+                DB::commit();
+    
+                return view('success-topup')->with([
+                    'prodDesc' => $prodDesc,
+                    'code' => $code
+                ]);
+            } else {
+                DB::rollback();
+                echo "Failed";
+                return;
+            }
 
         } catch(\Illuminate\Database\QueryException $e) {
             DB::rollback();
