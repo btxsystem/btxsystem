@@ -302,7 +302,7 @@ class ExploreController extends Controller
       ->first();
 
     if(!$book) {
-      return redirect()->route('member.explore');
+      return redirect()->route('member.home');
     }
 
     return view($this->pathView . '.components.list-chapter')->with([
@@ -325,7 +325,7 @@ class ExploreController extends Controller
       ->first();
 
     if(!$chapter) {
-      return redirect()->route('member.explore');
+      return redirect()->route('member.home');
     }
 
     // return response()->json([
@@ -355,7 +355,7 @@ class ExploreController extends Controller
       ->first();
 
     if(!$book) {
-      return redirect()->route('member.explore');
+      return redirect()->route('member.home');
     }
 
     // return response()->json([
