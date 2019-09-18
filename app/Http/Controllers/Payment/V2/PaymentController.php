@@ -328,12 +328,12 @@ class PaymentController extends Controller
         //     'status' => $status == "0" ? 6 : $status
         // ]);
 
-        $checkIsRegister = TransactionNonMember::where('transaction_ref', $code)
+        $checkIsRegister = TransactionMember::where('transaction_ref', $code)
           ->first();
 
         $isExpired = $checkIsRegister->expired_at < now() ? true : false;
 
-        $transaction = TransactionNonMember::where('transaction_ref', $code)
+        $transaction = TransactionMember::where('transaction_ref', $code)
         ->update([
           'status' => $status == "0" 
             ? $isExpired == false ? 1 : 6 
