@@ -29,12 +29,12 @@
                     <p class="notif" style="color:green">Convert from IDR 1000</p>
                 </div>
                 <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <div class="form-line">
-                        <input type="radio" name="method" value="transfer">
-                        <label for="">Transfer Manual</label>
-                        <input type="radio" name="method" value="ipay">
-                        <label for="">Ipay</label>
-                    </div>
+                  <div class="demo-radio-button">
+                    <input name="method" type="radio" value="1" id="male" class="with-gap radio-col-red" checked />
+                    <label for="male">Transfer</label>
+                    <input name="method" type="radio" value="0" id="female" class="with-gap radio-col-red" />
+                    <label for="female">Ipay</label>
+                  </div>
                 </div>
                 <div class="modal-footer">
                     <a href="#" class="btn btn-secondary" data-dismiss="modal">Close</a>
