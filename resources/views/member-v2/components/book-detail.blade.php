@@ -112,7 +112,7 @@
     let breadcrumbs = [
       {
         title: 'Home',
-        route: '{{route("member.explore")}}'
+        route: '{{route("member.home")}}'
       },
       {
         title: '{{ucwords($book->bookEbook->ebook->title)}}',

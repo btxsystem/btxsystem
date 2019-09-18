@@ -121,7 +121,7 @@
     let breadcrumbs = [
       {
         title: 'Home',
-        route: '{{route("member.explore")}}'
+        route: '{{route("member.home")}}'
       },
       {
         title: '{{$chapter->book->title}}',
@@ -186,7 +186,7 @@
     }
     if(index == maxIndexLesson) {
       alert('Berhasil menyelesaikan chapter {{$chapter->title}}')
-      window.location.href = '{{route("member.explore")}}'
+      window.location.href = '{{route("member.home")}}'
       return
     }
     currentLesson = lessons[index+1]
