@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Employeer;
 use App\Models\Address;
+use DB;
+use Excel;
 use DataTables;
 use Auth;
 use Alert;
@@ -63,6 +65,22 @@ class StarterpackShippingController extends Controller
 
         Alert::error('Data tidak ditemukan', 'Gagal');
         return \redirect()->back();
+    }
+
+    public function import()
+    {
+        $employeerID = Employeer::with('transaction','address')->whereHas('transaction', function ($query) {
+                        $query->where('type', '=', 1);
+                        $query->where('shipping_status','=', 0);
+                    })->pluck('id');
+
+        // return $employeer;
+
+        $address = Address::whereIn('user_id', $employeerID)->get();
+
+        // return $address;
+
+        return Excel::download($address, 'adrress.xlsx');
     }
 
     // public function htmlAction($row)
