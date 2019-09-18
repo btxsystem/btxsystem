@@ -72,6 +72,8 @@ class ImportExcelController extends Controller
            $dt['member_id'] = $user['id'];
            $dt['reward_id'] = 1;
            $dt['status'] = 2;
+           $dt['created_at'] = now();
+           $dt['updated_at'] = now();
            GotReward::insert($dt);
         }
         $history_data = Excel::toArray(new RewardImport, request()->file('file'))[0];
@@ -80,6 +82,8 @@ class ImportExcelController extends Controller
             $dt2['id_member'] = $user['id'];
             $dt2['nominal'] = $data2['fix_amount'];
             $dt2['description'] = $data2['description'];
+            $dt['created_at'] = now();
+            $dt['updated_at'] = now();
             $dt2['info'] = 1;
             $dt2['type'] = 3;
             HistoryBitrexCash::insert($dt2);
@@ -93,6 +97,8 @@ class ImportExcelController extends Controller
            $user = Employeer::where('id_member',$data['mamber_id'])->select('id')->first();
            $dt['member_id'] = $user['id'];
            $dt['reward_id'] = 2;
+           $dt['created_at'] = now();
+           $dt['updated_at'] = now();
            $dt['status'] = 2;
            GotReward::insert($dt);
         }
@@ -102,6 +108,8 @@ class ImportExcelController extends Controller
             $dt2['id_member'] = $user['id'];
             $dt2['nominal'] = 5000000;
             $dt2['description'] = 'Cruise bonus *before tax';
+            $dt['created_at'] = now();
+            $dt['updated_at'] = now();
             $dt2['info'] = 1;
             $dt2['type'] = 3;
             HistoryBitrexCash::insert($dt2);
