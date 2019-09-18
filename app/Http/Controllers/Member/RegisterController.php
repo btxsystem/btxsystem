@@ -109,7 +109,7 @@ class RegisterController extends Controller
         ]);
       }
 
-      $prefixRef = $ebooks != null ? 'BITREX003' : 'BITREX004';
+      $prefixRef = $ebooks != null ? 'BITREX03' : 'BITREX04';
 
       $checkRef = DB::table('temporary_transaction_members')->where('transaction_ref', $prefixRef . (time() + rand(100, 500)))->first();
 
@@ -373,7 +373,7 @@ class RegisterController extends Controller
           $temporaryTrx[0]->member
         );
 
-        if($orderType == 'BITREX003') { //with ebbook
+        if($orderType == 'BITREX03') { //with ebbook
           $books = [];
           foreach ($temporaryTrx as $trx) {
             $books[] = [
@@ -385,7 +385,7 @@ class RegisterController extends Controller
             ];
           }
           $trxMember = TransactionMember::insert($books);
-        } else if($orderType == 'BITREX004') { //witout ebbook
+        } else if($orderType == 'BITREX04') { //witout ebbook
           // $trxMember = TransactionMember::where('transaction_ref', $code);
           // $trxMember->update([
           //   'expired_at' => Carbon::create($trxMember->first()->expired_at)->addYear(1)
