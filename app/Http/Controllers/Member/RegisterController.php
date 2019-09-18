@@ -379,15 +379,21 @@ class RegisterController extends Controller
         if($orderType == 'BITREX03') { //with ebbook
           $books = [];
           foreach ($temporaryTrx as $trx) {
-            $books[] = [
-              'transaction_ref' => $code,
-              'ebook_id' => $trx->ebook_id,
-              'expired_at' => Carbon::create(date('Y-m-d H:i:s'))->addYear(1),
-              'member_id' => $idNewMember->id,
-              'status' => 1
-            ];
+            // $books[] = [
+            //   'transaction_ref' => $code,
+            //   'ebook_id' => $trx->ebook_id,
+            //   'expired_at' => Carbon::create(date('Y-m-d H:i:s'))->addYear(1),
+            //   'member_id' => $idNewMember->id,
+            //   'status' => 1
+            // ];
+            $trxMember = new TransactionMember();
+            $trxMember->transaction_ref = $code;
+            $trxMember->ebook_id = $trx->ebook_id;
+            $trxMember->expired_at = Carbon::create(date('Y-m-d H:i:s'))->addYear(1);
+            $trxMember->member_id = $idNewMember->id;
+            $trxMember->status = 1;
           }
-          $trxMember = TransactionMember::insert($books);
+          //$trxMember = TransactionMember::insert($books);
 
           $password = strtolower(str_random(8));
 
