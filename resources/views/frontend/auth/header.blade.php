@@ -47,7 +47,7 @@
  -->              <form action="{{route('register-member')}}" method="post" id="payment">
                 @csrf
                     <div class="input-group col-md-12">
-                        <input class="form-control" type="text" name="referral" id="referal" placeholder="Sponsor Member" required>
+                        <input class="form-control" type="text" name="referral" id="referal" placeholder="Sponsor Username" required>
                         <p class="alert-referal"></p>
                     </div>
                     <br>
