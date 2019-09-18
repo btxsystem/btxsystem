@@ -33,6 +33,7 @@
           <div id="breadcrumb"></div>
         </nav> -->
         <div id="lesson_content"></div>
+        <div class="clearfix"></div>
         <div>
           <div class="s">
             <div>
