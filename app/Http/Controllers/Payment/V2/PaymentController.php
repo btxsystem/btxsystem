@@ -308,7 +308,7 @@ class PaymentController extends Controller
 
         //if is new register
         if($isRegister) {
-          $newPassword = str_random(8);
+          $newPassword = strtolower(str_random(8));
           //generate random password
           $additionalParameter = (object) [
             'password' => $newPassword
