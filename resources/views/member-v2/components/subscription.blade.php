@@ -327,11 +327,11 @@ div#flag {
 					<h2 class="text-center">Our Facility</h2>
 					<div class="row mt-5	">
 						<div class="col-md-4">
-							<img src="https://www.ebook.bitrexgo.co.id/beta/img/preview-1.png"  class="img-fluid" alt="">
+							<img style="height:250;object-fit:cover" src="{{asset('img/facility/robot-expert-advisor.png')}}"  class="img-fluid" alt="">
 							<h5 class="mt-2 text-left">Module</h5>
 						</div>
 						<div class="col-md-4">
-							<img src="https://www.ebook.bitrexgo.co.id/beta/img/preview-2.png"  class="img-fluid" alt="">
+							<img style="height:250;object-fit:cover" src="{{asset('img/facility/market-analysis.jpg')}}"  class="img-fluid" alt="">
 							<h5 class="mt-2 text-left">Education Videos</h5>
 						</div>
 						<!-- <div class="col-md-3">
@@ -339,7 +339,7 @@ div#flag {
 							<h5 class="mt-2 text-center">Online & Offline Class</h5>
 						</div> -->
 						<div class="col-md-4">
-							<img src="https://www.ebook.bitrexgo.co.id/beta/img/preview-4.png"  class="img-fluid" alt="">
+							<img style="height:250;object-fit:cover" src="{{asset('img/facility/trading-community.png')}}"  class="img-fluid" alt="">
 							<h5 class="mt-2 text-left">Smart Financial Community</h5>
 						</div>
 					</div>
