@@ -63,6 +63,8 @@ class PaymentController extends Controller
         } else if($ebook->id == 2) {
           $ebookId = 4;
         }
+      } else {
+        $ebookId = $ebook->id;
       }
 
       if($user = Auth::guard('nonmember')->user()) {
@@ -189,11 +191,11 @@ class PaymentController extends Controller
           'data' => $data
       ]);
 
-    } catch (\Exception $e) {
+    } catch (\Illuminate\Database\QueryException $e) {
       DB::rollback();
 
       return response()->json([
-        'message' => $transactionRef
+        'message' => $e
       ]);
     }
   }
