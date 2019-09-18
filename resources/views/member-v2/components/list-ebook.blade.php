@@ -50,7 +50,7 @@
 						<div class="shadow rounded p-3">
 							<div style="overflow: hidden;" class="mb-2">
 								@if(count($ebook->book->imageBooks) > 0)
-								<img src="{{asset($ebook->book->imageBooks[0]->image->src)}}" class="img-fluid w-100">
+								<img style="height: 200px; object-fit: cover;" src="{{asset($ebook->book->imageBooks[0]->image->src)}}" class="img-fluid w-100">
 								@else
 								<img src="{{asset('assetsebook/v2/img/logo-white.png')}}" class="img-fluid w-100">
 								@endif
@@ -63,7 +63,7 @@
 						<div class="shadow rounded p-3" >
 							<div style="overflow: hidden;" class="mb-2">
 								@if(count($ebook->book->imageBooks) > 0)
-								<img src="{{asset($ebook->book->imageBooks[0]->image->src)}}" class="img-fluid w-100">
+								<img style="height: 200px; object-fit: cover;" src="{{asset($ebook->book->imageBooks[0]->image->src)}}" class="img-fluid w-100">
 								@else
 								<img src="{{asset('assetsebook/v2/img/logo-white.png')}}" class="img-fluid w-100">
 								@endif
