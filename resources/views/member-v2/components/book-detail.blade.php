@@ -20,7 +20,7 @@
 </div>
 <div class="container-fluid">
     <div class="row">
-      <div id="view" class="col-xl-3 col-lg-4 col-sm-5 scroll" style="background: #FFF;height:auto !important">
+      <div id="view" class="col-xl-3 col-lg-4 col-sm-5 scroll" style="background: #FFF;height:auto !important;min-height: 100vh !important;">
           <h3 class="mt30 pl15">{{ $book->title }} <span id="percentage"></span></h3>
           <nav class="navbar">
             <ul class="navbar-nav bit-ul">
