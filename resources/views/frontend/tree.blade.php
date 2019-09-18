@@ -55,13 +55,13 @@
 					</div>
 					<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div class="form-line">
-							<input class="form-control" name="nik" id="number_phone" type="number" min="10" required>
+							<input class="form-control" id="nik" name="nik" id="number_phone" type="number" min="10" required>
 							<label class="form-label">NIK / Passport</label>
 						</div>
 					</div>
 					<div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div class="form-line">
-							<input type="date" name="birthdate" class="form-control" placeholder="Birthdate" required>
+							<input type="date" id="birthdate" name="birthdate" class="form-control" placeholder="Birthdate" required>
 						</div>
 					</div>
 					<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -137,6 +137,20 @@
               <h4>Grand Total : <span id="grand-total"></span></h4>
             </div>
           </div>
+          <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="term_one" name="term_one" value="1">
+              <label class="form-check-label" for="term_one">
+                Saya telah membaca dan menyetujui <a href="javascript:void(0)">kode etik Bitrexgo</a>.
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="term_two" name="term_two" value="1">
+              <label class="form-check-label" for="term_two">
+                Saya menyatakan bahwa data yang saya isi sudah benar, dapat dipertanggung jawabkan, dan dapat digunakan untuk keperluan pembuatan ID Startpro Support System
+              </label>
+            </div>
+					</div>
 					<div class="modal-footer">
 						<a class="btn btn-secondary" data-dismiss="modal">Close</a>
 						<input type="submit" class="btn btn-primary register" value="Register">
@@ -293,10 +307,58 @@
   let postalFee = 0
   let grandTotal = 0;
   let bitrexPoint = '{{Auth::user()->bitrex_points}}'
+
+  function checkTerm() {
+    if(!$('#term_one').prop('checked') || !$('#term_two').prop('checked')) {
+      $('.register').prop('disabled', true)
+      console.log($('#term_one').prop('checked'))
+      console.log($('#term_two').prop('checked'))
+    } else {
+      if(
+        $('#username').val() != ''
+        && $('#email').val() != ''
+        && $('#first_name').val() != ''
+        && $('#last_name').val() != ''
+        && $('#nik').val() != ''
+        && $('#birthdate').val() != ''
+      ) {
+        $('.register').prop('disabled', false)
+      } else {
+        $('.register').prop('disabled', true)
+      }
+    }
+  }
+
 	$(document).ready(function() {
     $('.register').prop('disabled', true)
     $('#cost-starter').html('280 Points')
 		var element = document.querySelector('#bah');
+
+    $('input').change(function() {
+      if(
+        $('#username').val() != ''
+        && $('#email').val() != ''
+        && $('#first_name').val() != ''
+        && $('#last_name').val() != ''
+        && $('#nik').val() != ''
+        && $('#birthdate').val() != ''
+      ) {
+        $('.register').prop('disabled', false)
+      } else {
+        $('.register').prop('disabled', true)
+      }
+    })
+
+    checkTerm()
+
+    $('#term_one').change(function() {
+      checkTerm()
+    })
+
+    $('#term_two').change(function() {
+      checkTerm()
+    })
+
 		$('#upline').hide();
 		panzoom(element);
 		$('#province').select2({
@@ -313,10 +375,11 @@
 				// 	<input id="ebooks" type="checkbox" value="${v.id}" id="${v.title}" class="with-gap radio-col-red" data-price="${v.price}" ${v.title == 'basic' ? 'checked' : ''} name="ebooks[]"/>
         // 	<label for="shipping">${v.title}</label>
 				// `
+
         return `
         <div class="form-check">
           <input class="form-check-input" data-price="${v.price}" type="checkbox" name="ebooks[]" value="${v.id}" id="${v.title}">
-          <label class="form-check-label" for="${v.title}">
+          <label class="form-check-label" for="${v.title}" ${v.id == 1 ? 'checked' : ''}>
             ${v.title}
           </label>
         </div>
@@ -329,7 +392,16 @@
 				</div>
 			`)
 
+      $('#checkboxEbook input[type=checkbox]').each(function() {
+        if(parseInt($(this).val()) == 1) {
+          $(this).prop('checked', true)
+          priceEbook = priceEbook + parseInt($(this).data('price'))
+          $('#cost-ebook').html(priceEbook / 1000 + ' Points')
+        }
+      })
+
 			$('#checkboxEbook input[type=checkbox]').change(function(index) {
+        checkTerm()
 
 				if($(this).prop('checked')) {
 					priceEbook = priceEbook + parseInt($(this).data('price'))
@@ -356,8 +428,6 @@
 
         if(bitrexPoint < grandTotal) {
           $('.register').prop('disabled', true)
-        } else {
-          $('.register').prop('disabled', false)
         }
 			})
 
@@ -487,8 +557,6 @@
 
     if(bitrexPoint < grandTotal) {
       $('.register').prop('disabled', true)
-    } else {
-      $('.register').prop('disabled', false)
     }
 
 	});
@@ -497,6 +565,8 @@
 		$('.shipping-form').show();
 		$('#province').prop('required',true);
 		$('#city').prop('required',true);
+    checkTerm()
+
 	});
 
 	$('#pickup').change(function(){
@@ -511,6 +581,7 @@
 			success: function (data) {
 				data.username ? $('#username_danger').text('username you entered already exists') : $('#username_danger').empty();
 				data.username ? $(".register").prop('disabled', true) : $(".register").prop('disabled', false);
+        checkTerm()
 			},
 			error: function() {
 				console.log("Error");

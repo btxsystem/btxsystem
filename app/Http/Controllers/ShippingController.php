@@ -67,11 +67,11 @@ class ShippingController extends Controller
         $berat = 1000;
         $kurir = array(
             'jne' => 'jne' ,
-            'pos' => 'pos' ,
-            'tiki' => 'tiki' ,
+            // 'pos' => 'pos' ,
+            // 'tiki' => 'tiki' ,
             'jnt' => 'jnt' ,
-            'wahana' => 'wahana',
-            'ninja' => 'ninja'
+            // 'wahana' => 'wahana',
+            // 'ninja' => 'ninja'
         );
 
         $rajaongkir = new Rajaongkir($config);
