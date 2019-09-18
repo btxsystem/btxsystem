@@ -25,12 +25,12 @@ class EbookController extends Controller
             $ebook = Ebook::select('id','title','price','description','src','pv','bv')->where('id', '>', 2)->get();
         }else {
             if (count($isHaveBasic) > 0) {
-                $ebook = Ebook::select('id','title','price','description','src','pv','bv')->where('id', 1)->orWhere('id',3)->get();
+                $ebook = Ebook::select('id','title','price','description','src','pv','bv')->where('id', 2)->orWhere('id',3)->get();
                 $tmp = $ebook[0];
                 $ebook[0] = $ebook[1];
                 $ebook[1] = $tmp;
-            }elseif (count($isHaveAdvance)) {
-                $ebook = Ebook::select('id','title','price','description','src','pv','bv')->where('id', 2)->orWhere('id',4)->get();
+            }elseif (count($isHaveAdvance)> 0) {
+                $ebook = Ebook::select('id','title','price','description','src','pv','bv')->where('id', 1)->orWhere('id',4)->get();
             }else{
                 $ebook = Ebook::select('id','title','price','description','src','pv','bv')->where('id', '<', 3)->get();
             }
