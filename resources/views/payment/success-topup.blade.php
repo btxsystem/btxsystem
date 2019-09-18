@@ -9,7 +9,7 @@
             <div class="row">
               <div class="col-12">
                 <div class="p-4">
-                  <h1 class="text-center text-success">Transaction Successfull</h1>
+                  <h1 class="text-center text-success">Transaction Successful</h1>
                 </div>
                 <hr/>
               </div>
@@ -34,8 +34,8 @@
 
                     </tbody>
                 </table>
-                <a type="button" href="{{route('member.dashboard')}}" class="btn btn-danger btn-lg btn-block">
-                  <span class="glyphicon glyphicon-chevron-left"></span> Back to Dashboard
+                <a type="button" href="{{route('member.dashboard')}}" class="btn btn-success btn-lg btn-block">
+                  Back to Dashboard
                 </a></td>
             </div>
         </div>
