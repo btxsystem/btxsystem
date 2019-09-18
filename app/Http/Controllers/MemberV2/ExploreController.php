@@ -442,4 +442,9 @@ class ExploreController extends Controller
       'message' => 'Success Solved Lesson',
     ]);
   }
+
+  public function videoBasic()
+  {
+    return view('member-v2.components.video-basic');
+  }
 }

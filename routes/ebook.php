@@ -39,6 +39,8 @@
 // });
 
 Route::domain(env('EBOOK_URL'))->group(function () {
+  Route::get('/videoEbook', 'MemberV2\ExploreController@videoBasic')->name('member.video.ebook');
+  
   Route::get('/ebook', 'MemberV2\ExploreController@subscription')->name('member.home');
 
   // Route::get('/', 'MemberV2\ExploreController@home')->name('member.home');

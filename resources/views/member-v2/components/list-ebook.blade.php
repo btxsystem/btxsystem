@@ -81,8 +81,9 @@
 				</div>
 				<hr>
 				<div class="row mb-5">
-				<div id="trfx-embed"></div>
-				<div id="trfx-embed-2"></div>
+				<div class="embed-responsive embed-responsive-16by9">
+					<iframe class="embed-responsive-item" src="{{route('member.video.ebook')}}" allowfullscreen></iframe>
+				</div>
         <!-- @foreach($book->videoEbooks as $video)
           <div class="col-lg-4 mb-3 hover">
 						<div class="embed-responsive embed-responsive-16by9">
