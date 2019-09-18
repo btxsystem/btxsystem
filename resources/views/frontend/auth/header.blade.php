@@ -69,7 +69,7 @@
                     </div>
                     <br>
                     <div class="input-group col-md-12">
-                        <input class="form-control" type="text" placeholder="NIK/Passport" name="passport" id="passport" required>
+                        <input class="form-control" type="number" placeholder="NIK/Passport" name="passport" id="passport" required>
                     </div>
                     <br>
                     <div class="input-group col-md-12">
