@@ -287,13 +287,13 @@ div#flag {
 									</form>
 								@else
 									<div>
-										@if($ebook->access)								
+										@if($ebook->id == 1 && $expired_basic != null || $ebook->id == 2 && $expired_advanced!= null)								
 										<form action="{{route('re.payment')}}" method="post">
 											{{csrf_field()}}
 											<input type="hidden" name="ebook" value="{{$ebook->id}}">
                       <input type="hidden" name="repeat" value="true">
-											<button type="submit" class="btn btn-identity-red text-white btn-sm mt-3 px-5">REPEAT ORDER</button>
-											@if(!$ebook->expired)
+											<button onclick="changeValueRepeat('{{json_encode($ebook)}}')" data-toggle="modal" data-target="#repeatModal" type="button" class="btn btn-identity-red text-white btn-sm mt-3 px-5">REPEAT ORDER</button>
+											@if($expired_basic != null)
 												<a href="{{route('member.ebook.detail', ['type' => strtolower($ebook->title)])}}" class="btn btn-secondary text-white btn-sm mt-3 px-5">VIEW</a>
 											@endif
 										</form>
@@ -349,49 +349,39 @@ div#flag {
 	</div>
 	@include('member-v2.partials.footer')
 	<!-- Modal -->
-	<div class="modal fade" id="modal-subscription" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<!-- End Modal -->
+	<!-- Modal -->
+		<div class="modal fade" id="repeatModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		  <div class="modal-dialog" role="document">
-		    <div class="modal-content bg-1 text-white">
+				<div class="modal-content bg-1 text-white">
 		      <div class="modal-body">
-		      	<img src="{{asset('assetsebook/v2/img/logo-white.png')}}" class="img-fluid mb-3 mx-auto d-block" style="width: 130px;">
-						@if($username == '')
-					  <div class="form-group">
-					    <label for="exampleInputEmail1">Refferal <small class="text-danger">*</small></label>
-					    <input type="text" class="form-control" id="referralCode" aria-describedby="emailHelp" placeholder="Refferal" required>
-					  </div>
-						@else
-						<div class="form-group">
-					    <label for="exampleInputEmail1">Refferal <small class="text-danger">*</small></label>
-					    <input type="text" class="form-control" id="referralCode" aria-describedby="emailHelp" placeholder="Refferal" readonly value="{{$username}}">
-					  </div>
-						@endif
-					  <div class="form-group">
-					    <label for="exampleInputPassword1">Firstname <small class="text-danger">*</small></label>
-					    <input type="text" class="form-control" id="firstName" placeholder="Firstname" required>
-					  </div>
-						<div class="form-group">
-					    <label for="exampleInputPassword1">Lastname <small class="text-danger">*</small></label>
-					    <input type="text" class="form-control" id="lastName" placeholder="Lastname" required>
-					  </div>
-					  <div class="form-group">
-					    <label for="exampleInputPassword1">Email <small class="text-danger">*</small></label>
-					    <input type="email" class="form-control" id="email" placeholder="Email" required>
-					  </div>
-					  <div class="form-group">
-					    <label for="exampleInputPassword1">Phone Number <small class="text-danger">*</small></label>
-					    <input type="number" class="form-control" id="phoneNumber" placeholder="Phone number" required>
-					  </div>
-					  <span>Total yang dibayar : </span><b><span id="total_price"></span></b>
-		      </div>
-		      <div class="modal-footer justify-content-center">
-		        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-		        <button type="button" class="btn btn-primary" onclick="submit()">Submit</button>
+						<form id="repeatBtn" action="{{route('re.payment')}}" method="post">
+							{{csrf_field()}}
+							<input type="hidden" id="repeatEbook" name="ebook">
+							<input type="hidden" id="repeatPaymentMethod" name="payment_method">
+							<input type="hidden" name="repeat" value="true">
+							<div class="form-group">
+								<div class="form-check form-check-inline">
+									<input onclick="selectPayment('transfer')" class="form-check-input" type="radio" name="payment_method" id="payment_method" value="transfer" checked>
+									<label class="form-check-label" for="inlineRadio1">Transfer</label>
+								</div>
+								<div class="form-check form-check-inline">
+									<input onclick="selectPayment('ipay')" class="form-check-input" type="radio" name="payment_method" id="payment_method" value="ipay">
+									<label class="form-check-label" for="inlineRadio1">VA / OVO</label>
+								</div>
+							</div>
+							<h4>Total yang dibayar : IDR </span><b><span id="total_price"></h4></b>
+						</div>
+						<div class="modal-footer justify-content-center">
+							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+							<button type="button" class="btn btn-identity-red" onclick="submit()" id="register">Submit</button>
+						</div>
+						</form>
 		      </div>
 		    </div>
 		  </div>
 		</div>
-	<!-- End Modal -->
-	<!-- Modal -->
+	<!-- End Modal -->	
 	<div class="modal fade" id="modal-login" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		  <div class="modal-dialog" role="document">
 		    <div class="modal-content text-white">
@@ -452,6 +442,24 @@ function selectedSubscription(param = null) {
   const data = JSON.parse(param)
 
   $('#total_price').html(toIDR(data.price))
+}
+
+function changeValueRepeat(param) {
+	let data = JSON.parse(param)
+	$('#repeatEbook').val(data.id)
+	$('#repeatPaymentMethod').val('transfer')
+
+	<?php if(Auth::guard('user')->user()){?>
+		$('#total_price').html(toIDR(data.price))
+	<?php } else {?>
+		$('#total_price').html(toIDR(parseInt(data.price) + parseInt(data.price_markup)))
+	<?php } ?>
+	$('#ebook').val(data.id)
+	$('#income').val(data.price_markup)
+}
+
+function selectPayment(data) {
+	$('#repeatPaymentMethod').val(data)
 }
 
 function submit() {

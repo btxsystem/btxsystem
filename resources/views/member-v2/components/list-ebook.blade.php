@@ -39,7 +39,7 @@
 					<!-- <img src="http://demo.viewpreview.online/assets/img/star.png" class="img-fluid mr-3"> -->
 					<span class="text-bold">{{ ucwords($book->title) }} Module</span>
 					@if(!$book->access)
-					<button class="btn btn-identity-red text-white px-5 ml-3" onclick="selectedSubscription('{{$book}}')">BUY</button>
+					<button class="btn btn-identity-red text-white px-5 ml-3" onclick="selectedSubscription(JSON.stringify({'price': '{{$book->price}}', 'price_markup': '{{$book->price_markup}}', 'id': '{{$book->id}}'}))">BUY</button>
 					@endif
 				</div>
 				<hr>
