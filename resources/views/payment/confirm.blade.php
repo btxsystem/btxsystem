@@ -44,10 +44,10 @@
                     <input type="text" class="form-control" name="bank_name" placeholder="Bank Name" value="" required>
                   </div>
                   <div class="form-group">
-                    <input type="text" class="form-control" name="account_name" placeholder="Account Name" value="" required>
+                    <input type="text" class="form-control" name="account_name" placeholder="Sender Account Name" value="" required>
                   </div>
                   <div class="form-group">
-                    <input type="number" class="form-control" name="account_number" placeholder="Account Number" value="" required>
+                    <input type="number" class="form-control" name="account_number" placeholder="Sender Account Number" value="" required>
                   </div>
                   <div class="form-group">
                     <input type="number" class="form-control" name="amount" placeholder="Amount" value="" required>
