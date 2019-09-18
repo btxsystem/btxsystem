@@ -165,6 +165,9 @@
             <a class="header-logo" href="javascript:void(0);">
               <img class="header-logo__img" src="{{asset('img/logo.png')}}"  alt="Logo" height="auto" width="190px">
             </a>
+            <a class="header-logo" href="javascript:void(0);">
+              <img class="header-logo__img" src="{{asset('img/ap2li_new_1.png')}}"  alt="AP2LI Logo" height="auto" width="190px">
+            </a>
             <div class="btnBook">
               <div class="btn">
                 <a href="{{route('member.home')}}">EBOOK</a>
@@ -199,6 +202,7 @@
                     <!-- <li><a href="#"><button class="btn btn-effect btn-info btn-buy" style="background: #b92240; margin-top: -10px;">JOIN</button></a></li> -->
 
                   </ul>
+                  
                 </div>
               </nav>
               <!--end navbar -->
