@@ -9,7 +9,7 @@
             <div class="row">
               <div class="col-12">
                 <div class="p-4">
-                  <h1 class="text-center text-success">Transaction Successfully</h1>
+                  <h1 class="text-center text-success">Transaction Successfull</h1>
                 </div>
                 <hr/>
               </div>
@@ -31,7 +31,7 @@
                             <td colspan=2>{{ $prodDesc ?? '' }}</h4></td>
                             <td colspan=2> {{ $code ?? '' }} </td>
                         </tr>
-  
+
                     </tbody>
                 </table>
                 <a type="button" href="{{route('member.home')}}" class="btn btn-danger btn-lg btn-block">

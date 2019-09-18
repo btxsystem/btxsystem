@@ -38,7 +38,7 @@
 //     Route::get('/{username}', 'MemberV2\ExploreController@subscription')->name('member.subscription.referral');
 // });
 
-Route::domain('ebook.bitrexgo.co.id')->group(function () {
+Route::domain('ebook.bitrexgo.id')->group(function () {
   Route::get('/ebook', 'MemberV2\ExploreController@subscription')->name('member.home');
 
   // Route::get('/', 'MemberV2\ExploreController@home')->name('member.home');
