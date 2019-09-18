@@ -22,17 +22,17 @@ class EbookController extends Controller
         $isHaveBasic = TransactionMember::where('member_id',Auth::id())->where('ebook_id',1)->get();
         $isHaveAdvance = TransactionMember::where('member_id',Auth::id())->where('ebook_id',2)->get();
         if (count($isHaveBasic) > 0 and count($isHaveAdvance) > 0) {
-            $ebook = Ebook::select('id','title','price','description','src','pv','bv')->where('id', '>', '2')->get();
+            $ebook = Ebook::select('id','title','price','description','src','pv','bv')->where('id', '>', 2)->get();
         }else {
             if (count($isHaveBasic) > 0) {
-                $ebook = Ebook::select('id','title','price','description','src','pv','bv')->where('id', '=', '2')->orWhere('id','=', '3')->get();
+                $ebook = Ebook::select('id','title','price','description','src','pv','bv')->where('id', 1)->orWhere('id',3)->get();
                 $tmp = $ebook[0];
                 $ebook[0] = $ebook[1];
                 $ebook[1] = $tmp;
             }elseif (count($isHaveAdvance)) {
-                $ebook = Ebook::select('id','title','price','description','src','pv','bv')->where('id', '=', '1')->orWhere('id','=', '4')->get();
+                $ebook = Ebook::select('id','title','price','description','src','pv','bv')->where('id', 2)->orWhere('id',4)->get();
             }else{
-                $ebook = Ebook::select('id','title','price','description','src','pv','bv')->where('id', '<', '3')->get();
+                $ebook = Ebook::select('id','title','price','description','src','pv','bv')->where('id', '<', 3)->get();
             }
         }
         return response()->json($ebook);

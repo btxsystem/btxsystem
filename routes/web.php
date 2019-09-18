@@ -154,7 +154,7 @@ Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
         Route::get('history-pv', ['as' => 'history-pv', 'uses' => 'Member\PvController@getHistoryPv']);
         Route::get('daily-bonus-sponsor', ['as' => 'daily-bonus-sponsor', 'uses' => 'Member\DashboardController@getBonusSponsorDaily']);
         Route::get('daily-pairing', ['as' => 'daily-pairing', 'uses' => 'Member\DashboardController@getBonusPairing']);
-        Route::get('generate', ['as' => 'generate', 'uses' => 'Member\PvController@generate']);
+       // Route::get('generate', ['as' => 'generate', 'uses' => 'Member\PvController@generate']);
         Route::get('my-transaction', ['as' => 'my-transaction', 'uses' => 'Member\TransactionController@myTransaction']);
         Route::get('prospected-member-transaction', ['as' => 'prospected-member-transaction', 'uses' => 'Member\TransactionController@prospectedMemberHistory']);
         Route::get('reward', ['as' => 'reward', 'uses' => 'Member\ProfileMemberController@getRewards']);
@@ -171,6 +171,8 @@ Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
         Route::get('summary/{id}', ['as' => 'summary', 'uses' => 'Member\PvController@getSummary']);
         Route::get('search-downline/{id}', ['as' => 'search-downline', 'uses' => 'Member\PvController@searchDownline']);
     });
+
+    Route::post('claim-reward', ['as' => 'claim-reward', 'uses' => 'Member\ProfileMemberController@claimReward']);
 
     Route::group(['prefix' => 'transaction', 'as'=> 'transaction.'], function () {
         Route::get('my-transaction', ['as' => 'my-transaction', 'uses' => 'Member\TransactionController@index']);

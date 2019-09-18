@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddColumnToEmployeersTable2 extends Migration
+class AddDisplayTitleToEbooksTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddColumnToEmployeersTable2 extends Migration
      */
     public function up()
     {
-        Schema::table('employeers', function (Blueprint $table) {
-            $table->dateTime('expired_at')->nullable();
+        Schema::table('ebooks', function (Blueprint $table) {
+            $table->text('display_title')->nullable()->after('slug');
         });
     }
 
@@ -25,8 +25,8 @@ class AddColumnToEmployeersTable2 extends Migration
      */
     public function down()
     {
-        Schema::table('employeers', function (Blueprint $table) {
-            $table->dropColumn('expired_at');
+        Schema::table('ebooks', function (Blueprint $table) {
+            $table->dropColumn('display_title');
         });
     }
 }
