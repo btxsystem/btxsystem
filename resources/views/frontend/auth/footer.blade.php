@@ -110,7 +110,7 @@
 <!--COLOR SWITCHER -->
 <script src="{{asset('assets3/js/bootstrap-select.js')}}"></script>
 <script src="{{asset('assets3/js/dmss.js')}}"></script>
-<script type="text/javascript" src="http://localhost:8000/assets2/js/select2.js" ></script>
+<script type="text/javascript" src="{{asset('assets2/js/select2.js')}}" ></script>
 <script>
 	let priceEbook = 0;
 	let postalFee = 0;
@@ -127,7 +127,7 @@
 			const {data} = res
 			let render = data.map((v, i) => {
 				return `
-					<input id="ebooks" type="checkbox" value="${v.id}" id="${v.title}" class="with-gap radio-col-red" data-price="${v.price}" name="ebooks[]"/>
+					<input id="ebooks" type="checkbox" value="${v.id}" id="${v.title}" class="with-gap radio-col-red" data-price="${v.price}" ${v.title == 'basic' ? 'checked' : ''} name="ebooks[]"/>
         	<label for="shipping">${v.title}</label>
 				`
 			})

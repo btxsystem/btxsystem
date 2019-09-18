@@ -18,7 +18,7 @@
   <link href="{{asset('assets3/css/color3.css')}}" rel="alternate stylesheet" title="color3" media="all">
   <link href="{{asset('assets3/css/color4.css')}}" rel="alternate stylesheet" title="color4" media="all">
   <link href="{{asset('assets3/css/color5.css')}}" rel="alternate stylesheet" title="color5" media="all">
-  <link rel="stylesheet" type="text/css" href="http://localhost:8000/assets2/css/select2.css">
+  <link rel="stylesheet" type="text/css" href="{{asset('assets2/css/select2.css')}}">
 
   <script src="{{asset('assets3/js/jquery-1.11.3.min.js')}}"></script>
 <!--   <script defer src="{{asset('js/app.js')}}"></script>
@@ -47,7 +47,7 @@
  -->              <form action="{{route('register-member')}}" method="post" id="payment">
                 @csrf
                     <div class="input-group col-md-12">
-                        <input class="form-control" type="text" name="referral" id="referal" placeholder="Referal" required>
+                        <input class="form-control" type="text" name="referral" id="referal" placeholder="Sponsor Username" required>
                         <p class="alert-referal"></p>
                     </div>
                     <br>
@@ -192,7 +192,8 @@
                     <li><a id="about" href="#">About Us</a></li>
                     <li><a id="product" href="#">Our Product</a></li>
                     <li><a id="event" href="#">Event</a></li>
-                    <li><a data-toggle="modal" data-target="#join"><button class="btn btn-effect btn-info btn-buy" style="background: #b92240; margin-top: -10px;">JOIN</button></a></li>
+                    <!-- <li><a data-toggle="modal" data-target="#join"><button class="btn btn-effect btn-info btn-buy" style="background: #b92240; margin-top: -10px;">JOIN</button></a></li> -->
+                    <li><a href="#"><button class="btn btn-effect btn-info btn-buy" style="background: #b92240; margin-top: -10px;">JOIN</button></a></li>
                   </ul>
                 </div>
               </nav>
