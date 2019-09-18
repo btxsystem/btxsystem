@@ -185,6 +185,12 @@ Route::group(['middleware' => 'admin'], function () {
         Route::get('/approve/{id}', ['as' => 'approve', 'uses' => 'Admin\TransferConfirmationController@approve']);
     });
 
+    Route::group(['prefix'=>'reward-claims','as'=>'reward-claims.'], function(){
+        Route::get('', ['as' => 'index', 'uses' => 'Admin\RewardClaimController@index']);
+        Route::get('/{id}/show', ['as' => 'edit', 'uses' => 'Admin\RewardClaimController@show']);
+        Route::get('/approve/{id}', ['as' => 'approve', 'uses' => 'Admin\RewardClaimController@approve']);
+    });
+
     Route::group(['prefix'=>'cms','as'=>'cms.'], function(){
         Route::resource('our-products', 'Admin\OurProductController');
 
