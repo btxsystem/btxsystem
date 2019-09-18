@@ -379,7 +379,7 @@ class RegisterController extends Controller
             $books[] = [
               'transaction_ref' => $code,
               'ebook_id' => $trx->ebook_id,
-              'expired_at' => Carbon::create(now())->addYear(1),
+              'expired_at' => Carbon::create(date('Y-m-d H:i:s'))->addYear(1),
               'member_id' => $idNewMember->id,
               'status' => 1
             ];
