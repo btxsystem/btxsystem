@@ -13,10 +13,6 @@ use DB;
 
 class TransferConfirmationController extends Controller
 {
-//    public function index()
-//    {
-//     return TransferConfirmation::all();
-//    }
 
     public function index()
     {
