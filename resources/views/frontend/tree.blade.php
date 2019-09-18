@@ -93,10 +93,10 @@
 					<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<h5 class="card-inside-title">Choose a shipping method</h5>
 						<div class="demo-radio-button">
-							<input name="shipping_method" type="radio" value="1" id="shipping" class="with-gap radio-col-red" checked />
-							<label for="shipping">Shipping</label>
-							<input name="shipping_method" type="radio" value="0" id="pickup" class="with-gap radio-col-red" />
+              <input name="shipping_method" type="radio" value="0" id="pickup" class="with-gap radio-col-red" checked/>
 							<label for="pickup">Pickup</label>
+							<input name="shipping_method" type="radio" value="1" id="shipping" class="with-gap radio-col-red" />
+							<label for="shipping">Shipping</label>
 						</div>
 					</div>
 					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 shipping-form">
@@ -131,17 +131,41 @@
           </div>
           <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <div class="form-group address-form">
-              <h4 class="hidden">Starter Pack : <span id="cost-starter">0</span></h4>
+              <!-- <h4 class="hidden">Starter Pack : <span id="cost-starter">0</span></h4>
               <h4 class="hidden">Total Ebook : <span id="cost-ebook">0</span></h4>
               <h4 class="hidden">Total Shipping : <span id="cost-postal">0</span></h4>
-              <h4>Grand Total : <span id="grand-total"></span></h4>
+              <h4>Grand Total : <span id="grand-total"></span></h4> -->
+              <div class="table-responsive">
+                <table class="table table-borderless">
+                  <tr>
+                    <td> <h4>Starter Pack</h4> </td>
+                    <td> <h4><span id="cost-starter">0</span></h4> </td>
+                    <td> <h4>Point</h4> </td>
+                  </tr>
+                  <tr>
+                    <td> <h4>Total Ebook</h4> </td>
+                    <td> <h4><span id="cost-ebook">0</span></h4> </td>
+                    <td> <h4>Point</h4> </td>
+                  </tr>
+                  <tr>
+                    <td> <h4>Total Shipping</h4> </td>
+                    <td> <h4><span id="cost-postal">0</span></h4> </td>
+                    <td> <h4>Point</h4> </td>
+                  </tr>
+                  <tr>
+                    <td> <h4>Grand Total</h4> </td>
+                    <td> <h4><span id="grand-total">0</span></h4> </td>
+                    <td> <h4>Point</h4> </td>
+                  </tr>
+                </table>
+              </div>
             </div>
           </div>
           <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <div class="form-check">
               <input class="form-check-input" type="checkbox" id="term_one" name="term_one" value="1">
               <label class="form-check-label" for="term_one">
-                Saya telah membaca dan menyetujui <a href="javascript:void(0)">kode etik Bitrexgo</a>.
+                Saya telah membaca dan menyetujui <a href="https://drive.google.com/file/d/1I2pDzWx2ITxE3PKplc_6pLdP0jMrmkA1/view?usp=sharing" target="_blank">kode etik Bitrexgo</a>.
               </label>
             </div>
             <div class="form-check">
@@ -334,7 +358,7 @@
 
 	$(document).ready(function() {
     $('.register').prop('disabled', true)
-    $('#cost-starter').html('280 Points')
+    $('#cost-starter').html('280')
 		var element = document.querySelector('#bah');
 
     $('input').change(function() {
@@ -361,6 +385,8 @@
     $('#term_two').change(function() {
       checkTerm()
     })
+
+    $('.shipping-form').hide();
 
 		$('#upline').hide();
 		panzoom(element);
@@ -399,8 +425,8 @@
         if(parseInt($(this).val()) == 1) {
           $(this).prop('checked', true)
           priceEbook = priceEbook + parseInt($(this).data('price'))
-          $('#cost-ebook').html(priceEbook / 1000 + ' Points')
-          $('#grand-total').html((priceEbook + postalFee + 280000) / 1000 + ' Points')
+          $('#cost-ebook').html(toPrice(priceEbook / 1000))
+          $('#grand-total').html(toPrice((priceEbook + postalFee + 280000) / 1000))
         }
       })
 
@@ -425,8 +451,8 @@
 					$('#cost-postal').parent().addClass('hidden')
 				}
 
-				$('#cost-ebook').html(priceEbook / 1000 + ' Points')
-				$('#grand-total').html((priceEbook + postalFee + 280000) / 1000 + ' Points')
+				$('#cost-ebook').html(toPrice(priceEbook / 1000))
+				$('#grand-total').html(toPrice((priceEbook + postalFee + 280000) / 1000))
 
         grandTotal = (priceEbook + postalFee + 280000) / 1000;
 
@@ -545,7 +571,7 @@
 		// $('#cost').val('Total ongkir: '+Math.ceil(this.value/1000) + ' Points');
 		// $('#starter').val('Join Member: '+280 + ' Points');
     $('#cost').val(Math.ceil(this.value/1000))
-    $('#cost-starter').html('280 Points')
+    $('#cost-starter').html('280')
     postalFee = Math.ceil(this.value)
 
 		if(postalFee != 0) {
@@ -554,8 +580,8 @@
 			$('#cost-postal').parent().addClass('hidden')
 		}
 
-		$('#cost-postal').html(postalFee / 1000 + ' Points')
-		$('#grand-total').html((priceEbook + postalFee + 280000) / 1000 + ' Points')
+		$('#cost-postal').html(toPrice(postalFee / 1000))
+		$('#grand-total').html(toPrice((priceEbook + postalFee + 280000) / 1000) + ' Points')
 
     grandTotal = (priceEbook + postalFee + 280000) / 1000;
 
@@ -728,8 +754,8 @@
 			.attr("y", function(d){return d.y-40;})
 			.classed("img-fluid", true);
 	}
-  function toIDR(value) {
-		return "IDR " + value.toString().replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1\.")
+  function toPrice(value) {
+		return value.toString().replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1\.")
 	}
 </script>
 @stop
