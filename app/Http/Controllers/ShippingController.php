@@ -86,7 +86,7 @@ class ShippingController extends Controller
         foreach ($datas as $key => $value) {
             for ($i=0; $i<count($value['costs']); $i++) {
                 $data[$index]['id'] = $value['costs'][$i]['cost'][0]['value'];
-                $data[$index]['text'] = $value['code'].' '.$value['costs'][$i]['service'].' ('.$value['costs'][$i]['cost'][0]['etd'].')';
+                $data[$index]['text'] = $value['code'].' '.$value['costs'][$i]['service'].' ('.$value['costs'][$i]['cost'][0]['etd'].') - ('.$value['costs'][$i]['cost'][0]['value'].')';
                 $index++;
             }
         }
