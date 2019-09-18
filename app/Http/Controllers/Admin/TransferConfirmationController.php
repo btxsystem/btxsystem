@@ -54,10 +54,10 @@ class TransferConfirmationController extends Controller
             if($data->type == 'topup_bitrex_point') {
                 $checkRef = HistoryBitrexPoints::where('transaction_ref', $data->invoice_number);
     
-                $data = DB::table('employeers')->where('id',$checkRef->first()->id_member)->select('bitrex_points')->first();
+                $member = DB::table('employeers')->where('id',$checkRef->first()->id_member)->select('bitrex_points')->first();
     
                 
-                DB::table('employeers')->where('id', $checkRef->first()->id_member)->update(['bitrex_points' => $data->bitrex_points + $checkRef->first()->points, 'updated_at' => Carbon::now()]);
+                DB::table('employeers')->where('id', $checkRef->first()->id_member)->update(['bitrex_points' => $member->bitrex_points + $checkRef->first()->points, 'updated_at' => Carbon::now()]);
     
                 $checkRef->update([
                     'status' => 1
