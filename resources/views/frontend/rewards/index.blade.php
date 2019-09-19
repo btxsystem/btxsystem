@@ -87,7 +87,7 @@
                     over ++;
                     $.each(data, function(i, item){
                         if (item.status == 2) {
-                            $('.reward-status-'+i).html('<button type="button" style="cursor:no-drop" class="btn btn-success fa fa-check">Climed</button>');
+                            $('.reward-status-'+i).html('<button type="button" style="cursor:no-drop" class="btn btn-success fa fa-check">Claimed</button>');
                         }else if(item.status == 1){
                             $('.reward-status-'+i).html('<button type="button" style="cursor:no-drop" class="btn btn-secondary">Waiting approval</button>');
                         }else if(item.status == 0){
@@ -97,7 +97,7 @@
                 }else if(leng > 8){
                     $.each(data, function(i, item){
                         if (item.status == 2) {
-                            $('.reward-status-'+i).html('<button type="button" style="cursor:no-drop" class="btn btn-success fa fa-check">Climed</button>');
+                            $('.reward-status-'+i).html('<button type="button" style="cursor:no-drop" class="btn btn-success fa fa-check">Claimed</button>');
                         }else if(item.status == 1){
                             $('.reward-status-'+i).html('<button type="button" style="cursor:no-drop" class="btn btn-secondary">Waiting approval</button>');
                         }else if(item.status == 0){
