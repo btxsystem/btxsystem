@@ -123,7 +123,7 @@
     @media only screen and (max-width: 480px) {
     /* For mobile phones: */
         span#clock{
-            margin-left: -9px;
+            margin-left: -15px;
             font-size: 10px !important;
         }
 

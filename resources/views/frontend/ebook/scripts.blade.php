@@ -112,7 +112,7 @@ $(document).ready(function () {
                         return letter.toUpperCase();
                     });
                     $('#basic').text(str);
-                    data[index].id == 3 ? $('#cart1').text('REFEAT ORDER') : $('#cart1').text('BUY') ;
+                    data[index].id == 3 ? $('#cart1').text('REPEAT ORDER') : $('#cart1').text('BUY') ;
 
                     if(parseInt($( window ).width()) < 992) {
                       $('#view1').addClass('btn-block')
@@ -138,7 +138,7 @@ $(document).ready(function () {
                         return letter.toUpperCase();
                     });
                     $('#advance').text(str);
-                    data[index].id == 4 ? $('#cart2').text('REFEAT ORDER') : $('#cart2').text('BUY') ;
+                    data[index].id == 4 ? $('#cart2').text('REPEAT ORDER') : $('#cart2').text('BUY') ;
 
                     if(parseInt($( window ).width()) < 992) {
                       $('#view2').addClass('btn-block')

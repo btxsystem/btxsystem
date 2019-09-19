@@ -99,24 +99,31 @@
 							<label for="shipping">Shipping</label>
 						</div>
 					</div>
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 pickup-form">
+            <h4>B-G 168, Jl. Pluit Indah Raya, Pluit, Penjaringan, North Jakarta City, Jakarta 14450</h4>
+          </div>
 					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 shipping-form">
 						<div class="form-group">
 							<select id="province" name="province" class="province"></select>
+              <input type="hidden" name="province_name" id="province_name" value="">
 						</div>
 						<div class="form-group city-form">
 							<select id="city" name="city" class="city"></select>
+              <input type="hidden" name="city_name" id="city_name" value="">
 						</div>
 						<div class="form-group district-form">
 							<select id="district" name="district" class="district"></select>
+              <input type="hidden" name="district_name" id="district_name" value="">
 						</div>
             <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
   						<div class="form-line">
-  							<input class="form-control" name="address" id="address" type="text" min="3" required>
+  							<input class="form-control" name="address" id="address" type="text" min="3">
   							<label class="form-label">Address</label>
   						</div>
   					</div>
 						<div class="form-group kurir-form">
 							<select id="kurir" name="kurir" class="kurir"></select>
+              <input type="hidden" name="kurir_name" id="kurir_name" value="">
 						</div>
 						<div class="cost-form form-line" style="display:none">
 							<input class="cost form-control" name="cost" id="cost" type="text">
@@ -508,6 +515,7 @@
 
 	$('#province').change(function(){
 		let id = this.value;
+    $('#province_name').val($(this).find(":checked").text())
 		$('#city').empty().trigger('change');
 		$('#district').empty().trigger('change');
 		$('#kurir').empty().trigger('change');
@@ -529,6 +537,7 @@
 
 	$('#city').change(function(){
 		let id = this.value;
+    $('#city_name').val($(this).find(":checked").text())
 		$('#district').empty().trigger('change');
 		$('#kurir').empty().trigger('change');
 		$('#district').html('<option disabled>Subdistrict<option>');
@@ -550,6 +559,7 @@
 	$('#district').change(function() {
 		let id = this.value;
 		$('#kurir').empty().trigger('change');
+    $('#district_name').val($(this).find(":checked").text())
 		$('#kurir').html('<option disabled>Kurir<option>');
 		$.ajax({
 			type: 'GET',
@@ -567,6 +577,7 @@
 	});
 
 	$('#kurir').change(function(){
+    $('#kurir_name').val($(this).find(":checked").text())
 		// $('.cost-form').show();
 		// $('#cost').val('Total ongkir: '+Math.ceil(this.value/1000) + ' Points');
 		// $('#starter').val('Join Member: '+280 + ' Points');
@@ -593,14 +604,18 @@
 
 	$('#shipping').change(function(){
 		$('.shipping-form').show();
+    $('.pickup-form').hide();
 		$('#province').prop('required',true);
 		$('#city').prop('required',true);
+    $('#address').prop('required', true)
     checkTerm()
 
 	});
 
 	$('#pickup').change(function(){
+    $('#address').prop('required', false)
 		$('.shipping-form').hide();
+    $('.pickup-form').show();
 	});
 
 	$('#username').keyup(function(){
@@ -678,7 +693,7 @@
 				data.pairings ? $('#_pv_pairing_l').text('PV Pairing L: ' + data.pairings.pv_left) : $('#_pv_pairing_l').text('PV Pairing L: 0 ') ;
 				data.pairings ? $('#_pv_pairing_m').text('PV Pairing M: ' + data.pairings.pv_midle) : $('#_pv_pairing_m').text('PV Pairing M: 0 ');
 				data.pairings ? $('#_pv_pairing_r').text('PV Pairing R: ' + data.pairings.pv_right) : $('#_pv_pairing_r').text('PV Pairing R: 0 ');
-				data.group ? $('#_pv_group').text('PV Group: ' + data.pv_group) : $('#_pv_group').text('PV Group: 0 ');
+				data.pv_group ? $('#_pv_group').text('PV Group: ' + data.pv_group) : $('#_pv_group').text('PV Group: 0 ');
             }
         });
 
