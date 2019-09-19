@@ -88,7 +88,7 @@ class TransactionController extends Controller
                 'id_member' => Auth::id(),
                 'nominal' => $request->nominal,
                 'points' => $request->points,
-                'description' => 'Topup',
+                'description' => 'Topup Bitrex Point',
                 'info' => 1,
                 'transaction_ref' => $afterCheckRef,
                 'status' => 6,
@@ -101,7 +101,7 @@ class TransactionController extends Controller
                 'ref_no' => $afterCheckRef
             ];
                 
-            Mail::to('asepmedia18@gmail.com')
+            Mail::to( Auth::user()->email ?? 'asepmedia18@gmail.com')
             ->send(new PurchaseBitrexPointTransferMail($dataOrder, null));
 
             DB::commit();
@@ -270,7 +270,7 @@ class TransactionController extends Controller
                 DB::beginTransaction();
                 $checkRef = HistoryBitrexPoints::where('transaction_ref', $code);
 
-                $data = DB::table('employeers')->where('id',$checkRef->first()->id_member)->select('bitrex_points')->first();
+                $data = DB::table('employeers')->where('id',$checkRef->first()->id_member)->select('bitrex_points', 'email')->first();
 
 
                 DB::table('employeers')->where('id', $checkRef->first()->id_member)->update(['bitrex_points' => $data->bitrex_points + $checkRef->first()->points, 'updated_at' => Carbon::now()]);
@@ -284,7 +284,7 @@ class TransactionController extends Controller
                     'point' => $data->bitrex_points
                 ];
                     
-                Mail::to('asepmedia18@gmail.com')
+                Mail::to($data->email ?? 'asepmedia18@gmail.com')
                 ->send(new PurchaseBitrexPointMail($dataOrder, null));
                 
                 
