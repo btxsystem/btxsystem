@@ -39,6 +39,7 @@
 </head>
 <body>
   <h1 style="text-align:center">Topup Bitrex Point</h1>
+  <h4>Please transfer to:</h4>
   <table>
     <tr>
       <td>Bank Name</td>
