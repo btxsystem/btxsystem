@@ -52,13 +52,13 @@
 
             <div class="col-lg-4 col-sm-3">
               <section class="footer-section">
-                <h3 class="footer-title">OUR CONTACT</h3>
+                <h3 class="footer-title">CONTACT US</h3>
                 <form class="form">
                   <div class="form-group">
                     <input class="form-control" type="text" placeholder="Your Name">
                     <input class="form-control" type="email" placeholder="Email address">
                     <textarea class="form-control" rows="7" placeholder="Message"></textarea>
-                    <button class="btn" style="background-color: #b92240; border-radius: 5px;">SEND MESSSAGE</button>
+                    <button class="btn" disabled style="background-color: #b92240; border-radius: 5px;">SEND MESSSAGE</button>
                   </div>
                 </form>
               </section>

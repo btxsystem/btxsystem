@@ -335,7 +335,7 @@
                 <!-- <form class="subscribe__form" action="get"> -->
                   <!-- <input class="subscribe__input form-control" type="text" placeholder="Your Email address ..."> -->
                 <div class="btnBook">
-                  <button class="subscribe__btn btn btn-effect" data-toggle="modal" data-target="#testimony" style="width: 200px;margin-right: 80px;margin-top: 20px; color: #fff;">Submit</button>
+                  <button class="subscribe__btn btn btn-effect" data-toggle="modal" data-target="#testimony" disabled style="width: 200px;margin-right: 80px;margin-top: 20px; color: #fff;">Submit</button>
                 </div>
                 <!-- </form> -->
                 <!-- Modal -->
@@ -354,7 +354,7 @@
                         <textarea class="form-control" placeholder="Your Testimony Here..." style="min-width: 100%; max-width: 100%; min-height: 150px; max-height: 150px;"></textarea>  
                       </div>
                       <div class="modal-footer">
-                        <button type="button" class="btn" style="border-radius: 5px; background-color: #b92240; color: #fff;">Send Testimony</button>
+                        <button type="button" disabled class="btn" style="border-radius: 5px; background-color: #b92240; color: #fff;">Send Testimony</button>
                         <button type="button" class="btn" style="border-radius: 5px; background-color: orange; color: #fff; margin-top: -5px;" data-dismiss="modal">Close</button>
                       </div>
                       </div>
