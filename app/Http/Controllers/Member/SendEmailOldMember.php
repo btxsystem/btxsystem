@@ -22,7 +22,7 @@ class SendEmailOldMember extends Controller
   public function sendMail()
   {
 
-    DB::table('employeers')->orderBy('id')->chunk(100, function($employeers) {
+    DB::table('employeers')->orderBy('id')->chunk(10, function($employeers) {
         foreach ($employeers as $key => $employeer) {
             $pass = strtolower(str_random(8));
             DB::table('employeers')->where('id', $employeer->id)->update(['password' => bcrypt($pass)]);
@@ -31,7 +31,8 @@ class SendEmailOldMember extends Controller
                 'password' => $pass
             ];
             if (filter_var($employeer->email, FILTER_VALIDATE_EMAIL)) {
-                Mail::to($employeer->email)->send(new OldMemberMail($dataEmail));
+              //Mail::to('dhadhang.efendi@gmail.com')->send(new OldMemberMail($dataEmail));
+              Mail::to($employeer->email)->send(new OldMemberMail($dataEmail));
             }
         }
     });

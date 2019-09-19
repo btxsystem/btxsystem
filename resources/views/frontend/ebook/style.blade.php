@@ -92,5 +92,13 @@
     		padding-top: 5px;
     		font-size: 15px;
     	}
+
+        #basic-photo{
+            width: 110px;
+        }
+
+        #advance-photo{
+            width: 110px;
+        } 
     }
 </style>

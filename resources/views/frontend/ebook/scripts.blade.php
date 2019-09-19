@@ -107,7 +107,7 @@ $(document).ready(function () {
         success: function (data) {
             for (let index = 0; index < data.length; index++) {
                 if(index == 0){
-                    var str = data[index].id == 3 ? data[index].title.replace('renewal_', ' ') : data[index].title ;
+                    var str = data[index].id == 3 ? data[index].title.replace('renewal_', ' ') + ' + Intermediate' : data[index].title + ' + Intermediate' ;
                     str = str.toLowerCase().replace(/\b[a-z]/g, function(letter) {
                         return letter.toUpperCase();
                     });
@@ -129,7 +129,7 @@ $(document).ready(function () {
                       }
                     })
 
-                    $('#description-basic').text(data[index].description);
+                    $('#description-basic').html(data[index].description);
                     $('#basic-value').val(data[index].id);
                     price_basic = data[index].price;
                 }else{
@@ -155,7 +155,7 @@ $(document).ready(function () {
                       }
                     })
 
-                    $('#advance-description').text(data[index].description);
+                    $('#advance-description').html(data[index].description);
                     $('#advance-value').val(data[index].id);
                     price_advance = data[index].price;
                 }
