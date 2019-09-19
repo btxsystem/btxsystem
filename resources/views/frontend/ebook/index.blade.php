@@ -117,6 +117,10 @@
                                                                 <h2 class="mb-0" style="color: #8543da;" id="advance"></h2>
                                                                 <br>
                                                                 <h5 style="color:black" id="advance-description"></h5><br>
+                                                                <br>
+                                                                <br>
+                                                                <br>
+                                                                <br><br><br><br>
                                                                 <a href="{{route('member.home')}}" class="btn btn-danger btn-sm mt-3 px-5" id="cart2"></a>
                                                                 <a href="{{route('member.ebook.referral', ['type' => 'advance', 'username' => isset($profile->username) ? $profile->username : $profile['username']])}}" class="btn btn-primary btn-sm mt-3 px-5" id="view2">VIEW</a>
                                                             </div>
