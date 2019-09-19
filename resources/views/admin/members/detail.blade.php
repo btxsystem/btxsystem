@@ -148,10 +148,11 @@
                         <thead class="flip-content">
                             <tr>
                                 <th width="5%">No</th>
-                                <th class="text-center" width="20%">Transaction</th>
+                                <th class="text-center" width="15%">Transaction</th>
                                 <th class="text-center" width="15%">Point</th>
                                 <th class="text-center" width="25%">Description</th>
-                                <th class="text-center" width="20%">Time</th>
+                                <th class="text-center" width="15%">Time</th>
+                                <th width="15%">Status</th>
                                 <th width="15%">Info</th>
                             </tr>
                         </thead>
@@ -323,6 +324,7 @@
                   { data: 'points', name: 'points', className: "text-center"  },                  
                   { data: 'description', name: 'description' },                  
                   { data: 'created_at', name: 'created_at', className: "text-center"  },                  
+                  { data: 'status', name: 'status', className: "text-center"  },                  
                   { data: 'info', name: 'info', className: "text-center"  },                  
 
               ]
