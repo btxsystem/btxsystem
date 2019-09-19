@@ -10,6 +10,7 @@
               <div class="col-12">
                 <div class="p-4">
                   <h1 class="text-center text-info">Transaction Summary</h1>
+                  <h4  class="text-center text-danger">Please check your email.</h4>
                 </div>
                 <hr/>
               </div>
