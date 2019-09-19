@@ -15,7 +15,9 @@ class EbookController extends Controller
     public function index()
     {
         $data = Auth::user();
-        return view('frontend.ebook.index')->with('profile',$data);
+        $basic = Ebook::select('src')->where('id', 1)->first();
+        $advance = Ebook::select('src')->where('id', 2)->first();
+        return view('frontend.ebook.index',['profile'=>$data, 'basic'=> $basic, 'advance'=>$advance]);
     }
 
     public function getEbook(){
