@@ -219,7 +219,9 @@ Transfer Confirmation
 
         $(document).on('click', '.approve-payment', function (e) {
             e.preventDefault();
-            var id = $(this).data('id');
+            // var id = $(this).data('id');
+            var invoice_number = $(this).data('invoice_number');
+            console.log(invoice_number);
             var url =   "{{url('backoffice/transfer-confirmation/approve/')}}"
             swal({
                     title: "Are you sure to approve this payment ?",
@@ -230,8 +232,8 @@ Transfer Confirmation
                 function() {
                     $.ajax({
                         type: "GET",
-                        url: url +'/'+ id,
-                        data: {id:id},
+                        url: url +'/'+ invoice_number,
+                        data: {invoice_number:invoice_number},
                         success: function (data) {
                                 window.location.href = "{{ route('transfer-confirmation.index') }}";
                             }         
