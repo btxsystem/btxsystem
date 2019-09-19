@@ -273,9 +273,9 @@ div#flag {
 									@endif
 								</h2>
 								@if($ebook->id == 1)
-								<span class="text-dark">Pada modul ini anda akan mempelajari trading dari dasar. Pertama anda akan mengerti istilah-istilah yang digunakan dalam dunia trading, anda akan mempelajari cara membaca grafik dan membuat analisa dasar sendiri.<br></span><br>
+								<span class="text-dark">{!! $ebook->description !!}<!--Pada modul ini anda akan mempelajari trading dari dasar. Pertama anda akan mengerti istilah-istilah yang digunakan dalam dunia trading, anda akan mempelajari cara membaca grafik dan membuat analisa dasar sendiri.<br></span><br>-->
 								@else
-								<span class="text-dark">Pada modul ini anda akan mempelajari dunia trading lanjutan. Bagaimana cara membaca pasar dengan penggabungan dua atau lebih analisa, diantaranya analisa secara fundamental dan teknikal, serta mempelajari secara mendalam indikator-indikator teknikal.</span><br>
+								<span class="text-dark">{!! $ebook->description !!}<!--Pada modul ini anda akan mempelajari dunia trading lanjutan. Bagaimana cara membaca pasar dengan penggabungan dua atau lebih analisa, diantaranya analisa secara fundamental dan teknikal, serta mempelajari secara mendalam indikator-indikator teknikal.</span><br>-->
 								@endif
 								@if($ebook->id == 3 || $ebook->id == 4)
 									<form action="{{route('payment')}}" method="post">
