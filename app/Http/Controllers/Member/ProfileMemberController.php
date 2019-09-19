@@ -538,19 +538,18 @@ class ProfileMemberController extends Controller
     public function registerAutoPlacement(Request $request)
     {
 
-        dd(Carbon::create(date('Y-m-d H:i:s'))->addYear(1));
         try {
             DB::beginTransaction();
             $method = $request->input('payment_method') ?? 'point';
             $shippingMethod = $request->input('shipping_method') ?? "0"; 
             
-            // $checkEmail = Employeer::where('email', $request->email)->count();
+            $checkEmail = Employeer::where('email', $request->email)->count();
 
-            // if($checkEmail > 0) {
-            //     DB::rollback();
-            //     Alert::error('Email sudah terdaftar', 'Error')->persistent("OK");
-            //     return redirect()->route('member.tree');
-            // }
+            if($checkEmail > 0) {
+                DB::rollback();
+                Alert::error('Email sudah terdaftar', 'Error')->persistent("OK");
+                return redirect()->route('member.tree');
+            }
 
             $checkUsername = Employeer::where('username', $request->username)->count();
 
