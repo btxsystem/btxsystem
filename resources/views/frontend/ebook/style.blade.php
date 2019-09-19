@@ -93,7 +93,11 @@
     		font-size: 15px;
     	}
 
-        #advance-photo,#basic-photo{
+        #basic-photo{
+            width 110px;
+        }
+
+        #advance-photo{
             width 110px;
         } 
     }
