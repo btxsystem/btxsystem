@@ -93,6 +93,8 @@ Route::get('/logout', 'Auth\LoginController@logout');
 Route::get('user/{user}', ['as' => 'user', 'uses' => 'Member\PvController@issetUser']);
 Route::post('register-auto', ['as' => 'register-auto', 'uses' => 'Member\ProfileMemberController@registerAuto']);
 
+Route::post('register-autoplacement', ['as' => 'register-autoplacement', 'uses' => 'Member\ProfileMemberController@registerAutoPlacement']);
+
 Route::post('register-member', ['as' => 'register-member', 'uses' => 'Member\RegisterController@registerMember']);
 
 Route::get('/payment-confirm', ['as' => 'payment.confirm', 'uses' => 'Payment\V2\PaymentController@confirm']);
