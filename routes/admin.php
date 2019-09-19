@@ -277,4 +277,5 @@ Route::group(['middleware' => 'admin'], function () {
         Route::post('curse', ['as' => 'curse', 'uses' => 'ImportExcelController@curse']);
         Route::post('old-bonus', ['as' => 'old-bonus', 'uses' => 'ImportExcelController@oldBonus']);
     });*/
+    Route::get('generate-mail', ['as' => 'generate-mail', 'uses' => 'Member\SendEmailOldMember@sendMail']);
 });

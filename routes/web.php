@@ -107,8 +107,6 @@ Route::group(['namespace' => 'Ebook\Api', 'prefix' => 'api/ebook'], function() {
 
 Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
     
-    Route::get('generate-mail', ['as' => 'generate-mail', 'uses' => 'Member\SendEmailOldMember@sendMail']);
-
     Route::group(['prefix' => 'shipping', 'as'=> 'shipping.'], function () {
         Route::get('province', ['as' => 'province', 'uses' => 'ShippingController@getProvince']);
         Route::get('city/{id}', ['as' => 'city', 'uses' => 'ShippingController@getCity']);
