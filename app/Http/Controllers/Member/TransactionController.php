@@ -102,7 +102,7 @@ class TransactionController extends Controller
                 'amount' =>   $request->nominal,
                 'ref_no' => $afterCheckRef
             ];
-                
+
             Mail::to( Auth::user()->email ?? 'asepmedia18@gmail.com')
             ->send(new PurchaseBitrexPointTransferMail($dataOrder, null));
 
@@ -196,18 +196,48 @@ class TransactionController extends Controller
 
             $imageName = null;
 
-            $hasConfirmation = DB::table('transfer_confirmations')
-                ->where('invoice_number', $invoice_number)->count();
+            if($invoice_number != '') {
+              $orderType = substr($invoice_number, 0, 8);
 
-            if($hasConfirmation > 0) {
+              $error = true;
+
+              if($orderType == 'BITREX05') {
+                $messageError = 'Topup Bitrex Point';
+                $error = $type != 'topup_bitrex_point' ? true : false;
+                $type = 'topup_bitrex_point';
+              } else if($orderType == 'BITREX02') {
+                $messageError = 'Ebook Member';
+                $error = $type != 'ebook' ? true : false;
+                $type = 'ebook';
+              } else if($orderType == 'BITREX01') {
+                $messageError = 'Ebook Non Member';
+                $error = $type != 'ebook_non_member' ? true : false;
+                $type = 'ebook_non_member';
+              } else {
                 return redirect()->back()->with([
-                    'error' => 'Transfer Confirmation Already Exists.'
+                    'error' => 'Transaction not found. Please try again.'
                 ]);
+              }
+
+              if($error) {
+                return redirect()->back()->with([
+                    'error' => "Transaction Type Should be {$messageError}. Please try again."
+                ]);
+              }
             }
+
+            // $hasConfirmation = DB::table('transfer_confirmations')
+            //     ->where('invoice_number', $invoice_number)->count();
+            //
+            // if($hasConfirmation > 0) {
+            //     return redirect()->back()->with([
+            //         'error' => 'Transfer Confirmation Already Exists.'
+            //     ]);
+            // }
 
             if($type == 'topup_bitrex_point') {
                 $check  = HistoryBitrexPoints::where('transaction_ref', $invoice_number)->where('status', '=', 1)->first();
-                
+
                 if($check) {
                     return redirect()->back()->with([
                         'error' => 'Transaction not found or invalid billing type. Please try again.'
@@ -333,11 +363,11 @@ class TransactionController extends Controller
                     'amount' =>   $amount,
                     'point' => $data->bitrex_points
                 ];
-                    
+
                 Mail::to($data->email ?? 'asepmedia18@gmail.com')
                 ->send(new PurchaseBitrexPointMail($dataOrder, null));
-                
-                
+
+
                 DB::commit();
 
                 return view('payment.success-topup')->with([

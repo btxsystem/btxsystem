@@ -490,8 +490,43 @@ class PaymentController extends Controller
     return view('payment.failed');
   }
 
-  public function confirm()
+  public function confirm(Request $request)
   {
-    return view('payment.confirm');
+    $billTypes = [
+      [
+        'value' => 'ebook',
+        'title' => 'Ebook Member'
+      ],
+      [
+        'value' => 'ebook_non_member',
+        'title' => 'Ebook Non Member'
+      ],
+      [
+        'value' => 'topup_bitrex_point',
+        'title' => 'Topup Bitrex Point'
+      ]
+    ];
+    $invoiceNumber = $request->input('ref') ?? '';
+
+    $select = null;
+
+    if($invoiceNumber != '') {
+      $orderType = substr($invoiceNumber, 0, 8);
+
+      if($orderType == 'BITREX05') {
+        $select = 'topup_bitrex_point';
+      } else if($orderType == 'BITREX02') {
+        $select = 'ebook';
+      } else if($orderType == 'BITREX01') {
+        $select = 'ebook_non_member';
+      } else {
+        $select = null;
+      }
+    }
+
+    return view('payment.confirm')->with([
+      'select' => $select,
+      'billTypes' => $billTypes
+    ]);
   }
 }
