@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use DB;
 use App\HistoryBitrexPoints;
+use App\Models\TransactionMember;
+use App\Models\TransactionNonMember;
 use Carbon\Carbon;
 
 use Illuminate\Support\Facades\Mail;
@@ -194,6 +196,54 @@ class TransactionController extends Controller
 
             $imageName = null;
 
+            $hasConfirmation = DB::table('transfer_confirmations')
+                ->where('invoice_number', $invoice_number)->count();
+
+            if($hasConfirmation > 0) {
+                return redirect()->back()->with([
+                    'error' => 'Transfer Confirmation Already Exists.'
+                ]);
+            }
+
+            if($type == 'topup_bitrex_point') {
+                $check  = HistoryBitrexPoints::where('transaction_ref', $invoice_number)->where('status', '=', 1)->first();
+                
+                if($check) {
+                    return redirect()->back()->with([
+                        'error' => 'Transaction not found or invalid billing type. Please try again.'
+                    ]);
+                }
+            } else if($type == 'ebook') {
+                $orderType = substr($code, 0, 8);
+
+                if($orderType == 'BITREX01') {
+                    $check = TransactionNonMember::where('transaction_ref', $invoice_number)->where('status', '=', 1)->first();
+
+                    if($check) {
+                        return redirect()->back()->with([
+                            'error' => 'Transaction not found or invalid billing type. Please try again.'
+                        ]);
+                    }
+
+                } else if($orderType == 'BITREX02') {
+                    $check = TransactionMember::where('transaction_ref', $invoice_number)->where('status', '=', 1)->first();
+
+                    if($check) {
+                        return redirect()->back()->with([
+                            'error' => 'Transaction not found or invalid billing type. Please try again.'
+                        ]);
+                    }
+                } else {
+                    return redirect()->back()->with([
+                        'error' => 'Transaction not found. Please try again.'
+                    ]);
+                }
+            } else {
+                return redirect()->back()->with([
+                    'error' => 'Transaction not found. Please try again.'
+                ]);
+            }
+
             if($request->hasFile('image')) {
                 $this->validate($request, [
                     'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
@@ -221,7 +271,7 @@ class TransactionController extends Controller
             ]);
         } catch (\Exception $e){
             return redirect()->back()->with([
-                'error' => 'Transfer Confirmation Failed. Please try again.'
+                'error' => $e
             ]);
         }
 
