@@ -92,5 +92,9 @@
     		padding-top: 5px;
     		font-size: 15px;
     	}
+
+        #advance-photo,#basic-photo{
+            width 110px;
+        } 
     }
 </style>

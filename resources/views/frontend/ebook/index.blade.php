@@ -83,7 +83,7 @@
                                                         </div> -->
                                                         <div class="row">
                                                             <div class="col-lg-3 d-flex align-items-center">
-                                                                <img src="{{URL::to('/')}}/{{$basic->src}}" class="mx-auto d-block">
+                                                                <img src="{{URL::to('/')}}/{{$basic->src}}" class="mx-auto d-block" id="basic-photo">
                                                             </div>
                                                             <input type="text" id="basic-value" hidden>
                                                             <div class="col-lg-9">
@@ -110,7 +110,7 @@
                                                         </div> -->
                                                         <div class="row">
                                                             <div class="col-lg-3 d-flex align-items-center">
-                                                            <img src="{{URL::to('/')}}/{{$advance->src}}" class="mx-auto d-block">
+                                                            <img src="{{URL::to('/')}}/{{$advance->src}}" class="mx-auto d-block" id="advance-photo">
                                                             </div>
                                                             <input type="text" id="advance-value" hidden>
                                                             <div class="col-lg-9">
