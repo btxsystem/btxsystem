@@ -37,6 +37,16 @@ class ProfileMemberController extends Controller
         return view('frontend.account.profile')->with('profile',$profile);
     }
 
+    public function changePhoto(Request $request){
+        if ($request->hasFile('photo')) {
+            $image = $request->photo;
+            $imageName = time() . str_random(15).'.'.$image->getClientOriginalExtension();
+            $uploadPath = 'upload/member/image/' . $imageName; //make sure folder path already exist
+            $image->move('upload/member/image/', $imageName);
+            $data->src = $uploadPath;
+        }
+    }
+
     public function resetPassword(Request $request){
         $data = Auth::user();
         $new = bcrypt($request->new_password);
