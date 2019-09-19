@@ -287,6 +287,26 @@
 
 @section('footer_scripts')
 <style>
+.svg-container {
+  display: inline-block;
+  position: relative;
+  width: 100%;
+  padding-bottom: 100%; /* aspect ratio */
+  vertical-align: top;
+  overflow: hidden;
+}
+.svg-content-responsive {
+  display: inline-block;
+  position: absolute;
+  top: 10px;
+  left: 0;
+}
+
+svg .rect {
+  fill: gold;
+  stroke: steelblue;
+  stroke-width: 5px;
+}	
 	@media only screen and (max-width: 480px) {
     /* For mobile phones: */
 		.search {
@@ -335,6 +355,13 @@
 		width: 100% !important;
 	}
 
+	@media (pointer: coarse) {
+		g{
+			transform-origin: 0 0;
+    		transform: matrix(1.06, 1.84, 0.54, 2.8, 466px, 482px)
+		}
+	}
+
 </style>
 <script>
   let priceEbook = 0
@@ -366,7 +393,7 @@
 	$(document).ready(function() {
     $('.register').prop('disabled', true)
     $('#cost-starter').html('280')
-		var element = document.querySelector('#bah');
+	var element = document.querySelector('#bah');
 
     $('input').change(function() {
       if(
@@ -392,11 +419,21 @@
     $('#term_two').change(function() {
       checkTerm()
     })
-
+	// var instance = panzoom(element, {
+	// 	zoomSpeed: 0.030
+	// });
+	
+	
+	// $panzoom.on('panzoomend', function(e, panzoom, matrix, changed) {
+  	// 	if (changed) {
+    // 		// deal with drags or touch moves
+  	// 	} else {
+    // 		// deal with clicks or taps
+  	// 	}
+	// });
     $('.shipping-form').hide();
 
 		$('#upline').hide();
-		panzoom(element);
 		$('#province').select2({
 			placeholder: 'Province',
 		});
@@ -404,7 +441,6 @@
 			type: 'GET',
 			url: '{{route("api.ebook.ebooks")}}'
 		}).done(function(res) {
-      console.log(res)
 			const {data} = res
 			let render = data.map((v, i) => {
 				// return `
@@ -626,7 +662,7 @@
 			success: function (data) {
 				data.username ? $('#username_danger').text('username you entered already exists') : $('#username_danger').empty();
 				data.username ? $(".register").prop('disabled', true) : $(".register").prop('disabled', false);
-        checkTerm()
+        		checkTerm()
 			},
 			error: function() {
 				console.log("Error");
@@ -634,10 +670,34 @@
 		});
 	})
 
-	var svg = d3.select("#tree").append("svg")
-		.attr("width",1190).attr("height",600)
-		.append("g").attr("transform", "translate(-750,-50)")
-		.attr('id', 'bah');
+	var my_transform = d3Transform()
+   .translate([-750, -50]);
+   var svg = d3.select("#tree")
+		.append("svg")
+		.attr("width", 1920).attr("height", 1080)
+		.call(d3.zoom().on("zoom", function () {
+			svg.attr("transform", d3.event.transform)
+		}))
+		.append("g")
+		.attr("transform", my_transform)
+		.attr("id", "bah")
+	panzoom(document.querySelector('#tree'), {
+		zoomSpeed: 0.030
+	});
+	// var svg = d3.select("#tree")
+	// 	.append("svg");
+
+	// var child = svg.attr("width", 1920).attr("height", 1080)
+	// 	.append("g")
+	// svg.call(
+	// 		d3.zoom()
+	// 		.scaleExtent([1, 10])
+	// 		.on("zoom", function() {
+	// 			console.log(d3.event)
+	// 			child.attr("transform", "translate(-36 45.5)");
+	// 		})
+	// 	);
+	
 	$.ajax({
 		type: 'GET',
 		url: '{{route("member.select.tree")}}',

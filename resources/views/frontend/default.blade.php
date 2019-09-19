@@ -93,6 +93,7 @@
 <script defer src="{{ asset('js/app.js') }}"></script>
 <!-- select2 -->
 <script type="text/javascript" src="{{ asset('assets2/js/select2.js') }}" ></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3-transform/1.0.4/d3-transform.js"></script>
 <style>
     span#clock{
         background: black;
