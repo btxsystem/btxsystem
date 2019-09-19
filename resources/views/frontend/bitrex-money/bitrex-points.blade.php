@@ -36,6 +36,11 @@
                     <label for="female">VA / OVO</label>
                   </div>
                 </div>
+                <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12" id="transfer-form">
+                  <h4>Bank Name : BCA</h4>
+                  <h4>Bank Account : PT. BITREXGO SOLUSI PRIMA</h4>
+                  <h4>Bank Number : 5810598168</h4>
+                </div>
                 <div class="modal-footer">
                     <a href="#" class="btn btn-secondary" data-dismiss="modal">Close</a>
                     <button type="submit" disabled=true class="btn btn-primary">Topup</a>
@@ -144,6 +149,10 @@
         }else{
             $("button").prop('disabled',true);
         }
+    })
+
+    $('.demo-radio-button input').change(function() {
+      $(this).val() == "transfer" ? $('#transfer-form').show() : $('#transfer-form').hide(); 
     })
 </script>
 @stop
