@@ -33,7 +33,7 @@
                     <input name="method" type="radio" value="transfer" id="male" class="with-gap radio-col-red" checked />
                     <label for="male">Transfer</label>
                     <input name="method" type="radio" value="ipay" id="female" class="with-gap radio-col-red" />
-                    <label for="female">Ipay</label>
+                    <label for="female">VA / OVO</label>
                   </div>
                 </div>
                 <div class="modal-footer">
