@@ -291,6 +291,9 @@ class MemberController extends Controller
             ->addColumn('info', function ($data) {
                 return $this->getStatusInfoTransaction($data);
             })
+            ->addColumn('status', function ($data) {
+                return $data->status ? $this->getStatusPayment($data) : 'No Action';
+            })
             ->make(true);
     }
 
@@ -366,6 +369,23 @@ class MemberController extends Controller
             break;
 
         } 
+    }
+
+    public function getStatusPayment($data)
+    {
+        switch($data->status) {
+            case 0;
+            return 'Failed';
+            break;
+
+            case 1;
+            return 'Success';
+            break;
+
+            case 6;
+            return 'Pending';
+            break;
+        }
     }
 
 }

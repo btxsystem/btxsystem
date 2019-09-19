@@ -182,7 +182,7 @@ Route::group(['middleware' => 'admin'], function () {
     Route::group(['prefix'=>'transfer-confirmation','as'=>'transfer-confirmation.'], function(){
         Route::get('', ['as' => 'index', 'uses' => 'Admin\TransferConfirmationController@index']);
         Route::get('/{id}/show', ['as' => 'edit', 'uses' => 'Admin\TransferConfirmationController@show']);
-        Route::get('/approve/{id}', ['as' => 'approve', 'uses' => 'Admin\TransferConfirmationController@approve']);
+        Route::get('/approve/{invoice_number}', ['as' => 'approve', 'uses' => 'Admin\TransferConfirmationController@approve']);
     });
 
     Route::group(['prefix'=>'reward-claims','as'=>'reward-claims.'], function(){
