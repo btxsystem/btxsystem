@@ -59,7 +59,7 @@ class TransferConfirmationController extends Controller
     public function approve($invoice_number)
     {
         // If Type *Register Member* update table transaction member
-
+        
         TransferConfirmation::where('invoice_number', $invoice_number)->update([
           'status' => 1
         ]);
@@ -69,17 +69,16 @@ class TransferConfirmationController extends Controller
             $data = TransferConfirmation::where('invoice_number', $invoice_number)->first();
 
             if($data->type == 'topup_bitrex_point') {
-                $checkRef = HistoryBitrexPoints::where('transaction_ref', $invoice_number)->first();
-                if($checkRef) {
-                  $member = DB::table('employeers')->where('id', $checkRef->first()->id_member)->select('bitrex_points')->first();
+                $checkRef = HistoryBitrexPoints::where('transaction_ref', $data->invoice_number);
+
+                $member = DB::table('employeers')->where('id',$checkRef->first()->id_member)->select('bitrex_points')->first();
 
 
-                  DB::table('employeers')->where('id', $checkRef->first()->id_member)->update(['bitrex_points' => $member->bitrex_points + $checkRef->first()->points, 'updated_at' => Carbon::now()]);
+                DB::table('employeers')->where('id', $checkRef->first()->id_member)->update(['bitrex_points' => $member->bitrex_points + $checkRef->first()->points, 'updated_at' => Carbon::now()]);
 
-                  $checkRef->update([
-                      'status' => 1
-                  ]);
-                }
+                $checkRef->update([
+                    'status' => 1
+                ]);
             }
 
 
@@ -99,7 +98,7 @@ class TransferConfirmationController extends Controller
                   //   'err_desc' => $errdesc,
                   // ]);
 
-                  $userData = PaymentHistoryNonMember::where('ref_no', $invoice_number)
+                  $userData = PaymentHistoryNonMember::where('ref_no', $data->invoice_number)
                   ->with([
                     'nonMember'
                   ])
@@ -107,7 +106,7 @@ class TransferConfirmationController extends Controller
 
                   $isRegister = false;
 
-                  $checkIsRegister = TransactionNonMember::where('transaction_ref', $invoice_number)
+                  $checkIsRegister = TransactionNonMember::where('transaction_ref', $data->invoice_number)
                     ->with([
                       'ebook',
                       'nonMember'
@@ -125,7 +124,7 @@ class TransferConfirmationController extends Controller
 
                   $isExpired = $checkIsRegister->expired_at < now() ? true : false;
 
-                  $transaction = TransactionNonMember::where('transaction_ref', $invoice_number)
+                  $transaction = TransactionNonMember::where('transaction_ref', $data->invoice_number)
                   ->update([
                     'status' => 1,
                   ]);
@@ -169,7 +168,7 @@ class TransferConfirmationController extends Controller
                   //     'status' => $status == "0" ? 6 : $status
                   // ]);
 
-                  $checkIsRegister = TransactionMember::where('transaction_ref', $invoice_number)
+                  $checkIsRegister = TransactionMember::where('transaction_ref', $data->invoice_number)
                     ->first();
 
                   $isRegister = false;
@@ -194,12 +193,12 @@ class TransferConfirmationController extends Controller
 
                   $isExpired = $checkIsRegister->expired_at < now() ? true : false;
 
-                  $transaction = TransactionMember::where('transaction_ref', $invoice_number)
+                  $transaction = TransactionMember::where('transaction_ref', $data->invoice_number)
                   ->update([
                     'status' => 1,
                   ]);
 
-                  $checkIsRegister = TransactionMember::where('transaction_ref', $invoice_number)
+                  $checkIsRegister = TransactionMember::where('transaction_ref', $data->invoice_number)
                     ->with([
                       'ebook',
                       'member'
@@ -225,13 +224,13 @@ class TransferConfirmationController extends Controller
                 // }
 
                   if($orderType == 'BITREX01') {
-                    $trxNonMember = TransactionNonMember::where('transaction_ref', $invoice_number);
+                    $trxNonMember = TransactionNonMember::where('transaction_ref', $data->invoice_number);
                     if(!$isRenewal) {
                       $trxNonMember->update([
                         'expired_at' => Carbon::create($trxNonMember->latest('id')->first()->expired_at)->addYear(1)
                       ]);
                     } else {
-                      $getEbookIdByHistory = PaymentHistoryNonMember::where('ref_no', $invoice_number)->first();
+                      $getEbookIdByHistory = PaymentHistoryNonMember::where('ref_no', $data->invoice_number)->first();
 
                       $newIncome = Ebook::where('id', $getEbookIdByHistory->ebook_id)->first();
 
@@ -247,7 +246,7 @@ class TransferConfirmationController extends Controller
                     }
 
                   } else if($orderType == 'BITREX02') {
-                    $trxMember = TransactionMember::where('transaction_ref', $invoice_number);
+                    $trxMember = TransactionMember::where('transaction_ref', $data->invoice_number);
                     if(!$isRenewal) {
                       $trxMember->update([
                         'expired_at' => Carbon::create($trxMember->latest('id')->first()->expired_at)->addYear(1)
@@ -267,9 +266,6 @@ class TransferConfirmationController extends Controller
                 }
 
 
-            $data->update([
-                'status' => 1
-            ]);
             DB::commit();
             Alert::success('Success Update Data', 'Success');
         } catch (Exception $e) {
