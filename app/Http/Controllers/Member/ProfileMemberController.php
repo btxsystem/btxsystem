@@ -11,6 +11,9 @@ use DB;
 use Carbon\Carbon;
 use Alert;
 
+use Illuminate\Support\Facades\Mail;
+use App\Mail\RegisterMemberMail;
+
 class ProfileMemberController extends Controller
 {
     
@@ -60,6 +63,16 @@ class ProfileMemberController extends Controller
         try {
             DB::beginTransaction();
             $method = $request->input('payment_method') ?? 'point';
+            $shippingMethod = $request->input('shipping_method') ?? "0"; 
+            
+            $checkEmail = Employeer::where('email', $request->email)->count();
+
+            if($checkEmail > 0) {
+                DB::rollback();
+                Alert::error('Email sudah terdaftar', 'Error')->persistent("OK");
+                return redirect()->route('member.tree');
+            }
+
             if($method == 'point') {
                 // return response()->json([
                 //     'data' => $request->all()
@@ -77,14 +90,16 @@ class ProfileMemberController extends Controller
                 $price = 280;
                 $sponsor = Auth::user();
                 $idMember = invoiceNumbering();
-                
+
+                $password = strtolower(str_random(8));
+
                 $data = [
                     'id_member' => $idMember,
                     'username' => $request->username,
                     'first_name' => $request->first_name,
                     'last_name' => $request->last_name,
                     'email' => $request->email,
-                    'password' => bcrypt('password'),//bcrypt('Mbitrex'.rand(100,1000)),
+                    'password' => bcrypt($password),//bcrypt('Mbitrex'.rand(100,1000)),
                     'birthdate' => $request->birthdate,
                     'gender' => $request->gender,
                     'position' => $request->position,
@@ -94,10 +109,25 @@ class ProfileMemberController extends Controller
                     'bitrex_points' => 0,
                     'pv' => 0,
                     'nik' => $request->nik,
+                    'expired_at' => Carbon::create(date('Y-m-d H:i:s'))->addYear(1)
                 ];
 
                 Employeer::create($data);
                 $employeer = Employeer::where('id_member', $idMember)->first();
+
+                if((int)$shippingMethod == 1) {
+                    DB::table('address')->insert([
+                        'decription' => $request->input('address'),
+                        'city_id' => $request->input('city'),
+                        'city_name' => $request->input('city_name'),
+                        'province_id' => $request->input('province'),
+                        'province' => $request->input('province_name'),
+                        'subdistrict_id' => $request->input('district'),
+                        'subdistrict_name' => $request->input('district_name'),
+                        'type' => 1,
+                        'user_id' => $employeer->id,
+                    ]);
+                }
                 
                 $totalPriceEbook = 0;
 
@@ -145,6 +175,14 @@ class ProfileMemberController extends Controller
 
                 Employeer::find($sponsor->id)->update($input);
                 DB::commit();
+
+                $dataEmail = (object) [
+                  'member' => $employeer,
+                  'password' => $password
+                ];
+      
+                Mail::to($employeer->email)
+                  ->send(new RegisterMemberMail($dataEmail, null));                
                 // return response()->json([
                 //     'data' => $price
                 // ]);
