@@ -17,7 +17,7 @@
     <div class="container-fluid">
         <div class="row clearfix">
             <div class="col-lg-12 col-md-12 col-sm-12" id="bill">
-                
+
             </div>
         </div>
     </div>
@@ -27,7 +27,7 @@
 </section>
 @stop
 
-@section('footer_scripts')  
+@section('footer_scripts')
 <script type="text/javascript">
     $(document).ready(function () {
         $.ajax({
@@ -35,9 +35,9 @@
             data: data,
             success:function(data){
                 console.log(data);
-                
+
                 if (data.transaction.data[0]==undefined) {
-                    $('#bill').html('<div class="body" style="color:red;"><center><strong>You have not history!!!</strong></center></div>');    
+                    $('#bill').html('<div class="body" style="color:red;"><center><strong>You have no history!!!</strong></center></div>');    
                 }else{
                     $.each(data.transaction.data, function(i, item) {
                         date = moment(item.created_at).format('MMMM Do Y');
@@ -65,7 +65,7 @@
         }).done(function(data){
             if(data.transaction.data[0]==undefined){
                 $('.ajax-load').html("No more records found");
-                return;    
+                return;
             }else{
                 $('.ajax-load').hide();
                 $.each(data.transaction.data, function(i, item) {

@@ -14,7 +14,7 @@
             </div>
         </div>
     </div>
-    <div class="container-fluid">        
+    <div class="container-fluid">
         <div class="row clearfix">
             <div class="col-lg-12 col-md-12">
                 <div class="card">
@@ -22,7 +22,7 @@
                         <div class="row">
                             <div class="col-md-12">
                             <div id="app">
-                            <fa-register-member-material-component/>
+                            <!-- <fa-register-member-material-component/> -->
                             </div>
                                 <!-- <form action="{{route('member.register-auto')}}" method="post">
                                     @csrf
@@ -88,7 +88,7 @@
                                         <div class="form-group form-float col-lg-1 col-md-1 col-sm-1 col-xs-1">
                                             <button type="submit" id="goto-join" class="btn btn-primary" style="cursor: pointer;">JOIN</button>
                                         </div>
-                                    </div>                           
+                                    </div>
                                 </form> -->
                             </div>
                         </div>
@@ -98,5 +98,5 @@
         </div>
     </div>
 </section>
-@stop  
+@stop
 @extends('frontend.add-member.scripts')

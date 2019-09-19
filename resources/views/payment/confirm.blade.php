@@ -32,10 +32,15 @@
                 </div>
                 <form action="{{route('payment.confirmation')}}" method="post" enctype="multipart/form-data">
                   {{csrf_field()}}
+                  @if(!\Session::has('message'))
                   <div class="form-group">
-                    <select class="form-control" name="type" required>
-                      <option value="ebook">Ebook</option>
-                      <option value="topup_bitrex_point">Topup Bitrex Point</option>
+                    @if($select != null)
+                      <input type="hidden" name="ebook" value="{{$select}}">
+                    @endif
+                    <select {{$select != null ? 'disabled' : ''}} class="form-control" name="type" required>
+                      @foreach($billTypes as $type)
+                        <option value="{{ $type['value'] }}" {{ $type['value'] == $select ? 'selected' : '' }}>{{ $type['title'] }}</option>
+                      @endforeach
                     </select>
                   </div>
                   <div class="form-group">
@@ -56,6 +61,7 @@
                   <div class="form-group">
                     <input type="file" class="form-control" accept="image/*" name="image">
                   </div>
+                  @endif
                   @if(\Session::has('message'))
                     <a type="button" href="{{url('')}}" class="btn btn-success btn-block">
                        Back
