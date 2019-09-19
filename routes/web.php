@@ -105,6 +105,8 @@ Route::group(['namespace' => 'Ebook\Api', 'prefix' => 'api/ebook'], function() {
 });
 
 Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
+
+    Route::post('change-photo', ['as' => 'change-photo', 'uses' => 'Member\ProfileMemberController@changePhoto'] );
     
     Route::group(['prefix' => 'shipping', 'as'=> 'shipping.'], function () {
         Route::get('province', ['as' => 'province', 'uses' => 'ShippingController@getProvince']);
