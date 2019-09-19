@@ -56,13 +56,17 @@ class TransferConfirmationController extends Controller
         return \response()->json($data);
     }
 
-    public function approve($id)
+    public function approve($invoice_number)
     {
         // If Type *Register Member* update table transaction member
+        
+        TransferConfirmation::where('invoice_number', $invoice_number)->update([
+          'status' => 1
+        ]);
 
         DB::beginTransaction();
         try {
-            $data = TransferConfirmation::findOrFail($id);
+            $data = TransferConfirmation::where('invoice_number', $invoice_number)->first();
 
             if($data->type == 'topup_bitrex_point') {
                 $checkRef = HistoryBitrexPoints::where('transaction_ref', $data->invoice_number);
@@ -262,9 +266,6 @@ class TransferConfirmationController extends Controller
                 }
 
 
-            $data->update([
-                'status' => 1
-            ]);
             DB::commit();
             Alert::success('Success Update Data', 'Success');
         } catch (Exception $e) {
@@ -280,7 +281,7 @@ class TransferConfirmationController extends Controller
             case 0;
             return '
                     <a data-id="'.$row->id.'"  class="btn btn-success fa fa-eye show-testimonial" title="Show Payment"></a>
-                    <a data-id="'.$row->id.' "class="btn btn-default fa fa-check approve-payment" style="background-color: #b85ebd; color: #ffffff;" title="Approve Payment"></a>';
+                    <a data-invoice_number="'.$row->invoice_number.' "class="btn btn-default fa fa-check approve-payment" style="background-color: #b85ebd; color: #ffffff;" title="Approve Payment"></a>';
             break;
 
             case 1;
