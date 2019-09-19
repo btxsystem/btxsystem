@@ -94,11 +94,11 @@
     	}
 
         #basic-photo{
-            width 110px;
+            width: 110px;
         }
 
         #advance-photo{
-            width 110px;
+            width: 110px;
         } 
     }
 </style>
