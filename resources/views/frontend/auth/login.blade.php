@@ -335,7 +335,7 @@
                 <!-- <form class="subscribe__form" action="get"> -->
                   <!-- <input class="subscribe__input form-control" type="text" placeholder="Your Email address ..."> -->
                 <div class="btnBook">
-                  <button class="subscribe__btn btn btn-effect" data-toggle="modal" data-target="#testimony" style="width: 200px;margin-right: 80px;margin-top: 20px; color: #fff;">Submit</button>
+                  <button class="subscribe__btn btn btn-effect" data-toggle="modal" data-target="#testimony" disabled style="width: 200px;margin-right: 80px;margin-top: 20px; color: #fff;">Submit</button>
                 </div>
                 <!-- </form> -->
                 <!-- Modal -->
