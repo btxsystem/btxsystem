@@ -15,8 +15,8 @@ class AddMemberIdToPaymentHistoriesTable extends Migration
     {
         Schema::table('payment_histories_non_members', function (Blueprint $table) {
             //
-            $table->bigInteger('member_id')->unsigned();
-            $table->foreign('member_id')->references('id')->on('employeers')->onDelete('cascade');
+            //$table->bigInteger('member_id')->unsigned();
+            //$table->foreign('member_id')->references('id')->on('employeers')->onDelete('cascade');
         });
     }
 
@@ -29,7 +29,7 @@ class AddMemberIdToPaymentHistoriesTable extends Migration
     {
         Schema::table('payment_histories_non_members', function (Blueprint $table) {
             //
-            $table->dropColumn('member_id');
+            //$table->dropColumn('member_id');
         });
     }
 }
