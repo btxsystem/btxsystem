@@ -199,19 +199,14 @@ class TransactionController extends Controller
             if($invoice_number != '') {
               $orderType = substr($invoice_number, 0, 8);
 
-              $error = true;
-
               if($orderType == 'BITREX05') {
                 $messageError = 'Topup Bitrex Point';
-                $error = $type != 'topup_bitrex_point' ? true : false;
                 $type = 'topup_bitrex_point';
               } else if($orderType == 'BITREX02') {
-                $messageError = 'Ebook Member';
-                $error = $type != 'ebook' ? true : false;
                 $type = 'ebook';
+                $messageError = 'Ebook Member';
               } else if($orderType == 'BITREX01') {
                 $messageError = 'Ebook Non Member';
-                $error = $type != 'ebook_non_member' ? true : false;
                 $type = 'ebook_non_member';
               } else {
                 return redirect()->back()->with([
@@ -219,10 +214,12 @@ class TransactionController extends Controller
                 ]);
               }
 
-              if($error) {
-                return redirect()->back()->with([
-                    'error' => "Transaction Type Should be {$messageError}. Please try again."
-                ]);
+              if($selectType = $request->input('type')) {
+                  if($selectType != $type) {
+                    return redirect()->back()->with([
+                        'error' => "Transaction Type Should be {$messageError}. Please try again."
+                    ]);
+                  }
               }
             }
 
