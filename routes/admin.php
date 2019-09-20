@@ -116,6 +116,7 @@ Route::group(['middleware' => 'admin'], function () {
         Route::get('/edit-data/{id}', ['as' => 'edit-data', 'uses' => 'Admin\MemberController@edit']);
         Route::patch('/update-member/{id}', ['as' => 'update-data', 'uses' => 'Admin\MemberController@update']);
         Route::get('topup', ['as' => 'topup', 'uses' => 'Admin\MemberController@topup']);
+        Route::get('update-password', ['as' => 'update-password', 'uses' => 'Admin\MemberController@updatePassword']);
         Route::get('buy-product', ['as' => 'buy-product', 'uses' => 'Admin\MemberController@buyProduct']);
 
         // Transaction

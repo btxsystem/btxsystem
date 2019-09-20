@@ -20,12 +20,15 @@ class MemberController extends Controller
         if (request()->ajax()) {
             $data = Employeer::where('status', 1)
                              ->with('rank')
-                             ->select('id','id_member','username','first_name','last_name','rank_id','phone_number','status');
+                             ->select('id','id_member','username','first_name','last_name','rank_id','created_at','status');
                                     
             return Datatables::of($data)
                     ->addIndexColumn()
                     ->editColumn('status', function($data) {
                         return $data->status == 1 ? 'Active' : 'Nonactive' ;
+                    })
+                    ->editColumn('full_name', function($data) {
+                        return $data->first_name .' '. $data->last_name;
                     })
                     ->editColumn('ranking', function($data) {
                         return $data->rank ? $data->rank->name : '-';
@@ -44,21 +47,24 @@ class MemberController extends Controller
         if (request()->ajax()) {
             $data = Employeer::where('status', 0)
                              ->with('rank')
-                             ->select('id','id_member','username','first_name','last_name','rank_id','phone_number','status');
+                             ->select('id','id_member','username','first_name','last_name','rank_id','created_at','status');
                                     
-            return Datatables::of($data)
-                    ->addIndexColumn()
-                    ->editColumn('status', function($data) {
-                        return $data->status == 1 ? 'Active' : 'Nonactive' ;
-                    })
-                    ->editColumn('ranking', function($data) {
-                        return $data->rank ? $data->rank->name : '-';
-                    })
-                    ->addColumn('action', function($row) {
-                        return $this->htmlAction($row);
-                    })
-                    ->rawColumns(['action'])
-                    ->make(true);
+                    return Datatables::of($data)
+                             ->addIndexColumn()
+                             ->editColumn('status', function($data) {
+                                 return $data->status == 1 ? 'Active' : 'Nonactive' ;
+                             })
+                             ->editColumn('full_name', function($data) {
+                                 return $data->first_name .' '. $data->last_name;
+                             })
+                             ->editColumn('ranking', function($data) {
+                                 return $data->rank ? $data->rank->name : '-';
+                             })
+                             ->addColumn('action', function($row) {
+                                 return $this->htmlAction($row);
+                             })
+                             ->rawColumns(['action'])
+                             ->make(true);
         }
         return view('admin.members.nonactive.index');
     }
@@ -215,10 +221,40 @@ class MemberController extends Controller
         }
     }
 
-    public function updatePassword(Request $request, $id)
-    {
+    public function updatePassword(Request $request)
+    {      
+        $validator = \Validator::make($request->all(), ['password' => 'min:6']);
+
+        if ($validator->fails()) {
+            Alert::error('Password minimal 6 karakter', 'Gagal')->persistent("Close");
+            return \redirect()->back();
+         }
+
+        DB::beginTransaction();
+        try{
+            
+            $data = Employeer::findOrFail($request->id);
+            if($request->password != $request->comfirm_password ) {
+                Alert::error('Password & Confirmasi Password tidak sama !!', 'Gagal')->persistent("Close");
+                return \redirect()->back();
+            }
+            $data->password = bcrypt($request->password);
+            $data->save();
+            DB::commit();
+            
+            Alert::success('Sukses Update Password', 'Sukses');
+            return redirect()->route('members.show', $data->id);
+
+        }catch(\Exception $e){
+            // throw $e;
+            DB::rollback();
+            
+            Alert::error('Gagal Update Password', 'Gagal');
+            return \redirect()->back();
+        }
 
     }
+
     public function topup(Request $request)
     {
         DB::beginTransaction();

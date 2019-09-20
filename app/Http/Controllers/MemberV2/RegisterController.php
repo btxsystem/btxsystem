@@ -106,6 +106,16 @@ class RegisterController extends Controller
           'email' => 'required|unique:non_members,email'
         ]);
 
+        if (!filter_var($request->input('email'), FILTER_VALIDATE_EMAIL)) {
+          DB::rollback();
+        
+          return response()->json([
+            'success' => false,
+            'message' => 'Failed register',
+            'data' => ''
+          ]);
+        }
+
         $builder = (new NonMemberBuilder())
           ->setFirstName($request->input('firstName'))
           ->setLastName($request->input('lastName'))

@@ -230,13 +230,13 @@
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title" id="modal-warning">Warning!!!</h5>
+				<h5 class="modal-title" id="modal-warning">Warning</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
 			<div class="modal-body">
-				<h5>You do not have enough points, you must refill!</h5>
+				<h5>You do not have enough points, please topup</h5>
 			</div>
 			<div class="modal-footer">
 				<a class="btn btn-secondary" data-dismiss="modal">Close</a>
@@ -253,7 +253,7 @@
 				<small class="text-muted">Bitrexgo</small>
 				</h2>
         <div class="pull-right mt-2">
-          <button onclick="openAutoPlacement()" class="btn btn-primary btn-md" data-toggle="modal" data-target="#register">Add new Member with Auto-placement</button>
+          <button onclick="openAutoPlacement()" class="btn btn-primary btn-md">Add new Member with Auto-placement</button>
         </div>
 			</div>
       <div class="clearfix">
@@ -437,6 +437,24 @@ cursor: pointer;
 
   function openAutoPlacement() {
     $('#action-member').attr('action', '{{route("register-autoplacement")}}')
+<<<<<<< HEAD
+=======
+		$.ajax({
+			type: 'GET',
+			url: '/member/select/bitrex-points',
+			success: function (data) {
+				if (data.bitrex_points >= 280) {
+					$('#register').modal('show');
+				}else{
+					$('#register').modal('hide');
+					$('#warning').modal('show');
+				}
+			},
+			error: function() {
+				console.log("Error");
+			}
+		});		
+>>>>>>> 1ab8cc8f7e334cb08d71c177c3c0f2758b2541d0
   }
 
   function openTree() {
