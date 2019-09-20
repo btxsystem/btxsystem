@@ -406,7 +406,6 @@ cursor: pointer;
 		transform: matrix(1.06, 1.84, 0.54, 2.8, 466px, 482px)
 	}
 }
-
 </style>
 <script>
   let priceEbook = 0
@@ -437,8 +436,6 @@ cursor: pointer;
 
   function openAutoPlacement() {
     $('#action-member').attr('action', '{{route("register-autoplacement")}}')
-<<<<<<< HEAD
-=======
 		$.ajax({
 			type: 'GET',
 			url: '/member/select/bitrex-points',
@@ -453,8 +450,7 @@ cursor: pointer;
 			error: function() {
 				console.log("Error");
 			}
-		});		
->>>>>>> 1ab8cc8f7e334cb08d71c177c3c0f2758b2541d0
+		});	
   }
 
   function openTree() {
@@ -467,23 +463,23 @@ cursor: pointer;
   }
 
 	$(document).ready(function() {
-    $('.register').prop('disabled', true)
-    $('#cost-starter').html('280')
-	var element = document.querySelector('#bah');
-
-    $('input').change(function() {
-      if(
-        $('#username').val() != ''
-        && $('#email').val() != ''
-        && $('#first_name').val() != ''
-        && $('#last_name').val() != ''
-        && $('#nik').val() != ''
-        && $('#birthdate').val() != ''
-      ) {
-        $('.register').prop('disabled', false)
-      } else {
-        $('.register').prop('disabled', true)
-      }
+		$('.register').prop('disabled', true)
+		$('#cost-starter').html('280')
+		
+		var element = document.querySelector('#bah');
+		$('input').change(function() {
+		if(
+			$('#username').val() != ''
+			&& $('#email').val() != ''
+			&& $('#first_name').val() != ''
+			&& $('#last_name').val() != ''
+			&& $('#nik').val() != ''
+			&& $('#birthdate').val() != ''
+		) {
+			$('.register').prop('disabled', false)
+		} else {
+			$('.register').prop('disabled', true)
+		}
     })
 
     checkTerm()
