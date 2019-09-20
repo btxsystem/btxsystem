@@ -13,9 +13,9 @@ class Fix extends Migration
      */
     public function up()
     {
-        DB::unprepared('DROP TRIGGER IF EXISTS `tr_bonus_sponsor_from_member`');
+        /*DB::unprepared('DROP TRIGGER IF EXISTS `tr_bonus_sponsor_from_member`');
         DB::unprepared('DROP TRIGGER IF EXISTS `tr_bonus_sponsor_from_non_member`');
-        DB::unprepared('DROP TRIGGER IF EXISTS `tr_bonus_retail`');
+        DB::unprepared('DROP TRIGGER IF EXISTS `tr_bonus_retail`');*/
     }
 
     /**
@@ -25,7 +25,7 @@ class Fix extends Migration
      */
     public function down()
     {
-        DB::unprepared('
+        /*DB::unprepared('
         CREATE TRIGGER tr_bonus_sponsor_from_member AFTER UPDATE ON `transaction_member` 
             FOR EACH ROW BEGIN
                 DECLARE bonus_bv decimal(15, 0);
@@ -118,6 +118,6 @@ class Fix extends Migration
                         UPDATE employeers SET bitrex_cash = bitrex_cash + (NEW.income + @ppn), updated_at = now() WHERE id = NEW.member_id;
                     END IF;
                 END
-        ');
+        ');*/
     }
 }
