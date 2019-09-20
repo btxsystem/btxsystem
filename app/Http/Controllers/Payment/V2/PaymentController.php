@@ -299,14 +299,14 @@ class PaymentController extends Controller
             }
           }
   
-          $isExpired = $checkIsRegister->expired_at < now() ? true : false;
+          // $isExpired = $checkIsRegister->expired_at < now() ? true : false;
   
-          $transaction = TransactionNonMember::where('transaction_ref', $code)
-          ->update([
-            'status' => $status == "0"
-              ? $isExpired == false ? 1 : 6
-              : $isExpired == false ? 1 : $status,
-          ]);
+          // $transaction = TransactionNonMember::where('transaction_ref', $code)
+          // ->update([
+          //   'status' => $status == "0"
+          //     ? $isExpired == false ? 1 : 6
+          //     : $isExpired == false ? 1 : $status,
+          // ]);
   
           //if is new register
           if($isRegister) {
