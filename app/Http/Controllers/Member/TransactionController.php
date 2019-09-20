@@ -193,6 +193,7 @@ class TransactionController extends Controller
             $account_number = $request->input('account_number');
             $bank_name = $request->input('bank_name');
             $amount = $request->input('amount');
+            $user_id = null;
 
             $imageName = null;
 

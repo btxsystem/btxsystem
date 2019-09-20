@@ -253,7 +253,7 @@
 				<small class="text-muted">Bitrexgo</small>
 				</h2>
         <div class="pull-right mt-2">
-          <button onclick="openAutoPlacement()" class="btn btn-primary btn-md" data-toggle="modal" data-target="#register">Add new Member with Auto-placement</button>
+          <button onclick="openAutoPlacement()" class="btn btn-primary btn-md">Add new Member with Auto-placement</button>
         </div>
 			</div>
       <div class="clearfix">
@@ -432,12 +432,25 @@ svg .rect {
 
   function openAutoPlacement() {
     $('#action-member').attr('action', '{{route("register-autoplacement")}}')
-    console.log($('#action-member').attr('action'))
+		$.ajax({
+			type: 'GET',
+			url: '/member/select/bitrex-points',
+			success: function (data) {
+				if (data.bitrex_points >= 280) {
+					$('#register').modal('show');
+				}else{
+					$('#register').modal('hide');
+					$('#warning').modal('show');
+				}
+			},
+			error: function() {
+				console.log("Error");
+			}
+		});		
   }
 
   function openTree() {
     $('#action-member').attr('action', '{{route("member.register-downline")}}')
-    console.log($('#action-member').attr('action'))
   }
 
   function submitData() {

@@ -152,7 +152,7 @@
     })
 
     $('.demo-radio-button input').change(function() {
-      $(this).val() == "transfer" ? $('#transfer-form').show() : $('#transfer-form').hide(); 
+      $(this).val() == "transfer" ? $('#transfer-form').show() : $('#transfer-form').hide();
     })
 </script>
 @stop
