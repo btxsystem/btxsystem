@@ -33,12 +33,13 @@ List Of Users Nonactive
                                 <table class="table data-table table-bordered table-striped table-condensed flip-content nonactive-user" >
                                     <thead class="flip-content">
                                         <tr>
-                                            <th>No</th>
-                                            <th>Id Member</th>
-                                            <th>Name</th>
-                                            <th>HP</th>
-                                            <th>Rank</th>
-                                            <th>Action</th>
+                                            <th class="text-center" width="5%">No</th>
+                                            <th class="text-center" width="15%">Id Member</th>
+                                            <th class="text-center" width="10%">Username</th>
+                                            <th class="text-center" width="20%">Name</th>
+                                            <th class="text-center" width="20%">Join Date</th>
+                                            <th class="text-center" width="15%">Rank</th>
+                                            <th class="text-center" width="15%">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -72,7 +73,8 @@ List Of Users Nonactive
                   },
                   {data: 'id_member', name: 'id_member'},
                   {data: 'username', name: 'username'},
-                  {data: 'phone_number', name: 'phone_number'},
+                  {data: 'full_name', name: 'last_name'},
+                  {data: 'created_at', name: 'created_at'},
                   {data: 'ranking', name: 'rank.name'},
                   {data: 'action', name: 'action', orderable: false, searchable: false, className: 'text-center'},
               ]
