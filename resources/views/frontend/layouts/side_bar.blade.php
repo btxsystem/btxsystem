@@ -65,7 +65,7 @@
             <li> <a href="{{ route('member.ebook.index') }}"><i class="zmdi zmdi-book col-red"></i><span>Ebook</span> </a> </li>
             <li> <a href="{{ route('member.reward') }}"><i class="zmdi zmdi-star-half col-blue"></i><span>My Rewards</span> </a> </li>
             <li> <a href="{{ route('member.bonus.index') }}"><i class="zmdi zmdi-ticket-star col-red"></i><span>My Bonus</span> </a> </li>
-            <li> <a href="{{ route('member.add-member.index') }}"><i class="zmdi zmdi-plus col-purple"></i><span>Add New Member</span> </a> </li>
+            <!-- <li> <a href="{{ route('member.add-member.index') }}"><i class="zmdi zmdi-plus col-purple"></i><span>Add New Member</span> </a> </li> -->
             <li><a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-money col-green"></i><span>Income and expenses</span> </a>
                 <ul class="ml-menu">
                     <li><a href="{{route('member.bitrex-money.bitrex-points')}}">Bitrex Points</a> </li>
