@@ -50,6 +50,45 @@
     </div>
 </div>
 
+<div class="modal fade" id="cekongkir" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="topup">Cek Ongkos Kirim</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 shipping-form">
+    						<div class="form-group">
+    							<select id="province" name="province" class="province" style="width:100%!important"></select>
+                  <input type="hidden" name="province_name" id="province_name" value="">
+    						</div>
+    						<div class="form-group city-form">
+    							<select id="city" name="city" class="city"></select>
+                  <input type="hidden" name="city_name" id="city_name" value="">
+    						</div>
+    						<div class="form-group district-form">
+    							<select id="district" name="district" class="district"></select>
+                  <input type="hidden" name="district_name" id="district_name" value="">
+    						</div>
+    						<div class="form-group kurir-form">
+    							<select id="kurir" name="kurir" class="kurir"></select>
+                  <input type="hidden" name="kurir_name" id="kurir_name" value="">
+    						</div>
+    						<div class="cost-form form-line" style="display:none">
+    							<h3>Total Ongkir : <span id="cost-summary"></span> </h3>
+    						</div>
+    					</div>
+            </div>
+            <div class="modal-footer">
+                <a href="#" class="btn btn-secondary" data-dismiss="modal">Close</a>
+            </div>
+        </div>
+    </div>
+</div>
+
 <section class="content ecommerce-page">
     <div class="block-header">
         <div class="row">
@@ -65,6 +104,7 @@
             <div class="col-lg-12 col-md-12 col-sm-12">
                 <div class="body">
                     <a href="#" class="btn btn-primary btn-md" data-toggle="modal" data-target="#topup">Topup</a>
+                    <a href="#" class="btn btn-primary btn-md" data-toggle="modal" data-target="#cekongkir">Cek Ongkir</a>
                     <h5 class="d-flex flex-row-reverse">Bitrex Points: {{number_format($profile->bitrex_points)}}</h5>
                 </div>
             </div>
@@ -87,6 +127,120 @@
 @section('footer_scripts')
 <script type="text/javascript">
     $(document).ready(function () {
+      $("#province").select2({
+        placeholder: "Province",
+        width: '100%'
+      });
+
+      $('#province').html('<option disabled>Province<option>');
+  		$.ajax({
+  			type: 'GET',
+  			url: '/member/shipping/province',
+  			success: function (data) {
+  				$('#province').select2({
+  					placeholder: 'Province',
+  					data: data,
+            width: '100%'
+  				});
+  			},
+  			error: function() {
+  				console.log("Error");
+  			}
+  		});
+      $('.dropdown-toggle').remove();
+      $('div').removeClass('btn-group');
+      $('.div').removeClass('bootstrap-select');
+
+      $("#city").select2({
+        placeholder: "City",
+        width: '100%'
+      });
+      $("#district").select2({
+        placeholder: "District",
+        width: '100%'
+      });
+      $("#kurir").select2({
+        placeholder: "Kurir",
+        width: '100%'
+      });
+
+      $('#province').change(function(){
+    		let id = $(this).val();
+        $('#province_name').val($(this).find(":checked").text())
+    		$('#city').empty().trigger('change');
+    		$('#district').empty().trigger('change');
+    		$('#kurir').empty().trigger('change');
+    		$('#city').html('<option disabled>City<option>');
+    		$.ajax({
+    			type: 'GET',
+    			url: '/member/shipping/city/'+id,
+    			success: function (data) {
+    				$('#city').select2({
+    					placeholder: 'City',
+    					data: data,
+              width: '100%'
+    				});
+    			},
+    			error: function() {
+    				console.log("Error");
+    			}
+    		});
+    	})
+
+      $('#city').change(function(){
+    		let id = this.value;
+        $('#city_name').val($(this).find(":checked").text())
+    		$('#district').empty().trigger('change');
+    		$('#kurir').empty().trigger('change');
+    		$('#district').html('<option disabled>Subdistrict<option>');
+    		$.ajax({
+    			type: 'GET',
+    			url: '/member/shipping/subdistrict/'+id,
+    			success: function (data) {
+    				$('#district').select2({
+    					placeholder: 'Subdistrict',
+    					data: data,
+              width: '100%'
+    				});
+    			},
+    			error: function() {
+    				console.log("Error");
+    			}
+    		});
+    	})
+
+    	$('#district').change(function() {
+    		let id = this.value;
+    		$('#kurir').empty().trigger('change');
+        $('#district_name').val($(this).find(":checked").text())
+    		$('#kurir').html('<option disabled>Kurir<option>');
+    		$.ajax({
+    			type: 'GET',
+    			url: '/member/shipping/cost/'+id,
+    			success: function (data) {
+    				$('#kurir').select2({
+    					placeholder: 'Kurir',
+    					data: data,
+              width: '100%'
+    				});
+    			},
+    			error: function() {
+    				console.log("Error");
+    			}
+    		});
+    	});
+
+    	$('#kurir').change(function(){
+        if($(this).val() != null) {
+          $('.cost-form').show();
+          $('#cost-summary').html(`
+            ${$(this).val()} = ${parseInt($(this).val()) / 1000} Points
+          `)
+        } else {
+          $('.cost-form').hide();
+        }
+    	});
+
         $.ajax({
             url: '{{route("member.select.history-points")}}',
             data: data,
