@@ -127,14 +127,6 @@ class RegisterController extends Controller
           ->call()
           ->createNonMember($builder);
 
-        $builderPayment = (new PaymentHistoryBuilder())
-          ->setEbookId($ebook)
-          ->setNonMemberId($nonMember->id);
-
-        $payment = (new PaymentHistoryFactoryBuild())
-          ->call()
-          ->nonMember($builderPayment);
-
         if($nonMember) {
           $referralId = '';
           $referralCode = $request->input('referralCode') ?? '';
@@ -151,19 +143,27 @@ class RegisterController extends Controller
               ]);
             }
           }
-    
-          $builderTrx = (new TransactionNonMemberBuilder())
-          ->setMemberId($referralId)
-          ->setNonMemberId($nonMember->id)
-          ->setExpiredAt(date('Y-m-d H:i:s'))
-          ->setIncome($income)
-          ->setEbookId($ebook)
-          ->setTransactionRef($payment->ref_no)
-          ->setStatus(6); // pending
-          
-          $transaction  = (new TransactionFactoryRegister())
+          $transaction = true;
+          $builderPayment = (new PaymentHistoryBuilder())
+            ->setEbookId($ebook)
+            ->setMemberId($referralId)
+            ->setNonMemberId($nonMember->id);
+
+          $payment = (new PaymentHistoryFactoryBuild())
             ->call()
-            ->createNonMember($builderTrx);
+            ->nonMember($builderPayment);          
+          // $builderTrx = (new TransactionNonMemberBuilder())
+          // ->setMemberId($referralId)
+          // ->setNonMemberId($nonMember->id)
+          // ->setExpiredAt(date('Y-m-d H:i:s'))
+          // ->setIncome($income)
+          // ->setEbookId($ebook)
+          // ->setTransactionRef($payment->ref_no)
+          // ->setStatus(6); // pending
+          
+          // $transaction  = (new TransactionFactoryRegister())
+          //   ->call()
+          //   ->createNonMember($builderTrx);
         } else {
           $transaction = false;
         }        

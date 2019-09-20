@@ -257,6 +257,7 @@ class PaymentController extends Controller
     $sinature_result = $this->signature($signature_plaintext, $amount);
     try {
       DB::beginTransaction();
+
       if($status == "1") {
         $orderType = substr($code, 0, 8);
         $isRenewal = false;
@@ -264,6 +265,7 @@ class PaymentController extends Controller
         if($orderType == 'BITREX01') {
           //
           $paymentHistory = PaymentHistoryNonMember::where('ref_no', $code)->update([
+            'status' => $status,
             'payment_id' => $payment_id,
             'amount' => $amount,
             'currency' => $currency,
@@ -406,26 +408,56 @@ class PaymentController extends Controller
   
         if($status == "1") {
           if($orderType == 'BITREX01') {
-            $trxNonMember = TransactionNonMember::where('transaction_ref', $code);
-            if(!$isRenewal) {
-              $trxNonMember->update([
-                'expired_at' => Carbon::create($trxNonMember->latest('id')->first()->expired_at)->addYear(1)
-              ]);
-            } else {
-              $getEbookIdByHistory = PaymentHistoryNonMember::where('ref_no', $code)->first();
-  
+            $getEbookIdByHistory = PaymentHistoryNonMember::where('ref_no', $code)->first();
+            $trxNonMember = TransactionNonMember::where('non_member_id', $getEbookIdByHistory->non_member_id)
+              ->latest('id')
+              ->first();
+
+            if($trxNonMember) {
               $newIncome = Ebook::where('id', $getEbookIdByHistory->ebook_id)->first();
   
               TransactionNonMember::insert([
                 'income' => $newIncome->price_markup,
-                'member_id' => $trxNonMember->latest('id')->first()->member_id,
-                'non_member_id' => $trxNonMember->latest('id')->first()->non_member_id,
+                'member_id' => $trxNonMember->member_id,
+                'non_member_id' => $trxNonMember->non_member_id,
                 'ebook_id' => $getEbookIdByHistory->ebook_id,
-                'status' => $trxNonMember->latest('id')->first()->status,
-                'transaction_ref' => $trxNonMember->latest('id')->first()->transaction_ref,
-                'expired_at' => Carbon::create($trxNonMember->latest('id')->first()->expired_at)->addYear(1)
+                'status' => $status,
+                'transaction_ref' => $trxNonMember->transaction_ref,
+                'expired_at' => Carbon::create($trxNonMember->expired_at)->addYear(1)
+              ]);
+            } else {  
+              $newIncome = Ebook::where('id', $getEbookIdByHistory->ebook_id)->first();
+  
+              TransactionNonMember::insert([
+                'income' => $newIncome->price_markup,
+                'member_id' => $getEbookIdByHistory->member_id,
+                'non_member_id' => $getEbookIdByHistory->non_member_id,
+                'ebook_id' => $getEbookIdByHistory->ebook_id,
+                'status' => $status,
+                'transaction_ref' => $getEbookIdByHistory->ref_no,
+                'expired_at' => Carbon::create(date('Y-m-d H:i:s'))->addYear(1)
               ]);
             }
+
+            // if(!$isRenewal) {
+            //   $trxNonMember->update([
+            //     'expired_at' => Carbon::create($trxNonMember->latest('id')->first()->expired_at)->addYear(1)
+            //   ]);
+            // } else {
+            //   $getEbookIdByHistory = PaymentHistoryNonMember::where('ref_no', $code)->first();
+  
+            //   $newIncome = Ebook::where('id', $getEbookIdByHistory->ebook_id)->first();
+  
+            //   TransactionNonMember::insert([
+            //     'income' => $newIncome->price_markup,
+            //     'member_id' => $trxNonMember->latest('id')->first()->member_id,
+            //     'non_member_id' => $trxNonMember->latest('id')->first()->non_member_id,
+            //     'ebook_id' => $getEbookIdByHistory->ebook_id,
+            //     'status' => $trxNonMember->latest('id')->first()->status,
+            //     'transaction_ref' => $trxNonMember->latest('id')->first()->transaction_ref,
+            //     'expired_at' => Carbon::create($trxNonMember->latest('id')->first()->expired_at)->addYear(1)
+            //   ]);
+            // }
   
           } else if($orderType == 'BITREX02') {
             $trxMember = TransactionMember::where('transaction_ref', $code);
@@ -446,9 +478,7 @@ class PaymentController extends Controller
             }
           }
           $view = 'payment.success';
-        } else {
-          $view = 'payment.failed';
-        }
+        }        
       } else if($status == "0") {
         // echo $tatus;
         $view = 'payment.failed';
