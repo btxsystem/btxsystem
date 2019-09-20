@@ -32,12 +32,25 @@ class TransferConfirmationController extends Controller
     public function index()
     {
         if (request()->ajax()) {
-            $data = TransferConfirmation::orderBy('id','desc');
+            $data = TransferConfirmation::with('member')->orderBy('id','desc');
+
+            // $data = TransferConfirmation::with(['member' => function($query){
+            //   $query->select('id');
+            // }])->orderBy('id','desc');
 
             return Datatables::of($data)
                     ->addIndexColumn()
                     ->addColumn('status', function($row){
                         return $row->status == 0 ? 'Submitted' : 'Approved';
+                    })
+                    ->addColumn('username', function($row){
+                        return $row->member ? $row->member->username : 'No Data';
+                    })
+                    ->addColumn('date', function($row){
+                        return $row->created_at ? $row->created_at : 'No Data';
+                    })
+                    ->addColumn('nominal', function($row){
+                        return $row->amount ? currency($row->amount) : 'No Data';
                     })
                     ->addColumn('action', function($row) {
                         return $this->htmlAction($row);

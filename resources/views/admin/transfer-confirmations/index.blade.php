@@ -36,11 +36,13 @@ Transfer Confirmation
                         <thead class="flip-content">
                             <tr>
                                 <th class="text-center" width="5%">No</th>
-                                <th class="text-center" width="35%">Type</th>
-                                <th class="text-center" width="15%">Status</th>
+                                <th class="text-center" width="15%">Username</th>
+                                <th class="text-center" width="20%">Type</th>
+                                <th class="text-center" width="10%">Status</th>
                                 <th class="text-center" width="15%">Invoice</th>
-                                <th class="text-center" width="15%">Account No</th>
-                                <th width="15%">Action</th>
+                                <th class="text-center" width="15%">Amount</th>
+                                <th class="text-center" width="10%">Date</th>
+                                <th width="10%">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -207,10 +209,12 @@ Transfer Confirmation
               
               columns: [
                   { data: 'DT_RowIndex', name: 'DT_RowIndex', className: "text-center", orderable: false, searchable: false },
+                  { data: 'username', name: 'member.username', className: "text-center" },                  
                   { data: 'type', name: 'type', className: "text-center" },                  
                   { data: 'status', name: 'status', className: "text-center" },                  
                   { data: 'invoice_number', name: 'invoice_number', className: "text-center" },                  
-                  { data: 'account_number', name: 'account_number', className: "text-center" },                  
+                  { data: 'nominal', name: 'amount', className: "text-center" },                  
+                  { data: 'date', name: 'created_at', className: "text-center" },                  
                   { data: 'action', name: 'action', orderable: false, searchable: false, className: "text-center" },
               ]
           });

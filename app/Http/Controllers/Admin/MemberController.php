@@ -82,9 +82,8 @@ class MemberController extends Controller
 
     public function store(Request $request)
     {
-
         $request->validate([
-            'username' => 'required|unique:employeers|max:255',
+            'username' => 'required|unique:employeers|max:255|alpha_dash',
             'first_name' => 'required|max:255',
             'email' => 'required|email|unique:users|max:255',
             'password' => 'required|min:6',
@@ -216,6 +215,10 @@ class MemberController extends Controller
         }
     }
 
+    public function updatePassword(Request $request, $id)
+    {
+
+    }
     public function topup(Request $request)
     {
         DB::beginTransaction();
