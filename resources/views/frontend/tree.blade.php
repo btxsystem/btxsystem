@@ -870,7 +870,7 @@ svg .rect {
 		.append("g")
 		.attr("transform", my_transform)
 		.attr("id", "bah")
-	panzoom(document.querySelector('#tree'), {
+	panzoom(document.querySelector('#bah'), {
 		zoomSpeed: 0.030
 	});
 	// var svg = d3.select("#tree")
