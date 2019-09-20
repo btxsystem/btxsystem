@@ -275,15 +275,15 @@ class PaymentController extends Controller
             'err_desc' => $errdesc,
           ]);
   
-          $userData = PaymentHistoryNonMember::where('ref_no', $code)
-          ->with([
-            'nonMember'
-          ])
-          ->first();
+          // $userData = PaymentHistoryNonMember::where('ref_no', $code)
+          // ->with([
+          //   'nonMember'
+          // ])
+          // ->first();
   
           $isRegister = false;
   
-          $checkIsRegister = TransactionNonMember::where('transaction_ref', $code)
+          $checkIsRegister = PaymentHistoryNonMember::where('ref_no', $code)
             ->with([
               'ebook',
               'nonMember'
@@ -291,12 +291,13 @@ class PaymentController extends Controller
             ->first();
   
           if($checkIsRegister) {
-            //if new register
-            if($checkIsRegister->expired_at < now() && $checkIsRegister->status != 1) {
-              $isRegister = true;
-            } else {
-              $isRegister = false;
-            }
+            $isRegister = true;
+            // //if new register
+            // if($checkIsRegister->expired_at < now() && $checkIsRegister->status != 1) {
+            //   $isRegister = true;
+            // } else {
+            //   $isRegister = false;
+            // }
           }
   
           // $isExpired = $checkIsRegister->expired_at < now() ? true : false;
