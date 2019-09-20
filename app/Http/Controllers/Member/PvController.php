@@ -43,32 +43,39 @@ class PvController extends Controller
     }
 
     public function cekDownline($data){
-        if($data->parent_id != null){
-            if ($data->parent_id == Auth::id()) {
-                return(true);
+        $parent = DB::table('employeers')->where('id','=',$data)->select('parent_id')->first();
+        if($data!=null && $parent->parent_id!=null){
+            if ($data == Auth::id()) {
+                dd('aaa');
+                return true;
             }else{
-                $datas = DB::table('employeers')->where('id','=',$data->id)->select('id','parent_id')->first();
-                $this->cekDownline($datas);
+                $this->cekDownline($parent->parent_id);
             }
-        }else {
+        }else{
             return false;
         }
     }
 
     public function searchDownline($id){
         $datas = DB::table('employeers')->where('username','=',$id)->select('id','parent_id')->first();
-        /*if($datas!=null){
+        if($datas!=null){
             if($datas->id == Auth::id()){
                 $status = true;
                 return response()->json($status, 200);
             }else{
-                $cek = $this->cekDownline($datas);
-                return response()->json($cek, 200);
+                $cek = $this->cekDownline($datas->parent_id);
+                //dd($cek);
+                $cek = $cek == '' ? true : false; 
+                if ($cek == true) {
+                    dd(true);
+                }else {
+                    return response()->json(false, 200);
+                }
             }
         }else{
             $status = false;
             return response()->json($status, 200);
-        }*/
+        }
     }
 
     public function getSummary($id){
