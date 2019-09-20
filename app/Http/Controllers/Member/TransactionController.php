@@ -103,7 +103,7 @@ class TransactionController extends Controller
                 'ref_no' => $afterCheckRef
             ];
 
-            Mail::to( Auth::user()->email ?? 'asepmedia18@gmail.com')
+            Mail::to( Auth::user()->email)
             ->send(new PurchaseBitrexPointTransferMail($dataOrder, null));
 
             DB::commit();
@@ -362,7 +362,7 @@ class TransactionController extends Controller
                     'point' => $data->bitrex_points
                 ];
 
-                Mail::to($data->email ?? 'asepmedia18@gmail.com')
+                Mail::to($data->email)
                 ->send(new PurchaseBitrexPointMail($dataOrder, null));
 
 
