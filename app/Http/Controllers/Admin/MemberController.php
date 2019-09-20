@@ -215,10 +215,40 @@ class MemberController extends Controller
         }
     }
 
-    public function updatePassword(Request $request, $id)
-    {
+    public function updatePassword(Request $request)
+    {      
+        $validator = \Validator::make($request->all(), ['password' => 'min:6']);
+
+        if ($validator->fails()) {
+            Alert::error('Password minimal 6 karakter', 'Gagal')->persistent("Close");
+            return \redirect()->back();
+         }
+
+        DB::beginTransaction();
+        try{
+            
+            $data = Employeer::findOrFail($request->id);
+            if($request->password != $request->comfirm_password ) {
+                Alert::error('Password & Confirmasi Password tidak sama !!', 'Gagal')->persistent("Close");
+                return \redirect()->back();
+            }
+            $data->password = bcrypt($request->password);
+            $data->save();
+            DB::commit();
+            
+            Alert::success('Sukses Update Password', 'Sukses');
+            return redirect()->route('members.show', $data->id);
+
+        }catch(\Exception $e){
+            // throw $e;
+            DB::rollback();
+            
+            Alert::error('Gagal Update Password', 'Gagal');
+            return \redirect()->back();
+        }
 
     }
+
     public function topup(Request $request)
     {
         DB::beginTransaction();
