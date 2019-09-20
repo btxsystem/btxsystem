@@ -25,9 +25,6 @@ class ReportController extends Controller
                     ->addColumn('username', function ($data) {
                         return $data->member ? $data->member->username : 'No Data';
                       })
-                    ->addColumn('buy_date', function($data) {
-                        return $data->created_at ? Carbon::parse($data->created_at)->format('Y-m-d') : 'No Data';
-                    })
                     ->addIndexColumn()
                     ->make(true);
         }

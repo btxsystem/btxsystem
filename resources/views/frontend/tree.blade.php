@@ -351,6 +351,41 @@ svg .rect {
 @media only screen and (max-width: 480px) {
 /* For mobile phones: */
 	.search {
+		font-size: 14px;
+		width: 887px;
+	}
+	rect {
+		/* fill: #ebebeb;
+		stroke: #ebebeb; */
+		width: 150px;
+		height: 190px;
+		stroke-width: 2;
+	}
+	path {
+		fill: none;
+		stroke: #666;
+	}
+	text {
+		dominant-baseline: middle;
+		text-anchor: middle;
+	}
+  rect {
+    cursor: pointer;
+  }
+	.bigger {
+		font-size: 13px;
+	}
+	.link {
+		text-decoration: none;
+		background: red;
+		padding: 20px;
+	}
+	.img-fluid {
+		width: 60px;
+		height: 60px;
+		display: block;
+		margin-right: auto;
+		margin-left: auto;
 		width: 160px !important;
 	}
 }
@@ -363,8 +398,8 @@ svg .rect {
 	width: width: 500px;width: 500px;
 }
 rect {
-	fill: #ebebeb;
-	stroke: #ebebeb;
+	/* fill: #ebebeb;
+	stroke: #ebebeb; */
 	width: 150px;
 	height: 190px;
 	stroke-width: 2;
@@ -861,6 +896,7 @@ cursor: pointer;
 			.attr("onclick", function(d){ return `tree_submit(${d.data.username ? `'${d.data.username}'` : `'${"available"}'`}, ${d.data.parent_id}, ${d.data.position} )` })
 			.attr("value", function(d){return d.data.username ? d.data.username : "available"})
 			.attr("href","#")
+			.attr("fill", function(d) {return d.data.username ? '#ebebeb' : '#28a745'})
 			.attr("x", function(d){return d.x-75;})
 			.attr("y", function(d){return d.y-50;});
 
