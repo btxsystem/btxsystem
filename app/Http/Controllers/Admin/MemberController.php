@@ -20,12 +20,15 @@ class MemberController extends Controller
         if (request()->ajax()) {
             $data = Employeer::where('status', 1)
                              ->with('rank')
-                             ->select('id','id_member','username','first_name','last_name','rank_id','phone_number','status');
+                             ->select('id','id_member','username','first_name','last_name','rank_id','created_at','status');
                                     
             return Datatables::of($data)
                     ->addIndexColumn()
                     ->editColumn('status', function($data) {
                         return $data->status == 1 ? 'Active' : 'Nonactive' ;
+                    })
+                    ->editColumn('full_name', function($data) {
+                        return $data->first_name .' '. $data->last_name;
                     })
                     ->editColumn('ranking', function($data) {
                         return $data->rank ? $data->rank->name : '-';
@@ -44,21 +47,24 @@ class MemberController extends Controller
         if (request()->ajax()) {
             $data = Employeer::where('status', 0)
                              ->with('rank')
-                             ->select('id','id_member','username','first_name','last_name','rank_id','phone_number','status');
+                             ->select('id','id_member','username','first_name','last_name','rank_id','created_at','status');
                                     
-            return Datatables::of($data)
-                    ->addIndexColumn()
-                    ->editColumn('status', function($data) {
-                        return $data->status == 1 ? 'Active' : 'Nonactive' ;
-                    })
-                    ->editColumn('ranking', function($data) {
-                        return $data->rank ? $data->rank->name : '-';
-                    })
-                    ->addColumn('action', function($row) {
-                        return $this->htmlAction($row);
-                    })
-                    ->rawColumns(['action'])
-                    ->make(true);
+                    return Datatables::of($data)
+                             ->addIndexColumn()
+                             ->editColumn('status', function($data) {
+                                 return $data->status == 1 ? 'Active' : 'Nonactive' ;
+                             })
+                             ->editColumn('full_name', function($data) {
+                                 return $data->first_name .' '. $data->last_name;
+                             })
+                             ->editColumn('ranking', function($data) {
+                                 return $data->rank ? $data->rank->name : '-';
+                             })
+                             ->addColumn('action', function($row) {
+                                 return $this->htmlAction($row);
+                             })
+                             ->rawColumns(['action'])
+                             ->make(true);
         }
         return view('admin.members.nonactive.index');
     }
