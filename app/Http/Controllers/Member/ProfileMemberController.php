@@ -50,6 +50,12 @@ class ProfileMemberController extends Controller
         }
     }
 
+    public function isHaveChange(){
+        $isHaveStatus = DB::table('employeers')->where('id',Auth::id())->select('is_update')->first();
+        $data['change'] = $isHaveStatus->is_update;
+        return response()->json($data, 200);
+    }
+
     public function resetPassword(Request $request){
         $data = Auth::user();
         $new = bcrypt($request->new_password);
