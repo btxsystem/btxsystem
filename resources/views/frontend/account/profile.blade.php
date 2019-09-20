@@ -47,9 +47,7 @@
         </div>
         <form action="{{route('member.change-photo')}}" enctype="multipart/form-data" method="post">
             @csrf
-            <div class="custom-file col">
-                <input type="file" name="photo" style="font-size:20px">
-            </div>
+
             <div class="modal-footer">
                 <a href="#" class="btn btn-secondary" data-dismiss="modal">Close</a>
                 <button type="submit" class="btn btn-primary" style="cursor:pointer">Change</a>
@@ -72,6 +70,16 @@
                         </div>
                     </div>
                     <div class="body">
+                        <!--<form action="/" id="frmFileUpload" class="dropzone" method="post" enctype="multipart/form-data">
+                            <div class="dz-message">
+                                <div class="drag-icon-cph"> <i class="material-icons">touch_app</i> </div>
+                                <h3>Drop files here or click to upload.</h3>
+                                <em>(This is just a demo dropzone. Selected files are <strong>not</strong> actually uploaded.)</em> </div>
+                            <div class="fallback">
+                                <input name="file" type="file"/>
+                            </div>
+                        </form>-->
+                        <br>
                         <p class="text-default">ID Member : {{$profile['id_member']}}</p>
                         <hr>
                         <p class="text-default">Username : {{$profile['username']}}</p>

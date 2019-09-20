@@ -171,6 +171,7 @@ Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
         Route::get('exp-three-month', ['as' => 'exp-three-month', 'uses' => 'Member\ProfileMemberController@expNotif']);
         Route::get('summary/{id}', ['as' => 'summary', 'uses' => 'Member\PvController@getSummary']);
         Route::get('search-downline/{id}', ['as' => 'search-downline', 'uses' => 'Member\PvController@searchDownline']);
+        Route::get('is-have-change-profile', ['as' => 'is-have-change-profile', 'uses' => 'Member\ProfileMemberController@isHaveChange']);
     });
 
     Route::post('claim-reward', ['as' => 'claim-reward', 'uses' => 'Member\ProfileMemberController@claimReward']);
