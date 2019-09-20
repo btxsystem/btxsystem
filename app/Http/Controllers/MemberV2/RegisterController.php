@@ -24,7 +24,7 @@ use App\Models\TransactionNonMember;
 use Carbon\Carbon;
 
 class RegisterController extends Controller
-{ 
+{
   protected function buildFailedValidationResponse(Request $request, array $errors){
     return ["success" => false, "code"=> 406 , "message" => "forbidden" , "errors" =>$errors];
   }
@@ -39,12 +39,12 @@ class RegisterController extends Controller
 
       if(Auth::guard('nonmember')->user()) {
         $nonMember = true;
-  
+
         $nonMemberId = Auth::guard('nonmember')->user()->id;
-  
+
         $referralId = '';
         $referralCode = $request->input('referralCode') ?? '';
-        
+
         //cek referal code
         if($referralCode != '') {
           $referralUser = Employeer::where('username', $referralCode);
@@ -58,7 +58,7 @@ class RegisterController extends Controller
             ]);
           }
         }
-  
+
         $builder = (new TransactionNonMemberBuilder())
           ->setMemberId($referralId)
           ->setNonMemberId($nonMemberId)
@@ -66,7 +66,7 @@ class RegisterController extends Controller
           ->setIncome($income)
           ->setEbookId($ebook)
           ->setStatus(6); // pending
-        
+
         $transaction = (new TransactionFactoryRegister())
           ->call()
           ->createNonMember($builder);
@@ -80,15 +80,15 @@ class RegisterController extends Controller
           ->nonMember($builderPayment);
       } else if(Auth::guard('user')->user()) {
         $nonMember = true;
-  
+
         $memberId = Auth::guard('user')->user()->id;
-    
+
         $builder = (new TransactionMemberBuilder())
           ->setMemberId($memberId)
           ->setExpiredAt(Carbon::create(date('Y-m-d')))
           ->setEbookid($ebook)
           ->setStatus(6); // pending
-        
+
         $transaction  = (new TransactionFactoryRegister())
           ->call()
           ->createMember($builder);
@@ -108,7 +108,7 @@ class RegisterController extends Controller
 
         if (!filter_var($request->input('email'), FILTER_VALIDATE_EMAIL)) {
           DB::rollback();
-        
+
           return response()->json([
             'success' => false,
             'message' => 'Failed register',
@@ -122,7 +122,7 @@ class RegisterController extends Controller
           ->setEmail($request->input('email'))
           ->setUsername($request->input('username'))
           ->setPassword('secret');
-          
+
         $nonMember = (new RegisterFactoryMake())
           ->call()
           ->createNonMember($builder);
@@ -130,7 +130,7 @@ class RegisterController extends Controller
         if($nonMember) {
           $referralId = '';
           $referralCode = $request->input('referralCode') ?? '';
-          
+
           //cek referal code
           if($referralCode != '') {
             $referralUser = Employeer::where('username', $referralCode);
@@ -151,7 +151,7 @@ class RegisterController extends Controller
 
           $payment = (new PaymentHistoryFactoryBuild())
             ->call()
-            ->nonMember($builderPayment);          
+            ->nonMember($builderPayment);
           // $builderTrx = (new TransactionNonMemberBuilder())
           // ->setMemberId($referralId)
           // ->setNonMemberId($nonMember->id)
@@ -160,18 +160,18 @@ class RegisterController extends Controller
           // ->setEbookId($ebook)
           // ->setTransactionRef($payment->ref_no)
           // ->setStatus(6); // pending
-          
+
           // $transaction  = (new TransactionFactoryRegister())
           //   ->call()
           //   ->createNonMember($builderTrx);
         } else {
           $transaction = false;
-        }        
+        }
       }
 
       if(!$nonMember || !$payment || !$transaction) {
         DB::rollback();
-        
+
         return response()->json([
           'success' => false,
           'message' => 'Failed register',
@@ -188,7 +188,7 @@ class RegisterController extends Controller
       ]);
     } catch (\Exception $e) {
       DB::rollback();
-  
+
       return response()->json([
         'success' => false,
         'message' => 'Failed register',
@@ -197,7 +197,7 @@ class RegisterController extends Controller
     }
   }
   /**
-   * 
+   *
    */
   public function registerV2(Request $request)
   {
@@ -206,12 +206,12 @@ class RegisterController extends Controller
 
       if(Auth::guard('nonmember')->user()) {
         $nonMember = true;
-  
+
         $nonMemberId = Auth::guard('nonmember')->user()->id;
-  
+
         $referralId = '';
         $referralCode = $request->input('referralCode') ?? '';
-        
+
         //cek referal code
         if($referralCode != '') {
           $referralUser = Employeer::where('username', $referralCode);
@@ -225,24 +225,24 @@ class RegisterController extends Controller
             ]);
           }
         }
-  
+
         $builder = (new TransactionNonMemberBuilder())
         ->setMemberId($referralId)
         ->setNonMemberId($nonMemberId)
         ->setExpiredAt(date('Y-m-d'))
         ->setIncome($request->input('income'))
         ->setEbookId($request->input('ebook'));
-        
+
         $transaction  = (new TransactionFactoryRegister())->call()->createNonMember($builder);
       } else if(Auth::guard('user')->user()) {
         $nonMember = true;
-  
+
         $memberId = Auth::guard('user')->user()->id;
         $builder = (new TransactionMemberBuilder())
         ->setMemberId($memberId)
         ->setExpiredAt(Carbon::create(date('Y-m-d'))->addYear(1))
         ->setEbookid($request->input('ebook'));
-        
+
         $transaction  = (new TransactionFactoryRegister())->call()->createMember($builder);
       } else {
         $builder = (new NonMemberBuilder())
@@ -251,13 +251,13 @@ class RegisterController extends Controller
           ->setEmail($request->input('email'))
           ->setUsername($request->input('username'))
           ->setPassword('secret');
-          
+
         $nonMember = (new RegisterFactoryMake())->call()->createNonMember($builder);
-  
+
         if($nonMember) {
           $referralId = '';
           $referralCode = $request->input('referralCode') ?? '';
-          
+
           //cek referal code
           if($referralCode != '') {
             $referralUser = Employeer::where('username', $referralCode);
@@ -270,32 +270,32 @@ class RegisterController extends Controller
               ]);
             }
           }
-    
+
           $builderTrx = (new TransactionNonMemberBuilder())
           ->setMemberId($referralId)
           ->setNonMemberId($nonMember->id)
           ->setExpiredAt(Carbon::create(date('Y-m-d'))->addYear(1))
           ->setIncome($request->input('income'))
           ->setEbookId($request->input('ebook'));
-          
+
           $transaction  = (new TransactionFactoryRegister())->call()->createNonMember($builderTrx);
         } else {
           $transaction = false;
         }
       }
-  
+
       if(!$nonMember || !$transaction) {
         DB::rollback();
-  
+
         return response()->json([
           'success' => false,
           'message' => 'Failed register',
           'data' => ''
         ]);
-      }    
-  
+      }
+
       DB::commit();
-  
+
       return response()->json([
         'success' => true,
         'message' => 'Success register',
@@ -303,18 +303,18 @@ class RegisterController extends Controller
       ]);
     } catch(\Exception $e) {
       DB::rollback();
-  
+
       return response()->json([
         'success' => false,
         'message' => 'Failed register',
         'data' => $e
       ]);
     }
-    
+
   }
 
   /**
-   * 
+   *
    */
   public function renewalEbook(Request $request)
   {
@@ -338,7 +338,7 @@ class RegisterController extends Controller
       }
 
       $builder->setExpiredAt(Carbon::create($check->expired_at)->addYear(1));
-      
+
       $transaction  = (new TransactionFactoryRegister())->call()->updateNonMember($builder);
 
     } else if(Auth::guard('user')->user()) {
@@ -351,7 +351,7 @@ class RegisterController extends Controller
         'ebook_id' => $request->input('ebook'),
         'member_id' => $memberId,
       ]);
-      
+
       $check = TransactionMember::where($builder->getIdentifiedBy())->first();
 
       if(!$check) {
@@ -367,12 +367,12 @@ class RegisterController extends Controller
       DB::rollback();
 
       return redirect()->back();
-    }    
+    }
 
     DB::commit();
 
     return redirect()->back();
-    
+
   }
 
 }
