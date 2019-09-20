@@ -358,8 +358,8 @@ svg .rect {
 		width: 887px;
 	}
 	rect {
-		fill: #ebebeb;
-		stroke: #ebebeb;
+		/* fill: #ebebeb;
+		stroke: #ebebeb; */
 		width: 150px;
 		height: 190px;
 		stroke-width: 2;
@@ -858,6 +858,7 @@ svg .rect {
 			.attr("onclick", function(d){ return `tree_submit(${d.data.username ? `'${d.data.username}'` : `'${"available"}'`}, ${d.data.parent_id}, ${d.data.position} )` })
 			.attr("value", function(d){return d.data.username ? d.data.username : "available"})
 			.attr("href","#")
+			.attr("fill", function(d) {return d.data.username ? '#ebebeb' : '#35d415'})
 			.attr("x", function(d){return d.x-75;})
 			.attr("y", function(d){return d.y-50;});
 
