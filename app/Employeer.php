@@ -51,6 +51,8 @@ class Employeer extends Authenticatable
         'src',
         'is_update',
         'nik',
+        'bank_name',
+        'bank_account_name',
         'expired_at'
     ];
 

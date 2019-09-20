@@ -19,10 +19,10 @@
 				<!-- <div id="app">
 					<fa-register-member-material-component/>
 				</div> -->
-				<form action="{{route('member.register-downline')}}" method="POST" class="formTree">
+				<form id="action-member" action="{{route('member.register-downline')}}" method="POST" class="formTree">
 					@csrf
-					<input type="text" name="parent" id="parent" value="" hidden>
-					<input type="text" name="position" id="position" value="" hidden>
+					<input type="hidden" name="parent" id="parent" value="">
+					<input type="hidden" name="position" id="position" value="">
           <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div class="forms-line">
 							<input class="form-control" disabled value="{{Auth::user()->username}}" type="text" min="3" required>
@@ -57,6 +57,40 @@
 						<div class="form-line">
 							<input class="form-control" id="nik" name="nik" id="number_phone" type="number" min="10" required>
 							<label class="form-label">NIK / Passport</label>
+						</div>
+					</div>
+          <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
+						<div class="form-line">
+							<input class="form-control" id="npwp_number" name="npwp_number" type="number" min="1" required>
+							<label class="form-label">NPWP</label>
+						</div>
+					</div>
+          <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
+						<div class="form-line">
+							<input class="form-control" id="bank_account_name" name="bank_account_name" type="text" min="10" required>
+							<label class="form-label">Account Name</label>
+						</div>
+					</div>
+          <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
+						<div class="form-line">
+							<input class="form-control" id="bank_account_number" name="bank_account_number" type="number" min="1" required>
+							<label class="form-label">Account Number</label>
+						</div>
+					</div>
+          <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
+						<div class="form">
+              <label class="form-label">Bank Name</label>
+              <select class="form-control" id="bank_name_select">
+                <option value="BCA">BCA</option>
+                <option value="BRI">BRI</option>
+                <option value="BNI">BNI</option>
+                <option value="Mandiri">Mandiri</option>
+                <option value="CIMB NIAGA">CIMB NIAGA</option>
+                <option value="other">Other Bank</option>
+              </select>
+              <div class="form-line">
+  							<input type="hidden" class="form-control" name="bank_name" id="bank_name" required>
+  						</div>
 						</div>
 					</div>
 					<div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -184,200 +218,13 @@
 					</div>
 					<div class="modal-footer">
 						<a class="btn btn-secondary" data-dismiss="modal">Close</a>
-						<input type="submit" class="btn btn-primary register" value="Register">
+						<input type="button" onclick="submitData()" class="btn btn-primary register" value="Register">
 					</div>
 				</form>
 			</div>
 		</div>
 	</div>
 </div>
-
-<div class="modal fade" id="register-auto" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	<div class="modal-dialog" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLabel">Register</h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-			</div>
-			<div class="modal-body">
-				<!-- <div id="app">
-					<fa-register-member-material-component/>
-				</div> -->
-				<form action="{{route('member.register-downline')}}" method="POST" class="formTree">
-					@csrf
-					<input type="text" name="parent" id="parent" value="" hidden>
-					<input type="text" name="position" id="position" value="" hidden>
-          <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
-						<div class="forms-line">
-							<input class="form-control" disabled value="{{Auth::user()->username}}" type="text" min="3" required>
-						</div>
-					</div>
-					<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
-						<div class="form-line">
-							<input class="form-control" name="username" id="username" type="text" min="3" required>
-							<label class="form-label">Username</label>
-						</div>
-						<div>
-							<b style="color:red" id="username_danger"></b>
-						</div>
-					</div>
-					<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12 row">
-						<div class="form-line col-lg-6 col-md-6 col-sm-6 col-xs-6">
-							<input class="form-control" name="first_name" id="first_name" type="text" min="2" required>
-							<label class="form-label">First Name</label>
-						</div>
-						<div class="form-line col-lg-6 col-md-6 col-sm-6 col-xs-6">
-							<input class="form-control" name="last_name" id="last_name" type="text" min="2" required>
-							<label class="form-label">Last Name</label>
-						</div>
-					</div>
-					<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
-						<div class="form-line">
-							<input class="form-control" name="email" id="email" type="email" min="3" required>
-							<label class="form-label">Email</label>
-						</div>
-					</div>
-					<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
-						<div class="form-line">
-							<input class="form-control" id="nik" name="nik" id="number_phone" type="number" min="10" required>
-							<label class="form-label">NIK / Passport</label>
-						</div>
-					</div>
-					<div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
-						<div class="form-line">
-							<input type="date" id="birthdate" name="birthdate" class="form-control" placeholder="Birthdate" required>
-						</div>
-					</div>
-					<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
-						<h5 class="card-inside-title">Gender</h5>
-						<div class="demo-radio-button">
-							<input name="gender" type="radio" value="1" id="male" class="with-gap radio-col-red" checked />
-							<label for="male">Male</label>
-							<input name="gender" type="radio" value="0" id="female" class="with-gap radio-col-red" />
-							<label for="female">Female</label>
-						</div>
-					</div>
-          <div class="dropdown-divider"></div>
-          <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
-						<div class="demo-radio-button">
-							<input name="pack" type="radio" value="1" id="pack" class="with-gap radio-col-red" checked />
-							<label for="shipping">Starter Pack</label>
-						</div>
-					</div>
-          <div class="dropdown-divider"></div>
-          <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
-						<h5 class="card-inside-title">Choose a ebook</h5>
-						<div class="demo-radio-button">
-							<!-- <input name="method" type="radio" value="1" id="shipping" class="with-gap radio-col-red" checked />
-							<label for="shipping">Shipping</label> -->
-              <div id="ebook-list"></div>
-						</div>
-					</div>
-          <div class="dropdown-divider"></div>
-					<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
-						<h5 class="card-inside-title">Choose a shipping method</h5>
-						<div class="demo-radio-button">
-              <input name="shipping_method" type="radio" value="0" id="pickup" class="with-gap radio-col-red" checked/>
-							<label for="pickup">Pickup</label>
-							<input name="shipping_method" type="radio" value="1" id="shipping" class="with-gap radio-col-red" />
-							<label for="shipping">Shipping</label>
-						</div>
-					</div>
-          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 pickup-form">
-            <h4>B-G 168, Jl. Pluit Indah Raya, Pluit, Penjaringan, North Jakarta City, Jakarta 14450</h4>
-          </div>
-					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 shipping-form">
-						<div class="form-group">
-							<select id="province" name="province" class="province"></select>
-              <input type="hidden" name="province_name" id="province_name" value="">
-						</div>
-						<div class="form-group city-form">
-							<select id="city" name="city" class="city"></select>
-              <input type="hidden" name="city_name" id="city_name" value="">
-						</div>
-						<div class="form-group district-form">
-							<select id="district" name="district" class="district"></select>
-              <input type="hidden" name="district_name" id="district_name" value="">
-						</div>
-            <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
-  						<div class="form-line">
-  							<input class="form-control" name="address" id="address" type="text" min="3">
-  							<label class="form-label">Address</label>
-  						</div>
-  					</div>
-						<div class="form-group kurir-form">
-							<select id="kurir" name="kurir" class="kurir"></select>
-              <input type="hidden" name="kurir_name" id="kurir_name" value="">
-						</div>
-						<div class="cost-form form-line" style="display:none">
-							<input class="cost form-control" name="cost" id="cost" type="text">
-							<input class="form-control" id="starter" type="text">
-						</div>
-					</div>
-          <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <div class="demo-radio-button">
-							<input name="payment_method" type="radio" value="point" id="payment_method" class="with-gap radio-col-red" checked />
-              <label for="payment_method">Bitrex Point</label>
-            </div>
-          </div>
-          <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <div class="form-group address-form">
-              <!-- <h4 class="hidden">Starter Pack : <span id="cost-starter">0</span></h4>
-              <h4 class="hidden">Total Ebook : <span id="cost-ebook">0</span></h4>
-              <h4 class="hidden">Total Shipping : <span id="cost-postal">0</span></h4>
-              <h4>Grand Total : <span id="grand-total"></span></h4> -->
-              <div class="table-responsive">
-                <table class="table table-borderless">
-                  <tr>
-                    <td> <h4>Starter Pack</h4> </td>
-                    <td class="text-right"> <h4><span id="cost-starter">0</span></h4> </td>
-                    <td> <h4>Points</h4> </td>
-                  </tr>
-                  <tr>
-                    <td> <h4>Total Ebook</h4> </td>
-                    <td class="text-right"> <h4><span id="cost-ebook">0</span></h4> </td>
-                    <td> <h4>Points</h4> </td>
-                  </tr>
-                  <tr>
-                    <td> <h4>Total Shipping</h4> </td>
-                    <td class="text-right"> <h4><span id="cost-postal">0</span></h4> </td>
-                    <td> <h4>Points</h4> </td>
-                  </tr>
-                  <tr>
-                    <td> <h4>Grand Total</h4> </td>
-                    <td class="text-right"> <h4><span id="grand-total">0</span></h4> </td>
-                    <td> <h4>Points</h4> </td>
-                  </tr>
-                </table>
-              </div>
-            </div>
-          </div>
-          <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" id="term_one" name="term_one" value="1">
-              <label class="form-check-label" for="term_one">
-                Saya telah membaca dan menyetujui <a href="https://drive.google.com/file/d/1I2pDzWx2ITxE3PKplc_6pLdP0jMrmkA1/view?usp=sharing" target="_blank">kode etik Bitrexgo</a>.
-              </label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" id="term_two" name="term_two" value="1">
-              <label class="form-check-label" for="term_two">
-                Saya menyatakan bahwa data yang saya isi sudah benar, dapat dipertanggung jawabkan, dan dapat digunakan untuk keperluan pembuatan ID Startpro Support System
-              </label>
-            </div>
-					</div>
-					<div class="modal-footer">
-						<a class="btn btn-secondary" data-dismiss="modal">Close</a>
-						<input type="submit" class="btn btn-primary register" value="Register">
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
-</div>
-
 
 <div class="modal fade" id="warning" tabindex="-1" role="dialog" aria-labelledby="modal-warning" aria-hidden="true">
 	<div class="modal-dialog" role="document">
@@ -401,13 +248,17 @@
 <section class="content ecommerce-page">
 	<div class="block-header">
 		<div class="row">
-			<div class="col-lg-7 col-md-6 col-sm-12">
-				<h2>Tree
+			<div class="col-lg-12 col-md-6 col-sm-12">
+				<h2 class="pull-left">Tree
 				<small class="text-muted">Bitrexgo</small>
 				</h2>
-        <br/>
-        <button class="btn btn-primary btn-md" data-toggle="modal" data-target="#topup">Register Auto Placement</button>
+        <div class="pull-right mt-2">
+          <button onclick="openAutoPlacement()" class="btn btn-primary btn-md" data-toggle="modal" data-target="#register">Add new Member with Auto-placement</button>
+        </div>
 			</div>
+      <div class="clearfix">
+
+      </div>
 		</div>
 	</div>
 	<div class="container-fluid">
@@ -579,6 +430,21 @@ svg .rect {
     }
   }
 
+  function openAutoPlacement() {
+    $('#action-member').attr('action', '{{route("register-autoplacement")}}')
+    console.log($('#action-member').attr('action'))
+  }
+
+  function openTree() {
+    $('#action-member').attr('action', '{{route("member.register-downline")}}')
+    console.log($('#action-member').attr('action'))
+  }
+
+  function submitData() {
+    $('.register').prop('disabled', true)
+    $('#action-member').submit();
+  }
+
 	$(document).ready(function() {
     $('.register').prop('disabled', true)
     $('#cost-starter').html('280')
@@ -737,6 +603,18 @@ svg .rect {
 			}
 		});
 	});
+
+  $('#bank_name_select').change(function() {
+    let bankName = $(this).val()
+
+    if(bankName == 'other') {
+      $('#bank_name').val('')
+      $('#bank_name').prop('type', 'text')
+    } else {
+      $('#bank_name').val(bankName)
+      $('#bank_name').prop('type', 'hidden')
+    }
+  });
 
 	$('#province').change(function(){
 		let id = this.value;
@@ -919,6 +797,7 @@ svg .rect {
 				success: function (data) {
 					if (data.bitrex_points >= 280) {
 						$('#register').modal('show');
+            openTree()
 						$('#parent').attr('value',parent);
 						$('#position').attr('value',position);
 					}else{

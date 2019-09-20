@@ -319,8 +319,12 @@ class ProfileMemberController extends Controller
                 'bitrex_cash' => 0,
                 'bitrex_points' => 0,
                 'pv' => 0,
-                'nik' => $data->passport,
-                'expired_at' => Carbon::now()->addMonths(2)
+                'nik' => $data->passport ?? $data->nik,
+                'no_rec' => $data->bank_account_number,
+                'bank_account_name' => $data->bank_account_name,
+                'bank_name' => $data->bank_name,
+                'npwp_number' => $data->npwp_number,
+                'expired_at' => Carbon::create(date('Y-m-d H:i:s'))->addYear(1)
             ];
             Employeer::create($member);
         }else{
@@ -352,8 +356,12 @@ class ProfileMemberController extends Controller
                     'bitrex_cash' => 0,
                     'bitrex_points' => 0,
                     'pv' => 0,
-                    'nik' => $data->passport,
-                    'expired_at' => Carbon::now()->addMonths(2)
+                    'nik' => $data->passport ?? $data->nik,
+                    'no_rec' => $data->bank_account_number,
+                    'bank_account_name' => $data->bank_account_name,
+                    'bank_name' => $data->bank_name,
+                    'npwp_number' => $data->npwp_number,
+                    'expired_at' => Carbon::create(date('Y-m-d H:i:s'))->addYear(1)
                 ];
                 Employeer::create($member);
             }elseif (!$midle) {
@@ -372,8 +380,12 @@ class ProfileMemberController extends Controller
                     'bitrex_cash' => 0,
                     'bitrex_points' => 0,
                     'pv' => 0,
-                    'nik' => $data->passport,
-                    'expired_at' => Carbon::now()->addMonths(2)
+                    'nik' => $data->passport ?? $data->nik,
+                    'no_rec' => $data->bank_account_number,
+                    'bank_account_name' => $data->bank_account_name,
+                    'bank_name' => $data->bank_name,
+                    'npwp_number' => $data->npwp_number,
+                    'expired_at' => Carbon::create(date('Y-m-d H:i:s'))->addYear(1)
                 ];
                 Employeer::create($member);
             }else {
@@ -392,8 +404,12 @@ class ProfileMemberController extends Controller
                     'bitrex_cash' => 0,
                     'bitrex_points' => 0,
                     'pv' => 0,
-                    'nik' => $data->passport,
-                    'expired_at' => Carbon::now()->addMonths(2)
+                    'nik' => $data->passport ?? $data->nik,
+                    'no_rec' => $data->bank_account_number,
+                    'bank_account_name' => $data->bank_account_name,
+                    'bank_name' => $data->bank_name,
+                    'npwp_number' => $data->npwp_number,
+                    'expired_at' => Carbon::create(date('Y-m-d H:i:s'))->addYear(1)
                 ];
                 Employeer::create($member);
             }
@@ -438,7 +454,7 @@ class ProfileMemberController extends Controller
                 'bitrex_points' => 0,
                 'pv' => 0,
                 'nik' => $request->passport,
-                'expired_at' => Carbon::now()->addMonths(2)
+                'expired_at' => Carbon::create(date('Y-m-d H:i:s'))->addYear(1)
             ];
             Employeer::create($member);
         }else{
@@ -471,7 +487,7 @@ class ProfileMemberController extends Controller
                     'bitrex_points' => 0,
                     'pv' => 0,
                     'nik' => $request->passport,
-                    'expired_at' => Carbon::now()->addMonths(2)
+                    'expired_at' => Carbon::create(date('Y-m-d H:i:s'))->addYear(1)
                 ];
                 Employeer::create($member);
             }elseif (!$midle) {
@@ -491,7 +507,7 @@ class ProfileMemberController extends Controller
                     'bitrex_points' => 0,
                     'pv' => 0,
                     'nik' => $request->passport,
-                    'expired_at' => Carbon::now()->addMonths(2)
+                    'expired_at' => Carbon::create(date('Y-m-d H:i:s'))->addYear(1)
                 ];
                 Employeer::create($member);
             }else {
@@ -511,12 +527,300 @@ class ProfileMemberController extends Controller
                     'bitrex_points' => 0,
                     'pv' => 0,
                     'nik' => $request->passport,
-                    'expired_at' => Carbon::now()->addMonths(2)
+                    'expired_at' => Carbon::create(date('Y-m-d H:i:s'))->addYear(1)
                 ];
                 Employeer::create($member);
             }
         }
         return redirect()->back();
+    }
+
+    public function registerAutoPlacement(Request $request)
+    {
+
+        try {
+            DB::beginTransaction();
+            $method = $request->input('payment_method') ?? 'point';
+            $shippingMethod = $request->input('shipping_method') ?? "0"; 
+            
+            $checkEmail = Employeer::where('email', $request->email)->count();
+
+            if($checkEmail > 0) {
+                DB::rollback();
+                Alert::error('Email sudah terdaftar', 'Error')->persistent("OK");
+                return redirect()->route('member.tree');
+            }
+
+            $checkUsername = Employeer::where('username', $request->username)->count();
+
+            if($checkUsername > 0) {
+                DB::rollback();
+                Alert::error('Username sudah terdaftar', 'Error')->persistent("OK");
+                return redirect()->route('member.tree');
+            }
+
+            if($method == 'point') {
+                // return response()->json([
+                //     'data' => $request->all()
+                // ]);
+                $ebooks = $request->input('ebooks') ?? [];
+                $term_one = $request->input('term_one') ?? '';
+                $term_two = $request->input('term_two') ?? '';
+
+                if($term_one == '' || $term_two == '') {
+                    DB::rollback();
+                    Alert::error('Kode etik Bitrexgo belum di Centang', 'Error')->persistent("OK");
+                    return redirect()->route('member.tree');
+                }
+
+                $price = 280;
+                $sponsor = Auth::user();
+                $idMember = invoiceNumbering();
+
+                $password = strtolower(str_random(8));
+
+                // $data = [
+                //     'id_member' => $idMember,
+                //     'username' => $request->username,
+                //     'first_name' => $request->first_name,
+                //     'last_name' => $request->last_name,
+                //     'email' => $request->email,
+                //     'password' => bcrypt($password),//bcrypt('Mbitrex'.rand(100,1000)),
+                //     'birthdate' => $request->birthdate,
+                //     'gender' => $request->gender,
+                //     'position' => $request->position,
+                //     'parent_id' => $request->parent,
+                //     'sponsor_id' => $sponsor->id,
+                //     'bitrex_cash' => 0,
+                //     'bitrex_points' => 0,
+                //     'pv' => 0,
+                //     'nik' => $request->nik,
+                //     'expired_at' => Carbon::create(date('Y-m-d H:i:s'))->addYear(1)
+                // ];
+
+                $isHaveChild = Employeer::where('parent_id',$sponsor->id)->select('position')->get();
+                if (count($isHaveChild) == 3) {
+                    $pv = DB::table('pv_rank')->where('id_member',$sponsor->id)->select('pv_left', 'pv_midle', 'pv_right')->first();
+                    if($pv != null){
+                        if ($pv->pv_left <= $pv->pv_midle and $pv->pv_left <= $pv->pv_right) {
+                            $child = Employeer::where('parent_id',$sponsor->id)->where('position',0)->select('id')->first();
+                            $this->findChild($child->id, $sponsor->id, $request);
+                        }elseif ($pv->pv_midle < $pv->pv_left and $pv->pv_midle <= $pv->pv_right) {
+                            $child = Employeer::where('parent_id',$sponsor->id)->where('position',1)->select('id')->first();
+                            $this->findChild($child->id, $sponsor->id, $request);
+                        }else {
+                            $child = Employeer::where('parent_id',$sponsor->id)->where('position',2)->select('id')->first();
+                            $this->findChild($child->id, $sponsor->id, $request);
+                        }
+                    }else{
+                        $child = Employeer::where('parent_id',$sponsor->id)->where('position',0)->select('id')->first();
+                        $this->findChild($child->id, $sponsor->id, $request);
+                    }
+                }elseif (count($isHaveChild)==0) {
+                    $idMember = invoiceNumbering();
+                    $member = [
+                        'id_member' => $idMember,
+                        'username' => $request->username,
+                        'first_name' => $request->first_name,
+                        'last_name' => $request->last_name,
+                        'email' => $request->email,
+                        'password' => bcrypt('password'),//bcrypt('Mbitrex'.rand(100,1000)),
+                        'birthdate' => $request->birthdate,
+                        'gender' => 0,
+                        'position' => 0,
+                        'parent_id' => $sponsor->id,
+                        'sponsor_id' => $sponsor->id,
+                        'bitrex_cash' => 0,
+                        'bitrex_points' => 0,
+                        'pv' => 0,
+                        'nik' => $request->nik,
+                        'no_rec' => $request->bank_account_number,
+                        'bank_account_name' => $request->bank_account_name,
+                        'bank_name' => $request->bank_name,
+                        'npwp_number' => $request->npwp_number,
+                        'expired_at' => Carbon::create(date('Y-m-d H:i:s'))->addYear(1)
+                    ];
+                    Employeer::create($member);
+                }else{
+                    $left = false;
+                    $midle = false;
+                    $right = false;
+                    foreach ($isHaveChild as $key => $child) {
+                        if ($child->position == 0) {
+                            $left = true;
+                        }elseif ($child->position == 1) {
+                            $midle = true;
+                        }elseif ($child->position == 2) {
+                            $right = true;
+                        }
+                    }
+                    if (!$left) {
+                        $idMember = invoiceNumbering();
+                        $member = [
+                            'id_member' => $idMember,
+                            'username' => $request->username,
+                            'first_name' => $request->first_name,
+                            'last_name' => $request->last_name,
+                            'email' => $request->email,
+                            'password' => bcrypt('password'),//bcrypt('Mbitrex'.rand(100,1000)),
+                            'birthdate' => $request->birthdate,
+                            'gender' => 0,
+                            'position' => 0,
+                            'parent_id' => $sponsor->id,
+                            'sponsor_id' => $sponsor->id,
+                            'bitrex_cash' => 0,
+                            'bitrex_points' => 0,
+                            'pv' => 0,
+                            'nik' => $request->nik,
+                            'no_rec' => $request->bank_account_number,
+                            'bank_account_name' => $request->bank_account_name,
+                            'bank_name' => $request->bank_name,
+                            'npwp_number' => $request->npwp_number,
+                            'expired_at' => Carbon::create(date('Y-m-d H:i:s'))->addYear(1)
+                        ];
+                        Employeer::create($member);
+                    }elseif (!$midle) {
+                        $idMember = invoiceNumbering();
+                        $member = [
+                            'id_member' => $idMember,
+                            'username' => $request->username,
+                            'first_name' => $request->first_name,
+                            'last_name' => $request->last_name,
+                            'email' => $request->email,
+                            'password' => bcrypt('password'),//bcrypt('Mbitrex'.rand(100,1000)),
+                            'birthdate' => $request->birthdate,
+                            'gender' => 0,
+                            'position' => 1,
+                            'parent_id' => $sponsor->id,
+                            'sponsor_id' => $sponsor->id,
+                            'bitrex_cash' => 0,
+                            'bitrex_points' => 0,
+                            'pv' => 0,
+                            'nik' => $request->nik,
+                            'no_rec' => $request->bank_account_number,
+                            'bank_account_name' => $request->bank_account_name,
+                            'bank_name' => $request->bank_name,
+                            'npwp_number' => $request->npwp_number,
+                            'expired_at' => Carbon::create(date('Y-m-d H:i:s'))->addYear(1)
+                        ];
+                        Employeer::create($member);
+                    }else {
+                        $idMember = invoiceNumbering();
+                        $member = [
+                            'id_member' => $idMember,
+                            'username' => $request->username,
+                            'first_name' => $request->first_name,
+                            'last_name' => $request->last_name,
+                            'email' => $request->email,
+                            'password' => bcrypt('password'),//bcrypt('Mbitrex'.rand(100,1000)),
+                            'birthdate' => $request->birthdate,
+                            'gender' => 0,
+                            'position' => 2,
+                            'parent_id' => $sponsor->id,
+                            'sponsor_id' => $sponsor->id,
+                            'bitrex_cash' => 0,
+                            'bitrex_points' => 0,
+                            'pv' => 0,
+                            'nik' => $request->nik,
+                            'no_rec' => $request->bank_account_number,
+                            'bank_account_name' => $request->bank_account_name,
+                            'bank_name' => $request->bank_name,
+                            'npwp_number' => $request->npwp_number,
+                            'expired_at' => Carbon::create(date('Y-m-d H:i:s'))->addYear(1)
+                        ];
+                        Employeer::create($member);
+                    }
+                }
+
+                //Employeer::create($data);
+                $employeer = Employeer::where('id_member', $idMember)->first();
+
+                if((int)$shippingMethod == 1) {
+                    DB::table('address')->insert([
+                        'decription' => $request->input('address'),
+                        'city_id' => $request->input('city'),
+                        'city_name' => $request->input('city_name'),
+                        'province_id' => $request->input('province'),
+                        'province' => $request->input('province_name'),
+                        'subdistrict_id' => $request->input('district'),
+                        'subdistrict_name' => $request->input('district_name'),
+                        'type' => 1,
+                        'user_id' => $employeer->id,
+                    ]);
+                }
+                
+                $totalPriceEbook = 0;
+
+                if(count($ebooks) > 0) {
+                    $totalPriceEbook = DB::table('ebooks')
+                        ->whereIn('id', $ebooks)
+                        ->sum('price');
+                    $price = ((int) $price + (int) ($totalPriceEbook / 1000));
+                }
+
+                if($request->input('shipping_method') == "1") {
+                    $price = (int) $price + (int) + $request->input('cost');
+                }//
+
+                foreach($ebooks as $ebook) {
+                    $prefixRef = 'BITREX02';
+
+                    $checkRef = TransactionMember::where('transaction_ref', $prefixRef . (time() + rand(100, 500)))->first();
+              
+                    $afterCheckRef = $prefixRef . (time() + rand(100, 500));
+              
+                    while($checkRef) {
+                      $afterCheckRef = $prefixRef . (time() + rand(100, 500));
+                      if(!$checkRef) {
+                        break;
+                      }
+                    }
+
+                    $trxMember = new TransactionMember();
+                    $trxMember->transaction_ref = $afterCheckRef;
+                    $trxMember->ebook_id = (int) $ebook;
+                    $trxMember->expired_at = Carbon::create(date('Y-m-d H:i:s'))->addYear(1);
+                    $trxMember->member_id = $employeer->id;
+                    $trxMember->status = 1;
+                    $trxMember->save();
+                }
+
+                $input['bitrex_points'] = $sponsor->bitrex_points - $price;
+
+                if($sponsor->bitrex_points < $price) {
+                    DB::rollback();
+                    Alert::error('Bitrex Point tidak cukup', 'Error')->persistent("OK");
+                    return redirect()->route('member.tree');
+                }
+
+                Employeer::find($sponsor->id)->update($input);
+                DB::commit();
+
+                $dataEmail = (object) [
+                  'member' => $employeer,
+                  'password' => $password
+                ];
+      
+                Mail::to($employeer->email)
+                  ->send(new RegisterMemberMail($dataEmail, null));                
+                // return response()->json([
+                //     'data' => $price
+                // ]);
+
+                // return response()->json([
+                //     'data' => $employeer
+                // ]);
+                Alert::success('Berhasil Register Member Autoplacement', 'Success')->persistent("OK");
+                return redirect()->route('member.tree');
+            }
+        } catch(\Illuminate\Database\QueryException $e) {
+            DB::rollback();
+            // return response()->json([
+            //     'data' => $e
+            // ]);
+            Alert::error('Kesalahan teknis', 'Error')->persistent("OK");
+            return redirect()->route('member.tree');
+        }        
     }
 
     public function expNotif(){
