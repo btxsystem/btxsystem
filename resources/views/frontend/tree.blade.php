@@ -253,7 +253,7 @@
 				<small class="text-muted">Bitrexgo</small>
 				</h2>
         <div class="pull-right mt-2">
-          <button onclick="openAutoPlacement()" class="btn btn-primary btn-md" data-toggle="modal" data-target="#register">Add new Member with Autoplacement</button>
+          <button onclick="openAutoPlacement()" class="btn btn-primary btn-md" data-toggle="modal" data-target="#register">Add new Member with Auto-placement</button>
         </div>
 			</div>
       <div class="clearfix">
