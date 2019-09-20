@@ -40,7 +40,7 @@ class EbookController extends Controller
         return response()->json($ebook);
     }
 
-    public function store(Request $request){
+   /* public function store(Request $request){
         $date = DB::table('transaction_member')->where('member_id',Auth::id())->orderBy('expired_at','DESC')->select('expired_at')->first();
         if($date!=null){
             $data = [
@@ -59,7 +59,7 @@ class EbookController extends Controller
         }
         $cek = TransactionMember::create($data);
         return redirect()->route('member.ebook.index');
-    }
+    }*/
 
     public function getExpiredEbook(){
         $ebook['basic'] = DB::table('transaction_member')->where('member_id',Auth::id())->where('status',1)
