@@ -420,11 +420,18 @@ class ExploreController extends Controller
    */
   public function checkUsername(Request $request)
   {
-    $username = $request->input('username');
+    $username = strtolower($request->input('username'));
 
     $this->validate($request, [
-      'username' => 'required|min:4'
+      'username' => 'required|min:8'
     ]);
+
+    if (preg_match('/[\'^£$%&*()}{@#~?><>,|=_+¬-]/', $username)){
+      return response()->json([
+        'success' => false,
+        'message' => 'Username already exist',
+      ]);
+    }
 
     $check = NonMember::where('username', $username)->count();
 
@@ -455,7 +462,15 @@ class ExploreController extends Controller
    */
   public function checkReferral(Request $request)
   {
-    $username = $request->input('username');
+    $username = strtolower($request->input('username'));
+
+    if (preg_match('/[\'^£$%&*()}{@#~?><>,|=_+¬-]/', $username)){
+      return response()->json([
+        'success' => false,
+        'message' => 'Referral not already exist',
+      ]);
+    }
+
     $check = Employeer::where('username', $username)->count();
 
     if($check <= 0) {
@@ -468,6 +483,32 @@ class ExploreController extends Controller
     return response()->json([
       'success' => true,
       'message' => 'Referral ready to use',
+    ]);
+  }
+
+  public function checkEmail(Request $request)
+  {
+    $email = strtolower($request->input('email'));
+
+    if (preg_match('/[\'^£$%&*()}{@#~?><>,|=_+¬-]/', $email)){
+      return response()->json([
+        'success' => false,
+        'message' => 'Email invalid',
+      ]);
+    }
+
+    $check = NonMember::where('email', $email)->count();
+
+    if($check <= 0) {
+      return response()->json([
+        'success' => false,
+        'message' => 'Email invalid',
+      ]);
+    }
+
+    return response()->json([
+      'success' => true,
+      'message' => 'Email ready to use',
     ]);
   }
 

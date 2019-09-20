@@ -5,7 +5,7 @@
 <meta name="_token" content="{{csrf_token()}}" />
 <title>
     @section('title')
-     | Betrixgo
+     | Bitrexgo
     @show
 </title>
 

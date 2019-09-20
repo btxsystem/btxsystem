@@ -23,7 +23,7 @@ class RegisterServiceMake implements RegisterService
     $save = new NonMember();
     $save->first_name = $builder->getFirstname();
     $save->last_name = $builder->getLastName();
-    $save->username = $builder->getUsername();
+    $save->username = strtolower($builder->getUsername());
     $save->email = $builder->getEmail();
     $save->password = Hash::make($builder->getPassword());
     $save->save();
