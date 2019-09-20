@@ -299,7 +299,7 @@
 								</div>
 								<hr>
 								<div class="row col-md-12">
-									<input type="text" class="search" placeholder="Search by Name / Username / Id Member">&nbsp;&nbsp;<button type="button" class="btn btn-primary" id="search-downline">Search</button>
+									<input type="text" class="search" placeholder="Search Username">&nbsp;&nbsp;<button type="button" class="btn btn-primary" id="search-downline">Search</button>
 								</div>
 								<hr>
 							</div>
@@ -346,13 +346,10 @@ svg .rect {
   fill: gold;
   stroke: steelblue;
   stroke-width: 5px;
-}	
-	@media only screen and (max-width: 480px) {
-    /* For mobile phones: */
-		.search {
-			width: 160px !important;
-		}
-    }
+}
+
+@media only screen and (max-width: 480px) {
+/* For mobile phones: */
 	.search {
 		font-size: 14px;
 		width: 887px;
@@ -389,18 +386,61 @@ svg .rect {
 		display: block;
 		margin-right: auto;
 		margin-left: auto;
+		width: 160px !important;
 	}
+}
+#search-downline{
+	cursor: pointer;
+}
 
-	.formTree .select2-container {
-		width: 100% !important;
-	}
+.search {
+	font-size: 14px;
+	width: width: 500px;width: 500px;
+}
+rect {
+	/* fill: #ebebeb;
+	stroke: #ebebeb; */
+	width: 150px;
+	height: 190px;
+	stroke-width: 2;
+}
+path {
+	fill: none;
+	stroke: #666;
+}
+text {
+	dominant-baseline: middle;
+	text-anchor: middle;
+}
+rect {
+cursor: pointer;
+}
+.bigger {
+	font-size: 13px;
+}
+.link {
+	text-decoration: none;
+	background: red;
+	padding: 20px;
+}
+.img-fluid {
+	width: 60px;
+	height: 60px;
+	display: block;
+	margin-right: auto;
+	margin-left: auto;
+}
 
-	@media (pointer: coarse) {
-		g{
-			transform-origin: 0 0;
-    		transform: matrix(1.06, 1.84, 0.54, 2.8, 466px, 482px)
-		}
+.formTree .select2-container {
+	width: 100% !important;
+}
+
+@media (pointer: coarse) {
+	g{
+		transform-origin: 0 0;
+		transform: matrix(1.06, 1.84, 0.54, 2.8, 466px, 482px)
 	}
+}
 
 </style>
 <script>
@@ -608,8 +648,7 @@ svg .rect {
 			type: 'GET',
 			url: '/member/select/search-downline/'+data,
 			success: function (data) {
-				console.log(data);
-
+				console.log('aaa');
 			},
 			error: function() {
 				console.log("Error");
