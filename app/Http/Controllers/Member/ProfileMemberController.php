@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Employeer;
 use App\Models\TransactionMember;
+use App\HistoryBitrexPoints;
 use DB;
 use Carbon\Carbon;
 use Alert;
@@ -198,6 +199,33 @@ class ProfileMemberController extends Controller
                     Alert::error('Bitrex Point tidak cukup', 'Error')->persistent("OK");
                     return redirect()->route('member.tree');
                 }
+
+                // histories points
+                $prefixRefBp = 'BITREX05';
+
+                $checkRefBp = HistoryBitrexPoints::where('transaction_ref', $prefixRefBp . (time() + rand(100, 500)))->first();
+          
+                $afterCheckRefBp = $prefixRefBp . (time() + rand(100, 500));
+          
+                while($checkRefBp) {
+                  $afterCheckRefBp = $prefixRefBp . (time() + rand(100, 500));
+                  if(!$checkRefBp) {
+                    break;
+                  }
+                }
+
+                //insert histories points
+                HistoryBitrexPoints::insert([
+                    'id_member' => Auth::id(),
+                    'nominal' => (int) $price * 1000,
+                    'points' => $price,
+                    'description' => "Register <strong>{$employeer->username}</strong> from Tree",
+                    'transaction_ref' => $prefixRefBp,
+                    'status' => 1,
+                    'info' => 0,
+                    'created_at' => now(),
+                    'updated_at' => now()
+                ]);
 
                 Employeer::find($sponsor->id)->update($input);
                 DB::commit();
@@ -808,6 +836,33 @@ class ProfileMemberController extends Controller
                     Alert::error('Bitrex Point tidak cukup', 'Error')->persistent("OK");
                     return redirect()->route('member.tree');
                 }
+
+                // histories points
+                $prefixRefBp = 'BITREX05';
+
+                $checkRefBp = HistoryBitrexPoints::where('transaction_ref', $prefixRefBp . (time() + rand(100, 500)))->first();
+          
+                $afterCheckRefBp = $prefixRefBp . (time() + rand(100, 500));
+          
+                while($checkRefBp) {
+                  $afterCheckRefBp = $prefixRefBp . (time() + rand(100, 500));
+                  if(!$checkRefBp) {
+                    break;
+                  }
+                }
+
+                //insert histories points
+                HistoryBitrexPoints::insert([
+                    'id_member' => Auth::id(),
+                    'nominal' => (int) $price * 1000,
+                    'points' => $price,
+                    'description' => "Register <strong>{$employeer->username}</strong> Auto-Placement",
+                    'transaction_ref' => $prefixRefBp,
+                    'status' => 1,
+                    'info' => 0,
+                    'created_at' => now(),
+                    'updated_at' => now()
+                ]);
 
                 Employeer::find($sponsor->id)->update($input);
                 DB::commit();

@@ -15,7 +15,7 @@ class JobController extends Controller
   {
     $params = [
       'mail' => new TestMail(),
-      'email' => 'akunmedia100@gmail.com'
+      'email' => 'com'
     ];
     dispatch((new TestMailJob($params))->delay(50));
   }
