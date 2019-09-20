@@ -40,27 +40,6 @@ class EbookController extends Controller
         return response()->json($ebook);
     }
 
-    public function store(Request $request){
-        $date = DB::table('transaction_member')->where('member_id',Auth::id())->orderBy('expired_at','DESC')->select('expired_at')->first();
-        if($date!=null){
-            $data = [
-                'member_id' => Auth::user()->id,
-                'ebook_id' => $request->id,
-                'status' => 1,
-                'expired_at' => Carbon::create($date->expired_at)->addYears(1)
-            ];
-        }else{
-            $data = [
-                'member_id' => Auth::user()->id,
-                'ebook_id' => $request->id,
-                'status' => 1,
-                'expired_at' => Carbon::now()->addYears(1)
-            ];
-        }
-        $cek = TransactionMember::create($data);
-        return redirect()->route('member.ebook.index');
-    }
-
     public function getExpiredEbook(){
         $ebook['basic'] = DB::table('transaction_member')->where('member_id',Auth::id())->where('status',1)
                                                          ->whereIn('id', [1 , 3])

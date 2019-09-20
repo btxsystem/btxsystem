@@ -15,7 +15,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="{{route('member.ebook.store')}}" method="POST">
+                <form action="/" method="POST">
                     @csrf
                     <input type="text" name="id" id="id" hidden>
                     <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">

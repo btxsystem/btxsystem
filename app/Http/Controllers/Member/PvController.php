@@ -42,16 +42,33 @@ class PvController extends Controller
         return response()->json($status, 200);
     }
 
-    public function searchDownline($id){
-        $datas = DB::table('employeers')->where('id_member','like','%'.$id.'%')->orWhere('username','like','%'.$id.'%')
-                                       ->orWhere('first_name','like','%'.$id.'%')->orWhere('last_name','like','%'.$id.'%')
-                                       ->select('id','username','first_name','last_name')->get();
-        $tmp = [];
-        foreach ($datas as $key => $data) {
-            $tmp[$key] = $data;
-            
+    public function cekDownline($data){
+        if($data->parent_id != null){
+            if ($data->parent_id == Auth::id()) {
+                return(true);
+            }else{
+                $datas = DB::table('employeers')->where('id','=',$data->id)->select('id','parent_id')->first();
+                $this->cekDownline($datas);
+            }
+        }else {
+            return false;
         }
-        return response()->json($datas, 200);
+    }
+
+    public function searchDownline($id){
+        $datas = DB::table('employeers')->where('username','=',$id)->select('id','parent_id')->first();
+        /*if($datas!=null){
+            if($datas->id == Auth::id()){
+                $status = true;
+                return response()->json($status, 200);
+            }else{
+                $cek = $this->cekDownline($datas);
+                return response()->json($cek, 200);
+            }
+        }else{
+            $status = false;
+            return response()->json($status, 200);
+        }*/
     }
 
     public function getSummary($id){
