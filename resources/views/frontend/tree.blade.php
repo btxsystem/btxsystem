@@ -441,7 +441,6 @@ cursor: pointer;
 		transform: matrix(1.06, 1.84, 0.54, 2.8, 466px, 482px)
 	}
 }
-
 </style>
 <script>
   let priceEbook = 0
@@ -486,7 +485,7 @@ cursor: pointer;
 			error: function() {
 				console.log("Error");
 			}
-		});		
+		});	
   }
 
   function openTree() {
@@ -499,23 +498,23 @@ cursor: pointer;
   }
 
 	$(document).ready(function() {
-    $('.register').prop('disabled', true)
-    $('#cost-starter').html('280')
-	var element = document.querySelector('#bah');
-
-    $('input').change(function() {
-      if(
-        $('#username').val() != ''
-        && $('#email').val() != ''
-        && $('#first_name').val() != ''
-        && $('#last_name').val() != ''
-        && $('#nik').val() != ''
-        && $('#birthdate').val() != ''
-      ) {
-        $('.register').prop('disabled', false)
-      } else {
-        $('.register').prop('disabled', true)
-      }
+		$('.register').prop('disabled', true)
+		$('#cost-starter').html('280')
+		
+		var element = document.querySelector('#bah');
+		$('input').change(function() {
+		if(
+			$('#username').val() != ''
+			&& $('#email').val() != ''
+			&& $('#first_name').val() != ''
+			&& $('#last_name').val() != ''
+			&& $('#nik').val() != ''
+			&& $('#birthdate').val() != ''
+		) {
+			$('.register').prop('disabled', false)
+		} else {
+			$('.register').prop('disabled', true)
+		}
     })
 
     checkTerm()
