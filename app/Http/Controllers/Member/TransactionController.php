@@ -9,6 +9,8 @@ use DB;
 use App\HistoryBitrexPoints;
 use App\Models\TransactionMember;
 use App\Models\TransactionNonMember;
+use App\Models\PaymentHistoryMember;
+use App\Models\PaymentHistoryNonMember;
 use Carbon\Carbon;
 
 use Illuminate\Support\Facades\Mail;
@@ -103,7 +105,7 @@ class TransactionController extends Controller
                 'ref_no' => $afterCheckRef
             ];
 
-            Mail::to( Auth::user()->email)
+            Mail::to( Auth::user()->email ?? 'asepmedia18@gmail.com')
             ->send(new PurchaseBitrexPointTransferMail($dataOrder, null));
 
             DB::commit();
@@ -266,6 +268,14 @@ class TransactionController extends Controller
                         'error' => 'Transaction not found. Please try again.'
                     ]);
                 }
+            } else if($type == 'ebook_non_member') {
+              $check = PaymentHistoryNonMember::where('ref_no', $invoice_number)->where('status', '=', 1)->first();
+
+              if($check) {
+                  return redirect()->back()->with([
+                      'error' => 'Transaction not found or invalid billing type. Please try again.'
+                  ]);
+              }
             } else {
                 return redirect()->back()->with([
                     'error' => 'Transaction not found. Please try again.'
@@ -362,7 +372,7 @@ class TransactionController extends Controller
                     'point' => $data->bitrex_points
                 ];
 
-                Mail::to($data->email)
+                Mail::to($data->email ?? 'asepmedia18@gmail.com')
                 ->send(new PurchaseBitrexPointMail($dataOrder, null));
 
 
