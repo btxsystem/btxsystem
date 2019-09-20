@@ -148,7 +148,7 @@ List Of Transaction Member
                   {data: 'transaction_ref', name: 'transaction_ref', className: 'text-center'},
                   {data: 'username', name: 'member.username', className: 'text-center'},
                   {data: 'product', name: 'ebook.title', className: 'text-center'},
-                  {data: 'buy_date', name: 'created_at', className: 'text-center'},
+                  {data: 'created_at', name: 'created_at', className: 'text-center'},
                   {data: 'expired_at', name: 'expired_at', className: 'text-center'},
               ]
           });
