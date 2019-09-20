@@ -37,8 +37,10 @@
                     </div>
 
                     <div class="pull-right">
-                        
-                        <a style=" color: white; text-decoration: none; margin-right: 20px; !important" href="{{ route('members.edit-data', $data->id) }}"><i style="font-size:15px;" class="fa fa-pencil"></i>&nbsp; &nbsp;<strong>Edit Data</strong></a>
+                
+                        <a style="color: white; text-decoration: none !important;" onMouseOut="this.style.color='white'" onMouseOver="this.style.color='#f06262'" href="#updatePasswordModal" data-toggle="modal"><i style="font-size:15px;" class="fa fa-refresh"></i>&nbsp; &nbsp;<strong>Update Password</strong></a>
+                        &nbsp; &nbsp;
+                        <a onMouseOut="this.style.color='white'" onMouseOver="this.style.color='#f06262'" style=" color: white; text-decoration: none; margin-right: 20px; !important" href="{{ route('members.edit-data', $data->id) }}"><i style="font-size:15px;" class="fa fa-pencil"></i>&nbsp; &nbsp;<strong>Edit Data</strong></a>
                      </div>
                 </div>
             
@@ -234,6 +236,55 @@
     </div>
  </section>
 
+
+<!--section ends-->
+<div id="updatePasswordModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title">Change Password {{$data->username}}</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="well form-horizontal" action="{{ route('members.update-password') }}">  
+                        {{ csrf_field() }}
+                        <fieldset>
+                        <input id="id" name="id" value="{{$data->id}}" type="hidden">
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Password</label>
+                                <div class="col-md-8 inputGroupContainer">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-key"></i>
+                                        </span>
+                                        <input id="password" name="password" placeholder="Password" class="form-control" required="true" value="" type="password">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Confirm Password</label>
+                                <div class="col-md-8 inputGroupContainer">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-key"></i>
+                                        </span>
+                                        <input id="comfirm_password" name="comfirm_password" placeholder="Confirm Password" class="form-control" required="true" value="" type="password">
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                        </fieldset>
+                        <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+</div>
 
 <!--section ends-->
 <div id="addTopUpModal" class="modal fade">
