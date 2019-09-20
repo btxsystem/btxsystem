@@ -34,6 +34,7 @@ Bonus Reward
                                 <th>Username</th>
                                 <th>Nominal</th>
                                 <th>Description</th>
+                                <th>Time</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -145,6 +146,7 @@ Bonus Reward
                   {data: 'member.username', name: 'member.username', className: 'text-center'},
                   {data: 'nominal', name: 'nominal', className: 'text-center'},
                   {data: 'description', name: 'description', className: 'text-center'},
+                  {data: 'created_at', name: 'created_at', className: 'text-center'},
               ]
           });
           $(".transaction_wrapper > .dt-buttons").appendTo("div.panel-heading");
