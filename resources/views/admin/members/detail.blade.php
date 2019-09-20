@@ -182,6 +182,7 @@
                                 <th class="text-center" width="25%">Price</th>
                                 <th class="text-center" width="20%">Point Value</th>
                                 <th width="15%">Bitrax Value</th>
+                                <th width="15%">Time</th>
                             </tr>
                         </thead>
                     </table>
@@ -435,6 +436,7 @@
                   { data: 'ebook.price', name: 'price', className: "text-center"   },                                
                   { data: 'ebook.pv', name: 'pv', className: "text-center"   },                                                 
                   { data: 'ebook.bv', name: 'bv', className: "text-center"   },                                                 
+                  { data: 'created_at', name: 'created_at', className: "text-center"   },                                                 
 
               ]
           });  

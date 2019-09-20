@@ -37,6 +37,7 @@ List Of Users Active
                                             <th>Name</th>
                                             <th>Username</th>
                                             <th>Email</th>
+                                            <th>Time</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -70,6 +71,7 @@ List Of Users Active
                   {data: 'name', name: 'name'},
                   {data: 'username', name: 'username'},                  
                   {data: 'email', name: 'email'},                   
+                  {data: 'created_at', name: 'created_at'},                   
                   {data: 'action', name: 'action', orderable: false, searchable: false},
               ]
           });
