@@ -83,6 +83,16 @@ class ProfileMemberController extends Controller
                 return redirect()->route('member.tree');
             }
 
+            $cek_parent = DB::table('employeers')->where('parent_id', $request->parent)->select('position')->get();
+           // dd($request->parent);
+            foreach ($cek_parent as $key => $data) {
+                if ($data->position == $request->position) {
+                    DB::rollback();
+                    Alert::error('the chosen position is already occupied by someone else', 'Error')->persistent("OK");
+                    return redirect()->route('member.tree');
+                }
+            }
+
             if($method == 'point') {
                 // return response()->json([
                 //     'data' => $request->all()
