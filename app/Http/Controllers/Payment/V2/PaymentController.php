@@ -400,7 +400,7 @@ class PaymentController extends Controller
           $transaction = false;
         }
   
-        if(!$paymentHistory || !$transaction) {
+        if(!$paymentHistory) {
           DB::rollback();
           return view('payment.failed');
         }
