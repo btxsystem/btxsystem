@@ -59,7 +59,7 @@
         <div class="profile-header">
             <div class="profile_info row">
                 <div class="col-lg-3 col-md-4 col-12">
-                    <div class="profile-image float-md-right"> <img src="{{asset('img/1.jpg')}}" alt=""> </div>
+                    <div class="profile-image float-md-right"> <img src="{{isset($profile['src']) ? asset($profile['src']) : asset('/assetsebook/v2/img/logo-white.png') }}"  alt=""> </div>
                 </div>
                 <div class="col-lg-6 col-md-8 col-12 profile">
                     <h4 class="m-t-5 m-b-0"><strong>{{$profile['name']}}</strong></h4>
