@@ -40,7 +40,8 @@
             <header class="header">
 
                 <a href="" class="logo">
-                    <img src="http://ebook.bitrexgo.id/assetsebook/v2/img/logo-white.png" alt="logo" style="height:40px;float:left;margin-top:12px">
+                    <!-- <img src="http://ebook.bitrexgo.id/assetsebook/v2/img/logo-white.png" alt="logo" style="height:40px;float:left;margin-top:12px"> -->
+                    <img src="{{ URL::to('/') }}/img/bitrexgo-logo.png" alt="logo" style="height:40px;float:left;margin-top:12px; margin-left:12px;">
                 </a>
 
                 <div class="clearfxix"></div>
