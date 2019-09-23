@@ -46,10 +46,9 @@ class PvController extends Controller
         $parent = DB::table('employeers')->where('id','=',$data)->select('parent_id')->first();
         if($data!=null && $parent->parent_id!=null){
             if ($data == Auth::id()) {
-                dd('aaa');
                 return true;
             }else{
-                $this->cekDownline($parent->parent_id);
+                return $this->cekDownline($parent->parent_id);
             }
         }else{
             return false;
@@ -64,13 +63,8 @@ class PvController extends Controller
                 return response()->json($status, 200);
             }else{
                 $cek = $this->cekDownline($datas->parent_id);
-                //dd($cek);
+                dd($cek);
                 $cek = $cek == '' ? true : false; 
-                if ($cek == true) {
-                    dd(true);
-                }else {
-                    return response()->json(false, 200);
-                }
             }
         }else{
             $status = false;
