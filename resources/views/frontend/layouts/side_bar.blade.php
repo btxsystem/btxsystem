@@ -49,7 +49,7 @@
 <aside id="leftsidebar" class="sidebar">
     <div class="user-info" style="background:#b92240;">
         <div class="image">
-            <img src="{{asset('img/1.jpg')}}" width="48" height="48" alt="User" />
+            <img src="{{isset($profile['src']) ? asset($profile['src']) : asset('/assetsebook/v2/img/logo-white.png') }}" width="48" height="48" alt="User" />
         </div>
         <div class="info-container">
             <div class="name" data-toggle="dropdown" style="color:white">{{isset($profile->username) ? $profile->username : $profile['username'] }}</div>

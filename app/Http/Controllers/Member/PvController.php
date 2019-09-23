@@ -46,10 +46,9 @@ class PvController extends Controller
         $parent = DB::table('employeers')->where('id','=',$data)->select('parent_id')->first();
         if($data!=null && $parent->parent_id!=null){
             if ($data == Auth::id()) {
-                dd('aaa');
                 return true;
             }else{
-                $this->cekDownline($parent->parent_id);
+                return $this->cekDownline($parent->parent_id);
             }
         }else{
             return false;
@@ -57,17 +56,15 @@ class PvController extends Controller
     }
 
     public function searchDownline($id){
-        $datas = DB::table('employeers')->where('username','=',$id)->select('id','parent_id')->first();
+        $datas = DB::table('employeers')->where('username','=',$id)->select('id','parent_id','username')->first();
         if($datas!=null){
             if($datas->id == Auth::id()){
                 $status = true;
-                return response()->json($status, 200);
+                return response()->json($datas, 200);
             }else{
                 $cek = $this->cekDownline($datas->parent_id);
-                //dd($cek);
-                $cek = $cek == '' ? true : false; 
-                if ($cek == true) {
-                    dd(true);
+                if ($cek) {
+                    return response()->json($datas, 200);
                 }else {
                     return response()->json(false, 200);
                 }

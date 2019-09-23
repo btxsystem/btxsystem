@@ -31,6 +31,7 @@ class DashboardController extends Controller
             "rank" => $rank ? $rank->name : '-' ,
             "bitrex_cash" => $data->bitrex_cash,
             "bitrex_points" => $data->bitrex_points,
+            "src" => $data->src,
             "pv" => $pv_group ? $pv_group->pv_left + $pv_group->pv_midle + $pv_group->pv_right : 0
         );
         return view('frontend.dashboard')->with('profile',$profile);

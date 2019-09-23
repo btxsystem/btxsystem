@@ -70,15 +70,21 @@
                         </div>
                     </div>
                     <div class="body">
-                        <!--<form action="/" id="frmFileUpload" class="dropzone" method="post" enctype="multipart/form-data">
-                            <div class="dz-message">
-                                <div class="drag-icon-cph"> <i class="material-icons">touch_app</i> </div>
-                                <h3>Drop files here or click to upload.</h3>
-                                <em>(This is just a demo dropzone. Selected files are <strong>not</strong> actually uploaded.)</em> </div>
-                            <div class="fallback">
-                                <input name="file" type="file"/>
-                            </div>
-                        </form>-->
+                        <form action="{{route('member.change-photo')}}" id="frmFileUpload" method="post" enctype="multipart/form-data">
+                            @csrf
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm-2 imgUp">
+                                        <div class="imagePreview"></div>
+                                            <label class="btn btn-primary" id="upload" style="cursor:pointer">
+                                                Upload<input type="file" name="photo" class="uploadFile img" style="width: 0px;height: 0px;overflow:">
+                                            </label>
+                                            <button type="submit" class="btn btn-primary" id="submit" style="cursor:pointer">Submit</button>
+                                        </div>
+                                    </div>
+                                </div><!-- row -->
+                            </div><!-- container -->              
+                        </form>
                         <br>
                         <p class="text-default">ID Member : {{$profile['id_member']}}</p>
                         <hr>
@@ -111,9 +117,66 @@
 
 
 @section('footer_scripts')
+    <style>
+        body
+        {
+            font-size: 14px;
+        }
+
+        @media only screen and (max-width: 780px) {
+           .imagePreview{
+               width: 100% !important;
+           }
+            .btn-primary{
+                width: 100% !important;
+            }
+        }
+
+        p
+        {
+            padding-left: 35px;
+        }
+        .imagePreview {
+            width: 200%;
+            height: 280px;
+            background-position: center center;
+            background:url(http://cliquecities.com/assets/no-image-e3699ae23f866f6cbdf8ba2443ee5c4e.jpg);
+            background-color:#fff;
+            background-size: cover;
+            background-repeat:no-repeat;
+            display: inline-block;
+            box-shadow:0px -3px 6px 2px rgba(0,0,0,0.2);
+        }
+        .btn-primary
+        {
+            display:block;
+            border-radius:0px;
+            box-shadow:0px 4px 6px 2px rgba(0,0,0,0.2);
+            margin-top:-5px;
+            width: 200%;
+        }
+        .imgUp
+        {
+            margin-bottom:15px;
+        }
+    </style>
     <script type="text/javascript">
         $(document).ready(function () {
+            $(document).on("change",".uploadFile", function(){
+                var uploadFile = $(this);
+                var files = !!this.files ? this.files : [];
+                if (!files.length || !window.FileReader) return;
+        
+                if (/^image/.test( files[0].type)){
+                    var reader = new FileReader();
+                    reader.readAsDataURL(files[0]);
+        
+                    reader.onloadend = function(){
+                        uploadFile.closest(".imgUp").find('.imagePreview').css("background-image", "url("+this.result+")");
+                    }
+                }
             
+            });   
         });
     </script>
 @stop

@@ -11,6 +11,7 @@ use App\HistoryBitrexPoints;
 use DB;
 use Carbon\Carbon;
 use Alert;
+use File;
 
 use Illuminate\Support\Facades\Mail;
 use App\Mail\RegisterMemberMail;
@@ -36,18 +37,26 @@ class ProfileMemberController extends Controller
             "no_rec" => $data->no_rec,
             "bitrex_cash" => $data->bitrex_cash,
             "bitrex_points" => $data->bitrex_points,
+            "src" => $data->src,
             "pv" => $data->pv
         );
         return view('frontend.account.profile')->with('profile',$profile);
     }
 
     public function changePhoto(Request $request){
+        $old_image = DB::table('employeers')->select('src')->where('id',Auth::id())->first();
+        if($old_image) {
+            File::delete($old_image->src);
+        }
         if ($request->hasFile('photo')) {
             $image = $request->photo;
             $imageName = time() . str_random(15).'.'.$image->getClientOriginalExtension();
-            $uploadPath = 'upload/member/image/' . $imageName; //make sure folder path already exist
+            $uploadPath = 'upload/member/image/' . $imageName;
             $image->move('upload/member/image/', $imageName);
-            $data->src = $uploadPath;
+            $data['src'] = $uploadPath;
+            Employeer::find(Auth::id())->update($data);
+            Alert::success('Profile photo has been updated', 'Success')->persistent("OK");
+            return redirect()->route('member.profile.index');
         }
     }
 
@@ -65,13 +74,12 @@ class ProfileMemberController extends Controller
             if($request->new_password != $request->old_password){
                 $pass['password'] = $new;
                 $info = Employeer::find($data->id)->update($pass);
-                Alert::success('pesan yang ingin disampaikan', 'Judul Pesan');
+                Alert::success('The password has been updated', 'Success')->persistent("OK");
             }else{
-                Alert::failed('The password must difference', 'Failed');
+                Alert::error('The password must difference', 'Error')->persistent("OK");
             }
         }else{
-            // password dont same with password on db
-            Alert::failed('The password you entered does not match', 'Failed');
+            Alert::error('The password you entered does not match', 'Error')->persistent("OK");
         }
         return view('frontend.dashboard');
     }
@@ -91,7 +99,6 @@ class ProfileMemberController extends Controller
             }
 
             $cek_parent = DB::table('employeers')->where('parent_id', $request->parent)->select('position')->get();
-           // dd($request->parent);
             foreach ($cek_parent as $key => $data) {
                 if ($data->position == $request->position) {
                     DB::rollback();
