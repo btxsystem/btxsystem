@@ -48,7 +48,7 @@
                         <div id="login" class="animate form">
                             <form action="{{ route('login') }}" autocomplete="on" method="post" role="form" id="login_form" class="my-3">
                                 <h3 class="black_bg">
-                                    <img src="http://ebook.bitrexgo.id/assetsebook/v2/img/logo-white.png" alt="Bitrexgo" style="height:80px">
+                                    <img src="{{ URL::to('/') }}/img/bitrexgo-logo.png" alt="Bitrexgo" style="height:70px">
                                     <h3>&nbsp;</h3>
                                     <!-- CSRF Token -->
                                     {{ csrf_field() }}
