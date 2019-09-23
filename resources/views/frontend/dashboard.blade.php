@@ -77,7 +77,7 @@
                         </a>
                     </li>
                     <li>
-                        <a title="pv"><b class="zmdi zmdi" style="font-size:15px">PV Group</b>
+                        <a title="pv"><b class="zmdi zmdi" style="font-size:20px">PV Group</b>
                             <p class="pv text-profile-title">{{number_format($profile['pv'])}}</p>
                         </a>
                     </li>
