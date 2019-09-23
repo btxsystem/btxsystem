@@ -661,7 +661,22 @@ cursor: pointer;
 			type: 'GET',
 			url: '/member/select/search-downline/'+data,
 			success: function (data) {
-				console.log('aaa');
+				if (data) {
+					$.ajax({
+						type: 'GET',
+						url: '/member/select/child-tree/'+data.username,
+						success: function (data) {
+							$('#bah').empty('g');
+							$('#upline').show();
+							tree(data)
+						},
+						error: function() {
+							console.log("Error");
+						}
+					});	
+				}else{
+					alert('Username not found');
+				}
 			},
 			error: function() {
 				console.log("Error");
