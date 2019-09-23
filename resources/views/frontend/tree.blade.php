@@ -23,7 +23,7 @@
 					@csrf
 					<input type="hidden" name="parent" id="parent" value="">
 					<input type="hidden" name="position" id="position" value="">
-          <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
+          			<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div class="forms-line">
 							<input class="form-control" disabled value="{{Auth::user()->username}}" type="text" min="3" required>
 						</div>
@@ -59,44 +59,46 @@
 							<label class="form-label">NIK / Passport</label>
 						</div>
 					</div>
-          <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
+          			<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div class="form-line">
 							<input class="form-control" id="npwp_number" name="npwp_number" type="number" min="1" required>
 							<label class="form-label">NPWP</label>
 						</div>
 					</div>
-          <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
+          			<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div class="form-line">
 							<input class="form-control" id="bank_account_name" name="bank_account_name" type="text" min="10" required>
 							<label class="form-label">Account Name</label>
 						</div>
 					</div>
-          <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
+          			<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div class="form-line">
 							<input class="form-control" id="bank_account_number" name="bank_account_number" type="number" min="1" required>
 							<label class="form-label">Account Number</label>
 						</div>
 					</div>
-          <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
+          			<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div class="form">
-              <label class="form-label">Bank Name</label>
-              <select class="form-control" id="bank_name_select">
-                <option value="BCA">BCA</option>
-                <option value="BRI">BRI</option>
-                <option value="BNI">BNI</option>
-                <option value="Mandiri">Mandiri</option>
-                <option value="CIMB NIAGA">CIMB NIAGA</option>
-                <option value="other">Other Bank</option>
-              </select>
-              <div class="form-line">
+              				<label class="form-label">Bank Name</label>
+							<select class="form-control" id="bank_name_select">
+								<option value="BCA">BCA</option>
+								<option value="BRI">BRI</option>
+								<option value="BNI">BNI</option>
+								<option value="Mandiri">Mandiri</option>
+								<option value="CIMB NIAGA">CIMB NIAGA</option>
+								<option value="other">Other Bank</option>
+							</select>
   							<input type="hidden" class="form-control" name="bank_name" id="bank_name" required>
-  						</div>
 						</div>
 					</div>
 					<div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
+						<div class="form">
+							<label class="form-label">Birth Date</label>
+						</div>
 						<div class="form-line">
 							<input type="date" id="birthdate" name="birthdate" class="form-control" placeholder="Birthdate" required>
 						</div>
+						<div style="color:red" id="birthdate_danger"></div>
 					</div>
 					<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<h5 class="card-inside-title">Gender</h5>
@@ -107,39 +109,39 @@
 							<label for="female">Female</label>
 						</div>
 					</div>
-          <div class="dropdown-divider"></div>
-          <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
+          			<div class="dropdown-divider"></div>
+          			<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div class="demo-radio-button">
 							<input name="pack" type="radio" value="1" id="pack" class="with-gap radio-col-red" checked />
 							<label for="shipping">Starter Pack</label>
 						</div>
 					</div>
-          <div class="dropdown-divider"></div>
-          <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
+					<div class="dropdown-divider"></div>
+					<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<h5 class="card-inside-title">Choose a ebook</h5>
 						<div class="demo-radio-button">
 							<!-- <input name="method" type="radio" value="1" id="shipping" class="with-gap radio-col-red" checked />
 							<label for="shipping">Shipping</label> -->
-              <div id="ebook-list"></div>
+              		<div id="ebook-list"></div>
 						</div>
 					</div>
-          <div class="dropdown-divider"></div>
+          			<div class="dropdown-divider"></div>
 					<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<h5 class="card-inside-title">Choose a shipping method</h5>
 						<div class="demo-radio-button">
-              <input name="shipping_method" type="radio" value="0" id="pickup" class="with-gap radio-col-red" checked/>
+              				<input name="shipping_method" type="radio" value="0" id="pickup" class="with-gap radio-col-red" checked/>
 							<label for="pickup">Pickup</label>
 							<input name="shipping_method" type="radio" value="1" id="shipping" class="with-gap radio-col-red" />
 							<label for="shipping">Shipping</label>
 						</div>
 					</div>
-          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 pickup-form">
-            <h4>B-G 168, Jl. Pluit Indah Raya, Pluit, Penjaringan, North Jakarta City, Jakarta 14450</h4>
-          </div>
+					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 pickup-form">
+						<h4>B-G 168, Jl. Pluit Indah Raya, Pluit, Penjaringan, North Jakarta City, Jakarta 14450</h4>
+					</div>
 					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 shipping-form">
 						<div class="form-group">
 							<select id="province" name="province" class="province"></select>
-              <input type="hidden" name="province_name" id="province_name" value="">
+              				<input type="hidden" name="province_name" id="province_name" value="">
 						</div>
 						<div class="form-group city-form">
 							<select id="city" name="city" class="city"></select>
@@ -447,12 +449,23 @@ cursor: pointer;
   let postalFee = 0
   let grandTotal = 0;
   let bitrexPoint = '{{Auth::user()->bitrex_points}}'
+  let adult = 0;
+
+  $('#birthdate').on('change', function() {
+	var dob = new Date(this.value);
+	var today = new Date();
+	var age = Math.floor((today-dob) / (365.25 * 24 * 60 * 60 * 1000));
+	adult = age;
+	if (age < 18) {
+		$('#birthdate_danger').append('<p id="danger_">Age must be more than 17 years</p>');
+	}else{
+		$('#danger_').empty();
+	}
+  });
 
   function checkTerm() {
     if(!$('#term_one').prop('checked') || !$('#term_two').prop('checked')) {
       $('.register').prop('disabled', true)
-      console.log($('#term_one').prop('checked'))
-      console.log($('#term_two').prop('checked'))
     } else {
       if(
         $('#username').val() != ''
@@ -461,6 +474,7 @@ cursor: pointer;
         && $('#last_name').val() != ''
         && $('#nik').val() != ''
         && $('#birthdate').val() != ''
+		&& adult >= 18
       ) {
         $('.register').prop('disabled', false)
       } else {
