@@ -37,10 +37,13 @@ Withdrawal Bonus
                             <tr>
                                 <th class="text-center" width="5%">No</th>
                                 <th class="text-center" width="15%">ID Member</th>
-                                <th class="text-center" width="20%">Username</th>
+                                <th class="text-center" width="15%">Username</th>
+                                <th class="text-center" width="10%">B Sponsor</th>
+                                <th class="text-center" width="10%">B Pairing</th>
+                                <th class="text-center" width="10%">B Profit</th>
+                                <th class="text-center" width="10%">B Reward</th>
                                 <th class="text-center" width="15%">Bitrax Cash</th>
-                                <th class="text-center" width="15%">Expired</th>
-                                <th class="text-center" width="15%"><button type="button" name="bulk_paid" id="bulk_paid" class="btn btn-danger btn-xs">Paid Checked</button></th>
+                                <th class="text-center" width="10%"><button type="button" name="bulk_paid" id="bulk_paid" class="btn btn-danger btn-xs">Paid Checked</button></th>
                                 <!-- <th width="15%">Action</th> -->
                             </tr>
                         </thead>
@@ -72,8 +75,12 @@ Withdrawal Bonus
                   { data: 'DT_RowIndex', name: 'DT_RowIndex', className: "text-center", orderable: false, searchable: false },
                   { data: 'id_member', name: 'id_member', className: "text-center" },                  
                   { data: 'username', name: 'username', className: "text-center" },                  
+                  { data: 'bonusSponsor', name: 'bonus_sponsor', className: "text-center" },                  
+                  { data: 'bonusPairing', name: 'bonus_pairing', className: "text-center" },                  
+                  { data: 'bonusProfit', name: 'bonus_profit', className: "text-center" },                  
+                  { data: 'bonusReward', name: 'bonus_reward', className: "text-center" },                  
                   { data: 'cash', name: 'bitrex_cash', className: "text-center" },                  
-                  { data: 'expired_at', name: 'expired_at', className: "text-center" },     
+                //   { data: 'expired_at', name: 'expired_at', className: "text-center" },     
                   { data: 'check', orderable: false, searchable:false, name:'id', className: "text-center" },             
                 //   { data: 'action', name: 'action', orderable: false, searchable: false, className: "text-center" },
               ]

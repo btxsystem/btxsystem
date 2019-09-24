@@ -28,6 +28,18 @@ class WithdrawalBonusController extends Controller
                         ->addColumn('cash', function($row){
                             return currency($row->bitrex_cash);
                         })
+                        ->addColumn('bonusSponsor', function($row){
+                            return currency($row->bonus_sponsor);
+                        })
+                        ->addColumn('bonusPairing', function($row){
+                            return currency($row->bonus_pairing);
+                        })
+                        ->addColumn('bonusProfit', function($row){
+                            return currency($row->bonus_profit);
+                        })
+                        ->addColumn('bonusReward', function($row){
+                            return currency($row->bonus_reward);
+                        })
                         ->addColumn('check', '<input type="checkbox" name="member_checkbox[]" class="member_checkbox" value="{{$id}}" />')
                         ->addColumn('action', function($row) {
                             return $this->htmlAction($row);
