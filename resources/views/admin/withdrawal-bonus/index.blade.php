@@ -6,6 +6,12 @@ Withdrawal Bonus
 @stop
 
 @section('content')
+<style>
+    div.dataTables_wrapper {
+        width: 1100px;
+        margin: 0 auto;
+    }
+</style>
 
 <section class="content-header">
     <h1>Withdrawal Bonus </h1>
@@ -25,18 +31,19 @@ Withdrawal Bonus
                         <i class="livicon" data-name="notebook" data-size="16" data-loop="true" data-c="#fff" data-hc="white"></i>
                         Withdrawal Bonus  Table
                     </div>
-<!-- 
+
                     <div class="pull-right">
-                        <a style=" color: white; text-decoration: none !important" href="#addTestimoniModal" data-toggle="modal"><i style="font-size:15px;" class="fa fa-plus"></i>&nbsp; &nbsp;<strong>Add New Testimony</strong></a>
-                    </div> -->
+                        <a style=" color: white; text-decoration: none !important" href="{{route('withdrawal-bonus.export')}}" target="_blank" data-toggle="modal"><i style="font-size:15px;" class="fa fa-file-excel-o"></i>&nbsp; &nbsp;<strong>Export Excel</strong></a>
+                    </div>
                 </div>
                 
                 <div class="portlet-body flip-scroll">
                     <table id="member_table"  class="table data-table table-bordered table-striped table-condensed flip-content testimonial" >
                         <thead class="flip-content">
-                            <tr>
+                            <!-- <tr>
                                 <th class="text-center" width="5%">No</th>
-                                <th class="text-center" width="15%">ID Member</th>
+                                <th class="text-center" width="15%">Name</th>
+                                <th class="text-center" width="15%">No Rec</th>
                                 <th class="text-center" width="15%">Username</th>
                                 <th class="text-center" width="10%">B Sponsor</th>
                                 <th class="text-center" width="10%">B Pairing</th>
@@ -44,7 +51,21 @@ Withdrawal Bonus
                                 <th class="text-center" width="10%">B Reward</th>
                                 <th class="text-center" width="15%">Bitrax Cash</th>
                                 <th class="text-center" width="10%"><button type="button" name="bulk_paid" id="bulk_paid" class="btn btn-danger btn-xs">Paid Checked</button></th>
-                                <!-- <th width="15%">Action</th> -->
+         -->
+                                <th class="text-center">No</th>
+                                <th class="text-center">Name</th>
+                                <th class="text-center">Username</th>
+                                <th class="text-center">No Rec</th>
+                                <th class="text-center">Bank Name</th>
+                                <th class="text-center">NPWP</th>
+                                <th class="text-center">B Sponsor</th>
+                                <th class="text-center">B Pairing</th>
+                                <th class="text-center">B Profit</th>
+                                <th class="text-center">B Reward</th>
+                                <th class="text-center">Tax</th>
+                                <th class="text-center">Bitrax Cash</th>
+                                <th class="text-center"><button type="button" name="bulk_paid" id="bulk_paid" class="btn btn-danger btn-xs">Paid Checked</button></th>
+        
                             </tr>
                         </thead>
                         <tbody>
@@ -65,6 +86,7 @@ Withdrawal Bonus
               rowCallback: function(row, data, index){
                 $(row).find('td').css('vertical-align', 'middle');
               },
+              scrollX: true,
               destroy: true,
               processing: true,
               serverSide: true,
@@ -73,16 +95,18 @@ Withdrawal Bonus
               },
               columns: [
                   { data: 'DT_RowIndex', name: 'DT_RowIndex', className: "text-center", orderable: false, searchable: false },
-                  { data: 'id_member', name: 'id_member', className: "text-center" },                  
-                  { data: 'username', name: 'username', className: "text-center" },                  
-                  { data: 'bonusSponsor', name: 'bonus_sponsor', className: "text-center" },                  
-                  { data: 'bonusPairing', name: 'bonus_pairing', className: "text-center" },                  
-                  { data: 'bonusProfit', name: 'bonus_profit', className: "text-center" },                  
-                  { data: 'bonusReward', name: 'bonus_reward', className: "text-center" },                  
+                  { data: 'fullname', name: 'first_name', className: "text-center" },                                 
+                  { data: 'username', name: 'username', className: "text-center" },
+                  { data: 'no_rec', name: 'no_rec', className: "text-center" },                     
+                  { data: 'bank_name', name: 'bank_name', className: "text-center" },                  
+                  { data: 'npwp_number', name: 'npwp_number', className: "text-center" },                  
+                  { data: 'bonusSponsor', name: 'bonus_sponsor', className: "text-center", orderable: false, searchable: false  },                  
+                  { data: 'bonusPairing', name: 'bonus_pairing', className: "text-center", orderable: false, searchable: false  },                  
+                  { data: 'bonusProfit', name: 'bonus_profit', className: "text-center", orderable: false, searchable: false  },                  
+                  { data: 'bonusReward', name: 'bonus_reward', className: "text-center", orderable: false, searchable: false  },                  
+                  { data: 'verificationStatus', name: 'verificationStatus', className: "text-center", orderable: false, searchable: false  },                  
                   { data: 'cash', name: 'bitrex_cash', className: "text-center" },                  
-                //   { data: 'expired_at', name: 'expired_at', className: "text-center" },     
                   { data: 'check', orderable: false, searchable:false, name:'id', className: "text-center" },             
-                //   { data: 'action', name: 'action', orderable: false, searchable: false, className: "text-center" },
               ]
           });
           

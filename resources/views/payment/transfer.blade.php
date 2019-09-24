@@ -11,6 +11,10 @@
                 <div class="p-4">
                   <h1 class="text-center text-info">Transaction Summary</h1>
                   <h4  class="text-center text-danger">Please check your email.</h4>
+                  <hr/>
+                  <h4>Bank Name : BCA</h4>
+                  <h4>Bank Account : PT. BITREXGO SOLUSI PRIMA</h4>
+                  <h4>Bank Number : 5810598168</h4>
                 </div>
                 <hr/>
               </div>

@@ -8,7 +8,10 @@ use App\Employeer;
 use Carbon\Carbon;
 use DataTables;
 use Alert;
+use App\Exports\EmployeerExport;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\DB;
+
 
 class WithdrawalBonusController extends Controller
 {
@@ -18,13 +21,16 @@ class WithdrawalBonusController extends Controller
             $data = Employeer::where('status', 1)
                                 ->where('bitrex_cash','>', 1000)
                                 ->whereDate('expired_at', '>=', now())
-                                ->select('id as check','id','id_member','username',
-                                        'first_name','last_name','rank_id',
+                                ->select('id as check','id','id_member','username','no_rec','bank_name','npwp_number',
+                                        'first_name','last_name','rank_id','verification',
                                         'created_at','status','bitrex_cash','bitrex_points','expired_at'
                     );
 
                 return Datatables::of($data)
                         ->addIndexColumn()
+                        ->addColumn('fullname', function($row){
+                            return $row->first_name .' '.$row->last_name;
+                        })
                         ->addColumn('cash', function($row){
                             return currency($row->bitrex_cash);
                         })
@@ -39,6 +45,9 @@ class WithdrawalBonusController extends Controller
                         })
                         ->addColumn('bonusReward', function($row){
                             return currency($row->bonus_reward);
+                        })
+                        ->addColumn('verificationStatus', function($row){
+                            return $this->getVerificationStatus($row);
                         })
                         ->addColumn('check', '<input type="checkbox" name="member_checkbox[]" class="member_checkbox" value="{{$id}}" />')
                         ->addColumn('action', function($row) {
@@ -91,6 +100,48 @@ class WithdrawalBonusController extends Controller
                 Alert::error('Gagal Melakukan Update Data', 'Gagal')->persistent("Close");
         }
 
+    }
+
+    // public function export()
+    // {
+    //     return Excel::create('products_' . date('d_m_Y'), function($excel) {
+    //         $excel->sheet('Sheet 1', function($sheet) {
+
+    //             ini_set('max_execution_time', 1800);
+    //             $data = Employeer::where('status', 1)
+    //                     ->where('bitrex_cash','>', 1000)
+    //                     ->whereDate('expired_at', '>=', now())
+    //                     ->select('id as check','id','id_member','username','no_rec','bank_name','npwp_number',
+    //                             'first_name','last_name','rank_id',
+    //                             'created_at','status','bitrex_cash','bitrex_points','expired_at')->get();
+
+    //             // $model = $models->map(function ($model){
+    //             //     return $model->only(['id','name','code','unit_name','quantity_available','stocks']);
+    //             // });
+
+    //             $sheet->loadView('admin.withdrawal-bonus.excel', [
+    //                 'data' => $data
+    //             ]);
+
+    //         });
+    //     })->export('xls');
+    // }
+    public function export()
+    {
+        return Excel::download(new EmployeerExport, 'employeers.xlsx');
+    }
+
+    public function getVerificationStatus($row)
+    {
+        switch($row->verification) {
+            case 0;
+            return '3.0%';
+            break;
+
+            case 1;
+            return '2,5%';
+            break;
+        }
     }
 
 }
