@@ -106,6 +106,8 @@ Route::group(['namespace' => 'Ebook\Api', 'prefix' => 'api/ebook'], function() {
   Route::get('/ebooks', 'EbookController@all')->name('api.ebook.ebooks');
 });
 
+Route::post('forgot-password', ['as' => 'forgot-password', 'uses' => 'Member\ForgotPasswordController@sendEmail']);
+
 Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
 
     Route::post('change-photo', ['as' => 'change-photo', 'uses' => 'Member\ProfileMemberController@changePhoto'] );
