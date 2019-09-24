@@ -122,7 +122,7 @@ class Employeer extends Authenticatable
     {
         // Wheredate untuk memisahkan data baru setelah migrasi data
        return \DB::table('history_bitrex_cash')
-                ->whereDate('created_at', '>', '2019-09-19 00:00:00')
+                ->whereDate('created_at', '>', '2019-09-18 00:00:00')
                 ->where('id_member', $this->id)
                 ->where('type', 0)
                 ->where('info', 1)
@@ -141,7 +141,7 @@ class Employeer extends Authenticatable
     {
         // Wheredate untuk memisahkan data baru setelah migrasi data
        return \DB::table('history_bitrex_cash')
-                ->whereDate('created_at', '>', '2019-09-19 00:00:00')
+                ->whereDate('created_at', '>', '2019-09-18 00:00:00')
                 ->where('id_member', $this->id)
                 ->where('type', 1)
                 ->where('info', 1)
@@ -159,7 +159,7 @@ class Employeer extends Authenticatable
     public function getBonusProfitAttribute()
     {
        return \DB::table('history_bitrex_cash')
-                ->whereDate('created_at', '>', '2019-09-19 00:00:00')
+                ->whereDate('created_at', '>', '2019-09-18 00:00:00')
                 ->where('id_member', $this->id)
                 ->where('type', 2)
                 ->where('info', 1)
@@ -177,7 +177,7 @@ class Employeer extends Authenticatable
     public function getBonusRewardAttribute()
     {
        return \DB::table('history_bitrex_cash')
-                ->whereDate('created_at', '>', '2019-09-19 00:00:00')
+                ->whereDate('created_at', '>', '2019-09-18 00:00:00')
                 ->where('id_member', $this->id)
                 ->where('type', 3)
                 ->where('info', 1)
