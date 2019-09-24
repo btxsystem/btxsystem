@@ -107,7 +107,7 @@ class Employeer extends Authenticatable
 
     public function transaction_member()
     {
-        return $this->hasMany('App\Models\TransactionMember','member_id');
+        return $this->hasMany('App\Models\TransactionMember','member_id')->where('status', 1);
     }
 
     public function rank(){

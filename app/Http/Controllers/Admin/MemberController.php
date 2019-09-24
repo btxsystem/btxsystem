@@ -381,7 +381,7 @@ class MemberController extends Controller
 
     public function transactionMember($id)
     {
-        $data = Employeer::with(('transaction_member.ebook'))->findOrFail($id);
+        $data = Employeer::with('transaction_member.ebook')->findOrFail($id);
      
         return Datatables::of($data->transaction_member)
             ->addIndexColumn()
