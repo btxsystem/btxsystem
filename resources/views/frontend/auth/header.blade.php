@@ -152,6 +152,33 @@
     </div>
 </div>
 
+<div class="modal fade" id="forgot-password" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <b style="font-size: 16px;" class="modal-title" id="exampleModalLabel">Forgot password</b>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="height: auto;">
+              <form action="{{route('forgot-password')}}" method="post" id="payment">
+                @csrf
+                    <div class="input-group col-md-12">
+                        <input class="form-control" type="email" name="email" id="email" placeholder="Email" required>
+                        <p class="alert-referal"></p>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="Submit" class="btn btn-join" style="border-radius: 5px; background-color: #b92240; color: #fff;">Submit</button>
+                      <button type="button" class="btn" style="border-radius: 5px; background-color: orange; color: #fff; margin-top: -5px;" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="layout-theme animated-css"  data-header="sticky" data-header-top="200">
 
   <div id="wrapper">
