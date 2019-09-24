@@ -458,7 +458,7 @@ cursor: pointer;
 	var age = Math.floor((today-dob) / (365.25 * 24 * 60 * 60 * 1000));
 	adult = age;
 	if (age < 18) {
-		$('#birthdate_danger').append('<p id="danger_">Age must be more than 17 years</p>');
+		$('#birthdate_danger').html('<p id="danger_">Age must be more than 17 years</p>');
 	}else{
 		$('#danger_').empty();
 	}
