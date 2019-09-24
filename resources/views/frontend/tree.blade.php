@@ -609,7 +609,8 @@ cursor: pointer;
 				}
 
 				if(priceEbook != 0) {
-					$('#cost-ebook').parent().removeClass('hidden')
+					$('#cost-ebook').parent().removeClass('hidden');
+					$('.for_hide').empty();
 				} else {
 					$('#cost-ebook').parent().addClass('hidden')
 				}
