@@ -13,9 +13,8 @@
                     <div class="form-group">
                       <input class="form-control" type="text" name="username" placeholder="Username">
                       <input class="form-control" type="password" name="password"  placeholder="Password">
-                      <div class="" style="color:red;">
-                          
-                      </div>
+                      <div class="col-sm-7"></div>
+                      <div class="col-sm-5"><a href="#" style="cursor:pointer"><b>Forgot password? </b></a></div>
                     </div>
                     <div class="find-course__wrap-btn">
                       <button type="submit" class="btn btn-effect btn-info" >SUBMIT</button>

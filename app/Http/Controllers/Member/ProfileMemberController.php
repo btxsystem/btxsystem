@@ -174,7 +174,7 @@ class ProfileMemberController extends Controller
 
                 if($request->input('shipping_method') == "1") {
                     $price = (int) $price + (int) + $request->input('cost');
-                }//
+                }
 
                 foreach($ebooks as $ebook) {
                     $prefixRef = 'BITREX02';

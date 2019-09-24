@@ -61,12 +61,11 @@
             <li class="header">Menu</li>
             <li> <a href="{{route('member.dashboard')}}"><i class="zmdi zmdi-view-dashboard col-red"></i><span>Dashboard</span> </a> </li>
             <li> <a href="{{route('member.tree')}}"><i class="zmdi zmdi-device-hub col-blue"></i><span>Tree</span> </a> </li>
-            <li> <a href="{{ route('member.prospected-member') }}"><i class="zmdi zmdi-accounts col-purple"></i><span>Prospected Member</span> </a> </li>
             <li> <a href="{{ route('member.ebook.index') }}"><i class="zmdi zmdi-book col-red"></i><span>Ebook</span> </a> </li>
             <li> <a href="{{ route('member.reward') }}"><i class="zmdi zmdi-star-half col-blue"></i><span>My Rewards</span> </a> </li>
             <li> <a href="{{ route('member.bonus.index') }}"><i class="zmdi zmdi-ticket-star col-red"></i><span>My Bonus</span> </a> </li>
             <!-- <li> <a href="{{ route('member.add-member.index') }}"><i class="zmdi zmdi-plus col-purple"></i><span>Add New Member</span> </a> </li> -->
-            <li><a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-money col-green"></i><span>Income and expenses</span> </a>
+            <li><a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-money col-green"></i><span>Debit and Credit</span> </a>
                 <ul class="ml-menu">
                     <li><a href="{{route('member.bitrex-money.bitrex-points')}}">Bitrex Points</a> </li>
                     <li><a href="{{route('member.bitrex-money.bitrex-cash')}}">Bitrex Value</a> </li>
@@ -80,6 +79,7 @@
                     <li><a href="{{route('member.transaction.prospected-member-transaction')}}">Prospected Member Transactions</a></li>
                 </ul>
             </li>
+            <li> <a href="{{ route('member.prospected-member') }}"><i class="zmdi zmdi-accounts col-purple"></i><span>Prospected Member</span> </a> </li>
             <li class="header">Profile</li>
             <li> <a href="{{route('member.profile.index')}}"><i class="zmdi zmdi-account col-purple"></i><span>My Profile</span> </a> </li>
             <li> <a data-toggle="modal" data-target="#change-password"><i class="zmdi zmdi-key col-red"></i><span>Change Password</span> </a> </li> 
