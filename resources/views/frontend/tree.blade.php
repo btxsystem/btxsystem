@@ -574,7 +574,7 @@ cursor: pointer;
         return `
         <div class="form-check">
           <input class="form-check-input" data-price="${v.price}" type="checkbox" name="ebooks[]" value="${v.id}" id="${v.title}">
-          <label class="form-check-label" for="${v.title}" ${v.id == 1 ? 'checked' : ''}>
+          <label class="form-check-label" id="${i}" for="${v.title}" ${v.id == 1 ? 'checked' : ''}>
             ${v.title}
           </label>
         </div>
@@ -601,18 +601,16 @@ cursor: pointer;
 
 				if($(this).prop('checked')) {
 					priceEbook = priceEbook + parseInt($(this).data('price'));
-					$('.for_hide').empty();
 				} else {
 					priceEbook = priceEbook - parseInt($(this).data('price'));
 					$('.register').prop('disabled', true);
-					$('.buy_ebook').html('<p style="color:red" class="for_hide">You have to buy one of the ebooks to become a member</p>');
 				}
 
 				if(priceEbook != 0) {
 					$('#cost-ebook').parent().removeClass('hidden');
-					$('.for_hide').empty();
 				} else {
-					$('#cost-ebook').parent().addClass('hidden')
+					$('#cost-ebook').parent().addClass('hidden');
+					$('.register').prop('disabled', true);
 				}
 
 				if(postalFee != 0) {
