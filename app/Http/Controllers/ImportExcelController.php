@@ -137,7 +137,6 @@ class ImportExcelController extends Controller
         $datas_ = Excel::toArray(new AccountName, request()->file('file'))[0];
         foreach ($datas_ as $key => $data3) {
             $user1 = Employeer::where('id_member',$data3['id_job_seeker'])->select('id')->first();
-            dd($user1->id);
             $dt3['bank_name'] = $data3['bank_name'];
             $dt3['bank_account_name'] = $data3['account_name'];
             Employeer::find($user1['id'])->update($dt3);
