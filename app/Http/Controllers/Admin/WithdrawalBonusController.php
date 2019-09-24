@@ -46,6 +46,9 @@ class WithdrawalBonusController extends Controller
                         ->addColumn('bonusReward', function($row){
                             return currency($row->bonus_reward);
                         })
+                        ->addColumn('verificationStatus', function($row){
+                            return $this->getVerificationStatus($row);
+                        })
                         ->addColumn('check', '<input type="checkbox" name="member_checkbox[]" class="member_checkbox" value="{{$id}}" />')
                         ->addColumn('action', function($row) {
                             return $this->htmlAction($row);
@@ -126,6 +129,19 @@ class WithdrawalBonusController extends Controller
     public function export()
     {
         return Excel::download(new EmployeerExport, 'employeers.xlsx');
+    }
+
+    public function getVerificationStatus($row)
+    {
+        switch($row->verification) {
+            case 0;
+            return '3.0%';
+            break;
+
+            case 1;
+            return '2,5%';
+            break;
+        }
     }
 
 }
