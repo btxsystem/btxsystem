@@ -25,36 +25,7 @@ class Employeer extends Authenticatable
         'total_bonus'
       ];
 
-    protected $fillable = [
-        'id',
-        'id_member',
-        'username',
-        'first_name',
-        'last_name',
-        'email',
-        'password',
-        'birthdate',
-        'npwp_number',
-        'is_married',
-        'gender',
-        'status',
-        'phone_number',
-        'no_rec',
-        'position',
-        'parent_id',
-        'sponsor_id',
-        'rank_id',
-        'verification',
-        'bitrex_cash',
-        'bitrex_points',
-        'pv',
-        'src',
-        'is_update',
-        'nik',
-        'bank_name',
-        'bank_account_name',
-        'expired_at'
-    ];
+    protected $guarded = [];
 
     public function getName()
     {

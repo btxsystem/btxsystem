@@ -187,6 +187,9 @@ Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
     Route::group(['prefix' => 'profile', 'as'=> 'profile.'], function () {
         Route::get('', ['as' => 'index', 'uses' => 'Member\ProfileMemberController@index']);
         Route::post('reset-password', ['as' => 'reset-password', 'uses' => 'Member\ProfileMemberController@resetPassword']);
+        Route::get('update',['as' => 'update', 'uses' => 'Member\ProfileMemberController@updateProfile']);
+        Route::get('data',['as' => 'data', 'uses' => 'Member\ProfileMemberController@data']);
+        Route::get('update-profile',['as' => 'update-profile', 'uses' => 'Member\ProfileMemberController@update_profile']);
     });
 
     Route::group(['prefix' => 'add-member', 'as'=> 'add-member.'], function () {

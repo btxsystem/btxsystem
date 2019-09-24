@@ -11,6 +11,7 @@ use App\Models\GotReward;
 use Session;
 
 use App\Imports\EmployeerImport;
+use App\Imports\AccountName;
 use App\Imports\RewardsImport;
 use App\Imports\RewardImport;
 use App\Imports\TreeImport;
@@ -128,6 +129,18 @@ class ImportExcelController extends Controller
             $dt2['info'] = 1;
             $dt2['type'] = 4;
             HistoryBitrexCash::insert($dt2);
+         }
+        return redirect()->back();
+    }
+
+    public function account_name(Request $request){
+        $datas_ = Excel::toArray(new AccountName, request()->file('file'))[0];
+        foreach ($datas_ as $key => $data3) {
+            $user1 = Employeer::where('id_member',$data3['id_job_seeker'])->select('id')->first();
+            dd($user1->id);
+            $dt3['bank_name'] = $data3['bank_name'];
+            $dt3['bank_account_name'] = $data3['account_name'];
+            Employeer::find($user1['id'])->update($dt3);
          }
         return redirect()->back();
     }

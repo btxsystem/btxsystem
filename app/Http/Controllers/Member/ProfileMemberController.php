@@ -143,7 +143,10 @@ class ProfileMemberController extends Controller
                     'bitrex_points' => 0,
                     'pv' => 0,
                     'nik' => $request->nik,
-                    'expired_at' => Carbon::create(date('Y-m-d H:i:s'))->addYear(1)
+                    'expired_at' => Carbon::create(date('Y-m-d H:i:s'))->addYear(1),
+                    'bank_name' => $request->bank_name,
+                    'bank_account_name' => $request->bank_account_name,
+                    'no_rec' => $request->bank_account_number
                 ];
 
                 Employeer::create($data);
@@ -375,7 +378,10 @@ class ProfileMemberController extends Controller
                 'bank_account_name' => $data->bank_account_name,
                 'bank_name' => $data->bank_name,
                 'npwp_number' => $data->npwp_number,
-                'expired_at' => Carbon::create(date('Y-m-d H:i:s'))->addYear(1)
+                'expired_at' => Carbon::create(date('Y-m-d H:i:s'))->addYear(1),
+                'bank_name' => $request->bank_name,
+                'bank_account_name' => $request->bank_account_name,
+                'no_rec' => $request->bank_account_number
             ];
             Employeer::create($member);
         }else{
@@ -408,11 +414,7 @@ class ProfileMemberController extends Controller
                     'bitrex_points' => 0,
                     'pv' => 0,
                     'nik' => $data->passport ?? $data->nik,
-                    'no_rec' => $data->bank_account_number,
-                    'bank_account_name' => $data->bank_account_name,
-                    'bank_name' => $data->bank_name,
-                    'npwp_number' => $data->npwp_number,
-                    'expired_at' => Carbon::create(date('Y-m-d H:i:s'))->addYear(1)
+                    'no_rec' => $data->bank_account_number
                 ];
                 Employeer::create($member);
             }elseif (!$midle) {
@@ -432,11 +434,7 @@ class ProfileMemberController extends Controller
                     'bitrex_points' => 0,
                     'pv' => 0,
                     'nik' => $data->passport ?? $data->nik,
-                    'no_rec' => $data->bank_account_number,
-                    'bank_account_name' => $data->bank_account_name,
-                    'bank_name' => $data->bank_name,
-                    'npwp_number' => $data->npwp_number,
-                    'expired_at' => Carbon::create(date('Y-m-d H:i:s'))->addYear(1)
+                    'no_rec' => $data->bank_account_number
                 ];
                 Employeer::create($member);
             }else {
@@ -460,7 +458,10 @@ class ProfileMemberController extends Controller
                     'bank_account_name' => $data->bank_account_name,
                     'bank_name' => $data->bank_name,
                     'npwp_number' => $data->npwp_number,
-                    'expired_at' => Carbon::create(date('Y-m-d H:i:s'))->addYear(1)
+                    'expired_at' => Carbon::create(date('Y-m-d H:i:s'))->addYear(1),
+                    'bank_name' => $request->bank_name,
+                    'bank_account_name' => $request->bank_account_name,
+                    'no_rec' => $request->bank_account_number
                 ];
                 Employeer::create($member);
             }
@@ -505,7 +506,10 @@ class ProfileMemberController extends Controller
                 'bitrex_points' => 0,
                 'pv' => 0,
                 'nik' => $request->passport,
-                'expired_at' => Carbon::create(date('Y-m-d H:i:s'))->addYear(1)
+                'expired_at' => Carbon::create(date('Y-m-d H:i:s'))->addYear(1),
+                'bank_name' => $request->bank_name,
+                'bank_account_name' => $request->bank_account_name,
+                'no_rec' => $request->bank_account_number
             ];
             Employeer::create($member);
         }else{
@@ -538,7 +542,10 @@ class ProfileMemberController extends Controller
                     'bitrex_points' => 0,
                     'pv' => 0,
                     'nik' => $request->passport,
-                    'expired_at' => Carbon::create(date('Y-m-d H:i:s'))->addYear(1)
+                    'expired_at' => Carbon::create(date('Y-m-d H:i:s'))->addYear(1),
+                    'bank_name' => $request->bank_name,
+                    'bank_account_name' => $request->bank_account_name,
+                    'no_rec' => $request->bank_account_number
                 ];
                 Employeer::create($member);
             }elseif (!$midle) {
@@ -558,7 +565,10 @@ class ProfileMemberController extends Controller
                     'bitrex_points' => 0,
                     'pv' => 0,
                     'nik' => $request->passport,
-                    'expired_at' => Carbon::create(date('Y-m-d H:i:s'))->addYear(1)
+                    'expired_at' => Carbon::create(date('Y-m-d H:i:s'))->addYear(1),
+                    'bank_name' => $request->bank_name,
+                    'bank_account_name' => $request->bank_account_name,
+                    'no_rec' => $request->bank_account_number
                 ];
                 Employeer::create($member);
             }else {
@@ -578,7 +588,10 @@ class ProfileMemberController extends Controller
                     'bitrex_points' => 0,
                     'pv' => 0,
                     'nik' => $request->passport,
-                    'expired_at' => Carbon::create(date('Y-m-d H:i:s'))->addYear(1)
+                    'expired_at' => Carbon::create(date('Y-m-d H:i:s'))->addYear(1),
+                    'bank_name' => $request->bank_name,
+                    'bank_account_name' => $request->bank_account_name,
+                    'no_rec' => $request->bank_account_number
                 ];
                 Employeer::create($member);
             }
@@ -588,6 +601,7 @@ class ProfileMemberController extends Controller
 
     public function registerAutoPlacement(Request $request)
     {
+        
 
         try {
             DB::beginTransaction();
@@ -689,7 +703,10 @@ class ProfileMemberController extends Controller
                         'bank_account_name' => $request->bank_account_name,
                         'bank_name' => $request->bank_name,
                         'npwp_number' => $request->npwp_number,
-                        'expired_at' => Carbon::create(date('Y-m-d H:i:s'))->addYear(1)
+                        'expired_at' => Carbon::create(date('Y-m-d H:i:s'))->addYear(1),
+                        'bank_name' => $request->bank_name,
+                        'bank_account_name' => $request->bank_account_name,
+                        'no_rec' => $request->bank_account_number
                     ];
                     Employeer::create($member);
                 }else{
@@ -727,7 +744,10 @@ class ProfileMemberController extends Controller
                             'bank_account_name' => $request->bank_account_name,
                             'bank_name' => $request->bank_name,
                             'npwp_number' => $request->npwp_number,
-                            'expired_at' => Carbon::create(date('Y-m-d H:i:s'))->addYear(1)
+                            'expired_at' => Carbon::create(date('Y-m-d H:i:s'))->addYear(1),
+                            'bank_name' => $request->bank_name,
+                            'bank_account_name' => $request->bank_account_name,
+                            'no_rec' => $request->bank_account_number
                         ];
                         Employeer::create($member);
                     }elseif (!$midle) {
@@ -752,7 +772,10 @@ class ProfileMemberController extends Controller
                             'bank_account_name' => $request->bank_account_name,
                             'bank_name' => $request->bank_name,
                             'npwp_number' => $request->npwp_number,
-                            'expired_at' => Carbon::create(date('Y-m-d H:i:s'))->addYear(1)
+                            'expired_at' => Carbon::create(date('Y-m-d H:i:s'))->addYear(1),
+                            'bank_name' => $request->bank_name,
+                            'bank_account_name' => $request->bank_account_name,
+                            'no_rec' => $request->bank_account_number
                         ];
                         Employeer::create($member);
                     }else {
@@ -777,7 +800,10 @@ class ProfileMemberController extends Controller
                             'bank_account_name' => $request->bank_account_name,
                             'bank_name' => $request->bank_name,
                             'npwp_number' => $request->npwp_number,
-                            'expired_at' => Carbon::create(date('Y-m-d H:i:s'))->addYear(1)
+                            'expired_at' => Carbon::create(date('Y-m-d H:i:s'))->addYear(1),
+                            'bank_name' => $request->bank_name,
+                            'bank_account_name' => $request->bank_account_name,
+                            'no_rec' => $request->bank_account_number
                         ];
                         Employeer::create($member);
                     }
@@ -904,5 +930,35 @@ class ProfileMemberController extends Controller
     public function expNotif(){
         $notif['darurat'] = Auth::user()->expired_at <= Carbon::now()->addMonths(3);
         return $notif;
+    }
+
+    public function updateProfile(){
+        $data = DB::table('employeers')->where('id',Auth::id())->select('is_update')->first();
+        return response()->json($data, 200);
+    }
+
+    public function data(){
+        $data = DB::table('employeers')->where('id',Auth::id())->select('npwp_number','phone_number','bank_account_name','bank_name','no_rec')->first();
+        return response()->json($data, 200);
+    }
+
+    public function update_profile(Request $request){
+        $data = [
+            'npwp_number' => $request->npwp,
+            'phone_number' => $request->phone_number,
+            'no_rec' => $request->no_rec,
+            'bank_account_name' => $request->bank_account_name,
+            'bank_name' => $request->bank_name,
+            'is_update' => 0
+        ];
+        $cek = Employeer::find(Auth::id())->update($data);
+        if ($cek) {
+            $dat['status'] = true;
+            return response()->json($dat, 200);
+        }else{
+            $dat['status'] = false;
+            return response()->json($dat, 200);
+        }
+        
     }
 }
