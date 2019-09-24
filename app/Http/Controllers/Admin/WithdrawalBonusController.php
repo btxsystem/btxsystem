@@ -22,7 +22,7 @@ class WithdrawalBonusController extends Controller
                                 ->where('bitrex_cash','>', 1000)
                                 ->whereDate('expired_at', '>=', now())
                                 ->select('id as check','id','id_member','username','no_rec','bank_name','npwp_number',
-                                        'first_name','last_name','rank_id',
+                                        'first_name','last_name','rank_id','verification',
                                         'created_at','status','bitrex_cash','bitrex_points','expired_at'
                     );
 
