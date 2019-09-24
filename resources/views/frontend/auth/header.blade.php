@@ -168,10 +168,11 @@
             <a class="header-logo" href="javascript:void(0);">
               <img class="header-logo__img" src="{{asset('img/ap2li_new_1.png')}}"  alt="AP2LI Logo" height="auto" width="190px">
             </a>
+            
             <div class="btnBook">
-              <div class="btn">
-                <a href="{{route('member.home')}}">EBOOK</a>
-              </div>
+              <a class="btn" href="{{route('member.home')}}">
+                  <span style="color:white">EBOOK</span>
+              </a>
             </div>
             <div class="header-inner">
               <div class="header-search">

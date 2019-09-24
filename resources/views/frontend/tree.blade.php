@@ -122,8 +122,9 @@
 						<div class="demo-radio-button">
 							<!-- <input name="method" type="radio" value="1" id="shipping" class="with-gap radio-col-red" checked />
 							<label for="shipping">Shipping</label> -->
-              		<div id="ebook-list"></div>
+              				<div id="ebook-list"></div>
 						</div>
+						<div class="buy_ebook"></div>
 					</div>
           			<div class="dropdown-divider"></div>
 					<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -145,40 +146,40 @@
 						</div>
 						<div class="form-group city-form">
 							<select id="city" name="city" class="city"></select>
-              <input type="hidden" name="city_name" id="city_name" value="">
+              				<input type="hidden" name="city_name" id="city_name" value="">
 						</div>
 						<div class="form-group district-form">
 							<select id="district" name="district" class="district"></select>
-              <input type="hidden" name="district_name" id="district_name" value="">
+              				<input type="hidden" name="district_name" id="district_name" value="">
 						</div>
-            <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
-  						<div class="form-line">
-  							<input class="form-control" name="address" id="address" type="text" min="3">
-  							<label class="form-label">Address</label>
+            			<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
+							<div class="form-line">
+								<input class="form-control" name="address" id="address" type="text" min="3">
+								<label class="form-label">Address</label>
+							</div>
   						</div>
-  					</div>
 						<div class="form-group kurir-form">
 							<select id="kurir" name="kurir" class="kurir"></select>
-              <input type="hidden" name="kurir_name" id="kurir_name" value="">
+              				<input type="hidden" name="kurir_name" id="kurir_name" value="">
 						</div>
 						<div class="cost-form form-line" style="display:none">
 							<input class="cost form-control" name="cost" id="cost" type="text">
 							<input class="form-control" id="starter" type="text">
 						</div>
 					</div>
-          <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <div class="demo-radio-button">
+					<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
+						<div class="demo-radio-button">
 							<input name="payment_method" type="radio" value="point" id="payment_method" class="with-gap radio-col-red" checked />
-              <label for="payment_method">Bitrex Point</label>
-            </div>
-          </div>
-          <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <div class="form-group address-form">
-              <!-- <h4 class="hidden">Starter Pack : <span id="cost-starter">0</span></h4>
-              <h4 class="hidden">Total Ebook : <span id="cost-ebook">0</span></h4>
-              <h4 class="hidden">Total Shipping : <span id="cost-postal">0</span></h4>
-              <h4>Grand Total : <span id="grand-total"></span></h4> -->
-              <div class="table-responsive">
+              				<label for="payment_method">Bitrex Point</label>
+            			</div>
+          			</div>
+					<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
+						<div class="form-group address-form">
+						<!-- <h4 class="hidden">Starter Pack : <span id="cost-starter">0</span></h4>
+						<h4 class="hidden">Total Ebook : <span id="cost-ebook">0</span></h4>
+						<h4 class="hidden">Total Shipping : <span id="cost-postal">0</span></h4>
+						<h4>Grand Total : <span id="grand-total"></span></h4> -->
+						<div class="table-responsive">
                 <table class="table table-borderless">
                   <tr>
                     <td> <h4>Starter Pack</h4> </td>
@@ -475,6 +476,7 @@ cursor: pointer;
         && $('#nik').val() != ''
         && $('#birthdate').val() != ''
 		&& adult >= 18
+		
       ) {
         $('.register').prop('disabled', false)
       } else {
@@ -598,9 +600,12 @@ cursor: pointer;
         checkTerm()
 
 				if($(this).prop('checked')) {
-					priceEbook = priceEbook + parseInt($(this).data('price'))
+					priceEbook = priceEbook + parseInt($(this).data('price'));
+					$('.for_hide').empty();
 				} else {
-					priceEbook = priceEbook - parseInt($(this).data('price'))
+					priceEbook = priceEbook - parseInt($(this).data('price'));
+					$('.register').prop('disabled', true);
+					$('.buy_ebook').html('<p style="color:red" class="for_hide">You have to buy one of the ebooks to become a member</p>');
 				}
 
 				if(priceEbook != 0) {
