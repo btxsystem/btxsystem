@@ -16,7 +16,7 @@ class ReportController extends Controller
     public function transactionMember()
     {
         if (request()->ajax()) {
-            $data = TransactionMember::with('member','ebook')->select('transaction_member.*');
+            $data = TransactionMember::with('member','ebook')->where('status', 1)->select('transaction_member.*');
            
             return Datatables::of($data)
                     ->addColumn('product', function ($data){
