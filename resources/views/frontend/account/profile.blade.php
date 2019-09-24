@@ -120,13 +120,15 @@
                         <hr>
                         <p class="text-default">NPWP : {{$profile['npwp_number']}}</p>
                         <hr>
-                        <p class="text-default">Rek Number : {{$profile['no_rec']}}</p>
-                        <hr>
                         <p class="text-default">Marital Status : {{$profile['is_married']}}</p>
                         <hr>
                         <p class="text-default">Gender : {{$profile['gender']}}</p>
                         <hr>
                         <p class="text-default">Bank Account Number : {{$profile['no_rec']}}</p>
+                        <hr>
+                        <p class="text-default">Bank Account Name : {{$profile['bank_account_name']}}</p>
+                        <hr>
+                        <p class="text-default">Bank Name : {{$profile['bank_name']}}</p>
                         <hr>
                     </div>
                 </div>                
@@ -207,14 +209,16 @@
                     'npwp': $('#npwp').val(),
                     'phone_number': $('#phone_number').val(),
                     'no_rec': $('#no_rec').val(),
-                    'bank_account_name': $('bank_name').val(),
-                    'bank_name': $('bank_name_select').val()
+                    'bank_account_name': $('#bank_name').val(),
+                    'bank_name': $('#bank_name_select').val()
                 },
                 success: function (data) {
                     if (data.status) {
                         alert('Profile update successful');
+                        location.reload();
                     }else{
                         alert('Something wrong');
+                        location.reload();
                     }
                 },
                 error: function() {
@@ -237,15 +241,15 @@
                                 $('#npwp').val(data.npwp_number);
                                 $('#phone_number').val(data.phone_number);
                                 $('#no_rec').val(data.no_rec);
-                                $('bank_name').val(data.bank_account_name);
-                                $('bank_name_select').val(data.bank_name);
+                                $('#bank_name').val(data.bank_account_name);
+                                $('#bank_name_select').val(data.bank_name);
                             },
                             error: function() {
-                                console.log("sorry you can not update the profile, try contacting the admin !");
+                                alert("sorry you can not update the profile, try contacting the admin !");
                             }
                         });
                     }else{
-                        alert('aaaaa');
+                        alert("sorry you can not update the profile, try contacting the admin !");
                     }
                 },
                 error: function() {

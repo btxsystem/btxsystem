@@ -35,6 +35,8 @@ class ProfileMemberController extends Controller
             "status" => $data->status ? 'Active' : 'Nonactive',
             "phone_number" => $data->phone_number,
             "no_rec" => $data->no_rec,
+            "bank_name" => $data->bank_name,
+            "bank_account_name" => $data->bank_account_name,
             "bitrex_cash" => $data->bitrex_cash,
             "bitrex_points" => $data->bitrex_points,
             "src" => $data->src,
@@ -944,21 +946,21 @@ class ProfileMemberController extends Controller
 
     public function update_profile(Request $request){
         $data = [
-            'npwp_number' => $request->npwp,
-            'phone_number' => $request->phone_number,
-            'no_rec' => $request->no_rec,
-            'bank_account_name' => $request->bank_account_name,
-            'bank_name' => $request->bank_name,
-            'is_update' => 0
+            'npwp_number' => $request->npwp ? $request->npwp : null ,
+            'phone_number' => $request->phone_number ? $request->phone_number : null,
+            'no_rec' => $request->no_rec ? $request->no_rec : null,
+            'bank_account_name' => $request->bank_account_name ? $request->bank_account_name : null,
+            'bank_name' => $request->bank_name ? $request->bank_name : null,
+            'is_update' => 0,
+            'verification' => strlen($request->npwp) >= 16 ? 1 : 0
         ];
         $cek = Employeer::find(Auth::id())->update($data);
         if ($cek) {
             $dat['status'] = true;
             return response()->json($dat, 200);
-        }else{
+        }else {
             $dat['status'] = false;
             return response()->json($dat, 200);
         }
-        
     }
 }
