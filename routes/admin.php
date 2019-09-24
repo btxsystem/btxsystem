@@ -180,6 +180,13 @@ Route::group(['middleware' => 'admin'], function () {
         Route::get('general', ['as' => 'general', 'uses' => 'Admin\BonusController@general']);
     });
 
+    Route::group(['prefix'=>'withdrawal-bonus','as'=>'withdrawal-bonus.'], function(){
+        Route::get('', ['as' => 'index', 'uses' => 'Admin\WithdrawalBonusController@index']);
+        Route::get('masspaid', ['as' => 'masspaid', 'uses' => 'Admin\WithdrawalBonusController@massPaid']);
+        // Route::get('/{id}/show', ['as' => 'edit', 'uses' => 'Admin\TransferConfirmationController@show']);
+        // Route::get('/approve/{invoice_number}', ['as' => 'approve', 'uses' => 'Admin\TransferConfirmationController@approve']);
+    });
+
     Route::group(['prefix'=>'transfer-confirmation','as'=>'transfer-confirmation.'], function(){
         Route::get('', ['as' => 'index', 'uses' => 'Admin\TransferConfirmationController@index']);
         Route::get('/{id}/show', ['as' => 'edit', 'uses' => 'Admin\TransferConfirmationController@show']);
@@ -193,13 +200,9 @@ Route::group(['middleware' => 'admin'], function () {
     });
 
     Route::group(['prefix'=>'starterpack-shipping','as'=>'starterpack-shipping.'], function(){
-        // Route::resource('testimonials', 'Admin\TestimonialController');
         Route::get('', ['as' => 'index', 'uses' => 'Admin\StarterpackShippingController@index']);
         Route::post('deliver', 'Admin\StarterpackShippingController@deliver')->name('deliver.starterpack');
         Route::get('import', ['as' => 'import', 'uses' => 'Admin\StarterpackShippingController@import']);
-        // Route::post('update-testimony', 'Admin\TestimonialController@update')->name('update-testimony');
-        // Route::get('testimonials/published/{id}', ['as' => 'published', 'uses' => 'Admin\TestimonialController@published']);
-        // Route::get('testimonials/unpublished/{id}', ['as' => 'unpublished', 'uses' => 'Admin\TestimonialController@unpublished']);
     });
 
 

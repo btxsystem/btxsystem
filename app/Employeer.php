@@ -123,6 +123,7 @@ class Employeer extends Authenticatable
        return \DB::table('history_bitrex_cash')
                 ->where('id_member', $this->id)
                 ->where('type', 0)
+                ->where('info', 1)
                 ->sum('nominal');
     }
 
@@ -139,6 +140,7 @@ class Employeer extends Authenticatable
        return \DB::table('history_bitrex_cash')
                 ->where('id_member', $this->id)
                 ->where('type', 1)
+                ->where('info', 1)
                 ->sum('nominal');
     }
 
@@ -155,6 +157,7 @@ class Employeer extends Authenticatable
        return \DB::table('history_bitrex_cash')
                 ->where('id_member', $this->id)
                 ->where('type', 2)
+                ->where('info', 1)
                 ->sum('nominal');
     }
 
@@ -171,6 +174,7 @@ class Employeer extends Authenticatable
        return \DB::table('history_bitrex_cash')
                 ->where('id_member', $this->id)
                 ->where('type', 3)
+                ->where('info', 1)
                 ->sum('nominal');
     }
 
@@ -186,6 +190,7 @@ class Employeer extends Authenticatable
     {
        return \DB::table('history_bitrex_cash')
                 ->where('id_member', $this->id)
+                ->where('info', 1)
                 ->sum('nominal');
     }
 

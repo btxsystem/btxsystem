@@ -106,14 +106,20 @@
             Transfer Confirmation
         </a>
     </li>
-        <li>
+    <li>
             <a href="{{ route('reward-claims.index') }}">
                 <i class="fa fa-check-square" style="color: #6CC66C" data-name="money" data-size="18" data-c="#6CC66C" data-hc="#6CC66C"
                 data-loop="true"></i>
                 Rewards Claim
             </a>
-        </li>
-    <li >
+    <li>
+    <li>
+        <a href="{{ route('withdrawal-bonus.index') }}">
+            <i class="fa fa-check-square" style="color: #6CC66C" data-name="money" data-size="18" data-c="#6CC66C" data-hc="#6CC66C"
+                data-loop="true"></i>
+                Withdrawal Bonus
+        </a>
+    <li>
         <a href="#">
             <i class="livicon" data-name="medal" data-size="18" data-c="#6CC66C" data-hc="#6CC66C"
                data-loop="true"></i>
@@ -165,12 +171,12 @@
             <span class="fa arrow"></span>
         </a>
         <ul class="sub-menu">
-            <li>
+            <!-- <li>
                 <a href="{{ route('bonus.general') }}">
                     <i class="fa fa-angle-double-right"></i>
                     Income
                 </a>
-            </li>
+            </li> -->
             <li>
                 <a href="{{ route('bonus.sponsor') }}">
                     <i class="fa fa-angle-double-right"></i>
