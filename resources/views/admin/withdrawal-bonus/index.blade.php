@@ -6,6 +6,12 @@ Withdrawal Bonus
 @stop
 
 @section('content')
+<style>
+    div.dataTables_wrapper {
+        width: 1100px;
+        margin: 0 auto;
+    }
+</style>
 
 <section class="content-header">
     <h1>Withdrawal Bonus </h1>
@@ -57,6 +63,7 @@ Withdrawal Bonus
                                 <th class="text-center">B Profit</th>
                                 <th class="text-center">B Reward</th>
                                 <th class="text-center">Bitrax Cash</th>
+                                <th class="text-center">Tax</th>
                                 <th class="text-center"><button type="button" name="bulk_paid" id="bulk_paid" class="btn btn-danger btn-xs">Paid Checked</button></th>
         
                             </tr>
@@ -79,6 +86,7 @@ Withdrawal Bonus
               rowCallback: function(row, data, index){
                 $(row).find('td').css('vertical-align', 'middle');
               },
+              scrollX: true,
               destroy: true,
               processing: true,
               serverSide: true,
@@ -96,6 +104,7 @@ Withdrawal Bonus
                   { data: 'bonusPairing', name: 'bonus_pairing', className: "text-center", orderable: false, searchable: false  },                  
                   { data: 'bonusProfit', name: 'bonus_profit', className: "text-center", orderable: false, searchable: false  },                  
                   { data: 'bonusReward', name: 'bonus_reward', className: "text-center", orderable: false, searchable: false  },                  
+                  { data: 'verificationStatus', name: 'verificationStatus', className: "text-center", orderable: false, searchable: false  },                  
                   { data: 'cash', name: 'bitrex_cash', className: "text-center" },                  
                 //   { data: 'expired_at', name: 'expired_at', className: "text-center" },     
                   { data: 'check', orderable: false, searchable:false, name:'id', className: "text-center" },             
