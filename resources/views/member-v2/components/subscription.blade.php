@@ -367,7 +367,7 @@ div#flag {
 								</div>
 								<div class="form-check form-check-inline">
 									<input onclick="selectPayment('ipay')" class="form-check-input" type="radio" name="payment_method" id="payment_method" value="ipay">
-									<label class="form-check-label" for="inlineRadio1">VA / OVO</label>
+									<label class="form-check-label" for="inlineRadio1">VA & OVO</label>
 								</div>
 							</div>
 							<h4>Total yang dibayar : IDR </span><b><span id="total_price"></h4></b>
