@@ -626,10 +626,10 @@ cursor: pointer;
 		$('#checkboxEbook input[type=checkbox]').change(function(index) {
 			
 			if($(this).prop('checked')) {
-				check + = 1;
+				check += 1;
 				priceEbook = priceEbook + parseInt($(this).data('price'));
 			} else {
-				check - = 1;
+				check -= 1;
 				priceEbook = priceEbook - parseInt($(this).data('price'));
 			}
 			checkTerm();
