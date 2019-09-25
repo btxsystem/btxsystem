@@ -161,7 +161,7 @@ Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
         Route::get('my-transaction', ['as' => 'my-transaction', 'uses' => 'Member\TransactionController@myTransaction']);
         Route::get('prospected-member-transaction', ['as' => 'prospected-member-transaction', 'uses' => 'Member\TransactionController@prospectedMemberHistory']);
         Route::get('reward', ['as' => 'reward', 'uses' => 'Member\ProfileMemberController@getRewards']);
-        Route::get('reward-clime', ['as' => 'reward-clime', 'uses' => 'Member\ProfileMemberController@rewardClime']);
+        Route::get('reward-claim', ['as' => 'reward-claim', 'uses' => 'Member\ProfileMemberController@rewardClaim']);
         Route::get('bitrex-points', ['as' => 'bitrex-points', 'uses' => 'Member\BitrexPointController@getBitrexPoints']);
         Route::get('history-pv-pairing', ['as' => 'history-pv-pairing', 'uses' => 'Member\PvController@historyPvPairing']);
         Route::get('bonus', ['as' => 'bonus', 'uses' => 'Member\MyBonusController@bonus']);
@@ -176,7 +176,7 @@ Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
         Route::get('is-have-change-profile', ['as' => 'is-have-change-profile', 'uses' => 'Member\ProfileMemberController@isHaveChange']);
     });
 
-    Route::post('claim-reward', ['as' => 'claim-reward', 'uses' => 'Member\ProfileMemberController@claimReward']);
+    Route::get('claim-reward', ['as' => 'claim-reward', 'uses' => 'Member\ProfileMemberController@claimReward']);
 
     Route::group(['prefix' => 'transaction', 'as'=> 'transaction.'], function () {
         Route::get('my-transaction', ['as' => 'my-transaction', 'uses' => 'Member\TransactionController@index']);
