@@ -30,7 +30,7 @@
 					</div>
 					<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div class="form-line">
-							<input class="form-control" name="username" id="username" type="text" min="3" required>
+							<input class="form-control" name="username" id="username" min="8" type="text" required>
 							<label class="form-label">Username</label>
 						</div>
 						<div>
@@ -49,7 +49,7 @@
 					</div>
 					<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div class="form-line">
-							<input class="form-control" name="email" id="email" type="email" min="3" required>
+							<input class="form-control" name="email" id="email" type="email" min="5" required>
 							<label class="form-label">Email</label>
 						</div>
 					</div>
@@ -61,7 +61,7 @@
 					</div>
           			<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div class="form-line">
-							<input class="form-control" id="npwp_number" name="npwp_number" type="number" min="1" required>
+							<input class="form-control" id="npwp_number" name="npwp_number" type="number" min="16" required>
 							<label class="form-label">NPWP</label>
 						</div>
 					</div>
@@ -81,6 +81,7 @@
 						<div class="form">
               				<label class="form-label">Bank Name</label>
 							<select class="form-control" id="bank_name_select">
+								<option value="" disabled selected>Choice Bank Name</option>
 								<option value="BCA">BCA</option>
 								<option value="BRI">BRI</option>
 								<option value="BNI">BNI</option>
@@ -446,79 +447,38 @@ cursor: pointer;
 }
 </style>
 <script>
-  let priceEbook = 0
-  let postalFee = 0
-  let grandTotal = 0;
-  let bitrexPoint = '{{Auth::user()->bitrex_points}}'
-  let adult = 0;
+	let priceEbook = 0
+	let postalFee = 0
+	let grandTotal = 0;
+	let bitrexPoint = '{{Auth::user()->bitrex_points}}'
+	let adult = 0;
+	let check = 1;
 
-  $('#birthdate').on('change', function() {
-	var dob = new Date(this.value);
-	var today = new Date();
-	var age = Math.floor((today-dob) / (365.25 * 24 * 60 * 60 * 1000));
-	adult = age;
-	if (age < 18) {
-		$('#birthdate_danger').html('<p id="danger_">Age must be more than 17 years</p>');
-	}else{
-		$('#danger_').empty();
-	}
-  });
+	$('#birthdate').on('change', function() {
+		var dob = new Date(this.value);
+		var today = new Date();
+		var age = Math.floor((today-dob) / (365.25 * 24 * 60 * 60 * 1000));
+		adult = age;
+		if (age < 18) {
+			$('#birthdate_danger').html('<p id="danger_">Age must be more than 17 years</p>');
+		}else{
+			$('#danger_').empty();
+		}
+		checkTerm()
+	});
 
-  function checkTerm() {
-    if(!$('#term_one').prop('checked') || !$('#term_two').prop('checked')) {
-      $('.register').prop('disabled', true)
-    } else {
-      if(
-        $('#username').val() != ''
-        && $('#email').val() != ''
-        && $('#first_name').val() != ''
-        && $('#last_name').val() != ''
-        && $('#nik').val() != ''
-        && $('#birthdate').val() != ''
-		&& adult >= 18
+	$('#username').keyup(function(){
+		let cek = /^[a-zA-Z0-9_]*$/.test(this.value);
+		this.value = !cek ? $(this).val().match(/[a-zA-Z0-9_]/g).join('') : this.value;
+		checkTerm()
+	});
+
+	function checkTerm() {
+		console.log(check);
 		
-      ) {
-        $('.register').prop('disabled', false)
-      } else {
-        $('.register').prop('disabled', true)
-      }
-    }
-  }
-
-  function openAutoPlacement() {
-    $('#action-member').attr('action', '{{route("register-autoplacement")}}')
-		$.ajax({
-			type: 'GET',
-			url: '/member/select/bitrex-points',
-			success: function (data) {
-				if (data.bitrex_points >= 280) {
-					$('#register').modal('show');
-				}else{
-					$('#register').modal('hide');
-					$('#warning').modal('show');
-				}
-			},
-			error: function() {
-				console.log("Error");
-			}
-		});	
-  }
-
-  function openTree() {
-    $('#action-member').attr('action', '{{route("member.register-downline")}}')
-  }
-
-  function submitData() {
-    $('.register').prop('disabled', true)
-    $('#action-member').submit();
-  }
-
-	$(document).ready(function() {
-		$('.register').prop('disabled', true)
-		$('#cost-starter').html('280')
-		
-		var element = document.querySelector('#bah');
-		$('input').change(function() {
+		if(!$('#term_one').prop('checked') || !$('#term_two').prop('checked')) {
+			$('.register').prop('disabled', true)
+		} else {
 		if(
 			$('#username').val() != ''
 			&& $('#email').val() != ''
@@ -526,41 +486,76 @@ cursor: pointer;
 			&& $('#last_name').val() != ''
 			&& $('#nik').val() != ''
 			&& $('#birthdate').val() != ''
+			&& adult >= 18
+			&& check > 0
 		) {
 			$('.register').prop('disabled', false)
 		} else {
 			$('.register').prop('disabled', true)
 		}
-    })
+		}
+	}
 
-    checkTerm()
+	function openAutoPlacement() {
+		$('#action-member').attr('action', '{{route("register-autoplacement")}}')
+			$.ajax({
+				type: 'GET',
+				url: '/member/select/bitrex-points',
+				success: function (data) {
+					if (data.bitrex_points >= 280) {
+						$('#register').modal('show');
+					}else{
+						$('#register').modal('hide');
+						$('#warning').modal('show');
+					}
+				},
+				error: function() {
+					console.log("Error");
+				}
+			});	
+	}
 
-    $('#term_one').change(function() {
-      checkTerm()
-    })
+	function openTree() {
+		$('#action-member').attr('action', '{{route("member.register-downline")}}')
+	}
 
-    $('#term_two').change(function() {
-      checkTerm()
-    })
-	// var instance = panzoom(element, {
-	// 	zoomSpeed: 0.030
-	// });
+	function submitData() {
+		$('.register').prop('disabled', true)
+		$('#action-member').submit();
+	}
+
+	$(document).ready(function() {
+		$('.register').prop('disabled', true)
+		$('#cost-starter').html('280')
+		
+		var element = document.querySelector('#bah');
+		$('input').change(function() {
+			if(
+				checkTerm()
+			) {
+				$('.register').prop('disabled', false)
+			} else {
+				$('.register').prop('disabled', true)
+			}
+		})
+
+    	checkTerm()
+
+		$('#term_one').change(function() {
+		checkTerm()
+		})
+
+		$('#term_two').change(function() {
+		checkTerm()
+		})
 	
-	
-	// $panzoom.on('panzoomend', function(e, panzoom, matrix, changed) {
-  	// 	if (changed) {
-    // 		// deal with drags or touch moves
-  	// 	} else {
-    // 		// deal with clicks or taps
-  	// 	}
-	// });
-    $('.shipping-form').hide();
+    	$('.shipping-form').hide();
 
 		$('#upline').hide();
 		$('#province').select2({
 			placeholder: 'Province',
 		});
-    $.ajax({
+    	$.ajax({
 			type: 'GET',
 			url: '{{route("api.ebook.ebooks")}}'
 		}).done(function(res) {
@@ -581,11 +576,11 @@ cursor: pointer;
         `
 			})
 
-			$('#ebook-list').html(`
-				<div id="checkboxEbook">
-					${render}
-				</div>
-			`)
+		$('#ebook-list').html(`
+			<div id="checkboxEbook">
+				${render}
+			</div>
+		`)
 
       $('#checkboxEbook input[type=checkbox]').each(function() {
         if(parseInt($(this).val()) == 1) {
@@ -595,32 +590,32 @@ cursor: pointer;
           $('#grand-total').html(toPrice((priceEbook + postalFee + 280000) / 1000))
         }
       })
+	 
+	 $('#checkboxEbook input[type=checkbox]').change(function(index) {
+        
+		if($(this).prop('checked')) {
+			check++;
+			priceEbook = priceEbook + parseInt($(this).data('price'));
+		} else {
+			check--;
+			priceEbook = priceEbook - parseInt($(this).data('price'));
+		}
+		checkTerm();
+		if(priceEbook != 0) {
+			$('#cost-ebook').parent().removeClass('hidden');
+		} else {
+			$('#cost-ebook').parent().addClass('hidden');
+			$('.register').prop('disabled', true);
+		}
 
-			$('#checkboxEbook input[type=checkbox]').change(function(index) {
-        checkTerm()
+		if(postalFee != 0) {
+			$('#cost-postal').parent().removeClass('hidden')
+		} else {
+			$('#cost-postal').parent().addClass('hidden')
+		}
 
-				if($(this).prop('checked')) {
-					priceEbook = priceEbook + parseInt($(this).data('price'));
-				} else {
-					priceEbook = priceEbook - parseInt($(this).data('price'));
-					$('.register').prop('disabled', true);
-				}
-
-				if(priceEbook != 0) {
-					$('#cost-ebook').parent().removeClass('hidden');
-				} else {
-					$('#cost-ebook').parent().addClass('hidden');
-					$('.register').prop('disabled', true);
-				}
-
-				if(postalFee != 0) {
-					$('#cost-postal').parent().removeClass('hidden')
-				} else {
-					$('#cost-postal').parent().addClass('hidden')
-				}
-
-				$('#cost-ebook').html(toPrice(priceEbook / 1000))
-				$('#grand-total').html(toPrice((priceEbook + postalFee + 280000) / 1000))
+		$('#cost-ebook').html(toPrice(priceEbook / 1000))
+		$('#grand-total').html(toPrice((priceEbook + postalFee + 280000) / 1000))
 
         grandTotal = (priceEbook + postalFee + 280000) / 1000;
 
@@ -690,7 +685,6 @@ cursor: pointer;
 
   $('#bank_name_select').change(function() {
     let bankName = $(this).val()
-
     if(bankName == 'other') {
       $('#bank_name').val('')
       $('#bank_name').prop('type', 'text')
@@ -698,10 +692,12 @@ cursor: pointer;
       $('#bank_name').val(bankName)
       $('#bank_name').prop('type', 'hidden')
     }
+	checkTerm()
   });
 
 	$('#province').change(function(){
 		let id = this.value;
+		checkTerm()
     $('#province_name').val($(this).find(":checked").text())
 		$('#city').empty().trigger('change');
 		$('#district').empty().trigger('change');
@@ -723,6 +719,7 @@ cursor: pointer;
 	})
 
 	$('#city').change(function(){
+		checkTerm()
 		let id = this.value;
     $('#city_name').val($(this).find(":checked").text())
 		$('#district').empty().trigger('change');
@@ -744,6 +741,7 @@ cursor: pointer;
 	})
 
 	$('#district').change(function() {
+		checkTerm()
 		let id = this.value;
 		$('#kurir').empty().trigger('change');
     $('#district_name').val($(this).find(":checked").text())
@@ -764,6 +762,7 @@ cursor: pointer;
 	});
 
 	$('#kurir').change(function(){
+		checkTerm()
     $('#kurir_name').val($(this).find(":checked").text())
 		// $('.cost-form').show();
 		// $('#cost').val('Total ongkir: '+Math.ceil(this.value/1000) + ' Points');
@@ -806,6 +805,7 @@ cursor: pointer;
 	});
 
 	$('#username').keyup(function(){
+		checkTerm()
 		var text = this.value;
 		$.ajax({
 			type: 'GET',
