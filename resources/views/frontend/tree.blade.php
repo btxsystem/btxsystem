@@ -38,11 +38,11 @@
 						</div>
 					</div>
 					<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12 row">
-						<div class="form-line col-lg-6 col-md-6 col-sm-6 col-xs-6">
+						<div class="form-line col">
 							<input class="form-control" name="first_name" id="first_name" type="text" min="2" required>
 							<label class="form-label">First Name</label>
 						</div>
-						<div class="form-line col-lg-6 col-md-6 col-sm-6 col-xs-6">
+						<div class="form-line col">
 							<input class="form-control" name="last_name" id="last_name" type="text" min="2" required>
 							<label class="form-label">Last Name</label>
 						</div>
