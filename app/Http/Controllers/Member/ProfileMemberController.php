@@ -613,8 +613,6 @@ class ProfileMemberController extends Controller
 
     public function registerAutoPlacement(Request $request)
     {
-        
-
         try {
             DB::beginTransaction();
             $method = $request->input('payment_method') ?? 'point';

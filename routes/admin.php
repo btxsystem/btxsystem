@@ -272,7 +272,7 @@ Route::group(['middleware' => 'admin'], function () {
     });
 
     //generate
-    /*Route::group(['prefix'=>'import','as'=>'import.'], function(){
+    Route::group(['prefix'=>'import','as'=>'import.'], function(){
         Route::get('', ['as' => 'index', 'uses' => 'ImportExcelController@index']);
         Route::post('excel', ['as' => 'excel', 'uses' => 'ImportExcelController@import_excel']);
         Route::post('tree', ['as' => 'tree', 'uses' => 'ImportExcelController@import_tree']);
@@ -284,6 +284,6 @@ Route::group(['middleware' => 'admin'], function () {
         Route::post('account-name', ['as' => 'account-name', 'uses' => 'ImportExcelController@account_name']);
     });
     
-    */
+    
     Route::get('generate-mail', ['as' => 'generate-mail', 'uses' => 'Member\SendEmailOldMember@sendMail']);
 });

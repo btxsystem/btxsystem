@@ -44,7 +44,7 @@ Bonus Reward
             </div>
         </div>
     </div>
-    </section>
+</section>
 
   
     <!-- <div id="detail" class="modal fade">

@@ -95,15 +95,11 @@ class ImportExcelController extends Controller
     public function curse(Request $request){
         $datas = Excel::toArray(new RewardsImport, request()->file('file'))[0];
         foreach ($datas as $key => $data) {
-           $user = Employeer::where('id_member',$data['mamber_id'])->select('id')->first();
-           $dt['member_id'] = $user['id'];
-           $dt['reward_id'] = 2;
-           $dt['created_at'] = now();
-           $dt['updated_at'] = now();
+           $user = DB::table('got_rewards')->where('id_member',$data['mamber_id'])->where('reward_id',2)->select('id')->first();
            $dt['status'] = 2;
-           GotReward::insert($dt);
+           GotReward::find($user->id)->update($dt);
         }
-        $history_data = Excel::toArray(new RewardImport, request()->file('file'))[0];
+        /*$history_data = Excel::toArray(new RewardImport, request()->file('file'))[0];
         foreach ($history_data as $key => $data2) {
             $user = Employeer::where('id_member',$data2['mamber_id'])->select('id')->first();
             $dt2['id_member'] = $user['id'];
@@ -115,6 +111,7 @@ class ImportExcelController extends Controller
             $dt2['type'] = 3;
             HistoryBitrexCash::insert($dt2);
          }
+        */
         return redirect()->back();
     }
     public function oldBonus(Request $request){
