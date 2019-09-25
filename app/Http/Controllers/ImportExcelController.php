@@ -95,9 +95,10 @@ class ImportExcelController extends Controller
     public function curse(Request $request){
         $datas = Excel::toArray(new RewardsImport, request()->file('file'))[0];
         foreach ($datas as $key => $data) {
-           $user = DB::table('got_rewards')->where('id_member',$data['mamber_id'])->where('reward_id',2)->select('id')->first();
+           $member = Employeer::where('id_member',$data['mamber_id'])->select('id')->first(); 
+           $reward = DB::table('got_rewards')->where('member_id',$member['id'])->where('reward_id',2)->select('id')->first();
            $dt['status'] = 2;
-           GotReward::find($user->id)->update($dt);
+           GotReward::find($reward['id'])->update($dt);
         }
         /*$history_data = Excel::toArray(new RewardImport, request()->file('file'))[0];
         foreach ($history_data as $key => $data2) {
