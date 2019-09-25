@@ -290,6 +290,7 @@ class MemberController extends Controller
             $topup->points = $point;
             $topup->description = $request->description;
             $topup->info = 1;
+            $topup->status = 1;
             $topup->save();
     
  
@@ -338,7 +339,7 @@ class MemberController extends Controller
     {
         $data = Employeer::findOrFail($id);
      
-        return Datatables::of($data->point_histories)
+        return Datatables::of($data->point_histories()->where('status', 1)->get())
             ->addIndexColumn()
             ->addColumn('nominal', function ($data) {
                 return currency($data->nominal);
