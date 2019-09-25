@@ -450,12 +450,12 @@ cursor: pointer;
 }
 </style>
 <script>
-	let priceEbook = 0
-	let postalFee = 0
-	let grandTotal = 0;
-	let bitrexPoint = '{{Auth::user()->bitrex_points}}'
-	let adult = 0;
-	let check = 1;
+	var priceEbook = 0
+	var postalFee = 0
+	var grandTotal = 0;
+	var bitrexPoint = '{{Auth::user()->bitrex_points}}'
+	var adult = 0;
+	var check = true;
 	var check_email = false;
 
 	$('male').change(function(){
@@ -527,8 +527,7 @@ cursor: pointer;
 			&& $('#nik').val() != ''
 			&& $('#birthdate').val() != ''
 			&& adult >= 18
-			&& check > 0
-			&& check_email == true
+			&& (check && check_email)
 		) {
 			$('.register').prop('disabled', false)
 		} else {
@@ -539,21 +538,21 @@ cursor: pointer;
 
 	function openAutoPlacement() {
 		$('#action-member').attr('action', '{{route("register-autoplacement")}}')
-			$.ajax({
-				type: 'GET',
-				url: '/member/select/bitrex-points',
-				success: function (data) {
-					if (data.bitrex_points >= 280) {
-						$('#register').modal('show');
-					}else{
-						$('#register').modal('hide');
-						$('#warning').modal('show');
-					}
-				},
-				error: function() {
-					console.log("Error");
+		$.ajax({
+			type: 'GET',
+			url: '/member/select/bitrex-points',
+			success: function (data) {
+				if (data.bitrex_points >= 280) {
+					$('#register').modal('show');
+				}else{
+					$('#register').modal('hide');
+					$('#warning').modal('show');
 				}
-			});	
+			},
+			error: function() {
+				console.log("Error");
+			}
+		});	
 	}
 
 	function openTree() {
@@ -583,11 +582,11 @@ cursor: pointer;
     	checkTerm()
 
 		$('#term_one').change(function() {
-		checkTerm()
+			checkTerm()
 		})
 
 		$('#term_two').change(function() {
-		checkTerm()
+			checkTerm()
 		})
 	
     	$('.shipping-form').hide();
@@ -602,84 +601,76 @@ cursor: pointer;
 		}).done(function(res) {
 			const {data} = res
 			let render = data.map((v, i) => {
-				// return `
-				// 	<input id="ebooks" type="checkbox" value="${v.id}" id="${v.title}" class="with-gap radio-col-red" data-price="${v.price}" ${v.title == 'basic' ? 'checked' : ''} name="ebooks[]"/>
-        // 	<label for="shipping">${v.title}</label>
-				// `
-
-        return `
-        <div class="form-check">
-          <input class="form-check-input" data-price="${v.price}" type="checkbox" name="ebooks[]" value="${v.id}" id="${v.title}">
-          <label class="form-check-label" id="${i}" for="${v.title}" ${v.id == 1 ? 'checked' : ''}>
-            ${v.title}
-          </label>
-        </div>
-        `
+				return `
+				<div class="form-check">
+				<input class="form-check-input" data-price="${v.price}" type="checkbox" name="ebooks[]" value="${v.id}" id="${v.title}">
+				<label class="form-check-label" id="${i}" for="${v.title}" ${v.id == 1 ? 'checked' : ''}>
+					${v.title}
+				</label>
+				</div>`
 			})
-
 		$('#ebook-list').html(`
 			<div id="checkboxEbook">
 				${render}
 			</div>
 		`)
-
-      $('#checkboxEbook input[type=checkbox]').each(function() {
-        if(parseInt($(this).val()) == 1) {
-          $(this).prop('checked', true)
-          priceEbook = priceEbook + parseInt($(this).data('price'))
-          $('#cost-ebook').html(toPrice(priceEbook / 1000))
-          $('#grand-total').html(toPrice((priceEbook + postalFee + 280000) / 1000))
-        }
-      })
-	 
-	 $('#checkboxEbook input[type=checkbox]').change(function(index) {
-        
-		if($(this).prop('checked')) {
-			check++;
-			priceEbook = priceEbook + parseInt($(this).data('price'));
-		} else {
-			check--;
-			priceEbook = priceEbook - parseInt($(this).data('price'));
-		}
-		checkTerm();
-		if(priceEbook != 0) {
-			$('#cost-ebook').parent().removeClass('hidden');
-		} else {
-			$('#cost-ebook').parent().addClass('hidden');
-			$('.register').prop('disabled', true);
-		}
-
-		if(postalFee != 0) {
-			$('#cost-postal').parent().removeClass('hidden')
-		} else {
-			$('#cost-postal').parent().addClass('hidden')
-		}
-
-		$('#cost-ebook').html(toPrice(priceEbook / 1000))
-		$('#grand-total').html(toPrice((priceEbook + postalFee + 280000) / 1000))
-
-        grandTotal = (priceEbook + postalFee + 280000) / 1000;
-
-        if(bitrexPoint < grandTotal) {
-          $('.register').prop('disabled', true)
-        }
-			})
-
-		})
-		$('#province').html('<option disabled>Province<option>');
-		$.ajax({
-			type: 'GET',
-			url: '/member/shipping/province',
-			success: function (data) {
-				$('#province').select2({
-					placeholder: 'Province',
-					data: data,
-				});
-			},
-			error: function() {
-				console.log("Error");
+		$('#checkboxEbook input[type=checkbox]').each(function() {
+			if(parseInt($(this).val()) == 1) {
+			$(this).prop('checked', true)
+			priceEbook = priceEbook + parseInt($(this).data('price'))
+			$('#cost-ebook').html(toPrice(priceEbook / 1000))
+			$('#grand-total').html(toPrice((priceEbook + postalFee + 280000) / 1000))
 			}
-		});
+		})
+	 
+		$('#checkboxEbook input[type=checkbox]').change(function(index) {
+			
+			if($(this).prop('checked')) {
+				check = true;
+				priceEbook = priceEbook + parseInt($(this).data('price'));
+			} else {
+				check = false;
+				priceEbook = priceEbook - parseInt($(this).data('price'));
+			}
+			checkTerm();
+			if(priceEbook != 0) {
+				$('#cost-ebook').parent().removeClass('hidden');
+			} else {
+				$('#cost-ebook').parent().addClass('hidden');
+				$('.register').prop('disabled', true);
+			}
+
+			if(postalFee != 0) {
+				$('#cost-postal').parent().removeClass('hidden')
+			} else {
+				$('#cost-postal').parent().addClass('hidden')
+			}
+
+			$('#cost-ebook').html(toPrice(priceEbook / 1000))
+			$('#grand-total').html(toPrice((priceEbook + postalFee + 280000) / 1000))
+
+			grandTotal = (priceEbook + postalFee + 280000) / 1000;
+
+			if(bitrexPoint < grandTotal) {
+			$('.register').prop('disabled', true)
+			}
+		})
+	})
+	$('#province').html('<option disabled>Province<option>');
+	$.ajax({
+		type: 'GET',
+		url: '/member/shipping/province',
+		success: function (data) {
+			$('#province').select2({
+				placeholder: 'Province',
+				data: data,
+			});
+		},
+		error: function() {
+			console.log("Error");
+		}
+	});
+		
 		$('.dropdown-toggle').remove();
 		$('div').removeClass('btn-group');
 		$('.div').removeClass('bootstrap-select');
@@ -738,8 +729,7 @@ cursor: pointer;
 
 	$('#province').change(function(){
 		let id = this.value;
-		checkTerm()
-    $('#province_name').val($(this).find(":checked").text())
+    	$('#province_name').val($(this).find(":checked").text())
 		$('#city').empty().trigger('change');
 		$('#district').empty().trigger('change');
 		$('#kurir').empty().trigger('change');
@@ -757,12 +747,12 @@ cursor: pointer;
 				console.log("Error");
 			}
 		});
+		checkTerm()
 	})
 
 	$('#city').change(function(){
-		checkTerm()
 		let id = this.value;
-    $('#city_name').val($(this).find(":checked").text())
+    	$('#city_name').val($(this).find(":checked").text())
 		$('#district').empty().trigger('change');
 		$('#kurir').empty().trigger('change');
 		$('#district').html('<option disabled>Subdistrict<option>');
@@ -779,13 +769,13 @@ cursor: pointer;
 				console.log("Error");
 			}
 		});
+		checkTerm()
 	})
 
 	$('#district').change(function() {
-		checkTerm()
 		let id = this.value;
 		$('#kurir').empty().trigger('change');
-    $('#district_name').val($(this).find(":checked").text())
+    	$('#district_name').val($(this).find(":checked").text())
 		$('#kurir').html('<option disabled>Kurir<option>');
 		$.ajax({
 			type: 'GET',
@@ -800,17 +790,18 @@ cursor: pointer;
 				console.log("Error");
 			}
 		});
+		checkTerm()
 	});
 
 	$('#kurir').change(function(){
-		checkTerm()
-    $('#kurir_name').val($(this).find(":checked").text())
-		// $('.cost-form').show();
-		// $('#cost').val('Total ongkir: '+Math.ceil(this.value/1000) + ' Points');
-		// $('#starter').val('Join Member: '+280 + ' Points');
-    $('#cost').val(Math.ceil(this.value/1000))
-    $('#cost-starter').html('280')
-    postalFee = Math.ceil(this.value)
+		
+		$('#kurir_name').val($(this).find(":checked").text())
+			// $('.cost-form').show();
+			// $('#cost').val('Total ongkir: '+Math.ceil(this.value/1000) + ' Points');
+			// $('#starter').val('Join Member: '+280 + ' Points');
+		$('#cost').val(Math.ceil(this.value/1000))
+		$('#cost-starter').html('280')
+		postalFee = Math.ceil(this.value)
 
 		if(postalFee != 0) {
 			$('#cost-postal').parent().removeClass('hidden')
@@ -821,21 +812,21 @@ cursor: pointer;
 		$('#cost-postal').html(toPrice(postalFee / 1000))
 		$('#grand-total').html(toPrice((priceEbook + postalFee + 280000) / 1000))
 
-    grandTotal = (priceEbook + postalFee + 280000) / 1000;
+		grandTotal = (priceEbook + postalFee + 280000) / 1000;
 
-    if(bitrexPoint < grandTotal) {
-      $('.register').prop('disabled', true)
-    }
-
+		if(bitrexPoint < grandTotal) {
+			$('.register').prop('disabled', true)
+		}
+		checkTerm()
 	});
 
 	$('#shipping').change(function(){
 		$('.shipping-form').show();
-    $('.pickup-form').hide();
+    	$('.pickup-form').hide();
 		$('#province').prop('required',true);
 		$('#city').prop('required',true);
-    $('#address').prop('required', true)
-    checkTerm()
+    	$('#address').prop('required', true)
+    	checkTerm()
 
 	});
 
@@ -846,7 +837,6 @@ cursor: pointer;
 	});
 
 	$('#email').keyup(function(){
-		checkTerm();
 		let val_email = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.value);
 		if (val_email) {
 			check_email = true;
@@ -855,6 +845,7 @@ cursor: pointer;
 			check_email = false;	
 			$('#email_danger').text('Email Invalid');	
 		}
+		checkTerm();
 	});
 
 	$('#username').keyup(function(){
@@ -866,13 +857,12 @@ cursor: pointer;
 			url: '/member/select/username/'+text,
 			success: function (data) {
 				data.username ? $('#username_danger').text('username you entered already exists') : $('#username_danger').empty();
-				data.username ? $(".register").prop('disabled', true) : checkTerm();
-        		checkTerm()
 			},
 			error: function() {
 				console.log("Error");
 			}
 		});
+		checkTerm()
 	})
 
 	var my_transform = d3Transform()
