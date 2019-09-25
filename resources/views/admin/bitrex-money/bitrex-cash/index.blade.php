@@ -34,7 +34,7 @@ List Of Bitrex Points
                                 <th>No</th>
                                 <th>Id Member</th>
                                 <th>Name</th>
-                                <th>Points</th>
+                                <th>Saldo</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
