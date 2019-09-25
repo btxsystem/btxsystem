@@ -1022,7 +1022,13 @@ cursor: pointer;
 		image.enter().append("a")
 			.append("image")
 			.attr("xlink:href", function(d){return "https://img.icons8.com/bubbles/2x/user.png"})
-			.attr("x", function(d){return d.x-30;})
+			.attr("x", function(d){
+				if($(window).width() <= 480) {  
+					return d.x-80;
+				}else{
+					return d.x-30;
+				}
+			})
 			.attr("y", function(d){return d.y-40;})
 			.classed("img-fluid", true);
 	}
