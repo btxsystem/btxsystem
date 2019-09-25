@@ -52,6 +52,9 @@
 							<input class="form-control" name="email" id="email" type="email" min="5" required>
 							<label class="form-label">Email</label>
 						</div>
+						<div>
+							<b style="color:red" id="email_danger"></b>
+						</div>
 					</div>
 					<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div class="form-line">
@@ -453,6 +456,23 @@ cursor: pointer;
 	let bitrexPoint = '{{Auth::user()->bitrex_points}}'
 	let adult = 0;
 	let check = 1;
+	var check_email = false;
+
+	$('male').change(function(){
+		checkTerm()
+	})
+
+	$('female').change(function(){
+		checkTerm()
+	})
+
+	$('pickup').change(function(){
+		checkTerm()
+	})
+
+	$('shipping').change(function(){
+		checkTerm()
+	})
 
 	$('#birthdate').on('change', function() {
 		var dob = new Date(this.value);
@@ -467,15 +487,35 @@ cursor: pointer;
 		checkTerm()
 	});
 
-	$('#username').keyup(function(){
-		let cek = /^[a-zA-Z0-9_]*$/.test(this.value);
-		this.value = !cek ? $(this).val().match(/[a-zA-Z0-9_]/g).join('') : this.value;
+	$('#nik').keyup(function(){
 		checkTerm()
-	});
+	})
+
+	$('#bank_account_name').keyup(function(){
+		checkTerm()
+	})
+
+	$('#bank_name_select').change(function(){
+		checkTerm()
+	})
+
+	$('#bank_account_number').keyup(function(){
+		checkTerm()
+	})
+
+	$('#npwp_number').keyup(function(){
+		checkTerm()
+	})
+
+	$('#first_name').keyup(function(){
+		checkTerm()
+	})
+
+	$('#last_name').keyup(function(){
+		checkTerm()
+	})
 
 	function checkTerm() {
-		console.log(check);
-		
 		if(!$('#term_one').prop('checked') || !$('#term_two').prop('checked')) {
 			$('.register').prop('disabled', true)
 		} else {
@@ -488,6 +528,7 @@ cursor: pointer;
 			&& $('#birthdate').val() != ''
 			&& adult >= 18
 			&& check > 0
+			&& check_email == true
 		) {
 			$('.register').prop('disabled', false)
 		} else {
@@ -804,15 +845,28 @@ cursor: pointer;
     $('.pickup-form').show();
 	});
 
+	$('#email').keyup(function(){
+		checkTerm();
+		let val_email = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.value);
+		if (val_email) {
+			check_email = true;
+			$('#email_danger').empty();
+		}else{
+			check_email = false;	
+			$('#email_danger').text('Email Invalid');	
+		}
+	});
+
 	$('#username').keyup(function(){
-		checkTerm()
+		let cek = /^[a-zA-Z0-9_]*$/.test(this.value);
+		this.value = !cek ? $(this).val().match(/[a-zA-Z0-9_]/g).join('') : this.value;
 		var text = this.value;
 		$.ajax({
 			type: 'GET',
 			url: '/member/select/username/'+text,
 			success: function (data) {
 				data.username ? $('#username_danger').text('username you entered already exists') : $('#username_danger').empty();
-				data.username ? $(".register").prop('disabled', true) : $(".register").prop('disabled', false);
+				data.username ? $(".register").prop('disabled', true) : checkTerm();
         		checkTerm()
 			},
 			error: function() {
