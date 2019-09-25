@@ -455,7 +455,7 @@ cursor: pointer;
 	var grandTotal = 0;
 	var bitrexPoint = '{{Auth::user()->bitrex_points}}'
 	var adult = 0;
-	var check = true;
+	var check = 1;
 	var check_email = false;
 
 	$('male').change(function(){
@@ -527,7 +527,7 @@ cursor: pointer;
 			&& $('#nik').val() != ''
 			&& $('#birthdate').val() != ''
 			&& adult >= 18
-			&& (check && check_email)
+			&& (check >= 1 && check_email)
 		) {
 			$('.register').prop('disabled', false)
 		} else {
@@ -626,10 +626,10 @@ cursor: pointer;
 		$('#checkboxEbook input[type=checkbox]').change(function(index) {
 			
 			if($(this).prop('checked')) {
-				check = true;
+				check + = 1;
 				priceEbook = priceEbook + parseInt($(this).data('price'));
 			} else {
-				check = false;
+				check - = 1;
 				priceEbook = priceEbook - parseInt($(this).data('price'));
 			}
 			checkTerm();
