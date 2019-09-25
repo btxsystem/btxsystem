@@ -96,7 +96,7 @@ class ImportExcelController extends Controller
         $datas = Excel::toArray(new RewardsImport, request()->file('file'))[0];
         foreach ($datas as $key => $data) {
            $member = Employeer::where('id_member',$data['mamber_id'])->select('id')->first(); 
-           $reward = DB::table('got_rewards')->where('member_id',$member['id'])->where('reward_id',1)->select('id')->first();
+           $reward = DB::table('got_rewards')->where('member_id',$member['id'])->where('reward_id',2)->select('id')->first();
            DB::update('update got_rewards set status = 2 where id = ?', $reward->id);
         }
         /*$history_data = Excel::toArray(new RewardImport, request()->file('file'))[0];
