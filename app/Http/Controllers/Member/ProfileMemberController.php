@@ -295,18 +295,22 @@ class ProfileMemberController extends Controller
     public function claimReward(Request $request){
         $member = Auth::user();
         if($request->id==1){
-            $pajak = $member->verification == 1 ? 0.025 : 0.03;
-           try {
+            try {
                 DB::beginTransaction();
-                DB::table('got_rewards')->where('reward_id', 1)->where('member_id', Auth::id())->update(['status' => 2, 'updated_at' => now()]);
-                DB::table('history_bitrex_cash')->insert(['id_member' => $member->id, 'nominal' => 3000000 - (3000000 * $pajak), 'created_at' => now(), 'updated_at' => now(), 'description' => 'Bonus Rewards', 'info' => 1, 'type' => 3]);
-                DB::table('employeers')->where('id', $member->id)->update(['bitrex_cash' => $member->bitrex_cash += 3000000 - (3000000 * $pajak), 'updated_at' => now()]);
-                DB::table('history_pajak')->insert(['id_member' => $member->id, 'id_bonus' => 4, 'persentase' => $pajak, 'nominal' => 3000000 * $pajak, 'created_at' => now(), 'updated_at' => now()]);
-            } catch (\Throwable $th) {
+                    $pajak = $member->verification == 1 ? 0.025 : 0.03;
+                    DB::table('got_rewards')->where('reward_id', $request->id)->where('member_id', Auth::id())->update(['status' => 2, 'updated_at' => now()]);
+                    DB::table('history_bitrex_cash')->insert(['id_member' => Auth::id(), 'nominal' => 3000000 - (3000000 * $pajak), 'created_at' => now(), 'updated_at' => now(), 'description' => 'Bonus Rewards', 'info' => 1, 'type' => 3]);
+                    DB::table('employeers')->where('id', Auth::id())->update(['bitrex_cash' => $member->bitrex_cash += 3000000 - (3000000 * $pajak), 'updated_at' => now()]);
+                    DB::table('history_pajak')->insert(['id_member' => Auth::id(), 'id_bonus' => 4, 'persentase' => $pajak, 'nominal' => 3000000 * $pajak, 'created_at' => now(), 'updated_at' => now()]);
+                    DB::commit();
+                    Alert::success('Claim Rewards Success, Check your history', 'Success')->persistent("OK");
+            } catch (\Exception $e) {
                 DB::rollback();
-           }
+                Alert::success('Something wrong', 'Success')->persistent("OK");
+            }
         }else{
             DB::table('got_rewards')->where('reward_id', $request->id)->where('member_id', Auth::id())->update(['status' => 1, 'updated_at' => now()]);
+            Alert::success('Claim Reward Success, Waiting approval admin', 'Success')->persistent("OK");
         }
         return redirect()->route('member.reward');
     }
