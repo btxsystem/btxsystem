@@ -302,8 +302,14 @@
 									</div>
 								</div>
 								<div class="row col-md-12">
-									<div class="col-md-6">
-										<h5 id="_pv_group"></h5>
+									<div class="col-md-4">
+										<h5 id="_pv_group_l"></h5>
+									</div>
+									<div class="col-md-4">
+										<h5 id="_pv_group_m"></h5>
+									</div>
+									<div class="col-md-4">
+										<h5 id="_pv_group_r"></h5>
 									</div>
 								</div>
 								<hr>
@@ -1005,7 +1011,9 @@ rect {
 				data.pairings ? $('#_pv_pairing_l').text('PV Pairing L: ' + data.pairings.pv_left) : $('#_pv_pairing_l').text('PV Pairing L: 0 ') ;
 				data.pairings ? $('#_pv_pairing_m').text('PV Pairing M: ' + data.pairings.pv_midle) : $('#_pv_pairing_m').text('PV Pairing M: 0 ');
 				data.pairings ? $('#_pv_pairing_r').text('PV Pairing R: ' + data.pairings.pv_right) : $('#_pv_pairing_r').text('PV Pairing R: 0 ');
-				data.pv_group ? $('#_pv_group').text('PV Group: ' + data.pv_group) : $('#_pv_group').text('PV Group: 0 ');
+				data.pv_group ? $('#_pv_group_l').text('PV Group L: ' + data.pv_group.pv_left) : $('#_pv_group_l').text('PV Group: 0 ');
+				data.pv_group ? $('#_pv_group_m').text('PV Group M: ' + data.pv_group.pv_midle) : $('#_pv_group_m').text('PV Group: 0 ');
+				data.pv_group ? $('#_pv_group_r').text('PV Group R: ' + data.pv_group.pv_right) : $('#_pv_group_r').text('PV Group: 0 ');
             }
         });
 
