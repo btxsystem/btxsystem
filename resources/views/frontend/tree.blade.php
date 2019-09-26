@@ -462,6 +462,7 @@ cursor: pointer;
 	var check = 1;
 	var check_email = false;
 	var parent_id = undefined;
+	var check_cost = true;
 
 	$('male').change(function(){
 		checkTerm()
@@ -532,7 +533,7 @@ cursor: pointer;
 			&& $('#nik').val() != ''
 			&& $('#birthdate').val() != ''
 			&& adult >= 18
-			&& (check >= 1 && check_email)
+			&& (check > 0 && check_email && check_cost)
 		) {
 			$('.register').prop('disabled', false)
 		} else {
@@ -637,7 +638,6 @@ cursor: pointer;
 				check -= 1;
 				priceEbook = priceEbook - parseInt($(this).data('price'));
 			}
-			checkTerm();
 			if(priceEbook != 0) {
 				$('#cost-ebook').parent().removeClass('hidden');
 			} else {
@@ -656,9 +656,9 @@ cursor: pointer;
 
 			grandTotal = (priceEbook + postalFee + 280000) / 1000;
 
-			if(bitrexPoint < grandTotal) {
-			$('.register').prop('disabled', true)
-			}
+			check_cost = bitrexPoint < grandTotal ? false : true;
+	
+			checkTerm()
 		})
 	})
 	$('#province').html('<option disabled>Province<option>');
