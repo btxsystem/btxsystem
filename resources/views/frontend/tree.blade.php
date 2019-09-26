@@ -38,11 +38,11 @@
 						</div>
 					</div>
 					<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12 row">
-						<div class="form-line col-lg-6 col-md-6 col-sm-6 col-xs-6">
+						<div class="form-line col">
 							<input class="form-control" name="first_name" id="first_name" type="text" min="2" required>
 							<label class="form-label">First Name</label>
 						</div>
-						<div class="form-line col-lg-6 col-md-6 col-sm-6 col-xs-6">
+						<div class="form-line col">
 							<input class="form-control" name="last_name" id="last_name" type="text" min="2" required>
 							<label class="form-label">Last Name</label>
 						</div>
@@ -275,6 +275,8 @@
 					<div class="container-fluid">
 						<div>
 							<div class="col-md-12">
+								<br>
+								<h4 style="color:red">"Untuk register orang dengan pemilihan tempat, silahkan gunakan dan klik tree di bawah"</h4>
 								<h3>Detail Summary</h3>
 								<hr>
 								<div class="row col-md-12">
@@ -300,8 +302,14 @@
 									</div>
 								</div>
 								<div class="row col-md-12">
-									<div class="col-md-6">
-										<h5 id="_pv_group"></h5>
+									<div class="col-md-4">
+										<h5 id="_pv_group_l"></h5>
+									</div>
+									<div class="col-md-4">
+										<h5 id="_pv_group_m"></h5>
+									</div>
+									<div class="col-md-4">
+										<h5 id="_pv_group_r"></h5>
 									</div>
 								</div>
 								<hr>
@@ -319,7 +327,7 @@
 							<div class="col-md-12">
 								<br>
 								<div class="chart" id="tree">
-									<button id="upline" class='btn btn-primary zmdi zmdi-chevron-up' onclick=location.reload()></button>
+									<button id="upline" class='btn btn-primary zmdi zmdi-chevron-up'></button>
 								</div>
 
 							</div>
@@ -349,17 +357,49 @@
   left: 0;
 }
 
+#upline{
+	cursor: pointer;
+}
+
 svg .rect {
   fill: gold;
   stroke: steelblue;
   stroke-width: 5px;
 }
 
+@media only screen and (max-width: 365px) and (min-width: 360px){
+/* For mobile phones: */
+	svg{
+		width: 305px !important;
+	}
+	span#clock {
+    	font-size: 8px !important;
+	}
+}
+
+@media only screen and (max-width: 500px) and (min-width: 480px) {
+/* For mobile phones: */
+	.search {
+		font-size: 14px !important;
+		width: 190px !important;
+	}
+
+	#clock{
+		font-size: 14px !important;
+	}
+
+	svg{
+		width: 430px !important;
+	}
+}
+
+
+
 @media only screen and (max-width: 480px) {
 /* For mobile phones: */
 	.search {
-		font-size: 14px;
-		width: 887px;
+		font-size: 14px !important;
+		width: 190px !important;
 	}
 	rect {
 		/* fill: #ebebeb;
@@ -396,6 +436,39 @@ svg .rect {
 		width: 160px !important;
 	}
 }
+
+@media only screen and (max-width: 375px) and (min-width: 370px) {
+	svg{
+		width: 320px !important;
+	}
+}
+
+@media only screen and (max-width: 800px) and (min-width: 760px) {
+	svg{
+		width: 710px !important;
+	}
+}
+
+
+@media only screen and (max-width: 1080px) and (min-width: 800px) {
+	svg{
+		width: 940px !important;
+	}
+}
+
+@media only screen and (max-width: 420px) and (min-width: 400px) {
+	svg{
+		width: 350px !important;
+	}
+}
+
+@media only screen and (max-width: 320px) {
+/* For mobile phones: */
+	svg{
+		width: 260px !important;
+	}
+}
+
 #search-downline{
 	cursor: pointer;
 }
@@ -420,7 +493,7 @@ text {
 	text-anchor: middle;
 }
 rect {
-cursor: pointer;
+	cursor: pointer;
 }
 .bigger {
 	font-size: 13px;
@@ -457,6 +530,8 @@ cursor: pointer;
 	var adult = 0;
 	var check = 1;
 	var check_email = false;
+	var parent_id = undefined;
+	var check_cost = true;
 
 	$('male').change(function(){
 		checkTerm()
@@ -527,7 +602,7 @@ cursor: pointer;
 			&& $('#nik').val() != ''
 			&& $('#birthdate').val() != ''
 			&& adult >= 18
-			&& (check >= 1 && check_email)
+			&& (check > 0 && check_email && check_cost)
 		) {
 			$('.register').prop('disabled', false)
 		} else {
@@ -626,13 +701,12 @@ cursor: pointer;
 		$('#checkboxEbook input[type=checkbox]').change(function(index) {
 			
 			if($(this).prop('checked')) {
-				check + = 1;
+				check += 1;
 				priceEbook = priceEbook + parseInt($(this).data('price'));
 			} else {
-				check - = 1;
+				check -= 1;
 				priceEbook = priceEbook - parseInt($(this).data('price'));
 			}
-			checkTerm();
 			if(priceEbook != 0) {
 				$('#cost-ebook').parent().removeClass('hidden');
 			} else {
@@ -651,9 +725,9 @@ cursor: pointer;
 
 			grandTotal = (priceEbook + postalFee + 280000) / 1000;
 
-			if(bitrexPoint < grandTotal) {
-			$('.register').prop('disabled', true)
-			}
+			check_cost = bitrexPoint < grandTotal ? false : true;
+	
+			checkTerm()
 		})
 	})
 	$('#province').html('<option disabled>Province<option>');
@@ -867,32 +941,19 @@ cursor: pointer;
 
 	var my_transform = d3Transform()
    .translate([-750, -50]);
-   var svg = d3.select("#tree")
+   	var svg = d3.select("#tree")
 		.append("svg")
-		.attr("width", 1920).attr("height", 1080)
+		.attr("width", 1035).attr("height", 1080)
 		.call(d3.zoom().on("zoom", function () {
 			svg.attr("transform", d3.event.transform)
 		}))
 		.append("g")
 		.attr("transform", my_transform)
 		.attr("id", "bah")
-	panzoom(document.querySelector('#bah'), {
-		zoomSpeed: 0.030
-	});
-	// var svg = d3.select("#tree")
-	// 	.append("svg");
+		panzoom(document.querySelector('#bah'), {
+			zoomSpeed: 0.030
+		});
 
-	// var child = svg.attr("width", 1920).attr("height", 1080)
-	// 	.append("g")
-	// svg.call(
-	// 		d3.zoom()
-	// 		.scaleExtent([1, 10])
-	// 		.on("zoom", function() {
-	// 			console.log(d3.event)
-	// 			child.attr("transform", "translate(-36 45.5)");
-	// 		})
-	// 	);
-	
 	$.ajax({
 		type: 'GET',
 		url: '{{route("member.select.tree")}}',
@@ -905,6 +966,7 @@ cursor: pointer;
 	});
 
 	var tree_submit = (a, parent, position) => {
+		parent_id = parent;
 		if(a!="available"){
 			$.ajax({
 				type: 'GET',
@@ -925,7 +987,7 @@ cursor: pointer;
 				success: function (data) {
 					if (data.bitrex_points >= 280) {
 						$('#register').modal('show');
-            openTree()
+            			openTree()
 						$('#parent').attr('value',parent);
 						$('#position').attr('value',position);
 					}else{
@@ -949,7 +1011,9 @@ cursor: pointer;
 				data.pairings ? $('#_pv_pairing_l').text('PV Pairing L: ' + data.pairings.pv_left) : $('#_pv_pairing_l').text('PV Pairing L: 0 ') ;
 				data.pairings ? $('#_pv_pairing_m').text('PV Pairing M: ' + data.pairings.pv_midle) : $('#_pv_pairing_m').text('PV Pairing M: 0 ');
 				data.pairings ? $('#_pv_pairing_r').text('PV Pairing R: ' + data.pairings.pv_right) : $('#_pv_pairing_r').text('PV Pairing R: 0 ');
-				data.pv_group ? $('#_pv_group').text('PV Group: ' + data.pv_group) : $('#_pv_group').text('PV Group: 0 ');
+				data.pv_group ? $('#_pv_group_l').text('PV Rank L: ' + data.pv_group.pv_left) : $('#_pv_group_l').text('PV Rank: 0 ');
+				data.pv_group ? $('#_pv_group_m').text('PV Rank M: ' + data.pv_group.pv_midle) : $('#_pv_group_m').text('PV Rank: 0 ');
+				data.pv_group ? $('#_pv_group_r').text('PV Rank R: ' + data.pv_group.pv_right) : $('#_pv_group_r').text('PV Rank: 0 ');
             }
         });
 
@@ -1022,12 +1086,35 @@ cursor: pointer;
 		image.enter().append("a")
 			.append("image")
 			.attr("xlink:href", function(d){return "https://img.icons8.com/bubbles/2x/user.png"})
-			.attr("x", function(d){return d.x-30;})
+			.attr("x", function(d){
+				if($(window).width() <= 480) {  
+					return d.x-80;
+				}else{
+					return d.x-30;
+				}
+			})
 			.attr("y", function(d){return d.y-40;})
 			.classed("img-fluid", true);
 	}
-  function toPrice(value) {
+  	function toPrice(value) {
 		return value.toString().replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1\.")
 	}
+	$('#upline').click(function(){
+		$.ajax({
+			type: 'GET',
+			url: '/member/select/tree-upline/'+parent_id,
+			success: function (data) {
+				parent_id = data.parent_id;
+				$('#bah').empty('g');
+				tree(data);
+				if (!data.parent) {
+					$('#upline').hide();
+				}
+			},
+			error: function() {
+				console.log("Error");
+			}
+		});
+	})
 </script>
 @stop

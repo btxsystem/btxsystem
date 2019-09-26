@@ -67,7 +67,6 @@
 <script type="text/javascript">
     let claim = (e) => {
         $.ajax({
-            type:'POST',
             url: '{{route("member.claim-reward")}}',
             data: { "_token": "{{ csrf_token() }}", "id": e},
             success:function(data){
@@ -79,7 +78,7 @@
     $(document).ready(function () {
         let over = 0;
         $.ajax({
-            url: '{{route("member.select.reward-clime")}}',
+            url: '{{route("member.select.reward-claim")}}',
             data: data,
             success:function(data){
                 let leng = Object.keys(data).length;

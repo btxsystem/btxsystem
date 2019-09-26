@@ -89,6 +89,7 @@ class ProfileMemberController extends Controller
     public function register(Request $request){
         try {
             DB::beginTransaction();
+            $cek_npwp = strlen($request->npwp_number) >= 16 ? 1 : 0;
             $method = $request->input('payment_method') ?? 'point';
             $shippingMethod = $request->input('shipping_method') ?? "0"; 
             
@@ -137,10 +138,12 @@ class ProfileMemberController extends Controller
                     'email' => $request->email,
                     'password' => bcrypt($password),//bcrypt('Mbitrex'.rand(100,1000)),
                     'birthdate' => $request->birthdate,
+                    'npwp_number' => $request->npwp_number,
                     'gender' => $request->gender,
                     'position' => $request->position,
                     'parent_id' => $request->parent,
                     'sponsor_id' => $sponsor->id,
+                    'verification' => $cek_npwp,
                     'bitrex_cash' => 0,
                     'bitrex_points' => 0,
                     'pv' => 0,
@@ -292,26 +295,28 @@ class ProfileMemberController extends Controller
     public function claimReward(Request $request){
         $member = Auth::user();
         if($request->id==1){
-            $pajak = $member->verification == 1 ? 0.025 : 0.03;
-           try {
+            try {
                 DB::beginTransaction();
-                DB::table('got_rewards')->where('reward_id', 1)->where('member_id', Auth::id())->update(['status' => 2, 'updated_at' => now()]);
-                DB::table('history_bitrex_cash')->insert(['id_member' => $member->id, 'nominal' => 3000000 - (3000000 * $pajak), 'created_at' => now(), 'updated_at' => now(), 'description' => 'Bonus Rewards', 'info' => 1, 'type' => 3]);
-                DB::table('employeers')->where('id', $member->id)->update(['bitrex_cash' => $member->bitrex_cash += 3000000 - (3000000 * $pajak), 'updated_at' => now()]);
-                DB::table('history_pajak')->insert(['id_member' => $member->id, 'id_bonus' => 4, 'persentase' => $pajak, 'nominal' => 3000000 * $pajak, 'created_at' => now(), 'updated_at' => now()]);
-                return 'yes';
-            } catch (\Throwable $th) {
+                    $pajak = $member->verification == 1 ? 0.025 : 0.03;
+                    DB::table('got_rewards')->where('reward_id', $request->id)->where('member_id', Auth::id())->update(['status' => 2, 'updated_at' => now()]);
+                    DB::table('history_bitrex_cash')->insert(['id_member' => Auth::id(), 'nominal' => 3000000 - (3000000 * $pajak), 'created_at' => now(), 'updated_at' => now(), 'description' => 'Bonus Rewards', 'info' => 1, 'type' => 3]);
+                    DB::table('employeers')->where('id', Auth::id())->update(['bitrex_cash' => $member->bitrex_cash += 3000000 - (3000000 * $pajak), 'updated_at' => now()]);
+                    DB::table('history_pajak')->insert(['id_member' => Auth::id(), 'id_bonus' => 4, 'persentase' => $pajak, 'nominal' => 3000000 * $pajak, 'created_at' => now(), 'updated_at' => now()]);
+                    DB::commit();
+                    Alert::success('Claim Rewards Success, Check your history', 'Success')->persistent("OK");
+            } catch (\Exception $e) {
                 DB::rollback();
-           }
+                Alert::success('Something wrong', 'Success')->persistent("OK");
+            }
         }else{
-            DB::table('got_rewards')->where('reward_id', $request->id)->update(['status' => 1, 'updated_at' => now()]);
+            DB::table('got_rewards')->where('reward_id', $request->id)->where('member_id', Auth::id())->update(['status' => 1, 'updated_at' => now()]);
+            Alert::success('Claim Reward Success, Waiting approval admin', 'Success')->persistent("OK");
         }
         return redirect()->route('member.reward');
     }
 
-    public function rewardClime(){
+    public function rewardClaim(){
         $data = DB::table('got_rewards')->where('member_id',Auth::id())->orderBy('reward_id')->get();
-        $total = (int) ceil(count($data)/8);
         return($data);
     }
 
@@ -341,6 +346,7 @@ class ProfileMemberController extends Controller
     }
 
     public function findChild($id, $sponsor, $data){
+        $cek_npwp = strlen($data->npwp_number) >= 16 ? 1 : 0;
         $isHaveChild = Employeer::where('parent_id',$id)->select('position')->get();
         if (count($isHaveChild) == 3) {
             $pv = DB::table('pv_rank')->where('id_member',$id)->select('pv_left', 'pv_midle', 'pv_right')->first();
@@ -372,6 +378,7 @@ class ProfileMemberController extends Controller
                 'position' => 0,
                 'parent_id' => $id,
                 'sponsor_id' => $sponsor,
+                'verification' => $cek_npwp,
                 'bitrex_cash' => 0,
                 'bitrex_points' => 0,
                 'pv' => 0,
@@ -380,10 +387,7 @@ class ProfileMemberController extends Controller
                 'bank_account_name' => $data->bank_account_name,
                 'bank_name' => $data->bank_name,
                 'npwp_number' => $data->npwp_number,
-                'expired_at' => Carbon::create(date('Y-m-d H:i:s'))->addYear(1),
-                'bank_name' => $request->bank_name,
-                'bank_account_name' => $request->bank_account_name,
-                'no_rec' => $request->bank_account_number
+                'expired_at' => Carbon::create(date('Y-m-d H:i:s'))->addYear(1)
             ];
             Employeer::create($member);
         }else{
@@ -412,11 +416,16 @@ class ProfileMemberController extends Controller
                     'position' => 0,
                     'parent_id' => $id,
                     'sponsor_id' => $sponsor,
+                    'verification' => $cek_npwp,
                     'bitrex_cash' => 0,
                     'bitrex_points' => 0,
                     'pv' => 0,
                     'nik' => $data->passport ?? $data->nik,
-                    'no_rec' => $data->bank_account_number
+                    'no_rec' => $data->bank_account_number,
+                    'bank_account_name' => $data->bank_account_name,
+                    'bank_name' => $data->bank_name,
+                    'npwp_number' => $data->npwp_number,
+                    'expired_at' => Carbon::create(date('Y-m-d H:i:s'))->addYear(1)
                 ];
                 Employeer::create($member);
             }elseif (!$midle) {
@@ -432,11 +441,16 @@ class ProfileMemberController extends Controller
                     'position' => 1,
                     'parent_id' => $id,
                     'sponsor_id' => $sponsor,
+                    'verification' => $cek_npwp,
                     'bitrex_cash' => 0,
                     'bitrex_points' => 0,
                     'pv' => 0,
                     'nik' => $data->passport ?? $data->nik,
-                    'no_rec' => $data->bank_account_number
+                    'no_rec' => $data->bank_account_number,
+                    'bank_account_name' => $data->bank_account_name,
+                    'bank_name' => $data->bank_name,
+                    'npwp_number' => $data->npwp_number,
+                    'expired_at' => Carbon::create(date('Y-m-d H:i:s'))->addYear(1)
                 ];
                 Employeer::create($member);
             }else {
@@ -452,6 +466,7 @@ class ProfileMemberController extends Controller
                     'position' => 2,
                     'parent_id' => $id,
                     'sponsor_id' => $sponsor,
+                    'verification' => $cek_npwp,
                     'bitrex_cash' => 0,
                     'bitrex_points' => 0,
                     'pv' => 0,
@@ -460,10 +475,7 @@ class ProfileMemberController extends Controller
                     'bank_account_name' => $data->bank_account_name,
                     'bank_name' => $data->bank_name,
                     'npwp_number' => $data->npwp_number,
-                    'expired_at' => Carbon::create(date('Y-m-d H:i:s'))->addYear(1),
-                    'bank_name' => $request->bank_name,
-                    'bank_account_name' => $request->bank_account_name,
-                    'no_rec' => $request->bank_account_number
+                    'expired_at' => Carbon::create(date('Y-m-d H:i:s'))->addYear(1)
                 ];
                 Employeer::create($member);
             }
@@ -603,8 +615,6 @@ class ProfileMemberController extends Controller
 
     public function registerAutoPlacement(Request $request)
     {
-        
-
         try {
             DB::beginTransaction();
             $method = $request->input('payment_method') ?? 'point';
