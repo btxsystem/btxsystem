@@ -276,7 +276,7 @@
 						<div>
 							<div class="col-md-12">
 								<br>
-								<h4 style="color:red">* untuk register orang dengan pemilihan tempat, silahkan gunakan dan klik tree di bawah</h4>
+								<h4 style="color:red">"Untuk register orang dengan pemilihan tempat, silahkan gunakan dan klik tree di bawah"</h4>
 								<h3>Detail Summary</h3>
 								<hr>
 								<div class="row col-md-12">
@@ -1096,6 +1096,7 @@ rect {
 			type: 'GET',
 			url: '/member/select/tree-upline/'+parent_id,
 			success: function (data) {
+				parent_id = data.parent_id;
 				$('#bah').empty('g');
 				tree(data);
 				if (!data.parent) {
