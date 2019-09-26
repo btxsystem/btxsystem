@@ -129,7 +129,7 @@ class WithdrawalBonusController extends Controller
 
     public function export()
     {
-        return Excel::download(new EmployeerExport, 'employeers.xlsx');
+        return Excel::download(new EmployeerExport, now() .' ' .'withdrawal.xlsx');
     }
 
     public function getVerificationStatus($row)
