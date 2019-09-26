@@ -275,6 +275,8 @@
 					<div class="container-fluid">
 						<div>
 							<div class="col-md-12">
+								<br>
+								<h4 style="color:red">* untuk register orang dengan pemilihan tempat, silahkan gunakan dan klik tree di bawah</h4>
 								<h3>Detail Summary</h3>
 								<hr>
 								<div class="row col-md-12">
@@ -359,15 +361,39 @@ svg .rect {
   stroke-width: 5px;
 }
 
-@media only screen and (max-width: 480px) {
+@media only screen and (max-width: 365px) and (min-width: 360px){
+/* For mobile phones: */
+	svg{
+		width: 305px !important;
+	}
+	span#clock {
+    	font-size: 8px !important;
+	}
+}
+
+@media only screen and (max-width: 500px) and (min-width: 480px) {
 /* For mobile phones: */
 	.search {
 		font-size: 14px !important;
 		width: 190px !important;
 	}
 
+	#clock{
+		font-size: 14px !important;
+	}
+
 	svg{
-		width: 300px !important;
+		width: 430px !important;
+	}
+}
+
+
+
+@media only screen and (max-width: 480px) {
+/* For mobile phones: */
+	.search {
+		font-size: 14px !important;
+		width: 190px !important;
 	}
 	rect {
 		/* fill: #ebebeb;
@@ -405,32 +431,28 @@ svg .rect {
 	}
 }
 
-@media only screen and (max-width: 480px) {
-/* For mobile phones: */
-	.search {
-		font-size: 14px !important;
-		width: 190px !important;
-	}
-
-	svg{
-		width: 360px !important;
-	}
-}
-
-@media only screen and (max-width: 360px) {
-/* For mobile phones: */
-	svg{
-		width: 300px !important;
-	}
-	span#clock {
-    	font-size: 8px !important;
-	}
-}
-
-@media only screen and (max-width: 375px) {
-/* For mobile phones: */
+@media only screen and (max-width: 375px) and (min-width: 370px) {
 	svg{
 		width: 320px !important;
+	}
+}
+
+@media only screen and (max-width: 800px) and (min-width: 760px) {
+	svg{
+		width: 710px !important;
+	}
+}
+
+
+@media only screen and (max-width: 1080px) and (min-width: 800px) {
+	svg{
+		width: 940px !important;
+	}
+}
+
+@media only screen and (max-width: 420px) and (min-width: 400px) {
+	svg{
+		width: 350px !important;
 	}
 }
 
@@ -441,19 +463,6 @@ svg .rect {
 	}
 }
 
-@media only screen and (max-width: 400px) {
-/* For mobile phones: */
-	svg{
-		width: 320px !important;
-	}
-}
-
-@media only screen and (max-width: 420px) {
-/* For mobile phones: */
-	svg{
-		width: 340px !important;
-	}
-}
 #search-downline{
 	cursor: pointer;
 }
