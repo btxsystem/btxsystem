@@ -319,7 +319,7 @@
 							<div class="col-md-12">
 								<br>
 								<div class="chart" id="tree">
-									<button id="upline" class='btn btn-primary zmdi zmdi-chevron-up' onclick=location.reload()></button>
+									<button id="upline" class='btn btn-primary zmdi zmdi-chevron-up'></button>
 								</div>
 
 							</div>
@@ -349,6 +349,10 @@
   left: 0;
 }
 
+#upline{
+	cursor: pointer;
+}
+
 svg .rect {
   fill: gold;
   stroke: steelblue;
@@ -358,8 +362,8 @@ svg .rect {
 @media only screen and (max-width: 480px) {
 /* For mobile phones: */
 	.search {
-		font-size: 14px;
-		width: 887px;
+		font-size: 14px !important;
+		width: 190px !important;
 	}
 	rect {
 		/* fill: #ebebeb;
@@ -457,6 +461,7 @@ cursor: pointer;
 	var adult = 0;
 	var check = 1;
 	var check_email = false;
+	var parent_id = undefined;
 
 	$('male').change(function(){
 		checkTerm()
@@ -867,7 +872,7 @@ cursor: pointer;
 
 	var my_transform = d3Transform()
    .translate([-750, -50]);
-   var svg = d3.select("#tree")
+   	var svg = d3.select("#tree")
 		.append("svg")
 		.attr("width", 1920).attr("height", 1080)
 		.call(d3.zoom().on("zoom", function () {
@@ -876,23 +881,10 @@ cursor: pointer;
 		.append("g")
 		.attr("transform", my_transform)
 		.attr("id", "bah")
-	panzoom(document.querySelector('#bah'), {
-		zoomSpeed: 0.030
-	});
-	// var svg = d3.select("#tree")
-	// 	.append("svg");
+		panzoom(document.querySelector('#bah'), {
+			zoomSpeed: 0.030
+		});
 
-	// var child = svg.attr("width", 1920).attr("height", 1080)
-	// 	.append("g")
-	// svg.call(
-	// 		d3.zoom()
-	// 		.scaleExtent([1, 10])
-	// 		.on("zoom", function() {
-	// 			console.log(d3.event)
-	// 			child.attr("transform", "translate(-36 45.5)");
-	// 		})
-	// 	);
-	
 	$.ajax({
 		type: 'GET',
 		url: '{{route("member.select.tree")}}',
@@ -905,6 +897,7 @@ cursor: pointer;
 	});
 
 	var tree_submit = (a, parent, position) => {
+		parent_id = parent;
 		if(a!="available"){
 			$.ajax({
 				type: 'GET',
@@ -925,7 +918,7 @@ cursor: pointer;
 				success: function (data) {
 					if (data.bitrex_points >= 280) {
 						$('#register').modal('show');
-            openTree()
+            			openTree()
 						$('#parent').attr('value',parent);
 						$('#position').attr('value',position);
 					}else{
@@ -1032,8 +1025,24 @@ cursor: pointer;
 			.attr("y", function(d){return d.y-40;})
 			.classed("img-fluid", true);
 	}
-  function toPrice(value) {
+  	function toPrice(value) {
 		return value.toString().replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1\.")
 	}
+	$('#upline').click(function(){
+		$.ajax({
+			type: 'GET',
+			url: '/member/select/tree-upline/'+parent_id,
+			success: function (data) {
+				$('#bah').empty('g');
+				tree(data);
+				if (!data.parent) {
+					$('#upline').hide();
+				}
+			},
+			error: function() {
+				console.log("Error");
+			}
+		});
+	})
 </script>
 @stop

@@ -151,6 +151,7 @@ Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
         Route::get('tree', ['as' => 'tree', 'uses' => 'Member\DashboardController@getTree']);
         Route::get('ebook', ['as' => 'ebook', 'uses' => 'Member\EbookController@getEbook']);
         Route::get('child-tree/{user}', ['as' => 'child-tree', 'uses' => 'Member\DashboardController@getChildTree']);
+        Route::get('tree-upline/{user}', ['as' => 'tree-upline', 'uses' => 'Member\DashboardController@getParentTree']);
         Route::get('username/{user}', ['as' => 'username', 'uses' => 'Member\ProfileMemberController@isSameUsername']);
         Route::get('history-points', ['as' => 'history-points', 'uses' => 'Member\BitrexPointController@getHistoryPoints']);
         Route::get('history-value', ['as' => 'history-cash', 'uses' => 'Member\BitrexCashController@getHistoryCash']);
