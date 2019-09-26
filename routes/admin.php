@@ -182,6 +182,7 @@ Route::group(['middleware' => 'admin'], function () {
 
     Route::group(['prefix'=>'withdrawal-bonus','as'=>'withdrawal-bonus.'], function(){
         Route::get('', ['as' => 'index', 'uses' => 'Admin\WithdrawalBonusController@index']);
+        Route::get('paidindex', ['as' => 'paidindex', 'uses' => 'Admin\WithdrawalBonusController@paidIndex']);
         Route::get('masspaid', ['as' => 'masspaid', 'uses' => 'Admin\WithdrawalBonusController@massPaid']);
         Route::get('export', ['as' => 'export', 'uses' => 'Admin\WithdrawalBonusController@export']);
         // Route::get('/{id}/show', ['as' => 'edit', 'uses' => 'Admin\TransferConfirmationController@show']);
