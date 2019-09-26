@@ -75,7 +75,7 @@
     </li>
     <li>
             <a href="{{ route('reward-claims.index') }}">
-                <i class="fa fa-check-square" style="color: #6CC66C" data-name="money" data-size="18" data-c="#6CC66C" data-hc="#6CC66C"
+                <i class="fa fa-calendar-check-o" style="color: #6CC66C" data-name="money" data-size="18" data-c="#6CC66C" data-hc="#6CC66C"
                 data-loop="true"></i>
                 Rewards Claim
             </a>
