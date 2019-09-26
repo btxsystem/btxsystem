@@ -365,6 +365,10 @@ svg .rect {
 		font-size: 14px !important;
 		width: 190px !important;
 	}
+
+	svg{
+		width: 300px !important;
+	}
 	rect {
 		/* fill: #ebebeb;
 		stroke: #ebebeb; */
@@ -400,6 +404,56 @@ svg .rect {
 		width: 160px !important;
 	}
 }
+
+@media only screen and (max-width: 480px) {
+/* For mobile phones: */
+	.search {
+		font-size: 14px !important;
+		width: 190px !important;
+	}
+
+	svg{
+		width: 360px !important;
+	}
+}
+
+@media only screen and (max-width: 360px) {
+/* For mobile phones: */
+	svg{
+		width: 300px !important;
+	}
+	span#clock {
+    	font-size: 8px !important;
+	}
+}
+
+@media only screen and (max-width: 375px) {
+/* For mobile phones: */
+	svg{
+		width: 320px !important;
+	}
+}
+
+@media only screen and (max-width: 320px) {
+/* For mobile phones: */
+	svg{
+		width: 260px !important;
+	}
+}
+
+@media only screen and (max-width: 400px) {
+/* For mobile phones: */
+	svg{
+		width: 320px !important;
+	}
+}
+
+@media only screen and (max-width: 420px) {
+/* For mobile phones: */
+	svg{
+		width: 340px !important;
+	}
+}
 #search-downline{
 	cursor: pointer;
 }
@@ -424,7 +478,7 @@ text {
 	text-anchor: middle;
 }
 rect {
-cursor: pointer;
+	cursor: pointer;
 }
 .bigger {
 	font-size: 13px;
@@ -874,7 +928,7 @@ cursor: pointer;
    .translate([-750, -50]);
    	var svg = d3.select("#tree")
 		.append("svg")
-		.attr("width", 1920).attr("height", 1080)
+		.attr("width", 1035).attr("height", 1080)
 		.call(d3.zoom().on("zoom", function () {
 			svg.attr("transform", d3.event.transform)
 		}))
