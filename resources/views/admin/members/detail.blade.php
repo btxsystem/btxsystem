@@ -31,9 +31,14 @@
                         Cash {{currency($data->bitrex_cash)}}
                     </div>
 
-                    <div class="caption">
+                    <div class="caption" style="margin-right: 25px;">
                         <i class="fa fa-area-chart"></i> &nbsp;
                         Point {{$data->bitrex_points}}
+                    </div>
+
+                    <div class="caption" style="margin-right: 25px;">
+                        <i class="fa fa-balance-scale"></i> &nbsp;
+                        PV {{$data->pv}}
                     </div>
 
                     <div class="pull-right">
@@ -65,6 +70,10 @@
                         </div> 
 
                         <div class="form-group">
+                             <label class="control-label col-md-4">Rank &nbsp; </label>: &nbsp;{{ optional($data->rank)->name }}
+                        </div> 
+
+                        <div class="form-group">
                             <label class="control-label col-md-4">Position &nbsp; </label>: &nbsp;
                             @if ( $data->position == 0 )
                                 Left
@@ -78,12 +87,17 @@
                         <div class="form-group">
                                 <label class="control-label col-md-4">Sponsor &nbsp; </label>: &nbsp;{{ $data->sponsor ? $data->sponsor->username : '-' }}
                         </div>  
-                        <div class="form-group">
-                                <label class="control-label col-md-4">Email &nbsp; </label>: &nbsp;{{ $data->email }}
-                        </div>  
 
                         <div class="form-group">
                                 <label class="control-label col-md-4">Bank Account &nbsp; </label>: &nbsp;{{ $data->no_rec }} 
+                        </div>  
+
+                        <div class="form-group">
+                                <label class="control-label col-md-4">Account Name &nbsp; </label>: &nbsp;{{ $data->bank_account_name }} 
+                        </div>  
+
+                        <div class="form-group">
+                                <label class="control-label col-md-4">Bank Name &nbsp; </label>: &nbsp;{{ $data->bank_name }} 
                         </div>  
 
                         <div class="form-group">
@@ -102,6 +116,10 @@
                         </div> 
 
                         <div class="form-group">
+                                <label class="control-label col-md-4">Email &nbsp; </label>: &nbsp;{{ $data->email }}
+                        </div>  
+
+                        <div class="form-group">
                                 <label class="control-label col-md-4">Gender &nbsp; </label>: &nbsp;{{ $data->gender == '1' ? 'Female' : 'Male' }}
                         </div> 
                         
@@ -114,10 +132,11 @@
                                     @elseif ( $data->status == '0' )
                                     Single
                                     @endif
+
                         </div> 
 
                         <div class="form-group">
-                                <label class="control-label col-md-4">Status &nbsp; </label>: &nbsp;{{ $data->status == '1' ? 'Active' : 'Non Active' }}
+                                <label class="control-label col-md-4">Status &nbsp; </label>: &nbsp;{{ $data->status == '1' ? 'Active' : 'Non Active' }} ({{$data->expired_at}})
                         </div> 
 
                         <div class="form-group">
@@ -179,10 +198,11 @@
                             <tr>
                                 <th width="5%">No</th>
                                 <th class="text-center" width="20%">Title</th>
-                                <th class="text-center" width="25%">Price</th>
-                                <th class="text-center" width="20%">Point Value</th>
+                                <th class="text-center" width="15%">Price</th>
+                                <th class="text-center" width="15%">Point Value</th>
                                 <th width="15%">Bitrax Value</th>
                                 <th width="15%">Time</th>
+                                <th width="15%">Expired</th>
                             </tr>
                         </thead>
                     </table>
@@ -274,9 +294,6 @@
                                     </div>
                                 </div>
                             </div>
-
-
-
                         </fieldset>
                         <div class="modal-footer">
                                 <button type="submit" class="btn btn-primary">Submit</button>
@@ -437,6 +454,7 @@
                   { data: 'ebook.pv', name: 'pv', className: "text-center"   },                                                 
                   { data: 'ebook.bv', name: 'bv', className: "text-center"   },                                                 
                   { data: 'created_at', name: 'created_at', className: "text-center"   },                                                 
+                  { data: 'expired_at', name: 'expired_at', className: "text-center"   },                                                 
 
               ]
           });  
