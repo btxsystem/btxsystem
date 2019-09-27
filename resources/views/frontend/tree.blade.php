@@ -535,19 +535,19 @@ rect {
 	var parent_id = undefined;
 	var check_cost = true;
 
-	$('male').change(function(){
+	$('#male').change(function(){
 		checkTerm()
 	})
 
-	$('female').change(function(){
+	$('#female').change(function(){
 		checkTerm()
 	})
 
-	$('pickup').change(function(){
+	$('#pickup').change(function(){
 		checkTerm()
 	})
 
-	$('shipping').change(function(){
+	$('#shipping').change(function(){
 		checkTerm()
 	})
 
