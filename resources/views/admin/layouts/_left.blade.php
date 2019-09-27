@@ -109,7 +109,7 @@
         </ul>
     </li>
 
-    <li>
+    <!-- <li>
         <a href="#">
             <i class="fa fa-street-view" style="color: #6CC66C" data-name="medal" data-size="18" data-c="#6CC66C" data-hc="#6CC66C"
                data-loop="true"></i>
@@ -130,7 +130,7 @@
                 </a>
             </li>
         </ul>
-    </li>
+    </li> -->
     <li >
         <a href="#">
             <i class="fa fa-money" style="color: #6CC66C" data-name="money" data-size="18" data-c="#6CC66C" data-hc="#6CC66C"
