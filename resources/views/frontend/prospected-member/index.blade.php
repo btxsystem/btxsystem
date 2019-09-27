@@ -17,7 +17,7 @@
     <div class="container-fluid">
         <div class="row clearfix">
             <div class="col-lg-12 col-md-12 col-sm-12" id="bill">
-                <table id="example" class="display nowrap" style="width:100%">
+                <table id="example" class="display nowrap" style="width:100%; font-size:15px">
                     <thead>
                         <tr>
                             <th>Name</th>
