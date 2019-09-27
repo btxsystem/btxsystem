@@ -163,6 +163,7 @@
 
 $(document).ready(function(){
     forhide = 0;
+
     $('#old_password').keyup(function (event) {
         var charCode = (event.which) ? event.which : event.keyCode;
         min_length = $('#old_password').val().length;

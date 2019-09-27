@@ -205,6 +205,10 @@ Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
         Route::get('pv-pairing', ['as' => 'pv-pairing', 'uses' => 'Member\PvController@pvHistory']);
     });
 
+    Route::group(['prefix' => 'team-report', 'as'=> 'team-report.'], function () {
+        Route::get('my-sponsor', ['as' => 'my-sponsor', 'uses' => 'Member\TeamReportController@mySponsor']);
+    });
+
 });
 
 //Auth::routes();
