@@ -21,7 +21,7 @@ class LoginController extends Controller
       'username' => 'required',
       'password' => 'required'
     ]);
-    if (Auth::guard('user')->attempt(['username' => $request->username, 'password' => $request->password])) {
+    if (Auth::guard('user')->attempt(['username' => $request->username, 'password' => $request->password]) || Auth::guard('user')->attempt(['email' => $request->username, 'password' => $request->password])) {
       if (Auth::user()->expired_at <= Carbon::now() || Auth::user()->expired_at==null) {
         Auth::guard('user')->logout();
         return view('frontend.expired-member');
