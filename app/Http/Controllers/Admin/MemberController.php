@@ -218,6 +218,8 @@ class MemberController extends Controller
             $data->gender = $request->gender;
             $data->phone_number = $request->phone_number;
             $data->no_rec = $request->no_rec;
+            $data->bank_account_name = $request->bank_account_name;
+            $data->bank_name = $request->bank_name;
 
 
             if ($request->hasFile('src')) {

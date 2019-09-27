@@ -60,7 +60,7 @@ Update Member
                                 <div class="col-md-8 inputGroupContainer">
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-envelope-square"></i></span>
-                                    <input id="email" name="email" placeholder="Email" class="form-control" value="{{$data->email}}" type="email" disabled> 
+                                    <input id="email" name="email" placeholder="Email" class="form-control" value="{{$data->email}}" type="email"> 
                                 </div>
                                 <small class="text-danger">{{ $errors->first('email') }}</small>
                                 </div>
@@ -82,7 +82,7 @@ Update Member
                                 <div class="col-md-8 inputGroupContainer">
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                                        <input id="nik" name="nik" placeholder="NIK" class="form-control" value="{{$data->nik}}" type="text" disabled>
+                                        <input id="nik" name="nik" placeholder="NIK" class="form-control" value="{{$data->nik}}" type="text">
                                     </div>
                                     <small class="text-danger">{{ $errors->first('nik') }}</small>
                                 </div>
@@ -161,6 +161,28 @@ Update Member
                                     <small class="text-danger">{{ $errors->first('no_rec') }}</small>
                                 </div>
                                 </div>
+
+                                <div class="form-group">
+                                <label class="col-md-2 control-label">Rekening Name</label>
+                                <div class="col-md-8 inputGroupContainer">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-cc-mastercard"></i></span>
+                                        <input id="bank_account_name" name="bank_account_name" placeholder="Rekening Name" class="form-control" value="{{$data->bank_account_name}}" type="text">
+                                    </div>
+                                    <small class="text-danger">{{ $errors->first('bank_account_name') }}</small>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">Bank Name</label>
+                                <div class="col-md-8 inputGroupContainer">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-cc-mastercard"></i></span>
+                                        <input id="bank_name" name="bank_name" placeholder="Bank Name" class="form-control" value="{{$data->bank_name}}" type="text">
+                                    </div>
+                                    <small class="text-danger">{{ $errors->first('bank_name') }}</small>
+                                </div>
+                            </div>
 
                                 <!-- <div class="form-group">
                                 <label class="col-md-2 control-label">Sponsor</label>
