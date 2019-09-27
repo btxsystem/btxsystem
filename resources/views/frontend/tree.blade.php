@@ -58,19 +58,19 @@
 					</div>
 					<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div class="form-line">
-							<input class="form-control" id="nik" name="nik" id="number_phone" type="number" min="10" required>
+							<input class="form-control" id="nik" name="nik" id="number_phone" type="number" min="1" required>
 							<label class="form-label">NIK / Passport</label>
 						</div>
 					</div>
           			<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div class="form-line">
-							<input class="form-control" id="npwp_number" name="npwp_number" type="number" min="16" required>
+							<input class="form-control" id="npwp_number" name="npwp_number" type="number" min="1" required>
 							<label class="form-label">NPWP</label>
 						</div>
 					</div>
           			<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div class="form-line">
-							<input class="form-control" id="bank_account_name" name="bank_account_name" type="text" min="10" required>
+							<input class="form-control" id="bank_account_name" name="bank_account_name" type="text" min="1" required>
 							<label class="form-label">Account Name</label>
 						</div>
 					</div>
@@ -179,10 +179,6 @@
           			</div>
 					<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div class="form-group address-form">
-						<!-- <h4 class="hidden">Starter Pack : <span id="cost-starter">0</span></h4>
-						<h4 class="hidden">Total Ebook : <span id="cost-ebook">0</span></h4>
-						<h4 class="hidden">Total Shipping : <span id="cost-postal">0</span></h4>
-						<h4>Grand Total : <span id="grand-total"></span></h4> -->
 						<div class="table-responsive">
                 <table class="table table-borderless">
                   <tr>
@@ -543,14 +539,6 @@ rect {
 		checkTerm()
 	})
 
-	$('#pickup').change(function(){
-		checkTerm()
-	})
-
-	$('#shipping').change(function(){
-		checkTerm()
-	})
-
 	$('#birthdate').on('change', function() {
 		var dob = new Date(this.value);
 		var today = new Date();
@@ -867,9 +855,6 @@ rect {
 	$('#kurir').change(function(){
 		
 		$('#kurir_name').val($(this).find(":checked").text())
-			// $('.cost-form').show();
-			// $('#cost').val('Total ongkir: '+Math.ceil(this.value/1000) + ' Points');
-			// $('#starter').val('Join Member: '+280 + ' Points');
 		$('#cost').val(Math.ceil(this.value/1000))
 		$('#cost-starter').html('280')
 		postalFee = Math.ceil(this.value)
@@ -897,14 +882,23 @@ rect {
 		$('#province').prop('required',true);
 		$('#city').prop('required',true);
     	$('#address').prop('required', true)
-    	checkTerm()
+    	checkTerm();
 
 	});
 
 	$('#pickup').change(function(){
-    $('#address').prop('required', false)
+    	$('#address').prop('required', false);
+		$('#province').prop('required',false);
+		$('#city').prop('required',false);
 		$('.shipping-form').hide();
-    $('.pickup-form').show();
+    	$('.pickup-form').show();
+		grandTotal -= postalFee;
+		postalFee = 0;
+		grandTotal = (priceEbook + 280000) / 1000;
+		check_cost = bitrexPoint < grandTotal ? false : true;
+		$('#cost-postal').text(postalFee);
+		$('#grand-total').text(grandTotal);
+		checkTerm();
 	});
 
 	$('#email').keyup(function(){
