@@ -59,29 +59,33 @@
     <div class="menu">
         <ul class="list">
             <li class="header">Menu</li>
-            <li> <a href="{{route('member.dashboard')}}"><i class="zmdi zmdi-view-dashboard col-red"></i><span>Dashboard</span> </a> </li>
-            <li> <a href="{{route('member.tree')}}"><i class="zmdi zmdi-device-hub col-blue"></i><span>Tree</span> </a> </li>
-            <li> <a href="{{ route('member.ebook.index') }}"><i class="zmdi zmdi-book col-red"></i><span>Ebook</span> </a> </li>
-            <li> <a href="{{ route('member.reward') }}"><i class="zmdi zmdi-star-half col-blue"></i><span>My Rewards</span> </a> </li>
-            <li> <a href="{{ route('member.bonus.index') }}"><i class="zmdi zmdi-ticket-star col-red"></i><span>My Bonus</span> </a> </li>
-            <!-- <li> <a href="{{ route('member.add-member.index') }}"><i class="zmdi zmdi-plus col-purple"></i><span>Add New Member</span> </a> </li> -->
-            <li><a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-money col-green"></i><span>Debit and Credit</span> </a>
+            <li class="{{ (request()->is('member')) ? 'active' : '' }}"> <a href="{{route('member.dashboard')}}"><i class="zmdi zmdi-view-dashboard col-red"></i><span>Dashboard</span> </a> </li>
+            <li class="{{ (request()->is('member/tree')) ? 'active' : '' }}"> <a href="{{route('member.tree')}}"><i class="zmdi zmdi-device-hub col-blue"></i><span>Tree</span> </a> </li>
+            <li class="{{ (request()->is('member/ebook')) ? 'active' : '' }}"> <a href="{{ route('member.ebook.index') }}"><i class="zmdi zmdi-book col-red"></i><span>Ebook</span> </a> </li>
+            <li class="{{ (request()->is('member/reward')) ? 'active' : '' }}"> <a href="{{ route('member.reward') }}"><i class="zmdi zmdi-star-half col-blue"></i><span>My Rewards</span> </a> </li>
+            <li class="{{ (request()->is('member/bonus')) ? 'active' : '' }}"> <a href="{{ route('member.bonus.index') }}"><i class="zmdi zmdi-ticket-star col-red"></i><span>My Bonus</span> </a> </li>
+            <li class="{{ (request()->segment(2))=='income-and-expenses' ? 'active' : '' }}"><a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-money col-green"></i><span>Debit and Credit</span> </a>
                 <ul class="ml-menu">
-                    <li><a href="{{route('member.bitrex-money.bitrex-points')}}">Bitrex Points</a> </li>
-                    <li><a href="{{route('member.bitrex-money.bitrex-cash')}}">Bitrex Value</a> </li>
-                    <li><a href="{{route('member.bitrex-money.pv')}}">Personal PV</a> </li>
-                    <li><a href="{{route('member.bitrex-money.pv-pairing')}}">PV Pairing</a> </li>
+                    <li class="{{ (request()->is('member/income-and-expenses/bitrex-points')) ? 'active' : '' }}"><a href="{{route('member.bitrex-money.bitrex-points')}}">Bitrex Points</a> </li>
+                    <li class="{{ (request()->is('member/income-and-expenses/bitrex-value')) ? 'active' : '' }}"><a href="{{route('member.bitrex-money.bitrex-cash')}}">Bitrex Value</a> </li>
+                    <li class="{{ (request()->is('member/income-and-expenses/pv')) ? 'active' : '' }}"><a href="{{route('member.bitrex-money.pv')}}">Personal PV</a> </li>
+                    <li class="{{ (request()->is('member/income-and-expenses/pv-pairing')) ? 'active' : '' }}"><a href="{{route('member.bitrex-money.pv-pairing')}}">PV Pairing</a> </li>
                 </ul>
             </li>
-            <li><a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-shopping-cart col-orange"></i><span>Transaction</span> </a>
+            <li class="{{ (request()->segment(2))=='transaction' ? 'active' : '' }}"><a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-shopping-cart col-orange"></i><span>Transaction</span> </a>
                 <ul class="ml-menu">
-                    <li><a href="{{route('member.transaction.my-transaction')}}">My Transactions</a></li>
-                    <li><a href="{{route('member.transaction.prospected-member-transaction')}}">Prospected Member Transactions</a></li>
+                    <li class="{{ (request()->is('member/transaction/my-transaction')) ? 'active' : '' }}"><a href="{{route('member.transaction.my-transaction')}}">My Transactions</a></li>
+                    <li class="{{ (request()->is('member/transaction/prospected-member-transaction')) ? 'active' : '' }}"><a href="{{route('member.transaction.prospected-member-transaction')}}">Prospected Member Transactions</a></li>
                 </ul>
             </li>
-            <li> <a href="{{ route('member.prospected-member') }}"><i class="zmdi zmdi-accounts col-purple"></i><span>Prospected Member</span> </a> </li>
+            <li class="{{ (request()->segment(2))=='team-report' ? 'active' : '' }}"><a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-group-work col-purple"></i><span>Team Report</span> </a>
+                <ul class="ml-menu">
+                    <li class="{{ (request()->is('member/team-report/my-sponsor')) ? 'active' : '' }}"><a href="{{route('member.team-report.my-sponsor')}}">My Sponsor</a></li>
+                </ul>
+            </li>
+            <li class="{{ (request()->is('member/prospected-member')) ? 'active' : '' }}"> <a href="{{ route('member.prospected-member') }}"><i class="zmdi zmdi-accounts col-purple"></i><span>Prospected Member</span> </a> </li>
             <li class="header">Profile</li>
-            <li> <a href="{{route('member.profile.index')}}"><i class="zmdi zmdi-account col-purple"></i><span>My Profile</span> </a> </li>
+            <li class="{{ (request()->is('member/profile')) ? 'active' : '' }}"> <a href="{{route('member.profile.index')}}"><i class="zmdi zmdi-account col-purple"></i><span>My Profile</span> </a> </li>
             <li> <a data-toggle="modal" data-target="#change-password"><i class="zmdi zmdi-key col-red"></i><span>Change Password</span> </a> </li> 
         </ul>
     </div>
