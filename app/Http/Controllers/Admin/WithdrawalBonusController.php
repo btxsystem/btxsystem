@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Employeer;
+use App\HistoryBitrexCash;
 use Carbon\Carbon;
 use DataTables;
 use Alert;
@@ -50,9 +51,6 @@ class WithdrawalBonusController extends Controller
                             return $this->getVerificationStatus($row);
                         })
                         ->addColumn('check', '<input type="checkbox" name="member_checkbox[]" class="member_checkbox" value="{{$id}}" />')
-                        ->addColumn('action', function($row) {
-                            return $this->htmlAction($row);
-                        })
                         ->rawColumns(['action','check'])
                         ->make(true);
             }
@@ -60,11 +58,38 @@ class WithdrawalBonusController extends Controller
         return view('admin.withdrawal-bonus.index');
     }
 
-    public function htmlAction($row)
+    public function paidIndex(Request $request)
     {
-            return '<a data-id="'.$row->id.'"  class="btn btn-success fa fa-eye show-testimonial" title="Show Payment"></a>
-                    <a data-id="'.$row->id.' "class="btn btn-default fa fa-check approve-payment" style="background-color: #b85ebd; color: #ffffff;" title="Approve Payment"></a>';
+        if (request()->ajax()) {
 
+            if($request->from_date)
+            {
+                $data = HistoryBitrexCash::where('type', 5)->where('info', 0)
+                ->whereBetween('created_at', [$request->from_date, $request->to_date])
+                ->with(['member'  => function($query) {
+                        $query->select(['id','id_member','username']);
+                      }
+                  ])
+                ->select('id','id_member','nominal','description','info','type','created_at','info','type');
+            }
+            else {
+                $data = HistoryBitrexCash::where('type', 5)->where('info', 0)
+                ->with(['member'  => function($query) {
+                    $query->select(['id','id_member','username']);
+                  }
+              ])
+            ->select('id','id_member','nominal','description','info','type','created_at','info','type');
+            }
+
+            return Datatables::of($data)
+                    ->addIndexColumn()
+                    ->addColumn('amount', function($row){
+                        return currency($row->nominal);
+                    })
+                    ->make(true);
+        }
+
+        return view('admin.withdrawal-bonus.paid');
     }
 
     function massPaid(Request $request)
@@ -102,33 +127,9 @@ class WithdrawalBonusController extends Controller
 
     }
 
-    // public function export()
-    // {
-    //     return Excel::create('products_' . date('d_m_Y'), function($excel) {
-    //         $excel->sheet('Sheet 1', function($sheet) {
-
-    //             ini_set('max_execution_time', 1800);
-    //             $data = Employeer::where('status', 1)
-    //                     ->where('bitrex_cash','>', 1000)
-    //                     ->whereDate('expired_at', '>=', now())
-    //                     ->select('id as check','id','id_member','username','no_rec','bank_name','npwp_number',
-    //                             'first_name','last_name','rank_id',
-    //                             'created_at','status','bitrex_cash','bitrex_points','expired_at')->get();
-
-    //             // $model = $models->map(function ($model){
-    //             //     return $model->only(['id','name','code','unit_name','quantity_available','stocks']);
-    //             // });
-
-    //             $sheet->loadView('admin.withdrawal-bonus.excel', [
-    //                 'data' => $data
-    //             ]);
-
-    //         });
-    //     })->export('xls');
-    // }
     public function export()
     {
-        return Excel::download(new EmployeerExport, 'employeers.xlsx');
+        return Excel::download(new EmployeerExport, now() .' ' .'withdrawal.xlsx');
     }
 
     public function getVerificationStatus($row)

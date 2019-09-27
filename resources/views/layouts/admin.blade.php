@@ -104,7 +104,7 @@
             <aside class="left-side ">
                 <section class="sidebar ">
                     <div class="page-sidebar  sidebar-nav">
-                        <div class="nav_icons">
+                        <!-- <div class="nav_icons">
                             <ul class="sidebar_threeicons">
                                 <li>
                                     <a href="">
@@ -131,7 +131,8 @@
                                     </a>
                                 </li>
                             </ul>
-                        </div>
+                        </div> -->
+                        <br/><br/>
                         <div class="clearfix"></div>
                         @include('admin.layouts._left')
                     </div>
