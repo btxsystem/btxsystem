@@ -270,8 +270,18 @@ class ProfileMemberController extends Controller
             'status' => 200,
             'username' => false,
         ];
-        $cek = Employeer::where('username','=',$user)->select('username')->first();
+        $cek = Employeer::where('username',$user)->select('username')->first();
         $cek ? $data['username'] = true : $data['username'] = false;
+        return response()->json($data);
+    }
+
+    public function isSameEmail($user){
+        $data = [
+            'status' => 200,
+            'email' => false,
+        ];
+        $cek = Employeer::where('email',$user)->select('id')->first();
+        $cek ? $data['email'] = true : $data['email'] = false;
         return response()->json($data);
     }
 

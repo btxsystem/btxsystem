@@ -530,6 +530,8 @@ rect {
 	var adult = 0;
 	var check = 1;
 	var check_email = false;
+	var check_user = false;
+	var available_email = false;
 	var parent_id = undefined;
 	var check_cost = true;
 
@@ -602,7 +604,11 @@ rect {
 			&& $('#nik').val() != ''
 			&& $('#birthdate').val() != ''
 			&& adult >= 18
-			&& (check > 0 && check_email && check_cost)
+			&& check > 0 
+			&& check_email 
+			&& check_cost 
+			&& check_user 
+			&& available_email
 		) {
 			$('.register').prop('disabled', false)
 		} else {
@@ -919,6 +925,23 @@ rect {
 			check_email = false;	
 			$('#email_danger').text('Email Invalid');	
 		}
+		$.ajax({
+			type: 'GET',
+			url: '/member/select/email/'+this.value,
+			success: function (data) {
+				if (data.email) {
+					$('#email_danger').text('email already exist');
+					available_email = false;
+				}else{
+					$('#email_danger').empty();
+					available_email = true;
+				}
+					
+			},
+			error: function() {
+				console.log("Error");
+			}
+		});
 		checkTerm();
 	});
 
@@ -931,6 +954,7 @@ rect {
 			url: '/member/select/username/'+text,
 			success: function (data) {
 				data.username ? $('#username_danger').text('username you entered already exists') : $('#username_danger').empty();
+				check_user = data.username ? false  : true;
 			},
 			error: function() {
 				console.log("Error");
