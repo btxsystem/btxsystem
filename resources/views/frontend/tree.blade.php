@@ -881,9 +881,17 @@ rect {
     	$('.pickup-form').hide();
 		$('#province').prop('required',true);
 		$('#city').prop('required',true);
-    	$('#address').prop('required', true)
-    	checkTerm();
-
+		$('#district').prop('required',true);
+		$('#kurir').prop('required',true);
+    	$('#address').prop('required', true);
+		$('#city').empty().trigger('change');
+		$('#district').empty().trigger('change');
+		$('#kurir').empty().trigger('change');
+		grandTotal = (priceEbook + postalFee + 280000) / 1000;
+		check_cost = bitrexPoint < grandTotal ? false : true;
+		$('#cost-postal').text(postalFee);
+		$('#grand-total').text(grandTotal);
+		checkTerm();
 	});
 
 	$('#pickup').change(function(){
@@ -894,7 +902,7 @@ rect {
     	$('.pickup-form').show();
 		grandTotal -= postalFee;
 		postalFee = 0;
-		grandTotal = (priceEbook + 280000) / 1000;
+		grandTotal = (priceEbook - postalFee + 280000) / 1000;
 		check_cost = bitrexPoint < grandTotal ? false : true;
 		$('#cost-postal').text(postalFee);
 		$('#grand-total').text(grandTotal);
