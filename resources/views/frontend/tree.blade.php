@@ -221,7 +221,7 @@
 					</div>
 					<div class="modal-footer">
 						<a class="btn btn-secondary" data-dismiss="modal">Close</a>
-						<input type="button" onclick="submitData()" class="btn btn-primary register" value="Register">
+						<input type="button" onclick="submitData()" class="btn btn-primary register" value="Register" style="cursor:pointer">
 					</div>
 				</form>
 			</div>
@@ -256,7 +256,7 @@
 				<small class="text-muted">Bitrexgo</small>
 				</h2>
         <div class="pull-right mt-2">
-          <button onclick="openAutoPlacement()" class="btn btn-primary btn-md">Add new Member with Auto-placement</button>
+          <button onclick="openAutoPlacement()" class="btn btn-primary btn-md" style="cursor:pointer">Add new Member with Auto-placement</button>
         </div>
 			</div>
       <div class="clearfix">
