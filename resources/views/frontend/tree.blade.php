@@ -650,15 +650,6 @@ rect {
 		$('#cost-starter').html('280')
 		
 		var element = document.querySelector('#bah');
-		$('input').change(function() {
-			if(
-				checkTerm()
-			) {
-				$('.register').prop('disabled', false)
-			} else {
-				$('.register').prop('disabled', true)
-			}
-		})
 
     	checkTerm()
 
