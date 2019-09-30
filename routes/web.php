@@ -130,6 +130,8 @@ Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
         Route::get('pairing', ['as' => 'pairing', 'uses' => 'Member\MyBonusController@pairing']);
     });
 
+    Route::post('convert-bitrex-points', ['as' => 'convert-bitrex-points', 'uses' => 'Member\BitrexPointController@convertBitrexPoints']);
+
     Route::get('', ['as' => 'dashboard', 'uses' => 'Member\DashboardController@index']);
     Route::get('tree', ['as' => 'tree', 'uses' => 'Member\DashboardController@tree']);
     Route::get('prospected-member', ['as' => 'prospected-member', 'uses' => 'Member\ProspectedMemberController@index']);

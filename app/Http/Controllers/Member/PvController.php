@@ -149,7 +149,6 @@ class PvController extends Controller
                     DB::commit();
                 } catch (\Exception $e) {
                     DB::rollback();
-                    return 'gagal';
                 }
             }elseif($pairing->rank_id <= 3 && $bonus_pairing >= 3500000){
                 $has_pairing = 35;
