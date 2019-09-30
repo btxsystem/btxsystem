@@ -184,7 +184,9 @@
     </style>
     <script type="text/javascript">
         $(document).ready(function () {
+            $('button#submit').hide();
             $(document).on("change",".uploadFile", function(){
+                $('button#submit').show();
                 var uploadFile = $(this);
                 var files = !!this.files ? this.files : [];
                 if (!files.length || !window.FileReader) return;
@@ -198,7 +200,6 @@
                     }
                 }
             });  
-            $('button').hide(); 
         });
 
         $('#profile_update').click(function(){

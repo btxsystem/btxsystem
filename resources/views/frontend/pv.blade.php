@@ -34,7 +34,6 @@
             url: '{{route("member.select.history-pv")}}',
             data: data,
             success:function(data){
-                console.log(data.pv.data);
                 if (data.pv.data[0]==undefined) {
                     $('#bill').html('<div class="body" style="color:red;"><center><strong>History is currently empty</strong></center></div>');    
                 }else{

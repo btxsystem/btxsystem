@@ -737,7 +737,7 @@ rect {
 			placeholder: 'City',
 		});
 		$('#district').select2({
-			placeholder: 'Subistrict',
+			placeholder: 'Kecamatan',
 		});
 		$('#kurir').select2({
 			placeholder: 'Kurir',
@@ -814,13 +814,13 @@ rect {
     	$('#city_name').val($(this).find(":checked").text())
 		$('#district').empty().trigger('change');
 		$('#kurir').empty().trigger('change');
-		$('#district').html('<option disabled>Subdistrict<option>');
+		$('#district').html('<option disabled>Kecamatan<option>');
 		$.ajax({
 			type: 'GET',
 			url: '/member/shipping/subdistrict/'+id,
 			success: function (data) {
 				$('#district').select2({
-					placeholder: 'Subdistrict',
+					placeholder: 'Kecamatan',
 					data: data,
 				});
 			},
