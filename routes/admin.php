@@ -182,7 +182,9 @@ Route::group(['middleware' => 'admin'], function () {
 
     Route::group(['prefix'=>'withdrawal-bonus','as'=>'withdrawal-bonus.'], function(){
         Route::get('', ['as' => 'index', 'uses' => 'Admin\WithdrawalBonusController@index']);
+        Route::get('paidindex', ['as' => 'paidindex', 'uses' => 'Admin\WithdrawalBonusController@paidIndex']);
         Route::get('masspaid', ['as' => 'masspaid', 'uses' => 'Admin\WithdrawalBonusController@massPaid']);
+        Route::get('export', ['as' => 'export', 'uses' => 'Admin\WithdrawalBonusController@export']);
         // Route::get('/{id}/show', ['as' => 'edit', 'uses' => 'Admin\TransferConfirmationController@show']);
         // Route::get('/approve/{invoice_number}', ['as' => 'approve', 'uses' => 'Admin\TransferConfirmationController@approve']);
     });
@@ -280,6 +282,9 @@ Route::group(['middleware' => 'admin'], function () {
         Route::get('generate-pv', ['as' => 'generate-pv', 'uses' => 'Member\MyBonusController@generatePv']);
         Route::post('curse', ['as' => 'curse', 'uses' => 'ImportExcelController@curse']);
         Route::post('old-bonus', ['as' => 'old-bonus', 'uses' => 'ImportExcelController@oldBonus']);
+        Route::post('account-name', ['as' => 'account-name', 'uses' => 'ImportExcelController@account_name']);
     });*/
+    
+    
     Route::get('generate-mail', ['as' => 'generate-mail', 'uses' => 'Member\SendEmailOldMember@sendMail']);
 });

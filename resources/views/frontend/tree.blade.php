@@ -30,7 +30,7 @@
 					</div>
 					<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div class="form-line">
-							<input class="form-control" name="username" id="username" type="text" min="3" required>
+							<input class="form-control" name="username" id="username" min="8" type="text" required>
 							<label class="form-label">Username</label>
 						</div>
 						<div>
@@ -38,24 +38,27 @@
 						</div>
 					</div>
 					<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12 row">
-						<div class="form-line col-lg-6 col-md-6 col-sm-6 col-xs-6">
+						<div class="form-line col">
 							<input class="form-control" name="first_name" id="first_name" type="text" min="2" required>
 							<label class="form-label">First Name</label>
 						</div>
-						<div class="form-line col-lg-6 col-md-6 col-sm-6 col-xs-6">
+						<div class="form-line col">
 							<input class="form-control" name="last_name" id="last_name" type="text" min="2" required>
 							<label class="form-label">Last Name</label>
 						</div>
 					</div>
 					<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div class="form-line">
-							<input class="form-control" name="email" id="email" type="email" min="3" required>
+							<input class="form-control" name="email" id="email" type="email" min="5" required>
 							<label class="form-label">Email</label>
+						</div>
+						<div>
+							<b style="color:red" id="email_danger"></b>
 						</div>
 					</div>
 					<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div class="form-line">
-							<input class="form-control" id="nik" name="nik" id="number_phone" type="number" min="10" required>
+							<input class="form-control" id="nik" name="nik" id="number_phone" type="number" min="1" required>
 							<label class="form-label">NIK / Passport</label>
 						</div>
 					</div>
@@ -67,7 +70,7 @@
 					</div>
           			<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div class="form-line">
-							<input class="form-control" id="bank_account_name" name="bank_account_name" type="text" min="10" required>
+							<input class="form-control" id="bank_account_name" name="bank_account_name" type="text" min="1" required>
 							<label class="form-label">Account Name</label>
 						</div>
 					</div>
@@ -81,6 +84,7 @@
 						<div class="form">
               				<label class="form-label">Bank Name</label>
 							<select class="form-control" id="bank_name_select">
+								<option value="" disabled selected>Choice Bank Name</option>
 								<option value="BCA">BCA</option>
 								<option value="BRI">BRI</option>
 								<option value="BNI">BNI</option>
@@ -175,10 +179,6 @@
           			</div>
 					<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div class="form-group address-form">
-						<!-- <h4 class="hidden">Starter Pack : <span id="cost-starter">0</span></h4>
-						<h4 class="hidden">Total Ebook : <span id="cost-ebook">0</span></h4>
-						<h4 class="hidden">Total Shipping : <span id="cost-postal">0</span></h4>
-						<h4>Grand Total : <span id="grand-total"></span></h4> -->
 						<div class="table-responsive">
                 <table class="table table-borderless">
                   <tr>
@@ -221,7 +221,7 @@
 					</div>
 					<div class="modal-footer">
 						<a class="btn btn-secondary" data-dismiss="modal">Close</a>
-						<input type="button" onclick="submitData()" class="btn btn-primary register" value="Register">
+						<input type="button" onclick="submitData()" class="btn btn-primary register" value="Register" style="cursor:pointer">
 					</div>
 				</form>
 			</div>
@@ -256,7 +256,7 @@
 				<small class="text-muted">Bitrexgo</small>
 				</h2>
         <div class="pull-right mt-2">
-          <button onclick="openAutoPlacement()" class="btn btn-primary btn-md">Add new Member with Auto-placement</button>
+          <button onclick="openAutoPlacement()" class="btn btn-primary btn-md" style="cursor:pointer">Add new Member with Auto-placement</button>
         </div>
 			</div>
       <div class="clearfix">
@@ -271,6 +271,8 @@
 					<div class="container-fluid">
 						<div>
 							<div class="col-md-12">
+								<br>
+								<h4 style="color:red">"Untuk register orang dengan pemilihan tempat, silahkan gunakan dan klik tree di bawah"</h4>
 								<h3>Detail Summary</h3>
 								<hr>
 								<div class="row col-md-12">
@@ -296,8 +298,14 @@
 									</div>
 								</div>
 								<div class="row col-md-12">
-									<div class="col-md-6">
-										<h5 id="_pv_group"></h5>
+									<div class="col-md-4">
+										<h5 id="_pv_group_l"></h5>
+									</div>
+									<div class="col-md-4">
+										<h5 id="_pv_group_m"></h5>
+									</div>
+									<div class="col-md-4">
+										<h5 id="_pv_group_r"></h5>
 									</div>
 								</div>
 								<hr>
@@ -315,7 +323,7 @@
 							<div class="col-md-12">
 								<br>
 								<div class="chart" id="tree">
-									<button id="upline" class='btn btn-primary zmdi zmdi-chevron-up' onclick=location.reload()></button>
+									<button id="upline" class='btn btn-primary zmdi zmdi-chevron-up'></button>
 								</div>
 
 							</div>
@@ -345,17 +353,49 @@
   left: 0;
 }
 
+#upline{
+	cursor: pointer;
+}
+
 svg .rect {
   fill: gold;
   stroke: steelblue;
   stroke-width: 5px;
 }
 
+@media only screen and (max-width: 365px) and (min-width: 360px){
+/* For mobile phones: */
+	svg{
+		width: 305px !important;
+	}
+	span#clock {
+    	font-size: 8px !important;
+	}
+}
+
+@media only screen and (max-width: 500px) and (min-width: 480px) {
+/* For mobile phones: */
+	.search {
+		font-size: 14px !important;
+		width: 190px !important;
+	}
+
+	#clock{
+		font-size: 14px !important;
+	}
+
+	svg{
+		width: 430px !important;
+	}
+}
+
+
+
 @media only screen and (max-width: 480px) {
 /* For mobile phones: */
 	.search {
-		font-size: 14px;
-		width: 887px;
+		font-size: 14px !important;
+		width: 190px !important;
 	}
 	rect {
 		/* fill: #ebebeb;
@@ -392,6 +432,39 @@ svg .rect {
 		width: 160px !important;
 	}
 }
+
+@media only screen and (max-width: 375px) and (min-width: 370px) {
+	svg{
+		width: 320px !important;
+	}
+}
+
+@media only screen and (max-width: 800px) and (min-width: 760px) {
+	svg{
+		width: 710px !important;
+	}
+}
+
+
+@media only screen and (max-width: 1080px) and (min-width: 800px) {
+	svg{
+		width: 940px !important;
+	}
+}
+
+@media only screen and (max-width: 420px) and (min-width: 400px) {
+	svg{
+		width: 350px !important;
+	}
+}
+
+@media only screen and (max-width: 320px) {
+/* For mobile phones: */
+	svg{
+		width: 260px !important;
+	}
+}
+
 #search-downline{
 	cursor: pointer;
 }
@@ -416,7 +489,7 @@ text {
 	text-anchor: middle;
 }
 rect {
-cursor: pointer;
+	cursor: pointer;
 }
 .bigger {
 	font-size: 13px;
@@ -446,47 +519,94 @@ cursor: pointer;
 }
 </style>
 <script>
-  let priceEbook = 0
-  let postalFee = 0
-  let grandTotal = 0;
-  let bitrexPoint = '{{Auth::user()->bitrex_points}}'
-  let adult = 0;
+	var priceEbook = 0
+	var postalFee = 0
+	var grandTotal = 0;
+	var bitrexPoint = '{{Auth::user()->bitrex_points}}'
+	var adult = 0;
+	var check = 1;
+	var check_email = false;
+	var check_user = false;
+	var available_email = false;
+	var parent_id = undefined;
+	var check_cost = true;
 
-  $('#birthdate').on('change', function() {
-	var dob = new Date(this.value);
-	var today = new Date();
-	var age = Math.floor((today-dob) / (365.25 * 24 * 60 * 60 * 1000));
-	adult = age;
-	if (age < 18) {
-		$('#birthdate_danger').html('<p id="danger_">Age must be more than 17 years</p>');
-	}else{
-		$('#danger_').empty();
+	$('#male').change(function(){
+		checkTerm()
+	})
+
+	$('#female').change(function(){
+		checkTerm()
+	})
+
+	$('#birthdate').on('change', function() {
+		var dob = new Date(this.value);
+		var today = new Date();
+		var age = Math.floor((today-dob) / (365.25 * 24 * 60 * 60 * 1000));
+		adult = age;
+		if (age < 18) {
+			$('#birthdate_danger').html('<p id="danger_">Age must be more than 17 years</p>');
+		}else{
+			$('#danger_').empty();
+		}
+		checkTerm()
+	});
+
+	$('#nik').keyup(function(){
+		checkTerm()
+	})
+
+	$('#bank_account_name').keyup(function(){
+		checkTerm()
+	})
+
+	$('#bank_name_select').change(function(){
+		checkTerm()
+	})
+
+	$('#bank_account_number').keyup(function(){
+		checkTerm()
+	})
+
+	$('#npwp_number').keyup(function(){
+		checkTerm()
+	})
+
+	$('#first_name').keyup(function(){
+		checkTerm()
+	})
+
+	$('#last_name').keyup(function(){
+		checkTerm()
+	})
+
+	function checkTerm() {
+		if(!$('#term_one').prop('checked') || !$('#term_two').prop('checked')) {
+			$('.register').prop('disabled', true)
+		} else {
+		if(
+			$('#username').val() != ''
+			&& $('#email').val() != ''
+			&& $('#first_name').val() != ''
+			&& $('#last_name').val() != ''
+			&& $('#nik').val() != ''
+			&& $('#birthdate').val() != ''
+			&& adult >= 18
+			&& check > 0 
+			&& check_email 
+			&& check_cost 
+			&& check_user 
+			&& available_email
+		) {
+			$('.register').prop('disabled', false)
+		} else {
+			$('.register').prop('disabled', true)
+		}
+		}
 	}
-  });
 
-  function checkTerm() {
-    if(!$('#term_one').prop('checked') || !$('#term_two').prop('checked')) {
-      $('.register').prop('disabled', true)
-    } else {
-      if(
-        $('#username').val() != ''
-        && $('#email').val() != ''
-        && $('#first_name').val() != ''
-        && $('#last_name').val() != ''
-        && $('#nik').val() != ''
-        && $('#birthdate').val() != ''
-		&& adult >= 18
-		
-      ) {
-        $('.register').prop('disabled', false)
-      } else {
-        $('.register').prop('disabled', true)
-      }
-    }
-  }
-
-  function openAutoPlacement() {
-    $('#action-member').attr('action', '{{route("register-autoplacement")}}')
+	function openAutoPlacement() {
+		$('#action-member').attr('action', '{{route("register-autoplacement")}}')
 		$.ajax({
 			type: 'GET',
 			url: '/member/select/bitrex-points',
@@ -502,148 +622,114 @@ cursor: pointer;
 				console.log("Error");
 			}
 		});	
-  }
+	}
 
-  function openTree() {
-    $('#action-member').attr('action', '{{route("member.register-downline")}}')
-  }
+	function openTree() {
+		$('#action-member').attr('action', '{{route("member.register-downline")}}')
+	}
 
-  function submitData() {
-    $('.register').prop('disabled', true)
-    $('#action-member').submit();
-  }
+	function submitData() {
+		$('.register').prop('disabled', true)
+		$('#action-member').submit();
+	}
 
 	$(document).ready(function() {
 		$('.register').prop('disabled', true)
 		$('#cost-starter').html('280')
 		
 		var element = document.querySelector('#bah');
-		$('input').change(function() {
-		if(
-			$('#username').val() != ''
-			&& $('#email').val() != ''
-			&& $('#first_name').val() != ''
-			&& $('#last_name').val() != ''
-			&& $('#nik').val() != ''
-			&& $('#birthdate').val() != ''
-		) {
-			$('.register').prop('disabled', false)
-		} else {
-			$('.register').prop('disabled', true)
-		}
-    })
 
-    checkTerm()
+    	checkTerm()
 
-    $('#term_one').change(function() {
-      checkTerm()
-    })
+		$('#term_one').change(function() {
+			checkTerm()
+		})
 
-    $('#term_two').change(function() {
-      checkTerm()
-    })
-	// var instance = panzoom(element, {
-	// 	zoomSpeed: 0.030
-	// });
+		$('#term_two').change(function() {
+			checkTerm()
+		})
 	
-	
-	// $panzoom.on('panzoomend', function(e, panzoom, matrix, changed) {
-  	// 	if (changed) {
-    // 		// deal with drags or touch moves
-  	// 	} else {
-    // 		// deal with clicks or taps
-  	// 	}
-	// });
-    $('.shipping-form').hide();
+    	$('.shipping-form').hide();
 
 		$('#upline').hide();
 		$('#province').select2({
 			placeholder: 'Province',
 		});
-    $.ajax({
+    	$.ajax({
 			type: 'GET',
 			url: '{{route("api.ebook.ebooks")}}'
 		}).done(function(res) {
 			const {data} = res
 			let render = data.map((v, i) => {
-				// return `
-				// 	<input id="ebooks" type="checkbox" value="${v.id}" id="${v.title}" class="with-gap radio-col-red" data-price="${v.price}" ${v.title == 'basic' ? 'checked' : ''} name="ebooks[]"/>
-        // 	<label for="shipping">${v.title}</label>
-				// `
-
-        return `
-        <div class="form-check">
-          <input class="form-check-input" data-price="${v.price}" type="checkbox" name="ebooks[]" value="${v.id}" id="${v.title}">
-          <label class="form-check-label" id="${i}" for="${v.title}" ${v.id == 1 ? 'checked' : ''}>
-            ${v.title}
-          </label>
-        </div>
-        `
+				return `
+				<div class="form-check">
+				<input class="form-check-input" data-price="${v.price}" type="checkbox" name="ebooks[]" value="${v.id}" id="${v.title}">
+				<label class="form-check-label" id="${i}" for="${v.title}" ${v.id == 1 ? 'checked' : ''}>
+					${v.title}
+				</label>
+				</div>`
 			})
-
-			$('#ebook-list').html(`
-				<div id="checkboxEbook">
-					${render}
-				</div>
-			`)
-
-      $('#checkboxEbook input[type=checkbox]').each(function() {
-        if(parseInt($(this).val()) == 1) {
-          $(this).prop('checked', true)
-          priceEbook = priceEbook + parseInt($(this).data('price'))
-          $('#cost-ebook').html(toPrice(priceEbook / 1000))
-          $('#grand-total').html(toPrice((priceEbook + postalFee + 280000) / 1000))
-        }
-      })
-
-			$('#checkboxEbook input[type=checkbox]').change(function(index) {
-        checkTerm()
-
-				if($(this).prop('checked')) {
-					priceEbook = priceEbook + parseInt($(this).data('price'));
-				} else {
-					priceEbook = priceEbook - parseInt($(this).data('price'));
-					$('.register').prop('disabled', true);
-				}
-
-				if(priceEbook != 0) {
-					$('#cost-ebook').parent().removeClass('hidden');
-				} else {
-					$('#cost-ebook').parent().addClass('hidden');
-					$('.register').prop('disabled', true);
-				}
-
-				if(postalFee != 0) {
-					$('#cost-postal').parent().removeClass('hidden')
-				} else {
-					$('#cost-postal').parent().addClass('hidden')
-				}
-
-				$('#cost-ebook').html(toPrice(priceEbook / 1000))
-				$('#grand-total').html(toPrice((priceEbook + postalFee + 280000) / 1000))
-
-        grandTotal = (priceEbook + postalFee + 280000) / 1000;
-
-        if(bitrexPoint < grandTotal) {
-          $('.register').prop('disabled', true)
-        }
-			})
-
-		})
-		$('#province').html('<option disabled>Province<option>');
-		$.ajax({
-			type: 'GET',
-			url: '/member/shipping/province',
-			success: function (data) {
-				$('#province').select2({
-					placeholder: 'Province',
-					data: data,
-				});
-			},
-			error: function() {
-				console.log("Error");
+		$('#ebook-list').html(`
+			<div id="checkboxEbook">
+				${render}
+			</div>
+		`)
+		$('#checkboxEbook input[type=checkbox]').each(function() {
+			if(parseInt($(this).val()) == 1) {
+			$(this).prop('checked', true)
+			priceEbook = priceEbook + parseInt($(this).data('price'))
+			$('#cost-ebook').html(toPrice(priceEbook / 1000))
+			$('#grand-total').html(toPrice((priceEbook + postalFee + 280000) / 1000))
 			}
-		});
+		})
+	 
+		$('#checkboxEbook input[type=checkbox]').change(function(index) {
+			
+			if($(this).prop('checked')) {
+				check += 1;
+				priceEbook = priceEbook + parseInt($(this).data('price'));
+			} else {
+				check -= 1;
+				priceEbook = priceEbook - parseInt($(this).data('price'));
+			}
+			if(priceEbook != 0) {
+				$('#cost-ebook').parent().removeClass('hidden');
+			} else {
+				$('#cost-ebook').parent().addClass('hidden');
+				$('.register').prop('disabled', true);
+			}
+
+			if(postalFee != 0) {
+				$('#cost-postal').parent().removeClass('hidden')
+			} else {
+				$('#cost-postal').parent().addClass('hidden')
+			}
+
+			$('#cost-ebook').html(toPrice(priceEbook / 1000))
+			$('#grand-total').html(toPrice((priceEbook + postalFee + 280000) / 1000))
+
+			grandTotal = (priceEbook + postalFee + 280000) / 1000;
+
+			check_cost = bitrexPoint < grandTotal ? false : true;
+	
+			checkTerm()
+		})
+	})
+	$('#province').html('<option disabled>Province<option>');
+	$.ajax({
+		type: 'GET',
+		url: '/member/shipping/province',
+		success: function (data) {
+			$('#province').select2({
+				placeholder: 'Province',
+				data: data,
+			});
+		},
+		error: function() {
+			console.log("Error");
+		}
+	});
+		
 		$('.dropdown-toggle').remove();
 		$('div').removeClass('btn-group');
 		$('.div').removeClass('bootstrap-select');
@@ -690,7 +776,6 @@ cursor: pointer;
 
   $('#bank_name_select').change(function() {
     let bankName = $(this).val()
-
     if(bankName == 'other') {
       $('#bank_name').val('')
       $('#bank_name').prop('type', 'text')
@@ -698,11 +783,12 @@ cursor: pointer;
       $('#bank_name').val(bankName)
       $('#bank_name').prop('type', 'hidden')
     }
+	checkTerm()
   });
 
 	$('#province').change(function(){
 		let id = this.value;
-    $('#province_name').val($(this).find(":checked").text())
+    	$('#province_name').val($(this).find(":checked").text())
 		$('#city').empty().trigger('change');
 		$('#district').empty().trigger('change');
 		$('#kurir').empty().trigger('change');
@@ -720,11 +806,12 @@ cursor: pointer;
 				console.log("Error");
 			}
 		});
+		checkTerm()
 	})
 
 	$('#city').change(function(){
 		let id = this.value;
-    $('#city_name').val($(this).find(":checked").text())
+    	$('#city_name').val($(this).find(":checked").text())
 		$('#district').empty().trigger('change');
 		$('#kurir').empty().trigger('change');
 		$('#district').html('<option disabled>Subdistrict<option>');
@@ -741,12 +828,13 @@ cursor: pointer;
 				console.log("Error");
 			}
 		});
+		checkTerm()
 	})
 
 	$('#district').change(function() {
 		let id = this.value;
 		$('#kurir').empty().trigger('change');
-    $('#district_name').val($(this).find(":checked").text())
+    	$('#district_name').val($(this).find(":checked").text())
 		$('#kurir').html('<option disabled>Kurir<option>');
 		$.ajax({
 			type: 'GET',
@@ -761,16 +849,15 @@ cursor: pointer;
 				console.log("Error");
 			}
 		});
+		checkTerm()
 	});
 
 	$('#kurir').change(function(){
-    $('#kurir_name').val($(this).find(":checked").text())
-		// $('.cost-form').show();
-		// $('#cost').val('Total ongkir: '+Math.ceil(this.value/1000) + ' Points');
-		// $('#starter').val('Join Member: '+280 + ' Points');
-    $('#cost').val(Math.ceil(this.value/1000))
-    $('#cost-starter').html('280')
-    postalFee = Math.ceil(this.value)
+		
+		$('#kurir_name').val($(this).find(":checked").text())
+		$('#cost').val(Math.ceil(this.value/1000))
+		$('#cost-starter').html('280')
+		postalFee = Math.ceil(this.value)
 
 		if(postalFee != 0) {
 			$('#cost-postal').parent().removeClass('hidden')
@@ -781,74 +868,109 @@ cursor: pointer;
 		$('#cost-postal').html(toPrice(postalFee / 1000))
 		$('#grand-total').html(toPrice((priceEbook + postalFee + 280000) / 1000))
 
-    grandTotal = (priceEbook + postalFee + 280000) / 1000;
+		grandTotal = (priceEbook + postalFee + 280000) / 1000;
 
-    if(bitrexPoint < grandTotal) {
-      $('.register').prop('disabled', true)
-    }
-
+		if(bitrexPoint < grandTotal) {
+			$('.register').prop('disabled', true)
+		}
+		checkTerm()
 	});
 
 	$('#shipping').change(function(){
 		$('.shipping-form').show();
-    $('.pickup-form').hide();
+    	$('.pickup-form').hide();
 		$('#province').prop('required',true);
 		$('#city').prop('required',true);
-    $('#address').prop('required', true)
-    checkTerm()
-
+		$('#district').prop('required',true);
+		$('#kurir').prop('required',true);
+    	$('#address').prop('required', true);
+		$('#city').empty().trigger('change');
+		$('#district').empty().trigger('change');
+		$('#kurir').empty().trigger('change');
+		grandTotal = (priceEbook + postalFee + 280000) / 1000;
+		check_cost = bitrexPoint < grandTotal ? false : true;
+		$('#cost-postal').text(postalFee);
+		$('#grand-total').text(grandTotal);
+		checkTerm();
 	});
 
 	$('#pickup').change(function(){
-    $('#address').prop('required', false)
+    	$('#address').prop('required', false);
+		$('#province').prop('required',false);
+		$('#city').prop('required',false);
 		$('.shipping-form').hide();
-    $('.pickup-form').show();
+    	$('.pickup-form').show();
+		grandTotal -= postalFee;
+		postalFee = 0;
+		grandTotal = (priceEbook - postalFee + 280000) / 1000;
+		check_cost = bitrexPoint < grandTotal ? false : true;
+		$('#cost-postal').text(postalFee);
+		$('#grand-total').text(grandTotal);
+		checkTerm();
+	});
+
+	$('#email').keyup(function(){
+		let val_email = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.value);
+		if (val_email) {
+			check_email = true;
+			$('#email_danger').empty();
+		}else{
+			check_email = false;	
+			$('#email_danger').text('Email Invalid');	
+		}
+		$.ajax({
+			type: 'GET',
+			url: '/member/select/email/'+this.value,
+			success: function (data) {
+				if (data.email) {
+					$('#email_danger').text('email already exist');
+					available_email = false;
+				}else{
+					$('#email_danger').empty();
+					available_email = true;
+				}
+					
+			},
+			error: function() {
+				console.log("Error");
+			}
+		});
+		checkTerm();
 	});
 
 	$('#username').keyup(function(){
+		let cek = /^[a-zA-Z0-9_]*$/.test(this.value);
+		this.value = !cek ? $(this).val().match(/[a-zA-Z0-9_]/g).join('') : this.value;
 		var text = this.value;
 		$.ajax({
 			type: 'GET',
 			url: '/member/select/username/'+text,
 			success: function (data) {
 				data.username ? $('#username_danger').text('username you entered already exists') : $('#username_danger').empty();
-				data.username ? $(".register").prop('disabled', true) : $(".register").prop('disabled', false);
-        		checkTerm()
+				check_user = data.username ? false  : true;
 			},
 			error: function() {
 				console.log("Error");
 			}
 		});
+		checkTerm()
 	})
 
 	var my_transform = d3Transform()
    .translate([-750, -50]);
-   var svg = d3.select("#tree")
+   	var svg = d3.select("#tree")
 		.append("svg")
-		.attr("width", 1920).attr("height", 1080)
+		.attr("width", 1035).attr("height", 1080)
 		.call(d3.zoom().on("zoom", function () {
 			svg.attr("transform", d3.event.transform)
 		}))
 		.append("g")
 		.attr("transform", my_transform)
 		.attr("id", "bah")
-	panzoom(document.querySelector('#bah'), {
-		zoomSpeed: 0.030
-	});
-	// var svg = d3.select("#tree")
-	// 	.append("svg");
+		panzoom(document.querySelector('#bah'), {
+			zoomSpeed: 0.030
+		});
 
-	// var child = svg.attr("width", 1920).attr("height", 1080)
-	// 	.append("g")
-	// svg.call(
-	// 		d3.zoom()
-	// 		.scaleExtent([1, 10])
-	// 		.on("zoom", function() {
-	// 			console.log(d3.event)
-	// 			child.attr("transform", "translate(-36 45.5)");
-	// 		})
-	// 	);
-	
 	$.ajax({
 		type: 'GET',
 		url: '{{route("member.select.tree")}}',
@@ -861,6 +983,7 @@ cursor: pointer;
 	});
 
 	var tree_submit = (a, parent, position) => {
+		parent_id = parent;
 		if(a!="available"){
 			$.ajax({
 				type: 'GET',
@@ -881,7 +1004,7 @@ cursor: pointer;
 				success: function (data) {
 					if (data.bitrex_points >= 280) {
 						$('#register').modal('show');
-            openTree()
+            			openTree()
 						$('#parent').attr('value',parent);
 						$('#position').attr('value',position);
 					}else{
@@ -905,7 +1028,9 @@ cursor: pointer;
 				data.pairings ? $('#_pv_pairing_l').text('PV Pairing L: ' + data.pairings.pv_left) : $('#_pv_pairing_l').text('PV Pairing L: 0 ') ;
 				data.pairings ? $('#_pv_pairing_m').text('PV Pairing M: ' + data.pairings.pv_midle) : $('#_pv_pairing_m').text('PV Pairing M: 0 ');
 				data.pairings ? $('#_pv_pairing_r').text('PV Pairing R: ' + data.pairings.pv_right) : $('#_pv_pairing_r').text('PV Pairing R: 0 ');
-				data.pv_group ? $('#_pv_group').text('PV Group: ' + data.pv_group) : $('#_pv_group').text('PV Group: 0 ');
+				data.pv_group ? $('#_pv_group_l').text('PV Rank L: ' + data.pv_group.pv_left) : $('#_pv_group_l').text('PV Rank: 0 ');
+				data.pv_group ? $('#_pv_group_m').text('PV Rank M: ' + data.pv_group.pv_midle) : $('#_pv_group_m').text('PV Rank: 0 ');
+				data.pv_group ? $('#_pv_group_r').text('PV Rank R: ' + data.pv_group.pv_right) : $('#_pv_group_r').text('PV Rank: 0 ');
             }
         });
 
@@ -978,12 +1103,35 @@ cursor: pointer;
 		image.enter().append("a")
 			.append("image")
 			.attr("xlink:href", function(d){return "https://img.icons8.com/bubbles/2x/user.png"})
-			.attr("x", function(d){return d.x-30;})
+			.attr("x", function(d){
+				if($(window).width() <= 480) {  
+					return d.x-80;
+				}else{
+					return d.x-30;
+				}
+			})
 			.attr("y", function(d){return d.y-40;})
 			.classed("img-fluid", true);
 	}
-  function toPrice(value) {
+  	function toPrice(value) {
 		return value.toString().replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1\.")
 	}
+	$('#upline').click(function(){
+		$.ajax({
+			type: 'GET',
+			url: '/member/select/tree-upline/'+parent_id,
+			success: function (data) {
+				parent_id = data.parent_id;
+				$('#bah').empty('g');
+				tree(data);
+				if (!data.parent) {
+					$('#upline').hide();
+				}
+			},
+			error: function() {
+				console.log("Error");
+			}
+		});
+	})
 </script>
 @stop

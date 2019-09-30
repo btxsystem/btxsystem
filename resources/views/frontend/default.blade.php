@@ -119,7 +119,14 @@
       font-size: 20px;
     }
 
-    @media only screen and (max-width: 480px) {
+    @media only screen and (max-width: 400px) and (min-width: 300px) {
+        span#clock{
+            margin-left: -15px;
+            font-size: 8px !important;
+        }
+    }
+
+    @media only screen and (max-width: 500px) and (min-width: 400px) {
     /* For mobile phones: */
         span#clock{
             margin-left: -15px;
@@ -163,6 +170,7 @@
 
 $(document).ready(function(){
     forhide = 0;
+
     $('#old_password').keyup(function (event) {
         var charCode = (event.which) ? event.which : event.keyCode;
         min_length = $('#old_password').val().length;

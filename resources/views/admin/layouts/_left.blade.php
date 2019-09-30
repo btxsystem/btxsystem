@@ -2,48 +2,15 @@
     <li >
 
     <a href="{{ route('dashboard') }}">
-            <i class="livicon" data-name="dashboard" data-size="18" data-c="#418BCA" data-hc="#418BCA"
+            <i class="fa fa-dashboard" style="color: #6CC66C"  data-name="dashboard" data-size="18" data-c="#418BCA" data-hc="#418BCA"
                data-loop="true"></i>
             <span class="title">Dashboard </span>
         </a>
     </li>
 
         <li >
-            <a href="">
-                <i class="livicon" data-name="user" data-size="18" data-c="#6CC66C" data-hc="#6CC66C" data-loop="true"></i>
-                <span class="title">Admin Management</span>
-                <span class="fa arrow"></span>
-            </a>
-
-            <ul class="sub-menu">
-
-                    <li>
-                        <a href="{{ route('admin-management.permissions') }}">
-                            <i class="fa fa-angle-double-right"></i>
-                            Permissions
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="{{ route('admin-management.roles.index') }}">
-                            <i class="fa fa-angle-double-right"></i>
-                            Roles
-                        </a>
-                    </li>
-                
-                <li >
-                    <a href="{{ route('admin-management.users.index') }}">
-                        <i class="fa fa-angle-double-right"></i>
-                        Users Company
-                    </a>
-                </li>
-
-            </ul>
-        </li>
-
-        <li >
             <a href="#">
-                <i class="livicon" data-name="notebook" data-size="18" data-c="#bdecb6" data-hc="#bdecb6" data-loop="true"></i>
+                <i class="fa fa-book" style="color: #6CC66C" data-name="notebook" data-size="18" data-c="#bdecb6" data-hc="#bdecb6" data-loop="true"></i>
                 <span class="title">Ebooks</span>
                 <span class="fa arrow"></span>
             </a>
@@ -66,7 +33,7 @@
 
         <li >
             <a href="#">
-                <i class="livicon" data-name="users" data-size="18" data-c="#1DA1F2" data-hc="#1DA1F2" data-loop="true"></i>
+                <i class="fa fa-user" style="color: #6CC66C" data-name="users" data-size="18" data-c="#1DA1F2" data-hc="#1DA1F2" data-loop="true"></i>
                 <span class="title">Members</span>
                 <span class="fa arrow"></span>
             </a>
@@ -87,14 +54,14 @@
         </li>
     <li>
          <a href="{{ route('customer.index') }}">
-            <i class="livicon" data-name="customer" data-size="18" data-c="#bdecb6" data-hc="#bdecb6"
+            <i class="fa fa-users" style="color: #6CC66C" data-name="customer" data-size="18" data-c="#bdecb6" data-hc="#bdecb6"
                data-loop="true"></i>
                 Customers
         </a>
     </li>
     <li>
         <a href="{{ route('new.tree.index') }}">
-            <i class="livicon" data-name="share" data-size="18" data-c="#F89A14" data-hc="#F89A14"
+            <i class="fa fa-sitemap" style="color: #6CC66C" data-name="share" data-size="18" data-c="#F89A14" data-hc="#F89A14"
                data-loop="true"></i>
             Tree
         </a>
@@ -108,20 +75,43 @@
     </li>
     <li>
             <a href="{{ route('reward-claims.index') }}">
-                <i class="fa fa-check-square" style="color: #6CC66C" data-name="money" data-size="18" data-c="#6CC66C" data-hc="#6CC66C"
+                <i class="fa fa-calendar-check-o" style="color: #6CC66C" data-name="money" data-size="18" data-c="#6CC66C" data-hc="#6CC66C"
                 data-loop="true"></i>
                 Rewards Claim
             </a>
     <li>
-    <li>
+    <!-- <li>
         <a href="{{ route('withdrawal-bonus.index') }}">
             <i class="fa fa-check-square" style="color: #6CC66C" data-name="money" data-size="18" data-c="#6CC66C" data-hc="#6CC66C"
                 data-loop="true"></i>
                 Withdrawal Bonus
         </a>
-    <li>
+    <li> -->
         <a href="#">
-            <i class="livicon" data-name="medal" data-size="18" data-c="#6CC66C" data-hc="#6CC66C"
+            <i class="fa fa-credit-card" style="color: #6CC66C" data-name="medal" data-size="18" data-c="#6CC66C" data-hc="#6CC66C"
+               data-loop="true"></i>
+            <span class="title">Withdrawal</span>
+            <span class="fa arrow"></span>
+        </a>
+        <ul class="sub-menu">
+            <li>
+                <a href="{{ route('withdrawal-bonus.index') }}">
+                    <i class="fa fa-angle-double-right"></i>
+                    Withdrawal Claim
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('withdrawal-bonus.paidindex') }}">
+                    <i class="fa fa-angle-double-right"></i>
+                    Withdrawal Paid
+                </a>
+            </li>
+        </ul>
+    </li>
+
+    <!-- <li>
+        <a href="#">
+            <i class="fa fa-street-view" style="color: #6CC66C" data-name="medal" data-size="18" data-c="#6CC66C" data-hc="#6CC66C"
                data-loop="true"></i>
             <span class="title">Training</span>
             <span class="fa arrow"></span>
@@ -140,10 +130,10 @@
                 </a>
             </li>
         </ul>
-    </li>
+    </li> -->
     <li >
         <a href="#">
-            <i class="livicon" data-name="money" data-size="18" data-c="#6CC66C" data-hc="#6CC66C"
+            <i class="fa fa-money" style="color: #6CC66C" data-name="money" data-size="18" data-c="#6CC66C" data-hc="#6CC66C"
                data-loop="true"></i>
             <span class="title">Bitrex Money</span>
             <span class="fa arrow"></span>
@@ -165,7 +155,7 @@
     </li>
     <li >
         <a href="#">
-            <i class="livicon" data-name="gift" data-size="18" data-c="#6CC66C" data-hc="#6CC66C"
+            <i class="fa fa-gift" style="color: #6CC66C" data-name="gift" data-size="18" data-c="#6CC66C" data-hc="#6CC66C"
                data-loop="true"></i>
             <span class="title">Bonus</span>
             <span class="fa arrow"></span>
@@ -205,7 +195,7 @@
     </li>
     <li >
         <a href="#">
-            <i class="livicon" data-name="map" data-size="18" data-c="#6CC66C" data-hc="#6CC66C"
+            <i class="fa fa-newspaper-o" style="color: #6CC66C"  data-name="map" data-size="18" data-c="#6CC66C" data-hc="#6CC66C"
                data-loop="true"></i>
             <span class="title">Report</span>
             <span class="fa arrow"></span>
@@ -227,7 +217,7 @@
     </li>
     <li >
         <a href="#">
-            <i class="livicon" data-name="grid" data-size="18" data-c="#6CC66C" data-hc="#6CC66C"
+            <i class="fa fa-rss" style="color: #6CC66C"  data-name="grid" data-size="18" data-c="#6CC66C" data-hc="#6CC66C"
                data-loop="true"></i>
             <span class="title">CMS</span>
             <span class="fa arrow"></span>
@@ -265,27 +255,33 @@
             </li>
         </ul>
     </li>
-    <!-- <li>
-        <a href="#">
-            <i class="livicon" data-name="event" data-size="18" data-c="#F89A14" data-hc="#F89A14"
-               data-loop="true"></i>
-            <span class="title">Event & Promotion</span>
+    <li >
+        <a href="">
+            <i class="fa fa-cogs" style="color: #6CC66C"  data-name="user" data-size="18" data-c="#6CC66C" data-hc="#6CC66C" data-loop="true"></i>
+            <span class="title">Admin Management</span>
             <span class="fa arrow"></span>
         </a>
         <ul class="sub-menu">
-            <li>
-                <a href="{{ route('event.index') }}">
+                <li>
+                    <a href="{{ route('admin-management.permissions') }}">
+                        <i class="fa fa-angle-double-right"></i>
+                        Permissions
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('admin-management.roles.index') }}">
+                        <i class="fa fa-angle-double-right"></i>
+                        Roles
+                    </a>
+                </li>
+            
+            <li >
+                <a href="{{ route('admin-management.users.index') }}">
                     <i class="fa fa-angle-double-right"></i>
-                    Event
-                </a>
-            </li>
-            <li>
-                <a href="{{ route('promotion.index') }}">
-                    <i class="fa fa-angle-double-right"></i>
-                    Promotion
+                    Users Company
                 </a>
             </li>
         </ul>
-    </li> -->
+    </li>
     @include('admin/layouts/menu')
 </ul>

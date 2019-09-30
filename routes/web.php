@@ -151,7 +151,9 @@ Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
         Route::get('tree', ['as' => 'tree', 'uses' => 'Member\DashboardController@getTree']);
         Route::get('ebook', ['as' => 'ebook', 'uses' => 'Member\EbookController@getEbook']);
         Route::get('child-tree/{user}', ['as' => 'child-tree', 'uses' => 'Member\DashboardController@getChildTree']);
+        Route::get('tree-upline/{user}', ['as' => 'tree-upline', 'uses' => 'Member\DashboardController@getParentTree']);
         Route::get('username/{user}', ['as' => 'username', 'uses' => 'Member\ProfileMemberController@isSameUsername']);
+        Route::get('email/{user}', ['as' => 'email', 'uses' => 'Member\ProfileMemberController@isSameEmail']);
         Route::get('history-points', ['as' => 'history-points', 'uses' => 'Member\BitrexPointController@getHistoryPoints']);
         Route::get('history-value', ['as' => 'history-cash', 'uses' => 'Member\BitrexCashController@getHistoryCash']);
         Route::get('history-pv', ['as' => 'history-pv', 'uses' => 'Member\PvController@getHistoryPv']);
@@ -161,7 +163,7 @@ Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
         Route::get('my-transaction', ['as' => 'my-transaction', 'uses' => 'Member\TransactionController@myTransaction']);
         Route::get('prospected-member-transaction', ['as' => 'prospected-member-transaction', 'uses' => 'Member\TransactionController@prospectedMemberHistory']);
         Route::get('reward', ['as' => 'reward', 'uses' => 'Member\ProfileMemberController@getRewards']);
-        Route::get('reward-clime', ['as' => 'reward-clime', 'uses' => 'Member\ProfileMemberController@rewardClime']);
+        Route::get('reward-claim', ['as' => 'reward-claim', 'uses' => 'Member\ProfileMemberController@rewardClaim']);
         Route::get('bitrex-points', ['as' => 'bitrex-points', 'uses' => 'Member\BitrexPointController@getBitrexPoints']);
         Route::get('history-pv-pairing', ['as' => 'history-pv-pairing', 'uses' => 'Member\PvController@historyPvPairing']);
         Route::get('bonus', ['as' => 'bonus', 'uses' => 'Member\MyBonusController@bonus']);
@@ -176,7 +178,7 @@ Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
         Route::get('is-have-change-profile', ['as' => 'is-have-change-profile', 'uses' => 'Member\ProfileMemberController@isHaveChange']);
     });
 
-    Route::post('claim-reward', ['as' => 'claim-reward', 'uses' => 'Member\ProfileMemberController@claimReward']);
+    Route::get('claim-reward', ['as' => 'claim-reward', 'uses' => 'Member\ProfileMemberController@claimReward']);
 
     Route::group(['prefix' => 'transaction', 'as'=> 'transaction.'], function () {
         Route::get('my-transaction', ['as' => 'my-transaction', 'uses' => 'Member\TransactionController@index']);
@@ -187,6 +189,9 @@ Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
     Route::group(['prefix' => 'profile', 'as'=> 'profile.'], function () {
         Route::get('', ['as' => 'index', 'uses' => 'Member\ProfileMemberController@index']);
         Route::post('reset-password', ['as' => 'reset-password', 'uses' => 'Member\ProfileMemberController@resetPassword']);
+        Route::get('update',['as' => 'update', 'uses' => 'Member\ProfileMemberController@updateProfile']);
+        Route::get('data',['as' => 'data', 'uses' => 'Member\ProfileMemberController@data']);
+        Route::get('update-profile',['as' => 'update-profile', 'uses' => 'Member\ProfileMemberController@update_profile']);
     });
 
     Route::group(['prefix' => 'add-member', 'as'=> 'add-member.'], function () {
@@ -199,6 +204,10 @@ Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
         Route::get('bitrex-value', ['as' => 'bitrex-cash', 'uses' => 'Member\BitrexCashController@index']);
         Route::get('pv', ['as' => 'pv', 'uses' => 'Member\PvController@index']);
         Route::get('pv-pairing', ['as' => 'pv-pairing', 'uses' => 'Member\PvController@pvHistory']);
+    });
+
+    Route::group(['prefix' => 'team-report', 'as'=> 'team-report.'], function () {
+        Route::get('my-sponsor', ['as' => 'my-sponsor', 'uses' => 'Member\TeamReportController@mySponsor']);
     });
 
 });

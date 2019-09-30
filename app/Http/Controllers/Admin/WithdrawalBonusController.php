@@ -5,10 +5,14 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Employeer;
+use App\HistoryBitrexCash;
 use Carbon\Carbon;
 use DataTables;
 use Alert;
+use App\Exports\EmployeerExport;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\DB;
+
 
 class WithdrawalBonusController extends Controller
 {
@@ -18,13 +22,16 @@ class WithdrawalBonusController extends Controller
             $data = Employeer::where('status', 1)
                                 ->where('bitrex_cash','>', 1000)
                                 ->whereDate('expired_at', '>=', now())
-                                ->select('id as check','id','id_member','username',
-                                        'first_name','last_name','rank_id',
+                                ->select('id as check','id','id_member','username','no_rec','bank_name','npwp_number',
+                                        'first_name','last_name','rank_id','verification',
                                         'created_at','status','bitrex_cash','bitrex_points','expired_at'
                     );
 
                 return Datatables::of($data)
                         ->addIndexColumn()
+                        ->addColumn('fullname', function($row){
+                            return $row->first_name .' '.$row->last_name;
+                        })
                         ->addColumn('cash', function($row){
                             return currency($row->bitrex_cash);
                         })
@@ -40,10 +47,10 @@ class WithdrawalBonusController extends Controller
                         ->addColumn('bonusReward', function($row){
                             return currency($row->bonus_reward);
                         })
-                        ->addColumn('check', '<input type="checkbox" name="member_checkbox[]" class="member_checkbox" value="{{$id}}" />')
-                        ->addColumn('action', function($row) {
-                            return $this->htmlAction($row);
+                        ->addColumn('verificationStatus', function($row){
+                            return $this->getVerificationStatus($row);
                         })
+                        ->addColumn('check', '<input type="checkbox" name="member_checkbox[]" class="member_checkbox" value="{{$id}}" />')
                         ->rawColumns(['action','check'])
                         ->make(true);
             }
@@ -51,11 +58,38 @@ class WithdrawalBonusController extends Controller
         return view('admin.withdrawal-bonus.index');
     }
 
-    public function htmlAction($row)
+    public function paidIndex(Request $request)
     {
-            return '<a data-id="'.$row->id.'"  class="btn btn-success fa fa-eye show-testimonial" title="Show Payment"></a>
-                    <a data-id="'.$row->id.' "class="btn btn-default fa fa-check approve-payment" style="background-color: #b85ebd; color: #ffffff;" title="Approve Payment"></a>';
+        if (request()->ajax()) {
 
+            if($request->from_date)
+            {
+                $data = HistoryBitrexCash::where('type', 5)->where('info', 0)
+                ->whereBetween('created_at', [$request->from_date, $request->to_date])
+                ->with(['member'  => function($query) {
+                        $query->select(['id','id_member','username']);
+                      }
+                  ])
+                ->select('id','id_member','nominal','description','info','type','created_at','info','type');
+            }
+            else {
+                $data = HistoryBitrexCash::where('type', 5)->where('info', 0)
+                ->with(['member'  => function($query) {
+                    $query->select(['id','id_member','username']);
+                  }
+              ])
+            ->select('id','id_member','nominal','description','info','type','created_at','info','type');
+            }
+
+            return Datatables::of($data)
+                    ->addIndexColumn()
+                    ->addColumn('amount', function($row){
+                        return currency($row->nominal);
+                    })
+                    ->make(true);
+        }
+
+        return view('admin.withdrawal-bonus.paid');
     }
 
     function massPaid(Request $request)
@@ -91,6 +125,24 @@ class WithdrawalBonusController extends Controller
                 Alert::error('Gagal Melakukan Update Data', 'Gagal')->persistent("Close");
         }
 
+    }
+
+    public function export()
+    {
+        return Excel::download(new EmployeerExport, now() .' ' .'withdrawal.xlsx');
+    }
+
+    public function getVerificationStatus($row)
+    {
+        switch($row->verification) {
+            case 0;
+            return '3.0%';
+            break;
+
+            case 1;
+            return '2,5%';
+            break;
+        }
     }
 
 }

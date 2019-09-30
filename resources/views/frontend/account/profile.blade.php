@@ -6,35 +6,55 @@
 
 @section('content')
 <!-- Top Bar -->
-<!-- <div class="modal fade" id="edit-profile" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="edit-profile" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
         <div class="modal-header">
-            <h5 class="modal-title" id="topup">Top Up Bitrex Points</h5>
+            <h5 class="modal-title" id="topup">Edit Profile</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
             </button>
         </div>
-        <form action="/action_page.php">
+        <form action="/">
             <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div class="form-line">
-                    <input class="form-control" id="nominal" type="number" min="5">
-                    <label class="form-label">Nominal</label>
+                    <label>NPWP</label>
+                    <input class="form-control" id="npwp" type="number" min="16">
                 </div>
-            </div>
-            <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <br>
                 <div class="form-line">
-                    <input class="form-control" id="points" type="text" readonly>
+                    <label>Phone Number</label>
+                    <input class="form-control" id="phone_number" type="number" min="10">
                 </div>
+                <br>
+                <div class="form-line">
+                    <label>Bank Account Number</label>
+                    <input class="form-control" id="no_rec" type="number" min="7">
+                </div>
+                <br>
+                <div class="form-line">
+                    <label>Bank Account Name</label>
+                    <input class="form-control" id="bank_name" type="text" min="3">
+                </div>
+                <label>&nbsp;</label>
+                <select class="form-control" id="bank_name_select">
+                    <option disabled selected>Choice Bank Name</option>
+                    <option value="BCA">BCA</option>
+                    <option value="BRI">BRI</option>
+                    <option value="BNI">BNI</option>
+                    <option value="Mandiri">Mandiri</option>
+                    <option value="CIMB NIAGA">CIMB NIAGA</option>
+                    <option value="other">Other Bank</option>
+                </select>
             </div>
         </form>
         <div class="modal-footer">
             <a href="#" class="btn btn-secondary" data-dismiss="modal">Close</a>
-            <a href="#" class="btn btn-primary">Topup</a>
+            <a href="#" id="profile_update" class="btn btn-primary">Edit Profile</a>
         </div>
         </div>
     </div>
-</div> -->
+</div>
 <!-- Update Profile-->
 <!--<div class="modal fade" id="edit-profile" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -66,7 +86,7 @@
                     <div class="header">
                         <h2><strong>My Profile</strong></h2>
                         <div class="header-dropdown">
-                            <li class="dropdown"> <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="modal" data-target="#edit-profile" role="button" aria-haspopup="true" aria-expanded="false" title="Change photo profile"> <i class="zmdi zmdi-edit"></i> </a></li>
+                            <li class="dropdown"> <a href="javascript:void(0);" class="dropdown-toggle" id="edit_profile" data-toggle="modal" role="button" aria-haspopup="true" aria-expanded="false" title="Change profile"> <i class="zmdi zmdi-edit"></i> </a></li>
                         </div>
                     </div>
                     <div class="body">
@@ -100,13 +120,15 @@
                         <hr>
                         <p class="text-default">NPWP : {{$profile['npwp_number']}}</p>
                         <hr>
-                        <p class="text-default">Rek Number : {{$profile['no_rec']}}</p>
-                        <hr>
                         <p class="text-default">Marital Status : {{$profile['is_married']}}</p>
                         <hr>
                         <p class="text-default">Gender : {{$profile['gender']}}</p>
                         <hr>
                         <p class="text-default">Bank Account Number : {{$profile['no_rec']}}</p>
+                        <hr>
+                        <p class="text-default">Bank Account Name : {{$profile['bank_account_name']}}</p>
+                        <hr>
+                        <p class="text-default">Bank Name : {{$profile['bank_name']}}</p>
                         <hr>
                     </div>
                 </div>                
@@ -175,9 +197,66 @@
                         uploadFile.closest(".imgUp").find('.imagePreview').css("background-image", "url("+this.result+")");
                     }
                 }
-            
-            });   
+            });  
+            $('button').hide(); 
         });
+
+        $('#profile_update').click(function(){
+            $.ajax({
+                url: '/member/profile/update-profile',
+                data: {
+                    '_token': $('input[name=_token]').val(),
+                    'npwp': $('#npwp').val(),
+                    'phone_number': $('#phone_number').val(),
+                    'no_rec': $('#no_rec').val(),
+                    'bank_account_name': $('#bank_name').val(),
+                    'bank_name': $('#bank_name_select').val()
+                },
+                success: function (data) {
+                    if (data.status) {
+                        alert('Profile update successful');
+                        location.reload();
+                    }else{
+                        alert('Something wrong');
+                        location.reload();
+                    }
+                },
+                error: function() {
+                    console.log("error");
+                }
+            });
+        })
+
+        $('#edit_profile').click(function(){
+            $.ajax({
+                type: 'GET',
+                url: '/member/profile/update',
+                success: function (data) {
+                    if(data.is_update == 1){
+                        $('#edit_profile').attr('data-target','#edit-profile');
+                        $.ajax({
+                            type: 'GET',
+                            url: '/member/profile/data',
+                            success: function (data) {
+                                $('#npwp').val(data.npwp_number);
+                                $('#phone_number').val(data.phone_number);
+                                $('#no_rec').val(data.no_rec);
+                                $('#bank_name').val(data.bank_account_name);
+                                $('#bank_name_select').val(data.bank_name);
+                            },
+                            error: function() {
+                                alert("sorry you can not update the profile, try contacting the admin !");
+                            }
+                        });
+                    }else{
+                        alert("sorry you can not update the profile, try contacting the admin !");
+                    }
+                },
+                error: function() {
+                    console.log("Error");
+                }
+            });
+        })
     </script>
 @stop
 

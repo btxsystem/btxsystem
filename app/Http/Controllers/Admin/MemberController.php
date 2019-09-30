@@ -136,6 +136,8 @@ class MemberController extends Controller
             $data->gender = $request->gender;
             $data->phone_number = $request->phone_number;
             $data->no_rec = $request->no_rec;
+            $data->bank_account_name = $request->bank_account_name;
+            $data->bank_name = $request->bank_name;
             $data->position = $request->position;
             $data->parent_id = $request->parent_id;
             $data->sponsor_id = $request->sponsor_id;
@@ -216,6 +218,8 @@ class MemberController extends Controller
             $data->gender = $request->gender;
             $data->phone_number = $request->phone_number;
             $data->no_rec = $request->no_rec;
+            $data->bank_account_name = $request->bank_account_name;
+            $data->bank_name = $request->bank_name;
 
 
             if ($request->hasFile('src')) {
@@ -290,6 +294,7 @@ class MemberController extends Controller
             $topup->points = $point;
             $topup->description = $request->description;
             $topup->info = 1;
+            $topup->status = 1;
             $topup->save();
     
  
@@ -338,7 +343,7 @@ class MemberController extends Controller
     {
         $data = Employeer::findOrFail($id);
      
-        return Datatables::of($data->point_histories)
+        return Datatables::of($data->point_histories()->where('status', 1)->get())
             ->addIndexColumn()
             ->addColumn('nominal', function ($data) {
                 return currency($data->nominal);

@@ -11,6 +11,7 @@ use App\Models\GotReward;
 use Session;
 
 use App\Imports\EmployeerImport;
+use App\Imports\AccountName;
 use App\Imports\RewardsImport;
 use App\Imports\RewardImport;
 use App\Imports\TreeImport;
@@ -94,15 +95,11 @@ class ImportExcelController extends Controller
     public function curse(Request $request){
         $datas = Excel::toArray(new RewardsImport, request()->file('file'))[0];
         foreach ($datas as $key => $data) {
-           $user = Employeer::where('id_member',$data['mamber_id'])->select('id')->first();
-           $dt['member_id'] = $user['id'];
-           $dt['reward_id'] = 2;
-           $dt['created_at'] = now();
-           $dt['updated_at'] = now();
-           $dt['status'] = 2;
-           GotReward::insert($dt);
+           $member = Employeer::where('id_member',$data['mamber_id'])->select('id')->first(); 
+           $reward = DB::table('got_rewards')->where('member_id',$member['id'])->where('reward_id',2)->select('id')->first();
+           DB::update('update got_rewards set status = 2 where id = ?', $reward['id']);
         }
-        $history_data = Excel::toArray(new RewardImport, request()->file('file'))[0];
+        /*$history_data = Excel::toArray(new RewardImport, request()->file('file'))[0];
         foreach ($history_data as $key => $data2) {
             $user = Employeer::where('id_member',$data2['mamber_id'])->select('id')->first();
             $dt2['id_member'] = $user['id'];
@@ -114,6 +111,7 @@ class ImportExcelController extends Controller
             $dt2['type'] = 3;
             HistoryBitrexCash::insert($dt2);
          }
+        */
         return redirect()->back();
     }
     public function oldBonus(Request $request){
@@ -128,6 +126,17 @@ class ImportExcelController extends Controller
             $dt2['info'] = 1;
             $dt2['type'] = 4;
             HistoryBitrexCash::insert($dt2);
+         }
+        return redirect()->back();
+    }
+
+    public function account_name(Request $request){
+        $datas_ = Excel::toArray(new AccountName, request()->file('file'))[0];
+        foreach ($datas_ as $key => $data3) {
+            $user1 = Employeer::where('id_member',$data3['id_job_seeker'])->select('id')->first();
+            $dt3['bank_name'] = $data3['bank_name'];
+            $dt3['bank_account_name'] = $data3['account_name'];
+            Employeer::find($user1['id'])->update($dt3);
          }
         return redirect()->back();
     }
