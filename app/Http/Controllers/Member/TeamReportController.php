@@ -9,6 +9,7 @@ use App\HistoryPv;
 use DataTables;
 use DB;
 use Carbon\Carbon;
+use App\Employeer;
 
 class TeamReportController extends Controller
 {
@@ -27,5 +28,26 @@ class TeamReportController extends Controller
                     ->make(true);
         }
         return view('frontend.team-report.my-sponsor.index')->with('profile',$data);
+    }
+
+    public function teamAnalizer(){
+        $datas = Employeer::parent(Auth::id())->renderAsArray();
+        $position = (object) [
+            'left' => [],
+            'midle' => [],
+            'right' => []
+        ];
+        foreach ($datas as $key => $data) {
+            if ($data['position'] == 0) {
+                $position->left = $data;
+            }elseif($data['position'] == 1){
+                $position->midle = $data;
+            }elseif ($data['position'] == 2) {
+                $position->right = $data;
+            }
+        }
+        // dd($position);
+        return $position->left;
+
     }
 }
