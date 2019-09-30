@@ -94,7 +94,8 @@ class Employeer extends Authenticatable
         // Wheredate untuk memisahkan data baru setelah migrasi data 2019-09-18 00:00:00'
         // Wheredate untuk memisahkan data baru setelah withdraw data 2019-09-25 00:00:00'
        return \DB::table('history_bitrex_cash')
-                 ->where('created_at', '>', '2019-09-25 02:00:00')
+                ->where('created_at', '>', $this->getWithdrawalTime()->last_withdrawal)
+                ->where('created_at', '<', $this->getWithdrawalTime()->next_withdrawal)
                 ->where('id_member', $this->id)
                 ->where('type', 0)
                 ->where('info', 1)
@@ -115,7 +116,8 @@ class Employeer extends Authenticatable
         // Wheredate untuk memisahkan data baru setelah withdraw data 2019-09-25 00:00:00'
 
        return \DB::table('history_bitrex_cash')
-                ->where('created_at', '>', '2019-09-25 02:00:00')
+                ->where('created_at', '>', $this->getWithdrawalTime()->last_withdrawal)
+                ->where('created_at', '<', $this->getWithdrawalTime()->next_withdrawal)
                 ->where('id_member', $this->id)
                 ->where('type', 1)
                 ->where('info', 1)
@@ -135,7 +137,8 @@ class Employeer extends Authenticatable
         // Wheredate untuk memisahkan data baru setelah migrasi data 2019-09-18 00:00:00'
         // Wheredate untuk memisahkan data baru setelah withdraw data 2019-09-25 00:00:00'
        return \DB::table('history_bitrex_cash')
-                ->where('created_at', '>', '2019-09-25 02:00:00')
+                ->where('created_at', '>', $this->getWithdrawalTime()->last_withdrawal)
+                ->where('created_at', '<', $this->getWithdrawalTime()->next_withdrawal)
                 ->where('id_member', $this->id)
                 ->where('type', 2)
                 ->where('info', 1)
@@ -155,7 +158,8 @@ class Employeer extends Authenticatable
         // Wheredate untuk memisahkan data baru setelah migrasi data 2019-09-18 00:00:00'
         // Wheredate untuk memisahkan data baru setelah withdraw data 2019-09-25 02:00:00'
        return \DB::table('history_bitrex_cash')
-                ->where('created_at', '>', '2019-09-25 02:00:00')
+                ->where('created_at', '>', $this->getWithdrawalTime()->last_withdrawal)
+                ->where('created_at', '<', $this->getWithdrawalTime()->next_withdrawal)
                 ->where('id_member', $this->id)
                 ->where('type', 3)
                 ->where('info', 1)
@@ -176,6 +180,12 @@ class Employeer extends Authenticatable
                 ->where('id_member', $this->id)
                 ->where('info', 1)
                 ->sum('nominal');
+    }
+
+    public function getWithdrawalTime()
+    {
+        return \DB::table('withdrawal_time')
+                ->where('id', 1)->first();
     }
 
     public function scopeFilter($query, $request)

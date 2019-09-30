@@ -116,6 +116,11 @@ class WithdrawalBonusController extends Controller
                     'bitrex_cash' => 0
                 ]);
             }
+
+            DB::table('withdrawal_time')->where('id', 1)
+                ->update([
+                    'last_withdrawal' => now()
+                ]);
             DB::commit();
             Alert::success('Sukses Update Data', 'Sukses')->persistent("Close");
         }catch(\Exception $e){
