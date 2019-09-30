@@ -2,18 +2,16 @@
 
 return [
     'parent'=> 'parent_id',
-    'username' => 'username' ,
+    'pv_down' => 'pv_down',
+    'username' => 'username',
+    'phone_number' => 'phone_number',
     'primary_key' => 'id',
+    'position' => 'position',
     'childNode' => 'children',
     'body' => [
-        'id',
         'username',
-        'position',
-        'sponsor_id',
-        'pv',
-        'pv_left' => 0,
-        'pv_midle' => 0,
-        'pv_right' => 0,
-        'rank_id',
+        'phone_number',
+        'position' => 'position',
+        'pv_down' => 'pv_down',
     ]
 ];

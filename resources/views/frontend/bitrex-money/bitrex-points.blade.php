@@ -43,7 +43,7 @@
                 </div>
                 <div class="modal-footer">
                     <a href="#" class="btn btn-secondary" data-dismiss="modal">Close</a>
-                    <button type="submit" disabled=true class="btn btn-primary">Topup</a>
+                    <button type="submit" id="topup-points" disabled=true class="btn btn-primary">Topup</a>
                 </div>
             </form>
         </div>
@@ -89,6 +89,42 @@
     </div>
 </div>
 
+<div class="modal fade" id="convert" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="topup">Convert Bitrex Points</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 shipping-form">
+                    <form action="{{Route('member.convert-bitrex-points')}}" method="post">
+                        @csrf
+                        <input type="hidden" name="bitrex-val" id="bitrex-val">
+                        <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="form-line">
+                                <input class="form-control" name="points-convert" id="points-convert" type="number" min="1">
+                                <label class="form-label">Points</label>
+                            </div>
+                        </div>
+                        <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="form-line">
+                                <input class="form-control" name="nominal-convert" id="nominal-convert" type="text" readonly>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <a href="#" class="btn btn-secondary" data-dismiss="modal">Close</a>
+                            <button type="submit" id="convert-bp" disabled=true class="btn btn-primary" style="cursor:pointer">Convert</a>
+                        </div>  
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <section class="content ecommerce-page">
     <div class="block-header">
         <div class="row">
@@ -105,6 +141,7 @@
                 <div class="body">
                     <a href="#" class="btn btn-primary btn-md" data-toggle="modal" data-target="#topup">Topup</a>
                     <a href="#" class="btn btn-primary btn-md" data-toggle="modal" data-target="#cekongkir">Cek Ongkir</a>
+                    <a href="#" class="btn btn-primary btn-md" data-toggle="modal" data-target="#convert">Convert to BV</a>
                     <h5 class="d-flex flex-row-reverse">Bitrex Points: {{number_format($profile->bitrex_points)}}</h5>
                 </div>
             </div>
@@ -156,7 +193,7 @@
         width: '100%'
       });
       $("#district").select2({
-        placeholder: "District",
+        placeholder: "Kecamatan",
         width: '100%'
       });
       $("#kurir").select2({
@@ -192,13 +229,13 @@
         $('#city_name').val($(this).find(":checked").text())
     		$('#district').empty().trigger('change');
     		$('#kurir').empty().trigger('change');
-    		$('#district').html('<option disabled>Subdistrict<option>');
+    		$('#district').html('<option disabled>Kecamatan<option>');
     		$.ajax({
     			type: 'GET',
     			url: '/member/shipping/subdistrict/'+id,
     			success: function (data) {
     				$('#district').select2({
-    					placeholder: 'Subdistrict',
+    					placeholder: 'Kecamatan',
     					data: data,
               width: '100%'
     				});
@@ -212,7 +249,7 @@
     	$('#district').change(function() {
     		let id = this.value;
     		$('#kurir').empty().trigger('change');
-        $('#district_name').val($(this).find(":checked").text())
+            $('#district_name').val($(this).find(":checked").text())
     		$('#kurir').html('<option disabled>Kurir<option>');
     		$.ajax({
     			type: 'GET',
@@ -249,6 +286,8 @@
                     $('#bill').html('<div class="body" style="color:red;"><center><strong>History is currently empty</strong></center></div>');
                 }else{
                     $.each(data.points.data, function(i, item) {
+                        console.log(item);
+                        
                         date = moment(item.created_at).format('MMMM Do Y');
                         type = item.info ? 'Income' : 'Spending';
                         color = item.info ? 'green' : 'red';
@@ -299,9 +338,23 @@
         var points = $('#nominal').val() / 1000;
         $('#points').val(points);
         if ($('#nominal').val() % 1000 == 0 && $('#nominal').val() >= 10000) {
-            $("button").prop('disabled',false);
+            $("#topup-points").prop('disabled',false);
         }else{
-            $("button").prop('disabled',true);
+            $("#topup-points").prop('disabled',true);
+        }
+    })
+
+    $('#points-convert').keyup(function(){
+        $('#convert-bp').prop('disabled', false);
+        let bp = {!!$profile->bitrex_points!!};
+        var points = 'IDR ' + addCommas(this.value * 1000);
+        $('#nominal-convert').val(points);
+        $('#bitrex-val').val(this.value*1000);
+        var check = /^[0-9]+$/.test(this.value);
+        if (bp >= this.value && check) {
+            $('#convert-bp').prop('disabled', false);
+        }else{
+            $('#convert-bp').prop('disabled', true);
         }
     })
 

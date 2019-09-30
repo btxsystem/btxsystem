@@ -58,19 +58,19 @@
 					</div>
 					<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div class="form-line">
-							<input class="form-control" id="nik" name="nik" id="number_phone" type="number" min="10" required>
+							<input class="form-control" id="nik" name="nik" id="number_phone" type="number" min="1" required>
 							<label class="form-label">NIK / Passport</label>
 						</div>
 					</div>
           			<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div class="form-line">
-							<input class="form-control" id="npwp_number" name="npwp_number" type="number" min="16" required>
+							<input class="form-control" id="npwp_number" name="npwp_number" type="number" min="1" required>
 							<label class="form-label">NPWP</label>
 						</div>
 					</div>
           			<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div class="form-line">
-							<input class="form-control" id="bank_account_name" name="bank_account_name" type="text" min="10" required>
+							<input class="form-control" id="bank_account_name" name="bank_account_name" type="text" min="1" required>
 							<label class="form-label">Account Name</label>
 						</div>
 					</div>
@@ -179,10 +179,6 @@
           			</div>
 					<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div class="form-group address-form">
-						<!-- <h4 class="hidden">Starter Pack : <span id="cost-starter">0</span></h4>
-						<h4 class="hidden">Total Ebook : <span id="cost-ebook">0</span></h4>
-						<h4 class="hidden">Total Shipping : <span id="cost-postal">0</span></h4>
-						<h4>Grand Total : <span id="grand-total"></span></h4> -->
 						<div class="table-responsive">
                 <table class="table table-borderless">
                   <tr>
@@ -225,7 +221,7 @@
 					</div>
 					<div class="modal-footer">
 						<a class="btn btn-secondary" data-dismiss="modal">Close</a>
-						<input type="button" onclick="submitData()" class="btn btn-primary register" value="Register">
+						<input type="button" onclick="submitData()" class="btn btn-primary register" value="Register" style="cursor:pointer">
 					</div>
 				</form>
 			</div>
@@ -260,7 +256,7 @@
 				<small class="text-muted">Bitrexgo</small>
 				</h2>
         <div class="pull-right mt-2">
-          <button onclick="openAutoPlacement()" class="btn btn-primary btn-md">Add new Member with Auto-placement</button>
+          <button onclick="openAutoPlacement()" class="btn btn-primary btn-md" style="cursor:pointer">Add new Member with Auto-placement</button>
         </div>
 			</div>
       <div class="clearfix">
@@ -530,22 +526,16 @@ rect {
 	var adult = 0;
 	var check = 1;
 	var check_email = false;
+	var check_user = false;
+	var available_email = false;
 	var parent_id = undefined;
 	var check_cost = true;
 
-	$('male').change(function(){
+	$('#male').change(function(){
 		checkTerm()
 	})
 
-	$('female').change(function(){
-		checkTerm()
-	})
-
-	$('pickup').change(function(){
-		checkTerm()
-	})
-
-	$('shipping').change(function(){
+	$('#female').change(function(){
 		checkTerm()
 	})
 
@@ -602,7 +592,11 @@ rect {
 			&& $('#nik').val() != ''
 			&& $('#birthdate').val() != ''
 			&& adult >= 18
-			&& (check > 0 && check_email && check_cost)
+			&& check > 0 
+			&& check_email 
+			&& check_cost 
+			&& check_user 
+			&& available_email
 		) {
 			$('.register').prop('disabled', false)
 		} else {
@@ -644,15 +638,6 @@ rect {
 		$('#cost-starter').html('280')
 		
 		var element = document.querySelector('#bah');
-		$('input').change(function() {
-			if(
-				checkTerm()
-			) {
-				$('.register').prop('disabled', false)
-			} else {
-				$('.register').prop('disabled', true)
-			}
-		})
 
     	checkTerm()
 
@@ -752,7 +737,7 @@ rect {
 			placeholder: 'City',
 		});
 		$('#district').select2({
-			placeholder: 'Subistrict',
+			placeholder: 'Kecamatan',
 		});
 		$('#kurir').select2({
 			placeholder: 'Kurir',
@@ -829,13 +814,13 @@ rect {
     	$('#city_name').val($(this).find(":checked").text())
 		$('#district').empty().trigger('change');
 		$('#kurir').empty().trigger('change');
-		$('#district').html('<option disabled>Subdistrict<option>');
+		$('#district').html('<option disabled>Kecamatan<option>');
 		$.ajax({
 			type: 'GET',
 			url: '/member/shipping/subdistrict/'+id,
 			success: function (data) {
 				$('#district').select2({
-					placeholder: 'Subdistrict',
+					placeholder: 'Kecamatan',
 					data: data,
 				});
 			},
@@ -870,9 +855,6 @@ rect {
 	$('#kurir').change(function(){
 		
 		$('#kurir_name').val($(this).find(":checked").text())
-			// $('.cost-form').show();
-			// $('#cost').val('Total ongkir: '+Math.ceil(this.value/1000) + ' Points');
-			// $('#starter').val('Join Member: '+280 + ' Points');
 		$('#cost').val(Math.ceil(this.value/1000))
 		$('#cost-starter').html('280')
 		postalFee = Math.ceil(this.value)
@@ -899,15 +881,32 @@ rect {
     	$('.pickup-form').hide();
 		$('#province').prop('required',true);
 		$('#city').prop('required',true);
-    	$('#address').prop('required', true)
-    	checkTerm()
-
+		$('#district').prop('required',true);
+		$('#kurir').prop('required',true);
+    	$('#address').prop('required', true);
+		$('#city').empty().trigger('change');
+		$('#district').empty().trigger('change');
+		$('#kurir').empty().trigger('change');
+		grandTotal = (priceEbook + postalFee + 280000) / 1000;
+		check_cost = bitrexPoint < grandTotal ? false : true;
+		$('#cost-postal').text(postalFee);
+		$('#grand-total').text(grandTotal);
+		checkTerm();
 	});
 
 	$('#pickup').change(function(){
-    $('#address').prop('required', false)
+    	$('#address').prop('required', false);
+		$('#province').prop('required',false);
+		$('#city').prop('required',false);
 		$('.shipping-form').hide();
-    $('.pickup-form').show();
+    	$('.pickup-form').show();
+		grandTotal -= postalFee;
+		postalFee = 0;
+		grandTotal = (priceEbook - postalFee + 280000) / 1000;
+		check_cost = bitrexPoint < grandTotal ? false : true;
+		$('#cost-postal').text(postalFee);
+		$('#grand-total').text(grandTotal);
+		checkTerm();
 	});
 
 	$('#email').keyup(function(){
@@ -919,6 +918,23 @@ rect {
 			check_email = false;	
 			$('#email_danger').text('Email Invalid');	
 		}
+		$.ajax({
+			type: 'GET',
+			url: '/member/select/email/'+this.value,
+			success: function (data) {
+				if (data.email) {
+					$('#email_danger').text('email already exist');
+					available_email = false;
+				}else{
+					$('#email_danger').empty();
+					available_email = true;
+				}
+					
+			},
+			error: function() {
+				console.log("Error");
+			}
+		});
 		checkTerm();
 	});
 
@@ -931,6 +947,7 @@ rect {
 			url: '/member/select/username/'+text,
 			success: function (data) {
 				data.username ? $('#username_danger').text('username you entered already exists') : $('#username_danger').empty();
+				check_user = data.username ? false  : true;
 			},
 			error: function() {
 				console.log("Error");
