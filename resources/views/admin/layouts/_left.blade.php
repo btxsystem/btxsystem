@@ -106,6 +106,12 @@
                     Withdrawal Paid
                 </a>
             </li>
+            <li>
+                <a href="{{ route('withdrawal-time.index') }}">
+                    <i class="fa fa-angle-double-right"></i>
+                    Withdrawal Time
+                </a>
+            </li>
         </ul>
     </li>
 

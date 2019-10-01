@@ -19,10 +19,23 @@ class MyBonusController extends Controller
 
     public function bonus(){
         $bonus = [];
-        $bonus['sponsor'] = DB::table('history_bitrex_cash')->where('id_member',Auth::id())->where('description', 'like', '%sponsor%')->where('info',1)->select(DB::raw('SUM(nominal) as nominal'))->first();
-        $bonus['pairing'] = DB::table('history_bitrex_cash')->where('id_member',Auth::id())->where('description', 'like', '%pairing%')->where('info',1)->select(DB::raw('SUM(nominal) as nominal'))->first();
-        $bonus['profit'] = DB::table('history_bitrex_cash')->where('id_member',Auth::id())->where('description', 'like', '%profit%')->where('info',1)->select(DB::raw('SUM(nominal) as nominal'))->first();
+        $bonus['total'] = DB::table('history_bitrex_cash')->where('id_member',Auth::id())->where('info',1)->select(DB::raw('SUM(nominal) as nominal'))->first();
+        $bonus['sponsor'] = DB::table('history_bitrex_cash')->where('id_member',Auth::id())->where('type', 0)->where('info',1)->select(DB::raw('SUM(nominal) as nominal'))->first();
+        $bonus['pairing'] = DB::table('history_bitrex_cash')->where('id_member',Auth::id())->where('type', 1)->where('info',1)->select(DB::raw('SUM(nominal) as nominal'))->first();
+        $bonus['profit'] = DB::table('history_bitrex_cash')->where('id_member',Auth::id())->where('type', 2)->where('info',1)->select(DB::raw('SUM(nominal) as nominal'))->first();
+        $bonus['rewards'] = DB::table('history_bitrex_cash')->where('id_member',Auth::id())->where('type', 3)->where('info',1)->select(DB::raw('SUM(nominal) as nominal'))->first();
+        $bonus['event'] = DB::table('history_bitrex_cash')->where('id_member',Auth::id())->where('type', 4)->where('info',1)->select(DB::raw('SUM(nominal) as nominal'))->first();
         return response()->json($bonus, 200);
+    }
+
+    public function rewards(){
+        $user = Auth::user();
+        return view('frontend.bonus.rewards.index')->with('profile',$user);
+    }
+
+    public function event(){
+        $user = Auth::user();
+        return view('frontend.bonus.event.index')->with('profile',$user);
     }
 
     public function sponsor(){
@@ -31,7 +44,20 @@ class MyBonusController extends Controller
     }
 
     public function bonusSponsor(){
-        $data = DB::table('history_bitrex_cash')->where('id_member',Auth::id())->where('description', 'like', '%sponsor%')->select('nominal','created_at','description')->paginate(4);
+        $data = DB::table('history_bitrex_cash')->where('id_member',Auth::id())->where('type', 0)->select('nominal','created_at','description')->orderBy('id', 'DESC')->paginate(4);
+        return response()->json($data, 200);
+    }
+
+    public function bonusRewards(){
+        $data = DB::table('got_rewards')->join('gift_rewards','got_rewards.reward_id','=','gift_rewards.id')
+                                        ->where('got_rewards.member_id',Auth::id())->where('status', 2)
+                                        ->select('gift_rewards.nominal as nominal','got_rewards.created_at as created_at','gift_rewards.description as description')
+                                        ->orderBy('got_rewards.id', 'DESC')->paginate(4);
+        return response()->json($data, 200);
+    }
+
+    public function bonusEvent(){
+        $data = DB::table('history_bitrex_cash')->where('id_member',Auth::id())->where('type', 4)->select('nominal','created_at','description')->orderBy('id', 'DESC')->paginate(4);
         return response()->json($data, 200);
     }
 
@@ -41,7 +67,7 @@ class MyBonusController extends Controller
     }
 
     public function bonusProfit(){
-        $data = DB::table('history_bitrex_cash')->where('id_member',Auth::id())->where('description', 'like', '%profit%')->select('nominal','created_at','description')->paginate(4);
+        $data = DB::table('history_bitrex_cash')->where('id_member',Auth::id())->where('type', 2)->select('nominal','created_at','description')->orderBy('id', 'DESC')->paginate(4);
         return response()->json($data, 200);
     }
 
@@ -51,7 +77,7 @@ class MyBonusController extends Controller
     }
 
     public function bonusPairing(){
-        $data = DB::table('history_bitrex_cash')->where('id_member',Auth::id())->where('description', 'like', '%pairing%')->select('nominal','created_at','description')->paginate(4);
+        $data = DB::table('history_bitrex_cash')->where('id_member',Auth::id())->where('type', 1)->select('nominal','created_at','description')->orderBy('id', 'DESC')->paginate(4);
         return response()->json($data, 200);
     }
 

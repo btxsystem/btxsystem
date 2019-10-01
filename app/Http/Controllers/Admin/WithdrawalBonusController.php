@@ -20,12 +20,16 @@ class WithdrawalBonusController extends Controller
     {
         if (request()->ajax()) {
             $data = Employeer::where('status', 1)
-                                ->where('bitrex_cash','>', 1000)
+                                // ->where('bitrex_cash','>', 1000)
                                 ->whereDate('expired_at', '>=', now())
-                                ->select('id as check','id','id_member','username','no_rec','bank_name','npwp_number',
+                                ->select('id as check','id','id_member','username','no_rec','bank_name','bank_account_name','npwp_number',
                                         'first_name','last_name','rank_id','verification',
                                         'created_at','status','bitrex_cash','bitrex_points','expired_at'
-                    );
+                    )->get()->filter(function($data) {
+                        return $data->total_bonus > 10000;
+                    });
+                    
+            // return $data;
 
                 return Datatables::of($data)
                         ->addIndexColumn()
@@ -46,6 +50,9 @@ class WithdrawalBonusController extends Controller
                         })
                         ->addColumn('bonusReward', function($row){
                             return currency($row->bonus_reward);
+                        })
+                        ->addColumn('bonusTotal', function($row){
+                            return currency($row->total_bonus);
                         })
                         ->addColumn('verificationStatus', function($row){
                             return $this->getVerificationStatus($row);
@@ -102,6 +109,7 @@ class WithdrawalBonusController extends Controller
 
             // Type 5 di table history_bitrex_cash untuk type withdraw
             foreach ($employeers as $key => $data) {
+
                 DB::table('history_bitrex_cash')->insert([
                     'id_member' => $data->id, 
                     'nominal' => $data->bitrex_cash,
@@ -112,10 +120,19 @@ class WithdrawalBonusController extends Controller
                 ]);
 
 
+
                 $data->update([
-                    'bitrex_cash' => 0
+                    'bitrex_cash' => $data->bitrex_cash - $data->total_bonus
                 ]);
             }
+
+            // Update withdrawal time 
+            // Last withdrawal ke waktu saat withdrawal
+            // Next withdrawal waktu saat withdrawal ditambah 24 hours
+            DB::table('withdrawal_time')->where('id', 1)->update([
+                'last_withdrawal' => Carbon::now(),
+                'next_withdrawal' => Carbon::now()->addDays(1),
+            ]);
             DB::commit();
             Alert::success('Sukses Update Data', 'Sukses')->persistent("Close");
         }catch(\Exception $e){
@@ -130,6 +147,7 @@ class WithdrawalBonusController extends Controller
     public function export()
     {
         return Excel::download(new EmployeerExport, now() .' ' .'withdrawal.xlsx');
+        // return EmployeerExport;
     }
 
     public function getVerificationStatus($row)

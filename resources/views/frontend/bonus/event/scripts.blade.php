@@ -2,7 +2,7 @@
     <script>
         $(document).ready(function () {
             $.ajax({
-                url: '{{route("member.select.bonus-profit")}}',
+                url: '{{route("member.select.bonus-event")}}',
                 data: data,
                 success:function(data){
                     data = data.data;
@@ -27,7 +27,7 @@
         });
         function loadMoreData(page){
             $.ajax({
-                url: '/member/select/bonus-profit?page=' + page,
+                url: '/member/select/bonus-event?page=' + page,
                 beforeSend: function(){
                     $('.ajax-load').show();
                 }
