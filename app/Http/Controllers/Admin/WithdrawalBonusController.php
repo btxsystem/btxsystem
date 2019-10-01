@@ -34,7 +34,7 @@ class WithdrawalBonusController extends Controller
                 return Datatables::of($data)
                         ->addIndexColumn()
                         ->addColumn('fullname', function($row){
-                            return $row->first_name .' '.$row->last_name;
+                            return strtolower($row->first_name .' '.$row->last_name);
                         })
                         ->addColumn('cash', function($row){
                             return currency($row->bitrex_cash);
@@ -129,10 +129,9 @@ class WithdrawalBonusController extends Controller
             // Update withdrawal time 
             // Last withdrawal ke waktu saat withdrawal
             // Next withdrawal waktu saat withdrawal ditambah 24 hours
-            DB::table('withdrawal_time')->where('id', 1)->update([
-                'last_withdrawal' => Carbon::now(),
-                'next_withdrawal' => Carbon::now()->addDays(1),
-            ]);
+            // DB::table('withdrawal_time')->where('id', 1)->update([
+            //     'last_withdrawal' => Carbon::now(),
+            // ]);
             DB::commit();
             Alert::success('Sukses Update Data', 'Sukses')->persistent("Close");
         }catch(\Exception $e){
@@ -146,6 +145,10 @@ class WithdrawalBonusController extends Controller
 
     public function export()
     {
+        DB::table('withdrawal_time')->where('id', 1)->update([
+            'next_withdrawal' => Carbon::now(),
+        ]);
+        
         return Excel::download(new EmployeerExport, now() .' ' .'withdrawal.xlsx');
         // return EmployeerExport;
     }
