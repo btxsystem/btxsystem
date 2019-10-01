@@ -26,9 +26,17 @@ class LoginController extends Controller
         Auth::guard('user')->logout();
         return view('frontend.expired-member');
       }
+      elseif(Auth::user()->status==0) {
+        Auth::guard('user')->logout();
+        Alert::error('Your account has been banned, please contact admin', 'Error')->persistent("OK");
+        return view('frontend.auth.login');
+      }
       return redirect()->route('member.dashboard');
     } else if (Auth::guard('nonmember')->attempt(['username' => $request->username, 'password' => $request->password])){
       return redirect()->route('member.home');
+    }
+    else{
+      Alert::error('Username or password is incorrect', 'Error')->persistent("OK");
     }
     return view('frontend.auth.login');
   }
