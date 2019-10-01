@@ -26,9 +26,10 @@ class WithdrawalBonusController extends Controller
                                         'first_name','last_name','rank_id','verification',
                                         'created_at','status','bitrex_cash','bitrex_points','expired_at'
                     )->get()->filter(function($data) {
-                        return $data->total_bonus > 50700;
+                        return $data->total_bonus > 10000;
                     });
                     
+            // return $data;
 
                 return Datatables::of($data)
                         ->addIndexColumn()
@@ -146,6 +147,7 @@ class WithdrawalBonusController extends Controller
     public function export()
     {
         return Excel::download(new EmployeerExport, now() .' ' .'withdrawal.xlsx');
+        // return EmployeerExport;
     }
 
     public function getVerificationStatus($row)
