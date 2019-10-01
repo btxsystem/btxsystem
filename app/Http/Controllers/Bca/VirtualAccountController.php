@@ -10,6 +10,14 @@ use App\Service\Bca\VirtualAccountService;
 class VirtualAccountController extends Controller
 {
   
+  public $virtualAccountService;
+
+  public function __construct(
+    VirtualAccountService $virtualAccountService
+  )
+  {
+    $this->virtualAccountService = $virtualAccountService;
+  }
   /**
    * bills function
    *
@@ -19,7 +27,7 @@ class VirtualAccountController extends Controller
   public function bills(Request $request)
   {
     try {
-      $inquryBills = (new VirtualAccountService())->checkInquiryBills($request);
+      $inquryBills = $this->virtualAccountService->checkInquiryBills($request);
   
       return response()->json($inquryBills, 200);
     } catch (\Exception $e) {
@@ -35,7 +43,13 @@ class VirtualAccountController extends Controller
    */
   public function payments(Request $request)
   {
-    
+    try {
+      $paymentBills = $this->virtualAccountService->paymentBills($request);
+  
+      return response()->json($paymentBills, 200);
+    } catch (\Exception $e) {
+
+    }    
   }
 
 }
