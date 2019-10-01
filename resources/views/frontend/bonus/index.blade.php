@@ -70,7 +70,7 @@
         </div>
         <div class="row clearfix">
             <div class="col-lg-4 col-sm-6 col-md-6">
-                <a href="#">
+                <a href="{{route('member.history-bonus.rewards')}}">
                     <div class="card">
                         <div class="body">
                             <div class="row">
@@ -88,7 +88,7 @@
                 </a>
             </div>
             <div class="col-lg-4 col-sm-6 col-md-6">
-                <a href="#">
+                <a href="{{route('member.history-bonus.event')}}">
                     <div class="card">
                         <div class="body">
                             <div class="row">
