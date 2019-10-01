@@ -13,6 +13,10 @@ class VaBillEntity
 
   public $RequestID;
 
+  public $PaymentFlagStatus;
+
+  public $PaymentFlagReason;
+
   public $ChannelType;
 
   public $InquiryStatus;
@@ -25,7 +29,11 @@ class VaBillEntity
 
   public $TotalAmount;
 
+  public $PaidAmount;
+
   public $SubCompany;
+
+  public $TransactionDate;
 
   public $DetailBills;
 
@@ -33,6 +41,14 @@ class VaBillEntity
 
   public $AdditionalData;
 
+  public $FlagAdvide;
+
+  /**
+   * Setter function
+   *
+   * @param [type] $AdditionalData
+   * @return void
+   */
   public function setCompanyCode($CompanyCode)
   {
     $this->CompanyCode = $CompanyCode;
@@ -40,6 +56,12 @@ class VaBillEntity
     return $this;
   }
 
+  /**
+   * Setter function
+   *
+   * @param [type] $AdditionalData
+   * @return void
+   */
   public function setCustomerNumber($CustomerNumber)
   {
     $this->CustomerNumber = $CustomerNumber;
@@ -47,6 +69,12 @@ class VaBillEntity
     return $this;
   }
 
+  /**
+   * Setter function
+   *
+   * @param [type] $AdditionalData
+   * @return void
+   */
   public function setRequestID($RequestID)
   {
     $this->RequestID = $RequestID;
@@ -54,6 +82,38 @@ class VaBillEntity
     return $this;
   }
 
+  /**
+   * Setter function
+   *
+   * @param [type] $PaymentFlagStatus
+   * @return void
+   */
+  public function setPaymentFlagStatus($PaymentFlagStatus)
+  {
+    $this->PaymentFlagStatus = $PaymentFlagStatus;
+
+    return $this;
+  }
+
+  /**
+   * Setter function
+   *
+   * @param [type] $AdditionalData
+   * @return void
+   */
+  public function setPaymentFlagReason($PaymentFlagReason)
+  {
+    $this->PaymentFlagReason = $PaymentFlagReason;
+
+    return $this;
+  }
+
+  /**
+   * Setter function
+   *
+   * @param [type] $AdditionalData
+   * @return void
+   */
   public function setChannelType($ChannelType)
   {
     $this->ChannelType = $ChannelType;
@@ -61,6 +121,12 @@ class VaBillEntity
     return $this;
   }
 
+  /**
+   * Setter function
+   *
+   * @param [type] $AdditionalData
+   * @return void
+   */
   public function setInquiryStatus($InquiryStatus)
   {
     $this->InquiryStatus = $InquiryStatus;
@@ -68,6 +134,12 @@ class VaBillEntity
     return $this;
   }
 
+  /**
+   * Setter function
+   *
+   * @param [type] $AdditionalData
+   * @return void
+   */
   public function setInquiryReason($class)
   {
     $this->InquiryReason = $class;
@@ -75,6 +147,12 @@ class VaBillEntity
     return $this;
   }
 
+  /**
+   * Setter function
+   *
+   * @param [type] $AdditionalData
+   * @return void
+   */
   public function setCustomerName($CustomerName)
   {
     $this->CustomerName = $CustomerName;
@@ -82,6 +160,12 @@ class VaBillEntity
     return $this;
   }
 
+  /**
+   * Setter function
+   *
+   * @param [type] $AdditionalData
+   * @return void
+   */
   public function setCurrencyCode($CurrencyCode)
   {
     $this->CurrencyCode = $CurrencyCode;
@@ -89,6 +173,12 @@ class VaBillEntity
     return $this;
   }
 
+  /**
+   * Setter function
+   *
+   * @param [type] $AdditionalData
+   * @return void
+   */
   public function setTotalAmount($TotalAmount)
   {
     $this->TotalAmount = $TotalAmount;
@@ -96,6 +186,25 @@ class VaBillEntity
     return $this;
   }
 
+  /**
+   * Setter function
+   *
+   * @param [type] $AdditionalData
+   * @return void
+   */
+  public function setPaidAmount($PaidAmount)
+  {
+    $this->PaidAmount = $PaidAmount;
+
+    return $this;
+  }
+
+  /**
+   * Setter function
+   *
+   * @param [type] $AdditionalData
+   * @return void
+   */
   public function setSubCompany($SubCompany)
   {
     $this->SubCompany = $SubCompany;
@@ -103,6 +212,25 @@ class VaBillEntity
     return $this;
   }
 
+  /**
+   * Setter function
+   *
+   * @param [type] $AdditionalData
+   * @return void
+   */
+  public function setTransactionDate($TransactionDate)
+  {
+    $this->TransactionDate = $TransactionDate;
+
+    return $this;
+  }
+
+  /**
+   * Setter function
+   *
+   * @param [type] $AdditionalData
+   * @return void
+   */
   public function setFreeTexts($class)
   {
     $this->FreeTexts = call_user_func($class);
@@ -110,6 +238,12 @@ class VaBillEntity
     return $this;
   }
 
+  /**
+   * Setter function
+   *
+   * @param [type] $AdditionalData
+   * @return void
+   */
   public function setDetailBiils($class)
   {
     $this->DetailBills = call_user_func($class);
@@ -117,9 +251,28 @@ class VaBillEntity
     return $this;
   }
 
+  /**
+   * Setter function
+   *
+   * @param [type] $AdditionalData
+   * @return void
+   */
   public function setAdditionalData($AdditionalData)
   {
     $this->AdditionalData = $AdditionalData;
+
+    return $this;
+  }
+
+  /**
+   * Setter function
+   *
+   * @param [type] $FlagAdvide
+   * @return void
+   */
+  public function setFlagAdvide($FlagAdvide)
+  {
+    $this->FlagAdvide = $FlagAdvide;
 
     return $this;
   }
