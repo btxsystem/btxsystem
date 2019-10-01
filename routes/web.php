@@ -175,6 +175,7 @@ Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
         Route::get('bonus-profit', ['as' => 'bonus-profit', 'uses' => 'Member\MyBonusController@bonusProfit']);
         Route::get('bonus-pairing', ['as' => 'bonus-pairing', 'uses' => 'Member\MyBonusController@bonusPairing']);
         Route::get('bonus-event', ['as' => 'bonus-event', 'uses' => 'Member\MyBonusController@bonusEvent']);
+        Route::get('bonus-rewards', ['as' => 'bonus-rewards', 'uses' => 'Member\MyBonusController@bonusRewards']);
         Route::get('expired-member', ['as' => 'expired-member', 'uses' => 'Member\ProfileMemberController@getExpiredMember']);
         Route::get('expired-ebook', ['as' => 'expired-ebook', 'uses' => 'Member\EbookController@getExpiredEbook']);
         Route::get('exp-three-month', ['as' => 'exp-three-month', 'uses' => 'Member\ProfileMemberController@expNotif']);

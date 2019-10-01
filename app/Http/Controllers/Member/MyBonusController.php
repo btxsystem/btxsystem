@@ -44,12 +44,20 @@ class MyBonusController extends Controller
     }
 
     public function bonusSponsor(){
-        $data = DB::table('history_bitrex_cash')->where('id_member',Auth::id())->where('type', 0)->select('nominal','created_at','description')->paginate(4);
+        $data = DB::table('history_bitrex_cash')->where('id_member',Auth::id())->where('type', 0)->select('nominal','created_at','description')->orderBy('id', 'DESC')->paginate(4);
+        return response()->json($data, 200);
+    }
+
+    public function bonusRewards(){
+        $data = DB::table('got_rewards')->join('gift_rewards','got_rewards.reward_id','=','gift_rewards.id')
+                                        ->where('got_rewards.member_id',Auth::id())->where('status', 2)
+                                        ->select('gift_rewards.nominal as nominal','got_rewards.created_at as created_at','gift_rewards.description as description')
+                                        ->orderBy('got_rewards.id', 'DESC')->paginate(4);
         return response()->json($data, 200);
     }
 
     public function bonusEvent(){
-        $data = DB::table('history_bitrex_cash')->where('id_member',Auth::id())->where('type', 4)->select('nominal','created_at','description')->paginate(4);
+        $data = DB::table('history_bitrex_cash')->where('id_member',Auth::id())->where('type', 4)->select('nominal','created_at','description')->orderBy('id', 'DESC')->paginate(4);
         return response()->json($data, 200);
     }
 
@@ -59,7 +67,7 @@ class MyBonusController extends Controller
     }
 
     public function bonusProfit(){
-        $data = DB::table('history_bitrex_cash')->where('id_member',Auth::id())->where('type', 2)->select('nominal','created_at','description')->paginate(4);
+        $data = DB::table('history_bitrex_cash')->where('id_member',Auth::id())->where('type', 2)->select('nominal','created_at','description')->orderBy('id', 'DESC')->paginate(4);
         return response()->json($data, 200);
     }
 
@@ -69,7 +77,7 @@ class MyBonusController extends Controller
     }
 
     public function bonusPairing(){
-        $data = DB::table('history_bitrex_cash')->where('id_member',Auth::id())->where('type', 1)->select('nominal','created_at','description')->paginate(4);
+        $data = DB::table('history_bitrex_cash')->where('id_member',Auth::id())->where('type', 1)->select('nominal','created_at','description')->orderBy('id', 'DESC')->paginate(4);
         return response()->json($data, 200);
     }
 
