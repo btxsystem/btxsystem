@@ -47,6 +47,9 @@ class WithdrawalBonusController extends Controller
                         ->addColumn('bonusReward', function($row){
                             return currency($row->bonus_reward);
                         })
+                        ->addColumn('bonusTotal', function($row){
+                            return currency($row->total_bonus);
+                        })
                         ->addColumn('verificationStatus', function($row){
                             return $this->getVerificationStatus($row);
                         })
@@ -116,11 +119,6 @@ class WithdrawalBonusController extends Controller
                     'bitrex_cash' => 0
                 ]);
             }
-
-            DB::table('withdrawal_time')->where('id', 1)
-                ->update([
-                    'last_withdrawal' => now()
-                ]);
             DB::commit();
             Alert::success('Sukses Update Data', 'Sukses')->persistent("Close");
         }catch(\Exception $e){

@@ -177,6 +177,8 @@ class Employeer extends Authenticatable
     public function getTotalBonusAttribute()
     {
        return \DB::table('history_bitrex_cash')
+                ->where('created_at', '>', $this->getWithdrawalTime()->last_withdrawal)
+                ->where('created_at', '<', $this->getWithdrawalTime()->next_withdrawal)
                 ->where('id_member', $this->id)
                 ->where('info', 1)
                 ->sum('nominal');
