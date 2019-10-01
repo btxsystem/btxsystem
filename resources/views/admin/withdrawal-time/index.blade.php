@@ -55,7 +55,7 @@ Withdrawal Time
                             <div class="form-group">
                               <center>
                               <label>Last Withdrawal &nbsp;&nbsp;
-                                <input id="last_withdrawal" name="last_withdrawal" type="text" style="width:150px" value="{{$key->last_withdrawal}}" class="time ui-timepicker-input" disabled></input>
+                                <input id="last_withdrawal" name="last_withdrawal" type="text" style="width:150px" value="{{$key->last_withdrawal}}" class="time ui-timepicker-input" autocomplete="off"></input>
                               </label>
           
                               &nbsp;&nbsp;&nbsp;&nbsp;
