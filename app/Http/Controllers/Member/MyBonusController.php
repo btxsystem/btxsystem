@@ -19,9 +19,12 @@ class MyBonusController extends Controller
 
     public function bonus(){
         $bonus = [];
-        $bonus['sponsor'] = DB::table('history_bitrex_cash')->where('id_member',Auth::id())->where('description', 'like', '%sponsor%')->where('info',1)->select(DB::raw('SUM(nominal) as nominal'))->first();
-        $bonus['pairing'] = DB::table('history_bitrex_cash')->where('id_member',Auth::id())->where('description', 'like', '%pairing%')->where('info',1)->select(DB::raw('SUM(nominal) as nominal'))->first();
-        $bonus['profit'] = DB::table('history_bitrex_cash')->where('id_member',Auth::id())->where('description', 'like', '%profit%')->where('info',1)->select(DB::raw('SUM(nominal) as nominal'))->first();
+        $bonus['total'] = DB::table('history_bitrex_cash')->where('id_member',Auth::id())->where('info',1)->select(DB::raw('SUM(nominal) as nominal'))->first();
+        $bonus['sponsor'] = DB::table('history_bitrex_cash')->where('id_member',Auth::id())->where('type', 0)->where('info',1)->select(DB::raw('SUM(nominal) as nominal'))->first();
+        $bonus['pairing'] = DB::table('history_bitrex_cash')->where('id_member',Auth::id())->where('type', 1)->where('info',1)->select(DB::raw('SUM(nominal) as nominal'))->first();
+        $bonus['profit'] = DB::table('history_bitrex_cash')->where('id_member',Auth::id())->where('type', 2)->where('info',1)->select(DB::raw('SUM(nominal) as nominal'))->first();
+        $bonus['rewards'] = DB::table('history_bitrex_cash')->where('id_member',Auth::id())->where('type', 3)->where('info',1)->select(DB::raw('SUM(nominal) as nominal'))->first();
+        $bonus['event'] = DB::table('history_bitrex_cash')->where('id_member',Auth::id())->where('type', 4)->where('info',1)->select(DB::raw('SUM(nominal) as nominal'))->first();
         return response()->json($bonus, 200);
     }
 

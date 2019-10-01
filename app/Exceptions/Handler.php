@@ -30,9 +30,9 @@ class Handler extends ExceptionHandler
       if ($exception instanceof CustomException) {
         return response()->view('errors.custom', [], 500);
       }
-      if(Auth::user()==null){
-        return redirect('/login');
-      }
+      //if(Auth::user()==null){
+      //  return redirect('/login');
+      //}
       return parent::render($request, $exception);
     }
     protected function unauthenticated($request, \Illuminate\Auth\AuthenticationException $exception)
