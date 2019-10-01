@@ -27,7 +27,7 @@
         });
         function loadMoreData(page){
             $.ajax({
-                url: '/member/select/bones-event?page=' + page,
+                url: '/member/select/bonus-event?page=' + page,
                 beforeSend: function(){
                     $('.ajax-load').show();
                 }

@@ -27,7 +27,7 @@
         });
         function loadMoreData(page){
             $.ajax({
-                url: '/member/select/bones-profit?page=' + page,
+                url: '/member/select/bonus-profit?page=' + page,
                 beforeSend: function(){
                     $('.ajax-load').show();
                 }
