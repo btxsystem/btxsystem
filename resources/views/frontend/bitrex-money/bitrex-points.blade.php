@@ -286,8 +286,6 @@
                     $('#bill').html('<div class="body" style="color:red;"><center><strong>History is currently empty</strong></center></div>');
                 }else{
                     $.each(data.points.data, function(i, item) {
-                        console.log(item);
-                        
                         date = moment(item.created_at).format('MMMM Do Y');
                         type = item.info ? 'Income' : 'Spending';
                         color = item.info ? 'green' : 'red';
