@@ -12,10 +12,11 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\DB;
 
+use App\Traits\PassportToken;
 
 class User extends Authenticatable
 {
-     use HasApiTokens, Notifiable;
+     use HasApiTokens, Notifiable, PassportToken;
 
 
     protected $hidden = [
