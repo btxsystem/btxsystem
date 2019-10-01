@@ -152,24 +152,48 @@
                     <div class="body">
                     <div class="row clearfix m-b-15">
                         <div class="col-lg-4 col-md-4 col-sm-5">
-                            <div class="icon l-amber"><i class="zmdi zmdi-chart-donut"></i></div>
+                            <div class="icon l-amber"><i class="zmdi zmdi-trending-up"></i></div>
                             <div class="col-in">
-                                <small class="text-muted m-t-0">Sales Profit</small> <br><br>
-                                <h4 class="counter m-b-0">IDR <b class="auto-retail"></b> </h4>
+                                <small class="text-muted m-t-0">Total Commission</small> <br><br>
+                                <h4 class="counter m-b-0">IDR <b class="commission"></b> </h4>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-5 col-sm-4">
+                            <div class="icon l-parpl"><i class="zmdi zmdi-accounts-outline"></i></div>
+                            <div class="col-in">
+                                <small class="text-muted m-t-0">Sponsor</small> <br><br>
+                                <h4 class="counter m-b-0">IDR <b class="sponsor"></b> </h4>
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-4 col-sm-4">
-                            <div class="icon l-turquoise"><i class="zmdi zmdi-chart"></i></div>
+                            <div class="icon l-turquoise"><i class="zmdi zmdi-swap"></i></div>
                             <div class="col-in">
                                 <small class="text-muted m-t-0">Pairing</small> <br><br>
                                 <h4 class="counter m-b-0">IDR <b class="pairing"></b> </h4>
                             </div>
                         </div>
+                    </div>
+                    <div class="row clearfix m-b-15">
                         <div class="col-lg-4 col-md-4 col-sm-4">
-                            <div class="icon l-parpl"><i class="zmdi zmdi-accounts-outline"></i></div>
+                            <div class="icon l-turquoise"><i class="zmdi zmdi-badge-check"></i></div>
                             <div class="col-in">
-                                <small class="text-muted m-t-0">Sponsor</small> <br><br>
-                                <h4 class="counter m-b-0">IDR <b class="sponsor"></b> </h4>
+                                <small class="text-muted m-t-0">Rewards</small> <br><br>
+                                <h4 class="counter m-b-0">IDR <b class="rewards"></b> </h4>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="col-lg-4 col-md-4 col-sm-4">
+                            <div class="icon l-parpl"><i class="zmdi zmdi-card-giftcard"></i></div>
+                            <div class="col-in">
+                                <small class="text-muted m-t-0">Event</small> <br><br>
+                                <h4 class="counter m-b-0">IDR <b class="event"></b> </h4>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-5">
+                            <div class="icon l-amber"><i class="zmdi zmdi-chart-donut"></i></div>
+                            <div class="col-in">
+                                <small class="text-muted m-t-0">Sales Profit</small> <br><br>
+                                <h4 class="counter m-b-0">IDR <b class="auto-retail"></b> </h4>
                             </div>
                         </div>
                     </div>
@@ -180,6 +204,13 @@
         </div>
     </div>
 </section>
+<style>
+    @media only screen and (max-width: 900px){
+        .product-report .counter {
+            padding-bottom: 15px;
+        }
+    }
+</style>
 @stop
 
 @section('footer_scripts')
@@ -190,6 +221,16 @@
                 data: data,
                 success:function(data){
                     $('.auto-retail').append(addCommas(data.bonus_retail.nominal));
+                }
+            });
+
+            $.ajax({
+                url: '{{route("member.select.bonus")}}',
+                data: data,
+                success:function(data){
+                    $('.commission').text(addCommas(data.total.nominal == null ? 0 : data.total.nominal));
+                    $('.event').text(addCommas(data.event.nominal == null ? 0 : data.event.nominal));
+                    $('.rewards').text(addCommas(data.rewards.nominal == null ? 0 : data.rewards.nominal));
                 }
             });
 

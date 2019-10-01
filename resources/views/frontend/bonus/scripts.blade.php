@@ -5,7 +5,6 @@
                 url: '{{route("member.select.bonus")}}',
                 data: data,
                 success:function(data){
-                    console.log(data);
                     $('.total-commission').text(addCommas(data.total.nominal == null ? 0 : data.total.nominal));
                     $('.bonus-sponsor').text(addCommas(data.sponsor.nominal == null ? 0 : data.sponsor.nominal));
                     $('.bonus-sales-profit').text(addCommas(data.profit.nominal == null ? 0 : data.profit.nominal));
