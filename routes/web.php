@@ -128,6 +128,8 @@ Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
         Route::get('sponsor', ['as' => 'sponsor', 'uses' => 'Member\MyBonusController@sponsor']);
         Route::get('sales-profit', ['as' => 'sales-profit', 'uses' => 'Member\MyBonusController@profit']);
         Route::get('pairing', ['as' => 'pairing', 'uses' => 'Member\MyBonusController@pairing']);
+        Route::get('rewards', ['as' => 'rewards', 'uses' => 'Member\MyBonusController@rewards']);
+        Route::get('event', ['as' => 'event', 'uses' => 'Member\MyBonusController@event']);
     });
 
     Route::post('convert-bitrex-points', ['as' => 'convert-bitrex-points', 'uses' => 'Member\BitrexPointController@convertBitrexPoints']);
@@ -172,6 +174,7 @@ Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
         Route::get('bonus-sponsor', ['as' => 'bonus-sponsor', 'uses' => 'Member\MyBonusController@bonusSponsor']);
         Route::get('bonus-profit', ['as' => 'bonus-profit', 'uses' => 'Member\MyBonusController@bonusProfit']);
         Route::get('bonus-pairing', ['as' => 'bonus-pairing', 'uses' => 'Member\MyBonusController@bonusPairing']);
+        Route::get('bonus-event', ['as' => 'bonus-event', 'uses' => 'Member\MyBonusController@bonusEvent']);
         Route::get('expired-member', ['as' => 'expired-member', 'uses' => 'Member\ProfileMemberController@getExpiredMember']);
         Route::get('expired-ebook', ['as' => 'expired-ebook', 'uses' => 'Member\EbookController@getExpiredEbook']);
         Route::get('exp-three-month', ['as' => 'exp-three-month', 'uses' => 'Member\ProfileMemberController@expNotif']);

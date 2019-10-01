@@ -28,13 +28,28 @@ class MyBonusController extends Controller
         return response()->json($bonus, 200);
     }
 
+    public function rewards(){
+        $user = Auth::user();
+        return view('frontend.bonus.rewards.index')->with('profile',$user);
+    }
+
+    public function event(){
+        $user = Auth::user();
+        return view('frontend.bonus.event.index')->with('profile',$user);
+    }
+
     public function sponsor(){
         $user = Auth::user();
         return view('frontend.bonus.sponsor.index')->with('profile',$user);
     }
 
     public function bonusSponsor(){
-        $data = DB::table('history_bitrex_cash')->where('id_member',Auth::id())->where('description', 'like', '%sponsor%')->select('nominal','created_at','description')->paginate(4);
+        $data = DB::table('history_bitrex_cash')->where('id_member',Auth::id())->where('type', 0)->select('nominal','created_at','description')->paginate(4);
+        return response()->json($data, 200);
+    }
+
+    public function bonusEvent(){
+        $data = DB::table('history_bitrex_cash')->where('id_member',Auth::id())->where('type', 4)->select('nominal','created_at','description')->paginate(4);
         return response()->json($data, 200);
     }
 
@@ -44,7 +59,7 @@ class MyBonusController extends Controller
     }
 
     public function bonusProfit(){
-        $data = DB::table('history_bitrex_cash')->where('id_member',Auth::id())->where('description', 'like', '%profit%')->select('nominal','created_at','description')->paginate(4);
+        $data = DB::table('history_bitrex_cash')->where('id_member',Auth::id())->where('type', 2)->select('nominal','created_at','description')->paginate(4);
         return response()->json($data, 200);
     }
 
@@ -54,7 +69,7 @@ class MyBonusController extends Controller
     }
 
     public function bonusPairing(){
-        $data = DB::table('history_bitrex_cash')->where('id_member',Auth::id())->where('description', 'like', '%pairing%')->select('nominal','created_at','description')->paginate(4);
+        $data = DB::table('history_bitrex_cash')->where('id_member',Auth::id())->where('type', 1)->select('nominal','created_at','description')->paginate(4);
         return response()->json($data, 200);
     }
 
