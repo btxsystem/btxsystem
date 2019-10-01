@@ -17,7 +17,7 @@ class EmployeerExport implements FromView
         return view('admin.withdrawal-bonus.excel', [
             'datas' => Employeer::where('status', 1)
                                 ->whereDate('expired_at', '>=', now())
-                                ->select('id as check','id','id_member','username','no_rec','bank_name','bank_account_number','npwp_number',
+                                ->select('id as check','id','id_member','username','no_rec','bank_name','bank_account_name','npwp_number',
                                         'first_name','last_name','rank_id','verification',
                                         'created_at','status','bitrex_cash','bitrex_points','expired_at'
                         )->get()->filter(function($data) {
