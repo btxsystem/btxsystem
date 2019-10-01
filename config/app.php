@@ -160,6 +160,7 @@ return [
         //Barryvdh\Cors\ServiceProvider::class,
 
         Maatwebsite\Excel\ExcelServiceProvider::class,
+        Laravel\Passport\PassportServiceProvider::class,
 
     ],
     /*
