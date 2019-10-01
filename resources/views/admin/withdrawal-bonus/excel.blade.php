@@ -29,7 +29,7 @@
             <td>{{ $model->username }}</td>
             <td>{{ $model->first_name }}  {{$model->last_name}}</td>
             <td>{{ $model->no_rec }}</td>
-            <td>{{ $model->bank_account_number }}</td>
+            <td>{{ $model->bank_account_name}}</td>
             <td>{{ $model->bank_name }}</td>
             <td>{{ $model->verification == 1 ? '3.0%' : '2.5%' }}</td>
             <td>{{ currency($model->total_bonus) }}</td>
