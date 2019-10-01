@@ -90,13 +90,19 @@ Withdrawal Time
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.4.5/jquery-ui-timepicker-addon.js"></script>
 
 <script>
+    // $("#last_withdrawal").datetimepicker({  
+    //     format: 'yy-mm-dd hh:mm:ss',
+    // });
+    // $('#next_withdrawal').datetimepicker({ 
+    //   format: 'yy-mm-dd hh:mm:ss',
+    // });
     $("#last_withdrawal").datetimepicker({  
         dateFormat: 'yy-mm-dd',
-        timeFormat: 'hh:mm:ss',
+        timeFormat: 'HH:mm:ss',
     });
     $('#next_withdrawal').datetimepicker({ 
         dateFormat: 'yy-mm-dd',
-        timeFormat: 'hh:mm:ss',
+        timeFormat: 'HH:mm:ss',
     });
 </script>
 
