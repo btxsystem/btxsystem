@@ -105,7 +105,7 @@ Withdrawal Bonus
                   { data: 'bonusProfit', name: 'bonus_profit', className: "text-center", orderable: false, searchable: false  },                  
                   { data: 'bonusReward', name: 'bonus_reward', className: "text-center", orderable: false, searchable: false  },                  
                   { data: 'verificationStatus', name: 'verificationStatus', className: "text-center", orderable: false, searchable: false  },                  
-                  { data: 'bonusTotal', name: 'total_bonus', className: "text-center" },                  
+                  { data: 'bonusTotal', name: 'total_bonus', className: "text-center", , orderable: false, searchable: false   },                  
                   { data: 'check', orderable: false, searchable:false, name:'id', className: "text-center" },             
               ]
           });
