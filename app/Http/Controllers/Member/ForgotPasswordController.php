@@ -24,11 +24,18 @@ class ForgotPasswordController extends Controller
                 'username' => $data->username,
                 'password' => $password
             ];
-            if (filter_var($data->email, FILTER_VALIDATE_EMAIL)) {
-              Mail::to($data->email)->send(new OldMemberMail($dataEmail));
+            if ($data->status==0) {
+                Alert::error('Your account has been banned, please contact admin', 'Error')->persistent("OK");
+                return redirect()->back();
+            }else{
+                if (filter_var($data->email, FILTER_VALIDATE_EMAIL)) {
+                    Mail::to($data->email)->send(new OldMemberMail($dataEmail));
+                    Alert::success('Please check your email', 'Success')->persistent("OK");
+                }else{
+                    Alert::error('Your email is wrong', 'Error')->persistent("OK");
+                }
             }
         }
-        Alert::success('Please check your email', 'Success')->persistent("OK");
         return redirect()->back();
     }
 }
