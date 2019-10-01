@@ -7,6 +7,7 @@ use App\Entities\Bca\LanguageEntity;
 use App\Entities\Bca\DetailBillEntity;
 use App\Repositories\TransactionVirtualAccountRepository;
 use App\Service\TransactionProductService;
+use App\Types\BcaStatusType;
 use App\Types\ProductType;
 
 class VirtualAccountService
@@ -153,7 +154,7 @@ class VirtualAccountService
 
       // if failed payment or any problem
       if(!$paymentBillProduct) {
-        $paymentBills->setPaymentFlagStatus("01")
+        $paymentBills->setPaymentFlagStatus(BcaStatusType::REJECT_FLAG)
           ->setPaymentFlagReason(
             (new LanguageEntity())
               ->setIndonesian("Gagal")
@@ -177,7 +178,7 @@ class VirtualAccountService
         return $paymentBills;
       }
 
-      $paymentBills->setPaymentFlagStatus("00")
+      $paymentBills->setPaymentFlagStatus(BcaStatusType::SUCCESS_FLAG)
         ->setPaymentFlagReason(
           (new LanguageEntity())
             ->setIndonesian("Sukses")
