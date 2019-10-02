@@ -168,7 +168,7 @@ List Of Bitrex Points
                 {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false},
                 {data: 'id_member', name: 'id_member'},
                 {data: 'username', name: 'username'},
-                {data: 'points', name: 'points', searchable: false},
+                {data: 'saldo', name: 'bitrex_cash', searchable: false},
                 {data: 'action', name: 'action', orderable: false, searchable: false},
             ]
         });
