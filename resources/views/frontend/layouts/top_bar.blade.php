@@ -20,9 +20,9 @@
 
 <nav class="navbar">
     <div class="col-12">
-        <div class="nav navbar-header">
+        <div class="nav navbar-header" id="padd">
             <a href="javascript:void(0);" class="bars" style="color:white"></a>
-            <a class="navbar-brand " href="#"><img src="{{asset('assetsebook/v2/img/logo-white.png')}}" alt="" style="height:35px"></a>
+            <a class="navbar-brand " href="#"><img src="{{asset('assetsebook/v2/img/logo-white.png')}}" id="logo-bitrex" style="height:30px; width: 120px; padding-left: 15px;"></a>
         </div>
         <ul class="nav navbar-nav navbar-right">
             <li style="font-size:13px"><a data-toggle="modal" data-target="#logout" title="sign out" style="text-decoration:none; cursor:pointer;" class="logout"><strong>Logout</strong>&nbsp<i class="fa fa-sign-out" style="color:red; cursor:pointer;"></a></i></li> 

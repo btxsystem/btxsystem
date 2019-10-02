@@ -119,6 +119,18 @@
       font-size: 20px;
     }
 
+    @media only screen and (max-width: 1200px){
+        #padd{
+            padding-top: 7px !important;
+        }
+
+        #logo-bitrex{
+            height:30px !important;
+            width: 80px !important;
+            padding-left: 0px !important;
+        }
+    }
+
     @media only screen and (max-width: 400px) and (min-width: 300px) {
         span#clock{
             margin-left: -15px;
