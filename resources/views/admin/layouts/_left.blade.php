@@ -208,6 +208,12 @@
         </a>
         <ul class="sub-menu">
             <li>
+                <a href="{{ route('report.transaction') }}">
+                    <i class="fa fa-angle-double-right"></i>
+                    Transaction
+                </a>
+            </li>
+            <!-- <li>
                 <a href="{{ route('report.transaction-member') }}">
                     <i class="fa fa-angle-double-right"></i>
                     Transaction Member
@@ -218,7 +224,7 @@
                     <i class="fa fa-angle-double-right"></i>
                     Membership
                 </a>
-            </li>
+            </li> -->
         </ul>
     </li>
     <li >

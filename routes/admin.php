@@ -168,8 +168,10 @@ Route::group(['middleware' => 'admin'], function () {
     });
 
     Route::group(['prefix'=>'report','as'=>'report.'], function(){
+        Route::get('transaction', ['as' => 'transaction', 'uses' => 'Admin\ReportController@transaction']);
         Route::get('transaction-member', ['as' => 'transaction-member', 'uses' => 'Admin\ReportController@transactionMember']);
         Route::get('membership', ['as' => 'membership', 'uses' => 'Admin\ReportController@membership']);
+        Route::get('export', ['as' => 'export', 'uses' => 'Admin\ReportController@export']);
     });
 
     Route::group(['prefix'=>'bonus','as'=>'bonus.'], function(){
