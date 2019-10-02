@@ -530,6 +530,7 @@ rect {
 	var available_email = false;
 	var parent_id = undefined;
 	var check_cost = true;
+	const BASE_SRC = '{{url("/")}}';
 
 	$('#male').change(function(){
 		checkTerm()
@@ -715,7 +716,7 @@ rect {
 			checkTerm()
 		})
 	})
-	$('#province').html('<option disabled>Province<option>');
+	$('#province').html('<option disabled>Province</option>');
 	$.ajax({
 		type: 'GET',
 		url: '/member/shipping/province',
@@ -1034,7 +1035,7 @@ rect {
 				data.pv_group ? $('#_pv_group_r').text('PV Rank R: ' + data.pv_group.pv_right) : $('#_pv_group_r').text('PV Rank: 0 ');
             }
         });
-
+		
 		var treeStructure = d3.tree().size([2000,480]);
 		var root = d3.hierarchy(data).sort(function(a, b) {return a.data.position - b.data.position ;});
 		treeStructure(root);
@@ -1103,7 +1104,7 @@ rect {
 			.data(information.descendants());
 		image.enter().append("a")
 			.append("image")
-			.attr("xlink:href", function(d){return "https://img.icons8.com/bubbles/2x/user.png"})
+			.attr("xlink:href", function(d){return d.data.src == null ? "https://img.icons8.com/bubbles/2x/user.png" : BASE_SRC+'/'+d.data.src})
 			.attr("x", function(d){
 				if($(window).width() <= 480) {  
 					return d.x-80;

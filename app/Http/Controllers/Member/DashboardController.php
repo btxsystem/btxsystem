@@ -93,6 +93,7 @@ class DashboardController extends Controller
             'pv_midle' => $user->pv_down ? $user->pv_down->pv_midle : 0 ,
             'pv_right' => $user->pv_down ? $user->pv_down->pv_right : 0,
             'parent_id' => $user->parent_id ? $user->parent_id : null,
+            'src' => $user->src ? $user->src : null,
             'children' => [],
         ];
         for ($i=0; $i < 3; $i++) {
@@ -109,7 +110,8 @@ class DashboardController extends Controller
                                 'pv_left' => $tamp2->pv_down ? $tamp2->pv_down->pv_left : 0,
                                 'pv_midle' => $tamp2->pv_down ? $tamp2->pv_down->pv_midle  : 0 ,
                                 'pv_right' => $tamp2->pv_down ? $tamp2->pv_down->pv_right : 0,
-                                'parent_id' => $tamp2->parent_id,
+                                'parent_id' => $tamp2->parent_id ? $tamp2->parent_id : null,
+                                'src' => $tamp2->src ? $tamp2->src : null,
                                 'position' => $tamp2->position
                             ];   
                         }else if($user->children[$i]->children[$j]->position == 1){
@@ -120,7 +122,8 @@ class DashboardController extends Controller
                                 'pv_left' => $tamp2->pv_down ? $tamp2->pv_down->pv_left : 0,
                                 'pv_midle' => $tamp2->pv_down ? $tamp2->pv_down->pv_midle  : 0 ,
                                 'pv_right' => $tamp2->pv_down ? $tamp2->pv_down->pv_right : 0,
-                                'parent_id' => $tamp2->parent_id,
+                                'parent_id' => $tamp2->parent_id ? $tamp2->parent_id : null,
+                                'src' => $tamp2->src ? $tamp2->src : null,
                                 'position' => $tamp2->position
                             ];   
                         }else{
@@ -131,7 +134,8 @@ class DashboardController extends Controller
                                 'pv_left' => $tamp2->pv_down ? $tamp2->pv_down->pv_left : 0,
                                 'pv_midle' => $tamp2->pv_down ? $tamp2->pv_down->pv_midle  : 0 ,
                                 'pv_right' => $tamp2->pv_down ? $tamp2->pv_down->pv_right : 0,
-                                'parent_id' => $tamp2->parent_id,
+                                'parent_id' => $tamp2->parent_id ? $tamp2->parent_id : null,
+                                'src' => $tamp2->src ? $tamp2->src : null,
                                 'position' => $tamp2->position
                             ];   
                         }        
@@ -146,7 +150,8 @@ class DashboardController extends Controller
                         'pv_midle' => $tamp->pv_down ? $tamp->pv_down->pv_midle  : 0 ,
                         'pv_right' => $tamp->pv_down ? $tamp->pv_down->pv_right : 0,
                         'children' => $child ? $child : [],
-                        'parent_id' => $tamp->parent_id,
+                        'parent_id' => $tamp->parent_id ? $tamp->parent_id : null,
+                        'src' => $tamp->src ? $tamp->src : null,
                         'position' => $tamp->position
                     ];
                 }else if ($user->children[$i]->position == 1) {
@@ -158,7 +163,8 @@ class DashboardController extends Controller
                         'pv_midle' => $tamp->pv_down ? $tamp->pv_down->pv_midle  : 0 ,
                         'pv_right' => $tamp->pv_down ? $tamp->pv_down->pv_right : 0,
                         'children' => $child ? $child : [],
-                        'parent_id' => $tamp->parent_id,
+                        'parent_id' => $tamp->parent_id ? $tamp->parent_id : null,
+                        'src' => $tamp->src ? $tamp->src : null,
                         'position' => $tamp->position
                     ];
                 }else{
@@ -170,7 +176,8 @@ class DashboardController extends Controller
                         'pv_midle' => $tamp->pv_down ? $tamp->pv_down->pv_midle  : 0 ,
                         'pv_right' => $tamp->pv_down ? $tamp->pv_down->pv_right : 0,
                         'children' => $child ? $child : [],
-                        'parent_id' => $tamp->parent_id,
+                        'parent_id' => $tamp->parent_id ? $tamp->parent_id : null,
+                        'src' => $tamp->src ? $tamp->src : null,
                         'position' => $tamp->position
                     ];
                 }
@@ -205,7 +212,8 @@ class DashboardController extends Controller
             'pv_left' => $user->pv_down ? $user->pv_down->pv_left : 0,
             'pv_midle' => $user->pv_down ? $user->pv_down->pv_midle : 0 ,
             'pv_right' => $user->pv_down ? $user->pv_down->pv_right : 0,
-            'parent_id' => $user->parent_id,
+            'parent_id' => $user->parent_id ? $user->parent_id : null,
+            'src' => $user->src ? $user->src : null,
             'children' => [],
         ];
         
@@ -236,6 +244,7 @@ class DashboardController extends Controller
             'pv_midle' => $user->pv_down ? $user->pv_down->pv_midle : 0 ,
             'pv_right' => $user->pv_down ? $user->pv_down->pv_right : 0,
             'parent_id' => $user->parent_id ? $user->parent_id : null,
+            'src' => $user->src ? $user->src : null,
             'children' => [],
         ];
         for ($i=0; $i < 3; $i++) {
@@ -251,8 +260,9 @@ class DashboardController extends Controller
                                 'rank' => $tamp2->rank ? $tamp2->rank->name : '-' ,
                                 'pv_left' => $tamp2->pv_down ? $tamp2->pv_down->pv_left : 0,
                                 'pv_midle' => $tamp2->pv_down ? $tamp2->pv_down->pv_midle  : 0 ,
-                                'pv_right' => $tamp2->pv_down ? $tamp2->pv_down->pv_right : 0,
-                                'parent_id' => $tamp2->parent_id,
+                                'pv_right' => $tamp2->pv_down ? $tamp2->pv_down->pv_right : 0,        
+                                'parent_id' => $tamp2->parent_id ? $tamp2->parent_id : null,
+                                'src' => $tamp2->src ? $tamp2->src : null,
                                 'position' => $tamp2->position
                             ];   
                         }else if($user->children[$i]->children[$j]->position == 1){
@@ -262,8 +272,9 @@ class DashboardController extends Controller
                                 'rank' => $tamp2->rank ? $tamp2->rank->name : '-' ,
                                 'pv_left' => $tamp2->pv_down ? $tamp2->pv_down->pv_left : 0,
                                 'pv_midle' => $tamp2->pv_down ? $tamp2->pv_down->pv_midle  : 0 ,
-                                'pv_right' => $tamp2->pv_down ? $tamp2->pv_down->pv_right : 0,
-                                'parent_id' => $tamp2->parent_id,
+                                'pv_right' => $tamp2->pv_down ? $tamp2->pv_down->pv_right : 0,        
+                                'parent_id' => $tamp2->parent_id ? $tamp2->parent_id : null,
+                                'src' => $tamp2->src ? $tamp2->src : null,
                                 'position' => $tamp2->position
                             ];   
                         }else{
@@ -273,8 +284,9 @@ class DashboardController extends Controller
                                 'rank' => $tamp2->rank ? $tamp2->rank->name : '-' ,
                                 'pv_left' => $tamp2->pv_down ? $tamp2->pv_down->pv_left : 0,
                                 'pv_midle' => $tamp2->pv_down ? $tamp2->pv_down->pv_midle  : 0 ,
-                                'pv_right' => $tamp2->pv_down ? $tamp2->pv_down->pv_right : 0,
-                                'parent_id' => $tamp2->parent_id,
+                                'pv_right' => $tamp2->pv_down ? $tamp2->pv_down->pv_right : 0,        
+                                'parent_id' => $tamp2->parent_id ? $tamp2->parent_id : null,
+                                'src' => $tamp2->src ? $tamp2->src : null,
                                 'position' => $tamp2->position
                             ];   
                         }        
@@ -288,8 +300,9 @@ class DashboardController extends Controller
                         'pv_left' => $tamp->pv_down ? $tamp->pv_down->pv_left : 0,
                         'pv_midle' => $tamp->pv_down ? $tamp->pv_down->pv_midle  : 0 ,
                         'pv_right' => $tamp->pv_down ? $tamp->pv_down->pv_right : 0,
-                        'children' => $child ? $child : [],
-                        'parent_id' => $tamp->parent_id,
+                        'children' => $child ? $child : [],        
+                        'parent_id' => $tamp->parent_id ? $tamp->parent_id : null,
+                        'src' => $tamp->src ? $tamp->src : null,
                         'position' => $tamp->position
                     ];
                 }else if ($user->children[$i]->position == 1) {
@@ -300,8 +313,9 @@ class DashboardController extends Controller
                         'pv_left' => $tamp->pv_down ? $tamp->pv_down->pv_left : 0,
                         'pv_midle' => $tamp->pv_down ? $tamp->pv_down->pv_midle  : 0 ,
                         'pv_right' => $tamp->pv_down ? $tamp->pv_down->pv_right : 0,
-                        'children' => $child ? $child : [],
-                        'parent_id' => $tamp->parent_id,
+                        'children' => $child ? $child : [],   
+                        'parent_id' => $tamp->parent_id ? $tamp->parent_id : null,
+                        'src' => $tamp->src ? $tamp->src : null,
                         'position' => $tamp->position
                     ];
                 }else{
@@ -312,8 +326,9 @@ class DashboardController extends Controller
                         'pv_left' => $tamp->pv_down ? $tamp->pv_down->pv_left : 0,
                         'pv_midle' => $tamp->pv_down ? $tamp->pv_down->pv_midle  : 0 ,
                         'pv_right' => $tamp->pv_down ? $tamp->pv_down->pv_right : 0,
-                        'children' => $child ? $child : [],
-                        'parent_id' => $tamp->parent_id,
+                        'children' => $child ? $child : [],   
+                        'parent_id' => $tamp->parent_id ? $tamp->parent_id : null,
+                        'src' => $tamp->src ? $tamp->src : null,
                         'position' => $tamp->position
                     ];
                 }
@@ -347,8 +362,9 @@ class DashboardController extends Controller
             'rank' => $user->rank ? $user->rank->name : '-',
             'pv_left' => $user->pv_down ? $user->pv_down->pv_left : 0,
             'pv_midle' => $user->pv_down ? $user->pv_down->pv_midle : 0 ,
-            'pv_right' => $user->pv_down ? $user->pv_down->pv_right : 0,
-            'parent_id' => $user->parent_id,
+            'pv_right' => $user->pv_down ? $user->pv_down->pv_right : 0,   
+            'parent_id' => $user->parent_id ? $user->parent_id : null,
+            'src' => $user->src ? $user->src : null,
             'children' => [],
         ];
         
@@ -379,8 +395,9 @@ class DashboardController extends Controller
             'rank' => $user->rank ? $user->rank->name : '-',
             'pv_left' => $user->pv_down ? $user->pv_down->pv_left : 0,
             'pv_midle' => $user->pv_down ? $user->pv_down->pv_midle : 0 ,
-            'pv_right' => $user->pv_down ? $user->pv_down->pv_right : 0,
+            'pv_right' => $user->pv_down ? $user->pv_down->pv_right : 0,   
             'parent_id' => $user->parent_id ? $user->parent_id : null,
+            'src' => $user->src ? $user->src : null,
             'children' => [],
         ];
         for ($i=0; $i < 3; $i++) {
@@ -396,8 +413,9 @@ class DashboardController extends Controller
                                 'rank' => $tamp2->rank ? $tamp2->rank->name : '-' ,
                                 'pv_left' => $tamp2->pv_down ? $tamp2->pv_down->pv_left : 0,
                                 'pv_midle' => $tamp2->pv_down ? $tamp2->pv_down->pv_midle  : 0 ,
-                                'pv_right' => $tamp2->pv_down ? $tamp2->pv_down->pv_right : 0,
-                                'parent_id' => $tamp2->parent_id,
+                                'pv_right' => $tamp2->pv_down ? $tamp2->pv_down->pv_right : 0,   
+                                'parent_id' => $tamp2->parent_id ? $tamp2->parent_id : null,
+                                'src' => $tamp2->src ? $tamp2->src : null,
                                 'position' => $tamp2->position
                             ];   
                         }else if($user->children[$i]->children[$j]->position == 1){
@@ -407,8 +425,9 @@ class DashboardController extends Controller
                                 'rank' => $tamp2->rank ? $tamp2->rank->name : '-' ,
                                 'pv_left' => $tamp2->pv_down ? $tamp2->pv_down->pv_left : 0,
                                 'pv_midle' => $tamp2->pv_down ? $tamp2->pv_down->pv_midle  : 0 ,
-                                'pv_right' => $tamp2->pv_down ? $tamp2->pv_down->pv_right : 0,
-                                'parent_id' => $tamp2->parent_id,
+                                'pv_right' => $tamp2->pv_down ? $tamp2->pv_down->pv_right : 0,   
+                                'parent_id' => $tamp2->parent_id ? $tamp2->parent_id : null,
+                                'src' => $tamp2->src ? $tamp2->src : null,
                                 'position' => $tamp2->position
                             ];   
                         }else{
@@ -418,8 +437,9 @@ class DashboardController extends Controller
                                 'rank' => $tamp2->rank ? $tamp2->rank->name : '-' ,
                                 'pv_left' => $tamp2->pv_down ? $tamp2->pv_down->pv_left : 0,
                                 'pv_midle' => $tamp2->pv_down ? $tamp2->pv_down->pv_midle  : 0 ,
-                                'pv_right' => $tamp2->pv_down ? $tamp2->pv_down->pv_right : 0,
-                                'parent_id' => $tamp2->parent_id,
+                                'pv_right' => $tamp2->pv_down ? $tamp2->pv_down->pv_right : 0,   
+                                'parent_id' => $tamp2->parent_id ? $tamp2->parent_id : null,
+                                'src' => $tamp2->src ? $tamp2->src : null,
                                 'position' => $tamp2->position
                             ];   
                         }        
@@ -433,8 +453,9 @@ class DashboardController extends Controller
                         'pv_left' => $tamp->pv_down ? $tamp->pv_down->pv_left : 0,
                         'pv_midle' => $tamp->pv_down ? $tamp->pv_down->pv_midle  : 0 ,
                         'pv_right' => $tamp->pv_down ? $tamp->pv_down->pv_right : 0,
-                        'children' => $child ? $child : [],
-                        'parent_id' => $tamp->parent_id,
+                        'children' => $child ? $child : [],   
+                        'parent_id' => $tamp->parent_id ? $tamp->parent_id : null,
+                        'src' => $tamp->src ? $tamp->src : null,
                         'position' => $tamp->position
                     ];
                 }else if ($user->children[$i]->position == 1) {
@@ -446,7 +467,8 @@ class DashboardController extends Controller
                         'pv_midle' => $tamp->pv_down ? $tamp->pv_down->pv_midle  : 0 ,
                         'pv_right' => $tamp->pv_down ? $tamp->pv_down->pv_right : 0,
                         'children' => $child ? $child : [],
-                        'parent_id' => $tamp->parent_id,
+                        'parent_id' => $tamp->parent_id ? $tamp->parent_id : null,
+                        'src' => $tamp->src ? $tamp->src : null,
                         'position' => $tamp->position
                     ];
                 }else{
@@ -458,7 +480,8 @@ class DashboardController extends Controller
                         'pv_midle' => $tamp->pv_down ? $tamp->pv_down->pv_midle  : 0 ,
                         'pv_right' => $tamp->pv_down ? $tamp->pv_down->pv_right : 0,
                         'children' => $child ? $child : [],
-                        'parent_id' => $tamp->parent_id,
+                        'parent_id' => $tamp->parent_id ? $tamp->parent_id : null,
+                        'src' => $tamp->src ? $tamp->src : null,
                         'position' => $tamp->position
                     ];
                 }
@@ -493,7 +516,8 @@ class DashboardController extends Controller
             'pv_left' => $user->pv_down ? $user->pv_down->pv_left : 0,
             'pv_midle' => $user->pv_down ? $user->pv_down->pv_midle : 0 ,
             'pv_right' => $user->pv_down ? $user->pv_down->pv_right : 0,
-            'parent_id' => $user->parent_id,
+            'parent_id' => $user->parent_id ? $user->parent_id : null,
+            'src' => $user->src ? $user->src : null,
             'children' => [],
         ];
         
