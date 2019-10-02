@@ -33,7 +33,9 @@ Withdrawal Bonus
                     </div>
 
                     <div class="pull-right">
-                        <a style=" color: white; text-decoration: none !important" href="{{route('withdrawal-bonus.export')}}" target="_blank" data-toggle="modal"><i style="font-size:15px;" class="fa fa-file-excel-o"></i>&nbsp; &nbsp;<strong>Export Excel</strong></a>
+                        <button type="button" name="bulk_paid" id="bulk_paid" class="btn btn-danger btn-sm">Paid Checked</button> &nbsp;
+                        <a onclick="return confirm('Are you sure to export data ?')" href="{{route('withdrawal-bonus.export')}}" target="_blank" class="btn btn-success btn-sm">Export Excel</a>
+                        <!-- <a style=" color: white; text-decoration: none !important" href="{{route('withdrawal-bonus.export')}}" target="_blank" data-toggle="modal"><i style="font-size:15px;" class="fa fa-file-excel-o"></i>&nbsp; &nbsp;<strong>Export Excel</strong></a> -->
                     </div>
                 </div>
                 
@@ -64,7 +66,7 @@ Withdrawal Bonus
                                 <th class="text-center">B Reward</th>
                                 <th class="text-center">Tax</th>
                                 <th class="text-center">Bitrax Cash</th>
-                                <th class="text-center"><button type="button" name="bulk_paid" id="bulk_paid" class="btn btn-danger btn-xs">Paid Checked</button></th>
+                                <th class="text-center">Check</th>
         
                             </tr>
                         </thead>
