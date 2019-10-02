@@ -4,14 +4,82 @@
     @parent
 @stop
 @section('content')
+
+<div class="modal fade" id="withdraw" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="wd">Withdrawal bitrex Value</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div>
+                <br>
+                <center><h5>Withdrawal feature will be coming soon</h5></center>
+            </div>
+            <!--<form action="" method="POST">
+                @csrf
+                <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="form-line">
+                        <input class="form-control" value="Bitrex Value: {{number_format($profile->bitrex_cash,0,".",".")}}" type="text" readonly>
+                    </div>
+                </div>
+                <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="form-line">
+                        <input class="form-control" value="Bank Account Number: {{$profile->no_rec}}" type="text" readonly>
+                    </div>
+                </div>
+                <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="form-line">
+                        <input class="form-control" value="Bank Name: {{$profile->bank_name}}" type="text" readonly>
+                    </div>
+                </div>
+                <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="form-line">
+                        <input class="form-control" value="Bank Account Name: {{$profile->bank_account_name}}" type="text" readonly>
+                    </div>
+                </div>
+                <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="form-line">
+                        <input class="form-control" name="nominal" id="nominal" type="number" min="5">
+                        <label class="form-label">Nominal withdrawal</label>
+                    </div>
+                </div>
+                <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="form-line">
+                        <input class="form-control" name="points" id="points" type="text" readonly>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a href="#" class="btn btn-secondary" data-dismiss="modal">Close</a>
+                    <button type="submit" id="topup-points" disabled=true class="btn btn-primary">Topup</a>
+                </div>
+            </form>!-->
+            <div class="modal-footer">
+                <a href="#" class="btn btn-secondary" data-dismiss="modal">Close</a>
+            </div>
+        </div>
+    </div>
+</div>
+    
 <section class="content ecommerce-page">
     <div class="block-header">
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12">
                 <h2>Bitrex Value History
                 <small class="text-muted">Bitrexgo</small>
-                <h5 class="d-flex flex-row-reverse">Bitrex Value: IDR {{number_format($profile->bitrex_cash)}}</h5>
                 </h2>
+            </div>
+        </div>
+    </div>
+    <div class="block-header">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="body">
+                    <a href="#" class="btn btn-primary btn-md" data-toggle="modal" data-target="#withdraw" style="margin-bottom:-20px; width: 136px;">withdrawal</a>
+                    <h4 class="d-flex flex-row-reverse">Bitrex Value: {{number_format($profile->bitrex_cash,0,".",".")}}</h4>
+                </div>
             </div>
         </div>
     </div>

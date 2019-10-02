@@ -119,6 +119,18 @@
       font-size: 20px;
     }
 
+    @media only screen and (max-width: 1200px){
+        #padd{
+            padding-top: 7px !important;
+        }
+
+        #logo-bitrex{
+            height:30px !important;
+            width: 80px !important;
+            padding-left: 0px !important;
+        }
+    }
+
     @media only screen and (max-width: 400px) and (min-width: 300px) {
         span#clock{
             margin-left: -15px;
@@ -225,47 +237,6 @@ $(document).ready(function(){
             }
         }
     });
-
-    $.ajax({
-        url: '{{route("member.select.expired-member")}}',
-        data: data,
-        success:function(data){
-            $('#clock').countdown(data.expired_at, function(event) {
-                $(this).html(`
-                  <span>${event.strftime('%D')}<span class="text-warning"> Days :</span></span>
-
-                  <span>${event.strftime('%H')}<span class="text-warning">h :</span></span>
-
-                  <span>${event.strftime('%M')}<span class="text-warning">m :</span></span>
-
-                  <span>${event.strftime('%S')}<span class="text-warning">s</span></span>
-
-                `);
-            });
-            // $('#clock-countdown').countdown(data.expired_at, function(event) {
-            //     $(this).html(`
-            //       <div id="clockdiv" class="clockdiv mt-2">
-    				// 				<div>
-    				// 					<span class="days">${event.strftime('%D')}</span>
-    				// 					<div class=" smalltext">Days</div>
-    				// 				</div>
-    				// 				<div>
-    				// 					<span class="hours">${event.strftime('%H')}</span>
-    				// 					<div class=" smalltext">Hours</div>
-    				// 				</div>
-    				// 				<div>
-    				// 					<span class="minutes">${event.strftime('%M')}</span>
-    				// 					<div class=" smalltext">Minutes</div>
-    				// 				</div>
-    				// 				<div>
-    				// 					<span class="seconds">${event.strftime('%S')}</span>
-    				// 					<div class=" smalltext">Seconds</div>
-    				// 				</div>
-    				// 			</div>
-            //     `);
-            // });
-        }
-    })
 })
 
 </script>

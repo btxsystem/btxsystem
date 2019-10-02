@@ -351,7 +351,8 @@ class ProfileMemberController extends Controller
     }
 
     public function getExpiredMember(){
-        $time = DB::table('employeers')->where('id',Auth::id())->select('expired_at')->first();
+        $time['date'] = DB::table('employeers')->where('id',Auth::id())->select('expired_at')->first();
+        $time['des'] = Auth::user()->expired_at <= Carbon::now()->addMonths(3) ? true : false;
         return response()->json($time, 200);
     }
 

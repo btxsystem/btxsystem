@@ -530,6 +530,7 @@ rect {
 	var available_email = false;
 	var parent_id = undefined;
 	var check_cost = true;
+	const BASE_SRC = '{{url("/")}}';
 
 	$('#male').change(function(){
 		checkTerm()
@@ -715,7 +716,7 @@ rect {
 			checkTerm()
 		})
 	})
-	$('#province').html('<option disabled>Province<option>');
+	$('#province').html('<option disabled>Province</option>');
 	$.ajax({
 		type: 'GET',
 		url: '/member/shipping/province',
@@ -751,6 +752,7 @@ rect {
 			type: 'GET',
 			url: '/member/select/search-downline/'+data,
 			success: function (data) {
+				parent_id = data.parent_id;
 				if (data) {
 					$.ajax({
 						type: 'GET',
@@ -1025,15 +1027,15 @@ rect {
 				$('#_name').text('Name: ' + data.member.first_name + ' ' +data.member.last_name);
 				$('#_username').text('Username: ' + data.member.username);
 				$('#_id_member').text('Id Member: ' + data.member.id_member);
-				data.pairings ? $('#_pv_pairing_l').text('PV Pairing L: ' + data.pairings.pv_left) : $('#_pv_pairing_l').text('PV Pairing L: 0 ') ;
-				data.pairings ? $('#_pv_pairing_m').text('PV Pairing M: ' + data.pairings.pv_midle) : $('#_pv_pairing_m').text('PV Pairing M: 0 ');
-				data.pairings ? $('#_pv_pairing_r').text('PV Pairing R: ' + data.pairings.pv_right) : $('#_pv_pairing_r').text('PV Pairing R: 0 ');
-				data.pv_group ? $('#_pv_group_l').text('PV Rank L: ' + data.pv_group.pv_left) : $('#_pv_group_l').text('PV Rank: 0 ');
-				data.pv_group ? $('#_pv_group_m').text('PV Rank M: ' + data.pv_group.pv_midle) : $('#_pv_group_m').text('PV Rank: 0 ');
-				data.pv_group ? $('#_pv_group_r').text('PV Rank R: ' + data.pv_group.pv_right) : $('#_pv_group_r').text('PV Rank: 0 ');
+				data.pairings ? $('#_pv_pairing_l').text('PV Pairing L: ' + addCommas(data.pairings.pv_left)) : $('#_pv_pairing_l').text('PV Pairing L: 0 ') ;
+				data.pairings ? $('#_pv_pairing_m').text('PV Pairing M: ' + addCommas(data.pairings.pv_midle)) : $('#_pv_pairing_m').text('PV Pairing M: 0 ');
+				data.pairings ? $('#_pv_pairing_r').text('PV Pairing R: ' + addCommas(data.pairings.pv_right)) : $('#_pv_pairing_r').text('PV Pairing R: 0 ');
+				data.pv_group ? $('#_pv_group_l').text('PV Rank L: ' + addCommas(data.pv_group.pv_left)) : $('#_pv_group_l').text('PV Rank: 0 ');
+				data.pv_group ? $('#_pv_group_m').text('PV Rank M: ' + addCommas(data.pv_group.pv_midle)) : $('#_pv_group_m').text('PV Rank: 0 ');
+				data.pv_group ? $('#_pv_group_r').text('PV Rank R: ' + addCommas(data.pv_group.pv_right)) : $('#_pv_group_r').text('PV Rank: 0 ');
             }
         });
-
+		
 		var treeStructure = d3.tree().size([2000,480]);
 		var root = d3.hierarchy(data).sort(function(a, b) {return a.data.position - b.data.position ;});
 		treeStructure(root);
@@ -1102,7 +1104,7 @@ rect {
 			.data(information.descendants());
 		image.enter().append("a")
 			.append("image")
-			.attr("xlink:href", function(d){return "https://img.icons8.com/bubbles/2x/user.png"})
+			.attr("xlink:href", function(d){return d.data.src == null ? "https://img.icons8.com/bubbles/2x/user.png" : BASE_SRC+'/'+d.data.src})
 			.attr("x", function(d){
 				if($(window).width() <= 480) {  
 					return d.x-80;

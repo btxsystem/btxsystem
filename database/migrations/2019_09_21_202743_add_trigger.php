@@ -18,11 +18,10 @@ class AddTrigger extends Migration
             FOR EACH ROW BEGIN
                 DECLARE bonus_bv decimal(15, 0);
                 DECLARE bonus_pv, sponsor, pv_now integer;
-                set time_zone = "+07:00";
                 SET bonus_bv = (SELECT bv FROM `ebooks` WHERE id = NEW.ebook_id);
                 SET bonus_pv = (SELECT pv FROM `ebooks` WHERE id = NEW.ebook_id);
                 SET sponsor = (SELECT sponsor_id FROM `employeers` WHERE id = NEW.member_id);
-                set @verif = (SELECT verification FROM `employeers` WHERE employeers.id = new.member_id);
+                set @verif = (SELECT verification FROM `employeers` WHERE employeers.id = sponsor);
                 set @username = (SELECT username FROM `employeers` WHERE employeers.id = new.member_id);
                 set @pajak = 0.0;
                 set @condition1 = (SELECT count(id) FROM `transaction_member` WHERE member_id = new.member_id and status = 1);
@@ -30,9 +29,9 @@ class AddTrigger extends Migration
                 IF @verif = 0 THEN
                 set @pajak = 0.03;
                 ELSE
-                set @pajak = 0.025;
+                    set @pajak = 0.025;
                 END IF;
-                set @ppn = @pajak * (bonus_bv * 0.2);
+                    set @ppn = @pajak * (bonus_bv * 0.2);
                 IF sponsor is NULL THEN 
                     SET sponsor = NEW.member_id;
                 END IF;
@@ -65,19 +64,18 @@ class AddTrigger extends Migration
             FOR EACH ROW BEGIN
                 DECLARE bonus_bv decimal(15, 0);
                 DECLARE bonus_pv, sponsor, pv_now integer;
-                set time_zone = "+07:00";
                 SET bonus_bv = (SELECT bv FROM `ebooks` WHERE id = NEW.ebook_id);
                 SET bonus_pv = (SELECT pv FROM `ebooks` WHERE id = NEW.ebook_id);
                 SET sponsor = (SELECT sponsor_id FROM `employeers` WHERE id = NEW.member_id);
-                set @verif = (SELECT verification FROM `employeers` WHERE employeers.id = new.member_id);
+                set @verif = (SELECT verification FROM `employeers` WHERE employeers.id = sponsor);
                 set @username = (SELECT username FROM `employeers` WHERE employeers.id = new.member_id);
                 set @pajak = 0.0;
                 set @condition1 = (SELECT count(id) FROM `transaction_member` WHERE member_id = new.member_id and status = 1);
                 set @condition2 = (SELECT count(id) FROM `transaction_non_members` WHERE member_id = new.member_id and status = 1);
                 IF @verif = 0 THEN
-                set @pajak = 0.03;
+                    set @pajak = 0.03;
                 ELSE
-                set @pajak = 0.025;
+                    set @pajak = 0.025;
                 END IF;
                 set @ppn = @pajak * (bonus_bv * 0.2);
                 IF sponsor is NULL THEN 
