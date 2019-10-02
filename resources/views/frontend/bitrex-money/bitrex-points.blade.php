@@ -139,10 +139,10 @@
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12">
                 <div class="body">
-                    <a href="#" class="btn btn-primary btn-md" data-toggle="modal" data-target="#topup">Topup</a>
-                    <a href="#" class="btn btn-primary btn-md" data-toggle="modal" data-target="#cekongkir">Cek Ongkir</a>
-                    <a href="#" class="btn btn-primary btn-md" data-toggle="modal" data-target="#convert">Convert to BV</a>
-                    <h5 class="d-flex flex-row-reverse">Bitrex Points: {{number_format($profile->bitrex_points)}}</h5>
+                    <a href="#" class="btn btn-primary btn-md topup" data-toggle="modal" data-target="#topup">Topup</a>
+                    <a href="#" class="btn btn-primary btn-md cek-ongkir" data-toggle="modal" data-target="#cekongkir">Cek Ongkir</a>
+                    <a href="#" class="btn btn-primary btn-md convert" data-toggle="modal" data-target="#convert">Convert to BV</a>
+                    <h5 class="d-flex flex-row-reverse">Bitrex Points: {{number_format($profile->bitrex_points,0,".",".")}}</h5>
                 </div>
             </div>
         </div>
@@ -160,6 +160,46 @@
     </div>
 </section>
 @stop
+
+<style>
+    @media only screen and (max-width: 1200px) {
+        .topup{
+            margin-bottom: 5px !important;
+            margin-right: 150px !important;
+            width: 136px;
+        }
+
+        .cek-ongkir{
+            margin-bottom: 5px !important;
+            margin-right: 300px !important;
+            width: 136px;
+        }
+
+        .convert{
+            margin-bottom: -20px !important;
+            width: 136px;
+        }
+    }
+    @media only screen and (min-width: 1200px) {
+        .topup{
+            margin-bottom: -20px !important;
+            margin-right: 3px !important;
+            width: 136px;
+        }
+
+        .cek-ongkir{
+            margin-bottom: -20px !important;
+            margin-right: 3px !important;
+            width: 136px;
+        }
+
+        .convert{
+            margin-bottom: -20px !important;
+            margin-right: 3px !important;
+            width: 136px;
+        }
+    }
+</style>
 
 @section('footer_scripts')
 <script type="text/javascript">
@@ -286,7 +326,7 @@
                     $('#bill').html('<div class="body" style="color:red;"><center><strong>History is currently empty</strong></center></div>');
                 }else{
                     $.each(data.points.data, function(i, item) {
-                        date = moment(item.created_at).format('MMMM Do Y');
+                        date = moment(item.created_at).format('MMMM Do Y - HH:mm');
                         type = item.info ? 'Income' : 'Spending';
                         color = item.info ? 'green' : 'red';
                         nominal = addCommas(item.nominal);
@@ -318,7 +358,7 @@
             }
             $('.ajax-load').hide();
             $.each(data.points.data, function(i, item) {
-                date = moment(item.created_at).format('MMMM Do Y');
+                date = moment(item.created_at).format('MMMM Do Y - HH:mm');
                 type = item.info ? 'Income' : 'Spending';
                 color = item.info ? 'green' : 'red';
                 nominal = addCommas(item.nominal);
