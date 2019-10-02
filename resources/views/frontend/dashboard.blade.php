@@ -35,28 +35,12 @@
     </div>
 </div>
 
-<div class="modal fade" id="exp" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="train" style="color:red">Warning</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <h5 style="color:red">Your member account will expire in less than three months</h5>
-            </div>
-            <div class="modal-footer">
-                <a class="btn btn-secondary" data-dismiss="modal">Close</a>
-            </div>
-        </div>
-    </div>
-</div>
-
 <section class="content profile-page">
     <section class="boxs-simple">
         <div class="profile-header">
+            <div class="text-right" style="margin-bottom: 20px; margin-right: 20px;">
+                <span id="clock"></span>
+            </div>
             <div class="profile_info row">
                 <div class="col-lg-3 col-md-4 col-12">
                     <div class="profile-image float-md-right"> <img src="{{isset($profile['src']) ? asset($profile['src']) : asset('/assetsebook/v2/img/logo-white.png') }}"  alt=""> </div>
@@ -225,20 +209,41 @@
             });
 
             $.ajax({
+                url: '{{route("member.select.expired-member")}}',
+                data: data,
+                success:function(data){
+                    console.log(data);
+                    
+                    if (data.des) {
+                        $('#clock').countdown(data.date.expired_at, function(event) {
+                            $(this).html(`
+                            <span>Status membership: </span>
+                            <span>${event.strftime('%D')}<span class="text-warning"> Days :</span></span>
+
+                            <span>${event.strftime('%H')}<span class="text-warning">h :</span></span>
+
+                            <span>${event.strftime('%M')}<span class="text-warning">m :</span></span>
+
+                            <span>${event.strftime('%S')}<span class="text-warning">s</span></span>
+
+                            `);
+                        });
+                    }else{
+                        $('#clock').html(`
+                            <span>Membership active until: </span>
+                            <span class="text-warning">${moment(data.date.expired_at).format('D MMMM Y')}</span>
+                        `);
+                    }
+                }
+            })
+
+            $.ajax({
                 url: '{{route("member.select.bonus")}}',
                 data: data,
                 success:function(data){
                     $('.commission').text(addCommas(data.total.nominal == null ? 0 : data.total.nominal));
                     $('.event').text(addCommas(data.event.nominal == null ? 0 : data.event.nominal));
                     $('.rewards').text(addCommas(data.rewards.nominal == null ? 0 : data.rewards.nominal));
-                }
-            });
-
-            $.ajax({
-                url: '{{route("member.select.exp-three-month")}}',
-                data: data,
-                success:function(data){
-                    data.darurat ? $('#exp').modal('show') : $('#exp').modal('hide');
                 }
             });
 

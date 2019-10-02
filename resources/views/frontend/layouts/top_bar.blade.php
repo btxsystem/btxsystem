@@ -24,10 +24,6 @@
             <a href="javascript:void(0);" class="bars" style="color:white"></a>
             <a class="navbar-brand " href="#"><img src="{{asset('assetsebook/v2/img/logo-white.png')}}" alt="" style="height:35px"></a>
         </div>
-        <ul class="nav navbar-nav navbar-left">
-            <li><a href="javascript:void(0);" class="ls-toggle-btn" data-close="true"><i class="zmdi zmdi-swap"></i></a></li>
-            <li><i class="zmsdi"><span id="clock"></span></i></li>
-        </ul>
         <ul class="nav navbar-nav navbar-right">
             <li style="font-size:13px"><a data-toggle="modal" data-target="#logout" title="sign out" style="text-decoration:none; cursor:pointer;" class="logout"><strong>Logout</strong>&nbsp<i class="fa fa-sign-out" style="color:red; cursor:pointer;"></a></i></li> 
         </ul>
