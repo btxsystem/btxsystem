@@ -57,7 +57,8 @@ class ReportController extends Controller
         if (request()->ajax()) {
             if($request->from_date) {
             $data = TransactionMember::where('status', 1)
-                                 ->whereNotNull('transaction_ref')                                                                  
+                                 ->whereNotNull('transaction_ref')   
+                                //  ->whereDate('created_at', '>=', '2019-09-19')                                                               
                                  ->whereBetween('created_at', [$request->from_date, $request->to_date])
                                  ->with(['ebook' => function($query) {
                                                         $query->select(['id','title','price']);
@@ -72,7 +73,8 @@ class ReportController extends Controller
                                 ->select('transaction_member.*')
                                 ->orderBy('transaction_member.created_at','desc');
             } else {
-                $data = TransactionMember::where('status', 1)
+                $data = TransactionMember::where('status','=', 1)
+                                // ->whereDate('created_at', '>=', '2019-09-19')
                                 ->whereNotNull('transaction_ref')
                                 ->with(['ebook' => function($query) {
                                                     $query->select(['id','title','price']);

@@ -12,7 +12,10 @@
     <thead>
     <tr>
         <th>Transaction No</th>
+        <th>Name</th>
         <th>Username</th>
+        <th>Contact</th>
+        <th>Address</th>
         <th>Get Startepack</th>
         <th>Product</th>
         <th>Price</th>
@@ -25,7 +28,10 @@
     @foreach($data as $model)
         <tr>
             <td>{{ $model->transaction_ref }}</td>
+            <td>{{ $model->member ? $model->member->first_name .' '. $model->member->last_name : '' }}</td>
             <td>{{ optional($model->member)->username }}</td>
+            <td>{{ optional($model->member)->phone_number }}</td>
+            <td>{{ $model->member->address ? $model->member->address->province .', '. $model->member->address->city_name .', '. $model->member->address->subdistrict_name .', '. $model->member->address->decription : '-' }}</td>
             <td>{{ $model->member->address ? 'Shipping' : 'Take Away' }}</td>
             <td>{{ optional($model->ebook)->title }}</td>
             <td>{{ optional($model->ebook)->price }}</td>
