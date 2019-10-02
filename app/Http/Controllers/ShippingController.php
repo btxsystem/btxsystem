@@ -11,7 +11,7 @@ class ShippingController extends Controller
 {
     public function getProvince()
     {
-        $config['api_key'] = '36c8c1ee70aa09f3bc85fe0f2d3ee62f';
+        $config['api_key'] = '04f0a0070bc0d7a543e78ff45fa0dc95';
         $config['account_type'] = 'pro';
 
         $rajaongkir = new Rajaongkir($config);
@@ -27,7 +27,7 @@ class ShippingController extends Controller
 
     public function getCity($id)
     {
-        $config['api_key'] = '36c8c1ee70aa09f3bc85fe0f2d3ee62f';
+        $config['api_key'] = '04f0a0070bc0d7a543e78ff45fa0dc95';
         $config['account_type'] = 'pro';
         $provinceId = $id ;
         $rajaongkir = new Rajaongkir($config);
@@ -43,7 +43,7 @@ class ShippingController extends Controller
 
     public function getSubDistrict($id)
     {
-        $config['api_key'] = '36c8c1ee70aa09f3bc85fe0f2d3ee62f';
+        $config['api_key'] = '04f0a0070bc0d7a543e78ff45fa0dc95';
         $config['account_type'] = 'pro';
 
         $rajaongkir = new Rajaongkir($config);
@@ -60,7 +60,7 @@ class ShippingController extends Controller
 
     public function getCost($id)
     {
-        $config['api_key'] = '36c8c1ee70aa09f3bc85fe0f2d3ee62f';
+        $config['api_key'] = '04f0a0070bc0d7a543e78ff45fa0dc95';
         $config['account_type'] = 'pro';
 
         $originID = 2127;
