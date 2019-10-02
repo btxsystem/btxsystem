@@ -190,6 +190,11 @@ class Employeer extends Authenticatable
                 ->where('id', 1)->first();
     }
 
+    public function getTakeStarterpackAttribute()
+    {
+        return $this->address ? 'Shipping' : 'Take Away';
+    }
+
     public function scopeFilter($query, $request)
     {
         if ($request->has('search') && $request->search['value'] !== null) {
