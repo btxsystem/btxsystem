@@ -751,6 +751,7 @@ rect {
 			type: 'GET',
 			url: '/member/select/search-downline/'+data,
 			success: function (data) {
+				parent_id = data.parent_id;
 				if (data) {
 					$.ajax({
 						type: 'GET',
