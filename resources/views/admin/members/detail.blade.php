@@ -235,6 +235,35 @@
                 <div class="portlet-title">
                     <div class="caption">
                         <i class="fa fa-book"></i> &nbsp;
+                        PV Pairing Histories
+                    </div>
+                </div>
+                
+                <div class="portlet-body flip-scroll">
+                    <table class="table pv-pairing-table table-bordered table-striped table-condensed flip-content" >
+                        <thead class="flip-content">
+                            <tr>
+                                <th width="5%">No</th>
+                                <th class="text-center" width="10%">PV Left Before</th>
+                                <th class="text-center" width="10%">PV Middle Before</th>
+                                <th class="text-center" width="10%">PV Right Before</th>
+                                <th class="text-center" width="10%">Pairing</th>
+                                <th class="text-center" width="15%">Flush Out / Unqualified</th>
+                                <th class="text-center" width="10%">PV Left Current</th>
+                                <th class="text-center" width="10%">PV Middle Current</th>
+                                <th class="text-center" width="10%">PV Right Current</th>
+                                <th class="text-center" width="10%">Date</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+
+
+            <div class="portlet box primary" style="margin-top: 55px;">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="fa fa-book"></i> &nbsp;
                         Point Value Histories
                     </div>
                 </div>
@@ -395,6 +424,35 @@
                   { data: 'created_at', name: 'created_at', className: "text-center"  },                  
                   { data: 'status', name: 'status', className: "text-center"  },                  
                   { data: 'info', name: 'info', className: "text-center"  },                  
+
+              ]
+          });  
+        });
+
+        $(document).ready(function () {
+          var table = $('.pv-pairing-table').DataTable({
+            rowCallback: function(row, data, index){
+                $(row).find('td').css('vertical-align', 'middle');
+              },
+              destroy: true,
+              processing: true,
+              serverSide: true,
+              ajax: {
+                url: "{{ route('members.pv.history.pairing', $data->id) }}", 
+              },
+              
+              columns: [
+                  { data: 'DT_RowIndex', name: 'DT_RowIndex',orderable: false, searchable: false },
+                  { data: 'left', name: 'left', className: "text-center"  },                                  
+                  { data: 'midle', name: 'midle', className: "text-center"  },                                  
+                  { data: 'right', name: 'right', className: "text-center"  },                                  
+                  { data: 'total_pairing', name: 'total_pairing', className: "text-center"  },                                  
+                  { data: 'fail_pairing', name: 'fail_pairing', className: "text-center"  },                                  
+                  { data: 'current_left', name: 'current_left', className: "text-center"  },                                  
+                  { data: 'current_midle', name: 'current_midle', className: "text-center"  },                                  
+                  { data: 'current_right', name: 'current_right', className: "text-center"  },                                  
+                  { data: 'created_at', name: 'created_at', className: "text-center"  },                                  
+               
 
               ]
           });  
