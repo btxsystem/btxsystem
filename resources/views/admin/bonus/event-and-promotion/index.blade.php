@@ -34,8 +34,8 @@ List Of Event and Promotion
                         <thead class="flip-content">
                             <tr>
                                 <th>No</th>
-                                <th>Username</th>
-                                <th>Event</th>
+                                <th style="width:20%">Username</th>
+                                <th style="width:30%;">Event</th>
                                 <th>Nominal</th>
                                 <th>Got Reward</th>
                             </tr>
@@ -61,7 +61,6 @@ List Of Event and Promotion
               ajax: {
                 url: "{{ route('bonus.event-and-promotion.index') }}", 
               },
-              
               columns: [
                   { data: 'DT_RowIndex', name: 'DT_RowIndex',orderable: false, searchable: false },
                   { data: 'username', name: 'username' },
