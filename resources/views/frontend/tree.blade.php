@@ -363,13 +363,18 @@ svg .rect {
   stroke-width: 5px;
 }
 
-@media only screen and (max-width: 365px) and (min-width: 360px){
+@media only screen and (max-width: 370px) and (min-width: 360px){
 /* For mobile phones: */
 	svg{
 		width: 305px !important;
 	}
 	span#clock {
     	font-size: 8px !important;
+	}
+
+	.search {
+		font-size: 14px !important;
+		width: 140px !important;
 	}
 }
 

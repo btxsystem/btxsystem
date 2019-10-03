@@ -76,7 +76,7 @@ Tree
 	</div>
 </div> -->
 
-<div class="modal fade" id="warning" tabindex="-1" role="dialog" aria-labelledby="modal-warning" aria-hidden="true">
+<!--<div class="modal fade" id="warning" tabindex="-1" role="dialog" aria-labelledby="modal-warning" aria-hidden="true">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -93,7 +93,7 @@ Tree
 			</div>
 		</div>
 	</div>
-</div>
+</div>-->
 	
 
 <section class="content ecommerce-page">
@@ -103,6 +103,53 @@ Tree
 				<h2>Tree
 				<small class="text-muted">Bitrexgo</small>
 				</h2>
+			</div>
+		</div>
+	</div>
+	<div class="card" style="background-color:white;">
+		<div class="container-fluid">
+			<div>
+				<div class="col-md-12">
+					<h3>Detail Summary</h3>
+					<hr>
+					<div class="row col-md-12">
+						<div class="col-md-4">
+							<h5 id="_name"></h5>
+						</div>
+						<div class="col-md-4">
+							<h5 id="_username"></h5>
+						</div>
+						<div class="col-md-4">
+							<h5 id="_id_member"></h5>
+						</div>
+					</div>
+					<div class="row col-md-12">
+						<div class="col-md-4">
+							<h5 id="_pv_pairing_l"></h5>
+						</div>
+						<div class="col-md-4">
+							<h5 id="_pv_pairing_m"></h5>
+						</div>
+						<div class="col-md-4">
+							<h5 id="_pv_pairing_r"></h5>
+						</div>
+					</div>
+					<div class="row col-md-12">
+						<div class="col-md-4">
+							<h5 id="_pv_group_l"></h5>
+						</div>
+						<div class="col-md-4">
+							<h5 id="_pv_group_m"></h5>
+						</div>
+						<div class="col-md-4">
+							<h5 id="_pv_group_r"></h5>
+						</div>
+					</div>
+					<hr>
+					<div class="row col-md-12">
+						<br>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -138,7 +185,7 @@ Tree
 							<div class="col-md-12">
 								<br>
 								<div class="chart" id="tree">
-									<a id="upline" onclick=location.reload()></a>
+									<button id="upline" class='btn btn-primary fa fa-sort-up'></button>
 								</div>
 								
 							</div>
@@ -152,47 +199,53 @@ Tree
 @stop
 
 @section('footer_scripts')
-		<style>
-			
-			rect {
-				fill: #eeeeee;
-				stroke: #ebebeb;
-				width: 150px;
-				height: 190px;
-				stroke-width: 2;
-			}
-			path {
-				fill: none;
-				stroke: #666;
-			}
-			text {
-				dominant-baseline: middle;
-				text-anchor: middle;
-			}
-			.bigger {
-				font-size: 13px;
-			}
-			.link {
-				text-decoration: none;
-				background: red;
-				padding: 20px;
-			}
-			.img-fluid {
-				width: 60px;
-				height: 60px;
-				display: block;
-				margin-right: auto;
-				margin-left: auto;
-			}
-		</style>
+	<style>
+		
+		rect {
+			fill: #eeeeee;
+			stroke: #ebebeb;
+			width: 150px;
+			height: 190px;
+			stroke-width: 2;
+			cursor: pointer;
+		}
+		path {
+			fill: none;
+			stroke: #666;
+		}
+		text {
+			dominant-baseline: middle;
+			text-anchor: middle;
+		}
+		.bigger {
+			font-size: 13px;
+		}
+		.link {
+			text-decoration: none;
+			background: red;
+			padding: 20px;
+		}
+		.img-fluid {
+			width: 60px;
+			height: 60px;
+			display: block;
+			margin-right: auto;
+			margin-left: auto;
+		}
+	</style>
     <script type="text/javascript" src="{{ asset('assets/tree/Treant.js') }}" ></script>
     <script type="text/javascript" src="{{ asset('assets/tree/basic-example.js') }}" ></script>
     <script type="text/javascript" src="{{ asset('assets/tree/raphael.js') }}" ></script>
 	<script src="{{asset('assets2/js/number.js')}}"></script>
 	<script src="{{ asset('assets/tree/panzoom.js') }}"></script>
 	<script src="{{ asset('assets/tree/d3.js') }}"></script>
-    <script type="text/javascript">
+	<script type="text/javascript">
+		
+		var dataUser = '';
+		var parent_id = null;
         $(document).ready(function () {
+			var element = document.querySelector('#bah');
+			panzoom(element);
             $('.cari').select2({
             placeholder: "Select member...",
             ajax: {
@@ -213,165 +266,171 @@ Tree
                 minimumInputLength: 2,
             });
         });
-    
-    </script>
 
-	<script>
-	var dataUser = '';
-$(document).ready(function() {
-		var element = document.querySelector('#bah');
-		$('#upline').hide();
-		panzoom(element);
-	});
-	
-	$('#username').keyup(function(){
-		var text = this.value;
-		$.ajax({
-			type: 'GET',
-			url: '/member/select/username/'+text,
-			success: function (data) {
-				data.username ? $('#username_danger').text('username you entered already exists') : $('#username_danger').empty();
-				data.username ? $(".register").prop('disabled', true) : $(".register").prop('disabled', false);
-			},
-			error: function() { 
-				console.log("Error");
-			}
-		});
-	})
-
-
-	$('.cari').on('select2:select', function (e) {
-    	// var dataUser = ;
-		$.ajax({
-			
-			type: 'GET',
-
-			url: '/member/select/child-tree/'+e.params.data.text,
-			success: function (data) {
-				$('#bah').empty('g');
-				tree(data);
-			},
-			error: function() { 
-				console.log("Error");
-			}
-		});
-	});
-
-
-
-	var svg = d3.select("#tree").append("svg")
-		.attr("width",1190).attr("height",600)
-		.append("g").attr("transform", "translate(-750,-50)")
-		.attr('id', 'bah');
-
-
-	var tree_submit = (a, parent, position) => {
-		if(a!="available"){
+		$('.cari').on('select2:select', function (e) {
+			// var dataUser = ;
 			$.ajax({
+				
 				type: 'GET',
-				url: '/member/select/child-tree/'+a,
+
+				url: '/member/select/child-tree/'+e.params.data.text,
 				success: function (data) {
 					$('#bah').empty('g');
-					$('#upline').show();
-					tree(data)
+					tree(data);
 				},
 				error: function() { 
 					console.log("Error");
 				}
 			});
-		}else{
+		});
+
+		$('#upline').click(function(){
 			$.ajax({
 				type: 'GET',
-				url: '/member/select/bitrex-points',
+				url: '/member/select/tree-upline/'+parent_id,
 				success: function (data) {
-					if (data.bitrex_points >= 280) {
-						$('#register').modal('show');
-						$('#parent').attr('value',parent);
-						$('#position').attr('value',position);		
-					}else{
-						$('#warning').modal('show');
+					parent_id = data.parent_id;
+					$('#bah').empty('g');
+					tree(data);
+					if (!data.parent) {
+						$('#upline').hide();
 					}
 				},
-				error: function() { 
+				error: function() {
 					console.log("Error");
 				}
 			});
-		}
-	};
+		})
 
-	var tree = (data) => {
-		var treeStructure = d3.tree().size([2000,480]);
-		var root = d3.hierarchy(data).sort(function(a, b) {return a.data.position - b.data.position ;});
-		treeStructure(root);
-		var information = treeStructure(root);
-		
-		var connections = svg.append("g").selectAll("path")
-			.data(information.links());
+		var svg = d3.select("#tree").append("svg")
+			.attr("width",1190).attr("height",600)
+			.append("g").attr("transform", "translate(-750,-50)")
+			.attr('id', 'bah');
 
-		connections.enter().append("path")
-			.attr("d", function(d){
-				return "M" + d.source.x + "," + d.source.y + " v 150 H" +
-				d.target.x + " V" + d.target.y;
+		var tree_submit = (a, parent, position) => {
+			parent_id = parent;
+			if(a!="available"){
+				$.ajax({
+					type: 'GET',
+					url: '/member/select/child-tree/'+a,
+					success: function (data) {
+						$('#bah').empty('g');
+						//$('#upline').show();
+						tree(data)
+					},
+					error: function() { 
+						console.log("Error");
+					}
+				});
+			}else{
+				$.ajax({
+					type: 'GET',
+					url: '/member/select/bitrex-points',
+					success: function (data) {
+						if (data.bitrex_points >= 280) {
+							$('#register').modal('show');
+							$('#parent').attr('value',parent);
+							$('#position').attr('value',position);		
+						}else{
+							$('#warning').modal('show');
+						}
+					},
+					error: function() { 
+						console.log("Error");
+					}
+				});
+			}
+		};
+
+		var tree = (data) => {
+			$.ajax({
+            url: '/member/select/summary/'+data.id,
+            success:function(data){
+				console.log(data);
+				$('#_name').text('Name: ' + data.member.first_name + ' ' +data.member.last_name);
+				$('#_username').text('Username: ' + data.member.username);
+				$('#_id_member').text('Id Member: ' + data.member.id_member);
+				data.pairings ? $('#_pv_pairing_l').text('PV Pairing L: ' + addCommas(data.pairings.pv_left)) : $('#_pv_pairing_l').text('PV Pairing L: 0 ') ;
+				data.pairings ? $('#_pv_pairing_m').text('PV Pairing M: ' + addCommas(data.pairings.pv_midle)) : $('#_pv_pairing_m').text('PV Pairing M: 0 ');
+				data.pairings ? $('#_pv_pairing_r').text('PV Pairing R: ' + addCommas(data.pairings.pv_right)) : $('#_pv_pairing_r').text('PV Pairing R: 0 ');
+				data.pv_group ? $('#_pv_group_l').text('PV Rank L: ' + addCommas(data.pv_group.pv_left)) : $('#_pv_group_l').text('PV Rank: 0 ');
+				data.pv_group ? $('#_pv_group_m').text('PV Rank M: ' + addCommas(data.pv_group.pv_midle)) : $('#_pv_group_m').text('PV Rank: 0 ');
+				data.pv_group ? $('#_pv_group_r').text('PV Rank R: ' + addCommas(data.pv_group.pv_right)) : $('#_pv_group_r').text('PV Rank: 0 ');
+				}
 			});
+			parent_id = data.parent_id;
+			var treeStructure = d3.tree().size([2000,480]);
+			var root = d3.hierarchy(data).sort(function(a, b) {return a.data.position - b.data.position ;});
+			treeStructure(root);
+			var information = treeStructure(root);
 			
-		var rectangles = svg.append("g").selectAll("rect")
-			.data(information.descendants());
-		rectangles.enter().append("rect")
-			.attr("onclick", function(d){ return `tree_submit(${d.data.username ? `'${d.data.username}'` : `'${"available"}'`}, ${d.data.parent_id}, ${d.data.position} )` })
-			.attr("value", function(d){return d.data.username ? d.data.username : "available"})
-			.attr("href","#")
-			.attr("x", function(d){return d.x-75;})
-			.attr("y", function(d){return d.y-50;});
-			
-		var names = svg.append("g").selectAll("text")
-			.data(information.descendants());
-		names.enter().append("text")
-			.text(function(d){return d.data.username ? d.data.username : 'Available';})
-			.attr("x", function(d){return d.x+0;})
-			.attr("y", function(d){return d.y+40;})
-			.classed("bigger", true);
+			var connections = svg.append("g").selectAll("path")
+				.data(information.links());
 
-		var levels = svg.append("g").selectAll("text")
-			.data(information.descendants());
-		levels.enter().append("text")
-			.text(function(d){return d.data.rank ? "Rank : " + d.data.rank : '';})
-			.attr("x", function(d){return d.x+0;})
-			.attr("y", function(d){return d.y+60;})
-			.classed("bigger", true)
+			connections.enter().append("path")
+				.attr("d", function(d){
+					return "M" + d.source.x + "," + d.source.y + " v 150 H" +
+					d.target.x + " V" + d.target.y;
+				});
+				
+			var rectangles = svg.append("g").selectAll("rect")
+				.data(information.descendants());
+			rectangles.enter().append("rect")
+				.attr("onclick", function(d){ return `tree_submit(${d.data.username ? `'${d.data.username}'` : `'${"available"}'`}, ${d.data.parent_id}, ${d.data.position} )` })
+				.attr("value", function(d){return d.data.username ? d.data.username : "available"})
+				.attr("href","#")
+				.attr("x", function(d){return d.x-75;})
+				.attr("y", function(d){return d.y-50;});
+				
+			var names = svg.append("g").selectAll("text")
+				.data(information.descendants());
+			names.enter().append("text")
+				.text(function(d){return d.data.username ? d.data.username : 'Available';})
+				.attr("x", function(d){return d.x+0;})
+				.attr("y", function(d){return d.y+40;})
+				.classed("bigger", true);
 
-		var pv_left = svg.append("g").selectAll("text")
-			.data(information.descendants());
-		pv_left.enter().append("text")
-			.text(function(d){return d.data.pv_left >= 0 ? "L : " + addCommas(d.data.pv_left) : '';})
-			.attr("x", function(d){return d.x+0;})
-			.attr("y", function(d){return d.y+80;})
-			.classed("bigger", true);
+			var levels = svg.append("g").selectAll("text")
+				.data(information.descendants());
+			levels.enter().append("text")
+				.text(function(d){return d.data.rank ? "Rank : " + d.data.rank : '';})
+				.attr("x", function(d){return d.x+0;})
+				.attr("y", function(d){return d.y+60;})
+				.classed("bigger", true)
 
-		var pv_midle = svg.append("g").selectAll("text")
-			.data(information.descendants());
-		pv_midle.enter().append("text")
-			.text(function(d){return d.data.pv_midle >= 0 ? "M : " + addCommas(d.data.pv_midle) : ''})
-			.attr("x", function(d){return d.x+0;})
-			.attr("y", function(d){return d.y+100;})
-			.classed("bigger", true);
+			var pv_left = svg.append("g").selectAll("text")
+				.data(information.descendants());
+			pv_left.enter().append("text")
+				.text(function(d){return d.data.pv_left >= 0 ? "L : " + addCommas(d.data.pv_left) : '';})
+				.attr("x", function(d){return d.x+0;})
+				.attr("y", function(d){return d.y+80;})
+				.classed("bigger", true);
 
-		var pv_right = svg.append("g").selectAll("text")
-			.data(information.descendants());
-		pv_right.enter().append("text")
-			.text(function(d){return d.data.pv_right >= 0 ? "R : " + addCommas(d.data.pv_right) : ''})
-			.attr("x", function(d){return d.x+0;})
-			.attr("y", function(d){return d.y+120;})
-			.classed("bigger", true);
+			var pv_midle = svg.append("g").selectAll("text")
+				.data(information.descendants());
+			pv_midle.enter().append("text")
+				.text(function(d){return d.data.pv_midle >= 0 ? "M : " + addCommas(d.data.pv_midle) : ''})
+				.attr("x", function(d){return d.x+0;})
+				.attr("y", function(d){return d.y+100;})
+				.classed("bigger", true);
 
-		var image = svg.append("g").selectAll("image")
-			.data(information.descendants());
-		image.enter().append("a")
-			.append("image")
-			.attr("xlink:href", function(d){return "https://img.icons8.com/bubbles/2x/user.png"})
-			.attr("x", function(d){return d.x-30;})
-			.attr("y", function(d){return d.y-40;})
-			.classed("img-fluid", true);
-	}
+			var pv_right = svg.append("g").selectAll("text")
+				.data(information.descendants());
+			pv_right.enter().append("text")
+				.text(function(d){return d.data.pv_right >= 0 ? "R : " + addCommas(d.data.pv_right) : ''})
+				.attr("x", function(d){return d.x+0;})
+				.attr("y", function(d){return d.y+120;})
+				.classed("bigger", true);
+
+			var image = svg.append("g").selectAll("image")
+				.data(information.descendants());
+			image.enter().append("a")
+				.append("image")
+				.attr("xlink:href", function(d){return "https://img.icons8.com/bubbles/2x/user.png"})
+				.attr("x", function(d){return d.x-30;})
+				.attr("y", function(d){return d.y-40;})
+				.classed("img-fluid", true);
+		}
 
     </script>
 @stop
