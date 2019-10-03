@@ -218,7 +218,7 @@ class MemberController extends Controller
             $data->nik = $data->nik;
             $data->first_name = $request->first_name;
             $data->last_name = $request->last_name;
-            $data->email = $data->email;
+            $data->email = $request->email;
             $data->birthdate = $request->birthdate;
             $data->npwp_number = $request->npwp_number;
             $data->is_married = $request->is_married;
@@ -239,14 +239,14 @@ class MemberController extends Controller
             $data->save();
             DB::commit();
             
-            Alert::success('Sukses Menambah Data Member', 'Sukses');
+            Alert::success('Sukses Update Data Member', 'Sukses');
             return redirect()->route('members.show', $data->id);
  
         }catch(\Exception $e){
             throw $e;
             DB::rollback();
             
-            Alert::error('Gagal Menambah Data Member', 'Gagal');
+            Alert::error('Gagal Update Data Member', 'Gagal');
             return \redirect()->back();
         }
     }
