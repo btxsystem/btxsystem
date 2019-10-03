@@ -158,6 +158,7 @@ class ProfileMemberController extends Controller
                 $employeer = Employeer::where('id_member', $idMember)->first();
 
                 if((int)$shippingMethod == 1) {
+                    $kurir = substr($request->kurir_name, 0, strpos($request->kurir_name, " -"));
                     DB::table('address')->insert([
                         'decription' => $request->input('address'),
                         'city_id' => $request->input('city'),
@@ -168,6 +169,8 @@ class ProfileMemberController extends Controller
                         'subdistrict_name' => $request->input('district_name'),
                         'type' => 1,
                         'user_id' => $employeer->id,
+                        'kurir' => $kurir,
+                        'cost' => $request->kurir,
                     ]);
                 }
                 
@@ -836,6 +839,7 @@ class ProfileMemberController extends Controller
                 $employeer = Employeer::where('id_member', $idMember)->first();
 
                 if((int)$shippingMethod == 1) {
+                    $kurir = substr($request->kurir_name, 0, strpos($request->kurir_name, " -"));
                     DB::table('address')->insert([
                         'decription' => $request->input('address'),
                         'city_id' => $request->input('city'),
@@ -846,6 +850,8 @@ class ProfileMemberController extends Controller
                         'subdistrict_name' => $request->input('district_name'),
                         'type' => 1,
                         'user_id' => $employeer->id,
+                        'kurir' => $kurir,
+                        'cost' => $request->kurir,
                     ]);
                 }
                 

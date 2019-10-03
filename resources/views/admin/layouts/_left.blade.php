@@ -161,6 +161,12 @@
                     Reward
                 </a>
             </li>
+            <li class="{{ (request()->is('backoffice/bonus/event-and-promotion')) ? 'active' : '' }}">
+                <a href="{{ route('bonus.event-and-promotion') }}">
+                    <i class="fa fa-angle-double-right"></i>
+                    Event and promotion
+                </a>
+            </li>
         </ul>
     </li>
     <li class="{{ (request()->segment(2))=='report' ? 'active' : '' }}">
