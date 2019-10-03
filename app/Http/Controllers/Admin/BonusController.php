@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\HistoryBitrexCash;
 use App\Employeer;
 use DataTables;
+use DB;
 
 class BonusController extends Controller
 {
@@ -57,11 +58,9 @@ class BonusController extends Controller
 
     public function event(){
         if (request()->ajax()) {
-            $data = HistoryBitrexCash::with('member')->where('type', 4)->select('history_bitrex_cash.*')->get();  
+            $data = DB::table('history_bitrex_cash')->join('employeers','employeers.id','=','history_bitrex_cash.id_member')
+                                                ->where('type',4)->select('employeers.username as username','history_bitrex_cash.description','history_bitrex_cash.nominal','history_bitrex_cash.created_at')->get();
             return Datatables::of($data)
-                    ->addColumn('username', function($data) {
-                        return $data->member ? $data->member->username : 'No Data';
-                    })
                     ->addIndexColumn()
                     ->make(true);
         }
