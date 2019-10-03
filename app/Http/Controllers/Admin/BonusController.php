@@ -55,6 +55,10 @@ class BonusController extends Controller
         return view('admin.bonus.profit');
     }
 
+    public function event(){
+        return view('admin.bonus.event-and-promotion.index');
+    }
+
     public function bonusReward()
     {
         if (request()->ajax()) {
@@ -83,7 +87,6 @@ class BonusController extends Controller
             }
         return view('admin.bonus.general');
     }
-
     // public function general(Request $request)
     // {
     //     if (request()->ajax()) {
