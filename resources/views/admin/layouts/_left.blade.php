@@ -162,7 +162,7 @@
                 </a>
             </li>
             <li class="{{ (request()->is('backoffice/bonus/event-and-promotion')) ? 'active' : '' }}">
-                <a href="{{ route('bonus.event-and-promotion') }}">
+                <a href="{{ route('bonus.event-and-promotion.index') }}">
                     <i class="fa fa-angle-double-right"></i>
                     Event and promotion
                 </a>

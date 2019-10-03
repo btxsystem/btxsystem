@@ -56,6 +56,15 @@ class BonusController extends Controller
     }
 
     public function event(){
+        if (request()->ajax()) {
+            $data = HistoryBitrexCash::with('member')->where('type', 4)->select('history_bitrex_cash.*')->get();  
+            return Datatables::of($data)
+                    ->addColumn('username', function($data) {
+                        return $data->member ? $data->member->username : 'No Data';
+                    })
+                    ->addIndexColumn()
+                    ->make(true);
+        }
         return view('admin.bonus.event-and-promotion.index');
     }
 
