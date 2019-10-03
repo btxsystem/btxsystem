@@ -17,14 +17,14 @@ class BitrexCashController extends Controller
     }
     public function index(){
         if (request()->ajax()) {
-            $data = DB::table('employeers')->select('id','id_member','username','bitrex_points');
+            $data = DB::table('employeers')->select('id','id_member','username','bitrex_points','bitrex_cash');
             return Datatables::of($data)
                     ->addIndexColumn()
                     ->editColumn('username', function($data) {
                         return $data->username;
                     })
-                    ->editColumn('points', function($data){
-                        return $data->bitrex_points;
+                    ->editColumn('saldo', function($data){
+                        return currency($data->bitrex_cash);
                     })
                     ->addColumn('action', function($row) {
                         return '<a href="#detail" data-toggle="modal" class="btn btn-primary fa fa-eye" onclick="detail('.$row->id.')"></a>';

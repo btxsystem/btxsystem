@@ -127,6 +127,7 @@ Route::group(['middleware' => 'admin'], function () {
         Route::get('/{id}/point-history','Admin\MemberController@historyPointData')->name('points.history');
         Route::get('/{id}/cash-history','Admin\MemberController@historyCashData')->name('cash.history');
         Route::get('/{id}/pv-history','Admin\MemberController@historyPV')->name('pv.history');
+        Route::get('/{id}/pv-history-pairing','Admin\MemberController@historyPVPairing')->name('pv.history.pairing');
         Route::get('/{id}/transaction','Admin\MemberController@transactionMember')->name('transaction.member');
 
 
