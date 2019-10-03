@@ -4,9 +4,12 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Employeer;
+use App\HistoryPv;
 use App\Models\Ebook;
 use App\HistoryBitrexPoints;
+use App\HistoryBitrexCash;
 use App\Models\TransactionMember;
+use App\Models\HistoryPVPairing;
 use DataTables;
 use Alert;
 use Illuminate\Support\Facades\DB;
@@ -53,7 +56,8 @@ class MemberController extends Controller
         return view('admin.members.active.index');
     }
 
-    public function member_nonactive(Request $request){
+    public function member_nonactive(Request $request)
+    {
         if (request()->ajax()) {
             if($request->from_date)
             {
@@ -89,17 +93,20 @@ class MemberController extends Controller
     }
 
 
-    public function create(){
+    public function create()
+    {
         return view('admin.members.create');
     }
 
-    public function nonactive($id){
+    public function nonactive($id)
+    {
         $data['status'] = 0;
         Employeer::findOrFail($id)->update($data);
         return redirect()->back(); 
     }
     
-    public function active($id){
+    public function active($id)
+    {
         $data['status'] = 1;
         Employeer::findOrFail($id)->update($data);
         return redirect()->back(); 
@@ -341,9 +348,12 @@ class MemberController extends Controller
     
     public function historyPointData($id)
     {
-        $data = Employeer::findOrFail($id);
+        // $data = Employeer::findOrFail($id);
+        $data = HistoryBitrexPoints::where('id_member', $id)
+                                    ->where('status', 1)
+                                    ->orderBy('created_at', 'desc');
      
-        return Datatables::of($data->point_histories()->where('status', 1)->get())
+        return Datatables::of($data)
             ->addIndexColumn()
             ->addColumn('nominal', function ($data) {
                 return currency($data->nominal);
@@ -362,9 +372,11 @@ class MemberController extends Controller
 
     public function historyCashData($id)
     {
-        $data = Employeer::findOrFail($id);
+        // $data = Employeer::findOrFail($id);
+  
+        $data = HistoryBitrexCash::where('id_member', $id)->orderBy('created_at', 'desc');
      
-        return Datatables::of($data->cash_histories)
+        return Datatables::of($data)
             ->addIndexColumn()
             ->addColumn('nominal', function ($data) {
                 return currency($data->nominal);
@@ -375,20 +387,32 @@ class MemberController extends Controller
             ->make(true);
     }
 
+    public function historyPVPairing($id)
+    {
+        // $data = Employeer::findOrFail($id);
+        $data = HistoryPVPairing::where('id_member', $id)->orderBy('created_at', 'desc');
+
+        return Datatables::of($data)
+                        ->addIndexColumn()
+                        ->make(true);
+    }
+
     public function historyPV($id)
     {
-        $data = Employeer::findOrFail($id);
+        // $data = Employeer::findOrFail($id);
+        $data = HistoryPv::where('id_member', $id)->orderBy('created_at', 'desc');
      
-        return Datatables::of($data->pv_histories)
+        return Datatables::of($data)
             ->addIndexColumn()
             ->make(true);
     }
 
     public function transactionMember($id)
     {
-        $data = Employeer::with('transaction_member.ebook')->findOrFail($id);
+        $data = TransactionMember::with('ebook')->where('member_id', $id)->orderBy('created_at', 'desc');
+        // $data = Employeer::with('transaction_member.ebook')->findOrFail($id);
      
-        return Datatables::of($data->transaction_member)
+        return Datatables::of($data)
             ->addIndexColumn()
             ->addColumn('nominal', function ($data) {
                 return currency($data->nominal);
