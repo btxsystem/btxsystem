@@ -162,6 +162,7 @@
         <script type="text/javascript" src="{{ asset('assets/js/chart.bundle.min.js') }}"></script>
         <script type="text/javascript" src="{{ asset('assets/js/chart.js') }}"></script>
         <script type="text/javascript" src="{{ asset('assets/js/chart.min.js') }}"></script>
+        <script src="{{asset('assets2/js/number.js')}}"></script>
 
         <script>
         const BASE_URL = '{{url("/")}}'

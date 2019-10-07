@@ -83,8 +83,6 @@ Tree
 			    type: 'GET', //THIS NEEDS TO BE GET
 			    url: '{{route("tree.select")}}',
 			    success: function (data) {
-					console.log(data);
-					
 			      	var data = data;
 					var treeStructure = d3.tree().size([1000,380]);
 

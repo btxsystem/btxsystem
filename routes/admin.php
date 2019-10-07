@@ -72,6 +72,9 @@ Route::group(['middleware' => 'admin'], function () {
     //sales
     Route::get('sales-ebook','Admin\EbookController@salesEbook')->name('sales-ebook');
 
+    //dashboard-value
+    Route::get('dashboard-values','Admin\DashboardValuesController@data')->name('dashboard-values');
+
     // Book
     Route::resource('book', 'Admin\BookController');
     Route::get('book/{id}/chapter-data','Admin\BookController@chapterData')->name('book.chapterData');
