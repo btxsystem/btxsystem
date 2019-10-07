@@ -15,7 +15,7 @@ class DashboardValuesController extends Controller
         $non_active = DB::table('employeers')->select('id')
                             ->where('status',0)->get();
         $sales = DB::table('transaction_member')->select('id')
-                            ->where('status',1)->get();
+                            ->where('status',1)->where('transaction_ref','<>',null)->get();
         $bonus = DB::table('history_bitrex_cash')->select('id')
                             ->where('info',1)->sum('nominal');
         $datas['active'] = count($active);
