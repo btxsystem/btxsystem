@@ -18,7 +18,7 @@ Bonus Sponsor
 <section class="content">                
     <div class="row">
         <div class="col-md-12">
-            <div id="trfx-embed"><canvas id="myChart" width="100" height="50"></canvas></div>
+            <div id="trfx-embed"><canvas id="myChart" width="100" height="40"></canvas></div>
         </div>
     </div>
 </section>

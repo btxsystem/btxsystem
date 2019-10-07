@@ -219,7 +219,7 @@ class EbookController extends Controller
 
     public function salesEbook(){
         $datas = DB::table('transaction_member')->select(DB::raw('MONTH(created_at) as tanggal'), DB::raw('count(id) as views'))
-                                                ->where(DB::raw('YEAR(created_at)'),now()->year)
+                                                ->where(DB::raw('YEAR(created_at)'),now()->year)->where('status',1)
                                                 ->where('transaction_ref','<>', null)->groupBy('tanggal')->get();
         $tmp_data = [0,0,0,0,0,0,0,0,0,0,0,0];
         foreach ($datas as $key => $data) {
