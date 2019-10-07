@@ -161,10 +161,10 @@ $(document).ready(function() {
         type: 'GET',
         url: '/backoffice/dashboard-values',
         success: function (d) {
-            $('#member-active').text(addCommas(d.active));
-            $('#member-nonactive').text(addCommas(d.non_active));
-            $('#member-sales').text(addCommas(d.sales));
-            $('#bonus').text(addCommas(d.bonus));
+            $('#member-active').html('<br/>'+addCommas(d.active));
+            $('#member-nonactive').html('<br/>'+addCommas(d.non_active));
+            $('#member-sales').html('<br/>'+addCommas(d.sales));
+            $('#bonus').html('IDR '+addCommas(d.bonus));
         }
     });
 });
