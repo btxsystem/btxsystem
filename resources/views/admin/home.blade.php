@@ -164,7 +164,7 @@ $(document).ready(function() {
             $('#member-active').html('<br/>'+addCommas(d.active));
             $('#member-nonactive').html('<br/>'+addCommas(d.non_active));
             $('#member-sales').html('<br/>'+addCommas(d.sales));
-            $('#bonus').html('IDR '+addCommas(d.bonus));
+            $('#bonus').html('IDR <br/>'+addCommas(d.bonus));
         }
     });
 });
