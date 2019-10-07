@@ -27,7 +27,7 @@ Bonus Sponsor
                                 <div class="col-xs-12 nopadmar">
                                     <div class="row">
                                         <div class="square_box col-xs-9">
-                                            <span style="font-size:15px;">Member Active</span>
+                                            <span style="font-size:15px;">Total Member Active</span>
                                             <div class="number" id="member-active"></div>
                                         </div>
                                     </div>
@@ -42,7 +42,7 @@ Bonus Sponsor
                                 <div class="col-xs-12 nopadmar">
                                     <div class="row">
                                         <div class="square_box col-xs-9">
-                                            <span style="font-size:15px;">Member Inactive</span>
+                                            <span style="font-size:15px;">Total Member Inactive</span>
                                             <div class="number" id="member-nonactive"></div>
                                         </div>
                                     </div>
@@ -57,7 +57,7 @@ Bonus Sponsor
                                 <div class="col-xs-12 nopadmar">
                                     <div class="row">
                                         <div class="square_box col-xs-9">
-                                            <span style="font-size:15px;">Sales this year</span>
+                                            <span style="font-size:15px;">Total Sales Ebook</span>
                                             <div class="number" id="member-sales"></div>
                                         </div>
                                     </div>
@@ -72,7 +72,7 @@ Bonus Sponsor
                                 <div class="col-xs-12 nopadmar">
                                     <div class="row">
                                         <div class="square_box col-xs-9">
-                                            <span style="font-size:15px;">Bonus credit</span>
+                                            <span style="font-size:15px;">Total Bonus Credit</span>
                                             <div class="number" id="bonus"></div>
                                         </div>
                                     </div>
