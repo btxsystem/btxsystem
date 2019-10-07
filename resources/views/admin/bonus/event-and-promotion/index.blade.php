@@ -34,7 +34,7 @@ List Of Event and Promotion
                         <thead class="flip-content">
                             <tr>
                                 <th style="width:10px; text-align: center;">No</th>
-                                <th style="width:20%">Username</th>
+                                <th style="width:20%;">Username</th>
                                 <th style="width:40%;">Event</th>
                                 <th style="width:20%;">Nominal</th>
                                 <th style="width:15%;">Got Reward</th>
