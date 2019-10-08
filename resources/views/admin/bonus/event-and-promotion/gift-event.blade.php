@@ -45,14 +45,6 @@ Gift event and promotion
                                 </div>
                             </div>
 
-                            <div class="form-group">
-                                <label class="col-md-2 control-label"></label>
-                                <div class="col-md-8 inputGroupContainer">
-                                    <span class="btn btn-info btn-sm select-all">Select all</span>
-                                    <span class="btn btn-danger btn-sm deselect-all">Deselect all</span>
-                                </div>        
-                            </div>
-
                             <div class="form-group">                
                                 <label class="col-md-2 control-label">Choose Member</label>
                                 <div class="col-md-8 inputGroupContainer">
@@ -81,4 +73,5 @@ Gift event and promotion
     </div>
 </section>
 
+@extends('admin.bonus.event-and-promotion.gift-member-script')
 @stop

@@ -89,7 +89,7 @@ class ProfileMemberController extends Controller
     public function register(Request $request){
         try {
             DB::beginTransaction();
-            $cek_npwp = strlen($request->npwp_number) >= 16 ? 1 : 0;
+            $cek_npwp = strlen($request->npwp_number) >= 15 ? 1 : 0;
             $method = $request->input('payment_method') ?? 'point';
             $shippingMethod = $request->input('shipping_method') ?? "0"; 
             
@@ -979,7 +979,7 @@ class ProfileMemberController extends Controller
             'bank_account_name' => $request->bank_account_name ? $request->bank_account_name : null,
             'bank_name' => $request->bank_name ? $request->bank_name : null,
             'is_update' => 0,
-            'verification' => strlen($request->npwp) >= 16 ? 1 : 0
+            'verification' => strlen($request->npwp) >= 15 ? 1 : 0
         ];
         $cek = Employeer::find(Auth::id())->update($data);
         if ($cek) {
