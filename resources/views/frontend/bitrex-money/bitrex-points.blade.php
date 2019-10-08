@@ -116,7 +116,8 @@
                         </div>
                         <div class="modal-footer">
                             <a href="#" class="btn btn-secondary" data-dismiss="modal">Close</a>
-                            <button type="submit" id="convert-bp" disabled=true class="btn btn-primary" style="cursor:pointer">Convert</a>
+                            <a href="#" id="convert-load" style="display:none" class="btn btn-primary"></a>
+                            <button type="submit" id="convert-bp" disabled=true class="btn btn-primary" style="cursor:pointer">Convert
                         </div>  
                     </form>
                 </div>
@@ -204,10 +205,27 @@
 @section('footer_scripts')
 <script type="text/javascript">
     $(document).ready(function () {
+    
       $("#province").select2({
         placeholder: "Province",
         width: '100%'
       });
+
+      $('#convert-bp').click(function(){
+        var $this = $(this);
+        var loadingText = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...';
+        if ($(this).html() !== loadingText) {
+            $this.data('original-text', $(this).html());
+            $this.hide();
+            $('#convert-load').html(loadingText);
+            $('#convert-load').show();
+        }
+        setTimeout(function() {
+            $this.html($this.data('original-text'));
+            $('#convert-load').hide();
+            $this.show();
+        }, 2000);
+      })
 
       $('#province').html('<option disabled>Province<option>');
   		$.ajax({

@@ -221,7 +221,8 @@
 					</div>
 					<div class="modal-footer">
 						<a class="btn btn-secondary" data-dismiss="modal">Close</a>
-						<input type="button" onclick="submitData()" class="btn btn-primary register" value="Register" style="cursor:pointer">
+						<a href="#" id="register-load" style="display:none" class="btn btn-primary"></a>
+						<input type="button" class="btn btn-primary register" value="Register" style="cursor:pointer">
 					</div>
 				</form>
 			</div>
@@ -599,10 +600,10 @@ rect {
 			&& $('#birthdate').val() != ''
 			&& adult >= 18
 			&& check > 0 
-			&& check_email 
+			//&& check_email 
 			&& check_cost 
 			&& check_user 
-			&& available_email
+			//&& available_email
 		) {
 			$('.register').prop('disabled', false)
 		} else {
@@ -634,16 +635,21 @@ rect {
 		$('#action-member').attr('action', '{{route("member.register-downline")}}')
 	}
 
-	function submitData() {
-		var $btn = $(this);
-        $btn.disabled = true;
-        $btn.button('loading');
-        // simulating a timeout
-        setTimeout(function () {
-            $btn.button('reset');
+	$('.register').click(function(){
+		var $this = $(this);
+        var loadingText = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...';
+        if ($(this).html() !== loadingText) {
+            $this.data('original-text', $(this).html());
+            $this.hide();
+            $('#register-load').html(loadingText);
+            $('#register-load').show();
+        }
+        setTimeout(function() {
+            $this.html($this.data('original-text'));
+            $('#register-load').hide();
+            $this.show();
         }, 2000);
-		$('#action-member').submit();
-	}
+	})
 
 	$(document).ready(function() {
 		$('.register').prop('disabled', true)
@@ -941,8 +947,7 @@ rect {
 				}else{
 					$('#email_danger').empty();
 					available_email = true;
-				}
-					
+				}	
 			},
 			error: function() {
 				console.log("Error");

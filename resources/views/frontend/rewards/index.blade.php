@@ -39,7 +39,7 @@
                                         <td>{{$rank->pv_needed_midle}}</td>
                                         <td>{{$rank->pv_needed_right}}</td>
                                         <td>{{$rewards[$key]->description}}</td>
-                                        <td class="reward-status-{{$key}}">
+                                        <td class="reward reward-status-{{$key}}">
                                         </td>
                                     </tr>
                                 @else
@@ -49,7 +49,7 @@
                                         <td>{{$rank->pv_needed_midle}}</td>
                                         <td>{{$rank->pv_needed_right}}</td>
                                         <td>{{$rewards[$key]->description}}</td>
-                                        <td class="reward-status-{{$key}}">
+                                        <td class="reward reward-status-{{$key}}">
                                         </td>
                                     </tr>
                                 @endif
@@ -66,18 +66,13 @@
 @section('footer_scripts')  
 <script type="text/javascript">
     let claim = (e) => {
-        var $btn = $(this);
-        $btn.disabled = true;
-        $btn.button('loading');
-        // simulating a timeout
-        setTimeout(function () {
-            $btn.button('reset');
-        }, 2000);
+        $('.reward').hide();
         $.ajax({
             url: '{{route("member.claim-reward")}}',
             data: { "_token": "{{ csrf_token() }}", "id": e},
             success:function(data){
                 location.reload();
+                $('.reward').show();
             }
         });
     }
