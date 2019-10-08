@@ -26,7 +26,7 @@ List Of Event and Promotion
                         Event and Promotion
                     </div>
                     <div class="pull-right">
-                        <a style=" color: white; text-decoration: none; margin-right: 20px; !important" href=""><i style="font-size:15px;" class="fa fa-plus"></i>&nbsp; &nbsp;<strong>Gift Event</strong></a>
+                        <a style=" color: white; text-decoration: none; margin-right: 20px; !important" href="{{route('bonus.event-and-promotion.gift-event')}}"><i style="font-size:15px;" class="fa fa-plus"></i>&nbsp; &nbsp;<strong>Gift Event</strong></a>
                     </div>
                 </div>
                 <div class="portlet-body flip-scroll">
@@ -49,29 +49,5 @@ List Of Event and Promotion
     </div>
 </section>
 
+@extends('admin.bonus.event-and-promotion.script-index')
 @stop
-
-@section('footer_scripts')
-    <script type="text/javascript">
-        $(document).ready(function () {
-          var table = $('.data-table').DataTable({
-              destroy: true,
-              processing: true,
-              serverSide: true,
-              ajax: {
-                url: "{{ route('bonus.event-and-promotion.index') }}", 
-              },
-              columns: [
-                  { data: 'DT_RowIndex', name: 'DT_RowIndex',orderable: false, searchable: false },
-                  { data: 'username', name: 'username' },
-                  { data: 'description', name: 'description' }, 
-                  { data: 'nominal', name: 'nominal' },
-                  { data: 'created_at', name: 'created_at' },                 
-              ]
-          });
-          
-        });
-       
-    </script>
-      
-@endsection

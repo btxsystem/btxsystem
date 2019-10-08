@@ -67,6 +67,10 @@ class BonusController extends Controller
         return view('admin.bonus.event-and-promotion.index');
     }
 
+    public function giftEvent(){
+        return view('admin.bonus.event-and-promotion.gift-event');
+    }
+
     public function bonusReward()
     {
         if (request()->ajax()) {
