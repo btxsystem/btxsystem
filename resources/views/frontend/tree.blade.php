@@ -600,10 +600,10 @@ rect {
 			&& $('#birthdate').val() != ''
 			&& adult >= 18
 			&& check > 0 
-			//&& check_email 
+			&& check_email 
 			&& check_cost 
 			&& check_user 
-			//&& available_email
+			&& available_email
 		) {
 			$('.register').prop('disabled', false)
 		} else {
