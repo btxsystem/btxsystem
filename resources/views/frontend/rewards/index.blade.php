@@ -66,6 +66,7 @@
 @section('footer_scripts')  
 <script type="text/javascript">
     let claim = (e) => {
+        this.disabled=true;
         $.ajax({
             url: '{{route("member.claim-reward")}}',
             data: { "_token": "{{ csrf_token() }}", "id": e},
@@ -77,6 +78,7 @@
 
     $(document).ready(function () {
         let over = 0;
+        this.disabled=false;
         $.ajax({
             url: '{{route("member.select.reward-claim")}}',
             data: data,
@@ -107,13 +109,7 @@
                     for (let index = 0; index < 8; index++) {
                         $('.reward-status-'+index).html('<button type="button" style="cursor:no-drop" class="btn btn-secondary">Unlock</button>');
                     }
-                }
-                //if (over < 8) {
-                //    for (let index = 8; index < over; index++) {
-                //        over ++; 
-                //        $('.reward-status-'+index).html('<button type="button" style="cursor:no-drop" class="btn btn-secondary">Unlock</button>'); 
-                //    }
-                //}         
+                }        
             }
         });
     });

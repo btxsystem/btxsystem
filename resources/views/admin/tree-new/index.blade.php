@@ -236,7 +236,6 @@ Tree
     <script type="text/javascript" src="{{ asset('assets/tree/Treant.js') }}" ></script>
     <script type="text/javascript" src="{{ asset('assets/tree/basic-example.js') }}" ></script>
     <script type="text/javascript" src="{{ asset('assets/tree/raphael.js') }}" ></script>
-	<script src="{{asset('assets2/js/number.js')}}"></script>
 	<script src="{{ asset('assets/tree/panzoom.js') }}"></script>
 	<script src="{{ asset('assets/tree/d3.js') }}"></script>
 	<script type="text/javascript">
@@ -346,7 +345,6 @@ Tree
 			$.ajax({
             url: '/member/select/summary/'+data.id,
             success:function(data){
-				console.log(data);
 				$('#_name').text('Name: ' + data.member.first_name + ' ' +data.member.last_name);
 				$('#_username').text('Username: ' + data.member.username);
 				$('#_id_member').text('Id Member: ' + data.member.id_member);

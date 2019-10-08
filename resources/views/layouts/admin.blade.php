@@ -17,7 +17,8 @@
         <link rel="stylesheet" type="text/css" href="/assets/vendors/sweetalert/css/sweetalert.css">
 
         <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
-   
+        <link href="{{ asset('assets/css/chart.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('assets/css/chart.min.css') }}" rel="stylesheet" type="text/css" />
  
         <!-- meta -->
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
@@ -157,6 +158,11 @@
         <script type="text/javascript" src="{{ asset('assets/vendors/datatables/js/dataTables.responsive.js') }}" ></script>
         <script type="text/javascript" src="{{ asset('assets/js/pages/table-responsive.js') }}"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+        <script type="text/javascript" src="{{ asset('assets/js/chart.bundle.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('assets/js/chart.bundle.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('assets/js/chart.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('assets/js/chart.min.js') }}"></script>
+        <script src="{{asset('assets2/js/number.js')}}"></script>
 
         <script>
         const BASE_URL = '{{url("/")}}'

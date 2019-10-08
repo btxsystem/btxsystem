@@ -8,6 +8,7 @@ use App\Models\Ebook;
 use DataTables;
 use Alert;
 use Validator;
+use DB;
 
 
 class EbookController extends Controller
@@ -214,6 +215,56 @@ class EbookController extends Controller
             })
             ->rawColumns(['action'])
             ->make(true);
+    }
+
+    public function salesEbook(){
+        $datas = DB::table('transaction_member')->select(DB::raw('MONTH(created_at) as tanggal'), DB::raw('count(id) as views'))
+                                                ->where(DB::raw('YEAR(created_at)'),now()->year)->where('status',1)
+                                                ->where('transaction_ref','<>', null)->groupBy('tanggal')->get();
+        $tmp_data = [0,0,0,0,0,0,0,0,0,0,0,0];
+        foreach ($datas as $key => $data) {
+            if ($data->tanggal != null) {
+                switch ($data->tanggal) {
+                    case '1':
+                        $tmp_data[0] = $data->views;
+                        break;
+                    case '2':
+                        $tmp_data[1] = $data->views;
+                        break;
+                    case '3':
+                        $tmp_data[2] = $data->views;
+                        break;
+                    case '4':
+                        $tmp_data[3] = $data->views;
+                        break;
+                    case '5':
+                        $tmp_data[4] = $data->views;
+                        break;
+                    case '6':
+                        $tmp_data[5] = $data->views;
+                        break;
+                    case '7':
+                        $tmp_data[6] = $data->views;
+                        break;
+                    case '8':
+                        $tmp_data[7] = $data->views;
+                        break;
+                    case '9':
+                        $tmp_data[8] = $data->views;
+                        break;
+                    case '10':
+                        $tmp_data[9] = $data->views;
+                        break;
+                    case '11':
+                        $tmp_data[10] = $data->views;
+                        break;
+                    case '12':
+                        $tmp_data[11] = $data->views;
+                        break;
+                }
+            }
+        }
+        return response()->json($tmp_data, 200);
     }
 
 }

@@ -69,6 +69,12 @@ Route::group(['middleware' => 'admin'], function () {
     Route::get('ebook/{id}/book-data','Admin\EbookController@bookData')->name('ebook.bookData');
     Route::get('ebook/{id}/video-data','Admin\EbookController@videoData')->name('ebook.videoData');
 
+    //sales
+    Route::get('sales-ebook','Admin\EbookController@salesEbook')->name('sales-ebook');
+
+    //dashboard-value
+    Route::get('dashboard-values','Admin\DashboardValuesController@data')->name('dashboard-values');
+
     // Book
     Route::resource('book', 'Admin\BookController');
     Route::get('book/{id}/chapter-data','Admin\BookController@chapterData')->name('book.chapterData');
@@ -145,14 +151,14 @@ Route::group(['middleware' => 'admin'], function () {
 
 
 
-    Route::group(['prefix'=>'new.tree','as'=>'new.tree.'], function(){
-            Route::get('index', ['as' => 'index', 'uses' => 'Admin\NewTreeController@tree']);
+    Route::group(['prefix'=>'new-tree','as'=>'new-tree.'], function(){
+            Route::get('', ['as' => 'index', 'uses' => 'Admin\NewTreeController@tree']);
             Route::get('create', ['as' => 'create', 'uses' => 'Admin\NewTreeController@create']);
             Route::get('select', ['as' => 'select', 'uses' => 'Admin\NewTreeController@getTree']);
     });
 
     Route::group(['prefix'=>'tree','as'=>'tree.'], function(){
-            Route::get('index', ['as' => 'index', 'uses' => 'Admin\TreeController@tree']);
+            Route::get('', ['as' => 'index', 'uses' => 'Admin\TreeController@tree']);
             Route::get('create', ['as' => 'create', 'uses' => 'Admin\TreeController@create']);
             Route::get('select', ['as' => 'select', 'uses' => 'Admin\TreeController@getTree']);
     });
@@ -181,6 +187,10 @@ Route::group(['middleware' => 'admin'], function () {
         Route::get('profit', ['as' => 'profit', 'uses' => 'Admin\BonusController@bonusProfit']);
         Route::get('reward', ['as' => 'reward', 'uses' => 'Admin\BonusController@bonusReward']);
         Route::get('general', ['as' => 'general', 'uses' => 'Admin\BonusController@general']);
+        Route::group(['prefix'=>'event-and-promotion','as'=>'event-and-promotion.'], function(){
+            Route::get('', ['as' => 'index', 'uses' => 'Admin\BonusController@event']);
+            Route::get('gift-event', ['as' => 'gift-event', 'uses' => 'Admin\BonusController@giftEvent']);
+        });
     });
 
     Route::group(['prefix'=>'withdrawal-bonus','as'=>'withdrawal-bonus.'], function(){
