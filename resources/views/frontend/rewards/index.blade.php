@@ -66,7 +66,13 @@
 @section('footer_scripts')  
 <script type="text/javascript">
     let claim = (e) => {
-        this.disabled=true;
+        var $btn = $(this);
+        $btn.disabled = true;
+        $btn.button('loading');
+        // simulating a timeout
+        setTimeout(function () {
+            $btn.button('reset');
+        }, 2000);
         $.ajax({
             url: '{{route("member.claim-reward")}}',
             data: { "_token": "{{ csrf_token() }}", "id": e},

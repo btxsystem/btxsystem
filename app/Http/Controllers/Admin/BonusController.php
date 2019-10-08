@@ -8,6 +8,7 @@ use App\HistoryBitrexCash;
 use App\Employeer;
 use DataTables;
 use DB;
+use Alert;
 
 class BonusController extends Controller
 {
@@ -72,7 +73,35 @@ class BonusController extends Controller
     }
 
     public function postEvent(Request $request){
-        dd($request);
+        foreach ($request->member as $key => $member) {
+            $data = [
+                'id_member' => $member,
+                'nominal' => $request->nominal,
+                'description' => $request->description,
+                'info' => 1,
+                'type' => 4,
+                'created_at' => now(),
+                'updated_at' => now()
+            ];
+            $bitrex_cash = DB::table('employeers')->where('id', $member)->select('bitrex_cash')->first();
+            $bitrex['bitrex_cash'] = $bitrex_cash->bitrex_cash+$request->nominal;
+            if ($request->type == 0) {
+                try {
+                    DB::beginTransaction();
+                    HistoryBitrexCash::insert($data);
+                    Employeer::find($member)->update($bitrex);
+                    DB::commit();
+                    Alert::success('Gift Event and promotion success', 'Success')->persistent("OK");
+                } catch (\Exception $e) {
+                    DB::rollback();
+                    Alert::error('Something wrong', 'Error')->persistent("OK");
+                }
+            }else {
+                HistoryBitrexCash::insert($data);
+                Alert::success('Gift Event and promotion success', 'Success')->persistent("OK");
+            }
+        }
+        return redirect()->route('bonus.event-and-promotion.index');
     }
 
     public function bonusReward()

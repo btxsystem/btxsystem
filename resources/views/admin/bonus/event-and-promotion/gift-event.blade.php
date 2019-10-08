@@ -21,7 +21,7 @@ Gift event and promotion
            <tbody>
               <tr>
                  <td colspan="1">
-                    <form action="" class="well form-horizontal" method="POST" enctype="multipart/form-data"> 
+                 <form action="{{route('bonus.event-and-promotion.event')}}" class="well form-horizontal" method="POST" enctype="multipart/form-data"> 
                         @csrf
                         <fieldset>
 
@@ -31,6 +31,17 @@ Gift event and promotion
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-bookmark"></i></span>
                                         <textarea name="description" id="" cols="30" rows="10" class="form-control" required="true" value=""></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">Type</label>
+                                <div class="col-md-8 inputGroupContainer" style="margin:10px">
+                                    <div class="input-group">
+                                        <input type="radio" name="type" id="tunai" value="0"> <label for="tunai">&nbsp;&nbsp;Tunai</label>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;
+                                        <input type="radio" name="type" id="nontunai" value="1"> <label for="tunai">&nbsp;&nbsp;Non Tunai</label>
                                     </div>
                                 </div>
                             </div>
@@ -60,7 +71,7 @@ Gift event and promotion
                             <div class="form-group">
                                 <label class="col-md-2 control-label"></label>
                                 <div class="col-md-8 inputGroupContainer">
-                                    <button type="submit" class="btn btn-primary btn-block">Submit</button>
+                                    <button type="submit" class="btn btn-primary btn-block event-submit">Submit</button>
                                 </div>
                             </div>
 

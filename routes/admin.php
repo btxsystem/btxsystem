@@ -190,7 +190,7 @@ Route::group(['middleware' => 'admin'], function () {
         Route::group(['prefix'=>'event-and-promotion','as'=>'event-and-promotion.'], function(){
             Route::get('', ['as' => 'index', 'uses' => 'Admin\BonusController@event']);
             Route::get('gift-event', ['as' => 'gift-event', 'uses' => 'Admin\BonusController@giftEvent']);
-            Route::post('gift-event', ['as' => 'gift-event', 'uses' => 'Admin\BonusController@giftEvent']);
+            Route::post('event', ['as' => 'event', 'uses' => 'Admin\BonusController@postEvent']);
         });
     });
 

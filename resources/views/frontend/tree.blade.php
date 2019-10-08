@@ -635,7 +635,13 @@ rect {
 	}
 
 	function submitData() {
-		$('.register').prop('disabled', true)
+		var $btn = $(this);
+        $btn.disabled = true;
+        $btn.button('loading');
+        // simulating a timeout
+        setTimeout(function () {
+            $btn.button('reset');
+        }, 2000);
 		$('#action-member').submit();
 	}
 

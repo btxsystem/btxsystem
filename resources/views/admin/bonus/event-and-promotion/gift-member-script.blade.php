@@ -22,6 +22,16 @@
                 },
                 minimumInputLength: 2,
             });
+
+            $('.event-submit').click(function(){
+                var $btn = $(this);
+                $btn.disabled = true;
+                $btn.button('loading');
+                // simulating a timeout
+                setTimeout(function () {
+                    $btn.button('reset');
+                }, 2000);
+            })
         });
     </script> 
 @endsection
