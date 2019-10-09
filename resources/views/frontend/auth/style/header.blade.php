@@ -67,6 +67,16 @@
         background-color: rgba(34, 145, 155, 0.84);
         content: '';
     }
+
+    .section-ui {
+        text-align: center;
+        color: #009286;
+        bottom: 10;
+        background-color: #F8F8FF;
+        padding-top: 3.5vw;
+	    padding-bottom: 3.5vw;
+    }
+    
     .section-subscribe {
         background-color: #22919b;
     }

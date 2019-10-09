@@ -426,8 +426,8 @@ class RegisterController extends Controller
             'password' => password_hash($password, PASSWORD_BCRYPT)
           ]);
 
-          Mail::to($idNewMember->email)
-            ->send(new RegisterMemberMail($dataEmail, null));
+          // Mail::to($idNewMember->email)
+          //   ->send(new RegisterMemberMail($dataEmail, null));
             
         } else if($orderType == 'BITREX04') { //witout ebbook
           $password = strtolower(str_random(8));

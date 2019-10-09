@@ -58,13 +58,19 @@
 					</div>
 					<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div class="form-line">
-							<input class="form-control" id="nik" name="nik" id="number_phone" type="number" min="1" required>
+							<input class="form-control" id="phone_number" name="phone_number" type="text" min="11" max='13' required>
+							<label class="form-label">Phone Number</label>
+						</div>
+					</div>
+					<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
+						<div class="form-line">
+							<input class="form-control" id="nik" name="nik" id="number_phone" type="text" min="1" required>
 							<label class="form-label">NIK / Passport</label>
 						</div>
 					</div>
           			<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div class="form-line">
-							<input class="form-control" id="npwp_number" name="npwp_number" type="number" min="1" required>
+							<input class="form-control" id="npwp_number" name="npwp_number" type="text" min="1" required>
 							<label class="form-label">NPWP</label>
 						</div>
 					</div>
@@ -76,7 +82,7 @@
 					</div>
           			<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div class="form-line">
-							<input class="form-control" id="bank_account_number" name="bank_account_number" type="number" min="1" required>
+							<input class="form-control" id="bank_account_number" name="bank_account_number" type="text" min="1" required>
 							<label class="form-label">Account Number</label>
 						</div>
 					</div>
@@ -546,6 +552,42 @@ rect {
 		checkTerm()
 	})
 
+	$('#username').change(function(){
+		checkTerm()
+	})
+
+	$('#first_name').change(function(){
+		checkTerm()
+	})
+
+	$('#last_name').change(function(){
+		checkTerm()
+	})
+
+	$('#email').change(function(){
+		checkTerm()
+	})
+
+	$('#phone_number').change(function(){
+		checkTerm()
+	})
+
+	$('#nik').change(function(){
+		checkTerm()
+	})
+
+	$('#npwp_number').change(function(){
+		checkTerm()
+	})
+
+	$('#bank_account_name').change(function(){
+		checkTerm()
+	})
+
+	$('#bank_account_number').change(function(){
+		checkTerm()
+	})
+
 	$('#birthdate').on('change', function() {
 		var dob = new Date(this.value);
 		var today = new Date();
@@ -560,6 +602,10 @@ rect {
 	});
 
 	$('#nik').keyup(function(){
+		checkTerm()
+	})
+
+	$('#phone_number').keyup(function(){
 		checkTerm()
 	})
 
@@ -594,6 +640,7 @@ rect {
 		if(
 			$('#username').val() != ''
 			&& $('#email').val() != ''
+			&& $('#phone_number').val() != ''
 			&& $('#first_name').val() != ''
 			&& $('#last_name').val() != ''
 			&& $('#nik').val() != ''
@@ -972,6 +1019,60 @@ rect {
 			}
 		});
 		checkTerm()
+	})
+
+	$('#phone_number').on('input', function() {
+		let str = this.value;
+		this.value = (str.match(/[0-9]/g)) ? str.match(/[0-9]/g).join('') : '';
+	var text = this.value;
+	$.ajax({
+		type: 'GET',
+		url: '/member/select/phone_number/'+text,
+		success: function (data) {
+			data.username ? $('#phone_number').text('phone number you entered already exists') : $('#phone_number').empty();
+			check_user = data.username ? false  : true;
+		},
+		error: function() {
+			console.log("Error");
+		}
+	});
+		checkTerm()
+	})
+
+	$('#nik').on('input', function() {
+		let str = this.value;
+		this.value = (str.match(/[0-9]/g)) ? str.match(/[0-9]/g).join('') : '';
+	var text = this.value;
+	$.ajax({
+		type: 'GET',
+		url: '/member/select/nik/'+text,
+		success: function (data) {
+			data.username ? $('#nik').text('nik you entered already exists') : $('#nik').empty();
+			check_user = data.username ? false  : true;
+		},
+		error: function() {
+			console.log("Error");
+		}
+	});
+	checkTerm()
+	})
+
+	$('#bank_account_number').on('input', function() {
+	let str = this.value;
+	this.value = (str.match(/[0-9]/g)) ? str.match(/[0-9]/g).join('') : '';
+	var text = this.value;
+	$.ajax({
+	type: 'GET',
+	url: '/member/select/bank_account_number/'+text,
+	success: function (data) {
+		data.username ? $('#bank_account_number').text('bank account number you entered already exists') : $('#bank_account_number').empty();
+		check_user = data.username ? false  : true;
+	},
+	error: function() {
+		console.log("Error");
+	}
+	});
+	checkTerm()
 	})
 
 	var my_transform = d3Transform()

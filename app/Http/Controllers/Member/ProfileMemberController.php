@@ -28,6 +28,7 @@ class ProfileMemberController extends Controller
             "username" =>  $data->username,
             "name" => $data->first_name.' '.$data->last_name,
             "email" => $data->email,
+            "phone_number" => $request->phone_number,
             "birthdate" => date('F j, Y',strtotime($data->birthdate)),
             "npwp_number" => $data->npwp_number,
             "is_married" => $data->is_married ? 'Married' : 'Single',
@@ -101,6 +102,14 @@ class ProfileMemberController extends Controller
                 return redirect()->route('member.tree');
             }
 
+            $checkPhoneNumber = Employeer::where('phone_number', $request->phone_number)->count();
+
+            if($checkPhoneNumber > 0) {
+                DB::rollback();
+                Alert::error('Nomor Telephon sudah terdaftar', 'Error')->persistent("OK");
+                return redirect()->route('member.tree');
+            }
+
             $cek_parent = DB::table('employeers')->where('parent_id', $request->parent)->select('position')->get();
             foreach ($cek_parent as $key => $data) {
                 if ($data->position == $request->position) {
@@ -136,6 +145,7 @@ class ProfileMemberController extends Controller
                     'first_name' => $request->first_name,
                     'last_name' => $request->last_name,
                     'email' => $request->email,
+                    "phone_number" => $request->phone_number,
                     'password' => bcrypt($password),//bcrypt('Mbitrex'.rand(100,1000)),
                     'birthdate' => $request->birthdate,
                     'npwp_number' => $request->npwp_number,
@@ -386,6 +396,7 @@ class ProfileMemberController extends Controller
                 'first_name' => $data->first_name,
                 'last_name' => $data->last_name,
                 'email' => $data->email,
+                "phone_number" => $request->phone_number,
                 'password' => bcrypt('password'),//bcrypt('Mbitrex'.rand(100,1000)),
                 'birthdate' => $data->birthdate,
                 'gender' => 0,
@@ -424,6 +435,7 @@ class ProfileMemberController extends Controller
                     'first_name' => $data->first_name,
                     'last_name' => $data->last_name,
                     'email' => $data->email,
+                    "phone_number" => $request->phone_number,
                     'password' => bcrypt('password'),//bcrypt('Mbitrex'.rand(100,1000)),
                     'birthdate' => $data->birthdate,
                     'gender' => 0,
@@ -449,6 +461,7 @@ class ProfileMemberController extends Controller
                     'first_name' => $data->first_name,
                     'last_name' => $data->last_name,
                     'email' => $data->email,
+                    "phone_number" => $request->phone_number,
                     'password' => bcrypt('password'),//bcrypt('Mbitrex'.rand(100,1000)),
                     'birthdate' => $data->birthdate,
                     'gender' => 0,
@@ -474,6 +487,7 @@ class ProfileMemberController extends Controller
                     'first_name' => $data->first_name,
                     'last_name' => $data->last_name,
                     'email' => $data->email,
+                    "phone_number" => $request->phone_number,
                     'password' => bcrypt('password'),//bcrypt('Mbitrex'.rand(100,1000)),
                     'birthdate' => $data->birthdate,
                     'gender' => 0,
@@ -524,6 +538,7 @@ class ProfileMemberController extends Controller
                 'first_name' => $request->first_name,
                 'last_name' => $request->last_name,
                 'email' => $request->email,
+                "phone_number" => $request->phone_number,
                 'password' => bcrypt('password'),//bcrypt('Mbitrex'.rand(100,1000)),
                 'birthdate' => $request->birthdate,
                 'gender' => 0,
@@ -560,6 +575,7 @@ class ProfileMemberController extends Controller
                     'first_name' => $request->first_name,
                     'last_name' => $request->last_name,
                     'email' => $request->email,
+                    "phone_number" => $request->phone_number,
                     'password' => bcrypt('password'),//bcrypt('Mbitrex'.rand(100,1000)),
                     'birthdate' => $request->birthdate,
                     'gender' => 0,
@@ -583,6 +599,7 @@ class ProfileMemberController extends Controller
                     'first_name' => $request->first_name,
                     'last_name' => $request->last_name,
                     'email' => $request->email,
+                    "phone_number" => $request->phone_number,
                     'password' => bcrypt('password'),//bcrypt('Mbitrex'.rand(100,1000)),
                     'birthdate' => $request->birthdate,
                     'gender' => 0,
@@ -606,6 +623,7 @@ class ProfileMemberController extends Controller
                     'first_name' => $request->first_name,
                     'last_name' => $request->last_name,
                     'email' => $request->email,
+                    "phone_number" => $request->phone_number,
                     'password' => bcrypt('password'),//bcrypt('Mbitrex'.rand(100,1000)),
                     'birthdate' => $request->birthdate,
                     'gender' => 0,
@@ -639,6 +657,14 @@ class ProfileMemberController extends Controller
             if($checkEmail > 0) {
                 DB::rollback();
                 Alert::error('Email sudah terdaftar', 'Error')->persistent("OK");
+                return redirect()->route('member.tree');
+            }
+
+            $checkPhoneNumber = Employeer::where('phone_number', $request->phone_number)->count();
+
+            if($checkPhoneNumber > 0) {
+                DB::rollback();
+                Alert::error('Nomor sudah terdaftar', 'Error')->persistent("OK");
                 return redirect()->route('member.tree');
             }
 
@@ -715,6 +741,7 @@ class ProfileMemberController extends Controller
                         'first_name' => $request->first_name,
                         'last_name' => $request->last_name,
                         'email' => $request->email,
+                        "phone_number" => $request->phone_number,
                         'password' => bcrypt('password'),//bcrypt('Mbitrex'.rand(100,1000)),
                         'birthdate' => $request->birthdate,
                         'gender' => 0,
@@ -756,6 +783,7 @@ class ProfileMemberController extends Controller
                             'first_name' => $request->first_name,
                             'last_name' => $request->last_name,
                             'email' => $request->email,
+                            "phone_number" => $request->phone_number,
                             'password' => bcrypt('password'),//bcrypt('Mbitrex'.rand(100,1000)),
                             'birthdate' => $request->birthdate,
                             'gender' => 0,
@@ -784,6 +812,7 @@ class ProfileMemberController extends Controller
                             'first_name' => $request->first_name,
                             'last_name' => $request->last_name,
                             'email' => $request->email,
+                            "phone_number" => $request->phone_number,
                             'password' => bcrypt('password'),//bcrypt('Mbitrex'.rand(100,1000)),
                             'birthdate' => $request->birthdate,
                             'gender' => 0,
@@ -812,6 +841,7 @@ class ProfileMemberController extends Controller
                             'first_name' => $request->first_name,
                             'last_name' => $request->last_name,
                             'email' => $request->email,
+                            "phone_number" => $request->phone_number,
                             'password' => bcrypt('password'),//bcrypt('Mbitrex'.rand(100,1000)),
                             'birthdate' => $request->birthdate,
                             'gender' => 0,

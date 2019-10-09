@@ -260,6 +260,25 @@
       </section>
       <!-- end section-default -->
 
+      <!-- end section-video -->
+      <section class="section-ui wow fadeInUp" data-wow-duration="1s">
+        <div class="container">
+          <div class="row">
+            <div class="col-xs-15">
+                <div class="ui-ktp" style="font-size:20px;font-weight:bold"> ANNOUNCEMENT </div>
+                <div class="ui-ktp" style="font-size:20px;font-weight:bold"> PT BITREXGO SOLUSI PRIMA HANYA AKAN MEMBERIKAN 1 HAK USAHA UNTUK 1 KTP KEPADA SELURUH MEMBER TANPA KECUALI </div> 
+                <div class="ui-ktp" style="font-size:20px;font-weight:bold"> 1 KTP BERLAKU UNTUK 1 HAK USAHA </div><br>
+                <div class="entry-thumbnail"><img class="ui-ktp" src="{{asset('img/KTP.png')}}" width="270" height="250" alt="Foto"/></a> </div>
+              </div>
+            <!-- end col -->
+          </div>
+          <!-- end row -->
+        </div>
+        <!-- end container -->
+      </section>
+      <!-- end section-video -->
+
+
       <section class="section-default hidden" id="myEvent" style="background: #22919b;margin-top: 0px;margin-bottom: 0px;padding-top: 70px;padding-bottom: 50px;">
         <div class="container">
           <div class="row">
