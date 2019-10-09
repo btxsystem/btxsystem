@@ -58,8 +58,12 @@
       <td>: <strong>{{ number_format($data->amount) }}</strong></td>
     </tr>
     <tr>
+      <td>Invoice Number</td>
+      <td>: <strong>{{ $data->ref_no }}</strong></td>
+    </tr>
+    <tr>
       <td>URL Confirmation</td>
-      <td>: <strong><a href="{{route('payment.confirm', ['ref_no' => $data->ref_no])}}">Confirm</a></strong></td>
+      <td>: <strong><a href="{{route('payment.confirm', ['ref' => $data->ref_no])}}">Confirm</a></strong></td>
     </tr>
   </table>
   <br/>
