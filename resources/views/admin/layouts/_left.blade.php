@@ -58,6 +58,13 @@
                 Customers
         </a>
     </li>
+    <li class="{{ (request()->is('backoffice/verification-npwp')) ? 'active' : '' }}">
+        <a href="{{ route('verification-npwp.index') }}">
+            <i class="fa fa-check-circle" style="color: #6CC66C" data-name="customer" data-size="18" data-c="#bdecb6" data-hc="#bdecb6"
+                data-loop="true"></i>
+                Verification NPWP
+        </a>
+    </li>
     <li class="{{ (request()->is('backoffice/new-tree')) ? 'active' : '' }}">
         <a href="{{ route('new-tree.index') }}">
             <i class="fa fa-sitemap" style="color: #6CC66C" data-name="share" data-size="18" data-c="#F89A14" data-hc="#F89A14"

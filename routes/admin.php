@@ -49,6 +49,11 @@ Route::group(['middleware' => 'admin'], function () {
 
     });
 
+    Route::group(['prefix' => 'verification-npwp' ,'as'=>'verification-npwp.'], function () {
+        Route::get('', ['as' => 'index', 'uses' => 'Admin\VerificarionNpwpController@index']);
+        Route::post('store', ['as' => 'store', 'uses' => 'Admin\VerificarionNpwpController@store']);
+    });
+
     Route::group(['prefix'=>'trainings','as'=>'trainings.'],function(){
         Route::get('', ['as' => 'index', 'uses' => 'Admin\TrainingController@index']);
         Route::get('create', ['as' => 'create', 'uses' => 'Admin\TrainingController@create']);
