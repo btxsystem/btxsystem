@@ -222,7 +222,7 @@
 					<div class="modal-footer">
 						<a class="btn btn-secondary" data-dismiss="modal">Close</a>
 						<a href="#" id="register-load" style="display:none" class="btn btn-primary"></a>
-						<input type="button" class="btn btn-primary register" value="Register" style="cursor:pointer">
+						<input type="submit" class="btn btn-primary register" value="Register" style="cursor:pointer">
 					</div>
 				</form>
 			</div>
@@ -648,7 +648,7 @@ rect {
             $this.html($this.data('original-text'));
             $('#register-load').hide();
             $this.show();
-        }, 2000);
+        }, 10000);
 	})
 
 	$(document).ready(function() {
