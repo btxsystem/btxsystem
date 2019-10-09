@@ -26,7 +26,7 @@ class TransactionExport implements FromView
                                         $query->select(['id','title','price']);
                                     },   
                             'member.address' => function($query) {
-                                        $query->select(['id','province','city_name','subdistrict_name','decription','user_id']);
+                                        $query->select(['id','province','city_name','subdistrict_name','decription','user_id', 'kurir', 'cost']);
                                     },  
                             'member' => function($query) {
                                         $query->select(['id','id_member','username','first_name','last_name','phone_number']);

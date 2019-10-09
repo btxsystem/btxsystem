@@ -21,6 +21,8 @@
         <th>Price</th>
         <th>Buy Date</th>
         <th>Expired</th>
+        <th>Curir</th>
+        <th>Cost</th>
     </tr>
     </thead>
     <tbody>
@@ -37,6 +39,8 @@
             <td>{{ optional($model->ebook)->price }}</td>
             <td>{{ $model->created_at }}</td>
             <td>{{ $model->expired_at }}</td>
+            <td>{{ $model->member->address ? $model->member->address->kurir : '-' }}</td>
+            <td>{{ $model->member->address ? $model->member->address->cost : '-' }}</td>
 
         </tr>
     @endforeach
