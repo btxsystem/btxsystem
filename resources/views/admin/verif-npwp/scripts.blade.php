@@ -1,24 +1,25 @@
 @section('footer_scripts')
     <script type="text/javascript">
+        let username = undefined;
 
         let verif = (data) => {
+            username = data;
             $('#info-verif').html('Are you want verification npwp '+ data +' ?')
         }
 
         $('#verification').click(function(){
+            var $btn = $(this);
             $.ajax({
-                type: 'POST',
-                url: '/member/select/bitrex-points',
-                success: function (data) {
-                    if (data.bitrex_points >= 280) {
-                        $('#register').modal('show');
-                    }else{
-                        $('#register').modal('hide');
-                        $('#warning').modal('show');
-                    }
-                },
-                error: function() {
-                    console.log("Error");
+                url: '{{route("verification-npwp.store")}}',
+                data: { "_token": "{{ csrf_token() }}", "username": username},
+                success:function(data){
+                    $btn.disabled = true;
+                    $btn.button('loading');
+                    // simulating a timeout
+                    location.reload();
+                    setTimeout(function () {
+                        $btn.button('reset');
+                    }, 2000);
                 }
             });
         })

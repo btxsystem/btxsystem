@@ -27,4 +27,10 @@ class VerificarionNpwpController extends Controller
          }
          return view('admin.verif-npwp.index');
     }
+
+    public function store(Request $request){
+        $data = Employeer::where('username',$request->username)->select('id')->first();
+        $npwp['verification'] = 1;
+        Employeer::find($data->id)->update($npwp);
+    }
 }
