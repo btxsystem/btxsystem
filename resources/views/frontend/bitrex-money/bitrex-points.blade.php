@@ -30,10 +30,12 @@
                 </div>
                 <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
                   <div class="demo-radio-button">
-                    <input name="method" type="radio" value="transfer" id="male" class="with-gap radio-col-red" checked />
-                    <label for="male">Transfer</label>
-                    <input name="method" type="radio" value="ipay" id="female" class="with-gap radio-col-red" />
-                    <label for="female">VA & OVO</label>
+                    <input name="method" type="radio" value="transfer" id="transfer" class="with-gap radio-col-red" checked />
+                    <label for="transfer">Transfer</label>
+                    <input name="method" type="radio" value="ipay" id="ipay" class="with-gap radio-col-red" />
+                    <label for="ipay">VA & OVO</label>
+                    <input name="method" type="radio" value="bca" id="bca" class="with-gap radio-col-red" />
+                    <label for="bca">VA BCA</label>
                   </div>
                 </div>
                 <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12" id="transfer-form">
@@ -41,9 +43,13 @@
                   <h4>Bank Account : PT. BITREXGO SOLUSI PRIMA</h4>
                   <h4>Bank Number : 5810598168</h4>
                 </div>
+                <hr>
+                <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12" id="va-bca" style="display:none;">
+                    <img src="{{asset('img/bca.png')}}" alt="" srcset="" style="width:120px;">
+                </div>
                 <div class="modal-footer">
                     <a href="#" class="btn btn-secondary" data-dismiss="modal">Close</a>
-                    <button type="submit" id="topup-points" disabled=true class="btn btn-primary">Topup</a>
+                    <button type="submit" id="topup-points" disabled=true class="btn btn-primary" style="cursor:pointer">Topup</a>
                 </div>
             </form>
         </div>
@@ -225,6 +231,18 @@
             $('#convert-load').hide();
             $this.show();
         }, 2000);
+      })
+
+      $('#bca').change(function(){
+        $('#va-bca').show();
+      })
+
+      $('#ipay').change(function(){
+        $('#va-bca').hide();
+      })
+
+      $('#transfer').change(function(){
+        $('#va-bca').hide();
       })
 
       $('#province').html('<option disabled>Province<option>');
