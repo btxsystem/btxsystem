@@ -35,7 +35,7 @@
                     <input name="method" type="radio" value="ipay" id="ipay" class="with-gap radio-col-red" />
                     <label for="ipay">VA & OVO</label>
                     <input name="method" type="radio" value="bca" id="bca" class="with-gap radio-col-red" />
-                    <label for="bca">VA BCA</label>
+                    <label for="bca">BCA VA</label>
                   </div>
                 </div>
                 <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12" id="transfer-form">
@@ -206,12 +206,35 @@
 
 @section('footer_scripts')
 <script type="text/javascript">
+    let is_bca_method = false;  
+
     $(document).ready(function () {
     
       $("#province").select2({
         placeholder: "Province",
         width: '100%'
       });
+
+      $('#transfer').change(function(){
+          $('#topup-points').prop('type','submit');
+          is_bca_method = false;
+      })
+
+      $('#ipay').change(function(){
+          $('#topup-points').prop('type','submit');
+          is_bca_method = false;
+      })
+
+      $('#bca').change(function(){
+          $('#topup-points').prop('type','button');
+          is_bca_method = true;
+      })
+
+      $('#topup-points').click(function(){
+          if(is_bca_method){
+              console.log('masuk');
+          }
+      })
 
       $('#convert-bp').click(function(){
         var $this = $(this);
