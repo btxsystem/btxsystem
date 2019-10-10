@@ -5,7 +5,7 @@ namespace App\Entities\Bca;
 use App\Entities\Bca\DetailBillEntity;
 use App\Entities\Bca\LanguageEntity;
 
-class VaBillEntity
+class TransactionBillEntity
 {
   public $CompanyCode;
   

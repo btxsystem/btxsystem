@@ -2,7 +2,7 @@
 
 namespace App\Service\Bca;
 
-use App\Entities\Bca\VaBillEntity;
+use App\Entities\Bca\TransactionBillEntity;
 use App\Entities\Bca\LanguageEntity;
 use App\Entities\Bca\DetailBillEntity;
 use App\Repositories\TransactionBillDetailRepository;
@@ -59,12 +59,12 @@ class VirtualAccountService
     $transactionBill = (new TransactionBillRepository())
       ->findByCustomerNumber($customerNumber);
 
-    $checkInquiryBills = (new VaBillEntity())
+    $checkInquiryBills = (new TransactionBillEntity())
       ->setCompanyCode($companyCode ?? '11210')
       ->setCustomerNumber($customerNumber)
       ->setRequestID($requestID)
       ->setChannelType($channelType ?? '6014')
-      ->setInquiryStatus("00")
+      ->setInquiryStatus(BcaStatusType::SUCCESS_FLAG)
       ->setCustomerName('Customer BCA Virtual Account')
       ->setCurrencyCode('IDR')
       ->setTotalAmount("150000.00")
@@ -98,7 +98,7 @@ class VirtualAccountService
         ->setPaidAmount($transactionBill->paid_amount)
         ->setCustomerName($transactionBill->user_type == 'member' ? $transactionBill->member->username : $transactionBill->nonMember->username);
       } else {
-        $checkInquiryBills->setInquiryStatus('01')
+        $checkInquiryBills->setInquiryStatus(BcaStatusType::REJECT_FLAG)
         ->setInquiryReason(
           ((new LanguageEntity())
             ->setIndonesian('Gagal')
@@ -129,7 +129,7 @@ class VirtualAccountService
       $request->input('TransactionDate') == '' || 
       !$this->validateFormatDate($request->input('TransactionDate'))
     ) {
-      $builder->setInquiryStatus('01')
+      $builder->setInquiryStatus(BcaStatusType::REJECT_FLAG)
         ->setInquiryReason(
           ((new LanguageEntity())
             ->setIndonesian('Gagal')
@@ -173,7 +173,7 @@ class VirtualAccountService
     $flagAdvide = $request->input('FlagAdvide');
     $additionaldata = $request->input('Additionaldata');
 
-    $paymentBills = (new VaBillEntity())
+    $paymentBills = (new TransactionBillEntity())
       ->setCompanyCode($companyCode ?? '11210')
       ->setCustomerNumber($customerNumber ?? '008271822372')
       ->setRequestID($requestID ?? '201507131507262221400000001975')
