@@ -84,7 +84,7 @@ class ProfileMemberController extends Controller
         }else{
             Alert::error('The password you entered does not match', 'Error')->persistent("OK");
         }
-        return view('frontend.dashboard');
+        return redirect()->back();
     }
 
     public function register(Request $request){
