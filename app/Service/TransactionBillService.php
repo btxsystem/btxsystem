@@ -2,7 +2,11 @@
 
 namespace App\Service;
 
-class TransactionProductService
+use App\Repositories\TransactionBillRepository;
+use App\Repositories\TransactionBillDetailRepository;
+
+
+class TransactionBillService
 {
 
   /**
