@@ -6,6 +6,7 @@ use App\Repositories\TransactionBillRepository;
 use App\Repositories\TransactionBillDetailRepository;
 use App\Employeer;
 use App\Models\TransactionMember;
+use App\HistoryBitrexPoints;
 
 use DB;
 use Carbon\Carbon;
@@ -95,9 +96,9 @@ class TransactionBillService
    * @param [type] $customerNumber
    * @return void
    */
-  public function ebookNonMember($transactionBillRepo)
+  public function ebookNonMember($builder, $transactionBillRepo)
   {
-    return true;
+    return false;
   }
 
   /**
@@ -106,9 +107,51 @@ class TransactionBillService
    * @param [type] $customerNumber
    * @return void
    */
-  public function topupBitrexPoint($transactionBillRepo)
+  public function topupBitrexPoint($builder, $transactionBillRepo)
   {
-    return true;
+    try {
+      DB::beginTransaction();
+      $productDetail = json_decode($transactionBillRepo->detail->product_detail);
+
+      $affix = (int) ltrim($transactionBillRepo->customer_number, '1121') + (int) date('yhmdHis');
+
+      $saveTopupBitrexPoint = HistoryBitrexPoints::insert([
+        'id_member' => $transactionBillRepo->user_id,
+        'nominal' => $productDetail->nominal,
+        'points' => $productDetail->points,
+        'description' => $productDetail->description,
+        'info' => 1,
+        'transaction_ref' => "BITREX".$affix,
+        'status' => 1,
+        'created_at' => date('Y-m-d H:i:s'),
+        'updated_at' => date('Y-m-d H:i:s'),
+      ]);
+
+      $user = Employeer::find($transactionBillRepo->user_id)->increment('bitrex_points', (int) $productDetail->points);
+
+      $updateTransaction = $transactionBillRepo->update([
+        'payment_flag_status' => '00',
+        'payment_flag_reason' => json_encode($builder->getPaymentFlagReason()),
+        'customer_name' => $builder->getCustomerName(),
+        'referrence' => $builder->getReferrence(),
+        'flag_advice' => $builder->getFlagAdvice(),
+        'paid_amount' => substr($builder->getPaidAmount(), 0, strlen($builder->getPaidAmount()) - 3),
+        'transaction_date' => $builder->getTransactionDate(),
+        'request_id' => $builder->getRequestID(),
+      ]);
+
+      if(!$saveTopupBitrexPoint || !$updateTransaction || !$user) {
+        DB::rollback();
+        return false;
+      }
+
+      DB::commit();
+  
+      return true;
+    } catch (\Exception $e) {
+      DB::rollback();
+      return false;
+    }
   }
 
   /**

@@ -207,11 +207,17 @@ class VirtualAccountService
       //get transaction type
       $transactionBillRepo = $this->transactionBillRepo
         ->findByCustomerNumber($customerNumber);
-
+      
+      // jika SIT tidakterpenuhi
+      if(!$this->validateFlagPayment($paymentBills, $transactionBillRepo ?? null, $request)) {
+        return $paymentBills;
+      }
+      
       // jika user sudah membayar
       if($this->validateIsPayment($paymentBills, $transactionBillRepo->payment_flag_status ?? null)) {
         return $paymentBills;
       } 
+      
       
       $paymentBills->setPaymentFlagStatus(BcaStatusType::SUCCESS_FLAG)
         ->setPaymentFlagReason(
@@ -219,11 +225,9 @@ class VirtualAccountService
             ->setIndonesian("Sukses")
             ->setEnglish("Success")
         );
-        //assign to product type by customerNumber
-      $paymentBillProduct = $this->paymentBillProduct($paymentBills, $transactionBillRepo);
       
       // if failed payment or any problem
-      if(!$paymentBillProduct || !$transactionBillRepo) {
+      if(!$transactionBillRepo) {
         $paymentBills->setPaymentFlagStatus(BcaStatusType::REJECT_FLAG)
           ->setPaymentFlagReason(
             (new LanguageEntity())
@@ -248,7 +252,10 @@ class VirtualAccountService
         return $paymentBills;
       }
 
-      $paymentBills->setPaymentFlagStatus(BcaStatusType::SUCCESS_FLAG)
+      $paymentBillProduct = $this->paymentBillProduct($paymentBills, $transactionBillRepo);
+      
+      if($paymentBillProduct) {
+        $paymentBills->setPaymentFlagStatus(BcaStatusType::SUCCESS_FLAG)
         ->setPaymentFlagReason(
           (new LanguageEntity())
             ->setIndonesian("Sukses")
@@ -259,8 +266,8 @@ class VirtualAccountService
             ->setIndonesian('Sukses')
             ->setEnglish('Success'))
         )
-        ->setTotalAmount($transactionBillRepo->total_amount)
-        ->setPaidAmount($transactionBillRepo->paid_amount)
+        ->setTotalAmount($transactionBillRepo->total_amount.".00")
+        ->setPaidAmount($transactionBillRepo->paid_amount.".00")
         ->setCustomerName($transactionBillRepo->user_type == 'member' ? $transactionBillRepo->member->username : $transactionBillRepo->nonMember->username);
         // ->setFreeTexts(function() {
         //   $freeTexts = [
@@ -271,9 +278,8 @@ class VirtualAccountService
     
         //   return $freeTexts;
         // });
+      }
         
-      $this->validateFlagPayment($paymentBills, $transactionBillRepo, $request);
-      
     return $paymentBills;    
   }
 
@@ -287,20 +293,22 @@ class VirtualAccountService
   public function validateFlagPayment($builder, $transactionBillRepo, $request)
   {
     if(
+      $transactionBillRepo == null || 
       $request->input('CompanyCode') == '' || 
       $request->input('CustomerNumber') == '' || 
       $request->input('RequestID') == '' || 
       $request->input('ChannelType') == '' ||
       $request->input('TransactionDate') == '' || 
       $request->input('TotalAmount') == '' || 
-      $request->input('TotalAmount') != $transactionBillRepo->total_amount ||  
       $request->input('PaidAmount') == '' || 
       $request->input('FlagAdvice') == '' || 
       $request->input('SubCompany') == '' || 
       $request->input('Referrence') == '' || 
       $request->input('FlagAdvice') != 'Y' &&
       $request->input('FlagAdvice') != 'N' ||
-      !$this->validateFormatDate($request->input('TransactionDate'))
+      !$this->validateFormatDate($request->input('TransactionDate')) ||
+      !$this->validateTotalAmount($request->input('TotalAmount'), $transactionBillRepo->total_amount.".00") ||
+      !$this->validateTotalAmount($request->input('PaidAmount'), $transactionBillRepo->total_amount.".00")
     ) {
       $builder->setInquiryStatus(BcaStatusType::REJECT_FLAG)
         ->setInquiryReason(
@@ -315,7 +323,15 @@ class VirtualAccountService
             ->setEnglish('Failed'))
         );
       
+      return false;
+    } else {
+      return true;
     }
+  }
+
+  public function validateTotalAmount($a, $b)
+  {
+    return $a != $b ? false : true;
   }
 
   /**
@@ -357,15 +373,15 @@ class VirtualAccountService
         break;
       case ProductType::EBOOK_NONMEMBER:
         return $this->TransactionBillService
-          ->ebookNonMember($transactionBillRepo);
+          ->ebookNonMember($builder, $transactionBillRepo);
         break;
       case ProductType::TOPUP_BITREX_POINT:
         return $this->TransactionBillService
-          ->topUpBitrexPoint($transactionBillRepo);
+          ->topUpBitrexPoint($builder, $transactionBillRepo);
         break;
       case ProductType::REGISTER_MEMBER:
         return $this->TransactionBillService
-          ->registerMember($transactionBillRepo);
+          ->registerMember($builder, $transactionBillRepo);
         break;
     }
 
