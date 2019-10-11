@@ -7,6 +7,14 @@ use App\Entities\Bca\LanguageEntity;
 
 class TransactionBillEntity
 {
+  public $ID;
+  
+  public $UserID;
+  
+  public $ProductType;
+
+  public $UserType;
+  
   public $CompanyCode;
   
   public $CustomerNumber;
@@ -38,6 +46,8 @@ class TransactionBillEntity
   public $DetailBills;
 
   public $FreeTexts;
+
+  public $Referrence;
 
   public $AdditionalData;
 
@@ -273,6 +283,106 @@ class TransactionBillEntity
   public function setFlagAdvide($FlagAdvide)
   {
     $this->FlagAdvide = $FlagAdvide;
+
+    return $this;
+  }
+
+  /**
+   * Get the value of UserID
+   */ 
+  public function getUserID()
+  {
+    return $this->UserID;
+  }
+
+  /**
+   * Set the value of UserID
+   *
+   * @return  self
+   */ 
+  public function setUserID($UserID)
+  {
+    $this->UserID = $UserID;
+
+    return $this;
+  }
+
+  /**
+   * Get the value of ProductType
+   */ 
+  public function getProductType()
+  {
+    return $this->ProductType;
+  }
+
+  /**
+   * Set the value of ProductType
+   *
+   * @return  self
+   */ 
+  public function setProductType($ProductType)
+  {
+    $this->ProductType = $ProductType;
+
+    return $this;
+  }
+
+  /**
+   * Get the value of UserType
+   */ 
+  public function getUserType()
+  {
+    return $this->UserType;
+  }
+
+  /**
+   * Set the value of UserType
+   *
+   * @return  self
+   */ 
+  public function setUserType($UserType)
+  {
+    $this->UserType = $UserType;
+
+    return $this;
+  }
+
+  /**
+   * Get the value of ID
+   */ 
+  public function getID()
+  {
+    return $this->ID;
+  }
+
+  /**
+   * Set the value of ID
+   *
+   * @return  self
+   */ 
+  public function setID($ID)
+  {
+    $this->ID = $ID;
+
+    return $this;
+  }
+
+  /**
+   * Get the value of Referrence
+   */ 
+  public function getReferrence()
+  {
+    return $this->Referrence;
+  }
+
+  /**
+   * Set the value of Referrence
+   *
+   * @return  self
+   */ 
+  public function setReferrence($Referrence)
+  {
+    $this->Referrence = $Referrence;
 
     return $this;
   }

@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\HistoryBitrexPoints;
 use App\HistoryBitrexCash;
 use App\Employeer;
+use App\Service\PaymentVa\TransactionPaymentService as Va;
 use DataTables;
 use DB;
 use Alert;
@@ -18,6 +19,29 @@ class BitrexPointController extends Controller
     {
         $data = Auth::user();
         return view('frontend.bitrex-money.bitrex-points')->with('profile',$data);
+    }
+
+    public function store(Request $request){
+
+        $date = now();
+
+        do {
+            $no_invoice = '11210'.date_format($date,"ymdh").rand(100,999);
+            $cek = DB::table('transaction_bills')->where('customer_number',$no_invoice)->select('id')->get();
+        } while (count($cek)>0);
+       
+        $data = [
+            'user_id' => Auth::user()->id,
+            'product_type' => 'topup',
+            'user_type' => 'member',
+            'total_amount' => $request->nominal,
+            'customer_number' => $no_invoice
+        ];
+
+        $va = new Va;
+        $va->topup(Auth::user()->id, $request->nominal, $no_invoice);
+
+        return response()->json($data, 200);
     }
 
     public function getHistoryPoints(){
