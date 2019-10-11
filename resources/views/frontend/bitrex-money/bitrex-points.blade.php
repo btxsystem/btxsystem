@@ -45,9 +45,94 @@
                 </div>
                 <div class="modal-footer">
                     <a href="#" class="btn btn-secondary" data-dismiss="modal">Close</a>
-                    <button type="submit" id="topup-points" disabled=true class="btn btn-primary">Topup</a>
+                    <a href="#" id="payment-bca" style="cursor:pointer; display:none;" class="btn btn-primary"></a>
+                    <button type="submit" id="topup-points" disabled=true class="btn btn-primary" style="cursor:pointer;">Topup</a>
                 </div>
             </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="no-virtual" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <img src="{{asset('img/bca.png')}}" alt="" srcset="" style="width:100px">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="height: 450px; overflow-y: auto;">
+                <center>
+                    <p style="font-size:14px">BCA Virtual Account Number</p>
+                        <div class="form-line focused success">
+                            <input style="color:green; font-size:25px; font-weight:bold; text-align:center;" type="text" class="form-control" id="va" name="va" value="" readonly>
+                        </div>
+                    <button type="button" class="btn btn-raised bg-grey waves-effect" style="cursor:pointer" id="copy">Copy</button>
+                </center>
+                <br>
+                <h4>Bagaimana cara melakukan Pembayaran BCA Virtual Account ?</h4>
+                <h5>1. ATM BCA</h5>
+                <ul style="font-size:12px">
+                    <li>
+                        <p>Masukkan kartu ATM dan PIN BCA anda</p>
+                    </li>
+                    <li>
+                        <p>Pilih menu TRANSAKSI LAINNYA > TRANSFER > KE REKENING BCA VIRTUAL ACCOUNT</p>
+                    </li>
+                    <li>
+                        <p>Masukkan 3901081277800894 sebagai rekening tujuan</p>
+                    </li>
+                    <li>
+                        <p>Masukkan jumlah transfer sesuai detail transaksi. (Jumlah pembayaran harus sama dengan jumlah tagihan yang harus dibayar).</p>
+                    </li>
+                    <li>
+                        <p>Ikuti instruksi untuk menyelesaikan transaksi</p>
+                    </li>
+                </ul>
+                <h5>2. KLIK BCA</h5>
+                <ul style="font-size:12px">
+                    <li>
+                        <p>Masuk ke website KLIK BCA</p>
+                    </li>
+                    <li>
+                        <p>Pilih menu TRANSFER DANA > TRANSFER KE BCA VIRTUAL ACCOUNT</p>
+                    </li>
+                    <li>
+                        <p>Masukkan 3901081277800894 sebagai rekening tujuan</p>
+                    </li>
+                    <li>
+                        <p>Masukkan jumlah transfer sesuai detail transaksi. Jumlah pembayaran harus sama dengan jumlah tagihan yang harus dibayar.</p>
+                    </li>
+                    <li>
+                        <p>Ikuti instruksi untuk menyelesaikan transaksi</p>
+                    </li>
+                </ul>
+                <h5>3. m-BCA (BCA MOBILE)</h5>
+                <ul style="font-size:12px">
+                    <li>
+                        <p>Masuk ke aplikasi mobile m-BCA</p>
+                    </li>
+                    <li>
+                        <p>Pilih menu M-TRANSFER > BCA VIRTUAL ACCOUNT</p>
+                    </li>
+                    <li>
+                        <p>Masukkan 3901081277800894 sebagai rekening tujuan</p>
+                    </li>
+                    <li>
+                        <p>Masukkan jumlah transfer sesuai detail transaksi. Jumlah pembayaran harus sama dengan jumlah tagihan yang harus dibayar.</p>
+                    </li>
+                    <li>
+                        <p>Masukkan PIN m-BCA Anda</p>
+                    </li>
+                    <li>
+                        <p>Ikuti instruksi untuk menyelesaikan transaksi</p>
+                    </li>
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" style="cursor:pointer">Close</button>
+            </div>
         </div>
     </div>
 </div>
@@ -206,14 +291,26 @@
 
 @section('footer_scripts')
 <script type="text/javascript">
-    let is_bca_method = false;  
-
+    let is_bca_method = false; 
+    
     $(document).ready(function () {
     
       $("#province").select2({
         placeholder: "Province",
         width: '100%'
       });
+
+      $('#copy').click(function(){
+            var copyText = document.getElementById("va");
+            var selection = document.getSelection();
+            copyText.select();
+            copyText.setSelectionRange(0, 99999);
+            try {
+                var success = document.execCommand('copy')
+            } catch (error) {
+                console.log(error)
+            }
+      })
 
       $('#transfer').change(function(){
           $('#topup-points').prop('type','submit');
@@ -230,9 +327,44 @@
           is_bca_method = true;
       })
 
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
       $('#topup-points').click(function(){
+          let nominal = $('#nominal').val();
+          let points = $('#points').val();
+
           if(is_bca_method){
-              console.log('masuk');
+            var $this = $(this);
+            var loadingText = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...';
+            if ($(this).html() !== loadingText) {
+                $this.data('original-text', $(this).html());
+                $this.hide();
+                $('#payment-bca').html(loadingText);
+                $('#payment-bca').show();
+            }
+            setTimeout(function() {
+                $this.html($this.data('original-text'));
+                $('#payment-bca').hide();
+                $this.show();
+            }, 2000);
+
+            $.ajax({
+                type: 'POST',
+                url: '{{route("member.bp.store")}}',
+                data: {nominal: nominal, points: points},
+                success: function (data) {
+                    $('#va').val(data.customer_number)
+                    $('#no-virtual').modal('show');
+                    $('#topup').modal('hide');
+                },
+                error: function() {
+                    console.log("Error");
+                }
+            });
           }
       })
 

@@ -110,6 +110,10 @@ Route::post('forgot-password', ['as' => 'forgot-password', 'uses' => 'Member\For
 
 Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
 
+    Route::group(['prefix' => 'bp', 'as'=> 'bp.'], function () {
+        Route::post('store', ['as' => 'store', 'uses' => 'Member\BitrexPointController@store']);
+    });
+
     Route::post('change-photo', ['as' => 'change-photo', 'uses' => 'Member\ProfileMemberController@changePhoto'] );
     
     Route::group(['prefix' => 'shipping', 'as'=> 'shipping.'], function () {
@@ -121,6 +125,10 @@ Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
     });
 
     Route::group(['prefix' => 'bonus', 'as'=> 'bonus.'], function () {
+        Route::get('', ['as' => 'index', 'uses' => 'Member\MyBonusController@index']);
+    });
+
+    Route::group(['prefix' => 'payment', 'as'=> 'payment.'], function () {
         Route::get('', ['as' => 'index', 'uses' => 'Member\MyBonusController@index']);
     });
 
