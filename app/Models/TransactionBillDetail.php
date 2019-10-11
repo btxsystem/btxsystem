@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class TransactionBillDetail extends Model
 {
-    protected $table = 'transaction_biils_details';
+    protected $table = 'transaction_bills_details';
   
     protected $guarded = [];
 }
