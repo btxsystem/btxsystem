@@ -4,10 +4,7 @@ namespace App\Service\Bca;
 
 use App\Entities\Bca\TransactionBillEntity;
 use App\Entities\Bca\LanguageEntity;
-use App\Entities\Bca\DetailBillEntity;
-use App\Repositories\TransactionBillDetailRepository;
 use App\Repositories\TransactionBillRepository;
-use App\Repositories\TransactionVirtualAccountRepository;
 use App\Service\TransactionBillService;
 use App\Types\BcaStatusType;
 use App\Types\ProductType;
