@@ -13,6 +13,36 @@ class TransactionBillService
 {
 
   /**
+   * createEbookMember function
+   *
+   * @param [type] $id
+   * @param [type] $user
+   * @param [type] $customerNumber
+   * @param integer $duration
+   * @return void
+   */
+  public function createEbookMember($id, $user, $customerNumber, $duration = 1)
+  {
+    try {
+      $affix = (int) ltrim($customerNumber, '1121') + (int) date('yhmdHis');
+
+      $saveEbook = TransactionMember::insert([
+        'member_id' => $user,
+        'ebook_id' => $id,
+        'status' => 1,
+        'transaction_ref' => "BITREX".$affix,
+        'expired_at' => Carbon::create(date('Y-m-d H:i:s'))->addYears($duration)
+      ]);
+
+      if(!$saveEbook) return false;
+
+      return true;
+    } catch (\Exception $e) {
+      return false;
+    }
+  }
+
+  /**
    * ebookMember function
    *
    * @param [type] $request
@@ -27,13 +57,12 @@ class TransactionBillService
       $user = Employeer::where('id', $productDetail->user_id)->first();
   
       if(!$user) return false;
-  
-      $saveEbook = TransactionMember::insert([
-        'member_id' => $user->id,
-        'ebook_id' => $productDetail->ebook_id,
-        'status' => 1,
-        'expired_at' => Carbon::create(date('Y-m-d H:i:s'))->addYears(1)
-      ]);
+
+      $saveEbook = $this->createEbookMember(
+        $productDetail->ebook_id,
+        $user->id,
+        $transactionBillRepo->customer_number
+      );
 
       $updateTransaction = $transactionBillRepo->update([
         'payment_flag_status' => '00',
