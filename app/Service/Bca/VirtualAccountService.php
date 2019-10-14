@@ -52,6 +52,7 @@ class VirtualAccountService
     $customerNumber = $request->input('CustomerNumber');
     $requestID = $request->input('RequestID');
     $channelType = $request->input('ChannelType');
+    $additionaldata = $request->input('AdditionalData');
 
     $transactionBill = (new TransactionBillRepository())
       ->findByCustomerNumber($customerNumber ?? 0);
@@ -67,6 +68,7 @@ class VirtualAccountService
       ->setCurrencyCode('IDR')
       ->setTotalAmount("150000.00")
       ->setSubCompany('11210')
+      ->setAdditionalData($additionaldata)
       // ->setDetailBills(function() {
       //   $detailBills = [
       //     (new DetailBillEntity())
@@ -107,20 +109,7 @@ class VirtualAccountService
       $this->validationBillPresentment($checkInquiryBills, $request);
       
     
-    return [
-      'CompanyCode' => $checkInquiryBills->getCompanyCode(),
-      'CustomerNumber' => $checkInquiryBills->getCustomerNumber(),
-      'RequestID' => $checkInquiryBills->getRequestID(),
-      'InquiryStatus' => $checkInquiryBills->getInquiryStatus(),
-      'InquiryReason' => $checkInquiryBills->getInquiryReason(),
-      'CustomerName' => $checkInquiryBills->getCustomerName(),
-      'CurrencyCode' => $checkInquiryBills->getCurrencyCode(),
-      'TotalAmount' => $checkInquiryBills->getTotalAmount(),
-      'SubCompany' => $checkInquiryBills->getSubCompany(),
-      'DetailBills' => $checkInquiryBills->getDetailBills(),
-      'FreeTexts' => $checkInquiryBills->getFreeTexts(),
-      'AdditionalData' => $checkInquiryBills->getAdditionalData(),
-    ];
+    return $this->responseBills($checkInquiryBills);
   }
 
   /**
@@ -162,6 +151,36 @@ class VirtualAccountService
     return $d && $d->format($format) === $date;
   }
 
+  /**
+   * responseBills function
+   *
+   * @param [type] $builder
+   * @return void
+   */
+  public function responseBills($builder)
+  {
+    return [
+      'CompanyCode' => $builder->getCompanyCode(),
+      'CustomerNumber' => $builder->getCustomerNumber(),
+      'RequestID' => $builder->getRequestID(),
+      'InquiryStatus' => $builder->getInquiryStatus(),
+      'InquiryReason' => $builder->getInquiryReason(),
+      'CustomerName' => $builder->getCustomerName(),
+      'CurrencyCode' => $builder->getCurrencyCode(),
+      'TotalAmount' => $builder->getTotalAmount(),
+      'SubCompany' => $builder->getSubCompany(),
+      'DetailBills' => $builder->getDetailBills(),
+      'FreeTexts' => $builder->getFreeTexts(),
+      'AdditionalData' => $builder->getAdditionalData(),
+    ];
+  }
+
+  /**
+   * responsePayments function
+   *
+   * @param [type] $builder
+   * @return void
+   */
   public function responsePayments($builder)
   {
     return [
