@@ -96,6 +96,10 @@ class VirtualAccountService
         ->setTotalAmount($transactionBill->total_amount.".00")
         ->setPaidAmount($transactionBill->paid_amount.".00")
         ->setCustomerName($transactionBill->user_type == 'member' ? $transactionBill->member->username : $transactionBill->nonMember->username);
+        
+        if($this->validateIsPayment($checkInquiryBills, $transactionBill->payment_flag_status)) {
+          return $this->responseBills($checkInquiryBills);
+        }
       } else {
         $checkInquiryBills->setInquiryStatus(BcaStatusType::REJECT_FLAG)
         ->setInquiryReason(
@@ -399,7 +403,13 @@ class VirtualAccountService
           ((new LanguageEntity())
             ->setIndonesian('Sukses')
             ->setEnglish('Success'))
-        );
+        )
+        ->setInquiryReason(
+          ((new LanguageEntity())
+            ->setIndonesian('Gagal')
+            ->setEnglish('Failed'))
+        )
+        ->setInquiryStatus("01");
       return true;
     } else {
       return false;
