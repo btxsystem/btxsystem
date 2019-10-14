@@ -67,7 +67,7 @@ class VirtualAccountService
       ->setCustomerName('Customer BCA Virtual Account')
       ->setCurrencyCode('IDR')
       ->setTotalAmount("150000.00")
-      ->setSubCompany('11210')
+      ->setSubCompany('00000')
       ->setAdditionalData($additionaldata)
       // ->setDetailBills(function() {
       //   $detailBills = [
