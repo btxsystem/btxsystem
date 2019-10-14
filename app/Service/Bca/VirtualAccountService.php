@@ -59,10 +59,10 @@ class VirtualAccountService
 
     
     $checkInquiryBills = (new TransactionBillEntity())
-      ->setCompanyCode($companyCode ?? '11210')
-      ->setCustomerNumber($customerNumber)
-      ->setRequestID($requestID)
-      ->setChannelType($channelType ?? '6014')
+      ->setCompanyCode($companyCode ?? "")
+      ->setCustomerNumber($customerNumber ?? "")
+      ->setRequestID($requestID ?? "")
+      ->setChannelType($channelType ?? "")
       ->setInquiryStatus(BcaStatusType::SUCCESS_FLAG)
       ->setCustomerName('Customer BCA Virtual Account')
       ->setCurrencyCode('IDR')
@@ -227,9 +227,9 @@ class VirtualAccountService
     $additionaldata = $request->input('Additionaldata');
 
     $paymentBills = (new TransactionBillEntity())
-      ->setCompanyCode($companyCode)
-      ->setCustomerNumber($customerNumber)
-      ->setRequestID($requestID)
+      ->setCompanyCode($companyCode ?? "")
+      ->setCustomerNumber($customerNumber ?? "")
+      ->setRequestID($requestID ?? "")
       ->setChannelType($channelType)
       ->setCustomerName($customerName)
       ->setCurrencyCode($currencyCode)
@@ -409,8 +409,7 @@ class VirtualAccountService
             ->setIndonesian('Gagal')
             ->setEnglish('Failed'))
         )
-        ->setInquiryStatus("01")
-        ->setCompanyCode("");
+        ->setInquiryStatus("01");
       return true;
     } else {
       return false;
