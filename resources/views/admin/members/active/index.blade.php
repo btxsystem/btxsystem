@@ -102,6 +102,34 @@ List Of Users Active
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.js"></script>
     <script type="text/javascript">
+
+        let direct = () => {
+            $.ajax({
+                type: 'POST',
+                url: '{{route("redirect")}}',
+                success: function (data) {
+                    alert('success redirect website');
+                },
+                error: function() {
+                    console.log("Error");
+                }
+            });
+            
+        } 
+
+        let nonredirect = () => {
+            $.ajax({
+                type: 'POST',
+                url: '{{route("non-redirect")}}',
+                success: function (data) {
+                    alert('success nonactive redirect website');
+                },
+                error: function() {
+                    console.log("Error");
+                }
+            });
+        }
+
         $(document).ready(function(){
             $('.input-daterange').datepicker({
                 todayBtn:'linked',
