@@ -409,7 +409,8 @@ class VirtualAccountService
             ->setIndonesian('Gagal')
             ->setEnglish('Failed'))
         )
-        ->setInquiryStatus("01");
+        ->setInquiryStatus("01")
+        ->setCompanyCode("");
       return true;
     } else {
       return false;
