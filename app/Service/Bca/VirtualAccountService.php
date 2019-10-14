@@ -107,7 +107,20 @@ class VirtualAccountService
       $this->validationBillPresentment($checkInquiryBills, $request);
       
     
-    return $checkInquiryBills;
+    return [
+      'CompanyCode' => $checkInquiryBills->getCompanyCode(),
+      'CustomerNumber' => $checkInquiryBills->getCustomerNumber(),
+      'RequestID' => $checkInquiryBills->getRequestID(),
+      'InquiryStatus' => $checkInquiryBills->getInquiryStatus(),
+      'InquiryReason' => $checkInquiryBills->getInquiryReason(),
+      'CustomerName' => $checkInquiryBills->getCustomerName(),
+      'CurrencyCode' => $checkInquiryBills->getCurrencyCode(),
+      'TotalAmount' => $checkInquiryBills->getTotalAmount(),
+      'SubCompany' => $checkInquiryBills->getSubCompany(),
+      'DetailBills' => $checkInquiryBills->getDetailBills(),
+      'FreeTexts' => $checkInquiryBills->getFreeTexts(),
+      'AdditionalData' => $checkInquiryBills->getAdditionalData(),
+    ];
   }
 
   /**
@@ -149,6 +162,24 @@ class VirtualAccountService
     return $d && $d->format($format) === $date;
   }
 
+  public function responsePayments($builder)
+  {
+    return [
+      'CompanyCode' => $builder->getCompanyCode(),
+      'CustomerNumber' => $builder->getCustomerNumber(),
+      'RequestID' => $builder->getRequestID(),
+      'PaymentFlagStatus' => $builder->getPaymentFlagStatus(),
+      'PaymentFlagReason' => $builder->getPaymentFlagReason(),
+      'CustomerName' => $builder->getCustomerName(),
+      'CurrencyCode' => $builder->getCurrencyCode(),
+      'PaidAmount' => $builder->getPaidAmount(),
+      'TotalAmount' => $builder->getTotalAmount(),
+      'TransactionDate' => $builder->getTransactionDate(),
+      'DetailBills' => $builder->getDetailBills(),
+      'FreeTexts' => $builder->getFreeTexts(),
+      'AdditionalData' => $builder->getAdditionalData(),
+    ];
+  }
   /**
    * paymentBills function
    *
@@ -210,12 +241,12 @@ class VirtualAccountService
       
       // jika SIT tidakterpenuhi
       if(!$this->validateFlagPayment($paymentBills, $transactionBillRepo ?? null, $request)) {
-        return $paymentBills;
+        return $this->responsePayments($paymentBills);
       }
       
       // jika user sudah membayar
       if($this->validateIsPayment($paymentBills, $transactionBillRepo->payment_flag_status ?? null)) {
-        return $paymentBills;
+        return $this->responsePayments($paymentBills);
       } 
       
       
@@ -249,7 +280,7 @@ class VirtualAccountService
             return $freeTexts;
           });
 
-        return $paymentBills;
+        return $this->responsePayments($paymentBills);
       }
 
       $paymentBillProduct = $this->paymentBillProduct($paymentBills, $transactionBillRepo);
@@ -280,7 +311,7 @@ class VirtualAccountService
         // });
       }
         
-    return $paymentBills;    
+    return $this->responsePayments($paymentBills);    
   }
 
   /**
