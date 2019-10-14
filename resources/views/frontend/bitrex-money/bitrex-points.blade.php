@@ -81,7 +81,7 @@
                         <p>Pilih menu TRANSAKSI LAINNYA > TRANSFER > KE REKENING BCA VIRTUAL ACCOUNT</p>
                     </li>
                     <li>
-                        <p>Masukkan 3901081277800894 sebagai rekening tujuan</p>
+                        <p id="des_noreq"></p>
                     </li>
                     <li>
                         <p>Masukkan jumlah transfer sesuai detail transaksi. (Jumlah pembayaran harus sama dengan jumlah tagihan yang harus dibayar).</p>
@@ -99,7 +99,7 @@
                         <p>Pilih menu TRANSFER DANA > TRANSFER KE BCA VIRTUAL ACCOUNT</p>
                     </li>
                     <li>
-                        <p>Masukkan 3901081277800894 sebagai rekening tujuan</p>
+                        <p id="des_noreq2"></p>
                     </li>
                     <li>
                         <p>Masukkan jumlah transfer sesuai detail transaksi. Jumlah pembayaran harus sama dengan jumlah tagihan yang harus dibayar.</p>
@@ -117,7 +117,7 @@
                         <p>Pilih menu M-TRANSFER > BCA VIRTUAL ACCOUNT</p>
                     </li>
                     <li>
-                        <p>Masukkan 3901081277800894 sebagai rekening tujuan</p>
+                        <p id="des_noreq3"></p>
                     </li>
                     <li>
                         <p>Masukkan jumlah transfer sesuai detail transaksi. Jumlah pembayaran harus sama dengan jumlah tagihan yang harus dibayar.</p>
@@ -357,7 +357,10 @@
                 url: '{{route("member.bp.store")}}',
                 data: {nominal: nominal, points: points},
                 success: function (data) {
-                    $('#va').val(data.customer_number)
+                    $('#va').val(data.customer_number);
+                    $('#des_noreq').text('Masukkan '+data.customer_number+' sebagai rekening tujuan');
+                    $('#des_noreq2').text('Masukkan '+data.customer_number+' sebagai rekening tujuan');
+                    $('#des_noreq3').text('Masukkan '+data.customer_number+' sebagai rekening tujuan');
                     $('#no-virtual').modal('show');
                     $('#topup').modal('hide');
                 },
