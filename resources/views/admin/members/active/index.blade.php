@@ -21,6 +21,8 @@ List Of Users Active
                     <div class="col-md-12">
                         <!-- BEGIN SAMPLE TABLE PORTLET-->
                         <a class="btn btn-large btn-primary" href="{{ route('members.create-data') }}" data-toggle="modal"><i class="fa fa-plus" style="margin-right: 10px;"></i>Add</a>
+                        <a class="btn btn-large btn-success" onclick="direct()" href="#">Redirect</a>
+                        <a class="btn btn-large btn-danger" onclick="nonredirect()" href="#">Non Redirect</a>
                         <div class="portlet box primary" style="margin-top: 15px;">
                             <div class="portlet-title">
                                 <div class="caption">
@@ -102,6 +104,34 @@ List Of Users Active
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.js"></script>
     <script type="text/javascript">
+
+        let direct = () => {
+            $.ajax({
+                type: 'POST',
+                url: '{{route("redirect")}}',
+                success: function (data) {
+                    alert('success redirect website');
+                },
+                error: function() {
+                    console.log("Error");
+                }
+            });
+            
+        } 
+
+        let nonredirect = () => {
+            $.ajax({
+                type: 'POST',
+                url: '{{route("non-redirect")}}',
+                success: function (data) {
+                    alert('success nonactive redirect website');
+                },
+                error: function() {
+                    console.log("Error");
+                }
+            });
+        }
+
         $(document).ready(function(){
             $('.input-daterange').datepicker({
                 todayBtn:'linked',

@@ -27,6 +27,8 @@ Route::group(['prefix' => 'select', 'as'=> 'select.'], function () {
 });
 
 Route::group(['middleware' => 'admin'], function () {
+    Route::post('redirect', ['as' => 'redirect', 'uses' => 'Admin\MemberController@redirect']);
+    Route::post('non-redirect', ['as' => 'non-redirect', 'uses' => 'Admin\MemberController@nonredirect']);
     Route::group(['prefix'=>'admin-management','as'=>'admin-management.'], function(){
         Route::get('permissions', ['as' => 'permissions', 'uses' => 'Admin\PermissionsController@index']);
 
