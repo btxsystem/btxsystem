@@ -59,7 +59,7 @@ class TransactionBillRepository
       'inqury_status' => $builder->getInquiryStatus(),
       'inqury_reason' => $builder->getInquiryReason(),
       'flag_advide' => $builder->getFlagAdvide(),
-      'referrence' => $builder->getReferrence(),
+      'referrence' => $builder->getReference(),
       'transaction_date' => $builder->getTransactionDate(),
     ]);
 
@@ -85,7 +85,7 @@ class TransactionBillRepository
       'inqury_status' => $builder->getInquiryStatus(),
       'inqury_reason' => $builder->getInquiryReason(),
       'flag_advide' => $builder->getFlagAdvide(),
-      'referrence' => $builder->getReferrence(),
+      'referrence' => $builder->getReference(),
       'transaction_date' => $builder->getTransactionDate(),
     ]);
 
@@ -111,7 +111,7 @@ class TransactionBillRepository
       'inqury_status' => $builder->getInquiryStatus(),
       'inqury_reason' => $builder->getInquiryReason(),
       'flag_advide' => $builder->getFlagAdvide(),
-      'referrence' => $builder->getReferrence(),
+      'referrence' => $builder->getReference(),
       'transaction_date' => $builder->getTransactionDate(),
     ]);
 
