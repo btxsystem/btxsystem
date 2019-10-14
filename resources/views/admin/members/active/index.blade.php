@@ -21,8 +21,6 @@ List Of Users Active
                     <div class="col-md-12">
                         <!-- BEGIN SAMPLE TABLE PORTLET-->
                         <a class="btn btn-large btn-primary" href="{{ route('members.create-data') }}" data-toggle="modal"><i class="fa fa-plus" style="margin-right: 10px;"></i>Add</a>
-                        <a class="btn btn-large btn-success" onclick="direct()" href="#">Redirect</a>
-                        <a class="btn btn-large btn-danger" onclick="nonredirect()" href="#">Non Redirect</a>
                         <div class="portlet box primary" style="margin-top: 15px;">
                             <div class="portlet-title">
                                 <div class="caption">

@@ -219,7 +219,7 @@ class VirtualAccountService
     $transactionDate = $request->input('TransactionDate');
     $detailBills = $request->input('DetailBills') ?? [];
     $flagAdvice = $request->input('FlagAdvice');
-    $referrence = $request->input('Referrence');
+    $reference = $request->input('Reference');
     $additionaldata = $request->input('Additionaldata');
 
     $paymentBills = (new TransactionBillEntity())
@@ -235,7 +235,7 @@ class VirtualAccountService
       ->setTransactionDate($transactionDate)
       ->setAdditionaldata($additionaldata)
       ->setFlagAdvice($flagAdvice)
-      ->setReferrence($referrence)
+      ->setReference($reference)
       ->setCurrencyCode('IDR');
       // ->setDetailBills(function() use ($detailBills) {
       //   $detailBillLists = [];
@@ -353,7 +353,7 @@ class VirtualAccountService
       $request->input('PaidAmount') == '' || 
       $request->input('FlagAdvice') == '' || 
       $request->input('SubCompany') == '' || 
-      $request->input('Referrence') == '' || 
+      $request->input('Reference') == '' || 
       $request->input('FlagAdvice') != 'Y' &&
       $request->input('FlagAdvice') != 'N' ||
       !$this->validateFormatDate($request->input('TransactionDate')) ||

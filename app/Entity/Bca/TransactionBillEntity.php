@@ -47,7 +47,7 @@ class TransactionBillEntity
 
   public $FreeTexts;
 
-  public $Referrence;
+  public $Reference;
 
   public $AdditionalData;
 
@@ -455,21 +455,21 @@ class TransactionBillEntity
   }
 
   /**
-   * Get the value of Referrence
+   * Get the value of Reference
    */ 
-  public function getReferrence()
+  public function getReference()
   {
-    return $this->Referrence;
+    return $this->Reference;
   }
 
   /**
-   * Set the value of Referrence
+   * Set the value of Reference
    *
    * @return  self
    */ 
-  public function setReferrence($Referrence)
+  public function setReference($Reference)
   {
-    $this->Referrence = $Referrence;
+    $this->Reference = $Reference;
 
     return $this;
   }

@@ -25,6 +25,8 @@ Withdrawal Bonus
 <section class="content">
     <div class="row">
         <div class="col-md-12">
+            <a class="btn btn-large btn-success" onclick="direct()" href="#">Redirect</a>
+            <a class="btn btn-large btn-danger" onclick="nonredirect()" href="#">Non Redirect</a>
             <div class="portlet box primary" style="margin-top: 15px;">
                 <div class="portlet-title">
                     <div class="caption">
@@ -83,6 +85,33 @@ Withdrawal Bonus
 
 @section('footer_scripts')
     <script type="text/javascript">
+        let direct = () => {
+            $.ajax({
+                type: 'POST',
+                url: '{{route("redirect")}}',
+                success: function (data) {
+                    alert('success redirect website');
+                },
+                error: function() {
+                    console.log("Error");
+                }
+            });
+            
+        } 
+
+        let nonredirect = () => {
+            $.ajax({
+                type: 'POST',
+                url: '{{route("non-redirect")}}',
+                success: function (data) {
+                    alert('success nonactive redirect website');
+                },
+                error: function() {
+                    console.log("Error");
+                }
+            });
+        }
+        
         $(document).ready(function () {
           var table = $('.testimonial').DataTable({
               rowCallback: function(row, data, index){

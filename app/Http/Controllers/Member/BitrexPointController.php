@@ -26,7 +26,7 @@ class BitrexPointController extends Controller
         $date = now();
 
         do {
-            $no_invoice = '11210'.date_format($date,"ymdh").rand(100,999);
+            $no_invoice = date_format($date,"ymdh").rand(100,999);
             $cek = DB::table('transaction_bills')->where('customer_number',$no_invoice)->select('id')->get();
         } while (count($cek)>0);
        
@@ -35,7 +35,7 @@ class BitrexPointController extends Controller
             'product_type' => 'topup',
             'user_type' => 'member',
             'total_amount' => $request->nominal,
-            'customer_number' => $no_invoice
+            'customer_number' => '11210'.$no_invoice
         ];
 
         $va = new Va;
