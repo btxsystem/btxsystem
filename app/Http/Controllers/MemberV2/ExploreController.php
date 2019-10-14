@@ -206,7 +206,10 @@ class ExploreController extends Controller
    */
   public function subscription(Request $request, $username = null)
   {
-    // return view('frontend.auth.maintenance');
+    $data = DB::table('close_member')->select('is_close_member')->first();
+    if ($data->is_close_member == 1) {
+      return view('frontend.auth.maintenance');
+    }
     $excludesEbooks = [3, 4];
     $userId = 0;
 
