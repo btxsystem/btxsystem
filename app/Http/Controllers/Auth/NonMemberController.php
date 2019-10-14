@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Auth;
+use Alert;
+use App\Employeer;
+use DB;
 class NonMemberController extends Controller
 {
   public function getLogin()
@@ -23,9 +26,19 @@ class NonMemberController extends Controller
       'password' => 'required'
     ]);
 
+    $data = DB::table('close_member')->select('is_close_member')->first();
+
     if (Auth::guard('nonmember')->attempt(['username' => $request->username, 'password' => $request->password])){
+      if ($data->is_close_member == 1) {
+        Auth::guard('nonmember')->logout();
+        return view('frontend.auth.maintenance');
+      }
       return redirect()->route('member.home');
     } else if (Auth::guard('user')->attempt(['username' => $request->username, 'password' => $request->password])) {
+      if ($data->is_close_member == 1) {
+        Auth::guard('user')->logout();
+        return view('frontend.auth.maintenance');
+      }
       return redirect()->route('member.home');
     }
     // Tambah logic member
