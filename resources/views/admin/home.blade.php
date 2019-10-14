@@ -81,7 +81,10 @@ Bonus Sponsor
                         </div>
                     </div>
                 </div>
-            <br>    
+            <br>
+            <div id="trfx-embed"><canvas id="memberChart" width="100" height="40"></canvas></div>
+            <br>
+            <hr>    
             <div id="trfx-embed"><canvas id="myChart" width="100" height="40"></canvas></div>
         </div>
     </div>
@@ -98,7 +101,73 @@ Bonus Sponsor
 @section('footer_scripts')
 <script>
 var ctx = $('#myChart');
+var chartMember = $('#memberChart');
 var dt = new Date();
+const monthNames = ["January", "February", "March", "April", "May", "June",
+                    "July", "August", "September", "October", "November", "December"
+                    ];
+
+$.ajax({
+    type: 'GET',
+    url: '/backoffice/member-daily',
+    success: function (data) {
+        var myChart = new Chart(chartMember, {
+            type: 'bar',
+            data: {
+                labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12',
+                        '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24',
+                        '25', '26', '27', '28', '29', '30', '31'
+                        ],
+                datasets: [{
+                    label: 'Chart new member daily ' + monthNames[dt.getMonth()] +' '+ dt.getFullYear(),
+                    data: data,
+                    backgroundColor: [
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(54, 162, 235, 1)',
+                    ],
+                    borderColor: [
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(54, 162, 235, 1)',
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+    },
+    error: function() {
+        console.log("Error");
+    }
+});
+
 $.ajax({
     type: 'GET',
     url: '/backoffice/sales-ebook',

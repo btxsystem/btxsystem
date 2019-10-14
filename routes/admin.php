@@ -79,6 +79,9 @@ Route::group(['middleware' => 'admin'], function () {
     //sales
     Route::get('sales-ebook','Admin\EbookController@salesEbook')->name('sales-ebook');
 
+    //member daily
+    Route::get('member-daily','Admin\UsersController@memberDaily')->name('member-daily');
+
     //dashboard-value
     Route::get('dashboard-values','Admin\DashboardValuesController@data')->name('dashboard-values');
 
