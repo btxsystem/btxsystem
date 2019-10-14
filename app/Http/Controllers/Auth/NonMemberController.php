@@ -29,16 +29,8 @@ class NonMemberController extends Controller
     $data = DB::table('close_member')->select('is_close_member')->first();
 
     if (Auth::guard('nonmember')->attempt(['username' => $request->username, 'password' => $request->password])){
-      if ($data->is_close_member == 1) {
-        Auth::guard('nonmember')->logout();
-        return view('frontend.auth.maintenance');
-      }
       return redirect()->route('member.home');
     } else if (Auth::guard('user')->attempt(['username' => $request->username, 'password' => $request->password])) {
-      if ($data->is_close_member == 1) {
-        Auth::guard('user')->logout();
-        return view('frontend.auth.maintenance');
-      }
       return redirect()->route('member.home');
     }
     // Tambah logic member

@@ -27,9 +27,6 @@ class AuthGates
                 Auth::guard('user')->logout();
                 return redirect('/login');
             }
-        }else{
-            Auth::guard('user')->logout();
-            return redirect('/login');
         }
         
         return $next($request);
