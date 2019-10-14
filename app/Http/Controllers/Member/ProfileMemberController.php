@@ -28,9 +28,9 @@ class ProfileMemberController extends Controller
             "username" =>  $data->username,
             "name" => $data->first_name.' '.$data->last_name,
             "email" => $data->email,
-            "phone_number" => $request->phone_number,
+            "phone_number" => $data->phone_number,
             "birthdate" => date('F j, Y',strtotime($data->birthdate)),
-            "npwp_number" => $data->npwp_number,
+            "npwp_number" => $data->npwp_number ? $data->npwp_number : null,
             "is_married" => $data->is_married ? 'Married' : 'Single',
             "gender" => $data->gender ? 'Male' : 'Female',
             "status" => $data->status ? 'Active' : 'Nonactive',
@@ -90,7 +90,12 @@ class ProfileMemberController extends Controller
     public function register(Request $request){
         try {
             DB::beginTransaction();
-            $cek_npwp = strlen($request->npwp_number) >= 15 ? 1 : 0;
+
+            $cek_npwp = 0;
+            if (isset($request->npwp_number)) {
+                $cek_npwp = strlen($request->npwp_number) >= 15 ? 1 : 0;
+            }
+            
             $method = $request->input('payment_method') ?? 'point';
             $shippingMethod = $request->input('shipping_method') ?? "0"; 
             
@@ -148,7 +153,7 @@ class ProfileMemberController extends Controller
                     "phone_number" => $request->phone_number,
                     'password' => bcrypt($password),//bcrypt('Mbitrex'.rand(100,1000)),
                     'birthdate' => $request->birthdate,
-                    'npwp_number' => $request->npwp_number,
+                    'npwp_number' => $request->npwp_number ? $request->npwp_number : null,
                     'gender' => $request->gender,
                     'position' => $request->position,
                     'parent_id' => $request->parent,
@@ -370,7 +375,10 @@ class ProfileMemberController extends Controller
     }
 
     public function findChild($id, $sponsor, $data){
-        $cek_npwp = strlen($data->npwp_number) >= 16 ? 1 : 0;
+        $cek_npwp = 0;
+        if (isset($data->npwp_number)) {
+            $cek_npwp = strlen($data->npwp_number) >= 15 ? 1 : 0;
+        }
         $isHaveChild = Employeer::where('parent_id',$id)->select('position')->get();
         if (count($isHaveChild) == 3) {
             $pv = DB::table('pv_rank')->where('id_member',$id)->select('pv_left', 'pv_midle', 'pv_right')->first();
@@ -411,7 +419,7 @@ class ProfileMemberController extends Controller
                 'no_rec' => $data->bank_account_number,
                 'bank_account_name' => $data->bank_account_name,
                 'bank_name' => $data->bank_name,
-                'npwp_number' => $data->npwp_number,
+                'npwp_number' => $data->npwp_number ? $data->npwp_number : null,
                 'expired_at' => Carbon::create(date('Y-m-d H:i:s'))->addYear(1)
             ];
             Employeer::create($member);
@@ -450,7 +458,7 @@ class ProfileMemberController extends Controller
                     'no_rec' => $data->bank_account_number,
                     'bank_account_name' => $data->bank_account_name,
                     'bank_name' => $data->bank_name,
-                    'npwp_number' => $data->npwp_number,
+                    'npwp_number' => $data->npwp_number ? $data->npwp_number : null,
                     'expired_at' => Carbon::create(date('Y-m-d H:i:s'))->addYear(1)
                 ];
                 Employeer::create($member);
@@ -476,7 +484,7 @@ class ProfileMemberController extends Controller
                     'no_rec' => $data->bank_account_number,
                     'bank_account_name' => $data->bank_account_name,
                     'bank_name' => $data->bank_name,
-                    'npwp_number' => $data->npwp_number,
+                    'npwp_number' => $data->npwp_number ? $data->npwp_number : null,
                     'expired_at' => Carbon::create(date('Y-m-d H:i:s'))->addYear(1)
                 ];
                 Employeer::create($member);
@@ -502,7 +510,7 @@ class ProfileMemberController extends Controller
                     'no_rec' => $data->bank_account_number,
                     'bank_account_name' => $data->bank_account_name,
                     'bank_name' => $data->bank_name,
-                    'npwp_number' => $data->npwp_number,
+                    'npwp_number' => $data->npwp_number ? $data->npwp_number : null,
                     'expired_at' => Carbon::create(date('Y-m-d H:i:s'))->addYear(1)
                 ];
                 Employeer::create($member);
@@ -755,7 +763,7 @@ class ProfileMemberController extends Controller
                         'no_rec' => $request->bank_account_number,
                         'bank_account_name' => $request->bank_account_name,
                         'bank_name' => $request->bank_name,
-                        'npwp_number' => $request->npwp_number,
+                        'npwp_number' => $request->npwp_number ? $request->npwp_number : null,
                         'expired_at' => Carbon::create(date('Y-m-d H:i:s'))->addYear(1),
                         'bank_name' => $request->bank_name,
                         'bank_account_name' => $request->bank_account_name,
@@ -797,7 +805,7 @@ class ProfileMemberController extends Controller
                             'no_rec' => $request->bank_account_number,
                             'bank_account_name' => $request->bank_account_name,
                             'bank_name' => $request->bank_name,
-                            'npwp_number' => $request->npwp_number,
+                            'npwp_number' => $request->npwp_number ? $request->npwp_number : null,
                             'expired_at' => Carbon::create(date('Y-m-d H:i:s'))->addYear(1),
                             'bank_name' => $request->bank_name,
                             'bank_account_name' => $request->bank_account_name,
@@ -826,7 +834,7 @@ class ProfileMemberController extends Controller
                             'no_rec' => $request->bank_account_number,
                             'bank_account_name' => $request->bank_account_name,
                             'bank_name' => $request->bank_name,
-                            'npwp_number' => $request->npwp_number,
+                            'npwp_number' => $request->npwp_number ? $request->npwp_number : null,
                             'expired_at' => Carbon::create(date('Y-m-d H:i:s'))->addYear(1),
                             'bank_name' => $request->bank_name,
                             'bank_account_name' => $request->bank_account_name,
@@ -855,7 +863,7 @@ class ProfileMemberController extends Controller
                             'no_rec' => $request->bank_account_number,
                             'bank_account_name' => $request->bank_account_name,
                             'bank_name' => $request->bank_name,
-                            'npwp_number' => $request->npwp_number,
+                            'npwp_number' => $request->npwp_number ? $request->npwp_number : null,
                             'expired_at' => Carbon::create(date('Y-m-d H:i:s'))->addYear(1),
                             'bank_name' => $request->bank_name,
                             'bank_account_name' => $request->bank_account_name,
