@@ -231,8 +231,8 @@ class VirtualAccountService
       ->setCustomerNumber($customerNumber ?? "")
       ->setRequestID($requestID ?? "")
       ->setChannelType($channelType)
-      ->setCustomerName($customerName)
-      ->setCurrencyCode($currencyCode)
+      ->setCustomerName($customerName ?? "")
+      ->setCurrencyCode($currencyCode ?? "")
       ->setTotalAmount($totalAmount)
       ->setPaidAmount($paidAmount)
       ->setSubCompany($subCompany)
@@ -350,6 +350,8 @@ class VirtualAccountService
       $transactionBillRepo == null || 
       $request->input('CompanyCode') == '' || 
       $request->input('CustomerNumber') == '' || 
+      $request->input('CustomerName') == '' || 
+      $request->input('CurrencyCode') == '' || 
       $request->input('RequestID') == '' || 
       $request->input('ChannelType') == '' ||
       $request->input('TransactionDate') == '' || 
@@ -401,8 +403,8 @@ class VirtualAccountService
       $builder->setPaymentFlagStatus('01')
         ->setPaymentFlagReason(
           ((new LanguageEntity())
-            ->setIndonesian('Sukses')
-            ->setEnglish('Success'))
+            ->setIndonesian('Gagal')
+            ->setEnglish('Failed'))
         )
         ->setInquiryReason(
           ((new LanguageEntity())

@@ -22,11 +22,57 @@ Withdrawal Bonus
         <li class="active">Index</li>
     </ol>
 </section>
+
+<!-- Modal -->
+<div class="modal fade" id="direct" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Redirect</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <center>Are you sure to redirect member login ? </center>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" onclick="direct()">Submit</button>
+        </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="nodirect" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Inactive Redirect</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <center>Are you sure to inactive redirect member login ? </center>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" onclick="nonredirect()">Submit</button>
+        </div>
+        </div>
+    </div>
+</div>
+
 <section class="content">
     <div class="row">
         <div class="col-md-12">
-            <a class="btn btn-large btn-success" onclick="direct()" href="#">Redirect</a>
-            <a class="btn btn-large btn-danger" onclick="nonredirect()" href="#">Non Redirect</a>
+            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#direct">
+                Redirect
+            </button>
+            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#nodirect">
+                Non Redirect
+            </button>                
             <div class="portlet box primary" style="margin-top: 15px;">
                 <div class="portlet-title">
                     <div class="caption">
@@ -90,7 +136,7 @@ Withdrawal Bonus
                 type: 'POST',
                 url: '{{route("redirect")}}',
                 success: function (data) {
-                    alert('success redirect website');
+                    location.reload();
                 },
                 error: function() {
                     console.log("Error");
@@ -104,7 +150,7 @@ Withdrawal Bonus
                 type: 'POST',
                 url: '{{route("non-redirect")}}',
                 success: function (data) {
-                    alert('success nonactive redirect website');
+                    location.reload();
                 },
                 error: function() {
                     console.log("Error");
