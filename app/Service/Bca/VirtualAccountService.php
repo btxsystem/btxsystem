@@ -68,7 +68,7 @@ class VirtualAccountService
       ->setCurrencyCode('IDR')
       ->setTotalAmount("0.00")
       ->setSubCompany('00000')
-      ->setAdditionalData($additionaldata)
+      ->setAdditionalData("")
       // ->setDetailBills(function() {
       //   $detailBills = [
       //     (new DetailBillEntity())
