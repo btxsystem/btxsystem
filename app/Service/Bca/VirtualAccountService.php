@@ -4,10 +4,7 @@ namespace App\Service\Bca;
 
 use App\Entities\Bca\TransactionBillEntity;
 use App\Entities\Bca\LanguageEntity;
-use App\Entities\Bca\DetailBillEntity;
-use App\Repositories\TransactionBillDetailRepository;
 use App\Repositories\TransactionBillRepository;
-use App\Repositories\TransactionVirtualAccountRepository;
 use App\Service\TransactionBillService;
 use App\Types\BcaStatusType;
 use App\Types\ProductType;
@@ -16,11 +13,11 @@ class VirtualAccountService
 {
 
   /**
-   * transactionVaRepo variable
+   * transactionBillRepo variable
    *
    * @var class
    */
-  public $transactionVaRepo;
+  public $transactionBillRepo;
 
   /**
    * TransactionBillService variable
@@ -32,15 +29,15 @@ class VirtualAccountService
   /**
    * Undocumented function
    *
-   * @param TransactionBillRepository $transactionVaRepo
+   * @param TransactionBillRepository $transactionBillRepo
    * @param TransactionBillService $TransactionBillService
    */
   public function __construct(
-    TransactionBillRepository $transactionVaRepo,
+    TransactionBillRepository $transactionBillRepo,
     TransactionBillService $TransactionBillService
   )
   {
-    $this->transactionVaRepo = $transactionVaRepo;
+    $this->transactionBillRepo = $transactionBillRepo;
     $this->TransactionBillService = $TransactionBillService;
   }
   /**
@@ -70,7 +67,7 @@ class VirtualAccountService
       ->setCurrencyCode('IDR')
       ->setTotalAmount("150000.00")
       ->setSubCompany('11210')
-      // ->setDetailBiils(function() {
+      // ->setDetailBills(function() {
       //   $detailBills = [
       //     (new DetailBillEntity())
       //     ->setBillDescription(
@@ -94,8 +91,8 @@ class VirtualAccountService
       //check transaction bills
       if($transactionBill) {
         $checkInquiryBills->setCurrencyCode($transactionBill->currency_code)
-        ->setTotalAmount($transactionBill->total_amount."00")
-        ->setPaidAmount($transactionBill->paid_amount."00")
+        ->setTotalAmount($transactionBill->total_amount)
+        ->setPaidAmount($transactionBill->paid_amount)
         ->setCustomerName($transactionBill->user_type == 'member' ? $transactionBill->member->username : $transactionBill->nonMember->username);
       } else {
         $checkInquiryBills->setInquiryStatus(BcaStatusType::REJECT_FLAG)
@@ -171,7 +168,8 @@ class VirtualAccountService
     $subCompany = $request->input('SubCompany');
     $transactionDate = $request->input('TransactionDate');
     $detailBills = $request->input('DetailBills') ?? [];
-    $flagAdvide = $request->input('FlagAdvide');
+    $flagAdvice = $request->input('FlagAdvice');
+    $referrence = $request->input('Referrence');
     $additionaldata = $request->input('Additionaldata');
 
     $paymentBills = (new TransactionBillEntity())
@@ -186,33 +184,50 @@ class VirtualAccountService
       ->setSubCompany($subCompany)
       ->setTransactionDate($transactionDate)
       ->setAdditionaldata($additionaldata)
-      ->setFlagAdvide($flagAdvide)
-      ->setDetailBiils(function() use ($detailBills) {
-        $detailBillLists = [];
+      ->setFlagAdvice($flagAdvice)
+      ->setReferrence($referrence)
+      ->setCurrencyCode('IDR');
+      // ->setDetailBills(function() use ($detailBills) {
+      //   $detailBillLists = [];
 
-        foreach($detailBills as $list) {
-          $list = (object) $list;
+      //   foreach($detailBills as $list) {
+      //     $list = (object) $list;
 
-          $detailBillLists[] = [
-            (new DetailBillEntity())
-            ->setBillAmount($list->BillAmount)
-            ->setBillNumber($list->BillNumber)
-            ->setBillSubCompany($list->BillSubCompany)
-          ];
-        }
+      //     $detailBillLists[] = [
+      //       (new DetailBillEntity())
+      //       ->setBillAmount($list->BillAmount)
+      //       ->setBillNumber($list->BillNumber)
+      //       ->setBillSubCompany($list->BillSubCompany)
+      //     ];
+      //   }
   
-        return $detailBillLists;
-      });    
+      //   return $detailBillLists;
+      // });    
 
       //get transaction type
-      $transactionVaRepo = $this->transactionVaRepo
+      $transactionBillRepo = $this->transactionBillRepo
         ->findByCustomerNumber($customerNumber);
-
-        //assign to product type by customerNumber
-      $paymentBillProduct = $this->paymentBillProduct($transactionVaRepo);
+      
+      // jika SIT tidakterpenuhi
+      if(!$this->validateFlagPayment($paymentBills, $transactionBillRepo ?? null, $request)) {
+        return $paymentBills;
+      }
+      
+      // jika user sudah membayar
+      if($this->validateIsPayment($paymentBills, $transactionBillRepo->payment_flag_status ?? null)) {
+        return $paymentBills;
+      } 
+      
+      
+      $paymentBills->setPaymentFlagStatus(BcaStatusType::SUCCESS_FLAG)
+        ->setPaymentFlagReason(
+          (new LanguageEntity())
+            ->setIndonesian("Sukses")
+            ->setEnglish("Success")
+        );
       
       // if failed payment or any problem
-      if(!$paymentBillProduct) {
+      if(!$transactionBillRepo) {
         $paymentBills->setPaymentFlagStatus(BcaStatusType::REJECT_FLAG)
           ->setPaymentFlagReason(
             (new LanguageEntity())
@@ -237,7 +252,10 @@ class VirtualAccountService
         return $paymentBills;
       }
 
-      $paymentBills->setPaymentFlagStatus(BcaStatusType::SUCCESS_FLAG)
+      $paymentBillProduct = $this->paymentBillProduct($paymentBills, $transactionBillRepo);
+      
+      if($paymentBillProduct) {
+        $paymentBills->setPaymentFlagStatus(BcaStatusType::SUCCESS_FLAG)
         ->setPaymentFlagReason(
           (new LanguageEntity())
             ->setIndonesian("Sukses")
@@ -248,7 +266,9 @@ class VirtualAccountService
             ->setIndonesian('Sukses')
             ->setEnglish('Success'))
         )
-        ->setTotalAmount($transactionVaRepo->total_amount."00");
+        ->setTotalAmount($transactionBillRepo->total_amount.".00")
+        ->setPaidAmount($transactionBillRepo->paid_amount.".00")
+        ->setCustomerName($transactionBillRepo->user_type == 'member' ? $transactionBillRepo->member->username : $transactionBillRepo->nonMember->username);
         // ->setFreeTexts(function() {
         //   $freeTexts = [
         //     ((new LanguageEntity())
@@ -258,15 +278,22 @@ class VirtualAccountService
     
         //   return $freeTexts;
         // });
+      }
         
-      $this->validateFlagPayment($paymentBills, $request);
-      $this->validateIsPayment($paymentBills, $transactionVaRepo->inquiry_status);
     return $paymentBills;    
   }
 
-  public function validateFlagPayment($builder, $request)
+  /**
+   * validateFlagPayment function
+   *
+   * @param [type] $builder
+   * @param [type] $request
+   * @return void
+   */
+  public function validateFlagPayment($builder, $transactionBillRepo, $request)
   {
     if(
+      $transactionBillRepo == null || 
       $request->input('CompanyCode') == '' || 
       $request->input('CustomerNumber') == '' || 
       $request->input('RequestID') == '' || 
@@ -279,7 +306,9 @@ class VirtualAccountService
       $request->input('Referrence') == '' || 
       $request->input('FlagAdvice') != 'Y' &&
       $request->input('FlagAdvice') != 'N' ||
-      !$this->validateFormatDate($request->input('TransactionDate'))
+      !$this->validateFormatDate($request->input('TransactionDate')) ||
+      !$this->validateTotalAmount($request->input('TotalAmount'), $transactionBillRepo->total_amount.".00") ||
+      !$this->validateTotalAmount($request->input('PaidAmount'), $transactionBillRepo->total_amount.".00")
     ) {
       $builder->setInquiryStatus(BcaStatusType::REJECT_FLAG)
         ->setInquiryReason(
@@ -294,22 +323,37 @@ class VirtualAccountService
             ->setEnglish('Failed'))
         );
       
+      return false;
+    } else {
+      return true;
     }
   }
 
+  public function validateTotalAmount($a, $b)
+  {
+    return $a != $b ? false : true;
+  }
+
+  /**
+   * validateIsPayment function
+   *
+   * @param [type] $builder
+   * @param [type] $status
+   * @return void
+   */
   public function validateIsPayment($builder, $status)
   {
     if($status == '00') {
-      $builder->setPaymentFlagStatus('00')
+      $builder->setPaymentFlagStatus('01')
         ->setPaymentFlagReason(
           ((new LanguageEntity())
             ->setIndonesian('Sukses')
             ->setEnglish('Success'))
         );
       return true;
-    };
-
-    return false;
+    } else {
+      return false;
+    }
   }
 
   /**
@@ -318,26 +362,26 @@ class VirtualAccountService
    * @param [type] $customerNumber
    * @return void
    */
-  public function paymentBillProduct($transactionVaRepo)
+  public function paymentBillProduct($builder, $transactionBillRepo)
   { 
-    if(!$transactionVaRepo) return false;
+    if(!$transactionBillRepo) return false;
 
-    switch($transactionVaRepo->product_type) {
+    switch($transactionBillRepo->product_type) {
       case ProductType::EBOOK_MEMBER:
         return $this->TransactionBillService
-          ->ebookMember($transactionVaRepo->customer_number);
+          ->ebookMember($builder, $transactionBillRepo);
         break;
       case ProductType::EBOOK_NONMEMBER:
         return $this->TransactionBillService
-          ->ebookNonMember($transactionVaRepo->customer_number);
+          ->ebookNonMember($builder, $transactionBillRepo);
         break;
       case ProductType::TOPUP_BITREX_POINT:
         return $this->TransactionBillService
-          ->topUpBitrexPoint($transactionVaRepo->customer_number);
+          ->topUpBitrexPoint($builder, $transactionBillRepo);
         break;
       case ProductType::REGISTER_MEMBER:
         return $this->TransactionBillService
-          ->registerMember($transactionVaRepo->customer_number);
+          ->registerMember($builder, $transactionBillRepo);
         break;
     }
 

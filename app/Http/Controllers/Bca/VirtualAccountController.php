@@ -31,7 +31,13 @@ class VirtualAccountController extends Controller
   
       return response()->json($inquryBills, 200);
     } catch (\Exception $e) {
-
+      return response()->json([
+        'ErrorCode' => 'ESB-14-011',
+        'ErrorMessage' => [
+          'Indonesian' => 'Service tidak ada',
+          'English' => "Service doesn't exist"
+        ]
+      ], 400);
     }
   }
 
@@ -48,7 +54,13 @@ class VirtualAccountController extends Controller
   
       return response()->json($paymentBills, 200);
     } catch (\Exception $e) {
-
+      return response()->json([
+        'ErrorCode' => 'ESB-14-011',
+        'ErrorMessage' => [
+          'Indonesian' => 'Service tidak ada',
+          'English' => "Service doesn't exist"
+        ]
+      ], 400);
     }    
   }
 

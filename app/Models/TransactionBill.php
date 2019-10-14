@@ -20,4 +20,9 @@ class TransactionBill extends Model
     {
       return $this->hasOne(NonMember::class, 'id', 'user_id');
     }
+
+    public function detail()
+    {
+      return $this->hasOne(TransactionBillDetail::class, 'transaction_bill_id', 'id');
+    }
 }
