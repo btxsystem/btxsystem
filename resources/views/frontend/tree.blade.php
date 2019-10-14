@@ -645,7 +645,6 @@ em{
 			&& $('#email').val() != ''
 			&& $('#phone_number').val() != ''
 			&& $('#first_name').val() != ''
-			&& $('#last_name').val() != ''
 			&& $('#nik').val() != ''
 			&& $('#birthdate').val() != ''
 			&& adult >= 18
