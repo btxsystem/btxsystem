@@ -31,7 +31,7 @@
 					<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div class="form-line">
 							<input class="form-control" name="username" id="username" min="8" type="text" required>
-							<label class="form-label">Username</label>
+							<label class="form-label">Username <em>*</em></label>
 						</div>
 						<div>
 							<b style="color:red" id="username_danger"></b>
@@ -40,7 +40,7 @@
 					<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12 row">
 						<div class="form-line col">
 							<input class="form-control" name="first_name" id="first_name" type="text" min="2" required>
-							<label class="form-label">First Name</label>
+							<label class="form-label">First Name <em>*</em></label>
 						</div>
 						<div class="form-line col">
 							<input class="form-control" name="last_name" id="last_name" type="text" min="2" required>
@@ -50,7 +50,7 @@
 					<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div class="form-line">
 							<input class="form-control" name="email" id="email" type="email" min="5" required>
-							<label class="form-label">Email</label>
+							<label class="form-label">Email <em>*</em></label>
 						</div>
 						<div>
 							<b style="color:red" id="email_danger"></b>
@@ -59,13 +59,13 @@
 					<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div class="form-line">
 							<input class="form-control" id="phone_number" name="phone_number" type="text" min="11" max='13' required>
-							<label class="form-label">Phone Number</label>
+							<label class="form-label">Phone Number <em>*</em></label>
 						</div>
 					</div>
 					<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div class="form-line">
 							<input class="form-control" id="nik" name="nik" id="number_phone" type="text" min="1" required>
-							<label class="form-label">NIK / Passport</label>
+							<label class="form-label">NIK / Passport <em>*</em></label>
 						</div>
 					</div>
           			<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -77,21 +77,20 @@
           			<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div class="form-line">
 							<input class="form-control" id="bank_account_name" name="bank_account_name" type="text" min="1" required>
-							<label class="form-label">Account Name</label>
+							<label class="form-label">Account Name <em>*</em></label>
 						</div>
 					</div>
           			<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div class="form-line">
 							<input class="form-control" id="bank_account_number" name="bank_account_number" type="text" min="1" required>
-							<label class="form-label">Account Number</label>
+							<label class="form-label">Account Number <em>*</em></label>
 						</div>
 					</div>
           			<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div class="form">
-              				<label class="form-label">Bank Name</label>
+              				<label class="form-label">Bank Name <em>*</em></label>
 							<select class="form-control" id="bank_name_select">
-								<option value="" disabled selected>Choice Bank Name</option>
-								<option value="BCA">BCA</option>
+								<option value="BCA" selected>BCA</option>
 								<option value="BRI">BRI</option>
 								<option value="BNI">BNI</option>
 								<option value="Mandiri">Mandiri</option>
@@ -103,7 +102,7 @@
 					</div>
 					<div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div class="form">
-							<label class="form-label">Birth Date</label>
+							<label class="form-label">Birth Date <em>*</em></label>
 						</div>
 						<div class="form-line">
 							<input type="date" id="birthdate" name="birthdate" class="form-control" placeholder="Birthdate" required>
@@ -111,7 +110,7 @@
 						<div style="color:red" id="birthdate_danger"></div>
 					</div>
 					<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
-						<h5 class="card-inside-title">Gender</h5>
+						<h5 class="card-inside-title">Gender <em>*</em></h5>
 						<div class="demo-radio-button">
 							<input name="gender" type="radio" value="1" id="male" class="with-gap radio-col-red" checked />
 							<label for="male">Male</label>
@@ -128,7 +127,7 @@
 					</div>
 					<div class="dropdown-divider"></div>
 					<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
-						<h5 class="card-inside-title">Choose a ebook</h5>
+						<h5 class="card-inside-title">Choose a ebook <em>*</em></h5>
 						<div class="demo-radio-button">
 							<!-- <input name="method" type="radio" value="1" id="shipping" class="with-gap radio-col-red" checked />
 							<label for="shipping">Shipping</label> -->
@@ -226,7 +225,7 @@
             </div>
 					</div>
 					<div class="modal-footer">
-						<a class="btn btn-secondary" data-dismiss="modal">Close</a>
+						<a class="btn btn-secondary" data-dismiss="modal" style="cursor:pointer">Close</a>
 						<a href="#" id="register-load" style="display:none" class="btn btn-primary"></a>
 						<input type="submit" class="btn btn-primary register" value="Register" style="cursor:pointer">
 					</div>
@@ -510,6 +509,10 @@ rect {
 	text-decoration: none;
 	background: red;
 	padding: 20px;
+}
+
+em{
+	color: red;
 }
 .img-fluid {
 	width: 60px;
