@@ -233,7 +233,7 @@ class VirtualAccountService
       ->setPaidAmount($paidAmount)
       ->setSubCompany($subCompany)
       ->setTransactionDate($transactionDate)
-      ->setAdditionaldata($additionaldata)
+      ->setAdditionaldata("")
       ->setFlagAdvice($flagAdvice)
       ->setReference($reference)
       ->setCurrencyCode('IDR');
