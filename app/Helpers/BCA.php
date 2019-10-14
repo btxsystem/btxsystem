@@ -3,6 +3,9 @@
 namespace App\Helpers;
 
 use DateTime;
+use Carbon\Carbon;
+use Unirest\Request as UniRequest;
+use Unirest\Request\Body as UniBody;
 
 class BCA
 {
@@ -31,31 +34,8 @@ class BCA
         $this->timestamp = null;
         $this->corporate_id = 'BCAAPI2016'; // Fill With Your Corporate ID. BCAAPI2016 is Sandbox ID
         $this->account_number = '0201245680'; // Fill With Your Account Number. 0201245680 is Sandbox Account
-    }
-    
-    public function getToken()
-    {
-		$path 	 = '/api/oauth/token';
-		$headers = [
-					 'Content-Type: application/x-www-form-urlencoded',
-					 'Authorization: Basic '.base64_encode($this->client_id.':'.$this->client_secret)
-					];
-		$data 	 = ['grant_type' => 'client_credentials'];
-		$ch 	 = curl_init();
-					curl_setopt($ch, CURLOPT_URL, $this->main_url.$path);
-					curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // Ignore Verify SSL Certificate
-					curl_setopt_array($ch, array(
-						CURLOPT_POST => TRUE,
-						CURLOPT_RETURNTRANSFER => TRUE,
-						CURLOPT_HTTPHEADER => $headers,
-						CURLOPT_POSTFIELDS => http_build_query($data),
-		));
-		$output = curl_exec($ch);
-		curl_close($ch);
-		$result = json_decode($output,true);
-        return $this->access_token = $result['access_token'];
 	}
-
+	
 	public function getTimestamp()
     {
         $date = Carbon::now('Asia/Jakarta');
@@ -83,11 +63,34 @@ class BCA
         return $signature;
     }
     
-    public function balanceInformation(Request $request)
+    public function getToken()
+    {
+		$path 	 = '/api/oauth/token';
+		$headers = [
+					 'Content-Type: application/x-www-form-urlencoded',
+					 'Authorization: Basic '.base64_encode($this->client_id.':'.$this->client_secret)
+					];
+		$data 	 = ['grant_type' => 'client_credentials'];
+		$ch 	 = curl_init();
+					curl_setopt($ch, CURLOPT_URL, $this->main_url.$path);
+					curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // Ignore Verify SSL Certificate
+					curl_setopt_array($ch, array(
+						CURLOPT_POST => TRUE,
+						CURLOPT_RETURNTRANSFER => TRUE,
+						CURLOPT_HTTPHEADER => $headers,
+						CURLOPT_POSTFIELDS => http_build_query($data),
+		));
+		$output = curl_exec($ch);
+		curl_close($ch);
+		$result = json_decode($output,true);
+        return $this->access_token = $result['access_token'];
+	}
+    
+    public function balanceInformation()
     {
         try {
             $httpMethod = 'GET';
-            $relativeUrl = '/banking/v3/corporates/BCAAPI2016/accounts/0201245680';
+            $relativeUrl = '/banking/v3/corporates/'.$this->corporate_id.'/accounts/'.$this->account_number;
             $accessToken = $this->getToken();
             $contentType = 'application/json';
             $timestamp = $this->getTimestamp();
@@ -105,18 +108,18 @@ class BCA
             $response = $e->getMessage();
             return $response;
         }
-    }
-
-    public function statement(Request $request)
+	}
+	
+    public function statementInformation($startDate, $endDate)
     {
         try {
             $httpMethod = 'GET';
-            // $relativeUrl = '/banking/v3/corporates/BCAAPI2016/accounts/0201245680';
-            $relativeUrl = '/banking/v3/corporates/BCAAPI2016/accounts/0201245680/statements?StartDate=2019-10-13&EndDate=2019-10-14';
+			$relativeUrl = '/banking/v3/corporates/'.$this->corporate_id.'/accounts/'.$this->account_number.'/statements?StartDate='.$startDate.'&EndDate='.$endDate;
             $accessToken = $this->getToken();
             $contentType = 'application/json';
             $timestamp = $this->getTimestamp();
-            $stringToSign = $this->getStringToSign($httpMethod, $relativeUrl, $accessToken, $this->getLowerCaseHexEncode(), $timestamp);
+			$stringToSign = $this->getStringToSign($httpMethod, $relativeUrl, $accessToken, $this->getLowerCaseHexEncode(), $timestamp);
+			
             $headers = [
                 'Authorization'     =>  'Bearer ' . $accessToken,
                 'Content-Type'      =>  $contentType,
@@ -132,7 +135,7 @@ class BCA
         }
     }
 
-    public function transfer(Request $request)
+    public function transfer($date, $accountnumber, $amount, $remark1, $remark2)
     {
         try {
             $httpMethod = 'POST';
@@ -141,19 +144,17 @@ class BCA
             $contentType = 'application/json';
             $timestamp = $this->getTimestamp();
 
-            return $timestamp;
-
             $body = [
-                "CorporateID" => str_replace(' ', '', "BCAAPI2016"),
-                "SourceAccountNumber" => str_replace(' ', '', "0201245680"),
+                "CorporateID" => str_replace(' ', '', $this->corporate_id),
+                "SourceAccountNumber" => str_replace(' ', '', $this->account_number),
                 "TransactionID" => str_replace(' ', '', "00000001"),
-                "TransactionDate" => "2019-10-14",
+                "TransactionDate" => $date, //Sample request 2019-10-14
                 "ReferenceID" => str_replace(' ', '', "12345/PO/2016"),
                 "CurrencyCode" => "IDR",
-                "Amount" => "100000.00",
-                "BeneficiaryAccountNumber" => str_replace(' ', '', "0201245681"),
-                "Remark1" => str_replace(' ', '', "Transfer Test"),
-                "Remark2" => str_replace(' ', '', "Online Transfer")
+                "Amount" => $amount, //Sampel request 100000.00
+                "BeneficiaryAccountNumber" => str_replace(' ', '', $accountnumber), //Sample request 0201245680
+                "Remark1" => str_replace(' ', '', $remark1),//Sample request "Transfer Test"
+                "Remark2" => str_replace(' ', '', $remark2) //Sample request "Online Transfer"
             ];
 
             $data = json_encode($body, JSON_UNESCAPED_SLASHES);
@@ -176,7 +177,7 @@ class BCA
         }
     }
     
-    public function rateforex(Request $request)
+    public function rateforex()
     {
         try {
             $httpMethod = 'GET';
@@ -195,9 +196,9 @@ class BCA
             $response = UniRequest::get($this->main_url . $relativeUrl, $headers);
             return response()->json($response->body);
         } catch (\Exception $e) {
-            $response = $e->getResponse();
-            $responseBodyAsString = $response->getBody()->getContents();
-            return $responseBodyAsString;
+            $response = $e->getMessage();;
+
+            return $response;
         }
     }
 

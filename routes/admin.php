@@ -26,6 +26,8 @@ Route::group(['prefix' => 'select', 'as'=> 'select.'], function () {
     Route::get('/{id}/upline', ['as' => 'upline', 'uses' => 'MembershipController@select_upline']);
 });
 
+
+
 Route::group(['middleware' => 'admin'], function () {
     Route::group(['prefix'=>'admin-management','as'=>'admin-management.'], function(){
         Route::get('permissions', ['as' => 'permissions', 'uses' => 'Admin\PermissionsController@index']);
@@ -50,11 +52,12 @@ Route::group(['middleware' => 'admin'], function () {
     });
 
     Route::group(['prefix' => 'bca' ,'as'=>'bca.'], function () {
-        Route::get('/balance', ['as' => 'timestamp', 'uses' => 'Admin\BCAController@balanceInformation']);
-        Route::get('/statement', ['as' => 'statement', 'uses' => 'Admin\BCAController@statement']);
-        Route::get('/transfer', ['as' => 'transfer', 'uses' => 'Admin\BCAController@transfer']);
+        Route::get('/balance', ['as' => 'balance', 'uses' => 'Admin\BCAController@getBalance']);
+        Route::get('/transfer', ['as' => 'transfer', 'uses' => 'Admin\BCAController@fundTransfer']);
         Route::get('/rateforex', ['as' => 'rateforex', 'uses' => 'Admin\BCAController@rateforex']);
     });
+
+
 
     Route::group(['prefix' => 'verification-npwp' ,'as'=>'verification-npwp.'], function () {
         Route::get('', ['as' => 'index', 'uses' => 'Admin\VerificarionNpwpController@index']);
