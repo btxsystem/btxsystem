@@ -49,6 +49,13 @@ Route::group(['middleware' => 'admin'], function () {
 
     });
 
+    Route::group(['prefix' => 'bca' ,'as'=>'bca.'], function () {
+        Route::get('/balance', ['as' => 'timestamp', 'uses' => 'Admin\BCAController@balanceInformation']);
+        Route::get('/statement', ['as' => 'statement', 'uses' => 'Admin\BCAController@statement']);
+        Route::get('/transfer', ['as' => 'transfer', 'uses' => 'Admin\BCAController@transfer']);
+        Route::get('/rateforex', ['as' => 'rateforex', 'uses' => 'Admin\BCAController@rateforex']);
+    });
+
     Route::group(['prefix' => 'verification-npwp' ,'as'=>'verification-npwp.'], function () {
         Route::get('', ['as' => 'index', 'uses' => 'Admin\VerificarionNpwpController@index']);
         Route::get('store', ['as' => 'store', 'uses' => 'Admin\VerificarionNpwpController@store']);
