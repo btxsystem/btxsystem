@@ -223,10 +223,10 @@ class VirtualAccountService
     $additionaldata = $request->input('Additionaldata');
 
     $paymentBills = (new TransactionBillEntity())
-      ->setCompanyCode($companyCode ?? '11210')
-      ->setCustomerNumber($customerNumber ?? '008271822372')
-      ->setRequestID($requestID ?? '201507131507262221400000001975')
-      ->setChannelType($channelType ?? '6014')
+      ->setCompanyCode($companyCode)
+      ->setCustomerNumber($customerNumber)
+      ->setRequestID($requestID)
+      ->setChannelType($channelType)
       ->setCustomerName($customerName)
       ->setCurrencyCode($currencyCode)
       ->setTotalAmount($totalAmount)
