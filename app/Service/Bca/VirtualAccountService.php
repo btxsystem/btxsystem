@@ -66,7 +66,7 @@ class VirtualAccountService
       ->setInquiryStatus(BcaStatusType::SUCCESS_FLAG)
       ->setCustomerName('Customer BCA Virtual Account')
       ->setCurrencyCode('IDR')
-      ->setTotalAmount("150000.00")
+      ->setTotalAmount("0.00")
       ->setSubCompany('00000')
       ->setAdditionalData($additionaldata)
       // ->setDetailBills(function() {
@@ -93,8 +93,8 @@ class VirtualAccountService
       //check transaction bills
       if($transactionBill) {
         $checkInquiryBills->setCurrencyCode($transactionBill->currency_code)
-        ->setTotalAmount($transactionBill->total_amount)
-        ->setPaidAmount($transactionBill->paid_amount)
+        ->setTotalAmount($transactionBill->total_amount.".00")
+        ->setPaidAmount($transactionBill->paid_amount.".00")
         ->setCustomerName($transactionBill->user_type == 'member' ? $transactionBill->member->username : $transactionBill->nonMember->username);
       } else {
         $checkInquiryBills->setInquiryStatus(BcaStatusType::REJECT_FLAG)
