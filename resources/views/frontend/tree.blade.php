@@ -70,7 +70,7 @@
 					</div>
           			<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div class="form-line">
-							<input class="form-control" id="npwp_number" name="npwp_number" type="text" min="1" required>
+							<input class="form-control" id="npwp_number" name="npwp_number" type="text" min="1">
 							<label class="form-label">NPWP</label>
 						</div>
 					</div>
