@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Auth;
+use Alert;
+use App\Employeer;
+use DB;
 class NonMemberController extends Controller
 {
   public function getLogin()
@@ -22,6 +25,8 @@ class NonMemberController extends Controller
       'username' => 'required',
       'password' => 'required'
     ]);
+
+    $data = DB::table('close_member')->select('is_close_member')->first();
 
     if (Auth::guard('nonmember')->attempt(['username' => $request->username, 'password' => $request->password])){
       return redirect()->route('member.home');

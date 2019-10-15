@@ -92,6 +92,17 @@ class MemberController extends Controller
         return view('admin.members.nonactive.index');
     }
 
+    public function redirect(){
+        DB::table('close_member')->where('is_close_member', 0)->update(['is_close_member' => 1, 'updated_at' => now()]); 
+        $data['successs'] = 200;  
+        return $data;
+    }
+
+    public function nonredirect(){
+        DB::table('close_member')->where('is_close_member', 1)->update(['is_close_member' => 0, 'updated_at' => now()]); 
+        $data['successs'] = 200;  
+        return $data;
+    }
 
     public function create()
     {
@@ -204,7 +215,7 @@ class MemberController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'username' => 'max:255|unique:employeers'.$id,
+            'username' => 'max:255|unique:employeers,username,'.$id,
             'first_name' => 'required|max:255',
             'password' => 'min:6',
             'birthdate' => 'required',
@@ -217,6 +228,7 @@ class MemberController extends Controller
 
             $data->nik = $data->nik;
             $data->first_name = $request->first_name;
+            $data->username = $request->username;
             $data->last_name = $request->last_name;
             $data->email = $request->email;
             $data->birthdate = $request->birthdate;
@@ -422,8 +434,6 @@ class MemberController extends Controller
             })
             ->make(true);
     }
-
-
 
     public function htmlAction($row)
     {

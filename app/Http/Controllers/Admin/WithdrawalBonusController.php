@@ -37,22 +37,22 @@ class WithdrawalBonusController extends Controller
                             return strtolower($row->first_name .' '.$row->last_name);
                         })
                         ->addColumn('cash', function($row){
-                            return currency($row->bitrex_cash);
+                            return $row->bitrex_cash;
                         })
                         ->addColumn('bonusSponsor', function($row){
-                            return currency($row->bonus_sponsor);
+                            return $row->bonus_sponsor;
                         })
                         ->addColumn('bonusPairing', function($row){
-                            return currency($row->bonus_pairing);
+                            return $row->bonus_pairing;
                         })
                         ->addColumn('bonusProfit', function($row){
-                            return currency($row->bonus_profit);
+                            return $row->bonus_profit;
                         })
                         ->addColumn('bonusReward', function($row){
-                            return currency($row->bonus_reward);
+                            return $row->bonus_reward;
                         })
                         ->addColumn('bonusTotal', function($row){
-                            return currency($row->total_bonus);
+                            return $row->total_bonus;
                         })
                         ->addColumn('verificationStatus', function($row){
                             return $this->getVerificationStatus($row);

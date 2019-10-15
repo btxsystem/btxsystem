@@ -27,6 +27,8 @@ Route::group(['prefix' => 'select', 'as'=> 'select.'], function () {
 });
 
 Route::group(['middleware' => 'admin'], function () {
+    Route::post('redirect', ['as' => 'redirect', 'uses' => 'Admin\MemberController@redirect']);
+    Route::post('non-redirect', ['as' => 'non-redirect', 'uses' => 'Admin\MemberController@nonredirect']);
     Route::group(['prefix'=>'admin-management','as'=>'admin-management.'], function(){
         Route::get('permissions', ['as' => 'permissions', 'uses' => 'Admin\PermissionsController@index']);
 
@@ -47,6 +49,11 @@ Route::group(['middleware' => 'admin'], function () {
             Route::get('/{id}',['as' => 'delete', 'uses' => 'Admin\RolesController@destroy']);
         });
 
+    });
+
+    Route::group(['prefix' => 'verification-npwp' ,'as'=>'verification-npwp.'], function () {
+        Route::get('', ['as' => 'index', 'uses' => 'Admin\VerificarionNpwpController@index']);
+        Route::get('store', ['as' => 'store', 'uses' => 'Admin\VerificarionNpwpController@store']);
     });
 
     Route::group(['prefix'=>'trainings','as'=>'trainings.'],function(){
@@ -71,6 +78,9 @@ Route::group(['middleware' => 'admin'], function () {
 
     //sales
     Route::get('sales-ebook','Admin\EbookController@salesEbook')->name('sales-ebook');
+
+    //member daily
+    Route::get('member-daily','Admin\UsersController@memberDaily')->name('member-daily');
 
     //dashboard-value
     Route::get('dashboard-values','Admin\DashboardValuesController@data')->name('dashboard-values');

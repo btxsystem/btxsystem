@@ -68,6 +68,7 @@
     let claim = (e) => {
         $('.reward').hide();
         $.ajax({
+            type: "get",
             url: '{{route("member.claim-reward")}}',
             data: { "_token": "{{ csrf_token() }}", "id": e},
             success:function(data){
