@@ -18,7 +18,7 @@ class BCAController extends Controller
 
     public function fundTransfer()
     {
-        $date = "2019-10-14";
+        $date = "2019-10-15";
         $accountnumber = "0201245681";
         $amount = "100000.00";
         $remark1 = "Test Transfer";
