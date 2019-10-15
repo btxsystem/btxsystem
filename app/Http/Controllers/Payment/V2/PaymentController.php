@@ -63,6 +63,8 @@ class PaymentController extends Controller
           $ebookId = 3;
         } else if($ebook->id == 2) {
           $ebookId = 4;
+        } else {
+          $ebookId = $ebook->id;
         }
       } else {
         $ebookId = $ebook->id;
