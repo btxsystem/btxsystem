@@ -104,4 +104,111 @@ class UsersController extends Controller
 
         return response(null, 204);
     }
+
+    public function memberDaily(){
+        $datas = DB::table('employeers')->select(DB::raw('DAY(created_at) as tanggal'), DB::raw('count(id) as views'))
+                                                ->where(DB::raw('MONTH(created_at)'),now()->month)->where('status',1)
+                                                ->groupBy('tanggal')->get();
+        $tmp_data = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+        foreach ($datas as $key => $data) {
+            if ($data->tanggal != null) {
+                switch ($data->tanggal) {
+                    case '1':
+                        $tmp_data[0] = $data->views;
+                        break;
+                    case '2':
+                        $tmp_data[1] = $data->views;
+                        break;
+                    case '3':
+                        $tmp_data[2] = $data->views;
+                        break;
+                    case '4':
+                        $tmp_data[3] = $data->views;
+                        break;
+                    case '5':
+                        $tmp_data[4] = $data->views;
+                        break;
+                    case '6':
+                        $tmp_data[5] = $data->views;
+                        break;
+                    case '7':
+                        $tmp_data[6] = $data->views;
+                        break;
+                    case '8':
+                        $tmp_data[7] = $data->views;
+                        break;
+                    case '9':
+                        $tmp_data[8] = $data->views;
+                        break;
+                    case '10':
+                        $tmp_data[9] = $data->views;
+                        break;
+                    case '11':
+                        $tmp_data[10] = $data->views;
+                        break;
+                    case '12':
+                        $tmp_data[11] = $data->views;
+                        break;
+                    case '13':
+                        $tmp_data[12] = $data->views;
+                        break;
+                    case '14':
+                        $tmp_data[13] = $data->views;
+                        break;
+                    case '15':
+                        $tmp_data[14] = $data->views;
+                        break;
+                    case '16':
+                        $tmp_data[15] = $data->views;
+                        break;
+                    case '17':
+                        $tmp_data[16] = $data->views;
+                        break;
+                    case '18':
+                        $tmp_data[17] = $data->views;
+                        break;
+                    case '19':
+                        $tmp_data[18] = $data->views;
+                        break;
+                    case '20':
+                        $tmp_data[19] = $data->views;
+                        break;
+                    case '21':
+                        $tmp_data[20] = $data->views;
+                        break;
+                    case '22':
+                        $tmp_data[21] = $data->views;
+                        break;
+                    case '23':
+                        $tmp_data[22] = $data->views;
+                        break;
+                    case '24':
+                        $tmp_data[23] = $data->views;
+                        break;
+                    case '25':
+                        $tmp_data[24] = $data->views;
+                        break;
+                    case '26':
+                        $tmp_data[25] = $data->views;
+                        break;
+                    case '27':
+                        $tmp_data[26] = $data->views;
+                        break;
+                    case '28':
+                        $tmp_data[27] = $data->views;
+                        break;
+                    case '29':
+                        $tmp_data[28] = $data->views;
+                        break;
+                    case '30':
+                        $tmp_data[29] = $data->views;
+                        break;
+                    case '31':
+                        $tmp_data[30] = $data->views;
+                        break;
+                }
+            }
+        }
+        return response()->json($tmp_data, 200);
+    }
 }
