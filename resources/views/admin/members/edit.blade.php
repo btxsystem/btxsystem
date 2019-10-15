@@ -49,7 +49,7 @@ Update Member
                                 <div class="col-md-8 inputGroupContainer">
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                                        <input id="username" name="username" placeholder="Username" class="form-control" value="{{$data->username}}" type="text" disabled>
+                                        <input id="username" name="username" placeholder="Username" class="form-control" value="{{$data->username}}" type="text">
                                     </div>
                                     <small class="text-danger">{{ $errors->first('username') }}</small>
                                 </div>
