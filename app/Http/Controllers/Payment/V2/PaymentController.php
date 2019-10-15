@@ -59,13 +59,12 @@ class PaymentController extends Controller
       $ebookId = 0;
 
       if($repeat) {
-        if($ebook->id == 1) {
-          $ebookId = 3;
-        } else if($ebook->id == 2) {
-          $ebookId = 4;
-        } else {
-          $ebookId = $ebook->id;
-        }
+        // if($ebook->id == 1) {
+        //   $ebookId = 3;
+        // } else if($ebook->id == 2) {
+        //   $ebookId = 4;
+        // }
+        $ebookId = $ebook->id;
       } else {
         $ebookId = $ebook->id;
       }
