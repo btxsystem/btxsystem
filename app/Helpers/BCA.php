@@ -34,6 +34,9 @@ class BCA
         $this->timestamp = null;
         $this->corporate_id = 'BCAAPI2016'; // Fill With Your Corporate ID. BCAAPI2016 is Sandbox ID
         $this->account_number = '0201245680'; // Fill With Your Account Number. 0201245680 is Sandbox Account
+        $this->channel_id = '95051';
+        $this->credential_id = 'BCAAPI';
+
 	}
 	
 	public function getTimestamp()
@@ -167,6 +170,56 @@ class BCA
                 'X-BCA-Key'         =>  $this->api_key,
                 'X-BCA-Timestamp'   =>  $timestamp,
                 'X-BCA-Signature'   =>  $this->getSignature($stringToSign)
+            ];
+
+            $response = UniRequest::post($this->main_url . $relativeUrl, $headers, $data);
+            return response()->json($response->body);
+        } catch (\Exception $e) {
+            $response = $e->getMessage();
+            return $response;
+        }
+    }
+
+    public function domesticTransfer($date, $accountnumber, $accountname, $bankcode, $amount, $remark1, $remark2)
+    {
+        try {
+            $httpMethod = 'POST';
+            $relativeUrl = '/banking/corporates/transfers/domestic';
+            $accessToken = $this->getToken();
+            $contentType = 'application/json';
+            $timestamp = $this->getTimestamp();
+
+            $body = [
+                "TransactionID" => str_replace(' ', '', "00000001"),
+                "TransactionDate" => $date, //Sample request 2019-10-14
+                "ReferenceID" => str_replace(' ', '', "12345/PO/2016"),
+                "SourceAccountNumber" => str_replace(' ', '', $this->account_number),
+                "BeneficiaryAccountNumber" => str_replace(' ', '', $accountnumber), //Sample request 0201245680
+                "BeneficiaryBankCode" => str_replace(' ', '', $bankcode), //Sample request BRONINJA
+                "BeneficiaryName" => str_replace(' ', '', $accountname), //Sample request BRONINJA
+                "CorporateID" => str_replace(' ', '', $this->corporate_id),
+                "Amount" => $amount, //Sampel request 100000.00
+                "TransferType" => str_replace(' ', '', 'LLG'),
+                "BeneficiaryCustType" => "1", //Sampel request 1
+                "BeneficiaryCustResidence" => "1", //Sampel request 1
+                "CurrencyCode" => "IDR",
+                "Remark1" => str_replace(' ', '', $remark1),//Sample request "Transfer Test"
+                "Remark2" => str_replace(' ', '', $remark2) //Sample request "Online Transfer"
+            ];
+
+            $data = json_encode($body, JSON_UNESCAPED_SLASHES);
+
+            $stringToSign = $this->getStringToSign($httpMethod, $relativeUrl, $accessToken, $this->getLowerCaseHexEncode($data), $timestamp);
+
+            $headers = [
+                'Authorization'     =>  'Bearer ' . $accessToken,
+                'Content-Type'      =>  $contentType,
+                'X-BCA-Key'         =>  $this->api_key,
+                'X-BCA-Timestamp'   =>  $timestamp,
+                'X-BCA-Signature'   =>  $this->getSignature($stringToSign),
+                'ChannelID'   =>  $this->channel_id,
+                'CredentialID'   =>  $this->credential_id,
+
             ];
 
             $response = UniRequest::post($this->main_url . $relativeUrl, $headers, $data);
