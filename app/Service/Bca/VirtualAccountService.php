@@ -236,11 +236,10 @@ class VirtualAccountService
       ->setTotalAmount($totalAmount ?? "")
       ->setPaidAmount($paidAmount ?? "")
       ->setSubCompany($subCompany)
-      ->setTransactionDate($transactionDate)
+      ->setTransactionDate($transactionDate ?? "")
       ->setAdditionaldata("")
       ->setFlagAdvice($flagAdvice)
-      ->setReference($reference)
-      ->setCurrencyCode('IDR');
+      ->setReference($reference);
       // ->setDetailBills(function() use ($detailBills) {
       //   $detailBillLists = [];
 
