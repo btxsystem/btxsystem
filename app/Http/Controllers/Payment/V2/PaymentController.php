@@ -64,7 +64,7 @@ class PaymentController extends Controller
         // } else if($ebook->id == 2) {
         //   $ebookId = 4;
         // }
-        $ebookId = $ebook->id;
+        $ebookId = $request->input('ebook');
       } else {
         $ebookId = $ebook->id;
       }
@@ -88,13 +88,13 @@ class PaymentController extends Controller
 
         //repeat
         if($repeat) {
-          $renewalEbookId = 0;
+          $renewalEbookId = $ebookId = $request->input('ebook');
 
-          if($ebook->id == 1) {
-            $renewalEbookId = 3;
-          } else if($ebook->id == 2) {
-            $renewalEbookId = 4;
-          }
+          // if($ebook->id == 1) {
+          //   $renewalEbookId = 3;
+          // } else if($ebook->id == 2) {
+          //   $renewalEbookId = 4;
+          // }
 
           $renewalEbook = Ebook::where('id', $renewalEbookId)->first();
 
@@ -124,13 +124,13 @@ class PaymentController extends Controller
 
         //repeat
         if($repeat) {
-          $renewalEbookId = 0;
+          $renewalEbookId = $ebookId = $request->input('ebook');
 
-          if($ebook->id == 1) {
-            $renewalEbookId = 3;
-          } else if($ebook->id == 2) {
-            $renewalEbookId = 4;
-          }
+          // if($ebook->id == 1) {
+          //   $renewalEbookId = 3;
+          // } else if($ebook->id == 2) {
+          //   $renewalEbookId = 4;
+          // }
 
           $renewalEbook = Ebook::where('id', $renewalEbookId)->first();
 
