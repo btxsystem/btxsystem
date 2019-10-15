@@ -279,36 +279,10 @@ class VirtualAccountService
             ->setIndonesian("Sukses")
             ->setEnglish("Success")
         );
-      
-      // if failed payment or any problem
-      if(!$transactionBillRepo) {
-        $paymentBills->setPaymentFlagStatus(BcaStatusType::REJECT_FLAG)
-          ->setPaymentFlagReason(
-            (new LanguageEntity())
-              ->setIndonesian("Gagal")
-              ->setEnglish("Failed")
-          )
-          ->setInquiryReason(
-            ((new LanguageEntity())
-              ->setIndonesian('Gagal')
-              ->setEnglish('Failed'))
-          )
-          ->setFreeTexts(function() {
-            $freeTexts = [
-              ((new LanguageEntity())
-              ->setIndonesian('Gagal')
-              ->setEnglish('Failed'))
-            ];
-      
-            return $freeTexts;
-          });
-
-        return $this->responsePayments($paymentBills);
-      }
 
       $paymentBillProduct = $this->paymentBillProduct($paymentBills, $transactionBillRepo);
       
-      if($paymentBillProduct) {
+      if($paymentBillProduct && $transactionBillRepo) {
         $paymentBills->setPaymentFlagStatus(BcaStatusType::SUCCESS_FLAG)
         ->setPaymentFlagReason(
           (new LanguageEntity())
@@ -332,6 +306,18 @@ class VirtualAccountService
     
         //   return $freeTexts;
         // });
+      } else {
+        $paymentBills->setPaymentFlagStatus(BcaStatusType::REJECT_FLAG)
+          ->setPaymentFlagReason(
+            (new LanguageEntity())
+              ->setIndonesian("Gagal")
+              ->setEnglish("Failed")
+          )
+          ->setInquiryReason(
+            ((new LanguageEntity())
+              ->setIndonesian('Gagal')
+              ->setEnglish('Failed'))
+          );
       }
         
     return $this->responsePayments($paymentBills);    
@@ -447,7 +433,7 @@ class VirtualAccountService
         break;
     }
 
-    return false;
+    return true;
   }
 
 }
