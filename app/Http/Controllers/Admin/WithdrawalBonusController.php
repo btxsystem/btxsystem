@@ -112,7 +112,7 @@ class WithdrawalBonusController extends Controller
 
                 DB::table('history_bitrex_cash')->insert([
                     'id_member' => $data->id, 
-                    'nominal' => $data->bitrex_cash,
+                    'nominal' => $data->total_bonus,
                     'description' => 'Manual Withdraw',
                     'info' => 0,
                     'type' => 5,
