@@ -330,12 +330,24 @@ class ExploreController extends Controller
     //   ->where('transaction_non_members.non_member_id', Auth::guard('nonmember')->user()->id)
     //   ->get();
 
+    $renewalBasic = Ebook::select('id', 'price', 'pv', 'bv', 'price_markup', 'description', 'title', 'src', 'display_title')
+    ->where('id', 3)
+    ->orderBy('position', 'ASC')
+    ->first();
+
+    $renewalAdvanced = Ebook::select('id', 'price', 'pv', 'bv', 'price_markup', 'description', 'title', 'src', 'display_title')
+    ->where('id', 4)
+    ->orderBy('position', 'ASC')
+    ->first();
+
 
     return view($this->pathView . '.components.subscription')->with([
       'username' => $referral,
       'ebooks' => $ebooks,
       'expired_basic' => $expiredBasic,
-      'expired_advanced' => $expiredAdvanced
+      'expired_advanced' => $expiredAdvanced,
+      'renewal_basic' => $renewalBasic,
+      'renewal_advanced' => $renewalAdvanced
     ]);
   }
 
