@@ -244,7 +244,7 @@ class TransactionController extends Controller
                     ]);
                 }
             } else if($type == 'ebook') {
-                $orderType = substr($code, 0, 8);
+                $orderType = substr($invoice_number, 0, 8);
 
                 if($orderType == 'BITREX01') {
                     $check = TransactionNonMember::where('transaction_ref', $invoice_number)->where('status', '=', 1)->first();
