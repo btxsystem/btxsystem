@@ -26,6 +26,8 @@ Route::group(['prefix' => 'select', 'as'=> 'select.'], function () {
     Route::get('/{id}/upline', ['as' => 'upline', 'uses' => 'MembershipController@select_upline']);
 });
 
+
+
 Route::group(['middleware' => 'admin'], function () {
     Route::post('redirect', ['as' => 'redirect', 'uses' => 'Admin\MemberController@redirect']);
     Route::post('non-redirect', ['as' => 'non-redirect', 'uses' => 'Admin\MemberController@nonredirect']);
@@ -50,6 +52,15 @@ Route::group(['middleware' => 'admin'], function () {
         });
 
     });
+
+    Route::group(['prefix' => 'bca' ,'as'=>'bca.'], function () {
+        Route::get('/balance', ['as' => 'balance', 'uses' => 'Admin\BCAController@getBalance']);
+        Route::get('/transfer', ['as' => 'transfer', 'uses' => 'Admin\BCAController@fundTransfer']);
+        Route::get('/transferdomestic', ['as' => 'transferdomestic', 'uses' => 'Admin\BCAController@domesticTransfer']);
+        Route::get('/rateforex', ['as' => 'rateforex', 'uses' => 'Admin\BCAController@rateforex']);
+    });
+
+
 
     Route::group(['prefix' => 'verification-npwp' ,'as'=>'verification-npwp.'], function () {
         Route::get('', ['as' => 'index', 'uses' => 'Admin\VerificarionNpwpController@index']);

@@ -662,6 +662,8 @@ em{
 	}
 
 	function openAutoPlacement() {
+		console.log('masuk');
+		
 		$('#action-member').attr('action', '{{route("register-autoplacement")}}')
 		$.ajax({
 			type: 'GET',
