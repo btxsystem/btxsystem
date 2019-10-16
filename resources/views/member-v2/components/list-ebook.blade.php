@@ -16,6 +16,89 @@
 @section('style_class')bit-bg4 @stop
 
 @section('content')
+<div class="modal fade" id="no-virtual" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<img src="{{asset('img/bca.png')}}" alt="" srcset="" style="width:100px">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body" style="height: 450px; overflow-y: auto;">
+				<center>
+					<p style="font-size:14px">BCA Virtual Account Number</p>
+						<div class="form-line focused success">
+							<input style="color:green; font-size:25px; font-weight:bold; text-align:center;" type="text" class="form-control" id="va" name="va" value="" readonly>
+						</div>
+					<br>
+				</center>
+				<br>
+				<h4>Bagaimana cara melakukan Pembayaran BCA Virtual Account ?</h4>
+				<h5>1. ATM BCA</h5>
+				<ul style="font-size:12px">
+					<li>
+						<p>Masukkan kartu ATM dan PIN BCA anda</p>
+					</li>
+					<li>
+						<p>Pilih menu TRANSAKSI LAINNYA > TRANSFER > KE REKENING BCA VIRTUAL ACCOUNT</p>
+					</li>
+					<li>
+						<p id="des_noreq"></p>
+					</li>
+					<li>
+						<p>Masukkan jumlah transfer sesuai detail transaksi. (Jumlah pembayaran harus sama dengan jumlah tagihan yang harus dibayar).</p>
+					</li>
+					<li>
+						<p>Ikuti instruksi untuk menyelesaikan transaksi</p>
+					</li>
+				</ul>
+				<h5>2. KLIK BCA</h5>
+				<ul style="font-size:12px">
+					<li>
+						<p>Masuk ke website KLIK BCA</p>
+					</li>
+					<li>
+						<p>Pilih menu TRANSFER DANA > TRANSFER KE BCA VIRTUAL ACCOUNT</p>
+					</li>
+					<li>
+						<p id="des_noreq2"></p>
+					</li>
+					<li>
+						<p>Masukkan jumlah transfer sesuai detail transaksi. Jumlah pembayaran harus sama dengan jumlah tagihan yang harus dibayar.</p>
+					</li>
+					<li>
+						<p>Ikuti instruksi untuk menyelesaikan transaksi</p>
+					</li>
+				</ul>
+				<h5>3. m-BCA (BCA MOBILE)</h5>
+				<ul style="font-size:12px">
+					<li>
+						<p>Masuk ke aplikasi mobile m-BCA</p>
+					</li>
+					<li>
+						<p>Pilih menu M-TRANSFER > BCA VIRTUAL ACCOUNT</p>
+					</li>
+					<li>
+						<p id="des_noreq3"></p>
+					</li>
+					<li>
+						<p>Masukkan jumlah transfer sesuai detail transaksi. Jumlah pembayaran harus sama dengan jumlah tagihan yang harus dibayar.</p>
+					</li>
+					<li>
+						<p>Masukkan PIN m-BCA Anda</p>
+					</li>
+					<li>
+						<p>Ikuti instruksi untuk menyelesaikan transaksi</p>
+					</li>
+				</ul>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal" style="cursor:pointer">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
 <div class="col-12 d-flex justify-content-center" style="position: absolute; height: 50vh;background-color:#ffb320;">
 </div>
 	<div class="col-lg-12 pb-3">
@@ -171,19 +254,25 @@
 						@endif
 						<div class="form-group">
 							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="radio" name="payment_method" id="payment_method" value="transfer" checked>
+								<input class="form-check-input" type="radio" name="payment_method" id="transfer" value="transfer" checked>
 								<label class="form-check-label" for="inlineRadio1">Transfer</label>
 							</div>
 							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="radio" name="payment_method" id="payment_method" value="ipay">
+								<input class="form-check-input" type="radio" name="payment_method" id="ipay" value="ipay">
 								<label class="form-check-label" for="inlineRadio1">VA & OVO</label>
+							</div>
+							<div class="form-check form-check-inline">
+								<input class="form-check-input" type="radio" name="payment_method" id="va-bca" value="va-bca">
+								<label class="form-check-label" for="inlineRadio1">BCA VA</label>
 							</div>
 					  </div>
 					  <h4>Total yang dibayar : IDR </span><b><span id="total_price"></h4></b>
 		      </div>
 		      <div class="modal-footer justify-content-center">
-		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-		        <button type="button" class="btn btn-identity-red" onclick="submit()" id="register">Submit</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		        <button type="button" class="btn btn-identity-red" id="submit-va">Submit</button>
+		        <button type="button" class="btn btn-identity-red" onclick="submit()" id="submit-nonva">Submit</button>
+				<a href="#" id="payment-bca" style="cursor:pointer; display:none;" class="btn btn-identity-red"></a>
 		      </div>
 		    </div>
 		  </div>
@@ -209,6 +298,10 @@
 w[o].h=h;w[o].b=b;return (w[o].q=w[o].q||[]).push(arguments)};a=d.createElement(t),
 m=d.getElementsByTagName(t)[0];a.async=1;a.src=h+l+'?b='+b+'&p='+p.join(',');a.crossorigin='use-credentials';m.parentNode.insertBefore(a,m)
 })(window,document,'script','https://embedder.traducationfx.com/','embedder.js','PCyAlXfaqVU',['modal'],'TraducationFX');
+
+$('#submit-va').hide();
+$('#submit-nonva').show();
+
 </script>
 <?php if($books[0]->id == 1) { ?>
 <script>
@@ -263,9 +356,67 @@ TraducationFX('video', 'embed');
 </script>
 <?php } ?>
 <script>
-let auth = "{{Auth::guard('nonmember')->user() || Auth::guard('user')->user()}}"
+let auth = "{{Auth::guard('nonmember')->user() || Auth::guard('user')->user()}}";
+
 $('#username').on('change', function() {
 	checkUsername()
+})
+
+
+$('#va-bca').change(function(){
+	$('#submit-nonva').hide();
+	$('#submit-va').show();
+})
+
+$('#transfer').change(function(){
+	$('#submit-va').hide();
+	$('#submit-nonva').show();
+})
+
+$('#ipay').change(function(){
+	$('#submit-va').hide();
+	$('#submit-nonva').show();
+})
+
+$('#submit-va').click(function(){
+	var $this = $(this);
+	var loadingText = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...';
+	if ($(this).html() !== loadingText) {
+		$this.data('original-text', $(this).html());
+		$this.hide();
+		$('#payment-bca').html(loadingText);
+		$('#payment-bca').show();
+	}
+	setTimeout(function() {
+		$this.html($this.data('original-text'));
+		$('#payment-bca').hide();
+		$this.show();
+	}, 100000);
+
+	$.ajaxSetup({
+		headers: {
+			'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+		}
+	});
+
+	$.ajax({
+		type: 'POST',
+		url: '{{route("member.buy-ebook")}}',
+		data: {ebook_id: $('#ebook').val()},
+		success: function (data) {
+			
+			$('#va').val(data.customer_number);
+			$('#des_noreq').text('Masukkan '+data.customer_number+' sebagai rekening tujuan');
+			$('#des_noreq2').text('Masukkan '+data.customer_number+' sebagai rekening tujuan');
+			$('#des_noreq3').text('Masukkan '+data.customer_number+' sebagai rekening tujuan');
+			$('#no-virtual').modal('show');
+			$('#modal-subscription').modal('hide');
+			
+		},
+		error: function() {
+			console.log("Error");
+		}
+	});
 })
 
 $('#referralCode').on('change', function() {
