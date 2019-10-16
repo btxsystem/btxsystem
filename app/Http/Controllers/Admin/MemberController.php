@@ -215,7 +215,7 @@ class MemberController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'username' => 'max:255|unique:employeers'.$id,
+            'username' => 'max:255|unique:employeers,username,'.$id,
             'first_name' => 'required|max:255',
             'password' => 'min:6',
             'birthdate' => 'required',
@@ -228,6 +228,7 @@ class MemberController extends Controller
 
             $data->nik = $data->nik;
             $data->first_name = $request->first_name;
+            $data->username = $request->username;
             $data->last_name = $request->last_name;
             $data->email = $request->email;
             $data->birthdate = $request->birthdate;

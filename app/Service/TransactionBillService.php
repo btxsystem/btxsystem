@@ -101,7 +101,7 @@ class TransactionBillService
 
         $ebookRenewal = Ebook::where('id', $productDetail->ebook_renewal_id)->first();
 
-        // jika blm ada transaksi
+        // jika belum ada transaksi
         if(!$check || !$ebookRenewal) return false;
         
         $data['income'] = $ebookRenewal->price_markup;
@@ -274,7 +274,14 @@ class TransactionBillService
    */
   public function registerMember($transactionBillRepo)
   {
-    return true;
+    try {
+      DB::beginTransaction();
+
+      $productDetail = json_decode($transactionBillRepo->detail->product_detail);
+    } catch (\Exception $e) {
+      DB::rollback();
+      return false;
+    }
   }
 
 }
