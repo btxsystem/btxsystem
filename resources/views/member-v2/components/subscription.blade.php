@@ -380,7 +380,7 @@ div#flag {
 											
 											@if($ebook->id == 1)
 												<button onclick="changeValueRepeat(JSON.stringify({'price': '{{$renewal_basic->price}}', 'price_markup': '{{$renewal_basic->price_markup}}', 'id': '{{$renewal_basic->id}}'}))" data-toggle="modal" data-target="#repeatModal" type="button" class="btn btn-identity-red text-white btn-sm mt-3 px-5">REPEAT ORDER</button>
-											@else if($ebook->id == 2)
+											@elseif($ebook->id == 2)
 												<button onclick="changeValueRepeat(JSON.stringify({'price': '{{$renewal_advanced->price}}', 'price_markup': '{{$renewal_advanced->price_markup}}', 'id': '{{$renewal_advanced->id}}'}))" data-toggle="modal" data-target="#repeatModal" type="button" class="btn btn-identity-red text-white btn-sm mt-3 px-5">REPEAT ORDER</button>
 											@endif
 											@if($ebook->id == 1 && $expired_basic != null || $ebook->id == 2 && $expired_advanced!= null)
