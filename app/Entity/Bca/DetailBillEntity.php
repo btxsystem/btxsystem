@@ -7,6 +7,8 @@ use Closure;
 
 class DetailBillEntity
 {
+  public $ID;
+  
   public $BillDescription;
 
   public $BillAmount = 20;
@@ -14,6 +16,10 @@ class DetailBillEntity
   public $BillNumber;
 
   public $BillSubCompany;
+
+  public $BillReferrence;
+
+  public $ProductDetail;
 
   public function setBillDescription($class)
   {
@@ -37,6 +43,66 @@ class DetailBillEntity
   public function setBillSubCompany($BillSubCompany)
   {
     $this->BillSubCompany = $BillSubCompany;
+    return $this;
+  }
+
+  /**
+   * Get the value of BillReferrence
+   */ 
+  public function getBillReferrence()
+  {
+    return $this->BillReferrence;
+  }
+
+  /**
+   * Set the value of BillReferrence
+   *
+   * @return  self
+   */ 
+  public function setBillReferrence($BillReferrence)
+  {
+    $this->BillReferrence = $BillReferrence;
+
+    return $this;
+  }
+
+  /**
+   * Get the value of ProductDetail
+   */ 
+  public function getProductDetail()
+  {
+    return $this->ProductDetail;
+  }
+
+  /**
+   * Set the value of ProductDetail
+   *
+   * @return  self
+   */ 
+  public function setProductDetail($ProductDetail)
+  {
+    $this->ProductDetail = $ProductDetail;
+
+    return $this;
+  }
+
+  /**
+   * Get the value of ID
+   */ 
+  public function getID()
+  {
+    return $this->ID;
+  }
+
+  /**
+   * Set the value of ID
+   *
+   * @return  self
+   */ 
+  public function setID($ID)
+  {
+    $this->ID = $ID;
+
     return $this;
   }
 }

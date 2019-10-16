@@ -244,7 +244,7 @@ class TransactionController extends Controller
                     ]);
                 }
             } else if($type == 'ebook') {
-                $orderType = substr($code, 0, 8);
+                $orderType = substr($invoice_number, 0, 8);
 
                 if($orderType == 'BITREX01') {
                     $check = TransactionNonMember::where('transaction_ref', $invoice_number)->where('status', '=', 1)->first();
@@ -299,7 +299,9 @@ class TransactionController extends Controller
                 'account_number' => $account_number,
                 'bank_name' => $bank_name,
                 'amount' => $amount,
-                'image' => $imageName != null ? "upload/transfer-confirmation/" . $imageName : ''
+                'image' => $imageName != null ? "upload/transfer-confirmation/" . $imageName : '',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
             ]);
 
             DB::commit();

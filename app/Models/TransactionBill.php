@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class TransactionBill extends Model
 {
-    protected $table = 'transaction_biils';
+    protected $table = 'transaction_bills';
   
     protected $guarded = [];
 
@@ -19,5 +19,10 @@ class TransactionBill extends Model
     public function nonMember()
     {
       return $this->hasOne(NonMember::class, 'id', 'user_id');
+    }
+
+    public function detail()
+    {
+      return $this->hasOne(TransactionBillDetail::class, 'transaction_bill_id', 'id');
     }
 }
