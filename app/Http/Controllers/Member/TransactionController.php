@@ -196,6 +196,8 @@ class TransactionController extends Controller
             $bank_name = $request->input('bank_name');
             $amount = $request->input('amount');
             $user_id = null;
+            $username = '';
+            $userType = 'unknown';
 
             $imageName = null;
 
@@ -205,12 +207,15 @@ class TransactionController extends Controller
               if($orderType == 'BITREX05') {
                 $messageError = 'Topup Bitrex Point';
                 $type = 'topup_bitrex_point';
+                $userType = 'member';
               } else if($orderType == 'BITREX02') {
                 $type = 'ebook';
                 $messageError = 'Ebook Member';
+                $userType = 'member';
               } else if($orderType == 'BITREX01') {
                 $messageError = 'Ebook Non Member';
                 $type = 'ebook_non_member';
+                $userType = 'nonmember';
               } else {
                 return redirect()->back()->with([
                     'error' => 'Transaction not found. Please try again.'
@@ -243,6 +248,11 @@ class TransactionController extends Controller
                         'error' => 'Transaction not found or invalid billing type. Please try again.'
                     ]);
                 }
+
+                $username  = HistoryBitrexPoints::where('transaction_ref', $invoice_number)->first()->member->username;
+
+                $user_id = HistoryBitrexPoints::where('transaction_ref', $invoice_number)->first()->member->id;
+
             } else if($type == 'ebook') {
                 $orderType = substr($invoice_number, 0, 8);
 
@@ -255,6 +265,10 @@ class TransactionController extends Controller
                         ]);
                     }
 
+                    $username  = TransactionNonMember::where('transaction_ref', $invoice_number)->first()->nonMember->username;
+
+                    $user_id = TransactionNonMember::where('transaction_ref', $invoice_number)->first()->nonMember->id;
+
                 } else if($orderType == 'BITREX02') {
                     $check = TransactionMember::where('transaction_ref', $invoice_number)->where('status', '=', 1)->first();
 
@@ -263,6 +277,9 @@ class TransactionController extends Controller
                             'error' => 'Transaction not found or invalid billing type. Please try again.'
                         ]);
                     }
+
+                    $username  = TransactionMember::where('transaction_ref', $invoice_number)->first()->member->username;
+                    $user_id = TransactionMember::where('transaction_ref', $invoice_number)->first()->member->id;
                 } else {
                     return redirect()->back()->with([
                         'error' => 'Transaction not found. Please try again.'
@@ -276,6 +293,9 @@ class TransactionController extends Controller
                       'error' => 'Transaction not found or invalid billing type. Please try again.'
                   ]);
               }
+
+              $username = PaymentHistoryNonMember::where('ref_no', $invoice_number)->first()->nonMember->username;
+              $user_id = PaymentHistoryNonMember::where('ref_no', $invoice_number)->first()->nonMember->id;
             } else {
                 return redirect()->back()->with([
                     'error' => 'Transaction not found. Please try again.'
@@ -293,6 +313,9 @@ class TransactionController extends Controller
 
             DB::table('transfer_confirmations')->insert([
                 'type' => $type,
+                'username' => $username,
+                'user_type' => $userType,
+                'user_id' => $user_id,
                 'status' => 0,
                 'invoice_number' => $invoice_number,
                 'account_name' => $account_name,
