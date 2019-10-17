@@ -37,10 +37,11 @@ Transfer Confirmation
                             <tr>
                                 <th class="text-center" width="5%">No</th>
                                 <th class="text-center" width="15%">Username</th>
-                                <th class="text-center" width="20%">Type</th>
+                                <th class="text-center" width="15%">Type</th>
                                 <th class="text-center" width="10%">Status</th>
                                 <th class="text-center" width="15%">Invoice</th>
-                                <th class="text-center" width="15%">Amount</th>
+                                <th class="text-center" width="10%">Amount</th>
+                                <th class="text-center" width="10%">Approved At</th>
                                 <th class="text-center" width="10%">Date</th>
                                 <th width="10%">Action</th>
                             </tr>
@@ -201,6 +202,7 @@ Transfer Confirmation
                 $(row).find('td').css('vertical-align', 'middle');
               },
               destroy: true,
+              scrollX: true,
               processing: true,
               serverSide: true,
               ajax: {
@@ -213,8 +215,9 @@ Transfer Confirmation
                   { data: 'type', name: 'type', className: "text-center" },                  
                   { data: 'status', name: 'status', className: "text-center" },                  
                   { data: 'invoice_number', name: 'invoice_number', className: "text-center" },                  
-                  { data: 'nominal', name: 'amount', className: "text-center" },                  
-                  { data: 'date', name: 'created_at', className: "text-center" },                  
+                  { data: 'nominal', name: 'amount', className: "text-center" }, 
+                  { data: 'approved_at', name: 'approved_at', className: "text-center" },                  
+                  { data: 'date', name: 'created_at', className: "text-center" },                                   
                   { data: 'action', name: 'action', orderable: false, searchable: false, className: "text-center" },
               ]
           });
@@ -245,6 +248,30 @@ Transfer Confirmation
             });
         });
 
+        // $(document).on('click', '.delete-payment', function (e) {
+        //     e.preventDefault();
+        //     // var id = $(this).data('id');
+        //     var invoice_number = $(this).data('invoice_number');
+        //     console.log(invoice_number);
+        //     var url =   "{{url('backoffice/transfer-confirmation/approve/')}}"
+        //     swal({
+        //             title: "Are you sure to delete this payment ?",
+        //             confirmButtonClass: "btn-danger",
+        //             confirmButtonText: "Yes!",
+        //             showCancelButton: true,
+        //         },
+        //         function() {
+        //             $.ajax({
+        //                 type: "GET",
+        //                 url: url +'/'+ invoice_number,
+        //                 data: {invoice_number:invoice_number},
+        //                 success: function (data) {
+        //                         window.location.href = "{{ route('transfer-confirmation.index') }}";
+        //                     }         
+        //             });
+        //     });
+        // });
+
         $(document).on('click','.show-testimonial',function(){
             var id = $(this).data('id');
             
@@ -267,6 +294,30 @@ Transfer Confirmation
                 $('#editTestimoniModal').modal('show');
             }) 
         });
+
+        $(document).on('click', '.delete-payment', function (e) {
+            e.preventDefault();
+            var id = $(this).data('id');
+            var url =   "{{url('backoffice/transfer-confirmation/')}}";
+            swal({
+                    title: "Are you sure delete this data ?",
+                    type: "error",
+                    confirmButtonClass: "btn-danger",
+                    confirmButtonText: "Yes!",
+                    showCancelButton: true,
+                },
+                function() {
+                    $.ajax({
+                        type: "DELETE",
+                        url: url +'/'+ id,
+                        data: {id:id},
+                        success: function (data) {
+                                window.location.href = "{{ route('transfer-confirmation.index') }}";
+                            }         
+                    });
+            });
+        });
+
 
         function convertToRupiah(angka)
         {

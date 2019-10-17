@@ -26,6 +26,8 @@ Route::group(['prefix' => 'select', 'as'=> 'select.'], function () {
     Route::get('/{id}/upline', ['as' => 'upline', 'uses' => 'MembershipController@select_upline']);
 });
 
+
+
 Route::group(['middleware' => 'admin'], function () {
     Route::post('redirect', ['as' => 'redirect', 'uses' => 'Admin\MemberController@redirect']);
     Route::post('non-redirect', ['as' => 'non-redirect', 'uses' => 'Admin\MemberController@nonredirect']);
@@ -50,6 +52,15 @@ Route::group(['middleware' => 'admin'], function () {
         });
 
     });
+
+    Route::group(['prefix' => 'bca' ,'as'=>'bca.'], function () {
+        Route::get('/balance', ['as' => 'balance', 'uses' => 'Admin\BCAController@getBalance']);
+        Route::get('/transfer', ['as' => 'transfer', 'uses' => 'Admin\BCAController@fundTransfer']);
+        Route::get('/transferdomestic', ['as' => 'transferdomestic', 'uses' => 'Admin\BCAController@domesticTransfer']);
+        Route::get('/rateforex', ['as' => 'rateforex', 'uses' => 'Admin\BCAController@rateforex']);
+    });
+
+
 
     Route::group(['prefix' => 'verification-npwp' ,'as'=>'verification-npwp.'], function () {
         Route::get('', ['as' => 'index', 'uses' => 'Admin\VerificarionNpwpController@index']);
@@ -209,8 +220,6 @@ Route::group(['middleware' => 'admin'], function () {
         Route::get('paidindex', ['as' => 'paidindex', 'uses' => 'Admin\WithdrawalBonusController@paidIndex']);
         Route::get('masspaid', ['as' => 'masspaid', 'uses' => 'Admin\WithdrawalBonusController@massPaid']);
         Route::get('export', ['as' => 'export', 'uses' => 'Admin\WithdrawalBonusController@export']);
-        // Route::get('/{id}/show', ['as' => 'edit', 'uses' => 'Admin\TransferConfirmationController@show']);
-        // Route::get('/approve/{invoice_number}', ['as' => 'approve', 'uses' => 'Admin\TransferConfirmationController@approve']);
     });
 
     Route::group(['prefix'=>'withdrawal-time','as'=>'withdrawal-time.'], function(){
@@ -221,6 +230,7 @@ Route::group(['middleware' => 'admin'], function () {
     Route::group(['prefix'=>'transfer-confirmation','as'=>'transfer-confirmation.'], function(){
         Route::get('', ['as' => 'index', 'uses' => 'Admin\TransferConfirmationController@index']);
         Route::get('/{id}/show', ['as' => 'edit', 'uses' => 'Admin\TransferConfirmationController@show']);
+        Route::delete('/{id}', ['as' => 'delete', 'uses' => 'Admin\TransferConfirmationController@destroy']);
         Route::get('/approve/{invoice_number}', ['as' => 'approve', 'uses' => 'Admin\TransferConfirmationController@approve']);
     });
 
