@@ -74,7 +74,8 @@ class TransferConfirmationController extends Controller
         // If Type *Register Member* update table transaction member
         
         TransferConfirmation::where('invoice_number', $invoice_number)->update([
-          'status' => 1
+          'status' => 1,
+          'approved_at' => now()
         ]);
 
         DB::beginTransaction();
@@ -288,18 +289,35 @@ class TransferConfirmationController extends Controller
         }
     }
 
+    public function destroy($id)
+    {
+        $data = TransferConfirmation::findOrFail($id);
+        if ($data) { 
+            \File::delete(public_path($data->image));
+            $data->delete(); 
+            Alert::success('Success Delete Data', 'Success');
+        } else {
+            Alert::error('Gagal Delete Data', 'Gagal');
+        }
+    }
+
+
     public function htmlAction($row)
     {
         switch($row->status) {
             case 0;
             return '
                     <a data-id="'.$row->id.'"  class="btn btn-success fa fa-eye show-testimonial" title="Show Payment"></a>
-                    <a data-invoice_number="'.$row->invoice_number.' "class="btn btn-default fa fa-check approve-payment" style="background-color: #b85ebd; color: #ffffff;" title="Approve Payment"></a>';
+                    <a data-invoice_number="'.$row->invoice_number.' "class="btn btn-default fa fa-check approve-payment" style="background-color: #b85ebd; color: #ffffff;" title="Approve Payment"></a>
+                    <a data-id="'.$row->id.'"  class="btn btn-danger fa fa-trash delete-payment" title="Delete Payment"></a>
+                    ';
             break;
 
             case 1;
             return '
-                    <a data-id="'.$row->id.'"  class="btn btn-success fa fa-eye show-testimonial" title="Show Payment"></a>';
+                    <a data-id="'.$row->id.'"  class="btn btn-success fa fa-eye show-testimonial" title="Show Payment"></a>
+                    <a data-id="'.$row->id.'"  class="btn btn-danger fa fa-trash delete-payment" title="Delete Payment"></a>
+                    ';
             break;
 
         }
