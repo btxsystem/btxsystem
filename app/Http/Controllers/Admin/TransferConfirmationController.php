@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\TransferConfirmation;
+use App\Employeer;
 use App\HistoryBitrexPoints;
 use App\Models\Testimonial;
 use Carbon\Carbon;
@@ -32,19 +33,21 @@ class TransferConfirmationController extends Controller
     public function index()
     {
         if (request()->ajax()) {
-            $data = TransferConfirmation::with('member')->orderBy('id','desc');
+            $data = TransferConfirmation::with(['user' => function ($query){
+                        $query->select('id','username');
+                     }])->orderBy('id','desc');
 
-            // $data = TransferConfirmation::with(['member' => function($query){
-            //   $query->select('id');
-            // }])->orderBy('id','desc');
 
             return Datatables::of($data)
                     ->addIndexColumn()
                     ->addColumn('status', function($row){
                         return $row->status == 0 ? 'Submitted' : 'Approved';
                     })
-                    ->addColumn('username', function($row){
-                        return $row->member ? $row->member->username : 'No Data';
+                    ->addColumn('usernameMember', function($row){
+                        return $row->user_type == 'member' || null ? $row->user->username : '-';
+                    })
+                    ->addColumn('usernameNonMember', function($row){
+                        return $row->user_type == 'nonmember' ? $row->user->username : '-';
                     })
                     ->addColumn('date', function($row){
                         return $row->created_at ? $row->created_at : 'No Data';
@@ -74,7 +77,8 @@ class TransferConfirmationController extends Controller
         // If Type *Register Member* update table transaction member
         
         TransferConfirmation::where('invoice_number', $invoice_number)->update([
-          'status' => 1
+          'status' => 1,
+          'approved_at' => now()
         ]);
 
         DB::beginTransaction();
@@ -288,18 +292,35 @@ class TransferConfirmationController extends Controller
         }
     }
 
+    public function destroy($id)
+    {
+        $data = TransferConfirmation::findOrFail($id);
+        if ($data) { 
+            \File::delete(public_path($data->image));
+            $data->delete(); 
+            Alert::success('Success Delete Data', 'Success');
+        } else {
+            Alert::error('Gagal Delete Data', 'Gagal');
+        }
+    }
+
+
     public function htmlAction($row)
     {
         switch($row->status) {
             case 0;
             return '
                     <a data-id="'.$row->id.'"  class="btn btn-success fa fa-eye show-testimonial" title="Show Payment"></a>
-                    <a data-invoice_number="'.$row->invoice_number.' "class="btn btn-default fa fa-check approve-payment" style="background-color: #b85ebd; color: #ffffff;" title="Approve Payment"></a>';
+                    <a data-invoice_number="'.$row->invoice_number.' "class="btn btn-default fa fa-check approve-payment" style="background-color: #b85ebd; color: #ffffff;" title="Approve Payment"></a>
+                    <a data-id="'.$row->id.'"  class="btn btn-danger fa fa-trash delete-payment" title="Delete Payment"></a>
+                    ';
             break;
 
             case 1;
             return '
-                    <a data-id="'.$row->id.'"  class="btn btn-success fa fa-eye show-testimonial" title="Show Payment"></a>';
+                    <a data-id="'.$row->id.'"  class="btn btn-success fa fa-eye show-testimonial" title="Show Payment"></a>
+                    <a data-id="'.$row->id.'"  class="btn btn-danger fa fa-trash delete-payment" title="Delete Payment"></a>
+                    ';
             break;
 
         }
