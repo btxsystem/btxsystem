@@ -17,13 +17,13 @@ class Employeer extends Authenticatable
     
     protected $parent = 'parent_id';
 
-    protected $appends = [
-        'bonus_sponsor','tax_sponsor',
-        'bonus_pairing','tax_pairing',
-        'bonus_profit','tax_profit',
-        'bonus_reward','tax_reward',
-        'total_bonus'
-      ];
+    // protected $appends = [
+    //     'bonus_sponsor','tax_sponsor',
+    //     'bonus_pairing','tax_pairing',
+    //     'bonus_profit','tax_profit',
+    //     'bonus_reward','tax_reward',
+    //     'total_bonus'
+    //   ];
 
     protected $guarded = [];
 
@@ -92,6 +92,11 @@ class Employeer extends Authenticatable
 
     public function pv_down(){
         return $this->hasOne('App\PvRank','id_member');
+    }
+
+    public function transfer_confirmations()
+    {
+        return $this->morphMany('App\Models\TransferConfirmation', 'user');
     }
 
     public function getBonusSponsorAttribute()

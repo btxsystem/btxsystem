@@ -15,5 +15,10 @@ class NonMember extends Authenticatable
 
     protected $hidden = [
         'password',
-    ];    
+    ];  
+    
+    public function transfer_confirmations()
+    {
+        return $this->morphMany('App\Models\TransferConfirmation', 'user_type');
+    }
 }

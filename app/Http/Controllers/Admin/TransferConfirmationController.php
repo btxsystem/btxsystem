@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\TransferConfirmation;
+use App\Employeer;
 use App\HistoryBitrexPoints;
 use App\Models\Testimonial;
 use Carbon\Carbon;
@@ -32,19 +33,21 @@ class TransferConfirmationController extends Controller
     public function index()
     {
         if (request()->ajax()) {
-            $data = TransferConfirmation::with('member')->orderBy('id','desc');
+            $data = TransferConfirmation::with(['user' => function ($query){
+                        $query->select('id','username');
+                     }])->orderBy('id','desc');
 
-            // $data = TransferConfirmation::with(['member' => function($query){
-            //   $query->select('id');
-            // }])->orderBy('id','desc');
 
             return Datatables::of($data)
                     ->addIndexColumn()
                     ->addColumn('status', function($row){
                         return $row->status == 0 ? 'Submitted' : 'Approved';
                     })
-                    ->addColumn('username', function($row){
-                        return $row->member ? $row->member->username : 'No Data';
+                    ->addColumn('usernameMember', function($row){
+                        return $row->user_type == 'member' || null ? $row->user->username : '-';
+                    })
+                    ->addColumn('usernameNonMember', function($row){
+                        return $row->user_type == 'nonmember' ? $row->user->username : '-';
                     })
                     ->addColumn('date', function($row){
                         return $row->created_at ? $row->created_at : 'No Data';

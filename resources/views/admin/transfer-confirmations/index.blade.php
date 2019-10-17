@@ -36,12 +36,13 @@ Transfer Confirmation
                         <thead class="flip-content">
                             <tr>
                                 <th class="text-center" width="5%">No</th>
-                                <th class="text-center" width="15%">Username</th>
-                                <th class="text-center" width="15%">Type</th>
+                                <th class="text-center" width="10%">Member</th>
+                                <th class="text-center" width="10%">NonMember</th>
+                                <th class="text-center" width="10%">Type</th>
                                 <th class="text-center" width="10%">Status</th>
                                 <th class="text-center" width="15%">Invoice</th>
                                 <th class="text-center" width="10%">Amount</th>
-                                <th class="text-center" width="10%">Approved At</th>
+                                <th class="text-center" width="10%">Approved</th>
                                 <th class="text-center" width="10%">Date</th>
                                 <th width="10%">Action</th>
                             </tr>
@@ -211,7 +212,8 @@ Transfer Confirmation
               
               columns: [
                   { data: 'DT_RowIndex', name: 'DT_RowIndex', className: "text-center", orderable: false, searchable: false },
-                  { data: 'username', name: 'member.username', className: "text-center" },                  
+                  { data: 'usernameMember', name: 'user.username', className: "text-center" },                  
+                  { data: 'usernameNonMember', name: 'user.username', className: "text-center" },                  
                   { data: 'type', name: 'type', className: "text-center" },                  
                   { data: 'status', name: 'status', className: "text-center" },                  
                   { data: 'invoice_number', name: 'invoice_number', className: "text-center" },                  
