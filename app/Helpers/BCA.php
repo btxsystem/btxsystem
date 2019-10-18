@@ -138,7 +138,7 @@ class BCA
         }
     }
 
-    public function transfer($date, $accountnumber, $amount, $remark1, $remark2)
+    public function transfer($date, $accountnumber, $amount, $remark1, $remark2, $transactionId, $referenceId)
     {
         try {
             $httpMethod = 'POST';
@@ -150,9 +150,9 @@ class BCA
             $body = [
                 "CorporateID" => str_replace(' ', '', $this->corporate_id),
                 "SourceAccountNumber" => str_replace(' ', '', $this->account_number),
-                "TransactionID" => str_replace(' ', '', "00000001"),
+                "TransactionID" => str_replace(' ', '', $transactionId),
                 "TransactionDate" => $date, //Sample request 2019-10-14
-                "ReferenceID" => str_replace(' ', '', "12345/PO/2016"),
+                "ReferenceID" => str_replace(' ', '', $referenceId),
                 "CurrencyCode" => "IDR",
                 "Amount" => $amount, //Sampel request 100000.00
                 "BeneficiaryAccountNumber" => str_replace(' ', '', $accountnumber), //Sample request 0201245680
@@ -173,14 +173,15 @@ class BCA
             ];
 
             $response = UniRequest::post($this->main_url . $relativeUrl, $headers, $data);
-            return response()->json($response->body);
+            $data = isset($response->body->Status) ? $response->body->Status : $response->body->ErrorMessage->English;
+             return($data);
         } catch (\Exception $e) {
             $response = $e->getMessage();
             return $response;
         }
     }
 
-    public function domesticTransfer($date, $accountnumber, $accountname, $bankcode, $amount, $remark1, $remark2)
+    public function domesticTransfer($date, $accountnumber, $accountname, $bankcode, $amount, $remark1, $remark2, $transactionId, $referenceId)
     {
         try {
             $httpMethod = 'POST';
@@ -190,9 +191,9 @@ class BCA
             $timestamp = $this->getTimestamp();
 
             $body = [
-                "TransactionID" => str_replace(' ', '', "00000001"),
+                "TransactionID" => str_replace(' ', '', $transactionId),
                 "TransactionDate" => $date, //Sample request 2019-10-14
-                "ReferenceID" => str_replace(' ', '', "12345/PO/2016"),
+                "ReferenceID" => str_replace(' ', '', $referenceId),
                 "SourceAccountNumber" => str_replace(' ', '', $this->account_number),
                 "BeneficiaryAccountNumber" => str_replace(' ', '', $accountnumber), //Sample request 0201245680
                 "BeneficiaryBankCode" => str_replace(' ', '', $bankcode), //Sample request BRONINJA

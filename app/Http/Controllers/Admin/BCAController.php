@@ -18,17 +18,20 @@ class BCAController extends Controller
     }
 
     public function fundTransfer()
-    {
-        $date = "2019-10-15";
+    {$date = "2019-10-19";
         $accountnumber = "0201245681";
-        $amount = "100000.00";
+        $amount = "100000";
         $remark1 = "Test Transfer";
         $remark2 = "Testing transfer";
+        $transactionId = "00000001";
+        $referenceId = '20191018/WD/0001';
 
         $bca = new BCA;
-        $response = $bca->transfer($date, $accountnumber, $amount, $remark1, $remark2);
+        $response = $bca->transfer($date, $accountnumber, $amount, $remark1, $remark2, $transactionId, $referenceId);
+        // if($response)
 
-        return $response;
+        $nganu = json_encode($response);
+        return $nganu == "Seccess" ? 'Sukses' : 'Gagal';        
     }
 
     public function domesticTransfer()
