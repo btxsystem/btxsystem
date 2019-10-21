@@ -639,13 +639,11 @@ em{
 	$('#va').change(function(){
 		checkTerm();
 		is_va = true;
-		$('.register').attr('type', 'button');
 	})
 	
 	$('#bp').change(function(){
 		checkTerm();
 		is_va = false;
-		$('.register').attr('type', 'submit');
 	})
 
 	function checkTerm() {
