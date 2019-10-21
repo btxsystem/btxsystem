@@ -177,9 +177,8 @@
 						</div>
 					</div>
 					<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
-						<div class="demo-radio-button">
-							<input name="payment_method" type="radio" value="point" id="payment_method" class="with-gap radio-col-red" checked />
-              				<label for="payment_method">Bitrex Point</label>
+						<h5 class="card-inside-title">Payment Method <em>*</em></h5>
+						<div class="demo-radio-button" id="payment_method">
             			</div>
           			</div>
 					<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -546,6 +545,7 @@ em{
 	var parent_id = undefined;
 	var check_cost = true;
 	const BASE_SRC = '{{url("/")}}';
+	var is_va = false;
 
 	$('#male').change(function(){
 		checkTerm()
@@ -584,7 +584,7 @@ em{
 	})
 
 	$('#bank_account_name').change(function(){
-		checkTerm()
+		checkTerm();
 	})
 
 	$('#bank_account_number').change(function(){
@@ -636,6 +636,18 @@ em{
 		checkTerm()
 	})
 
+	$('#va').change(function(){
+		checkTerm();
+		is_va = true;
+		$('.register').attr('type', 'button');
+	})
+	
+	$('#bp').change(function(){
+		checkTerm();
+		is_va = false;
+		$('.register').attr('type', 'submit');
+	})
+
 	function checkTerm() {
 		if(!$('#term_one').prop('checked') || !$('#term_two').prop('checked')) {
 			$('.register').prop('disabled', true)
@@ -662,9 +674,12 @@ em{
 	}
 
 	function openAutoPlacement() {
-		console.log('masuk');
-		
-		$('#action-member').attr('action', '{{route("register-autoplacement")}}')
+		$('#payment_method').html(`
+							<input name="payment_method" type="radio" value="point" id="bp" class="with-gap radio-col-red" checked />
+              				<label for="payment_method">Bitrex Points</label>
+							<input name="payment_method" type="radio" value="va" aria-hidden="true" id="va" class="with-gap radio-col-red"/>
+              				<label for="va" aria-hidden="true">Virtual Account BCA</label>`);
+		$('#action-member').attr('action', '{{route("register-autoplacement")}}');
 		$.ajax({
 			type: 'GET',
 			url: '/member/select/bitrex-points',
@@ -683,6 +698,9 @@ em{
 	}
 
 	function openTree() {
+		$('#payment_method').html(`
+							<input name="payment_method" type="radio" value="point" id="payment_method" class="with-gap radio-col-red" checked />
+              				<label for="payment_method">Bitrex Points</label>`);
 		$('#action-member').attr('action', '{{route("member.register-downline")}}')
 	}
 
