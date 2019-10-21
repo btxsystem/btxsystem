@@ -43,9 +43,11 @@ class BCAController extends Controller
         $amount = "100000.00";
         $remark1 = "Test Transfer";
         $remark2 = "Testing transfer";
+        $transactionId = '0001'.rand(1000,9999);
+        $referenceId = 'BITREXGO/WD/'.date("Ymd/").$transactionId;
 
         $bca = new BCA;
-        $response = $bca->domesticTransfer($date, $accountnumber, $accountname, $bankcode, $amount, $remark1, $remark2);
+        $response = $bca->domesticTransfer($date, $accountnumber, $accountname, $bankcode, $amount, $remark1, $remark2, $transactionId, $referenceId);
 
         return $response;
     }

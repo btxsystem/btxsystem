@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Auth;
 use App\HistoryBitrexCash;
 use DataTables;
 use DB;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\OTPMail;
+use App\Mail\Withdrawsuccess;
 use Carbon\Carbon;
 use App\Helpers\BCA;
 
@@ -32,6 +35,22 @@ class BitrexCashController extends Controller
         if ($is_available) {
             DB::table('otp_withdrawal')->where('member_id', Auth::id())->update(['otp' => $otp, 'expired_at' => $min, 'updated_at' => now()]);
         }
+        $dataEmail = (object) [
+            'otp' => $otp,
+            'time' => '180 second',
+            'description' => 'OTP Code for withdrawal'
+        ];
+        if (filter_var(Auth::user()->email, FILTER_VALIDATE_EMAIL)) {
+            //Mail::to('dhadhang.efendi@gmail.com')->send(new OldMemberMail($dataEmail));
+            Mail::to(Auth::user()->email)->send(new OTPMail($dataEmail));
+        }
+        $data = [
+            'otp' => $otp,
+            'minute' => 180,
+            'description' => 'success',
+        ];
+        $status = 200;
+        return response()->json($data, $status);
     }
 
     public function sendOTP(Request $request){
@@ -59,6 +78,16 @@ class BitrexCashController extends Controller
                         $data_response = [
                             'status' => $data,
                         ];
+                        $dataEmail = (object) [
+                            'amount' => $request->nominal,
+                            'description' => 'Auto withdrawal (Admin Charge IDR 5000)',
+                            'transaction_id' => $transactionId,
+                            'reference_id' => $referenceId
+                        ];
+                        if (filter_var(Auth::user()->email, FILTER_VALIDATE_EMAIL)) {
+                            //Mail::to('dhadhang.efendi@gmail.com')->send(new OldMemberMail($dataEmail));
+                            Mail::to(Auth::user()->email)->send(new Withdrawsuccess($dataEmail));
+                        }
                     }catch (\Exception $e) {
                         DB::rollback();
                         $data_response = [
@@ -83,8 +112,38 @@ class BitrexCashController extends Controller
 
                 $bca = new BCA;
                 $response = $bca->domesticTransfer($date, $accountnumber, $accountname, $bankcode, $amount, $remark1, $remark2, $transactionId, $referenceId);
-
-                return $response;
+                
+                $data = json_encode($response);
+                if($data == '"Success"') {
+                    try {
+                        DB::beginTransaction();
+                        DB::table('history_bitrex_cash')->insert(['id_member' => Auth::user()->id, 'nominal' => $request->nominal, 'created_at' => now(), 'updated_at' => now(), 'description' => $remark1.' (Admin Charge IDR 5000)', 'info' => 0, 'type' => 5, 'transaction_id' => $transactionId,'reference_id' => $referenceId]);
+                        DB::table('employeers')->where('id', Auth::user()->id)->update(['bitrex_cash' => Auth::user()->bitrex_cash -= $request->nominal + 5000, 'updated_at' => now()]);
+                        DB::commit();
+                        $data_response = [
+                            'status' => $data,
+                        ];
+                        $dataEmail = (object) [
+                            'amount' => $request->nominal,
+                            'description' => 'Auto withdrawal (Admin Charge IDR 5000)',
+                            'transaction_id' => $transactionId,
+                            'reference_id' => $referenceId
+                        ];
+                        if (filter_var(Auth::user()->email, FILTER_VALIDATE_EMAIL)) {
+                            //Mail::to('dhadhang.efendi@gmail.com')->send(new OldMemberMail($dataEmail));
+                            Mail::to(Auth::user()->email)->send(new Withdrawsuccess($dataEmail));
+                        }
+                    }catch (\Exception $e) {
+                        DB::rollback();
+                        $data_response = [
+                            'status' => 'Something wrong',
+                        ];
+                    } 
+                }else{
+                    $data_response = [
+                        'status' => $data,
+                    ];
+                }
             }
         }else{
             $data_response = [
@@ -103,6 +162,15 @@ class BitrexCashController extends Controller
                 DB::table('otp_withdrawal')->insert(['member_id' => Auth::id(), 'otp' => $otp, 'expired_at' => $min , 'created_at' => now(), 'updated_at' => now()]);
             }else{
                 DB::table('otp_withdrawal')->where('member_id', Auth::id())->update(['otp' => $otp, 'expired_at' => $min, 'updated_at' => now()]);   
+            }
+            $dataEmail = (object) [
+                'otp' => $otp,
+                'time' => '180 second',
+                'description' => 'OTP Code for withdrawal'
+            ];
+            if (filter_var(Auth::user()->email, FILTER_VALIDATE_EMAIL)) {
+                //Mail::to('dhadhang.efendi@gmail.com')->send(new OldMemberMail($dataEmail));
+                Mail::to(Auth::user()->email)->send(new OTPMail($dataEmail));
             }
             $data = [
                 'otp' => $otp,

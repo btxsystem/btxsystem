@@ -170,7 +170,7 @@
             $this.html($this.data('original-text'));
             $('#load-otp').hide();
             $this.show();
-        }, 2000);
+        }, 100000);
 
         $.ajaxSetup({
             headers: {
@@ -247,7 +247,7 @@
             $this.html($this.data('original-text'));
             $('#load-withdraw').hide();
             $this.show();
-        }, 2000);
+        }, 100000);
         
         $.ajaxSetup({
             headers: {

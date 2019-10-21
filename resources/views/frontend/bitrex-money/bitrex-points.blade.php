@@ -350,7 +350,7 @@
                 $this.html($this.data('original-text'));
                 $('#payment-bca').hide();
                 $this.show();
-            }, 2000);
+            }, 100000);
 
             $.ajax({
                 type: 'POST',

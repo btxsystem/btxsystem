@@ -55,6 +55,8 @@ Route::domain(env('EBOOK_URL'))->group(function () {
 
   Route::post('register', 'MemberV2\RegisterController@register')->name('member.register');
 
+  Route::post('buy-ebook', 'MemberV2\EbookController@store')->name('member.buy-ebook');
+
   Route::post('/v2/register', 'MemberV2\RegisterController@registerV2')->name('member.register-v2');
 
   Route::post('/v3/register', 'MemberV2\RegisterController@registerV3')->name('member.register-v3');
