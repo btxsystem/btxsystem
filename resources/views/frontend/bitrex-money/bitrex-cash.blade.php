@@ -183,12 +183,44 @@
             data: {nominal: $('#nominal_').val(), otp: $('#form_otp').val()},
             success: function (data) {
                 $('#otp').modal('hide');
-                if (data.status=='"Success"') {   
-                    swal("Success", "Withdrawal Success!", "success");
+                if (data.status=='"Success"') {
+                    swal({
+                        title: "Success",
+                        text: "Your withrawal success",
+                        type: "success",
+                        confirmButtonClass: "btn-primary",
+                        confirmButtonText: "OK",
+                        closeOnConfirm: false
+                    },
+                    function(){
+                        location.reload();
+                    });
                 }else if(data.status!='"success"'){
-                    swal("Error", 'Cant withdrawal', "error");
+                    swal({
+                        title: "Error",
+                        text: "Cant withdrawal, something wrong",
+                        type: "error",
+                        confirmButtonClass: "btn-primary",
+                        confirmButtonText: "OK",
+                        closeOnConfirm: false
+                    },
+                    function(){
+                        location.reload();
+                    });
                 }else{
-                   data.ErrorMessage ? swal("Error", data.ErrorMessage.English, "error") : '';
+                    if(data.ErrorMessage){
+                        swal({
+                            title: "Error",
+                            text: data.ErrorMessage.English,
+                            type: "error",
+                            confirmButtonClass: "btn-primary",
+                            confirmButtonText: "OK",
+                            closeOnConfirm: false
+                        },
+                        function(){
+                            location.reload();
+                        });
+                    }
                 } 
             },
             error: function() {

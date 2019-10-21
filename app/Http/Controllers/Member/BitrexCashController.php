@@ -53,7 +53,7 @@ class BitrexCashController extends Controller
                 if($data == '"Success"') {
                     try {
                         DB::beginTransaction();
-                        DB::table('history_bitrex_cash')->insert(['id_member' => Auth::user()->id, 'nominal' => $request->nominal, 'created_at' => now(), 'updated_at' => now(), 'description' => $remark1.' (Admin Charge IDR 5000)', 'info' => 0, 'type' => 5]);
+                        DB::table('history_bitrex_cash')->insert(['id_member' => Auth::user()->id, 'nominal' => $request->nominal, 'created_at' => now(), 'updated_at' => now(), 'description' => $remark1.' (Admin Charge IDR 5000)', 'info' => 0, 'type' => 5, 'transaction_id' => $transactionId,'reference_id' => $referenceId]);
                         DB::table('employeers')->where('id', Auth::user()->id)->update(['bitrex_cash' => Auth::user()->bitrex_cash -= $request->nominal + 5000, 'updated_at' => now()]);
                         DB::commit();
                         $data_response = [
