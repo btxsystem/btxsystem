@@ -24,16 +24,16 @@ class BCA
 
     public function __construct()
     {
-        $this->main_url = 'https://sandbox.bca.co.id'; // Change When Your Apps is Live
-        $this->client_id = 'c3fd6d93-6aec-4ef1-be33-5e964f8eda16'; // Fill With Your Client ID
-        $this->client_secret = 'bb03f953-5cc6-4a8d-a4a8-4384b20852cf'; // Fill With Your Client Secret ID
-        $this->api_key = 'bf034e29-c45f-4eac-bfcc-cec9c36296d4'; // Fill With Your API Key
-        $this->api_secret = '5b3d2b59-b358-404b-a3b1-6c6ebcd9443a'; // Fill With Your API Secret Key
+        $this->main_url = 'https://devapi.klikbca.com'; // Change When Your Apps is Live
+        $this->client_id = 'b095ac9d-2d21-42a3-a70c-4781f4570704'; // Fill With Your Client ID
+        $this->client_secret = 'bedd1f8d-3bd6-4d4a-8cb4-e61db41691c9'; // Fill With Your Client Secret ID
+        $this->api_key = 'dcc99ba6-3b2f-479b-9f85-86a09ccaaacf'; // Fill With Your API Key
+        $this->api_secret = '5e636b16-df7f-4a53-afbe-497e6fe07edc'; // Fill With Your API Secret Key
         $this->access_token = null;
         $this->signature = null;
         $this->timestamp = null;
-        $this->corporate_id = 'BCAAPI2016'; // Fill With Your Corporate ID. BCAAPI2016 is Sandbox ID
-        $this->account_number = '0201245680'; // Fill With Your Account Number. 0201245680 is Sandbox Account
+        $this->corporate_id = 'h2hauto008'; // Fill With Your Corporate ID. BCAAPI2016 is Sandbox ID
+        $this->account_number = '0613005908'; // Fill With Your Account Number. 0201245680 is Sandbox Account
         $this->channel_id = '95051';
         $this->credential_id = 'BCAAPI';
 

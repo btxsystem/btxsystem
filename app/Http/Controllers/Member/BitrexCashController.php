@@ -59,7 +59,7 @@ class BitrexCashController extends Controller
         if ($cek_otp->otp == $request->otp && $cek_otp->expired_at >= now()) {
             if(Auth::user()->bank_name == 'BCA'){
                 $date = date("Y-m-d");
-                $accountnumber = '0201245681';
+                $accountnumber = "1112154440223";
                 $amount = $request->nominal;
                 $remark1 = "Auto withdraw";
                 $remark2 = "Auto withdraw";
