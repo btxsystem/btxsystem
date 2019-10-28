@@ -220,8 +220,6 @@ Route::group(['middleware' => 'admin'], function () {
         Route::get('paidindex', ['as' => 'paidindex', 'uses' => 'Admin\WithdrawalBonusController@paidIndex']);
         Route::get('masspaid', ['as' => 'masspaid', 'uses' => 'Admin\WithdrawalBonusController@massPaid']);
         Route::get('export', ['as' => 'export', 'uses' => 'Admin\WithdrawalBonusController@export']);
-        // Route::get('/{id}/show', ['as' => 'edit', 'uses' => 'Admin\TransferConfirmationController@show']);
-        // Route::get('/approve/{invoice_number}', ['as' => 'approve', 'uses' => 'Admin\TransferConfirmationController@approve']);
     });
 
     Route::group(['prefix'=>'withdrawal-time','as'=>'withdrawal-time.'], function(){
@@ -232,6 +230,7 @@ Route::group(['middleware' => 'admin'], function () {
     Route::group(['prefix'=>'transfer-confirmation','as'=>'transfer-confirmation.'], function(){
         Route::get('', ['as' => 'index', 'uses' => 'Admin\TransferConfirmationController@index']);
         Route::get('/{id}/show', ['as' => 'edit', 'uses' => 'Admin\TransferConfirmationController@show']);
+        Route::delete('/{id}', ['as' => 'delete', 'uses' => 'Admin\TransferConfirmationController@destroy']);
         Route::get('/approve/{invoice_number}', ['as' => 'approve', 'uses' => 'Admin\TransferConfirmationController@approve']);
     });
 
