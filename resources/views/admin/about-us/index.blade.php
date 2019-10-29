@@ -27,7 +27,9 @@ List Of About US
                     </div>
 
                     <div class="pull-right">
-                        <a style=" color: white; text-decoration: none !important" href="#addAboutModal" data-toggle="modal"><i style="font-size:15px;" class="fa fa-plus"></i>&nbsp; &nbsp;<strong>Add New Data</strong></a>
+                        @if(\Auth::guard('admin')->user()->hasPermission('Cms.about_us.add'))
+                            <a style=" color: white; text-decoration: none !important" href="#addAboutModal" data-toggle="modal"><i style="font-size:15px;" class="fa fa-plus"></i>&nbsp; &nbsp;<strong>Add New Data</strong></a>
+                        @endif
                     </div>
                 </div>
                 

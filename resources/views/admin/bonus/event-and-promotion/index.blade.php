@@ -25,9 +25,11 @@ List Of Event and Promotion
                         <i class="livicon" data-name="notebook" data-size="16" data-loop="true" data-c="#fff" data-hc="white"></i>
                         Event and Promotion
                     </div>
-                    <div class="pull-right">
-                        <a style=" color: white; text-decoration: none; margin-right: 20px; !important" href="{{route('bonus.event-and-promotion.gift-event')}}"><i style="font-size:15px;" class="fa fa-plus"></i>&nbsp; &nbsp;<strong>Gift Event</strong></a>
-                    </div>
+                    @if(\Auth::guard('admin')->user()->hasPermission('Bonus.event.gift_event'))
+                        <div class="pull-right">
+                            <a style=" color: white; text-decoration: none; margin-right: 20px; !important" href="{{route('bonus.event-and-promotion.gift-event')}}"><i style="font-size:15px;" class="fa fa-plus"></i>&nbsp; &nbsp;<strong>Gift Event</strong></a>
+                        </div>
+                    @endif
                 </div>
                 <div class="portlet-body flip-scroll">
                     <table class="table data-table table-bordered table-striped table-condensed flip-content" >

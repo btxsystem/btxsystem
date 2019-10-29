@@ -20,7 +20,8 @@ class VerificarionNpwpController extends Controller
                         return $data->first_name.' '.$data->first_name;
                     })
                     ->addColumn('action', function($row) {
-                        return "<a href='#detail' data-toggle='modal' onclick='verif(`$row->username`)' id='verif-button' class='btn btn-success fa fa-check'></a>";
+                        $action = \Auth::guard('admin')->user()->hasPermission('Verification_npwp.verification') ? "<a href='#detail' data-toggle='modal' onclick='verif(`$row->username`)' id='verif-button' class='btn btn-success fa fa-check'></a>" : "";
+                        return $action;
                     })
                     ->rawColumns(['action'])
                     ->make(true);

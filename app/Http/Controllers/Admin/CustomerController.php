@@ -32,9 +32,10 @@ class CustomerController extends Controller
                     })
                   
                     ->addColumn('action', function($row) {
-                        return '<a href="'.route('customer.show',$row->id).'"  class="btn btn-primary fa fa-eye" title="Show"></a>
-                                <a href="'.route('customer.edit',$row->id).'"  class="btn btn-warning fa fa-pencil" title="Edit"></a>
-                                <a href="customer/data/'.$row->id.'" class="btn btn-danger fa fa-trash" title="Delete"></a>';
+                        $show = \Auth::guard('admin')->user()->hasPermission('Customers.view') ? '<a href="'.route('customer.show',$row->id).'"  class="btn btn-primary fa fa-eye" title="Show"></a>' : '';
+                        $edit = \Auth::guard('admin')->user()->hasPermission('Customers.edit') ? '<a href="'.route('customer.edit',$row->id).'"  class="btn btn-warning fa fa-pencil" title="Edit"></a>' : '';
+                        $delete = \Auth::guard('admin')->user()->hasPermission('Customers.delete') ? '<a href="customer/data/'.$row->id.'" class="btn btn-danger fa fa-trash" title="Delete"></a>' : ''; 
+                        return $show.' '.$edit.' '.$delete;
                     })
                     ->rawColumns(['action'])
                     ->make(true);

@@ -168,18 +168,18 @@ class TestimonialController extends Controller
     public function htmlAction($row)
     {
         switch($row->isPublished) {
-            case 1; 
-            return '
-                    <a data-id="'.$row->id.'"  class="btn btn-warning fa fa-pencil edit-testimonial" title="Edit"></a>
-                    <a data-id="'.$row->id.' "class="btn btn-default fa fa-power-off unpublish-testimonial" style="background-color: #b85ebd; color: #ffffff;" title="Set Unpublished"></a>
-                    <a data-id="'.$row->id.' "class="btn btn-danger fa fa-trash delete-ourProduct"title="Delete"></a>';
+            case 1;
+            $edit = \Auth::guard('admin')->user()->hasPermission('Cms.testimonial.edit') ? '<a data-id="'.$row->id.'"  class="btn btn-warning fa fa-pencil edit-testimonial" title="Edit"></a>' : '';
+            $publish = \Auth::guard('admin')->user()->hasPermission('Cms.testimonial.publish') ? '<a data-id="'.$row->id.' "class="btn btn-default fa fa-power-off unpublish-testimonial" style="background-color: #b85ebd; color: #ffffff;" title="Set Unpublished"></a>' : '';
+            $delete = \Auth::guard('admin')->user()->hasPermission('Cms.testimonial.delete') ? '<a data-id="'.$row->id.' "class="btn btn-danger fa fa-trash delete-ourProduct"title="Delete"></a>':'';
+            return $edit.' '.$publish.' '.$delete;
             break;
 
             case 0;
-            return '
-                    <a data-id="'.$row->id.'"  class="btn btn-warning fa fa-pencil edit-testimonial" title="Edit"></a>
-                    <a data-id="'.$row->id.' "class="btn btn-success fa fa-check-square publish-testimonial"title="Set Published"></a>
-                    <a data-id="'.$row->id.' "class="btn btn-danger fa fa-trash delete-ourProduct"title="Delete"></a>';
+            $edit = \Auth::guard('admin')->user()->hasPermission('Cms.testimonial.edit') ? '<a data-id="'.$row->id.'"  class="btn btn-warning fa fa-pencil edit-testimonial" title="Edit"></a>' : '';
+            $publish = \Auth::guard('admin')->user()->hasPermission('Cms.testimonial.publish') ? '<a data-id="'.$row->id.' "class="btn btn-success fa fa-check-square publish-testimonial"title="Set Published"></a>' : '';
+            $delete = \Auth::guard('admin')->user()->hasPermission('Cms.testimonial.delete') ? '<a data-id="'.$row->id.' "class="btn btn-danger fa fa-trash delete-ourProduct"title="Delete"></a>':'';
+            return $edit.' '.$publish.' '.$delete;
             break;
 
         }

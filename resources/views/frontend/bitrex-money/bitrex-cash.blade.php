@@ -100,7 +100,7 @@
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12">
                 <div class="body">
-                    <a href="#" class="btn btn-primary btn-md" data-toggle="modal" data-target="#withdraw" style="margin-bottom:-20px; width: 136px;">withdrawal</a>
+                    {{--<a href="#" class="btn btn-primary btn-md" data-toggle="modal" data-target="#withdraw" style="margin-bottom:-20px; width: 136px;">withdrawal</a>--}}
                     <h4 class="d-flex flex-row-reverse">Bitrex Value: {{number_format($profile->bitrex_cash,0,".",".")}}</h4>
                 </div>
             </div>

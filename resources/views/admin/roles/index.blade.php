@@ -15,8 +15,10 @@ List Of Roles
 </section>
 <section class="content">
                 <div class="row">
-                    <div class="col-md-12">
-                        <a class="btn btn-primary" href="{{ route('admin-management.roles.create')}}"><i class="fa fa-plus" style="margin-right: 10px;"></i>Add</a>
+                    <div class="col-md-12">      
+                        @if(\Auth::guard('admin')->user()->hasPermission('Admin_management.roles.add'))
+                            <a class="btn btn-primary" href="{{ route('admin-management.roles.create')}}"><i class="fa fa-plus" style="margin-right: 10px;"></i>Add</a>
+                        @endif
                         <div class="portlet box primary" style="margin-top: 15px;">
                             <div class="portlet-title">
                                 <div class="caption">

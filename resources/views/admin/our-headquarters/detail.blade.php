@@ -28,9 +28,10 @@
                     </div>
 
                     <div class="pull-right">
-        
-                        <a href="#" data-id="{{$data->id}}" class="edit-headquarter" style=" color: white; text-decoration: none !important"><i style="font-size:15px;" class="fa fa-pencil edit-headquarter"></i>&nbsp; &nbsp;<strong>Edit Data</strong></a>
-                        <!-- <a style=" color: white; text-decoration: none; margin-right: 20px; !important" href="{{ route('cms.our-products.edit', $data->id) }}"><i style="font-size:15px;" class="fa fa-pencil"></i>&nbsp; &nbsp;<strong>Edit Data</strong></a> -->
+                        @if(\Auth::guard('admin')->user()->hasPermission('Cms.headquarter.edit'))
+                            <a href="#" data-id="{{$data->id}}" class="edit-headquarter" style=" color: white; text-decoration: none !important"><i style="font-size:15px;" class="fa fa-pencil edit-headquarter"></i>&nbsp; &nbsp;<strong>Edit Data</strong></a>
+                        @endif
+                            <!-- <a style=" color: white; text-decoration: none; margin-right: 20px; !important" href="{{ route('cms.our-products.edit', $data->id) }}"><i style="font-size:15px;" class="fa fa-pencil"></i>&nbsp; &nbsp;<strong>Edit Data</strong></a> -->
                      </div>
                 </div>
                   
@@ -77,7 +78,9 @@
                     </div>
 
                     <div class="pull-right">
-                        <a style=" color: white; text-decoration: none !important" href="#addAttachmentModal" data-toggle="modal"><i style="font-size:15px;" class="fa fa-plus"></i>&nbsp; &nbsp;<strong>Add Image</strong></a>
+                        @if(\Auth::guard('admin')->user()->hasPermission('Cms.headquarter.add'))
+                            <a style=" color: white; text-decoration: none !important" href="#addAttachmentModal" data-toggle="modal"><i style="font-size:15px;" class="fa fa-plus"></i>&nbsp; &nbsp;<strong>Add Image</strong></a>
+                        @endif
                     </div>
                 </div>
                 
