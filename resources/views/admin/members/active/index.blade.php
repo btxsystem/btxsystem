@@ -17,57 +17,59 @@ List Of Users Active
     </ol>
 </section>
 <section class="content">
-                <div class="row">
-                    <div class="col-md-12">
-                        <!-- BEGIN SAMPLE TABLE PORTLET-->
-                        <a class="btn btn-large btn-primary" href="{{ route('members.create-data') }}" data-toggle="modal"><i class="fa fa-plus" style="margin-right: 10px;"></i>Add</a>
-                        <div class="portlet box primary" style="margin-top: 15px;">
-                            <div class="portlet-title">
-                                <div class="caption">
-                                    <i class="livicon" data-name="user" data-size="16" data-loop="true" data-c="#fff" data-hc="white"></i>
-                                    Users Active Table
-                                </div>
-                            </div>
-
-                            <br/>
-                                    <div class="row input-daterange">
-                                            <div class="col-md-5">
-                                                <input type="text" name="from_date" id="from_date" class="form-control"  placeholder="From Date" readonly />
-                                            </div>
-                                            <div class="col-md-5">
-                                                <input type="text" name="to_date" id="to_date" class="form-control" placeholder="To Date" readonly />
-                                            </div>
-                                            <div class="col-md-2">
-                                                <div class="pull-right">
-                                                    <button type="button" name="filter" id="filter" style="width: 50px;" class="btn btn-success"><i class="fa fa-search"></i></button> &nbsp;
-                                                    <button type="button" name="refresh" id="refresh" style="width: 50px;" class="btn btn-default"><i class="fa fa-refresh"></i></button>
-                                                </div>
-                                            </div>
-                        
-                                    </div>
-                             <br/>
-                            
-                            <div class="portlet-body flip-scroll">
-                                <table id="active-member" class="table membership-table table-bordered table-striped table-condensed flip-content" >
-                                    <thead class="flip-content">
-                                        <tr>
-                                            <th class="text-center" width="5%">No</th>
-                                            <th class="text-center" width="15%">Id Member</th>
-                                            <th class="text-center" width="10%">Username</th>
-                                            <th class="text-center" width="20%">Name</th>
-                                            <th class="text-center" width="15%">Join Date</th>
-                                            <th class="text-center" width="15%">Rank</th>
-                                            <th class="text-center" width="15%">Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
+    <div class="row">
+        <div class="col-md-12">
+            <!-- BEGIN SAMPLE TABLE PORTLET-->
+            @if(\Auth::guard('admin')->user()->hasPermission('Members.add'))
+                <a class="btn btn-large btn-primary" href="{{ route('members.create-data') }}" data-toggle="modal"><i class="fa fa-plus" style="margin-right: 10px;"></i>Add</a>
+            @endif
+            <div class="portlet box primary" style="margin-top: 15px;">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="livicon" data-name="user" data-size="16" data-loop="true" data-c="#fff" data-hc="white"></i>
+                        Users Active Table
                     </div>
                 </div>
-            </section>
+
+                <br/>
+                        <div class="row input-daterange">
+                                <div class="col-md-5">
+                                    <input type="text" name="from_date" id="from_date" class="form-control"  placeholder="From Date" readonly />
+                                </div>
+                                <div class="col-md-5">
+                                    <input type="text" name="to_date" id="to_date" class="form-control" placeholder="To Date" readonly />
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="pull-right">
+                                        <button type="button" name="filter" id="filter" style="width: 50px;" class="btn btn-success"><i class="fa fa-search"></i></button> &nbsp;
+                                        <button type="button" name="refresh" id="refresh" style="width: 50px;" class="btn btn-default"><i class="fa fa-refresh"></i></button>
+                                    </div>
+                                </div>
+            
+                        </div>
+                    <br/>
+                
+                <div class="portlet-body flip-scroll">
+                    <table id="active-member" class="table membership-table table-bordered table-striped table-condensed flip-content" >
+                        <thead class="flip-content">
+                            <tr>
+                                <th class="text-center" width="5%">No</th>
+                                <th class="text-center" width="15%">Id Member</th>
+                                <th class="text-center" width="10%">Username</th>
+                                <th class="text-center" width="20%">Name</th>
+                                <th class="text-center" width="15%">Join Date</th>
+                                <th class="text-center" width="15%">Rank</th>
+                                <th class="text-center" width="15%">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
 @stop
 

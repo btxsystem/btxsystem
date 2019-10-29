@@ -18,8 +18,10 @@ List Of Bitrex Points
     <section class="content">                
     <div class="row">
         <div class="col-md-12">
-        <a href="#myDemoModal" role="button" class="btn btn-large btn-success" data-toggle="modal"><i class="fa fa-money" style="margin-right: 10px;"></i>Topup</a>    
-        <div class="portlet box primary" style="margin-top: 15px;">
+        @if(\Auth::guard('admin')->user()->hasPermission('Bitrex-money.bitrex-points.topup'))
+            <a href="#myDemoModal" role="button" class="btn btn-large btn-success" data-toggle="modal"><i class="fa fa-money" style="margin-right: 10px;"></i>Topup</a>    
+        @endif
+            <div class="portlet box primary" style="margin-top: 15px;">
                 <div class="portlet-title">
                     <div class="caption">
                         <i class="livicon" data-name="permissions" data-size="16" data-loop="true" data-c="#fff" data-hc="white"></i>

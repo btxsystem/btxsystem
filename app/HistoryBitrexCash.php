@@ -10,15 +10,7 @@ class HistoryBitrexCash extends Model
 
   	protected $table = 'history_bitrex_cash';
   
-	protected $fillable = [
-
-       'id_member',
-       'nominal',
-	   'description', 
-	   'created_at',
-	   'info',
-	   'type'
-    ];
+	protected $guarded = [];
 
 	 protected $hidden = [
 	     'updated_at'

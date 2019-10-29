@@ -24,16 +24,16 @@ class BCA
 
     public function __construct()
     {
-        $this->main_url = 'https://sandbox.bca.co.id'; // Change When Your Apps is Live
-        $this->client_id = 'c3fd6d93-6aec-4ef1-be33-5e964f8eda16'; // Fill With Your Client ID
-        $this->client_secret = 'bb03f953-5cc6-4a8d-a4a8-4384b20852cf'; // Fill With Your Client Secret ID
-        $this->api_key = 'bf034e29-c45f-4eac-bfcc-cec9c36296d4'; // Fill With Your API Key
-        $this->api_secret = '5b3d2b59-b358-404b-a3b1-6c6ebcd9443a'; // Fill With Your API Secret Key
+        $this->main_url = 'https://devapi.klikbca.com'; // Change When Your Apps is Live
+        $this->client_id = 'b095ac9d-2d21-42a3-a70c-4781f4570704'; // Fill With Your Client ID
+        $this->client_secret = 'bedd1f8d-3bd6-4d4a-8cb4-e61db41691c9'; // Fill With Your Client Secret ID
+        $this->api_key = 'dcc99ba6-3b2f-479b-9f85-86a09ccaaacf'; // Fill With Your API Key
+        $this->api_secret = '5e636b16-df7f-4a53-afbe-497e6fe07edc'; // Fill With Your API Secret Key
         $this->access_token = null;
         $this->signature = null;
         $this->timestamp = null;
-        $this->corporate_id = 'BCAAPI2016'; // Fill With Your Corporate ID. BCAAPI2016 is Sandbox ID
-        $this->account_number = '0201245680'; // Fill With Your Account Number. 0201245680 is Sandbox Account
+        $this->corporate_id = 'h2hauto008'; // Fill With Your Corporate ID. BCAAPI2016 is Sandbox ID
+        $this->account_number = '0613005908'; // Fill With Your Account Number. 0201245680 is Sandbox Account
         $this->channel_id = '95051';
         $this->credential_id = 'BCAAPI';
 
@@ -138,7 +138,7 @@ class BCA
         }
     }
 
-    public function transfer($date, $accountnumber, $amount, $remark1, $remark2)
+    public function transfer($date, $accountnumber, $amount, $remark1, $remark2, $transactionId, $referenceId)
     {
         try {
             $httpMethod = 'POST';
@@ -150,9 +150,9 @@ class BCA
             $body = [
                 "CorporateID" => str_replace(' ', '', $this->corporate_id),
                 "SourceAccountNumber" => str_replace(' ', '', $this->account_number),
-                "TransactionID" => str_replace(' ', '', "00000001"),
+                "TransactionID" => str_replace(' ', '', $transactionId),
                 "TransactionDate" => $date, //Sample request 2019-10-14
-                "ReferenceID" => str_replace(' ', '', "12345/PO/2016"),
+                "ReferenceID" => str_replace(' ', '', $referenceId),
                 "CurrencyCode" => "IDR",
                 "Amount" => $amount, //Sampel request 100000.00
                 "BeneficiaryAccountNumber" => str_replace(' ', '', $accountnumber), //Sample request 0201245680
@@ -173,14 +173,15 @@ class BCA
             ];
 
             $response = UniRequest::post($this->main_url . $relativeUrl, $headers, $data);
-            return response()->json($response->body);
+            $data = isset($response->body->Status) ? $response->body->Status : $response->body->ErrorMessage->English;
+            return($data);
         } catch (\Exception $e) {
             $response = $e->getMessage();
             return $response;
         }
     }
 
-    public function domesticTransfer($date, $accountnumber, $accountname, $bankcode, $amount, $remark1, $remark2)
+    public function domesticTransfer($date, $accountnumber, $accountname, $bankcode, $amount, $remark1, $remark2, $transactionId, $referenceId)
     {
         try {
             $httpMethod = 'POST';
@@ -190,9 +191,9 @@ class BCA
             $timestamp = $this->getTimestamp();
 
             $body = [
-                "TransactionID" => str_replace(' ', '', "00000001"),
+                "TransactionID" => str_replace(' ', '', $transactionId),
                 "TransactionDate" => $date, //Sample request 2019-10-14
-                "ReferenceID" => str_replace(' ', '', "12345/PO/2016"),
+                "ReferenceID" => str_replace(' ', '', $referenceId),
                 "SourceAccountNumber" => str_replace(' ', '', $this->account_number),
                 "BeneficiaryAccountNumber" => str_replace(' ', '', $accountnumber), //Sample request 0201245680
                 "BeneficiaryBankCode" => str_replace(' ', '', $bankcode), //Sample request BRONINJA
@@ -223,7 +224,8 @@ class BCA
             ];
 
             $response = UniRequest::post($this->main_url . $relativeUrl, $headers, $data);
-            return response()->json($response->body);
+            $data = isset($response->body->Status) ? $response->body->Status : $response->body->ErrorMessage->English;
+            return($data);
         } catch (\Exception $e) {
             $response = $e->getMessage();
             return $response;

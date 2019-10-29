@@ -25,9 +25,10 @@ class OurProductController extends Controller
             return Datatables::of($data)
                     ->addIndexColumn()
                     ->addColumn('action', function($row) {
-                        return '<a href="'.route('cms.our-products.show',$row->id).'"  class="btn btn-primary fa fa-eye"title="Show"></a>
-                                <a href="'.route('cms.our-products.edit',$row->id).'"  class="btn btn-warning fa fa-pencil"title="Edit"></a>
-                                <a data-id="'.$row->id.' "class="btn btn-danger fa fa-trash delete-ourProduct"title="Delete"></a>';
+                        $show = \Auth::guard('admin')->user()->hasPermission('Cms.our_product.detail') ? '<a href="'.route('cms.our-products.show',$row->id).'"  class="btn btn-primary fa fa-eye"title="Show"></a>' : '';
+                        $edit = \Auth::guard('admin')->user()->hasPermission('Cms.our_product.edit') ? '<a href="'.route('cms.our-products.edit',$row->id).'"  class="btn btn-warning fa fa-pencil"title="Edit"></a>' : '';
+                        $delete = \Auth::guard('admin')->user()->hasPermission('Cms.our_product.delete') ? '<a data-id="'.$row->id.' "class="btn btn-danger fa fa-trash delete-ourProduct"title="Delete"></a>' : '';
+                        return $show.' '.$edit.' '.$delete;
                     })
                     ->rawColumns(['action'])
                     ->make(true);

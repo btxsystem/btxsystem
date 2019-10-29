@@ -67,12 +67,16 @@ Withdrawal Bonus
 <section class="content">
     <div class="row">
         <div class="col-md-12">
-            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#direct">
-                Redirect
-            </button>
-            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#nodirect">
-                Non Redirect
-            </button>                
+            @if(\Auth::guard('admin')->user()->hasPermission('Withdrawal.claim.redirect'))
+                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#direct">
+                    Redirect
+                </button>
+            @endif
+            @if(\Auth::guard('admin')->user()->hasPermission('Withdrawal.claim.nonredirect'))
+                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#nodirect">
+                    Non Redirect
+                </button>
+            @endif
             <div class="portlet box primary" style="margin-top: 15px;">
                 <div class="portlet-title">
                     <div class="caption">
@@ -81,8 +85,12 @@ Withdrawal Bonus
                     </div>
 
                     <div class="pull-right">
-                        <button type="button" name="bulk_paid" id="bulk_paid" class="btn btn-danger btn-sm">Paid Checked</button> &nbsp;
-                        <a onclick="return confirm('Are you sure to export data ?')" href="{{route('withdrawal-bonus.export')}}" target="_blank" class="btn btn-success btn-sm">Export Excel</a>
+                        @if(\Auth::guard('admin')->user()->hasPermission('Withdrawal.claim.paid_checked'))
+                            <button type="button" name="bulk_paid" id="bulk_paid" class="btn btn-danger btn-sm">Paid Checked</button> &nbsp;
+                        @endif
+                        @if(\Auth::guard('admin')->user()->hasPermission('Withdrawal.claim.export_excel'))
+                            <a onclick="return confirm('Are you sure to export data ?')" href="{{route('withdrawal-bonus.export')}}" target="_blank" class="btn btn-success btn-sm">Export Excel</a>
+                        @endif
                         <!-- <a style=" color: white; text-decoration: none !important" href="{{route('withdrawal-bonus.export')}}" target="_blank" data-toggle="modal"><i style="font-size:15px;" class="fa fa-file-excel-o"></i>&nbsp; &nbsp;<strong>Export Excel</strong></a> -->
                     </div>
                 </div>

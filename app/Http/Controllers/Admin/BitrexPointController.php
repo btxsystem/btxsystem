@@ -23,7 +23,8 @@ class BitrexPointController extends Controller
                         return $data->bitrex_points;
                     })
                     ->addColumn('action', function($row) {
-                        return '<a href="#detail" data-toggle="modal" class="btn btn-primary fa fa-eye" onclick="detail('.$row->id.')"></a>';
+                        $detail = \Auth::guard('admin')->user()->hasPermission('Bitrex-money.bitrex-points.detail') ? '<a href="#detail" data-toggle="modal" class="btn btn-primary fa fa-eye" onclick="detail('.$row->id.')"></a>' : '';
+                        return $detail;
                     })
                     ->rawColumns(['action'])
                     ->make(true);

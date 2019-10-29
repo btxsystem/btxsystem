@@ -21,24 +21,16 @@
                       <tr>
                          <td colspan="1">
                          <form action="{{ route('admin-management.roles.store') }}" class="well form-horizontal" method="POST" enctype="multipart/form-data"> 
-                            {{ csrf_field() }}
+                            @csrf
                             <fieldset>
                                     <div class="form-group">
-                                    <label class="col-md-2 control-label">Title</label>
+                                    <label class="col-md-2 control-label">Role Name</label>
                                     <div class="col-md-8 inputGroupContainer">
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="fa fa-bookmark"></i></span>
-                                            <input id="title" name="title" placeholder="Title" class="form-control" required="true" value="" type="text">
+                                            <input id="role" name="title" placeholder="Role Name" class="form-control" required="true" value="" type="text">
                                         </div>
                                     </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label class="col-md-2 control-label"></label>
-                                        <div class="col-md-8 inputGroupContainer">
-                                            <span class="btn btn-info btn-sm select-all">Select all</span>
-                                            <span class="btn btn-danger btn-sm deselect-all">Deselect all</span>
-                                        </div>        
                                     </div>
 
                                     <div class="form-group">                
@@ -58,9 +50,7 @@
                                         <div class="col-md-8 inputGroupContainer">
                                             <button type="submit" class="btn btn-primary btn-block">Add</button>
                                         </div>
-                                    </div>
-                                                                
-                
+                                    </div>         
                                </fieldset>
                             </form>
                          </td>
@@ -78,6 +68,8 @@
                 url: '{{ route("select.permissions") }}',
                 dataType: 'json',
                 data: function (params) {
+                    console.log('masuk');
+                    
                     return {
                         q: $.trim(params.term)
                     };
