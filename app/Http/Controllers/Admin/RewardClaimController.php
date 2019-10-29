@@ -15,7 +15,7 @@ class RewardClaimController extends Controller
     public function index()
     {
         if (request()->ajax()) {
-            $data = GotReward::with('reward','member')->orderBy('id','desc')->whereIn('status', [1, 2]);
+            $data = GotReward::with('reward','member')->orderBy('id','desc')->whereIn('status', [1, 2])->get();
 
             return Datatables::of($data)
                     ->addColumn('id_member', function($row) {
