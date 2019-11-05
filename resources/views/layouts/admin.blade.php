@@ -19,7 +19,7 @@
         <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
         <link href="{{ asset('assets/css/chart.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('assets/css/chart.min.css') }}" rel="stylesheet" type="text/css" />
- 
+
         <!-- meta -->
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
         <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -28,7 +28,7 @@
 
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
         <!-- Datatable Export -->
@@ -48,13 +48,13 @@
                 <div class="clearfxix"></div>
 
                 <nav class="navbar navbar-static-top" role="navigation">
-                    
+
                     <div>
                         <a href="#" class="navbar-btn sidebar-toggle" data-toggle="offcanvas" role="button">
                             <div class="responsive_nav"></div>
                         </a>
                     </div>
-                    
+
                     <div class="navbar-right">
                         <ul class="nav navbar-nav">
                             @include('admin.layouts._messages')
@@ -80,7 +80,7 @@
                                             Account Settings
                                         </a>
                                     </li>
-                        
+
                                 <li class="user-footer">
                                     <div class="pull-left">
                                         <a href="">
