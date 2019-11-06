@@ -14,6 +14,9 @@ use DataTables;
 use Alert;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use App\Exports\EmployeerExport;
+use App\Exports\MembersExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 
 class MemberController extends Controller
@@ -485,6 +488,11 @@ class MemberController extends Controller
             return 'Pending';
             break;
         }
+    }
+
+    public function export()
+    {
+        return Excel::download(new MembersExport, 'members.xlsx');
     }
 
 }
