@@ -23,6 +23,9 @@ List Of Users Active
             @if(\Auth::guard('admin')->user()->hasPermission('Members.add'))
                 <a class="btn btn-large btn-primary" href="{{ route('members.create-data') }}" data-toggle="modal"><i class="fa fa-plus" style="margin-right: 10px;"></i>Add</a>
             @endif
+            <!-- @if(\Auth::guard('admin')->user()->hasPermission('Members.add')) -->
+                <a onclick="return confirm('Are you sure to export data ?')" class="btn btn-large btn-primary" href="{{ route('members.export-data') }}" data-toggle="modal"><i class="fa fa-plus" style="margin-right: 10px;"></i>Export</a>
+            <!-- @endif -->
             <div class="portlet box primary" style="margin-top: 15px;">
                 <div class="portlet-title">
                     <div class="caption">

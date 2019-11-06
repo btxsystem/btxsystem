@@ -168,6 +168,8 @@ Route::group(['middleware' => 'admin'], function () {
             Route::get('', ['as' => 'index', 'uses' => 'Admin\MemberController@member_nonactive']);
             Route::get('/{id}/active', ['as' => 'active', 'uses' => 'Admin\MemberController@active']);
         });
+
+        Route::get('/export-data', ['as' => 'export-data', 'uses' => 'Admin\MemberController@export']);
     });
 
 
