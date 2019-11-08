@@ -35,7 +35,8 @@ class MembersExport implements FromView
                 SELECT employeers.`sponsor_id` FROM employeers)) AS 'sponsor'"))->get()
         ]);
         // $datas = DB::table("employeers")
-        //   ->select("employeers.*",DB::raw("(SELECT employeers.`username` FROM employeers WHERE employeers.`id` IN (SELECT employeers.`parent_id` FROM employeers)) AS 'parent'"))->get();
+        //   ->select("employeers.*",DB::raw("(SELECT employeers.`username` FROM employeers WHERE employeers.`id` IN (SELECT employeers.`parent_id` FROM employeers)) AS 'parent',(SELECT employeers.`username` FROM employeers WHERE employeers.`id` IN (
+        //         SELECT employeers.`sponsor_id` FROM employeers)) AS 'sponsor'"))->get();
         // echo "<pre>";
         //     print_r($datas);
         // echo "</pre>";
