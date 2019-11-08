@@ -26,7 +26,7 @@
                     <div class="form-line">
                         <input class="form-control" name="points" id="points" type="text" readonly>
                     </div>
-                    <p class="notif" style="color:green">Convert from IDR 1000</p>
+                    {{--<p class="notif" style="color:green">Convert from IDR 1000</p>--}}
                 </div>
                 <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
                   <div class="demo-radio-button">
@@ -205,7 +205,7 @@
                             <a href="#" class="btn btn-secondary" data-dismiss="modal">Close</a>
                             <a href="#" id="convert-load" style="display:none" class="btn btn-primary"></a>
                             <button type="submit" id="convert-bp" disabled=true class="btn btn-primary" style="cursor:pointer">Convert
-                        </div>  
+                        </div>
                     </form>
                 </div>
             </div>
@@ -291,10 +291,10 @@
 
 @section('footer_scripts')
 <script type="text/javascript">
-    let is_bca_method = false; 
-    
+    let is_bca_method = false;
+
     $(document).ready(function () {
-    
+
       $("#province").select2({
         placeholder: "Province",
         width: '100%'
