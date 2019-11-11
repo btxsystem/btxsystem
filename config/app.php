@@ -161,6 +161,7 @@ return [
 
         Maatwebsite\Excel\ExcelServiceProvider::class,
         Laravel\Passport\PassportServiceProvider::class,
+        Rap2hpoutre\FastExcel\Facades\FastExcel::class,
 
     ],
     /*
@@ -215,6 +216,7 @@ return [
         'Helper'       => App\Helper::class,
         'Alert'        => UxWeb\SweetAlert\SweetAlert::class,
         'Excel'        => Maatwebsite\Excel\Facades\Excel::class,
+        'FastExcel'    => Rap2hpoutre\FastExcel\Facades\FastExcel::class,
         
     ],
 ];
