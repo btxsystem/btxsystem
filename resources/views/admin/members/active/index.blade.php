@@ -24,7 +24,8 @@ List Of Users Active
                 <a class="btn btn-large btn-primary" href="{{ route('members.create-data') }}" data-toggle="modal"><i class="fa fa-plus" style="margin-right: 10px;"></i>Add</a>
             @endif
             <!-- @if(\Auth::guard('admin')->user()->hasPermission('Members.add')) -->
-                <a onclick="return confirm('Are you sure to export data ?')" class="btn btn-large btn-primary" href="{{ route('members.export-data') }}" data-toggle="modal"><i class="fa fa-plus" style="margin-right: 10px;"></i>Export</a>
+            <!-- <button type="button" class="btn btn-large btn-success" data-toggle="modal" data-target="#myModal" id="open"><i class="fa fa-download" style="margin-right: 10px;"></i>Export</button> -->
+                <a onclick="return confirm('Are you sure to export data ?')" class="btn btn-large btn-success" href="{{ route('members.export-data') }}" data-toggle="modal"><i class="fa fa-download" style="margin-right: 10px;"></i>Export</a>
             <!-- @endif -->
             <div class="portlet box primary" style="margin-top: 15px;">
                 <div class="portlet-title">
@@ -48,7 +49,6 @@ List Of Users Active
                                         <button type="button" name="refresh" id="refresh" style="width: 50px;" class="btn btn-default"><i class="fa fa-refresh"></i></button>
                                     </div>
                                 </div>
-            
                         </div>
                     <br/>
                 
@@ -73,6 +73,41 @@ List Of Users Active
         </div>
     </div>
 </section>
+<!-- Modal -->
+  <div class="modal" tabindex="-1" role="dialog" id="myModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="alert alert-danger" style="display:none"></div>
+      <div class="modal-header">
+        
+        <h5 class="modal-title">Export Member To Excel or Csv</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" style="align-content: center">
+        <div class="row input-daterange">
+            <div class="col-md-4">
+                <input type="text" name="from_date" id="from_date" class="form-control"  placeholder="From Date" readonly />
+            </div>
+            <div class="col-md-4">
+                <input type="text" name="to_date" id="to_date" class="form-control" placeholder="To Date" readonly />
+            </div>
+            <div class="col-md-4">
+                <div class="pull-left">
+                    <button type="button" name="filter" id="filter" style="width: 100px;" class="btn btn-success"><i class="fa fa-download"></i> Excel</button><br><br>
+                    <button type="button" name="refresh" id="refresh" style="width: 100px;" class="btn btn-success"><i class="fa fa-download"></i> Csv</button>
+                </div>
+            </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <!-- <button  class="btn btn-success" id="ajaxSubmit">Save changes</button> -->
+        </div>
+    </div>
+  </div>
+</div>
 
 @stop
 

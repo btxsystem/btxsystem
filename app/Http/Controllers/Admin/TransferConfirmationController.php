@@ -34,7 +34,7 @@ class TransferConfirmationController extends Controller
     {
         if (request()->ajax()) {
             $data = TransferConfirmation::with(['user' => function ($query){
-                        $query->select('id','username');
+                        $query->select('id','username','first_name','last_name');
                      }])->orderBy('id','desc');
 
 
@@ -43,12 +43,15 @@ class TransferConfirmationController extends Controller
                     ->addColumn('status', function($row){
                         return $row->status == 0 ? 'Submitted' : 'Approved';
                     })
+                    // ->addColumn('name', function($row){
+                    //     return $row->name ? $row->name : '-';
+                    // })
                     ->addColumn('usernameMember', function($row){
-                        return $row->user_type == 'member' || null ? $row->user->username : '-';
+                        return $row->user->first_name.' '.$row->user->last_name;
                     })
-                    ->addColumn('usernameNonMember', function($row){
-                        return $row->user_type == 'nonmember' ? $row->user->username : '-';
-                    })
+                    // ->addColumn('usernameNonMember', function($row){
+                    //     return $row->user_type == 'nonmember' ? $row->user->username : '-';
+                    // })
                     ->addColumn('date', function($row){
                         return $row->created_at ? $row->created_at : 'No Data';
                     })
