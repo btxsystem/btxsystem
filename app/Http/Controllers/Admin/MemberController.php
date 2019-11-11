@@ -17,6 +17,7 @@ use Carbon\Carbon;
 use App\Exports\EmployeerExport;
 use App\Exports\MembersExport;
 use Maatwebsite\Excel\Facades\Excel;
+use Rap2hpoutre\FastExcel\FastExcel;
 
 
 class MemberController extends Controller
@@ -492,7 +493,12 @@ class MemberController extends Controller
 
     public function export()
     {
-        return Excel::download(new MembersExport, 'members.xlsx');
+        // return Excel::download(new MembersExport, 'members.xlsx');
+        // return (new MembersExport)->download('members.xlsx');
+        $datas = DB::table("employeers")
+          ->select("employeers.*",DB::raw("(SELECT employeers.`username` FROM employeers WHERE employeers.`id` IN (SELECT employeers.`parent_id` FROM employeers)) AS 'parent',(SELECT employeers.`username` FROM employeers WHERE employeers.`id` IN (SELECT employeers.`sponsor_id` FROM employeers)) AS 'sponsor'"))->get();
+        
+        return (new FastExcel($datas))->download('file.xlsx');
     }
 
 }

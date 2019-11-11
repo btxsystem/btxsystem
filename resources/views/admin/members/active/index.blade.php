@@ -24,8 +24,8 @@ List Of Users Active
                 <a class="btn btn-large btn-primary" href="{{ route('members.create-data') }}" data-toggle="modal"><i class="fa fa-plus" style="margin-right: 10px;"></i>Add</a>
             @endif
             <!-- @if(\Auth::guard('admin')->user()->hasPermission('Members.add')) -->
-            <button type="button" class="btn btn-large btn-success" data-toggle="modal" data-target="#myModal" id="open"><i class="fa fa-download" style="margin-right: 10px;"></i>Export</button>
-                <!-- <a onclick="return confirm('Are you sure to export data ?')" class="btn btn-large btn-success" href="{{ route('members.export-data') }}" data-toggle="modal"><i class="fa fa-download" style="margin-right: 10px;"></i>Export</a> -->
+            <!-- <button type="button" class="btn btn-large btn-success" data-toggle="modal" data-target="#myModal" id="open"><i class="fa fa-download" style="margin-right: 10px;"></i>Export</button> -->
+                <a onclick="return confirm('Are you sure to export data ?')" class="btn btn-large btn-success" href="{{ route('members.export-data') }}" data-toggle="modal"><i class="fa fa-download" style="margin-right: 10px;"></i>Export</a>
             <!-- @endif -->
             <div class="portlet box primary" style="margin-top: 15px;">
                 <div class="portlet-title">
