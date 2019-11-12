@@ -30,11 +30,14 @@ Detail Book
                         Content
                     </div>
 
-                    <div class="pull-right">
-                        <a style=" color: white; text-decoration: none; margin-right: 20px; !important" href="{{ route('book.edit', $data->id) }}"><i style="font-size:15px;" class="fa fa-pencil"></i>&nbsp; &nbsp;<strong>Edit Data</strong></a>
-                        <a data-id="{{$data->id}}" style=" color: white; text-decoration: none !important"><i style="font-size:15px;" class="fa fa-power-off"></i>&nbsp; &nbsp;<strong>Delete</strong></a>
-                     
-                     </div>
+                    <div class="pull-right">   
+                        @if(\Auth::guard('admin')->user()->hasPermission('Ebooks.list.book.edit'))
+                            <a style=" color: white; text-decoration: none; margin-right: 20px; !important" href="{{ route('book.edit', $data->id) }}"><i style="font-size:15px;" class="fa fa-pencil"></i>&nbsp; &nbsp;<strong>Edit Data</strong></a>
+                        @endif
+                        @if(\Auth::guard('admin')->user()->hasPermission('Ebooks.list.book.delete'))
+                            <a data-id="{{$data->id}}" style=" color: white; text-decoration: none !important"><i style="font-size:15px;" class="fa fa-power-off"></i>&nbsp; &nbsp;<strong>Delete</strong></a>
+                        @endif
+                    </div>
                 </div>
                   
                     <div class="col-md-12">
@@ -52,9 +55,11 @@ Detail Book
                         <i class="fa fa-book"></i> &nbsp;
                         Lesson List
                     </div>
-                    <div class="pull-right">
-                        <a style=" color: white; text-decoration: none; margin-right: 20px; !important" href="{{ route('book.create.lesson', $data->id) }}"><i style="font-size:15px;" class="fa fa-plus"></i>&nbsp; &nbsp;<strong>Add New Lesson</strong></a>
-                     </div>
+                    @if(\Auth::guard('admin')->user()->hasPermission('Ebooks.list.book.lesson.add'))
+                        <div class="pull-right">
+                            <a style=" color: white; text-decoration: none; margin-right: 20px; !important" href="{{ route('book.create.lesson', $data->id) }}"><i style="font-size:15px;" class="fa fa-plus"></i>&nbsp; &nbsp;<strong>Add New Lesson</strong></a>
+                        </div>
+                    @endif
                 </div>
                 
                 <div class="portlet-body flip-scroll">
@@ -76,9 +81,11 @@ Detail Book
                         <i class="fa fa-file-photo-o"></i> &nbsp;
                         Image List
                     </div>
-                    <div class="pull-right">
-                        <a style=" color: white; text-decoration: none !important" href="#addImageModal" data-toggle="modal"><i style="font-size:15px;" class="fa fa-plus"></i>&nbsp; &nbsp;<strong>Add New Image</strong></a>
-                     </div>
+                    @if(\Auth::guard('admin')->user()->hasPermission('Ebooks.list.book.image.add'))
+                        <div class="pull-right">
+                            <a style=" color: white; text-decoration: none !important" href="#addImageModal" data-toggle="modal"><i style="font-size:15px;" class="fa fa-plus"></i>&nbsp; &nbsp;<strong>Add New Image</strong></a>
+                        </div>
+                    @endif
                 </div>
                 
                 <div class="portlet-body flip-scroll">

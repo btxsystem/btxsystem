@@ -26,9 +26,10 @@ class EbookController extends Controller
             return Datatables::of($data)
                     ->addIndexColumn()
                     ->addColumn('action', function($row) {
-                        return '<a href="'.route('ebook.show',$row->id).'"  class="btn btn-primary fa fa-eye"title="Show"></a>
-                                <a href="'.route('ebook.edit',$row->id).'"  class="btn btn-warning fa fa-pencil"title="Edit"></a>
-                                <a data-id="'.$row->id.' "class="btn btn-danger fa fa-trash delete-ebook"title="Delete"></a>';
+                        $detail = \Auth::guard('admin')->user()->hasPermission('Ebooks.list.detail') ? '<a href="'.route('ebook.show',$row->id).'"  class="btn btn-primary fa fa-eye"title="Show"></a>' : '';
+                        $edit   = \Auth::guard('admin')->user()->hasPermission('Ebooks.list.edit') ? '<a href="'.route('ebook.edit',$row->id).'"  class="btn btn-warning fa fa-pencil"title="Edit"></a>' : '';
+                        $action = $detail.' '.$edit;
+                        return $action;
                     })
                     ->rawColumns(['action'])
                     ->make(true);
@@ -194,9 +195,10 @@ class EbookController extends Controller
         return Datatables::of($data->books)
             ->addIndexColumn()
             ->addColumn('action', function($row) {
-                return '<a href="'.route('book.show',$row->id).'"  class="btn btn-primary fa fa-eye" title="Show"></a>
-                        <a href="'.route('book.edit',$row->id).'"  class="btn btn-warning fa fa-pencil" title="Edit"></a>
-                        <a href="'.route('deleteBook',$row->id).'" class="btn btn-danger fa fa-trash" title="Delete"></a>';
+                $show = \Auth::guard('admin')->user()->hasPermission('Ebooks.list.book.view') ? '<a href="'.route('book.show',$row->id).'"  class="btn btn-primary fa fa-eye" title="Show"></a>' : '';
+                $edit = \Auth::guard('admin')->user()->hasPermission('Ebooks.list.book.edit') ? '<a href="'.route('book.edit',$row->id).'"  class="btn btn-warning fa fa-pencil" title="Edit"></a>' : '';
+                $delete = \Auth::guard('admin')->user()->hasPermission('Ebooks.list.book.delete') ? '<a href="'.route('deleteBook',$row->id).'" class="btn btn-danger fa fa-trash" title="Delete"></a>' : '';
+                return $show.' '.$edit.' '.$delete;
             })
             ->rawColumns(['action'])
             ->make(true);
@@ -209,9 +211,10 @@ class EbookController extends Controller
         return Datatables::of($data->videos)
             ->addIndexColumn()
             ->addColumn('action', function($row) {
-                return '<a href="'.route('video.show',$row->id).'"  class="btn btn-primary fa fa-eye" title="Show"></a>
-                        <a href="'.route('video.edit',$row->id).'"  class="btn btn-warning fa fa-pencil" title="Edit"></a>
-                        <a href="'.route('deleteVideo',$row->id).'" class="btn btn-danger fa fa-trash" title="Delete"></a>';
+                $show = \Auth::guard('admin')->user()->hasPermission('Ebooks.list.video.view') ? '<a href="'.route('video.show',$row->id).'"  class="btn btn-primary fa fa-eye" title="Show"></a>' : '';
+                $edit = \Auth::guard('admin')->user()->hasPermission('Ebooks.list.video.edit') ? '<a href="'.route('video.edit',$row->id).'"  class="btn btn-warning fa fa-pencil" title="Edit"></a>' : '';
+                $delete = \Auth::guard('admin')->user()->hasPermission('Ebooks.list.video.delete') ? '<a href="'.route('deleteVideo',$row->id).'" class="btn btn-danger fa fa-trash" title="Delete"></a>' : '';
+                return $show.' '.$edit.' '.$delete;
             })
             ->rawColumns(['action'])
             ->make(true);

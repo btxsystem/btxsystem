@@ -27,7 +27,8 @@ class BitrexCashController extends Controller
                         return currency($data->bitrex_cash);
                     })
                     ->addColumn('action', function($row) {
-                        return '<a href="#detail" data-toggle="modal" class="btn btn-primary fa fa-eye" onclick="detail('.$row->id.')"></a>';
+                        $detail = \Auth::guard('admin')->user()->hasPermission('Bitrex-money.bitrex-value.detail') ? '<a href="#detail" data-toggle="modal" class="btn btn-primary fa fa-eye" onclick="detail('.$row->id.')"></a>' : '';
+                        return $detail;
                     })
                     ->rawColumns(['action'])
                     ->make(true);

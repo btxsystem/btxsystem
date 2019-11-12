@@ -19,7 +19,6 @@ class BookController extends Controller
      */
     public function index()
     {
-
         if (request()->ajax()) {
             $data = Book::with('ebooks')->select('*');
 
@@ -148,10 +147,10 @@ class BookController extends Controller
         return Datatables::of($data->lessons)
             ->addIndexColumn()
             ->addColumn('action', function($row) {
-                return '
-                        <a href="'.route('book-chapter-lesson.show',$row->id).'"  class="btn btn-primary fa fa-eye" title="Show"></a>
-                        <a href="'.route('book-chapter-lesson.edit',$row->id).'"  class="btn btn-primary fa fa-pencil" title="Edit"></a>
-                        <a href="'.route('deleteChapterLesson',$row->id).'" class="btn btn-danger fa fa-trash" title="Delete"></a>';
+                $show = \Auth::guard('admin')->user()->hasPermission('Ebooks.list.book.lesson.view') ? '<a href="'.route('book-chapter-lesson.show',$row->id).'"  class="btn btn-primary fa fa-eye" title="Show"></a>' : '';
+                $edit = \Auth::guard('admin')->user()->hasPermission('Ebooks.list.book.lesson.edit') ? '<a href="'.route('book-chapter-lesson.edit',$row->id).'"  class="btn btn-primary fa fa-pencil" title="Edit"></a>' : '';
+                $delete = \Auth::guard('admin')->user()->hasPermission('Ebooks.list.book.lesson.delete') ? '<a href="'.route('deleteChapterLesson',$row->id).'" class="btn btn-danger fa fa-trash" title="Delete"></a>' : '';
+                return $show.' '.$edit.' '.$delete;
                     
             })
             ->rawColumns(['action'])
@@ -167,9 +166,9 @@ class BookController extends Controller
         return Datatables::of($data->images)
             ->addIndexColumn()
             ->addColumn('action', function($row) {
-                return '
-                        <a data-id="'.$row->id.'"  class="btn btn-warning fa fa-pencil edit-image" title="Edit"></a>
-                        <a href="'.route('deleteImage',$row->id).'" class="btn btn-danger fa fa-trash" title="Delete"></a>';
+                $edit = \Auth::guard('admin')->user()->hasPermission('Ebooks.list.book.lesson.edit') ? '<a data-id="'.$row->id.'"  class="btn btn-warning fa fa-pencil edit-image" title="Edit"></a>' : '';
+                $delete = \Auth::guard('admin')->user()->hasPermission('Ebooks.list.book.lesson.delete') ? '<a href="'.route('deleteImage',$row->id).'" class="btn btn-danger fa fa-trash" title="Delete"></a>' : '';
+                return $edit.' '.$delete;
             })
             ->rawColumns(['action'])
             ->make(true);

@@ -26,7 +26,9 @@ Withdrawal Time
                 <tr>
                   <th class="text-center">Last Withdrawal</th>
                   <th class="text-center">Next Withdrawal</th>
-                  <th class="text-center">Action</th>
+                  @if(\Auth::guard('admin')->user()->hasPermission('Withdrawal.time.edit'))
+                    <th class="text-center">Action</th>
+                  @endif
                 </tr>
               </thead>
 

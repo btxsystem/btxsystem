@@ -306,24 +306,20 @@ class TransferConfirmationController extends Controller
 
 
     public function htmlAction($row)
-    {
-        switch($row->status) {
-            case 0;
-            return '
-                    <a data-id="'.$row->id.'"  class="btn btn-success fa fa-eye show-testimonial" title="Show Payment"></a>
-                    <a data-invoice_number="'.$row->invoice_number.' "class="btn btn-default fa fa-check approve-payment" style="background-color: #b85ebd; color: #ffffff;" title="Approve Payment"></a>
-                    <a data-id="'.$row->id.'"  class="btn btn-danger fa fa-trash delete-payment" title="Delete Payment"></a>
-                    ';
+    {  
+      $show = \Auth::guard('admin')->user()->hasPermission('Transfer_confirmation.detail') ? '<a data-id="'.$row->id.'"  class="btn btn-success fa fa-eye show-testimonial" title="Show Payment"></a>' : '';
+      $approve = \Auth::guard('admin')->user()->hasPermission('Transfer_confirmation.approve') ? '<a data-invoice_number="'.$row->invoice_number.' "class="btn btn-default fa fa-check approve-payment" style="background-color: #b85ebd; color: #ffffff;" title="Approve Payment"></a>' : '';
+      $delete = \Auth::guard('admin')->user()->hasPermission('Transfer_confirmation.delete') ? '<a data-id="'.$row->id.'"  class="btn btn-danger fa fa-trash delete-payment" title="Delete Payment"></a>' : '';
+      switch($row->status) {
+          case 0:
+            return $show.' '.$approve.' '.$delete;
             break;
 
-            case 1;
-            return '
-                    <a data-id="'.$row->id.'"  class="btn btn-success fa fa-eye show-testimonial" title="Show Payment"></a>
-                    <a data-id="'.$row->id.'"  class="btn btn-danger fa fa-trash delete-payment" title="Delete Payment"></a>
-                    ';
+          case 1;
+            return $show.' '.$delete;
             break;
 
-        }
+      }
 
     }
 }

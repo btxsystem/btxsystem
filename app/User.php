@@ -49,6 +49,15 @@ class User extends Authenticatable
         return $value ? Carbon::createFromFormat('Y-m-d H:i:s', $value)->format(config('panel.date_format') . ' ' . config('panel.time_format')) : null;
     }
 
+    public function hasPermission($permission)
+    {
+        return (null !== DB::table('permission_role')
+        ->join('permissions', 'permission_role.permission_id', '=', 'permissions.id')
+        ->where('permissions.name', $permission)
+        ->where('permission_role.role_id', $this->roles_id)
+        ->first() || false);
+    }
+
     public function setEmailVerifiedAtAttribute($value)
     {
         $this->attributes['email_verified_at'] = $value ? Carbon::createFromFormat(config('panel.date_format') . ' ' . config('panel.time_format'), $value)->format('Y-m-d H:i:s') : null;
@@ -81,14 +90,6 @@ class User extends Authenticatable
      *
      * @return object
      */
-    public function hasPermission($permission)
-    {
-        return (null !== DB::table('permission_role')
-        ->join('permissions', 'permission_role.permission_id', '=', 'permissions.id')
-        ->where('permissions.name', $permission)
-        ->where('permission_role.role_id', $this->roles_id)
-        ->first() || abort(401, 'This action is unauthorized.'));
-    }
 
     public static function authAcessToken(){
         return $this->hasMany('\App\OauthAccessToken');
