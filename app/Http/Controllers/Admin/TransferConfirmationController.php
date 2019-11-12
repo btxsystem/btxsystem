@@ -47,7 +47,7 @@ class TransferConfirmationController extends Controller
                     //     return $row->name ? $row->name : '-';
                     // })
                     ->addColumn('usernameMember', function($row){
-                        return $row->user->first_name.' '.$row->user->last_name;
+                        return ucwords($row->user->first_name.' '.$row->user->last_name);
                     })
                     // ->addColumn('usernameNonMember', function($row){
                     //     return $row->user_type == 'nonmember' ? $row->user->username : '-';
