@@ -160,7 +160,8 @@ return [
         //Barryvdh\Cors\ServiceProvider::class,
 
         Maatwebsite\Excel\ExcelServiceProvider::class,
-        Laravel\Passport\PassportServiceProvider::class,
+        Laravel\Passport\PassportServiceProvider::class
+        // Rap2hpoutre\FastExcel\Facades\FastExcel::class
 
     ],
     /*
@@ -214,7 +215,8 @@ return [
         'Nestable'     => Nestable\Facades\NestableService::class,
         'Helper'       => App\Helper::class,
         'Alert'        => UxWeb\SweetAlert\SweetAlert::class,
-        'Excel'        => Maatwebsite\Excel\Facades\Excel::class,
+        'Excel'        => Maatwebsite\Excel\Facades\Excel::class
+        // 'FastExcel'    => Rap2hpoutre\FastExcel\Facades\FastExcel::class
         
     ],
 ];

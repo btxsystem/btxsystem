@@ -217,4 +217,9 @@ class Employeer extends Authenticatable
         }
     }
 
+    public function getallMember()
+    {
+        return \DB::table('employeers');
+    }
+
 }
