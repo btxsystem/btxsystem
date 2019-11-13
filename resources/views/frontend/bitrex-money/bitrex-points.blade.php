@@ -395,11 +395,11 @@
   				$('#province').select2({
   					placeholder: 'Province',
   					data: data,
-            width: '100%'
+                    width: '100%'
   				});
   			},
   			error: function() {
-  				console.log("Error");
+  				console.log("masuk province");
   			}
   		});
       $('.dropdown-toggle').remove();
