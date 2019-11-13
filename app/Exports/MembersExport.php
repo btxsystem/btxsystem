@@ -12,45 +12,45 @@ use Illuminate\Support\Facades\DB;
 
 class MembersExport implements FromQuery, WithHeadings
 {
-    // use Exportable;
+    use Exportable;
 
-    // public function query()
-    // {
-    //     return Employeer::query()->select('id_member','username','email','birthdate','npwp_number','is_married','gender','status','phone_number','no_rec','bank_account_name','bank_account_number','position','rank_id','created_at','updated_at','verification','bitrex_cash','bitrex_points','pv','src','is_update','nik','expired_at');
-    // }
+    public function query()
+    {
+        return Employeer::query()->select('id_member','username','email','birthdate','npwp_number','is_married','gender','status','phone_number','no_rec','bank_account_name','bank_account_number','position','rank_id','created_at','updated_at','verification','bitrex_cash','bitrex_points','pv','src','is_update','nik','expired_at');
+    }
 
-    // public function headings() : array
-    // {
-    //     return [
-    //         'ID Member',
-    //         'Username',
-    //         // 'Full Name',
-    //         'Email',
-    //         'Birthdate',
-    //         'Npwp Number',
-    //         'Is Married',
-    //         'Gender',
-    //         'Status',
-    //         'Phone Number',
-    //         'No Rek',
-    //         'Bank Account Name',
-    //         'Bank Account Number',
-    //         'Position',
-    //         // 'Parent',
-    //         // 'Sponsor',
-    //         'Rank Id',
-    //         'Created Date',
-    //         'Updated Date',
-    //         'Verification',
-    //         'Bitrex Cash',
-    //         'Bitrex Points',
-    //         'Pv',
-    //         'Src',
-    //         'Is Update',
-    //         'Nik',
-    //         'Expired Date'
-    //     ];
-    // }
+    public function headings() : array
+    {
+        return [
+            'ID Member',
+            'Username',
+            // 'Full Name',
+            'Email',
+            'Birthdate',
+            'Npwp Number',
+            'Is Married',
+            'Gender',
+            'Status',
+            'Phone Number',
+            'No Rek',
+            'Bank Account Name',
+            'Bank Account Number',
+            'Position',
+            // 'Parent',
+            // 'Sponsor',
+            'Rank Id',
+            'Created Date',
+            'Updated Date',
+            'Verification',
+            'Bitrex Cash',
+            'Bitrex Points',
+            'Pv',
+            'Src',
+            'Is Update',
+            'Nik',
+            'Expired Date'
+        ];
+    }
     /**
     * @return \Illuminate\Support\Collection
     */
