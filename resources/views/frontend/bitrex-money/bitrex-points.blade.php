@@ -34,8 +34,8 @@
                     <label for="transfer">Transfer</label>
                     <input name="method" type="radio" value="ipay" id="ipay" class="with-gap radio-col-red" />
                     <label for="ipay">VA & OVO</label>
-                    <input name="method" type="radio" value="bca" id="bca" class="with-gap radio-col-red" />
-                    <label for="bca">BCA VA</label>
+                    {{--<input name="method" type="radio" value="bca" id="bca" class="with-gap radio-col-red" />
+                    <label for="bca">BCA VA</label>!--}}
                   </div>
                 </div>
                 <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12" id="transfer-form">
