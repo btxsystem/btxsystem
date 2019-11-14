@@ -648,10 +648,10 @@ em{
 			&& $('#nik').val() != ''
 			&& $('#birthdate').val() != ''
 			&& adult >= 18
-			&& check > 0 
-			&& check_email 
-			&& check_cost 
-			&& check_user 
+			&& check > 0
+			&& check_email
+			&& check_cost
+			&& check_user
 			&& available_email
 		) {
 			$('.register').prop('disabled', false)
@@ -662,8 +662,6 @@ em{
 	}
 
 	function openAutoPlacement() {
-		console.log('masuk');
-		
 		$('#action-member').attr('action', '{{route("register-autoplacement")}}')
 		$.ajax({
 			type: 'GET',
@@ -679,7 +677,7 @@ em{
 			error: function() {
 				console.log("Error");
 			}
-		});	
+		});
 	}
 
 	function openTree() {
@@ -705,7 +703,7 @@ em{
 	$(document).ready(function() {
 		$('.register').prop('disabled', true)
 		$('#cost-starter').html('280')
-		
+
 		var element = document.querySelector('#bah');
 
     	checkTerm()
@@ -717,7 +715,7 @@ em{
 		$('#term_two').change(function() {
 			checkTerm()
 		})
-	
+
     	$('.shipping-form').hide();
 
 		$('#upline').hide();
@@ -751,9 +749,9 @@ em{
 			$('#grand-total').html(toPrice((priceEbook + postalFee + 280000) / 1000))
 			}
 		})
-	 
+
 		$('#checkboxEbook input[type=checkbox]').change(function(index) {
-			
+
 			if($(this).prop('checked')) {
 				check += 1;
 				priceEbook = priceEbook + parseInt($(this).data('price'));
@@ -780,7 +778,7 @@ em{
 			grandTotal = (priceEbook + postalFee + 280000) / 1000;
 
 			check_cost = bitrexPoint < grandTotal ? false : true;
-	
+
 			checkTerm()
 		})
 	})
@@ -798,7 +796,7 @@ em{
 			console.log("Error");
 		}
 	});
-		
+
 		$('.dropdown-toggle').remove();
 		$('div').removeClass('btn-group');
 		$('.div').removeClass('bootstrap-select');
@@ -833,7 +831,7 @@ em{
 						error: function() {
 							console.log("Error");
 						}
-					});	
+					});
 				}else{
 					alert('Username not found');
 				}
@@ -923,7 +921,7 @@ em{
 	});
 
 	$('#kurir').change(function(){
-		
+
 		$('#kurir_name').val($(this).find(":checked").text())
 		$('#cost').val(Math.ceil(this.value/1000))
 		$('#cost-starter').html('280')
@@ -985,8 +983,8 @@ em{
 			check_email = true;
 			$('#email_danger').empty();
 		}else{
-			check_email = false;	
-			$('#email_danger').text('Email Invalid');	
+			check_email = false;
+			$('#email_danger').text('Email Invalid');
 		}
 		$.ajax({
 			type: 'GET',
@@ -998,7 +996,7 @@ em{
 				}else{
 					$('#email_danger').empty();
 					available_email = true;
-				}	
+				}
 			},
 			error: function() {
 				console.log("Error");
@@ -1156,7 +1154,7 @@ em{
 				data.pv_group ? $('#_pv_group_r').text('PV Rank R: ' + addCommas(data.pv_group.pv_right)) : $('#_pv_group_r').text('PV Rank: 0 ');
             }
         });
-		
+
 		var treeStructure = d3.tree().size([2000,480]);
 		var root = d3.hierarchy(data).sort(function(a, b) {return a.data.position - b.data.position ;});
 		treeStructure(root);
@@ -1227,7 +1225,7 @@ em{
 			.append("image")
 			.attr("xlink:href", function(d){return d.data.src == null ? "https://img.icons8.com/bubbles/2x/user.png" : BASE_SRC+'/'+d.data.src})
 			.attr("x", function(d){
-				if($(window).width() <= 480) {  
+				if($(window).width() <= 480) {
 					return d.x-80;
 				}else{
 					return d.x-30;
