@@ -11,8 +11,8 @@ List Of Report Birthdate
     // menentukan timestamp 10 hari berikutnya dari tanggal hari ini
     $nextN = mktime(0, 0, 0, date("m"), date("d") + $n, date("Y"));
 
-    $tgl_until = date('d F Y',strtotime(date('Y-m-d',$nextN)));
-    $tgl_now = date('d F Y'); 
+    $tgl_until = date('d-m-Y',$nextN);
+    $tgl_now = date('d-m-Y'); 
 ?>
 
 <section class="content-header">
