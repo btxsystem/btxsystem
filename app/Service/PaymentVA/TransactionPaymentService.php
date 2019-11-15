@@ -11,7 +11,7 @@ use App\Mail\VirtualAccountMail as VaMail;
 class TransactionPaymentService
 {
     public function __construct(){}
-    
+
     public function __call($method , $parameter){
         if($method == "transactionMember"){
             $type_ebook = '';
@@ -46,7 +46,7 @@ class TransactionPaymentService
                     'description' => $type_ebook,
                     'no_invoice' => '11210'.$parameter[5]
                 ];
-                
+
                 if (filter_var(Auth::user()->email, FILTER_VALIDATE_EMAIL)) {
                     //Mail::to('dhadhang.efendi@gmail.com')->send(new OldMemberMail($dataEmail));
                     Mail::to(Auth::user()->email)->send(new VaMail($dataEmail));
@@ -88,7 +88,7 @@ class TransactionPaymentService
                     'description' => $type_ebook,
                     'no_invoice' => '11210'.$parameter[5]
                 ];
-                
+
                 if (filter_var(Auth::user()->email, FILTER_VALIDATE_EMAIL)) {
                     //Mail::to('dhadhang.efendi@gmail.com')->send(new OldMemberMail($dataEmail));
                     Mail::to(Auth::user()->email)->send(new VaMail($dataEmail));
@@ -136,7 +136,7 @@ class TransactionPaymentService
                     'bank_name' => $parameter[1]->bank_name,
                     'birthdate' => $parameter[1]->birthdate,
                     'gender' => $parameter[1]->gender,
-
+                    'referal' => Auth::user()->username,
                 ],
                 'ebooks' => $parameter[1]->ebooks,
                 'shipping_method' => $parameter[1]->shipping_method,
@@ -158,16 +158,16 @@ class TransactionPaymentService
                 $price_ebook = DB::table('ebooks')->where('id',$ebook)->select('price')->first();
                 $cost += $price_ebook->price;
             }
-            
+
             $trx = DB::table('transaction_bills')
                 ->insertGetId(
                     [
-                        'user_id' => $parameter[0], 
-                        'product_type' => 'register', 
+                        'user_id' => $parameter[0],
+                        'product_type' => 'register',
                         'user_type' => 'member',
                         'customer_number' => $parameter[2],
-                        'total_amount' => $cost, 
-                        'created_at' => now(), 
+                        'total_amount' => $cost,
+                        'created_at' => now(),
                         'updated_at' => now()
                     ]
                 );
@@ -175,10 +175,10 @@ class TransactionPaymentService
             DB::table('transaction_bills_details')
                 ->insert(
                     [
-                        'transaction_bill_id' => $trx, 
+                        'transaction_bill_id' => $trx,
                         'bill_number' => $parameter[2],
-                        'product_detail' => $arr_tojson, 
-                        'created_at' => now(), 
+                        'product_detail' => $arr_tojson,
+                        'created_at' => now(),
                         'updated_at' => now()
                     ]
                 );
