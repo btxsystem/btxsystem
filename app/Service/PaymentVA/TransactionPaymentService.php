@@ -42,7 +42,7 @@ class TransactionPaymentService
                 $trx = DB::table('transaction_bills')->insertGetId(['user_id' => $parameter[0], 'product_type' => 'ebook', 'user_type' => $parameter[3],'customer_number' => $parameter[5], 'total_amount' => $parameter[4], 'created_at' => now(), 'updated_at' => now()]);
                 DB::table('transaction_bills_details')->insert(['transaction_bill_id'=>$trx, 'bill_number'=>$parameter[4],  'product_detail'=>$arr_tojson, 'created_at' => now(), 'updated_at' => now()]);
                 $dataEmail = (object) [
-                    'amount' => $parameter[4],
+                    'amount' => $parameter[4].' Include fee',
                     'description' => $type_ebook,
                     'no_invoice' => '11210'.$parameter[5]
                 ];
@@ -84,7 +84,7 @@ class TransactionPaymentService
                 $trx = DB::table('transaction_bills')->insertGetId(['user_id' => $parameter[0], 'product_type' => 'ebook', 'user_type' => $parameter[3],'customer_number' => $parameter[5], 'total_amount' => $parameter[4], 'created_at' => now(), 'updated_at' => now()]);
                 DB::table('transaction_bills_details')->insert(['transaction_bill_id'=>$trx, 'bill_number'=>$parameter[4],  'product_detail'=>$arr_tojson, 'created_at' => now(), 'updated_at' => now()]);
                 $dataEmail = (object) [
-                    'amount' => $parameter[4],
+                    'amount' => $parameter[4].' Include fee',
                     'description' => $type_ebook,
                     'no_invoice' => '11210'.$parameter[5]
                 ];
@@ -101,7 +101,7 @@ class TransactionPaymentService
             try {
                 $product_detail = [
                     'nominal' => $parameter[1],
-                    'points' => $parameter[1]/1000,
+                    'points' => ($parameter[1]-2750)/1000,
                     'description' => 'Topup Bitrex Point From Virtual Account'
                 ];
                 $arr_tojson = json_encode($product_detail);
@@ -109,7 +109,7 @@ class TransactionPaymentService
                 $trx = DB::table('transaction_bills')->insertGetId(['user_id' => $parameter[0], 'product_type' => 'topup', 'user_type' => 'member','customer_number' => $parameter[2], 'total_amount' => $parameter[1], 'created_at' => now(), 'updated_at' => now()]);
                 DB::table('transaction_bills_details')->insert(['transaction_bill_id'=>$trx, 'bill_number'=>$parameter[2],  'product_detail'=>$arr_tojson, 'created_at' => now(), 'updated_at' => now()]);
                 $dataEmail = (object) [
-                    'amount' => $parameter[1],
+                    'amount' => $parameter[1].' (Include fee 2750)',
                     'description' => 'Topup Bitrex Points',
                     'no_invoice' => '11210'.$parameter[2]
                 ];
@@ -152,7 +152,7 @@ class TransactionPaymentService
                 'term_two' => $parameter[1]->term_two
             ];
             $arr_tojson = json_encode($product_detail);
-            $cost = $parameter[1]->cost + 280000;
+            $cost = $parameter[1]->cost + 280000 +2750;
 
             foreach ($parameter[1]->ebooks as $key => $ebook) {
                 $price_ebook = DB::table('ebooks')->where('id',$ebook)->select('price')->first();
@@ -184,7 +184,7 @@ class TransactionPaymentService
                 );
 
             $dataEmail = (object) [
-                'amount' => $cost,
+                'amount' => $cost.' (Include fee)',
                 'description' => 'Register Member from Autoplacement',
                 'no_invoice' => '11210'.$parameter[2]
             ];

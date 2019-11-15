@@ -71,6 +71,8 @@
                     <button type="button" class="btn btn-raised bg-grey waves-effect" style="cursor:pointer" id="copy">Copy</button>
                 </center>
                 <br>
+                <center><p style="font-size:14px" id="nominal_plus_fee"></p></center>
+                <br>
                 <h4>Bagaimana cara melakukan Pembayaran BCA Virtual Account ?</h4>
                 <h5>1. ATM BCA</h5>
                 <ul style="font-size:12px">
@@ -205,7 +207,7 @@
                             <a href="#" class="btn btn-secondary" data-dismiss="modal">Close</a>
                             <a href="#" id="convert-load" style="display:none" class="btn btn-primary"></a>
                             <button type="submit" id="convert-bp" disabled=true class="btn btn-primary" style="cursor:pointer">Convert
-                        </div>  
+                        </div>
                     </form>
                 </div>
             </div>
@@ -291,10 +293,10 @@
 
 @section('footer_scripts')
 <script type="text/javascript">
-    let is_bca_method = false; 
-    
+    let is_bca_method = false;
+
     $(document).ready(function () {
-    
+
       $("#province").select2({
         placeholder: "Province",
         width: '100%'
@@ -361,6 +363,7 @@
                     $('#des_noreq').text('Masukkan '+data.customer_number+' sebagai rekening tujuan');
                     $('#des_noreq2').text('Masukkan '+data.customer_number+' sebagai rekening tujuan');
                     $('#des_noreq3').text('Masukkan '+data.customer_number+' sebagai rekening tujuan');
+                    $('#nominal_plus_fee').text('Nominal Transfer '+addCommas(data.total_amount)+' (include fee)')
                     $('#no-virtual').modal('show');
                     $('#topup').modal('hide');
                 },
