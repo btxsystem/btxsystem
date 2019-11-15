@@ -12,6 +12,7 @@ use DB;
 use Carbon\Carbon;
 use Alert;
 use File;
+use App\Service\PaymentVa\TransactionPaymentService as Va;
 
 use Illuminate\Support\Facades\Mail;
 use App\Mail\RegisterMemberMail;
@@ -656,7 +657,14 @@ class ProfileMemberController extends Controller
     public function registerAutoPlacement(Request $request)
     {
         try {
+            
             DB::beginTransaction();
+
+            $cek_npwp = 0;
+            if (isset($request->npwp_number)) {
+                $cek_npwp = strlen($request->npwp_number) >= 15 ? 1 : 0;
+            }
+
             $method = $request->input('payment_method') ?? 'point';
             $shippingMethod = $request->input('shipping_method') ?? "0"; 
             
@@ -764,6 +772,7 @@ class ProfileMemberController extends Controller
                         'bank_account_name' => $request->bank_account_name,
                         'bank_name' => $request->bank_name,
                         'npwp_number' => $request->npwp_number ? $request->npwp_number : null,
+                        'verification' => $cek_npwp,
                         'expired_at' => Carbon::create(date('Y-m-d H:i:s'))->addYear(1),
                         'bank_name' => $request->bank_name,
                         'bank_account_name' => $request->bank_account_name,
@@ -803,6 +812,7 @@ class ProfileMemberController extends Controller
                             'pv' => 0,
                             'nik' => $request->nik,
                             'no_rec' => $request->bank_account_number,
+                            'verification' => $cek_npwp,
                             'bank_account_name' => $request->bank_account_name,
                             'bank_name' => $request->bank_name,
                             'npwp_number' => $request->npwp_number ? $request->npwp_number : null,
@@ -835,6 +845,7 @@ class ProfileMemberController extends Controller
                             'bank_account_name' => $request->bank_account_name,
                             'bank_name' => $request->bank_name,
                             'npwp_number' => $request->npwp_number ? $request->npwp_number : null,
+                            'verification' => $cek_npwp,
                             'expired_at' => Carbon::create(date('Y-m-d H:i:s'))->addYear(1),
                             'bank_name' => $request->bank_name,
                             'bank_account_name' => $request->bank_account_name,
@@ -864,6 +875,7 @@ class ProfileMemberController extends Controller
                             'bank_account_name' => $request->bank_account_name,
                             'bank_name' => $request->bank_name,
                             'npwp_number' => $request->npwp_number ? $request->npwp_number : null,
+                            'verification' => $cek_npwp,
                             'expired_at' => Carbon::create(date('Y-m-d H:i:s'))->addYear(1),
                             'bank_name' => $request->bank_name,
                             'bank_account_name' => $request->bank_account_name,
@@ -973,22 +985,58 @@ class ProfileMemberController extends Controller
                 ];
       
                 Mail::to($employeer->email)
-                  ->send(new RegisterMemberMail($dataEmail, null));                
-                // return response()->json([
-                //     'data' => $price
-                // ]);
-
-                // return response()->json([
-                //     'data' => $employeer
-                // ]);
+                  ->send(new RegisterMemberMail($dataEmail, null));
                 Alert::success('Berhasil Register Member Autoplacement', 'Success')->persistent("OK");
                 return redirect()->route('member.tree');
+            }else{
+
+                $data = Auth::user();
+                $rank = DB::table('ranks')->select('name')->where('id','=',$data->rank_id)->first();
+                $profile = array(
+                    "id_member" => $data->id_member,
+                    "username" =>  $data->username,
+                    "name" => $data->first_name.' '.$data->last_name,
+                    "email" => $data->email,
+                    "phone_number" => $data->phone_number,
+                    "birthdate" => date('F j, Y',strtotime($data->birthdate)),
+                    "npwp_number" => $data->npwp_number ? $data->npwp_number : null,
+                    "is_married" => $data->is_married ? 'Married' : 'Single',
+                    "gender" => $data->gender ? 'Male' : 'Female',
+                    "status" => $data->status ? 'Active' : 'Nonactive',
+                    "phone_number" => $data->phone_number,
+                    "no_rec" => $data->no_rec,
+                    "bank_name" => $data->bank_name,
+                    "bank_account_name" => $data->bank_account_name,
+                    "bitrex_cash" => $data->bitrex_cash,
+                    "bitrex_points" => $data->bitrex_points,
+                    "src" => $data->src,
+                    "pv" => $data->pv
+                );
+
+                $date = now();
+
+                do {
+                    $no_invoice = date_format($date,"ymdh").rand(100,999);
+                    $cek = DB::table('transaction_bills')->where('customer_number',$no_invoice)->select('id')->get();
+                } while (count($cek)>0);
+       
+                $data = [
+                    'user_id' => Auth::user()->id,
+                    'product_type' => 'topup',
+                    'user_type' => 'member',
+                    'total_amount' => $request->nominal,
+                    'customer_number' => '11210'.$no_invoice
+                ];
+
+                $profile['no_invoice'] = $data['customer_number'];
+                $va = new Va;
+                $va->register(Auth::user()->id, $request, $no_invoice);
+                DB::commit();
+
+                return view('frontend.virtual-account-autoplacement')->with('profile',$profile);
             }
         } catch(\Illuminate\Database\QueryException $e) {
             DB::rollback();
-            // return response()->json([
-            //     'data' => $e
-            // ]);
             Alert::error('Kesalahan teknis', 'Error')->persistent("OK");
             return redirect()->route('member.tree');
         }        

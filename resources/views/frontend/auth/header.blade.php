@@ -52,7 +52,7 @@
                     </div>
                     <br>
                     <div class="input-group col-md-12">
-                        <input class="form-control" type="text" name="firstName" minlength="2" placeholder="First Name" required>
+                        <input class="form-control" type="text" name="firstName" id="firstName" minlength="2" placeholder="First Name" required>
                     </div>
                     <br>
                     <div class="input-group col-md-12">
@@ -66,6 +66,9 @@
                     <br>
                     <div class="input-group col-md-12">
                         <input class="form-control" type="email" placeholder="Email" name="email" id="email" required>
+                    </div>              
+                    <div>
+                      <b style="color:red" id="email_danger"></b>
                     </div>
                     <br>
                     <div class="input-group col-md-12">
@@ -73,8 +76,40 @@
                     </div>
                     <br>
                     <div class="input-group col-md-12">
-                        <input type="text" name="birthdate" class="datepicker form-control" placeholder="Birthdate" required>
+                        <input class="form-control" type="text" placeholder="Phone Number" name="phone_number" id="phone_number" required>
                     </div>
+                    <br>
+                    <div class="input-group col-md-12">
+                        <input class="form-control" type="text" placeholder="NPWP" name="npwp" id="npwp">
+                    </div>
+                    <br>
+                    <div class="input-group col-md-12">
+                        <input class="form-control" type="text" placeholder="Account Name (Bank)" name="account_name" id="account_name" required>
+                    </div>
+                    <br>
+                    <div class="input-group col-md-12">
+                        <input class="form-control" type="text" placeholder="Account Number (Bank)" name="account_nnumber" id="account_number" required>
+                    </div>
+                    <br>
+                    <div class="input-group col-md-12">
+                        <div class="form-line">
+                          <input type="date" id="birthdate" name="birthdate" class="form-control" placeholder="Birthdate" required>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="input-group col-md-12">
+              				<label class="form-label">Bank Name <em>*</em></label>
+                      <select class="form-control" id="bank_name_select">
+                        <option value="BCA" selected>BCA</option>
+                        <option value="BRI">BRI</option>
+                        <option value="BNI">BNI</option>
+                        <option value="Mandiri">Mandiri</option>
+                        <option value="CIMB NIAGA">CIMB NIAGA</option>
+                        <option value="other">Other Bank</option>
+                      </select>
+                        <input type="hidden" class="form-control" name="bank_name" id="bank_name" required>
+                    </div>
+                    <br>
                     <div class="input-group col-md-12">
                       <h5 class="card-inside-title">Choose a pack</h5>
                       <div class="demo-radio-button">
@@ -85,28 +120,28 @@
                       </div>
                       <input type="hidden" id="choosepack">
                     </div>
+                    <br>
                     <div class="input-group col-md-12">
                       <h5 class="card-inside-title">Choose a ebook</h5>
                       <div class="demo-radio-button">
-                        <div id="ebook-list"></div>
-                        <!-- <input name="method" type="checkbox" value="0" id="basic" class="with-gap radio-col-red" checked />
-                        <label for="shipping">Basic + Intermediate</label>
-                        <input name="method" type="checkbox" value="0" id="advanced" class="with-gap radio-col-red" checked />
-                        <label for="shipping">Advanced</label> -->
-                        <!-- <input name="method" type="radio" value="1" id="starterpackebook" class="with-gap radio-col-red" />
-                        <label for="pickup">Starter Pack + Ebook</label> -->
+                        <div class="btn-group-toggle" data-toggle="buttons">
+                            <input type="checkbox" name="basic" id="basic" checked> Basic &nbsp;&nbsp;
+                            <input type="checkbox" name="advance" id="advance"> Advance
+                        </div>
                       </div>
                       <input type="hidden" id="choosepack">
                     </div>
+                    <br>
                     <div class="input-group col-md-12 mt-4">
                       <h5 class="card-inside-title">Choose a shipping method</h5>
                       <div class="demo-radio-button">
+                        <input name="shipping" type="radio" value="0" id="pickup" checked class="with-gap radio-col-red" />
+                        <label for="pickup">Pickup</label>&nbsp;&nbsp;
                         <input name="shipping" type="radio" value="1" id="shipping" class="with-gap radio-col-red" />
-                        <label for="shipping">Shipping</label>
-                        <input name="shipping" type="radio" value="0" id="pickup" class="with-gap radio-col-red" />
-                        <label for="pickup">Pickup</label>
+                        <label for="shipping">Shipping</label> 
                       </div>
                     </div>
+                    <br>
                     <div class="input-group col-md-12" id="shipping-form">
                       <div class="form-group">
                         <select style="width:100%;" id="province" name="province" class="form-control province"></select>
@@ -139,6 +174,20 @@
                         <h4 class="hidden">Total Ebook : <span id="cost-ebook">0</span></h4>
                         <h4 class="hidden">Total Postal Fee : <span id="cost-postal">0</span></h4>
                         <h4>Grand Total : <span id="grand-total"></span></h4>
+                      </div>
+                    </div>
+                    <div class="input-group col-md-12">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="term_one" name="term_one" value="1">
+                        <label class="form-check-label" for="term_one">
+                          Saya telah membaca dan menyetujui <a href="https://drive.google.com/file/d/1I2pDzWx2ITxE3PKplc_6pLdP0jMrmkA1/view?usp=sharing" target="_blank">kode etik Bitrexgo</a>.
+                        </label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="term_two" name="term_two" value="1">
+                        <label class="form-check-label" for="term_two">
+                          Saya menyatakan bahwa data yang saya isi sudah benar, dapat dipertanggung jawabkan, dan dapat digunakan untuk keperluan pembuatan ID Startpro Support System
+                        </label>
                       </div>
                     </div>
                     <div class="modal-footer">
@@ -224,8 +273,8 @@
                     <li><a id="product" href="#">Our Product</a></li>
                     <li><a id="event" href="#">Event</a></li>
 
-                    <!-- <li><a data-toggle="modal" data-target="#join"><button class="btn btn-effect btn-info btn-buy" style="background: #b92240; margin-top: -10px;">JOIN</button></a></li> -->
-                    <li><a href="#"><button class="btn btn-effect btn-info btn-buy" style="background: #b92240; margin-top: -10px;">JOIN</button></a></li>
+                    <li><a data-toggle="modal" data-target="#join"><button class="btn btn-effect btn-info btn-buy" style="background: #b92240; margin-top: -10px;">JOIN</button></a></li>
+                    {{-- <li><a href="#"><button class="btn btn-effect btn-info btn-buy" style="background: #b92240; margin-top: -10px;">JOIN</button></a></li>--}}
                     {{-- <li><a data-toggle="modal" data-target="#join"><button class="btn btn-effect btn-info btn-buy" style="background: #b92240; margin-top: -10px;">JOIN</button></a></li> --}}
                     <!-- <li><a href="#"><button class="btn btn-effect btn-info btn-buy" style="background: #b92240; margin-top: -10px;">JOIN</button></a></li> -->
 

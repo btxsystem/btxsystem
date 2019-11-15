@@ -177,9 +177,8 @@
 						</div>
 					</div>
 					<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
-						<div class="demo-radio-button">
-							<input name="payment_method" type="radio" value="point" id="payment_method" class="with-gap radio-col-red" checked />
-              				<label for="payment_method">Bitrex Point</label>
+						<h5 class="card-inside-title">Payment Method <em>*</em></h5>
+						<div class="demo-radio-button" id="payment_method">
             			</div>
           			</div>
 					<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -546,6 +545,7 @@ em{
 	var parent_id = undefined;
 	var check_cost = true;
 	const BASE_SRC = '{{url("/")}}';
+	var is_va = false;
 
 	$('#male').change(function(){
 		checkTerm()
@@ -584,7 +584,7 @@ em{
 	})
 
 	$('#bank_account_name').change(function(){
-		checkTerm()
+		checkTerm();
 	})
 
 	$('#bank_account_number').change(function(){
@@ -636,6 +636,16 @@ em{
 		checkTerm()
 	})
 
+	$('#va').change(function(){
+		checkTerm();
+		is_va = true;
+	})
+	
+	$('#bp').change(function(){
+		checkTerm();
+		is_va = false;
+	})
+
 	function checkTerm() {
 		if(!$('#term_one').prop('checked') || !$('#term_two').prop('checked')) {
 			$('.register').prop('disabled', true)
@@ -662,27 +672,19 @@ em{
 	}
 
 	function openAutoPlacement() {
-		console.log('masuk');
-		
-		$('#action-member').attr('action', '{{route("register-autoplacement")}}')
-		$.ajax({
-			type: 'GET',
-			url: '/member/select/bitrex-points',
-			success: function (data) {
-				if (data.bitrex_points >= 280) {
-					$('#register').modal('show');
-				}else{
-					$('#register').modal('hide');
-					$('#warning').modal('show');
-				}
-			},
-			error: function() {
-				console.log("Error");
-			}
-		});	
+		$('#payment_method').html(`
+							<input name="payment_method" type="radio" value="point" id="bp" class="with-gap radio-col-red" checked />
+              				<label for="payment_method">Bitrex Points</label>
+							<input name="payment_method" type="radio" value="va" aria-hidden="true" id="va" class="with-gap radio-col-red"/>
+              				<label for="va" aria-hidden="true">Virtual Account BCA</label>`);
+		$('#action-member').attr('action', '{{route("register-autoplacement")}}');
+		$('#register').modal('show');
 	}
 
 	function openTree() {
+		$('#payment_method').html(`
+							<input name="payment_method" type="radio" value="point" id="payment_method" class="with-gap radio-col-red" checked />
+              				<label for="payment_method">Bitrex Points</label>`);
 		$('#action-member').attr('action', '{{route("member.register-downline")}}')
 	}
 
@@ -1028,55 +1030,19 @@ em{
 	$('#phone_number').on('input', function() {
 		let str = this.value;
 		this.value = (str.match(/[0-9]/g)) ? str.match(/[0-9]/g).join('') : '';
-	var text = this.value;
-	$.ajax({
-		type: 'GET',
-		url: '/member/select/phone_number/'+text,
-		success: function (data) {
-			data.username ? $('#phone_number').text('phone number you entered already exists') : $('#phone_number').empty();
-			check_user = data.username ? false  : true;
-		},
-		error: function() {
-			console.log("Error");
-		}
-	});
 		checkTerm()
 	})
 
 	$('#nik').on('input', function() {
 		let str = this.value;
 		this.value = (str.match(/[0-9]/g)) ? str.match(/[0-9]/g).join('') : '';
-	var text = this.value;
-	$.ajax({
-		type: 'GET',
-		url: '/member/select/nik/'+text,
-		success: function (data) {
-			data.username ? $('#nik').text('nik you entered already exists') : $('#nik').empty();
-			check_user = data.username ? false  : true;
-		},
-		error: function() {
-			console.log("Error");
-		}
-	});
-	checkTerm()
+		checkTerm()
 	})
 
 	$('#bank_account_number').on('input', function() {
-	let str = this.value;
-	this.value = (str.match(/[0-9]/g)) ? str.match(/[0-9]/g).join('') : '';
-	var text = this.value;
-	$.ajax({
-	type: 'GET',
-	url: '/member/select/bank_account_number/'+text,
-	success: function (data) {
-		data.username ? $('#bank_account_number').text('bank account number you entered already exists') : $('#bank_account_number').empty();
-		check_user = data.username ? false  : true;
-	},
-	error: function() {
-		console.log("Error");
-	}
-	});
-	checkTerm()
+		let str = this.value;
+		this.value = (str.match(/[0-9]/g)) ? str.match(/[0-9]/g).join('') : '';
+		checkTerm()
 	})
 
 	var my_transform = d3Transform()
