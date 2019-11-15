@@ -16,7 +16,16 @@ class MembersExport implements FromQuery, WithHeadings
 
     public function query()
     {
-        return Employeer::query()->select('id_member','username','email','birthdate','npwp_number','is_married','gender','status','phone_number','no_rec','bank_account_name','bank_account_number','position','rank_id','created_at','updated_at','verification','bitrex_cash','bitrex_points','pv','src','is_update','nik','expired_at');
+        //return Employeer::query();
+        return Employeer::all();
+        // $datas = DB::table("employeers")->select("employeers.*",DB::raw("(SELECT employeers.`username` FROM employeers WHERE employeers.`id` IN (SELECT employeers.`parent_id` FROM employeers)) AS 'parent',(SELECT employeers.`username` FROM employeers WHERE employeers.`id` IN (SELECT employeers.`sponsor_id` FROM employeers)) AS 'sponsor'"))->get();
+        // return $datas;
+
+        // echo "<pre>";
+        //     print_r($datas);
+        // echo "</pre>";
+        // die();
+        // ->select('id_member','username','email','birthdate','npwp_number','is_married','gender','status','phone_number','no_rec','bank_account_name','bank_account_number','position','rank_id','created_at','updated_at','verification','bitrex_cash','bitrex_points','pv','src','is_update','nik','expired_at');
     }
 
     public function headings() : array
@@ -24,7 +33,7 @@ class MembersExport implements FromQuery, WithHeadings
         return [
             'ID Member',
             'Username',
-            // 'Full Name',
+            'Full Name',
             'Email',
             'Birthdate',
             'Npwp Number',
@@ -36,8 +45,8 @@ class MembersExport implements FromQuery, WithHeadings
             'Bank Account Name',
             'Bank Account Number',
             'Position',
-            // 'Parent',
-            // 'Sponsor',
+            'Parent',
+            'Sponsor',
             'Rank Id',
             'Created Date',
             'Updated Date',

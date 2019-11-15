@@ -495,10 +495,19 @@ class MemberController extends Controller
     {
         // return Excel::download(new MembersExport, 'members.xlsx');
         // return (new MembersExport)->download('members.xlsx');
-        $datas = DB::table("employeers")
-          ->select("employeers.*",DB::raw("(SELECT employeers.`username` FROM employeers WHERE employeers.`id` IN (SELECT employeers.`parent_id` FROM employeers)) AS 'parent',(SELECT employeers.`username` FROM employeers WHERE employeers.`id` IN (SELECT employeers.`sponsor_id` FROM employeers)) AS 'sponsor'"))->get();
+        $datas = DB::select(DB::raw("SELECT * FROM employeers WHERE DATE_FORMAT(birthdate,'%m %d') BETWEEN DATE_FORMAT(CURDATE(),'%m %d') AND DATE_FORMAT((INTERVAL 2 DAY + CURDATE()),'%m %d') ORDER BY DATE_FORMAT(birthdate,'%m %d')"));
+        echo "<pre>";
+            print_r($datas);
+        echo "</pre>";
+        die();
         
-        return (new FastExcel($datas))->download('file.xlsx');
+        // return (new FastExcel($datas))->download('file.xlsx');
+
+        // return Csv::download(new UsersExport, 'users.csv');
+        (new MembersExport)->queue('members.xlsx');
+
+        return back()->withSuccess('Export started!');
+
     }
 
 }
