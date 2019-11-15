@@ -51,7 +51,7 @@ class TransactionBillEntity
 
   public $AdditionalData;
 
-  public $FlagAdvide;
+  public $FlagAdvice;
 
 
   /**
@@ -495,21 +495,21 @@ class TransactionBillEntity
   }
 
   /**
-   * Get the value of FlagAdvide
+   * Get the value of FlagAdvice
    */ 
-  public function getFlagAdvide()
+  public function getFlagAdvice()
   {
-    return $this->FlagAdvide;
+    return $this->FlagAdvice;
   }
 
   /**
-   * Set the value of FlagAdvide
+   * Set the value of FlagAdvice
    *
    * @return  self
    */ 
-  public function setFlagAdvide($FlagAdvide)
+  public function setFlagAdvice($FlagAdvice)
   {
-    $this->FlagAdvide = $FlagAdvide;
+    $this->FlagAdvice = $FlagAdvice;
 
     return $this;
   }

@@ -222,7 +222,7 @@ class VirtualAccountService
     $subCompany = $request->input('SubCompany');
     $transactionDate = $request->input('TransactionDate');
     $detailBills = $request->input('DetailBills') ?? [];
-    $FlagAdvide = $request->input('FlagAdvide');
+    $FlagAdvice = $request->input('FlagAdvice');
     $reference = $request->input('Reference');
     $additionaldata = $request->input('Additionaldata');
 
@@ -238,7 +238,7 @@ class VirtualAccountService
       ->setSubCompany($subCompany)
       ->setTransactionDate($transactionDate ?? "")
       ->setAdditionaldata("")
-      ->setFlagAdvide($FlagAdvide)
+      ->setFlagAdvice($FlagAdvice)
       ->setReference($reference);
       // ->setDetailBills(function() use ($detailBills) {
       //   $detailBillLists = [];
@@ -342,11 +342,11 @@ class VirtualAccountService
       $request->input('TransactionDate') == '' || 
       $request->input('TotalAmount') == '' || 
       $request->input('PaidAmount') == '' || 
-      $request->input('FlagAdvide') == '' || 
+      $request->input('FlagAdvice') == '' || 
       $request->input('SubCompany') == '' || 
       $request->input('Reference') == '' || 
-      $request->input('FlagAdvide') != 'Y' &&
-      $request->input('FlagAdvide') != 'N' ||
+      $request->input('FlagAdvice') != 'Y' &&
+      $request->input('FlagAdvice') != 'N' ||
       !$this->validateFormatDate($request->input('TransactionDate')) ||
       !$this->validateTotalAmount($request->input('TotalAmount'), $transactionBillRepo->total_amount.".00") ||
       !$this->validateTotalAmount($request->input('PaidAmount'), $transactionBillRepo->total_amount.".00")
