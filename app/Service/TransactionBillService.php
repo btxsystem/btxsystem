@@ -146,7 +146,7 @@ class TransactionBillService
         'payment_flag_reason' => json_encode($builder->getPaymentFlagReason()),
         'customer_name' => $builder->getCustomerName(),
         'referrence' => $builder->getReference(),
-        'flag_advice' => $builder->getFlagAdvice(),
+        'flag_advice' => $builder->getFlagAdvide(),
         'paid_amount' => $builder->getPaidAmount(),
         'transaction_date' => $builder->getTransactionDate(),
         'request_id' => $builder->getRequestID(),
@@ -193,7 +193,7 @@ class TransactionBillService
         'payment_flag_reason' => json_encode($builder->getPaymentFlagReason()),
         'customer_name' => $builder->getCustomerName(),
         'referrence' => $builder->getReference(),
-        'flag_advice' => $builder->getFlagAdvice(),
+        'flag_advice' => $builder->getFlagAdvide(),
         'paid_amount' => $builder->getPaidAmount(),
         'transaction_date' => $builder->getTransactionDate(),
         'request_id' => $builder->getRequestID(),
@@ -246,7 +246,7 @@ class TransactionBillService
         'payment_flag_reason' => json_encode($builder->getPaymentFlagReason()),
         'customer_name' => $builder->getCustomerName(),
         'referrence' => $builder->getReference(),
-        'flag_advice' => $builder->getFlagAdvice(),
+        'flag_advice' => $builder->getFlagAdvide(),
         'paid_amount' => substr($builder->getPaidAmount(), 0, strlen($builder->getPaidAmount()) - 3),
         'transaction_date' => $builder->getTransactionDate(),
         'request_id' => $builder->getRequestID(),
@@ -302,7 +302,7 @@ class TransactionBillService
         'payment_flag_reason' => json_encode($builder->getPaymentFlagReason()),
         'customer_name' => $builder->getCustomerName(),
         'referrence' => $builder->getReference(),
-        'flag_advice' => $builder->getFlagAdvice(),
+        'flag_advice' => $builder->getFlagAdvide(),
         'paid_amount' => $builder->getPaidAmount(),
         'transaction_date' => $builder->getTransactionDate(),
         'request_id' => $builder->getRequestID(),
@@ -469,7 +469,7 @@ class TransactionBillService
 }
 
   public function registerAuto($request){
-    $sponsor = $request->referal ? Employeer::where('username',$request->referal)->select('id')->first() : Employeer::where('username',Auth::user()->username)->select('id')->first() ;
+    $sponsor = $request->referral ? Employeer::where('username',$request->referral)->select('id')->first() : 1 ;
     $isHaveChild = Employeer::where('parent_id',$sponsor->id)->select('position')->get();
     if (count($isHaveChild) == 3) {
         $pv = DB::table('pv_rank')->where('id_member',$sponsor->id)->select('pv_left', 'pv_midle', 'pv_right')->first();
@@ -505,13 +505,12 @@ class TransactionBillService
             'bitrex_cash' => 0,
             'bitrex_points' => 0,
             'pv' => 0,
-            'nik' => $request->passport,
+            'nik' => $request->nik,
             'expired_at' => Carbon::create(date('Y-m-d H:i:s'))->addYear(1),
             'bank_name' => $request->bank_name,
             'bank_account_name' => $request->bank_account_name,
             'no_rec' => $request->bank_account_number
         ];
-        // return Employeer::insertGetId($member);
         return Employeer::insertGetId($member);
     }else{
         $left = false;
@@ -543,7 +542,7 @@ class TransactionBillService
                 'bitrex_cash' => 0,
                 'bitrex_points' => 0,
                 'pv' => 0,
-                'nik' => $request->passport,
+                'nik' => $request->nik,
                 'expired_at' => Carbon::create(date('Y-m-d H:i:s'))->addYear(1),
                 'bank_name' => $request->bank_name,
                 'bank_account_name' => $request->bank_account_name,
@@ -567,7 +566,7 @@ class TransactionBillService
                 'bitrex_cash' => 0,
                 'bitrex_points' => 0,
                 'pv' => 0,
-                'nik' => $request->passport,
+                'nik' => $request->nik,
                 'expired_at' => Carbon::create(date('Y-m-d H:i:s'))->addYear(1),
                 'bank_name' => $request->bank_name,
                 'bank_account_name' => $request->bank_account_name,
@@ -591,7 +590,7 @@ class TransactionBillService
                 'bitrex_cash' => 0,
                 'bitrex_points' => 0,
                 'pv' => 0,
-                'nik' => $request->passport,
+                'nik' => $request->nik,
                 'expired_at' => Carbon::create(date('Y-m-d H:i:s'))->addYear(1),
                 'bank_name' => $request->bank_name,
                 'bank_account_name' => $request->bank_account_name,
