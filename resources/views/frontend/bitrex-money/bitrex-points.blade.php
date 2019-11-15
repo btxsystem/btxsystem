@@ -34,8 +34,8 @@
                     <label for="transfer">Transfer</label>
                     <input name="method" type="radio" value="ipay" id="ipay" class="with-gap radio-col-red" />
                     <label for="ipay">VA & OVO</label>
-                    {{--<input name="method" type="radio" value="bca" id="bca" class="with-gap radio-col-red" />
-                    <label for="bca">BCA VA</label>!--}}
+                    <input name="method" type="radio" value="bca" id="bca" class="with-gap radio-col-red" />
+                    <label for="bca">BCA VA</label>
                   </div>
                 </div>
                 <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12" id="transfer-form">
@@ -229,7 +229,7 @@
                 <div class="body">
                     <a href="#" class="btn btn-primary btn-md topup" data-toggle="modal" data-target="#topup">Topup</a>
                     <a href="#" class="btn btn-primary btn-md cek-ongkir" data-toggle="modal" data-target="#cekongkir">Cek Ongkir</a>
-                    <a href="#" class="btn btn-primary btn-md convert" data-toggle="modal" data-target="#convert">Convert to BV</a>
+                    {{---<a href="#" class="btn btn-primary btn-md convert" data-toggle="modal" data-target="#convert">Convert to BV</a>--}}
                     <h5 class="d-flex flex-row-reverse">Bitrex Points: {{number_format($profile->bitrex_points,0,".",".")}}</h5>
                 </div>
             </div>
