@@ -34,7 +34,7 @@ class TransferConfirmationController extends Controller
     {
         if (request()->ajax()) {
             $data = TransferConfirmation::with(['user' => function ($query){
-                        $query->select('id','username');
+                        $query->select('id','username','first_name','last_name');
                      }])->orderBy('id','desc');
 
 
@@ -43,12 +43,15 @@ class TransferConfirmationController extends Controller
                     ->addColumn('status', function($row){
                         return $row->status == 0 ? 'Submitted' : 'Approved';
                     })
+                    // ->addColumn('name', function($row){
+                    //     return $row->name ? $row->name : '-';
+                    // })
                     ->addColumn('usernameMember', function($row){
-                        return $row->user_type == 'member' || null ? $row->user->username : '-';
+                        return ucwords($row->user->first_name.' '.$row->user->last_name);
                     })
-                    ->addColumn('usernameNonMember', function($row){
-                        return $row->user_type == 'nonmember' ? $row->user->username : '-';
-                    })
+                    // ->addColumn('usernameNonMember', function($row){
+                    //     return $row->user_type == 'nonmember' ? $row->user->username : '-';
+                    // })
                     ->addColumn('date', function($row){
                         return $row->created_at ? $row->created_at : 'No Data';
                     })
@@ -306,24 +309,20 @@ class TransferConfirmationController extends Controller
 
 
     public function htmlAction($row)
-    {
-        switch($row->status) {
-            case 0;
-            return '
-                    <a data-id="'.$row->id.'"  class="btn btn-success fa fa-eye show-testimonial" title="Show Payment"></a>
-                    <a data-invoice_number="'.$row->invoice_number.' "class="btn btn-default fa fa-check approve-payment" style="background-color: #b85ebd; color: #ffffff;" title="Approve Payment"></a>
-                    <a data-id="'.$row->id.'"  class="btn btn-danger fa fa-trash delete-payment" title="Delete Payment"></a>
-                    ';
+    {  
+      $show = \Auth::guard('admin')->user()->hasPermission('Transfer_confirmation.detail') ? '<a data-id="'.$row->id.'"  class="btn btn-success fa fa-eye show-testimonial" title="Show Payment"></a>' : '';
+      $approve = \Auth::guard('admin')->user()->hasPermission('Transfer_confirmation.approve') ? '<a data-invoice_number="'.$row->invoice_number.' "class="btn btn-default fa fa-check approve-payment" style="background-color: #b85ebd; color: #ffffff;" title="Approve Payment"></a>' : '';
+      $delete = \Auth::guard('admin')->user()->hasPermission('Transfer_confirmation.delete') ? '<a data-id="'.$row->id.'"  class="btn btn-danger fa fa-trash delete-payment" title="Delete Payment"></a>' : '';
+      switch($row->status) {
+          case 0:
+            return $show.' '.$approve.' '.$delete;
             break;
 
-            case 1;
-            return '
-                    <a data-id="'.$row->id.'"  class="btn btn-success fa fa-eye show-testimonial" title="Show Payment"></a>
-                    <a data-id="'.$row->id.'"  class="btn btn-danger fa fa-trash delete-payment" title="Delete Payment"></a>
-                    ';
+          case 1;
+            return $show.' '.$delete;
             break;
 
-        }
+      }
 
     }
 }

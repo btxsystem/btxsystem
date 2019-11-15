@@ -214,6 +214,10 @@ Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
         Route::post('reset-password', ['as' => 'reset-password', 'uses' => 'Member\ProfileMemberController@resetPassword']);
     });
 
+    Route::post('withrawal', ['as' => 'withdrawal', 'uses' => 'Member\BitrexCashController@withdrawal']);
+    Route::post('resend-otp', ['as' => 'resend-otp', 'uses' => 'Member\BitrexCashController@resendOTP']);
+    Route::post('send-otp', ['as' => 'send-otp', 'uses' => 'Member\BitrexCashController@sendOTP']);
+
     Route::group(['prefix' => 'income-and-expenses', 'as'=> 'bitrex-money.'], function () {
         Route::get('bitrex-points', ['as' => 'bitrex-points', 'uses' => 'Member\BitrexPointController@index']);
         Route::get('bitrex-value', ['as' => 'bitrex-cash', 'uses' => 'Member\BitrexCashController@index']);

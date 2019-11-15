@@ -261,10 +261,10 @@
 								<input class="form-check-input" type="radio" name="payment_method" id="ipay" value="ipay">
 								<label class="form-check-label" for="inlineRadio1">VA & OVO</label>
 							</div>
-							<div class="form-check form-check-inline">
+							{{--<div class="form-check form-check-inline">
 								<input class="form-check-input" type="radio" name="payment_method" id="va-bca" value="va-bca">
 								<label class="form-check-label" for="inlineRadio1">BCA VA</label>
-							</div>
+							</div>--}}
 					  </div>
 					  <h4>Total yang dibayar : IDR </span><b><span id="total_price"></h4></b>
 		      </div>
@@ -315,7 +315,7 @@ TraducationFX('video', 'configure', {
     layout: 'vertical-tabs'
 });
 TraducationFX('video', 'embed');
-</script>  
+</script>
 <script>
 
 TraducationFX('settings', 'configure', {
@@ -404,14 +404,14 @@ $('#submit-va').click(function(){
 		url: '{{route("member.buy-ebook")}}',
 		data: {ebook_id: $('#ebook').val()},
 		success: function (data) {
-			
+
 			$('#va').val(data.customer_number);
 			$('#des_noreq').text('Masukkan '+data.customer_number+' sebagai rekening tujuan');
 			$('#des_noreq2').text('Masukkan '+data.customer_number+' sebagai rekening tujuan');
 			$('#des_noreq3').text('Masukkan '+data.customer_number+' sebagai rekening tujuan');
 			$('#no-virtual').modal('show');
 			$('#modal-subscription').modal('hide');
-			
+
 		},
 		error: function() {
 			console.log("Error");
@@ -591,7 +591,7 @@ function submit() {
 			// 	// 	window.location.href = '{{ route("payment") }}?transactionRef=' + result.data.transaction_ref
 			// 	// } else {
 			// 	// 	window.location.href = '{{ route("payment") }}?transactionRef=' + result.data.transaction_ref
-			// 	// }	
+			// 	// }
 			// });
 			//$('#register').prop('disabled', false)
 		},

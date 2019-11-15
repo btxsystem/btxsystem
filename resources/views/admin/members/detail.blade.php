@@ -42,10 +42,11 @@
                     </div>
 
                     <div class="pull-right">
-                
-                        <a style="color: white; text-decoration: none !important;" onMouseOut="this.style.color='white'" onMouseOver="this.style.color='#f06262'" href="#updatePasswordModal" data-toggle="modal"><i style="font-size:15px;" class="fa fa-refresh"></i>&nbsp; &nbsp;<strong>Update Password</strong></a>
-                        &nbsp; &nbsp;
-                        <a onMouseOut="this.style.color='white'" onMouseOver="this.style.color='#f06262'" style=" color: white; text-decoration: none; margin-right: 20px; !important" href="{{ route('members.edit-data', $data->id) }}"><i style="font-size:15px;" class="fa fa-pencil"></i>&nbsp; &nbsp;<strong>Edit Data</strong></a>
+                        @if(\Auth::guard('admin')->user()->hasPermission('Members.edit'))
+                            <a style="color: white; text-decoration: none !important;" onMouseOut="this.style.color='white'" onMouseOver="this.style.color='#f06262'" href="#updatePasswordModal" data-toggle="modal"><i style="font-size:15px;" class="fa fa-refresh"></i>&nbsp; &nbsp;<strong>Update Password</strong></a>
+                            &nbsp; &nbsp;
+                            <a onMouseOut="this.style.color='white'" onMouseOver="this.style.color='#f06262'" style=" color: white; text-decoration: none; margin-right: 20px; !important" href="{{ route('members.edit-data', $data->id) }}"><i style="font-size:15px;" class="fa fa-pencil"></i>&nbsp; &nbsp;<strong>Edit Data</strong></a>
+                        @endif
                      </div>
                 </div>
             
@@ -160,8 +161,10 @@
                         Bitrex Point Histories
                     </div>
                     <div class="pull-right">
-                        <a style=" color: white; text-decoration: none !important;" onMouseOut="this.style.color='white'" onMouseOver="this.style.color='#f06262'" href="#addTopUpModal" data-toggle="modal"><i style="font-size:15px;" class="fa fa-money"></i>&nbsp; &nbsp;<strong>Topup</strong></a>
-                     </div>
+                        @if(\Auth::guard('admin')->user()->hasPermission('Members.Topup'))
+                            <a style=" color: white; text-decoration: none !important;" onMouseOut="this.style.color='white'" onMouseOver="this.style.color='#f06262'" href="#addTopUpModal" data-toggle="modal"><i style="font-size:15px;" class="fa fa-money"></i>&nbsp; &nbsp;<strong>Topup</strong></a>
+                        @endif
+                    </div>
                 </div>
                 
                 <div class="portlet-body flip-scroll">
@@ -188,8 +191,10 @@
                         Transaction Member
                     </div>
                     <div class="pull-right">
-                        <a style=" color: white; text-decoration: none !important;" onMouseOut="this.style.color='white'" onMouseOver="this.style.color='#f06262'" href="#buyProduct" data-toggle="modal"><i style="font-size:15px;" class="fa fa-cart-plus"></i>&nbsp; &nbsp;<strong>Buy Product</strong></a>
-                     </div>
+                        @if(\Auth::guard('admin')->user()->hasPermission('Members.Buy_product'))
+                            <a style=" color: white; text-decoration: none !important;" onMouseOut="this.style.color='white'" onMouseOver="this.style.color='#f06262'" href="#buyProduct" data-toggle="modal"><i style="font-size:15px;" class="fa fa-cart-plus"></i>&nbsp; &nbsp;<strong>Buy Product</strong></a>
+                        @endif
+                    </div>
                 </div>
                 
                 <div class="portlet-body flip-scroll">

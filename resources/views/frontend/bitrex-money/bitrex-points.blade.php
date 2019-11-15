@@ -26,7 +26,7 @@
                     <div class="form-line">
                         <input class="form-control" name="points" id="points" type="text" readonly>
                     </div>
-                    <p class="notif" style="color:green">Convert from IDR 1000</p>
+                    {{--<p class="notif" style="color:green">Convert from IDR 1000</p>--}}
                 </div>
                 <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
                   <div class="demo-radio-button">
@@ -34,8 +34,8 @@
                     <label for="transfer">Transfer</label>
                     <input name="method" type="radio" value="ipay" id="ipay" class="with-gap radio-col-red" />
                     <label for="ipay">VA & OVO</label>
-                    <input name="method" type="radio" value="bca" id="bca" class="with-gap radio-col-red" />
-                    <label for="bca">BCA VA</label>
+                    {{--<input name="method" type="radio" value="bca" id="bca" class="with-gap radio-col-red" />
+                    <label for="bca">BCA VA</label>!--}}
                   </div>
                 </div>
                 <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12" id="transfer-form">
@@ -398,11 +398,11 @@
   				$('#province').select2({
   					placeholder: 'Province',
   					data: data,
-            width: '100%'
+                    width: '100%'
   				});
   			},
   			error: function() {
-  				console.log("Error");
+  				console.log("masuk province");
   			}
   		});
       $('.dropdown-toggle').remove();

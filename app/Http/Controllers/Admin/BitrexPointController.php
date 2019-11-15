@@ -23,7 +23,8 @@ class BitrexPointController extends Controller
                         return $data->bitrex_points;
                     })
                     ->addColumn('action', function($row) {
-                        return '<a href="#detail" data-toggle="modal" class="btn btn-primary fa fa-eye" onclick="detail('.$row->id.')"></a>';
+                        $detail = \Auth::guard('admin')->user()->hasPermission('Bitrex-money.bitrex-points.detail') ? '<a href="#detail" data-toggle="modal" class="btn btn-primary fa fa-eye" onclick="detail('.$row->id.')"></a>' : '';
+                        return $detail;
                     })
                     ->rawColumns(['action'])
                     ->make(true);
@@ -34,7 +35,7 @@ class BitrexPointController extends Controller
     // public function topup(Request $request)
     // {
     //     $points_member = DB::table('employeers')->select('bitrex_points')->where('id','=',$request['name'])->first();
- 
+
     //     $points = $request['nominal'] / 1000;
     //     $add_points['bitrex_points'] = $points_member->bitrex_points + $points;
     //     $data = [
@@ -44,7 +45,7 @@ class BitrexPointController extends Controller
     //         'description' => $request['description'],
     //         'info' => 1
     //     ];
-        
+
     //     HistoryBitrexPoints::create($data);
     //     Employeer::findOrFail($request['name'])->update($add_points);
     //     Alert::success('Success topup', 'Success');
@@ -68,17 +69,17 @@ class BitrexPointController extends Controller
             $topup->description = $request->description;
             $topup->info = 1;
             $topup->save();
-    
- 
+
+
             DB::commit();
-            
+
             Alert::success('Sukses Melakukan Topup', 'Sukses');
             return redirect()->route('bitrex-money.points');
- 
+
         }catch(\Exception $e){
             throw $e;
             DB::rollback();
-            
+
             Alert::error('Gagal Melakukan Topup', 'Gagal');
             // return \redirect()->back();
         }
@@ -86,7 +87,7 @@ class BitrexPointController extends Controller
 
     public function detail($id){
         if (request()->ajax()) {
-            $data = DB::table('history_bitrex_point')->select('id','nominal','points','description','created_at')->where('id_member','=',$id);
+            $data = DB::table('history_bitrex_point')->select('id','nominal','points','description','created_at')->where('id_member','=',$id)->where('status',1);
             return Datatables::of($data)
                     ->addIndexColumn()
                     ->editColumn('transaction_date', function($data){

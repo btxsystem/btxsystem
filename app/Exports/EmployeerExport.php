@@ -27,6 +27,7 @@ class EmployeerExport implements FromView
     }
 
 
+
     // public function collection()
     // {
     //     return Employeer::where('status', 1)

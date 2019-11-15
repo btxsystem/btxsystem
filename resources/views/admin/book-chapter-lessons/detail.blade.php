@@ -35,10 +35,12 @@ Lesson Overview
                     </div>
 
                     <div class="pull-right">
-                        <a style=" color: white; text-decoration: none; margin-right: 20px; !important" href="{{ route('book-chapter-lesson.edit', $data->id) }}"><i style="font-size:15px;" class="fa fa-pencil"></i>&nbsp; &nbsp;<strong>Edit Data</strong></a>
-                        <a style=" color: white; text-decoration: none !important">
-                            <i style="font-size:15px;" class="fa fa-power-off"></i>&nbsp; &nbsp;<strong>Delete</strong></a>
-                     
+                        @if(\Auth::guard('admin')->user()->hasPermission('Ebooks.list.book.lesson.edit'))
+                            <a style=" color: white; text-decoration: none; margin-right: 20px; !important" href="{{ route('book-chapter-lesson.edit', $data->id) }}"><i style="font-size:15px;" class="fa fa-pencil"></i>&nbsp; &nbsp;<strong>Edit Data</strong></a>
+                        @endif
+                        @if(\Auth::guard('admin')->user()->hasPermission('Ebooks.list.book.lesson.delete'))
+                            <a style=" color: white; text-decoration: none !important"><i style="font-size:15px;" class="fa fa-power-off"></i>&nbsp; &nbsp;<strong>Delete</strong></a>
+                        @endif
                      </div>
                 </div>
                   

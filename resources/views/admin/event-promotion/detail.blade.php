@@ -28,9 +28,10 @@
                     </div>
 
                     <div class="pull-right">
-        
-                        <a href="#" data-id="{{$data->id}}" class="edit-promotion" style=" color: white; text-decoration: none !important"><i style="font-size:15px;" class="fa fa-pencil edit-promotion"></i>&nbsp; &nbsp;<strong>Edit Promotion</strong></a>
-                     </div>
+                        @if(\Auth::guard('admin')->user()->hasPermission('Cms.event.edit'))
+                            <a href="#" data-id="{{$data->id}}" class="edit-promotion" style=" color: white; text-decoration: none !important"><i style="font-size:15px;" class="fa fa-pencil edit-promotion"></i>&nbsp; &nbsp;<strong>Edit Promotion</strong></a>
+                        @endif
+                    </div>
                 </div>
                   
                     <div class="col-md-12">
@@ -76,7 +77,9 @@
                     </div>
 
                     <div class="pull-right">
-                        <a style=" color: white; text-decoration: none !important" href="#addPromotionAttachmentModal" data-toggle="modal"><i style="font-size:15px;" class="fa fa-plus"></i>&nbsp; &nbsp;<strong>Add Image</strong></a>
+                        @if(\Auth::guard('admin')->user()->hasPermission('Cms.event.add'))
+                            <a style=" color: white; text-decoration: none !important" href="#addPromotionAttachmentModal" data-toggle="modal"><i style="font-size:15px;" class="fa fa-plus"></i>&nbsp; &nbsp;<strong>Add Image</strong></a>
+                        @endif
                     </div>
                 </div>
                 

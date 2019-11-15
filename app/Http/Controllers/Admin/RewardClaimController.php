@@ -15,7 +15,7 @@ class RewardClaimController extends Controller
     public function index()
     {
         if (request()->ajax()) {
-            $data = GotReward::with('reward','member')->orderBy('id','desc')->whereIn('status', [1, 2]);
+            $data = GotReward::with('reward','member')->orderBy('id','desc')->whereIn('status', [1, 2])->get();
 
             return Datatables::of($data)
                     ->addColumn('id_member', function($row) {
@@ -78,20 +78,19 @@ class RewardClaimController extends Controller
 
    public function htmlAction($row)
    {
+       $view = \Auth::guard('admin')->user()->hasPermission('Claim_rewards.detail') ? '<a data-id="'.$row->id.'"  class="btn btn-success fa fa-eye show-reward" title="Show Reward"></a>' : '';
+       $approve = \Auth::guard('admin')->user()->hasPermission('Claim_rewards.confirm') ? '<a data-id="'.$row->id.' "class="btn btn-default fa fa-check approve-reward" style="background-color: #b85ebd; color: #ffffff;" title="Approve Reward"></a>' : '';
        switch($row->status) {
            case 0; 
-           return '
-                   <a data-id="'.$row->id.'"  class="btn btn-success fa fa-eye show-reward" title="Show Reward"></a>';
+           return $view;
            break;
 
            case 1;
-           return 
-                  '<a data-id="'.$row->id.'"  class="btn btn-success fa fa-eye show-reward" title="Show Reward"></a>
-                   <a data-id="'.$row->id.' "class="btn btn-default fa fa-check approve-reward" style="background-color: #b85ebd; color: #ffffff;" title="Approve Reward"></a>';
+           return $view.' '.$approve ;
            break;
 
            case 2;
-           return '<a data-id="'.$row->id.'"  class="btn btn-success fa fa-eye show-reward" title="Show Reward"></a>';
+           return $view;
 
        }
       

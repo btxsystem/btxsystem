@@ -24,25 +24,31 @@ class BCAController extends Controller
         $amount = "100000.00";
         $remark1 = "Test Transfer";
         $remark2 = "Testing transfer";
+        $transactionId = "0001".rand(1000,9999);
+        $referenceId = '20191018/WD/'.date("Ymd/").$transactionId;
 
         $bca = new BCA;
-        $response = $bca->transfer($date, $accountnumber, $amount, $remark1, $remark2);
+        $response = $bca->transfer($date, $accountnumber, $amount, $remark1, $remark2, $transactionId, $referenceId);
+        // if($response)
 
-        return $response;
+        $nganu = json_encode($response);
+        return $nganu;
     }
 
     public function domesticTransfer()
     {
-        $date = "2018-05-03";
-        $accountnumber = "0201245501";
+        $date = "2019-10-21";
+        $accountnumber = "0611105893";
         $accountname = "Tester";
-        $bankcode = "BRONINJA";
-        $amount = "100000.00";
+        $bankcode = "BNINIDJA";
+        $amount = "100000";
         $remark1 = "Test Transfer";
         $remark2 = "Testing transfer";
+        $transactionId = "0001".rand(1000,9999);
+        $referenceId = 'BITREXGO/WD/'.$transactionId;
 
         $bca = new BCA;
-        $response = $bca->domesticTransfer($date, $accountnumber, $accountname, $bankcode, $amount, $remark1, $remark2);
+        $response = $bca->domesticTransfer($date, $accountnumber, $accountname, $bankcode, $amount, $remark1, $remark2, $transactionId, $referenceId);
 
         return $response;
     }
@@ -53,5 +59,5 @@ class BCAController extends Controller
         $response = $bca->rateforex();
         return $response;
     }
-    
+
 }

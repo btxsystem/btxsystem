@@ -17,39 +17,35 @@ List Of Ebooks
     </ol>
 </section>
 <section class="content">
-                <div class="row">
-                    <div class="col-md-12">
-                        <!-- BEGIN SAMPLE TABLE PORTLET-->
-                        <!-- <a class="btn btn-large btn-primary" href="{{ route('ebook.create') }}"></i>Add</a> -->
-                        <div class="portlet box primary" style="margin-top: 15px;">
-                            <div class="portlet-title">
-                                <div class="caption">
-                                    <i class="livicon" data-name="notebook" data-size="16" data-loop="true" data-c="#fff" data-hc="white"></i>
-                                    Ebook  Table
-                                </div>
-
-                                <div class="pull-right">
-                                    <a style=" color: white; text-decoration: none; margin-right: 20px; !important" href="{{ route('ebook.create') }}"><i style="font-size:15px;" class="fa fa-plus"></i>&nbsp; &nbsp;<strong>Add New Ebook</strong></a>
-                                </div>
-                            </div>
-                            
-                            <div class="portlet-body flip-scroll">
-                                <table class="table data-table table-bordered table-striped table-condensed flip-content" >
-                                    <thead class="flip-content">
-                                        <tr>
-                                            <th>No</th>
-                                            <th class="text-center" width="60%">Title</th>
-                                            <th width="30%">Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
+    <div class="row">
+        <div class="col-md-12">
+            <!-- BEGIN SAMPLE TABLE PORTLET-->
+            <!-- <a class="btn btn-large btn-primary" href="{{ route('ebook.create') }}"></i>Add</a> -->
+            <div class="portlet box primary" style="margin-top: 15px;">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="livicon" data-name="notebook" data-size="16" data-loop="true" data-c="#fff" data-hc="white"></i>
+                        Ebook  Table
                     </div>
                 </div>
-            </section>
+                
+                <div class="portlet-body flip-scroll">
+                    <table class="table data-table table-bordered table-striped table-condensed flip-content" >
+                        <thead class="flip-content">
+                            <tr>
+                                <th>No</th>
+                                <th class="text-center" width="60%">Title</th>
+                                <th width="30%">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
 @stop
 

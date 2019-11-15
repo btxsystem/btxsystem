@@ -14,6 +14,10 @@ use DataTables;
 use Alert;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use App\Exports\EmployeerExport;
+use App\Exports\MembersExport;
+use Maatwebsite\Excel\Facades\Excel;
+use Rap2hpoutre\FastExcel\FastExcel;
 
 
 class MemberController extends Controller
@@ -438,16 +442,18 @@ class MemberController extends Controller
     public function htmlAction($row)
     {
         switch($row->status) {
-            case 1; 
-            return '<a href="'.route('members.show',$row->id).'" class="btn btn-primary fa fa-eye" title="Detail"></a>
-                    <a href="'.route('members.edit-data',$row->id).'" class="btn btn-warning fa fa-pencil" title="Edit"></a>
-                    <a href="active/'.$row->id.'/nonactive" class="btn btn-danger fa fa-power-off" title="Nonactive"></a>';
+            case 1:
+                $show = \Auth::guard('admin')->user()->hasPermission('Members.view') ? '<a href="'.route('members.show',$row->id).'" class="btn btn-primary fa fa-eye" title="Detail"></a>' : '';
+                $edit = \Auth::guard('admin')->user()->hasPermission('Members.edit') ? '<a href="'.route('members.edit-data',$row->id).'" class="btn btn-warning fa fa-pencil" title="Edit"></a>' : '';
+                $delete = \Auth::guard('admin')->user()->hasPermission('Members.nonactive') ? '<a href="active/'.$row->id.'/nonactive" class="btn btn-danger fa fa-power-off" title="Nonactive"></a>' : '';
+                return $show.' '.$edit.' '.$delete;
             break;
 
-            case 0;
-            return '<a href="'.route('members.show',$row->id).'" class="btn btn-primary fa fa-eye" title="Detail"></a>
-                    <a href="'.route('members.edit-data',$row->id).'" class="btn btn-warning fa fa-pencil" title="Edit"></a>
-                    <a href="nonactive/'.$row->id.'/active" class="btn btn-success fa fa-check-square" title="Active"></a>';
+            case 0:
+                $show = \Auth::guard('admin')->user()->hasPermission('Members.view') ? '<a href="'.route('members.show',$row->id).'" class="btn btn-primary fa fa-eye" title="Detail"></a>' : '';
+                $edit = \Auth::guard('admin')->user()->hasPermission('Members.edit') ? '<a href="'.route('members.edit-data',$row->id).'" class="btn btn-warning fa fa-pencil" title="Edit"></a>' : '';
+                $delete = \Auth::guard('admin')->user()->hasPermission('Members.nonactive') ? '<a href="nonactive/'.$row->id.'/active" class="btn btn-success fa fa-check-square" title="Active"></a>' : '';
+                return $show.' '.$edit.' '.$delete;
             break;
 
         }
@@ -483,6 +489,16 @@ class MemberController extends Controller
             return 'Pending';
             break;
         }
+    }
+
+    public function export()
+    {
+        // return Excel::download(new MembersExport, 'members.xlsx');
+        // return (new MembersExport)->download('members.xlsx');
+        $datas = DB::table("employeers")
+          ->select("employeers.*",DB::raw("(SELECT employeers.`username` FROM employeers WHERE employeers.`id` IN (SELECT employeers.`parent_id` FROM employeers)) AS 'parent',(SELECT employeers.`username` FROM employeers WHERE employeers.`id` IN (SELECT employeers.`sponsor_id` FROM employeers)) AS 'sponsor'"))->get();
+        
+        return (new FastExcel($datas))->download('file.xlsx');
     }
 
 }
