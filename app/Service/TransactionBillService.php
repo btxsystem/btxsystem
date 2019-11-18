@@ -137,8 +137,8 @@ class TransactionBillService
       $saveEbook = $this->createEbookMember(
         $productDetail->ebook_id,
         $user->id,
-        $productDetail->renewal,
-        $transactionBillRepo->customer_number
+        $transactionBillRepo->customer_number,
+        $productDetail->renewal
       );
 
       $updateTransaction = $transactionBillRepo->update([
@@ -227,10 +227,12 @@ class TransactionBillService
 
       $affix = (int) ltrim($transactionBillRepo->customer_number, '1121') + (int) date('yhmdHis');
 
+      $totalPoints = (int) $productDetail->points;
+
       $saveTopupBitrexPoint = HistoryBitrexPoints::insert([
         'id_member' => $transactionBillRepo->user_id,
         'nominal' => $productDetail->nominal,
-        'points' => $productDetail->points,
+        'points' => $totalPoints,
         'description' => $productDetail->description,
         'info' => 1,
         'transaction_ref' => "BITREX".$affix,
@@ -239,7 +241,7 @@ class TransactionBillService
         'updated_at' => date('Y-m-d H:i:s'),
       ]);
 
-      $user = Employeer::find($transactionBillRepo->user_id)->increment('bitrex_points', (int) $productDetail->points);
+      $user = Employeer::find($transactionBillRepo->user_id)->increment('bitrex_points', (int) $totalPoints);
 
       $updateTransaction = $transactionBillRepo->update([
         'payment_flag_status' => '00',
@@ -292,7 +294,6 @@ class TransactionBillService
         $this->createEbookMember(
           $ebook,
           $registerMember,
-          false,
           $transactionBillRepo->customer_number
         );
       }
