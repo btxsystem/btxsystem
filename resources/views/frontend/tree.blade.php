@@ -672,9 +672,6 @@ em{
 	}
 
 	function openAutoPlacement() {
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
 		$('#action-member').attr('action', '{{route("register-autoplacement")}}')
 		$.ajax({
 			type: 'GET',
@@ -691,8 +688,6 @@ em{
 				console.log("Error");
 			}
 		});
-=======
->>>>>>> 371d6b0f3ab3e087f232a5086cdffb142e169595
 		$('#payment_method').html(`
 							<input name="payment_method" type="radio" value="point" id="bp" class="with-gap radio-col-red" checked />
               				<label for="payment_method">Bitrex Points</label>
@@ -700,10 +695,6 @@ em{
               				<label for="va" aria-hidden="true">Virtual Account BCA</label>`);
 		$('#action-member').attr('action', '{{route("register-autoplacement")}}');
 		$('#register').modal('show');
-<<<<<<< HEAD
-=======
->>>>>>> dfe78b8b445fec57845ddd1443f736041b9aae70
->>>>>>> 371d6b0f3ab3e087f232a5086cdffb142e169595
 	}
 
 	function openTree() {
