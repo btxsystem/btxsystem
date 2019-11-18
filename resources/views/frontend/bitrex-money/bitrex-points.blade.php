@@ -34,8 +34,8 @@
                     <label for="transfer">Transfer</label>
                     <input name="method" type="radio" value="ipay" id="ipay" class="with-gap radio-col-red" />
                     <label for="ipay">VA & OVO</label>
-                    {{--!<input name="method" type="radio" value="bca" id="bca" class="with-gap radio-col-red" />
-                    <label for="bca">BCA VA</label>--}}
+                    <input name="method" type="radio" value="bca" id="bca" class="with-gap radio-col-red" />
+                    <label for="bca">BCA VA</label>
                   </div>
                 </div>
                 <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12" id="transfer-form">
@@ -70,6 +70,8 @@
                         </div>
                     <button type="button" class="btn btn-raised bg-grey waves-effect" style="cursor:pointer" id="copy">Copy</button>
                 </center>
+                <br>
+                <center><p style="font-size:14px" id="nominal_plus_fee"></p></center>
                 <br>
                 <h4>Bagaimana cara melakukan Pembayaran BCA Virtual Account ?</h4>
                 <h5>1. ATM BCA</h5>
@@ -361,6 +363,7 @@
                     $('#des_noreq').text('Masukkan '+data.customer_number+' sebagai rekening tujuan');
                     $('#des_noreq2').text('Masukkan '+data.customer_number+' sebagai rekening tujuan');
                     $('#des_noreq3').text('Masukkan '+data.customer_number+' sebagai rekening tujuan');
+                    $('#nominal_plus_fee').text('Nominal Transfer '+addCommas(data.total_amount)+' (include fee)')
                     $('#no-virtual').modal('show');
                     $('#topup').modal('hide');
                 },

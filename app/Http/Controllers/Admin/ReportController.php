@@ -116,4 +116,33 @@ class ReportController extends Controller
 
     //     return $data;
     // }
+
+    public function birthdate()
+    {
+        if (request()->ajax()) {
+           $data = DB::select(DB::raw("SELECT * FROM employeers WHERE DATE_FORMAT(birthdate,'%m %d') BETWEEN DATE_FORMAT(CURDATE(),'%m %d') AND DATE_FORMAT((INTERVAL 2 DAY + CURDATE()),'%m %d') ORDER BY DATE_FORMAT(birthdate,'%m %d')"));
+
+            foreach ($data as $key) {
+                return Datatables::of($data)
+                                ->addIndexColumn()
+                                ->addColumn('id_member', function($row){
+                                    return $row->id_member;
+                                })
+                                ->addColumn('username', function($row){
+                                    return $row->username;
+                                })
+                                ->addColumn('name', function($row){
+                                    return ucwords(strtolower($row->first_name.' '.$row->last_name));
+                                })
+                                ->addColumn('email', function($row){
+                                    return $row->email;
+                                })
+                                ->addColumn('birthdate', function($row){
+                                    return date('d-m-Y',strtotime($row->birthdate));
+                                })
+                                ->make(true);   
+            }
+        }
+        return view('admin.report.birthdate');
+    }
 }

@@ -11,7 +11,7 @@
 	background-color: transparent!important;
 	background: transparent!important;
 }
-div#flag { 
+div#flag {
 	background-color: #333;
 	padding: 6%;
 	font-size: 11px !important;
@@ -40,10 +40,10 @@ div#flag {
 	box-shadow: 0 2px 3px rgba(0, 0, 0, 0.3);
 }
 h2.plan-title {
-	text-align:center !important;		
+	text-align:center !important;
 	margin-top: 5px !important;
 }
-div#flag { 
+div#flag {
 	background-color: #333;
 	padding: 10px;
 	font-size: 16px !important;
@@ -95,12 +95,12 @@ div#flag {
 .smalltext{
 	padding-top: 5px;
 	font-size: 12px;
-}	
+}
 @media only screen and (min-width: 992px) {
 	h2.plan-title {
-		text-align:left !important;	
+		text-align:left !important;
 	}
-	div#flag { 
+	div#flag {
 		background-color: #333;
 		padding: 10px;
 		font-size: 16px !important;
@@ -152,7 +152,7 @@ div#flag {
 	.smalltext{
 		padding-top: 5px;
 		font-size: 15px;
-	}		
+	}
 }
 </style>
 @stop
@@ -176,7 +176,9 @@ div#flag {
 								<input style="color:green; font-size:25px; font-weight:bold; text-align:center;" type="text" class="form-control" id="va" name="va" value="" readonly>
 							</div>
 						<br>
-					</center>
+                    </center>
+                    <br>
+                    <center><p style="font-size:14px" id="ammount_bca"></p></center>
 					<br>
 					<h4>Bagaimana cara melakukan Pembayaran BCA Virtual Account ?</h4>
 					<h5>1. ATM BCA</h5>
@@ -274,8 +276,8 @@ div#flag {
 					@endif
 					</div>
 				</div>
-			</div>			
-		</div>		
+			</div>
+		</div>
 	</div>
 	<div class="pt-5 pb-5" style="background-color:#ffb320;">
 		<div class="container pt-5">
@@ -371,13 +373,13 @@ div#flag {
 									</form>
 								@else
 									<div>
-										@if($ebook->id == 1 && $expired_basic != null || $ebook->id == 2 && $expired_advanced!= null)								
+										@if($ebook->id == 1 && $expired_basic != null || $ebook->id == 2 && $expired_advanced!= null)
 										<form action="{{route('re.payment')}}" method="post">
 											{{csrf_field()}}
 											<input type="hidden" name="ebook" value="{{$ebook->id}}">
                       <input type="hidden" name="repeat" value="true">
 											<!-- <button onclick="changeValueRepeat('{{json_encode($ebook)}}')" data-toggle="modal" data-target="#repeatModal" type="button" class="btn btn-identity-red text-white btn-sm mt-3 px-5">REPEAT ORDER</button> --->
-											
+
 											@if($ebook->id == 1)
 												<button onclick="changeValueRepeat(JSON.stringify({'price': '{{$renewal_basic->price}}', 'price_markup': '{{$renewal_basic->price_markup}}', 'id': '{{$renewal_basic->id}}'}))" data-toggle="modal" data-target="#repeatModal" type="button" class="btn btn-identity-red text-white btn-sm mt-3 px-5">REPEAT ORDER</button>
 											@elseif($ebook->id == 2)
@@ -407,7 +409,7 @@ div#flag {
 				</div>
 				@endforeach
 			</div>
-		</div>	
+		</div>
 	</div>
 	<div class="bg-white p-4">
 		<div class="container mt-5 mb-4">
@@ -458,10 +460,10 @@ div#flag {
 									<input onclick="selectPayment('ipay')" class="form-check-input ipay" type="radio" name="payment_method" id="payment_method" value="ipay">
 									<label class="form-check-label" for="inlineRadio1">VA & OVO</label>
 								</div>
-								{{--<div class="form-check form-check-inline">
+								<div class="form-check form-check-inline">
 									<input onclick="selectPayment('va')" class="form-check-input va-submit" type="radio" name="payment_method" id="payment_method" value="va">
 									<label class="form-check-label" for="inlineRadio1">BCA VA</label>
-								</div>--}}
+								</div>
 							</div>
 							<h4>Total yang dibayar : IDR </span><b><span id="total_price"></h4></b>
 						</div>
@@ -476,7 +478,7 @@ div#flag {
 		    </div>
 		  </div>
 		</div>
-	<!-- End Modal -->	
+	<!-- End Modal -->
 	<div class="modal fade" id="modal-login" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		  <div class="modal-dialog" role="document">
 		    <div class="modal-content text-white">
@@ -519,7 +521,7 @@ div#flag {
 		    </div>
 		  </div>
 		</div>
-	<!-- End Modal -->	
+	<!-- End Modal -->
 @stop
 @section('footer_scripts')
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
@@ -584,6 +586,7 @@ $('#buy-va').click(function(){
 			$('#des_noreq').text('Masukkan '+data.customer_number+' sebagai rekening tujuan');
 			$('#des_noreq2').text('Masukkan '+data.customer_number+' sebagai rekening tujuan');
 			$('#des_noreq3').text('Masukkan '+data.customer_number+' sebagai rekening tujuan');
+            $('#ammount_bca').text('Nominal transaksi : '+data.total_amount+' (Include fee)');
 			$('#no-virtual').modal('show');
 			$('#repeatModal').modal('hide');
 		},

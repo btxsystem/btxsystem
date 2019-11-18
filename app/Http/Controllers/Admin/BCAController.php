@@ -32,7 +32,7 @@ class BCAController extends Controller
         // if($response)
 
         $nganu = json_encode($response);
-        return $nganu;        
+        return $nganu;
     }
 
     public function domesticTransfer()
@@ -59,5 +59,5 @@ class BCAController extends Controller
         $response = $bca->rateforex();
         return $response;
     }
-    
+
 }
