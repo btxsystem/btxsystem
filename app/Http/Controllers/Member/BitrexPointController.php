@@ -29,17 +29,17 @@ class BitrexPointController extends Controller
             $no_invoice = date_format($date,"ymdh").rand(100,999);
             $cek = DB::table('transaction_bills')->where('customer_number',$no_invoice)->select('id')->get();
         } while (count($cek)>0);
-       
+
         $data = [
             'user_id' => Auth::user()->id,
             'product_type' => 'topup',
             'user_type' => 'member',
-            'total_amount' => $request->nominal,
+            'total_amount' => $request->nominal+2750,
             'customer_number' => '11210'.$no_invoice
         ];
 
         $va = new Va;
-        $va->topup(Auth::user()->id, $request->nominal, $no_invoice);
+        $va->topup(Auth::user()->id, $request->nominal+2750, $no_invoice);
 
         return response()->json($data, 200);
     }
@@ -47,7 +47,7 @@ class BitrexPointController extends Controller
     public function getHistoryPoints(){
         $data = Auth::user();
         $history = HistoryBitrexPoints::where('id_member',$data->id)->orderBy('created_at','desc')->where('status',1)->paginate(4);
-        return response()->json(['points'=>$history]); 
+        return response()->json(['points'=>$history]);
     }
 
     public function getBitrexPoints(){
