@@ -23,7 +23,7 @@ class ListVaController extends Controller
     {
         if (request()->ajax()) {
             $data = DB::table('transaction_bills')->join('employeers','employeers.id','=','transaction_bills.user_id')
-                                                  ->select('employeers.username','transaction_bills.created_at','transaction_bills.inquiry_status','transaction_bills.id','transaction_bills.product_type','transaction_bills.customer_number','transaction_bills.total_amount')->get();
+                                                  ->select('employeers.username','transaction_bills.created_at','transaction_bills.payment_flag_status','transaction_bills.id','transaction_bills.product_type','transaction_bills.customer_number','transaction_bills.total_amount')->get();
             return Datatables::of($data)
                     ->addIndexColumn()
                     ->editColumn('username', function($row) {
@@ -43,13 +43,12 @@ class ListVaController extends Controller
                         $day = isset($row->created_at) ? $row->created_at : $row['created_at'];
                         $date1 = str_replace('-', '/', $day);
                         $tomorrow = date('Y-m-d H:i:s',strtotime($date1 . "+1 days"));
-                        return $row->inquiry_status;
-                        if(isset($row->inquiry_status)){
-                            if ($row->inquiry_status == 00) {
+                        if(isset($row->payment_flag_status)){
+                            if ($row->payment_flag_status == 00) {
                                 $status = 'Success';
-                            }elseif ($row->inquiry_status == 01) {
+                            }elseif ($row->payment_flag_status == 01) {
                                 $status = 'Failed';
-                            }elseif ($row->inquiry_status == 02) {
+                            }elseif ($row->payment_flag_status == 02) {
                                 $status = 'Timeout';
                             }
                         }else{
