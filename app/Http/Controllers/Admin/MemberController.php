@@ -492,26 +492,6 @@ class MemberController extends Controller
 
     public function export()
     {
-
-        // $datas = array();
-
-        // Employeer::chunk(100, function($members) {
-        //     foreach($members as $member)
-        //     {
-        //         echo $member->id_member . '</br>';
-        //         // $member->id_member;
-        //         // $datas[] = $member;
-        //     }
-        // });
-
-        // return $datas;
-        // $begin = memory_get_usage();
-        // DB::table('employeers')->chunkById(100, function($chunk) {
-        //     foreach ($chunk as $data) {
-        //         echo 'id_member :'. $data->id_member .'</br>';
-        //     }
-        //   });
-
         // echo 'Total memory usage : ' . (memory_get_usage() - $begin);
         return Excel::download(new MembersExport, now() .' ' .'members.xlsx');
     }
