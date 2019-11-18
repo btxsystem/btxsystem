@@ -452,10 +452,10 @@ div#flag {
 							<input type="hidden" id="repeatPaymentMethod" name="payment_method">
 							<input type="hidden" name="repeat" value="true">
 							<div class="form-group">
-								<div class="form-check form-check-inline">
+								<!-- <div class="form-check form-check-inline">
 									<input onclick="selectPayment('transfer')" class="form-check-input transfer" type="radio" name="payment_method" id="payment_method" value="transfer" checked>
 									<label class="form-check-label" for="inlineRadio1">Transfer</label>
-								</div>
+								</div> -->
 								<div class="form-check form-check-inline">
 									<input onclick="selectPayment('ipay')" class="form-check-input ipay" type="radio" name="payment_method" id="payment_method" value="ipay">
 									<label class="form-check-label" for="inlineRadio1">VA & OVO</label>
