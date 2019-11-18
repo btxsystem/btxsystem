@@ -205,6 +205,7 @@ Route::group(['middleware' => 'admin'], function () {
         Route::get('transaction-member', ['as' => 'transaction-member', 'uses' => 'Admin\ReportController@transactionMember']);
         Route::get('membership', ['as' => 'membership', 'uses' => 'Admin\ReportController@membership']);
         Route::get('export', ['as' => 'export', 'uses' => 'Admin\ReportController@export']);
+        Route::get('birthdate', ['as' => 'birthdate', 'uses' => 'Admin\ReportController@birthdate']);
     });
 
     Route::group(['prefix'=>'bonus','as'=>'bonus.'], function(){

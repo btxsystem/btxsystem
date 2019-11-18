@@ -36,8 +36,6 @@ Transfer Confirmation
                         <thead class="flip-content">
                             <tr>
                                 <th class="text-center" width="5%">No</th>
-                                <!-- <th class="text-center" width="10%">Member</th>
-                                <th class="text-center" width="10%">NonMember</th> -->
                                 <th class="text-center" width="10%">Name</th>
                                 <th class="text-center" width="10%">Type</th>
                                 <th class="text-center" width="10%">Status</th>
