@@ -136,7 +136,7 @@ class TransactionPaymentService
                     'bank_name' => $parameter[1]->bank_name,
                     'birthdate' => $parameter[1]->birthdate,
                     'gender' => $parameter[1]->gender,
-                    'referal' => Auth::user()->username,
+                    'referral' => Auth::user()->username,
                 ],
                 'ebooks' => $parameter[1]->ebooks,
                 'shipping_method' => $parameter[1]->shipping_method,

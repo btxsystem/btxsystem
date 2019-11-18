@@ -42,7 +42,7 @@ Route::group(['middleware' => 'admin'], function () {
             Route::put('{id}', ['as' => 'update', 'uses' => 'Admin\UsersController@update']);
             Route::delete('{id}', ['as' => 'delete', 'uses' => 'Admin\UsersController@destroy']);
         });
-        
+
         Route::group(['prefix' => 'roles', 'as' => 'roles.'], function () {
             Route::get('', ['as' => 'index', 'uses' => 'Admin\RolesController@index']);
             Route::get('create', ['as' => 'create', 'uses' => 'Admin\RolesController@create']);
@@ -93,6 +93,9 @@ Route::group(['middleware' => 'admin'], function () {
     //member daily
     Route::get('member-daily','Admin\UsersController@memberDaily')->name('member-daily');
 
+    //list va
+    Route::get('list-va','Admin\ListVaController@index')->name('list-va');
+
     //dashboard-value
     Route::get('dashboard-values','Admin\DashboardValuesController@data')->name('dashboard-values');
 
@@ -107,7 +110,7 @@ Route::group(['middleware' => 'admin'], function () {
     Route::get('book/{id}/create/lessons','Admin\BookChapterLessonController@create')->name('book.create.lesson');
     Route::resource('book-chapter-lesson', 'Admin\BookChapterLessonController');
     Route::get('chapter-lesson/delete/{id}', 'Admin\BookChapterLessonController@destroy')->name('deleteChapterLesson');
-    
+
     // Book Image
     Route::post('update-image', 'Admin\BookImageController@updateImage')->name('updateDataImage');
     Route::resource('book-image', 'Admin\BookImageController');
@@ -272,7 +275,7 @@ Route::group(['middleware' => 'admin'], function () {
             Route::get('/', ['as' => 'show', 'uses' => 'Admin\OurHeadquarterController@show']);
             Route::get('/edit/{id}', ['as' => 'edit', 'uses' => 'Admin\OurHeadquarterController@edit']);
             Route::post('update-headquarters', ['as' => 'update', 'uses' => 'Admin\OurHeadquarterController@update']);
-        
+
             // Images
             Route::get('/images', ['as' => 'images', 'uses' => 'Admin\OurHeadquarterController@image']);
             Route::post('/images', ['as' => 'images.upload', 'uses' => 'Admin\OurHeadquarterController@uploadAttachment']);
@@ -282,14 +285,14 @@ Route::group(['middleware' => 'admin'], function () {
 
             Route::get('images/published/{id}', ['as' => 'published', 'uses' => 'Admin\OurHeadquarterController@published']);
             Route::get('images/unpublished/{id}', ['as' => 'unpublished', 'uses' => 'Admin\OurHeadquarterController@unpublished']);
-    
+
         });
         // Event Promotion
         Route::group(['prefix'=>'event-promotions','as'=>'event-promotions.'], function(){
             Route::get('/', ['as' => 'show', 'uses' => 'Admin\EventPromotionController@show']);
             Route::get('/edit/{id}', ['as' => 'edit', 'uses' => 'Admin\EventPromotionController@edit']);
             Route::post('update-promotions', ['as' => 'update', 'uses' => 'Admin\EventPromotionController@update']);
-            
+
             // Images
             Route::get('/images', ['as' => 'images', 'uses' => 'Admin\EventPromotionController@image']);
             Route::post('/images', ['as' => 'images.upload', 'uses' => 'Admin\EventPromotionController@uploadAttachment']);
@@ -299,7 +302,7 @@ Route::group(['middleware' => 'admin'], function () {
 
             Route::get('images/published/{id}', ['as' => 'published', 'uses' => 'Admin\EventPromotionController@published']);
             Route::get('images/unpublished/{id}', ['as' => 'unpublished', 'uses' => 'Admin\EventPromotionController@unpublished']);
-    
+
         });
 
 
@@ -325,7 +328,7 @@ Route::group(['middleware' => 'admin'], function () {
         Route::post('old-bonus', ['as' => 'old-bonus', 'uses' => 'ImportExcelController@oldBonus']);
         Route::post('account-name', ['as' => 'account-name', 'uses' => 'ImportExcelController@account_name']);
     });*/
-    
-    
+
+
     Route::get('generate-mail', ['as' => 'generate-mail', 'uses' => 'Member\SendEmailOldMember@sendMail']);
 });
