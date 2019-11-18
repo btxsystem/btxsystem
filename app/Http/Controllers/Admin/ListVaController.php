@@ -43,12 +43,13 @@ class ListVaController extends Controller
                         $day = isset($row->created_at) ? $row->created_at : $row['created_at'];
                         $date1 = str_replace('-', '/', $day);
                         $tomorrow = date('Y-m-d H:i:s',strtotime($date1 . "+1 days"));
-                        if(isset($row['inquiry_status'])){
-                            if ($row['inquiry_status'] == 00) {
+                        return $row->inquiry_status;
+                        if(isset($row->inquiry_status)){
+                            if ($row->inquiry_status == 00) {
                                 $status = 'Success';
-                            }elseif ($row['inquiry_status'] == 01) {
+                            }elseif ($row->inquiry_status == 01) {
                                 $status = 'Failed';
-                            }elseif ($row['inquiry_status'] == 02) {
+                            }elseif ($row->inquiry_status == 02) {
                                 $status = 'Timeout';
                             }
                         }else{
