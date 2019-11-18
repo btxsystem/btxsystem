@@ -520,45 +520,111 @@
 <script src="{{asset('assets2/js/pages/forms/basic-form-elements.js')}}"></script>
 <script src="{{asset('assets2/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js')}}"></script>
 <script>
+
   $("#product").click(function() {
     $('html, body').animate({
         scrollTop: $("#myProduct").offset().top - 100
     }, 1000);
   });
+
   $("#about").click(function() {
     $('html, body').animate({
         scrollTop: $("#myAbout").offset().top - 180
     }, 1000);
   });
+
   $("#event").click(function() {
     $('html, body').animate({
         scrollTop: $("#myEvent").offset().top - 130
     }, 1000);
   });
+
+  let isset_referal = false;
+  let available_username = false;
+  let available_email = false;
+  let check_email = false;
+
+  let validasiForm = () => {
+    if(
+      $('#referal').val() != '' &&
+      $('#firstName').val() != '' &&
+      $('#username').val() != '' &&
+      $('#passport').val() != '' &&
+      $('#phone_number').val() != '' &&
+      $('#account_name').val() != '' &&
+      $('#account_nnumber').val() != '' &&
+      $('#birthdate').val() != '' &&
+      ($('#basic').val() != '' || $('#advance').val() != '') &&
+      ($('#pickup').val() != '' || $('#shipping').val() != '') &&
+      isset_referal == true && available_username == true &&
+      check_email == true && available_email == true &&
+      $('#term_one').val( )== '' && $('#term_two').val() == ''
+    ){
+      $(".btn-join").attr("disabled", false);
+    }else{
+      $(".btn-join").attr("disabled", true);
+    }
+  }
+
+  $('#phone_number').on('input', function() {
+		let str = this.value;
+		this.value = (str.match(/[0-9]/g)) ? str.match(/[0-9]/g).join('') : '';
+		validasiForm();
+	})
+
+  $('#email').keyup(function(){
+		let val_email = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.value);
+		if (val_email) {
+			check_email = true;
+			$('#email_danger').empty();
+		}else{
+			check_email = false;	
+			$('#email_danger').text('Email Invalid');	
+		}
+		$.ajax({
+			type: 'GET',
+			url: '/email/'+this.value,
+			success: function (data) {
+				if (data.email) {
+					$('#email_danger').text('email already exist');
+					available_email = false;
+				}else{
+					$('#email_danger').empty();
+					available_email = true;
+				}	
+			},
+			error: function() {
+				console.log("Error");
+			}
+		});
+		validasiForm();
+	});
+
   $("#referal").keyup(function(){
     $.ajax({
 			type: 'GET',
 			url: '/user/'+this.value,
 			success: function (data) {
-        data.referal ? $(".alert-referal").html("<span style=color:green>Referal tersedia</span>") : $(".alert-referal").html("<span style=color:red>Referal tidak tersedia</span>");
-        data.referal ? $(".btn-join").attr("disabled", false) : $(".btn-join").attr("disabled", true);
+        data.referal ? $(".alert-referal").html("<span style=color:green>Sponsor tersedia</span>") : $(".alert-referal").html("<span style=color:red>Sponsor tidak tersedia</span>");
       },
 			error: function() { 
 				console.log("Error");
 			}
 		});
+    validasiForm();
   })
+
   $("#username").keyup(function(){
     $.ajax({
 			type: 'GET',
 			url: '/user/'+this.value,
 			success: function (data) {
         data.username ? $(".alert-username").html("<span style=color:green>Username dapat digunakan</span>") : $(".alert-username").html("<span style=color:red>Username tidak dapat digunakan</span>");
-        data.username ? $(".btn-join").attr("disabled", false) : $(".btn-join").attr("disabled", true);
       },
 			error: function() { 
 				console.log("Error");
 			}
 		});
+    validasiForm();
   })
 </script>

@@ -245,6 +245,16 @@
                     </li>
                 @endif
             </ul>
+            <ul class="sub-menu">
+                <!-- @if(\Auth::guard('admin')->user()->hasPermission('Report.transaction')) -->
+                    <li class="#">
+                        <a href="{{ route('report.birthdate') }}">
+                            <i class="fa fa-angle-double-right"></i>
+                            Birthdate
+                        </a>
+                    </li>
+                <!-- @endif -->
+            </ul>
         </li>
     @endif
     
