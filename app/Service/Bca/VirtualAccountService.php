@@ -222,7 +222,7 @@ class VirtualAccountService
     $subCompany = $request->input('SubCompany');
     $transactionDate = $request->input('TransactionDate');
     $detailBills = $request->input('DetailBills') ?? [];
-    $flagAdvice = $request->input('FlagAdvice');
+    $FlagAdvice = $request->input('FlagAdvice');
     $reference = $request->input('Reference');
     $additionaldata = $request->input('Additionaldata');
 
@@ -238,7 +238,7 @@ class VirtualAccountService
       ->setSubCompany($subCompany)
       ->setTransactionDate($transactionDate ?? "")
       ->setAdditionaldata("")
-      ->setFlagAdvice($flagAdvice)
+      ->setFlagAdvice($FlagAdvice)
       ->setReference($reference);
       // ->setDetailBills(function() use ($detailBills) {
       //   $detailBillLists = [];
