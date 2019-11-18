@@ -253,10 +253,10 @@
 					  </div>
 						@endif
 						<div class="form-group">
-							<div class="form-check form-check-inline">
+							<!-- <div class="form-check form-check-inline">
 								<input class="form-check-input" type="radio" name="payment_method" id="transfer" value="transfer" checked>
 								<label class="form-check-label" for="inlineRadio1">Transfer</label>
-							</div>
+							</div> -->
 							<div class="form-check form-check-inline">
 								<input class="form-check-input" type="radio" name="payment_method" id="ipay" value="ipay">
 								<label class="form-check-label" for="inlineRadio1">VA & OVO</label>
