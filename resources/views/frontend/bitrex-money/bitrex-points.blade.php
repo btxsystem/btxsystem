@@ -72,7 +72,6 @@
                 </center>
                 <br>
                 <center><p style="font-size:14px" id="nominal_plus_fee"></p></center>
-                <br>
                 <center><p style="font-size:14px" id="time-expired"></p></center>
                 <br>
                 <h4>Bagaimana cara melakukan Pembayaran BCA Virtual Account ?</h4>
@@ -294,6 +293,7 @@
 </style>
 
 @section('footer_scripts')
+<script src="{{asset('assets2/js/moment.js')}}"></script>
 <script type="text/javascript">
     let is_bca_method = false;
 
