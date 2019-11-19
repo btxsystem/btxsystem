@@ -32,7 +32,7 @@
                   <div class="demo-radio-button">
                     <!-- <input name="method" type="radio" value="transfer" id="transfer" class="with-gap radio-col-red" checked />
                     <label for="transfer">Transfer</label> -->
-                    <input name="method" type="radio" value="ipay" id="ipay" class="with-gap radio-col-red" />
+                    <input name="method" type="radio" value="ipay" id="ipay" class="with-gap radio-col-red" checked />
                     <label for="ipay">VA & OVO</label>
                     <input name="method" type="radio" value="bca" id="bca" class="with-gap radio-col-red" />
                     <label for="bca">BCA VA</label>
