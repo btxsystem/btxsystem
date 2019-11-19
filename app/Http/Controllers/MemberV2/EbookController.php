@@ -43,7 +43,8 @@ class EbookController extends Controller
                 'product_type' => 'ebook',
                 'user_type' => 'member',
                 'total_amount' => $ebook->price+2750,
-                'customer_number' => '11210'.$no_invoice
+                'customer_number' => '11210'.$no_invoice,
+            'time_expired' => Carbon::create(date('Y-m-d H:i:s'))->addDay(1),
             ];
 
             $renewal = $request->ebook_id == 3 || $request->ebook_id == 4 ? $request->ebook_id : null;

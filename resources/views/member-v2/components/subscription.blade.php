@@ -179,7 +179,9 @@ div#flag {
                     </center>
                     <br>
                     <center><p style="font-size:14px" id="ammount_bca"></p></center>
-					<br>
+                    <br>
+                    <center><p style="font-size:14px" id="time-expired"></p></center>
+                    <br>
 					<h4>Bagaimana cara melakukan Pembayaran BCA Virtual Account ?</h4>
 					<h5>1. ATM BCA</h5>
 					<ul style="font-size:12px">
@@ -457,7 +459,7 @@ div#flag {
 									<label class="form-check-label" for="inlineRadio1">Transfer</label>
 								</div> -->
 								<div class="form-check form-check-inline">
-									<input onclick="selectPayment('ipay')" class="form-check-input ipay" type="radio" name="payment_method" id="payment_method" value="ipay">
+									<input onclick="selectPayment('ipay')" class="form-check-input ipay" type="radio" name="payment_method" id="payment_method" value="ipay" checked>
 									<label class="form-check-label" for="inlineRadio1">VA & OVO</label>
 								</div>
 								<div class="form-check form-check-inline">
@@ -587,6 +589,7 @@ $('#buy-va').click(function(){
 			$('#des_noreq2').text('Masukkan '+data.customer_number+' sebagai rekening tujuan');
 			$('#des_noreq3').text('Masukkan '+data.customer_number+' sebagai rekening tujuan');
             $('#ammount_bca').text('Nominal transaksi : '+data.total_amount+' (Include fee)');
+            $('#time-expired').text('Transfer Sebelum '+moment(data.time_expired).format('D MMMM Y - HH:mm'));
 			$('#no-virtual').modal('show');
 			$('#repeatModal').modal('hide');
 		},

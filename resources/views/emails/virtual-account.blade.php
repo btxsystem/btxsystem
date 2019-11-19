@@ -29,7 +29,7 @@
     font-size: .85em;
     letter-spacing: .1em;
     text-transform: uppercase;
-  } 
+  }
 
   table td {
     padding-top: 10px;
@@ -48,6 +48,10 @@
     <tr>
         <td>Description</td>
         <td>: <strong>{{$data->description}}</strong></td>
+    </tr>
+    <tr>
+        <td>Expired</td>
+        <td>: <strong>{{$data->time_expired}}</strong></td>
     </tr>
   </table>
   <br/>
