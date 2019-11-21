@@ -172,12 +172,51 @@
                                                     </ul>
                                                     <li>
                                                         <label>
-                                                            <input type="checkbox" />Level 1 - 3
+                                                            <input type="checkbox" name="permissions[]" value="21"/>Members
+                                                        </label>
+                                                        <ul>
+                                                            <li>
+                                                                <label>
+                                                                    <input type="checkbox" name="permissions[]" value="22"/>Members Active
+                                                                </label>
+                                                                <ul>
+                                                                    <li>
+                                                                        <label>
+                                                                            <input type="checkbox" name="permissions[]" value="24"/>Add
+                                                                        </label>
+                                                                    </li>
+                                                                    <li>
+                                                                        <label>
+                                                                            <input type="checkbox" name="permissions[]" value="25"/>Topup
+                                                                        </label>
+                                                                    </li>
+                                                                    <li>
+                                                                        <label>
+                                                                            <input type="checkbox" name="permissions[]" value="26"/>Edit
+                                                                        </label>
+                                                                    </li>
+                                                                </ul>
+                                                                <li>
+                                                                    <label>
+                                                                        <input type="checkbox" name="permissions[]" value="23"/>Members Inactive
+                                                                    </label>
+                                                                </li>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                    <li>
+                                                        <label>
+                                                            <input type="checkbox" name="permissions[]" value="31" />Customer
                                                         </label>
                                                     </li>
                                                     <li>
                                                         <label>
-                                                            <input type="checkbox" />Level 1 - 4
+                                                            <input type="checkbox" name="permissions[]" value="38" />Tree
+                                                        </label>
+                                                    </li>
+                                                    <li>
+                                                        <label>
+                                                            <input type="checkbox" name="permissions[]" value="43" />Claim Rewards
                                                         </label>
                                                     </li>
                                                 </li>
