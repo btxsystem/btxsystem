@@ -98,6 +98,9 @@ Route::group(['middleware' => 'admin'], function () {
 
     //dashboard-value
     Route::get('dashboard-values','Admin\DashboardValuesController@data')->name('dashboard-values');
+    Route::get('analayzer/generate','Admin\DashboardValuesController@analyzer')->name('dashboard-analyzer');
+    Route::get('downlines','Admin\DashboardValuesController@getDownlines')->name('dashboard-downlines');
+
 
     // Book
     Route::resource('book', 'Admin\BookController');
