@@ -36,6 +36,32 @@ class Employeer extends Authenticatable
     {
         return $this->hasMany( 'App\Employeer', 'parent_id', 'id');
     }
+
+    public function allChildren()
+    {
+        return $this->children()->with('allChildren')->select(['id','parent_id','username','pv',]);
+    }
+
+    public function leftChildren()
+    {
+        return $this->hasMany( 'App\Employeer', 'parent_id', 'id')->where('position', 0)->select(['id','parent_id','username','pv']);
+    }
+
+    public function allLeftChildren()
+    {
+        return $this->leftChildren()->with('allLeftChildren');
+    }
+
+    public function middleChildren()
+    {
+        return $this->hasMany( 'App\Employeer', 'parent_id', 'id')->where('position', 1)->select(['id','parent_id','username','pv']);
+    }
+
+    public function allMiddleChildren()
+    {
+        return $this->middleChildren()->with('allMiddleChildren');
+    }
+  
       
     public function parent()
     {

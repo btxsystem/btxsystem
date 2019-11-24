@@ -44,4 +44,5 @@ class NewTreeController extends Controller
         };
         return response()->json($user);
     }  
+
 }

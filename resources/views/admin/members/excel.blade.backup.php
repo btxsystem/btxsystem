@@ -43,11 +43,11 @@
     @foreach($datas as $data)
     <tr>
         <td>{{$data->id_member}}</td>
-        <td>{{$data->username}}</td>
+        <td>{{strtolower($data->username)}}</td>
         <td>{{ucwords("$data->first_name").' '.ucwords("$data->last_name")}}</td>
         <td>{{$data->email}}</td>
         <td>{{$data->birthdate}}</td>
-        <td>{{$data->npwp_number}}</td>
+        <td>'{{$data->npwp_number}}</td>
         <td>
             @if($data->is_married==0)
                 {{"single"}}
@@ -69,10 +69,10 @@
                 {{"active"}}
             @endif
         </td>
-        <td>{{$data->phone_number}}</td>
-        <td>{{$data->no_rec}}</td>
+        <td>'{{$data->phone_number}}</td>
+        <td>'{{$data->no_rec}}</td>
         <td>{{$data->bank_account_name}}</td>
-        <td>{{$data->bank_account_number}}</td>
+        <td>'{{$data->bank_account_number}}</td>
         <td>
             @if($data->position==0)
                 {{"left"}}
@@ -93,7 +93,7 @@
         <td>{{$data->pv}}</td>
         <td>{{$data->src}}</td>
         <td>{{$data->is_update}}</td>
-        <td>{{$data->nik}}</td>
+        <td>'{{$data->nik}}</td>
         <td>{{$data->expired_at}}</td>
     </tr>
     @endforeach
