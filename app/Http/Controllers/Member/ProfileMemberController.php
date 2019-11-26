@@ -108,13 +108,13 @@ class ProfileMemberController extends Controller
                 return redirect()->route('member.tree');
             }
 
-            $checkPhoneNumber = Employeer::where('phone_number', $request->phone_number)->count();
+            // $checkPhoneNumber = Employeer::where('phone_number', $request->phone_number)->count();
 
-            if($checkPhoneNumber > 0) {
-                DB::rollback();
-                Alert::error('Nomor Telephon sudah terdaftar', 'Error')->persistent("OK");
-                return redirect()->route('member.tree');
-            }
+            // if($checkPhoneNumber > 0) {
+            //     DB::rollback();
+            //     Alert::error('Nomor Telephon sudah terdaftar', 'Error')->persistent("OK");
+            //     return redirect()->route('member.tree');
+            // }
 
             $cek_parent = DB::table('employeers')->where('parent_id', $request->parent)->select('position')->get();
             foreach ($cek_parent as $key => $data) {
