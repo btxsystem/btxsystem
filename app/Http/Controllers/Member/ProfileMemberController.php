@@ -676,13 +676,13 @@ class ProfileMemberController extends Controller
                 return redirect()->route('member.tree');
             }
 
-            $checkPhoneNumber = Employeer::where('phone_number', $request->phone_number)->count();
+            // $checkPhoneNumber = Employeer::where('phone_number', $request->phone_number)->count();
 
-            if($checkPhoneNumber > 0) {
-                DB::rollback();
-                Alert::error('Nomor sudah terdaftar', 'Error')->persistent("OK");
-                return redirect()->route('member.tree');
-            }
+            // if($checkPhoneNumber > 0) {
+            //     DB::rollback();
+            //     Alert::error('Nomor sudah terdaftar', 'Error')->persistent("OK");
+            //     return redirect()->route('member.tree');
+            // }
 
             $checkUsername = Employeer::where('username', $request->username)->count();
 
