@@ -49,13 +49,13 @@
     <tr>
         <td>{{$data->id}}</td>
         <td>{{$data->id_member}}</td>
-        <td>{{$data->username}}</td>
+        <td>{{strtolower($data->username)}}</td>
         <td>{{ucwords("$data->first_name")}}</td>
         <td>{{ucwords("$data->last_name")}}</td>
         <td>{{$data->email}}</td>
         <td>{{$data->password}}</td>
         <td>{{$data->birthdate}}</td>
-        <td>{{$data->npwp_number}}</td>
+        <td>'{{$data->npwp_number}}</td>
         <td>
             @if($data->is_married==0)
                 {{"single"}}
@@ -77,8 +77,8 @@
                 {{"active"}}
             @endif
         </td>
-        <td>{{$data->phone_number}}</td>
-        <td>{{$data->no_rec}}</td>
+        <td>'{{$data->phone_number}}</td>
+        <td>'{{$data->no_rec}}</td>
         <td>{{$data->bank_account_number}}</td>
         <td>{{$data->bank_name}}</td>
         <td>{{$data->bank_account_name}}</td>
