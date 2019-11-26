@@ -72,6 +72,7 @@
                 </center>
                 <br>
                 <center><p style="font-size:14px" id="nominal_plus_fee"></p></center>
+                <center><p style="font-size:14px" id="time-expired"></p></center>
                 <br>
                 <h4>Bagaimana cara melakukan Pembayaran BCA Virtual Account ?</h4>
                 <h5>1. ATM BCA</h5>
@@ -292,6 +293,7 @@
 </style>
 
 @section('footer_scripts')
+<script src="{{asset('assets2/js/moment.js')}}"></script>
 <script type="text/javascript">
     let is_bca_method = false;
 
@@ -363,6 +365,7 @@
                     $('#des_noreq').text('Masukkan '+data.customer_number+' sebagai rekening tujuan');
                     $('#des_noreq2').text('Masukkan '+data.customer_number+' sebagai rekening tujuan');
                     $('#des_noreq3').text('Masukkan '+data.customer_number+' sebagai rekening tujuan');
+                    $('#time-expired').text('Transfer Sebelum '+moment(data.time_expired).format('D MMMM Y - HH:mm'));
                     $('#nominal_plus_fee').text('Nominal Transfer '+addCommas(data.total_amount)+' (include fee)')
                     $('#no-virtual').modal('show');
                     $('#topup').modal('hide');

@@ -49,6 +49,8 @@
                                             <br><br>
                                             <center><h5>Nominal Transfer : {{number_format($profile['amount'],0,",",".");}} (Include fee)</h5></center>
                                             <br><br>
+                                            <center><h5>Transfer Sebelum : {{$profile['expired']}} (Include fee)</h5></center>
+                                            <br><br>
                                             <b><p style="font-size:10px">Bagaimana cara melakukan Pembayaran BCA Virtual Account ?</p></b>
                                         </div>
                                     </div>

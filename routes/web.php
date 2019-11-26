@@ -227,6 +227,7 @@ Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
 
     Route::group(['prefix' => 'team-report', 'as'=> 'team-report.'], function () {
         Route::get('my-sponsor', ['as' => 'my-sponsor', 'uses' => 'Member\TeamReportController@mySponsor']);
+        Route::get('my-analizer', ['as' => 'my-analizer', 'uses' => 'Member\TeamReportController@myAnalizer']);
         Route::get('team-analizer', ['as' => 'team-analizer', 'uses' => 'Member\TeamReportController@teamAnalizer']);
     });
 

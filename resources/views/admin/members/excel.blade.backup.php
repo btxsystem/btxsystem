@@ -10,50 +10,42 @@
 <table>
     <thead>
     <tr>
-        <th>id</th>
-        <th>id_member</th>
-        <th>username</th>
-        <th>first_name</th>
-        <th>last_name</th>
-        <th>email</th>
-        <th>password</th>
-        <th>birthdate</th>
-        <th>npwp_number</th>
-        <th>is_married</th>
-        <th>gender</th>
-        <th>status</th>
-        <th>phone_number</th>
-        <th>no_rec</th>
-        <th>bank_account_number</th>
-        <th>bank_name</th>
-        <th>bank_account_name</th>
-        <th>position</th>
-        <th>parent_id</th>
-        <th>sponsor_id</th>
-        <th>rank_id</th>
-        <th>created_at</th>
-        <th>updated_at</th>
-        <th>verification</th>
-        <th>bitrex_cash</th>
-        <th>bitrex_points</th>
-        <th>pv</th>
-        <th>src</th>
-        <th>is_update</th>
-        <th>nik</th>
-        <th>expired_at</th>
-
+        <th>ID Member</th>
+        <th>Username</th>
+        <th>Full Name</th>
+        <th>Email</th>
+        <th>Birthdate</th>
+        <th>Npwp Number</th>
+        <th>Is Married</th>
+        <th>Gender</th>
+        <th>Status</th>
+        <th>Phone Number</th>
+        <th>No Rek</th>
+        <th>Bank Account Name</th>
+        <th>Bank Account Number</th>
+        <th>Position</th>
+        <th>Parent</th>
+        <th>Sponsor</th>
+        <th>Rank Id</th>
+        <th>Created Date</th>
+        <th>Updated Date</th>
+        <th>Verification</th>
+        <th>Bitrex Cash</th>
+        <th>Bitrex Points</th>
+        <th>Pv</th>
+        <th>Src</th>
+        <th>Is Update</th>
+        <th>Nik</th>
+        <th>Expired Date</th>
     </tr>
     </thead>
     <tbody>
     @foreach($datas as $data)
     <tr>
-        <td>{{$data->id}}</td>
         <td>{{$data->id_member}}</td>
         <td>{{strtolower($data->username)}}</td>
-        <td>{{ucwords("$data->first_name")}}</td>
-        <td>{{ucwords("$data->last_name")}}</td>
+        <td>{{ucwords("$data->first_name").' '.ucwords("$data->last_name")}}</td>
         <td>{{$data->email}}</td>
-        <td>{{$data->password}}</td>
         <td>{{$data->birthdate}}</td>
         <td>'{{$data->npwp_number}}</td>
         <td>
@@ -79,9 +71,8 @@
         </td>
         <td>'{{$data->phone_number}}</td>
         <td>'{{$data->no_rec}}</td>
-        <td>{{$data->bank_account_number}}</td>
-        <td>{{$data->bank_name}}</td>
         <td>{{$data->bank_account_name}}</td>
+        <td>'{{$data->bank_account_number}}</td>
         <td>
             @if($data->position==0)
                 {{"left"}}
@@ -91,8 +82,8 @@
                 {{"right"}}
             @endif
         </td>
-        <td>{{$data->parent_id}}</td>
-        <td>{{$data->sponsor_id}}</td>
+        <td>{{$data->parent}}</td>
+        <td>{{$data->sponsor}}</td>
         <td>{{$data->rank_id}}</td>
         <td>{{$data->created_at}}</td>
         <td>{{$data->updated_at}}</td>
@@ -102,7 +93,7 @@
         <td>{{$data->pv}}</td>
         <td>{{$data->src}}</td>
         <td>{{$data->is_update}}</td>
-        <td>{{$data->nik}}</td>
+        <td>'{{$data->nik}}</td>
         <td>{{$data->expired_at}}</td>
     </tr>
     @endforeach

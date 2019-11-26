@@ -108,13 +108,13 @@ class ProfileMemberController extends Controller
                 return redirect()->route('member.tree');
             }
 
-            $checkPhoneNumber = Employeer::where('phone_number', $request->phone_number)->count();
+            // $checkPhoneNumber = Employeer::where('phone_number', $request->phone_number)->count();
 
-            if($checkPhoneNumber > 0) {
-                DB::rollback();
-                Alert::error('Nomor Telephon sudah terdaftar', 'Error')->persistent("OK");
-                return redirect()->route('member.tree');
-            }
+            // if($checkPhoneNumber > 0) {
+            //     DB::rollback();
+            //     Alert::error('Nomor Telephon sudah terdaftar', 'Error')->persistent("OK");
+            //     return redirect()->route('member.tree');
+            // }
 
             $cek_parent = DB::table('employeers')->where('parent_id', $request->parent)->select('position')->get();
             foreach ($cek_parent as $key => $data) {
@@ -676,13 +676,13 @@ class ProfileMemberController extends Controller
                 return redirect()->route('member.tree');
             }
 
-            $checkPhoneNumber = Employeer::where('phone_number', $request->phone_number)->count();
+            // $checkPhoneNumber = Employeer::where('phone_number', $request->phone_number)->count();
 
-            if($checkPhoneNumber > 0) {
-                DB::rollback();
-                Alert::error('Nomor sudah terdaftar', 'Error')->persistent("OK");
-                return redirect()->route('member.tree');
-            }
+            // if($checkPhoneNumber > 0) {
+            //     DB::rollback();
+            //     Alert::error('Nomor sudah terdaftar', 'Error')->persistent("OK");
+            //     return redirect()->route('member.tree');
+            // }
 
             $checkUsername = Employeer::where('username', $request->username)->count();
 
@@ -1027,11 +1027,13 @@ class ProfileMemberController extends Controller
                     'product_type' => 'topup',
                     'user_type' => 'member',
                     'total_amount' => $request->nominal+27500,
-                    'customer_number' => '11210'.$no_invoice
+                    'customer_number' => '11210'.$no_invoice,
+                    'time_expired' => Carbon::create(date('Y-m-d H:i:s'))->addDay(1),
                 ];
 
                 $profile['no_invoice'] = $data['customer_number'];
                 $profile['amount'] = $data['total_amount'];
+                $profile['expired'] = $data['time_expired'];
                 $va = new Va;
                 $va->register(Auth::user()->id, $request, $no_invoice);
                 DB::commit();

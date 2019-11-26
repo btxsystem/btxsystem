@@ -5,6 +5,7 @@ use App\Models\NonMember;
 use Illuminate\Support\Facades\Hash;
 use DB;
 use Auth;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\VirtualAccountMail as VaMail;
 
@@ -44,7 +45,8 @@ class TransactionPaymentService
                 $dataEmail = (object) [
                     'amount' => $parameter[4].' Include fee',
                     'description' => $type_ebook,
-                    'no_invoice' => '11210'.$parameter[5]
+                    'no_invoice' => '11210'.$parameter[5],
+                    'time_expired' => date_format(Carbon::create(date('Y-m-d H:i:s'))->addDay(1), 'Y-m-d H:i:s'),
                 ];
 
                 if (filter_var(Auth::user()->email, FILTER_VALIDATE_EMAIL)) {
@@ -86,7 +88,8 @@ class TransactionPaymentService
                 $dataEmail = (object) [
                     'amount' => $parameter[4].' Include fee',
                     'description' => $type_ebook,
-                    'no_invoice' => '11210'.$parameter[5]
+                    'no_invoice' => '11210'.$parameter[5],
+                    'time_expired' => Carbon::create(date('Y-m-d H:i:s'))->addDay(1),
                 ];
 
                 if (filter_var(Auth::user()->email, FILTER_VALIDATE_EMAIL)) {
@@ -111,7 +114,8 @@ class TransactionPaymentService
                 $dataEmail = (object) [
                     'amount' => $parameter[1].' (Include fee 2750)',
                     'description' => 'Topup Bitrex Points',
-                    'no_invoice' => '11210'.$parameter[2]
+                    'no_invoice' => '11210'.$parameter[2],
+                    'time_expired' => Carbon::create(date('Y-m-d H:i:s'))->addDay(1),
                 ];
                 if (filter_var(Auth::user()->email, FILTER_VALIDATE_EMAIL)) {
                   //Mail::to('dhadhang.efendi@gmail.com')->send(new OldMemberMail($dataEmail));
@@ -186,7 +190,8 @@ class TransactionPaymentService
             $dataEmail = (object) [
                 'amount' => $cost.' (Include fee)',
                 'description' => 'Register Member from Autoplacement',
-                'no_invoice' => '11210'.$parameter[2]
+                'no_invoice' => '11210'.$parameter[2],
+                'time_expired' => Carbon::create(date('Y-m-d H:i:s'))->addDay(1),
             ];
 
             if (filter_var(Auth::user()->email, FILTER_VALIDATE_EMAIL)) {

@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\HistoryBitrexPoints;
 use App\HistoryBitrexCash;
 use App\Employeer;
+use Illuminate\Support\Carbon;
 use App\Service\PaymentVa\TransactionPaymentService as Va;
 use DataTables;
 use DB;
@@ -35,7 +36,8 @@ class BitrexPointController extends Controller
             'product_type' => 'topup',
             'user_type' => 'member',
             'total_amount' => $request->nominal+2750,
-            'customer_number' => '11210'.$no_invoice
+            'customer_number' => '11210'.$no_invoice,
+            'time_expired' => Carbon::create(date('Y-m-d H:i:s'))->addDay(1),
         ];
 
         $va = new Va;

@@ -20,10 +20,10 @@ use App\Factory\TransactionFactoryRegister;
 
 use App\Models\TransactionMember;
 use App\Models\TransactionNonMember;
+use Illuminate\Support\Carbon;
 
 use App\Service\PaymentVa\TransactionPaymentService as Va;
 
-use Carbon\Carbon;
 
 class EbookController extends Controller
 {
@@ -42,8 +42,9 @@ class EbookController extends Controller
                 'user_id' => Auth::user()->id,
                 'product_type' => 'ebook',
                 'user_type' => 'member',
-                'total_amount' => $ebook->price+2750,
-                'customer_number' => '11210'.$no_invoice
+                'total_amount' => number_format($ebook->price+2750,0,",","."),
+                'customer_number' => '11210'.$no_invoice,
+                'time_expired' => Carbon::create(date('Y-m-d H:i:s'))->addDay(1),
             ];
 
             $renewal = $request->ebook_id == 3 || $request->ebook_id == 4 ? $request->ebook_id : null;
@@ -65,8 +66,9 @@ class EbookController extends Controller
                 'user_id' => $id,
                 'product_type' => 'ebook',
                 'user_type' => 'nonmember',
-                'total_amount' => $ebook->price+2750,
-                'customer_number' => '11210'.$no_invoice
+                'total_amount' => number_format($ebook->price+2750,0,",","."),
+                'customer_number' => '11210'.$no_invoice,
+                'time_expired' => Carbon::create(date('Y-m-d H:i:s'))->addDay(1),
             ];
 
             $renewal = $request->ebook_id == 3 || $request->ebook_id == 4 ? $request->ebook_id : null;
