@@ -73,6 +73,46 @@ class TeamReportController extends Controller
         
     }
 
+    public function generateAnalyzer()
+    {
+        $datas = Employeer::with('allChildren')->get();
+
+        foreach($datas as $data) {
+           $this->recursiveLoop($data);
+        }
+
+        return 'Done';
+
+    }
+
+    public function recursiveLoop($data)
+    {
+        $dataArray = [];
+        if (!$data->allChildren->isEmpty()) {
+            foreach($data->allChildren as $children) {
+                    $this->recursiveLoop($children);
+                    $insert = $children->id .',';
+
+                    \array_push($dataArray, $insert);
+
+                $this->updateDownline($data->id, implode(" ", $dataArray));
+            }
+
+          
+        }
+    }
+
+    public function updateDownline($parent_id, $idArray)
+    {
+        DB::table('downlines')
+            ->updateOrInsert(
+                ['member_id' => $parent_id],
+                ['downline' => $idArray]
+        );
+    }
+
+
+
     public function teamAnalizer(){
         $datas = Employeer::parent(Auth::id())->renderAsArray();
         $position = (object) [
