@@ -331,6 +331,11 @@
 									<button id="upline" class='btn btn-primary zmdi zmdi-chevron-up'></button>
 								</div>
 
+								<div id="overlay">
+									<div class="cv-spinner">
+										<span class="spinner"></span>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -523,6 +528,41 @@ em{
 
 .formTree .select2-container {
 	width: 100% !important;
+}
+
+#overlay{
+	position: fixed;
+	top: 0;
+	z-index: 100;
+	width: 100%;
+	height:100%;
+	display: none;
+	background: rgba(0,0,0,0.6);
+}
+.cv-spinner {
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.spinner {
+	width: 40px;
+	height: 40px;
+	border: 4px #ddd solid;
+	border-top: 4px #2e93e6 solid;
+	border-radius: 50%;
+	animation: sp-anime 0.8s infinite linear;
+}
+@keyframes sp-anime {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(359deg);
+	}
+}
+.is-hide{
+	display:none;
 }
 
 @media (pointer: coarse) {
@@ -755,7 +795,7 @@ em{
 					${v.title}
 				</label>
 				</div>`
-			})
+		})
 		$('#ebook-list').html(`
 			<div id="checkboxEbook">
 				${render}
@@ -832,7 +872,7 @@ em{
 		});
 	});
 
-    let searchDownline = (data, type) => {
+    let searchDownline = (data) => {
         $.ajax({
 			type: 'GET',
 			url: '/member/select/search-downline/'+data,
@@ -852,7 +892,7 @@ em{
 						}
 					});
 				}else{
-					type == 0 ? swal("sorry, username not found") : $('#upline').hide();
+					swal("sorry, username not found");
 				}
 			},
 			error: function() {
@@ -863,7 +903,7 @@ em{
 
 	$('#search-downline').click(function(){
 		let data = $('.search').val();
-	    searchDownline(data,0);
+	    searchDownline(data);
 	});
 
   $('#bank_name_select').change(function() {
@@ -1079,7 +1119,6 @@ em{
 		panzoom(document.querySelector('#bah'), {
 			zoomSpeed: 0.030
 		});
-
 	$.ajax({
 		type: 'GET',
 		url: '{{route("member.select.tree")}}',
@@ -1226,20 +1265,24 @@ em{
 		return value.toString().replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1\.")
 	}
 	$('#upline').click(function(){
+        $("#overlay").fadeIn(300);
         $('#upline').hide();
 		$.ajax({
 			type: 'GET',
 			url: '/member/select/tree-upline/'+parent_id,
 			success: function (data) {
-                searchDownline(data.parent,1);
 				parent_id = data.parent_id;
 				$('#bah').empty('g');
 				tree(data);
-				//data.parent ? $('#upline').show() : $('#upline').hide();
+				data.parent ? $('#upline').show() : $('#upline').hide();
 			},
 			error: function() {
 				console.log("Error");
 			}
+		}).done(function() {
+			setTimeout(function(){
+				$("#overlay").fadeOut(300);
+			},500);
 		});
 	})
 </script>
