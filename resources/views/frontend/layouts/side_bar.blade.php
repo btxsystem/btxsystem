@@ -81,7 +81,7 @@
             <li class="{{ (request()->segment(2))=='team-report' ? 'active' : '' }}"><a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-group-work col-purple"></i><span>Team Report</span> </a>
                 <ul class="ml-menu">
                     <li class="{{ (request()->is('member/team-report/my-sponsor')) ? 'active' : '' }}"><a href="{{route('member.team-report.my-sponsor')}}">My Sponsor</a></li>
-                    <!--<li class="{{ (request()->is('member/team-report/my-analizer')) ? 'active' : '' }}"><a href="{{route('member.team-report.my-analizer')}}">Team Analizer</a></li>-->
+                    <li class="{{ (request()->is('member/team-report/my-analizer')) ? 'active' : '' }}"><a href="{{route('member.team-report.my-analizer')}}">Team Analizer</a></li>
                     <!--<li class="{{ (request()->is('member/team-report/team-analizer')) ? 'active' : '' }}"><a href="{{route('member.team-report.team-analizer')}}">Team Analizer</a></li>-->
                 </ul>
             </li>
