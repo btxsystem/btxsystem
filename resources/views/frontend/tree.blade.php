@@ -1265,8 +1265,9 @@ em{
 		return value.toString().replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1\.")
 	}
 	$('#upline').click(function(){
+		$('#upline').hide();
         $("#overlay").fadeIn(100);
-        $('#upline').hide();
+		cek_upline = 0;
 		$.ajax({
 			type: 'GET',
 			url: '/member/select/tree-upline/'+parent_id,
@@ -1274,7 +1275,7 @@ em{
 				parent_id = data.parent_id;
 				$('#bah').empty('g');
 				tree(data);
-				data.parent ? $('#upline').show() : $('#upline').hide();
+				data.parent ? cek_upline = 1 : cek_upline = 0;
 			},
 			error: function() {
 				console.log("Error");
@@ -1282,6 +1283,7 @@ em{
 		}).done(function() {
 			setTimeout(function(){
 				$("#overlay").fadeOut(100);
+				cek_upline==1 ? $('#upline').show() : $('#upline').hide();
 			},300);
 		});
 	})
