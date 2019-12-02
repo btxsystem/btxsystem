@@ -1265,7 +1265,7 @@ em{
 		return value.toString().replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1\.")
 	}
 	$('#upline').click(function(){
-        $("#overlay").fadeIn(300);
+        $("#overlay").fadeIn(100);
         $('#upline').hide();
 		$.ajax({
 			type: 'GET',
@@ -1281,8 +1281,8 @@ em{
 			}
 		}).done(function() {
 			setTimeout(function(){
-				$("#overlay").fadeOut(300);
-			},500);
+				$("#overlay").fadeOut(100);
+			},300);
 		});
 	})
 </script>
