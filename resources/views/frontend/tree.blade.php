@@ -832,9 +832,8 @@ em{
 		});
 	});
 
-	$('#search-downline').click(function(){
-		let data = $('.search').val();
-		$.ajax({
+    let searchDownline = (data) => {
+        $.ajax({
 			type: 'GET',
 			url: '/member/select/search-downline/'+data,
 			success: function (data) {
@@ -860,6 +859,11 @@ em{
 				console.log("Error");
 			}
 		});
+    }
+
+	$('#search-downline').click(function(){
+		let data = $('.search').val();
+		searchDownline(data);
 	});
 
   $('#bank_name_select').change(function() {
@@ -1226,12 +1230,11 @@ em{
 			type: 'GET',
 			url: '/member/select/tree-upline/'+parent_id,
 			success: function (data) {
+                $('#upline').hide();
 				parent_id = data.parent_id;
 				$('#bah').empty('g');
 				tree(data);
-				if (!data.parent) {
-					$('#upline').hide();
-				}
+				data.parent ? $('#upline').show() : $('#upline').hide();
 			},
 			error: function() {
 				console.log("Error");
