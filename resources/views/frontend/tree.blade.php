@@ -832,7 +832,7 @@ em{
 		});
 	});
 
-    let searchDownline = (data) => {
+    let searchDownline = (data, type) => {
         $.ajax({
 			type: 'GET',
 			url: '/member/select/search-downline/'+data,
@@ -852,7 +852,7 @@ em{
 						}
 					});
 				}else{
-					alert('Username not found');
+					type == 0 ? swal("sorry, username not found") : $('#upline').hide();
 				}
 			},
 			error: function() {
@@ -863,7 +863,7 @@ em{
 
 	$('#search-downline').click(function(){
 		let data = $('.search').val();
-		searchDownline(data);
+	    searchDownline(data,0);
 	});
 
   $('#bank_name_select').change(function() {
@@ -1226,15 +1226,16 @@ em{
 		return value.toString().replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1\.")
 	}
 	$('#upline').click(function(){
+        $('#upline').hide();
 		$.ajax({
 			type: 'GET',
 			url: '/member/select/tree-upline/'+parent_id,
 			success: function (data) {
-                $('#upline').hide();
+                searchDownline(data.parent,1);
 				parent_id = data.parent_id;
 				$('#bah').empty('g');
 				tree(data);
-				data.parent ? $('#upline').show() : $('#upline').hide();
+				//data.parent ? $('#upline').show() : $('#upline').hide();
 			},
 			error: function() {
 				console.log("Error");
