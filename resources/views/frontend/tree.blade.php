@@ -328,7 +328,9 @@
 							<div class="col-md-12">
 								<br>
 								<div class="chart" id="tree">
-									<button id="upline" class='btn btn-primary zmdi zmdi-chevron-up'></button>
+									<span id="tree_button">
+
+									</span>
 								</div>
 
 								<div id="overlay">
@@ -778,7 +780,6 @@ em{
 
     	$('.shipping-form').hide();
 
-		$('#upline').hide();
 		$('#province').select2({
 			placeholder: 'Province',
 		});
@@ -884,7 +885,7 @@ em{
 						url: '/member/select/child-tree/'+data.username,
 						success: function (data) {
 							$('#bah').empty('g');
-							$('#upline').show();
+							$('#tree_button').html('<button id="upline" class="btn btn-primary zmdi zmdi-chevron-up"></button>');
 							tree(data)
 						},
 						error: function() {
@@ -1138,7 +1139,7 @@ em{
 				url: '/member/select/child-tree/'+a,
 				success: function (data) {
 					$('#bah').empty('g');
-					$('#upline').show();
+					$('#tree_button').html('<button id="upline" class="btn btn-primary zmdi zmdi-chevron-up"></button>');
 					tree(data)
 				},
 				error: function() {
@@ -1264,8 +1265,10 @@ em{
   	function toPrice(value) {
 		return value.toString().replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1\.")
 	}
-	$('#upline').click(function(){
-		$('#upline').hide();
+	$(document).on('click','#upline',function(){
+		console.log('aaah');
+
+		$('#upline').remove();
         $("#overlay").fadeIn(100);
 		cek_upline = 0;
 		$.ajax({
@@ -1283,7 +1286,7 @@ em{
 		}).done(function() {
 			setTimeout(function(){
 				$("#overlay").fadeOut(100);
-				cek_upline==1 ? $('#upline').show() : $('#upline').hide();
+				cek_upline==1 ? $('#tree_button').html('<button id="upline" class="btn btn-primary zmdi zmdi-chevron-up"></button>') : $('#upline').remove();;
 			},300);
 		});
 	})
