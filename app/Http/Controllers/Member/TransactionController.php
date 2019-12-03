@@ -48,26 +48,63 @@ class TransactionController extends Controller
         return response()->json(['transaction'=>$data]);
     }
 
+    // public function topup(Request $request){
+
+    //     return $request->all();
+    //     $method = $request->input('method') ?? 'transfer';
+    //     //points
+    //     //nominal
+    //     try {
+    //         if($method == 'transfer') {
+    //             return $this->paymentWithTransfer($request);
+    //         } else {
+    //             return $this->paymentWithIpay($request);
+    //         }
+    //         // DB::beginTransaction();
+    //         // $data = DB::table('employeers')->where('id',Auth::id())->select('bitrex_points')->first();
+    //         // DB::table('employeers')->where('id', Auth::id())->update(['bitrex_points' => $data->bitrex_points + $request->points, 'updated_at' => Carbon::now()]);
+    //         // DB::table('history_bitrex_point')->insert(['id_member' => Auth::id(), 'nominal' => $request->nominal, 'points' => $request->points, 'description' => 'Topup', 'info' => 1, 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()]);
+    //         // DB::commit();
+    //     } catch (\Exception $e) {
+    //         DB::rollback();
+    //         return 'gagal';
+    //     }
+    //     //return redirect()->route('member.bitrex-money.bitrex-points');
+    // }
+
     public function topup(Request $request){
-        $method = $request->input('method') ?? 'transfer';
-        //points
-        //nominal
+
+    
+        $method = $request->input('method') ?? 'bca';
+
         try {
-            if($method == 'transfer') {
+            switch($method) {
+                case 'bca';
                 return $this->paymentWithTransfer($request);
-            } else {
-                return $this->paymentWithIpay($request);
+            break;
+                case 'ovo';
+                return $this->paymentWithIpay($request, 63);
+            break;
+                case 'mandiri';
+                return $this->paymentWithIpay($request, 17);
+            break;
+                case 'bni';
+                return $this->paymentWithIpay($request, 26);
+            break;
+                case 'maybank';
+                return $this->paymentWithIpay($request, 9);
+            break;
+                case 'permata';
+                return $this->paymentWithIpay($request, 31);
+            break;
+
             }
-            // DB::beginTransaction();
-            // $data = DB::table('employeers')->where('id',Auth::id())->select('bitrex_points')->first();
-            // DB::table('employeers')->where('id', Auth::id())->update(['bitrex_points' => $data->bitrex_points + $request->points, 'updated_at' => Carbon::now()]);
-            // DB::table('history_bitrex_point')->insert(['id_member' => Auth::id(), 'nominal' => $request->nominal, 'points' => $request->points, 'description' => 'Topup', 'info' => 1, 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()]);
-            // DB::commit();
+
         } catch (\Exception $e) {
             DB::rollback();
             return 'gagal';
         }
-        //return redirect()->route('member.bitrex-money.bitrex-points');
+    
     }
 
     public function paymentWithTransfer($request)
@@ -123,8 +160,9 @@ class TransactionController extends Controller
         }
     }
 
-    public function paymentWithIpay($request)
-    {
+    public function paymentWithIpay($request, $payment_method = null)
+    {   
+
         try {
             DB::beginTransaction();
             $prefixRef = 'BITREX05';
@@ -154,10 +192,12 @@ class TransactionController extends Controller
 
             $orderAmount = (int) $request->nominal;
 
+            
+
             $data['merchant_key'] = env('IPAY_MERCHANT_KEY');
             $data['merchant_code'] = env('IPAY_MERCHANT_CODE');
             $data['currency'] = "IDR";
-            $data['payment_id'] = 1;
+            $data['payment_id'] = $payment_method == null ? $payment_method : 1;
             $data['product_desc'] = "Topup {$request->points} Bitrex Point";
             $data['user_name'] = Auth::user()->username;
             $data['user_email'] = Auth::user()->email;

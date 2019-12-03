@@ -32,10 +32,25 @@
                   <div class="demo-radio-button">
                     <!-- <input name="method" type="radio" value="transfer" id="transfer" class="with-gap radio-col-red" checked />
                     <label for="transfer">Transfer</label> -->
-                    <input name="method" type="radio" value="ipay" id="ipay" class="with-gap radio-col-red" checked />
-                    <label for="ipay">VA & OVO</label>
-                    <input name="method" type="radio" value="bca" id="bca" class="with-gap radio-col-red" />
+                    <h5>Select Payment Method</h5>
+
+                    <input name="method" type="radio" value="bca" id="bca" class="with-gap radio-col-red" checked/>
                     <label for="bca">BCA VA</label>
+
+                    <input name="method" type="radio" value="ovo" id="ovo" class="with-gap radio-col-red" />
+                    <label for="ovo">OVO</label>
+
+                    <input name="method" type="radio" value="mandiri" id="mandiri" class="with-gap radio-col-red" />
+                    <label for="mandiri">MANDIRI ATM</label>
+
+                    <input name="method" type="radio" value="bni" id="bni" class="with-gap radio-col-red" />
+                    <label for="bni">BNI VA</label>
+
+                    <input name="method" type="radio" value="maybank" id="maybank" class="with-gap radio-col-red"/>
+                    <label for="maybank">MAYBANK VA</label>
+
+                    <input name="method" type="radio" value="permata" id="permata" class="with-gap radio-col-red" />
+                    <label for="permata">PERMATA VA</label>
                   </div>
                 </div>
                 <!-- <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12" id="transfer-form">
