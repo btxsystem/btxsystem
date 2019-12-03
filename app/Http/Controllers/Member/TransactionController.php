@@ -197,7 +197,7 @@ class TransactionController extends Controller
             $data['merchant_key'] = env('IPAY_MERCHANT_KEY');
             $data['merchant_code'] = env('IPAY_MERCHANT_CODE');
             $data['currency'] = "IDR";
-            $data['payment_id'] = $payment_method == null ? $payment_method : 1;
+            $data['payment_id'] = $payment_method == null ? 1 : $payment_method ;
             $data['product_desc'] = "Topup {$request->points} Bitrex Point";
             $data['user_name'] = Auth::user()->username;
             $data['user_email'] = Auth::user()->email;
