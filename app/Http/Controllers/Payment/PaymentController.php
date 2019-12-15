@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Payment;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use DB;
+use Illuminate\Support\Facades\DB;
 use App\Models\TransactionNonMember;
 use App\Models\TransactionMember;
 use App\Models\Ebook;
@@ -16,7 +16,7 @@ class PaymentController extends Controller
   {
     date_default_timezone_set('Asia/Jakarta');
 
-    $transactionRef = $request->input('transactionRef') ?? '';	
+    $transactionRef = $request->input('transactionRef') ?? '';
     $ebook = $request->input('ebook') ?? '';
     $productDesc = '';
     $user = null;
@@ -37,7 +37,7 @@ class PaymentController extends Controller
         $transactionRef = $check->transaction_ref ?? 'BITREX001' . (time() + $user->id);
         $orderAmount = (int) $updatePrice->price + (int) $updatePrice->price_markup;
         $productDesc = "Renewal Ebook " .  ucwords($check->ebook->title);
-          
+
       } else if($user = Auth::guard('user')->user()) {
         $check = TransactionMember::where([
           'ebook_id' => $ebook,
@@ -49,7 +49,7 @@ class PaymentController extends Controller
         ])->first();
 
         $transactionRef = $check->transaction_ref ?? 'BITREX002' . (time() + $user->id);
-        $orderAmount = (int) $updatePrice->price;  
+        $orderAmount = (int) $updatePrice->price;
         $productDesc = "Renewal Ebook " .  ucwords($check->ebook->title);
 
         // return response()->json([
@@ -72,14 +72,14 @@ class PaymentController extends Controller
       }
       $orderAmount = 0;
       $orderType = substr($transactionRef, 0, 8);
-  
+
       if($orderType == 'BITREX01') {
         $transaction = TransactionNonMember::where('transaction_ref', $transactionRef)
           ->with([
             'ebook'
           ])
           ->first();
-  
+
           $orderAmount = (int) $transaction->ebook->price + (int) ($transaction->ebook->price_markup);
           $productDesc = ucwords($transaction->ebook->name);
       } else if($orderType == 'BITREX02') {
@@ -88,12 +88,12 @@ class PaymentController extends Controller
             'ebook'
           ])
           ->first();
-  
+
           $orderAmount = (int) $transaction->ebook->price;
           $productDesc = ucwords($transaction->ebook->name);
       }
     }
-      
+
     $data['merchant_key'] = "tbaoVEHjP7";
     $data['merchant_code'] = "ID01085";
     $data['currency'] = "IDR";
@@ -108,14 +108,14 @@ class PaymentController extends Controller
     $data['amount'] = (int) str_replace(".","",str_replace(",","",number_format($orderAmount, 2, ".", "")));
     $data['signature'] = $this->signature($data['code'], $data['amount']);
     $data['response_url'] = 'https://bitrexgo.id/response-pay';
-    $data['backend_url'] = 'https://bitrexgo.id/backend-response-pay'; 
-    
+    $data['backend_url'] = 'https://bitrexgo.id/backend-response-pay';
+
     // return response()->json([
     //   'data' => $data
     // ]);
 
     // $form = "
-    //   <form method=\"post\" id=\"payment\" name=\"ePayment\" action=\"https://sandbox.ipay88.co.id/epayment/entry.asp\">        
+    //   <form method=\"post\" id=\"payment\" name=\"ePayment\" action=\"https://sandbox.ipay88.co.id/epayment/entry.asp\">
     //     <input type=\"hidden\" name=\"MerchantCode\" value=\"$data[merchant_code]\">
     //     <input type=\"hidden\" name=\"RefNo\" value=\"$data[code]\">
     //     <input type=\"hidden\" name=\"Amount\" value=\"$data[amount]\">
@@ -127,17 +127,17 @@ class PaymentController extends Controller
     //     <input type=\"hidden\" name=\"Remark\" value=\"\">
     //     <input type=\"hidden\" name=\"Lang\" value=\"UTF-8\">
     //     <input type=\"hidden\" name=\"Signature\" value=\"$data[signature]=\">
-    //     <input type=\"hidden\" name=\"ResponseURL\" value=\"$data[response_url]\"> 
-    //     <input type=\"hidden\" name=\"BackendURL\" value=\"$data[backend_url]\"> 
-    //     <input type=\"submit\" value=\"Proceed with Payment\" name=\"Submit\"> 
-    //     </form> 
+    //     <input type=\"hidden\" name=\"ResponseURL\" value=\"$data[response_url]\">
+    //     <input type=\"hidden\" name=\"BackendURL\" value=\"$data[backend_url]\">
+    //     <input type=\"submit\" value=\"Proceed with Payment\" name=\"Submit\">
+    //     </form>
     //     <script language=\"JavaScript\" type=\"text/javascript\">
     //     document.getElementById('payment').submit();
     //     </script
     // ";
 
     // echo $form;
-    
+
     return view('payment.form')
       ->with([
         'data' => $data
@@ -149,19 +149,19 @@ class PaymentController extends Controller
     $MechantKey = "tbaoVEHjP7";
     $MerchantCode = "ID01085";
     $RefNo = $code;
-    $amount = $amount; 
+    $amount = $amount;
     $currency = "IDR";
     $ipaySignature 	= "";
-    $encrypt		= sha1($MechantKey.$MerchantCode.$RefNo.$amount.$currency);		
-      
+    $encrypt		= sha1($MechantKey.$MerchantCode.$RefNo.$amount.$currency);
+
     for ($i=0; $i<strlen($encrypt); $i=$i+2){
       $ipaySignature .= chr(hexdec(substr($encrypt,$i,2)));
     }
-     
+
     $ipaySignature = base64_encode($ipaySignature);
-    
+
     return $ipaySignature;
-  }  
+  }
 
   public function responsePayment(Request $req)
   {
@@ -180,7 +180,7 @@ class PaymentController extends Controller
     if($code == '') {
       return redirect()->route('member.home');
     }
-    
+
     $merchant_key = "rMRMh6Qmcy";
     $signature_plaintext = $merchant_key . $merchant_code . $payment_id . $code . $amount . $currency . $status;
     $sinature_result = $this->signature($signature_plaintext, $amount);
@@ -221,7 +221,7 @@ class PaymentController extends Controller
       }
 
       DB::commit();
-      
+
       if($status == 1) {
         return view('payment.success');
       } else if($status == 0) {
@@ -240,7 +240,7 @@ class PaymentController extends Controller
   public function backendResponsePayment(Request $request)
   {
       echo "RECEIVEOK";
-  }  
+  }
 
   public function waitingTransfer()
   {
