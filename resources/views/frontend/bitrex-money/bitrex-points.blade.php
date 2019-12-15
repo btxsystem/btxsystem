@@ -37,7 +37,7 @@
                     <input name="method" type="radio" value="bca" id="bca" class="with-gap radio-col-red" checked/>
                     <label for="bca">BCA VA</label>
 
-                    <input name="method" type="radio" value="ovo" id="ovo" class="with-gap radio-col-red" />
+                    <!-- <input name="method" type="radio" value="ovo" id="ovo" class="with-gap radio-col-red" />
                     <label for="ovo">OVO</label>
 
                     <input name="method" type="radio" value="mandiri" id="mandiri" class="with-gap radio-col-red" />
@@ -50,7 +50,7 @@
                     <label for="maybank">MAYBANK VA</label>
 
                     <input name="method" type="radio" value="permata" id="permata" class="with-gap radio-col-red" />
-                    <label for="permata">PERMATA VA</label>
+                    <label for="permata">PERMATA VA</label> -->
                   </div>
                 </div>
                 <!-- <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12" id="transfer-form">
