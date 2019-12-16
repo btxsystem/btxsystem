@@ -47,7 +47,7 @@
                                                 <button type="button" class="btn btn-raised bg-grey waves-effect" style="cursor:pointer" id="copy">Copy</button>
                                             </center>
                                             <br><br>
-                                            <center><h5>Nominal Transfer : {{number_format($profile['amount'],0,",",".");}} (Include fee)</h5></center>
+                                            <center><h5>Nominal Transfer : {{number_format($profile['amount'],0,",",".")}} (Include fee)</h5></center>
                                             <br><br>
                                             <center><h5>Transfer Sebelum : {{$profile['expired']}} (Include fee)</h5></center>
                                             <br><br>
