@@ -85,7 +85,7 @@
         </div>
     </div>
 </div>
-    
+
 <section class="content ecommerce-page">
     <div class="block-header">
         <div class="row">
@@ -109,7 +109,7 @@
     <div class="container-fluid">
         <div class="row clearfix">
             <div class="col-lg-12 col-md-12 col-sm-12" id="bill">
-                
+
             </div>
         </div>
     </div>
@@ -119,7 +119,7 @@
 </section>
 @stop
 
-@section('footer_scripts')  
+@section('footer_scripts')
 <script type="text/javascript">
     $(document).ready(function () {
         $.ajax({
@@ -127,14 +127,14 @@
             data: data,
             success:function(data){
                 if (data.cash.data[0]==undefined) {
-                    $('#bill').html('<div class="body" style="color:red;"><center><strong>History is currently empty</strong></center></div>');    
+                    $('#bill').html('<div class="body" style="color:red;"><center><strong>History is currently empty</strong></center></div>');
                 }else{
                     $.each(data.cash.data, function(i, item) {
                         date = moment(item.created_at).format('MMMM Do Y - HH:mm');
                         type = item.info ? 'Income' : 'Spending';
                         color = item.info ? 'green' : 'red';
                         nominal = addCommas(item.nominal);
-                        $('#bill').append('<div class="card ke-'+i+'" style="border: 1px solid #ccc; box-shadow: 1px 1px 3px 0px  rgba(0,0,0,0.3);"><div class="body"><div class="row"><strong class="col-sm-4" id="date">Date Time: '+date+'</strong></div><hr><div class="row"><div class="col" id="type">Type: <b style="color:'+color+'">'+type+'</b></div><div class="col" id="nominal">Nominal Withdraw: '+nominal+'</div><hr></div><div class="row"><div class="col" id="description">Description: '+item.description+'</div></div></div>'); 
+                        $('#bill').append('<div class="card ke-'+i+'" style="border: 1px solid #ccc; box-shadow: 1px 1px 3px 0px  rgba(0,0,0,0.3);"><div class="body"><div class="row"><strong class="col-sm-4" id="date">Date Time: '+date+'</strong></div><hr><div class="row"><div class="col" id="type">Type: <b style="color:'+color+'">'+type+'</b></div><div class="col" id="nominal">Nominal Withdraw: '+nominal+'</div><hr></div><div class="row"><div class="col" id="description">Description: '+item.description+'</div></div></div>');
                     });
                 }
             }
@@ -221,7 +221,7 @@
                             location.reload();
                         });
                     }
-                } 
+                }
             },
             error: function() {
                 console.log("Error");
@@ -231,7 +231,7 @@
 
     $('#nominal').on('change keyup', function(){
         let bitrex_value = {{$profile->bitrex_cash}};
-        $(this).val() >= 10000 && parseInt($(this).val())+5000 <= bitrex_value ? $('#withdraw-button').prop('disabled',false) : $('#withdraw-button').prop('disabled',true);        
+        $(this).val() >= 10000 && parseInt($(this).val())+5000 <= bitrex_value ? $('#withdraw-button').prop('disabled',false) : $('#withdraw-button').prop('disabled',true);
     })
 
     $('#withdraw-button').click(function(){
@@ -248,7 +248,7 @@
             $('#load-withdraw').hide();
             $this.show();
         }, 100000);
-        
+
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -303,7 +303,7 @@
                 console.log("Error");
             }
         });
-        
+
     }
 
     function loadMoreData(page){
@@ -323,7 +323,7 @@
                 type = item.info ? 'Income' : 'Spending';
                 color = item.info ? 'green' : 'red';
                 nominal = addCommas(item.nominal);
-                $('#bill').append('<div class="card ke-'+i+'" style="border: 1px solid #ccc; box-shadow: 1px 1px 3px 0px  rgba(0,0,0,0.3);"><div class="body"><div class="row"><strong class="col-sm-4" id="date">Date Time: '+date+'</strong></div><hr><div class="row"><div class="col" id="type">Type: <b style="color:'+color+'">'+type+'</b></div><div class="col" id="nominal">Nominal: '+nominal+'</div><hr></div><div class="row"><div class="col" id="description">Description: '+item.description+'</div></div></div></div>'); 
+                $('#bill').append('<div class="card ke-'+i+'" style="border: 1px solid #ccc; box-shadow: 1px 1px 3px 0px  rgba(0,0,0,0.3);"><div class="body"><div class="row"><strong class="col-sm-4" id="date">Date Time: '+date+'</strong></div><hr><div class="row"><div class="col" id="type">Type: <b style="color:'+color+'">'+type+'</b></div><div class="col" id="nominal">Nominal: '+nominal+'</div><hr></div><div class="row"><div class="col" id="description">Description: '+item.description+'</div></div></div></div>');
             });
         })
         .fail(function(jqXHR, ajaxOptions, thrownError){
