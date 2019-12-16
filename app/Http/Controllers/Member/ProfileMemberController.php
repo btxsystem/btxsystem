@@ -1041,10 +1041,8 @@ class ProfileMemberController extends Controller
                 DB::commit();
                 foreach ($request['ebooks'] as $key => $ebook) {
                     $price_ebook = DB::table('ebooks')->where('id',$ebook)->select('price')->first();
-                    dd($price_ebook->price+$profile['amount']);
                     $profile['amount'] += $price_ebook->price;
                 }
-                dd($profile);
                 return view('frontend.virtual-account-autoplacement')->with('profile',$profile);
             }
         } catch(\Illuminate\Database\QueryException $e) {
