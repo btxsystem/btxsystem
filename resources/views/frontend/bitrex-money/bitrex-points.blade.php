@@ -13,7 +13,7 @@
                 <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{{route('member.transaction.topup')}}" method="POST">
+            <form {{--action="{{route('member.transaction.topup')}}"--}} method="POST">
                 @csrf
                 <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="form-line">
@@ -61,7 +61,7 @@
                 <div class="modal-footer">
                     <a href="#" class="btn btn-secondary" data-dismiss="modal">Close</a>
                     <a href="#" id="payment-bca" style="cursor:pointer; display:none;" class="btn btn-primary"></a>
-                    <button type="submit" id="topup-points" disabled=true class="btn btn-primary" style="cursor:pointer;">Topup</a>
+                    <button type="button" id="topup-points" disabled=true class="btn btn-primary" style="cursor:pointer;">Topup</a>
                 </div>
             </form>
         </div>
@@ -310,7 +310,7 @@
 @section('footer_scripts')
 <script src="{{asset('assets2/js/moment.js')}}"></script>
 <script type="text/javascript">
-    let is_bca_method = false;
+    let is_bca_method = true;
 
     $(document).ready(function () {
 

@@ -116,7 +116,7 @@ Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
     });
 
     Route::post('change-photo', ['as' => 'change-photo', 'uses' => 'Member\ProfileMemberController@changePhoto'] );
-    
+
     Route::group(['prefix' => 'shipping', 'as'=> 'shipping.'], function () {
         Route::get('province', ['as' => 'province', 'uses' => 'ShippingController@getProvince']);
         Route::get('city/{id}', ['as' => 'city', 'uses' => 'ShippingController@getCity']);
@@ -131,6 +131,7 @@ Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
 
     Route::group(['prefix' => 'payment', 'as'=> 'payment.'], function () {
         Route::get('', ['as' => 'index', 'uses' => 'Member\MyBonusController@index']);
+        Route::post('bitrans', ['as' => 'bitrans', 'uses' => 'Member\MyBonusController@index']);
     });
 
     Route::group(['prefix' => 'history-bonus', 'as'=> 'history-bonus.'], function () {
