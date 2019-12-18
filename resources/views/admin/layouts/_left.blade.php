@@ -1,6 +1,6 @@
 <ul id="menu" class="page-sidebar-menu">
 
-    @if(\Auth::guard('admin')->user()->hasPermission('Dashboard'))    
+    @if(\Auth::guard('admin')->user()->hasPermission('Dashboard'))
         <li class="{{ (request()->is('backoffice/dashboard')) ? 'active' : '' }}">
             <a href="{{ route('dashboard') }}">
                 <i class="fa fa-dashboard" style="color: #6CC66C"  data-name="dashboard" data-size="18" data-c="#418BCA" data-hc="#418BCA"
@@ -9,7 +9,7 @@
             </a>
         </li>
     @endif
-    
+
     @if(\Auth::guard('admin')->user()->hasPermission('Ebooks'))
         <li class="{{ (request()->segment(2))=='ebook' ? 'active' : '' }}">
             <a href="#">
@@ -29,7 +29,7 @@
             </ul>
         </li>
     @endif
-    
+
     @if(\Auth::guard('admin')->user()->hasPermission('Members'))
         <li class="{{ (request()->segment(2))=='members' ? 'active' : '' }}">
             <a href="#">
@@ -57,7 +57,7 @@
             </ul>
         </li>
     @endif
-    
+
     @if(\Auth::guard('admin')->user()->hasPermission('Customers'))
         <li class="{{ (request()->is('backoffice/customer')) ? 'active' : '' }}">
             <a href="{{ route('customer.index') }}">
@@ -77,7 +77,7 @@
             </a>
         </li>
     @endif
-    
+
     @if(\Auth::guard('admin')->user()->hasPermission('Tree'))
         <li class="{{ (request()->is('backoffice/new-tree')) ? 'active' : '' }}">
             <a href="{{ route('new-tree.index') }}">
@@ -97,6 +97,14 @@
             </a>
         </li>
     @endif
+
+    <li class="{{ (request()->is('backoffice/list-va')) ? 'active' : '' }}">
+        <a href="{{ route('list-va') }}">
+            <i class="fa fa-credit-card" style="color: #6CC66C" data-name="money" data-size="18" data-c="#6CC66C" data-hc="#6CC66C"
+            data-loop="true"></i>
+            List VA
+        </a>
+    </li>
 
     @if(\Auth::guard('admin')->user()->hasPermission('Claim_rewards'))
         <li class="{{ (request()->is('backoffice/reward-claims')) ? 'active' : '' }}">
@@ -144,7 +152,7 @@
             </ul>
         </li>
     @endif
-    
+
     @if(\Auth::guard('admin')->user()->hasPermission('Bitrex-money'))
         <li class="{{ (request()->segment(2))=='bitrex-money' ? 'active' : '' }}">
             <a href="#">
@@ -226,7 +234,7 @@
             </ul>
         </li>
     @endif
-    
+
     @if(\Auth::guard('admin')->user()->hasPermission('Report'))
         <li class="{{ (request()->segment(2))=='report' ? 'active' : '' }}">
             <a href="#">
@@ -257,7 +265,7 @@
             </ul>
         </li>
     @endif
-    
+
     @if(\Auth::guard('admin')->user()->hasPermission('Cms'))
         <li class="{{ (request()->segment(2))=='cms' ? 'active' : '' }}">
             <a href="#">
@@ -310,7 +318,7 @@
             </ul>
         </li>
     @endif
-    
+
     @if(\Auth::guard('admin')->user()->hasPermission('Admin_management'))
         <li class="{{ (request()->segment(2))=='admin-management' ? 'active' : '' }}">
             <a href="">

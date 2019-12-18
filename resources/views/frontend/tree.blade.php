@@ -328,9 +328,16 @@
 							<div class="col-md-12">
 								<br>
 								<div class="chart" id="tree">
-									<button id="upline" class='btn btn-primary zmdi zmdi-chevron-up'></button>
+									<span id="tree_button">
+
+									</span>
 								</div>
 
+								<div id="overlay">
+									<div class="cv-spinner">
+										<span class="spinner"></span>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -525,6 +532,41 @@ em{
 	width: 100% !important;
 }
 
+#overlay{
+	position: fixed;
+	top: 0;
+	z-index: 100;
+	width: 100%;
+	height:100%;
+	display: none;
+	background: rgba(0,0,0,0.6);
+}
+.cv-spinner {
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.spinner {
+	width: 40px;
+	height: 40px;
+	border: 4px #ddd solid;
+	border-top: 4px #2e93e6 solid;
+	border-radius: 50%;
+	animation: sp-anime 0.8s infinite linear;
+}
+@keyframes sp-anime {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(359deg);
+	}
+}
+.is-hide{
+	display:none;
+}
+
 @media (pointer: coarse) {
 	g{
 		transform-origin: 0 0;
@@ -640,7 +682,7 @@ em{
 		checkTerm();
 		is_va = true;
 	})
-	
+
 	$('#bp').change(function(){
 		checkTerm();
 		is_va = false;
@@ -672,7 +714,6 @@ em{
 	}
 
 	function openAutoPlacement() {
-<<<<<<< HEAD
 		$('#action-member').attr('action', '{{route("register-autoplacement")}}')
 		$.ajax({
 			type: 'GET',
@@ -689,15 +730,13 @@ em{
 				console.log("Error");
 			}
 		});
-=======
 		$('#payment_method').html(`
 							<input name="payment_method" type="radio" value="point" id="bp" class="with-gap radio-col-red" checked />
-              				<label for="payment_method">Bitrex Points</label>
+              				<label for="bp">Bitrex Points</label>
 							<input name="payment_method" type="radio" value="va" aria-hidden="true" id="va" class="with-gap radio-col-red"/>
               				<label for="va" aria-hidden="true">Virtual Account BCA</label>`);
 		$('#action-member').attr('action', '{{route("register-autoplacement")}}');
 		$('#register').modal('show');
->>>>>>> dfe78b8b445fec57845ddd1443f736041b9aae70
 	}
 
 	function openTree() {
@@ -741,7 +780,6 @@ em{
 
     	$('.shipping-form').hide();
 
-		$('#upline').hide();
 		$('#province').select2({
 			placeholder: 'Province',
 		});
@@ -758,7 +796,7 @@ em{
 					${v.title}
 				</label>
 				</div>`
-			})
+		})
 		$('#ebook-list').html(`
 			<div id="checkboxEbook">
 				${render}
@@ -835,9 +873,8 @@ em{
 		});
 	});
 
-	$('#search-downline').click(function(){
-		let data = $('.search').val();
-		$.ajax({
+    let searchDownline = (data) => {
+        $.ajax({
 			type: 'GET',
 			url: '/member/select/search-downline/'+data,
 			success: function (data) {
@@ -848,7 +885,7 @@ em{
 						url: '/member/select/child-tree/'+data.username,
 						success: function (data) {
 							$('#bah').empty('g');
-							$('#upline').show();
+							$('#tree_button').html('<button id="upline" class="btn btn-primary zmdi zmdi-chevron-up"></button>');
 							tree(data)
 						},
 						error: function() {
@@ -856,13 +893,18 @@ em{
 						}
 					});
 				}else{
-					alert('Username not found');
+					swal("sorry, username not found");
 				}
 			},
 			error: function() {
 				console.log("Error");
 			}
 		});
+    }
+
+	$('#search-downline').click(function(){
+		let data = $('.search').val();
+	    searchDownline(data);
 	});
 
   $('#bank_name_select').change(function() {
@@ -1078,7 +1120,6 @@ em{
 		panzoom(document.querySelector('#bah'), {
 			zoomSpeed: 0.030
 		});
-
 	$.ajax({
 		type: 'GET',
 		url: '{{route("member.select.tree")}}',
@@ -1098,7 +1139,7 @@ em{
 				url: '/member/select/child-tree/'+a,
 				success: function (data) {
 					$('#bah').empty('g');
-					$('#upline').show();
+					$('#tree_button').html('<button id="upline" class="btn btn-primary zmdi zmdi-chevron-up"></button>');
 					tree(data)
 				},
 				error: function() {
@@ -1224,7 +1265,10 @@ em{
   	function toPrice(value) {
 		return value.toString().replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1\.")
 	}
-	$('#upline').click(function(){
+	$(document).on('click','#upline',function(){
+		$('#upline').remove();
+        $("#overlay").fadeIn(100);
+		cek_upline = 0;
 		$.ajax({
 			type: 'GET',
 			url: '/member/select/tree-upline/'+parent_id,
@@ -1232,13 +1276,16 @@ em{
 				parent_id = data.parent_id;
 				$('#bah').empty('g');
 				tree(data);
-				if (!data.parent) {
-					$('#upline').hide();
-				}
+				data.parent ? cek_upline = 1 : cek_upline = 0;
 			},
 			error: function() {
 				console.log("Error");
 			}
+		}).done(function() {
+			setTimeout(function(){
+				$("#overlay").fadeOut(100);
+				cek_upline==1 ? $('#tree_button').html('<button id="upline" class="btn btn-primary zmdi zmdi-chevron-up"></button>') : $('#upline').remove();;
+			},300);
 		});
 	})
 </script>

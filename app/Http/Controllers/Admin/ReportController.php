@@ -138,7 +138,7 @@ class ReportController extends Controller
                                     return $row->email;
                                 })
                                 ->addColumn('birthdate', function($row){
-                                    return date('d F Y',strtotime($row->birthdate));
+                                    return date('d-m-Y',strtotime($row->birthdate));
                                 })
                                 ->make(true);   
             }

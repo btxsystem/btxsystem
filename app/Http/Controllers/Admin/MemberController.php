@@ -14,7 +14,6 @@ use DataTables;
 use Alert;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
-use App\Exports\EmployeerExport;
 use App\Exports\MembersExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Rap2hpoutre\FastExcel\FastExcel;
@@ -493,21 +492,8 @@ class MemberController extends Controller
 
     public function export()
     {
-        // return Excel::download(new MembersExport, 'members.xlsx');
-        // return (new MembersExport)->download('members.xlsx');
-        $datas = DB::select(DB::raw("SELECT * FROM employeers WHERE DATE_FORMAT(birthdate,'%m %d') BETWEEN DATE_FORMAT(CURDATE(),'%m %d') AND DATE_FORMAT((INTERVAL 2 DAY + CURDATE()),'%m %d') ORDER BY DATE_FORMAT(birthdate,'%m %d')"));
-        echo "<pre>";
-            print_r($datas);
-        echo "</pre>";
-        die();
-        
-        // return (new FastExcel($datas))->download('file.xlsx');
-
-        // return Csv::download(new UsersExport, 'users.csv');
-        (new MembersExport)->queue('members.xlsx');
-
-        return back()->withSuccess('Export started!');
-
+        // echo 'Total memory usage : ' . (memory_get_usage() - $begin);
+        return Excel::download(new MembersExport, now() .' ' .'members.xlsx');
     }
 
 }

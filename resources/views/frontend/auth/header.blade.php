@@ -66,7 +66,7 @@
                     <br>
                     <div class="input-group col-md-12">
                         <input class="form-control" type="email" placeholder="Email" name="email" id="email" required>
-                    </div>              
+                    </div>
                     <div>
                       <b style="color:red" id="email_danger"></b>
                     </div>
@@ -138,7 +138,7 @@
                         <input name="shipping" type="radio" value="0" id="pickup" checked class="with-gap radio-col-red" />
                         <label for="pickup">Pickup</label>&nbsp;&nbsp;
                         <input name="shipping" type="radio" value="1" id="shipping" class="with-gap radio-col-red" />
-                        <label for="shipping">Shipping</label> 
+                        <label for="shipping">Shipping</label>
                       </div>
                     </div>
                     <br>
@@ -244,7 +244,7 @@
             <a class="header-logo" href="javascript:void(0);">
               <img class="header-logo__img" src="{{asset('img/ap2li_new_1.png')}}"  alt="AP2LI Logo" height="auto" width="190px">
             </a>
-            
+
             <div class="btnBook">
               <a class="btn" href="{{route('member.home')}}">
                   <span style="color:white">EBOOK</span>
@@ -272,14 +272,14 @@
                     <li><a id="about" href="#">About Us</a></li>
                     <li><a id="product" href="#">Our Product</a></li>
                     <li><a id="event" href="#">Event</a></li>
-
-                    <li><a data-toggle="modal" data-target="#join"><button class="btn btn-effect btn-info btn-buy" style="background: #b92240; margin-top: -10px;">JOIN</button></a></li>
+                    <!-- <li><a href="#"><button class="btn btn-effect btn-info btn-buy" style="background: #b92240; margin-top: -10px;">JOIN</button></a></li> -->
+                    <!-- <li><a data-toggle="modal" data-target="#join"><button class="btn btn-effect btn-info btn-buy" style="background: #b92240; margin-top: -10px;">JOIN</button></a></li> -->
                     {{-- <li><a href="#"><button class="btn btn-effect btn-info btn-buy" style="background: #b92240; margin-top: -10px;">JOIN</button></a></li>--}}
-                    {{-- <li><a data-toggle="modal" data-target="#join"><button class="btn btn-effect btn-info btn-buy" style="background: #b92240; margin-top: -10px;">JOIN</button></a></li> --}}
+                   <li><a data-toggle="modal" data-target="#join"><button class="btn btn-effect btn-info btn-buy" style="background: #b92240; margin-top: -10px;">JOIN</button></a></li>
                     <!-- <li><a href="#"><button class="btn btn-effect btn-info btn-buy" style="background: #b92240; margin-top: -10px;">JOIN</button></a></li> -->
 
                   </ul>
-                  
+
                 </div>
               </nav>
               <!--end navbar -->

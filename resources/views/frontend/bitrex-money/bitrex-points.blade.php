@@ -13,7 +13,7 @@
                 <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{{route('member.transaction.topup')}}" method="POST">
+            <form {{--action="{{route('member.transaction.topup')}}"--}} method="POST">
                 @csrf
                 <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="form-line">
@@ -30,23 +30,38 @@
                 </div>
                 <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
                   <div class="demo-radio-button">
-                    <input name="method" type="radio" value="transfer" id="transfer" class="with-gap radio-col-red" checked />
-                    <label for="transfer">Transfer</label>
-                    <input name="method" type="radio" value="ipay" id="ipay" class="with-gap radio-col-red" />
-                    <label for="ipay">VA & OVO</label>
-                    <input name="method" type="radio" value="bca" id="bca" class="with-gap radio-col-red" />
+                    <!-- <input name="method" type="radio" value="transfer" id="transfer" class="with-gap radio-col-red" checked />
+                    <label for="transfer">Transfer</label> -->
+                    <h5>Select Payment Method</h5>
+
+                    <input name="method" type="radio" value="bca" id="bca" class="with-gap radio-col-red" checked/>
                     <label for="bca">BCA VA</label>
+
+                    <!-- <input name="method" type="radio" value="ovo" id="ovo" class="with-gap radio-col-red" />
+                    <label for="ovo">OVO</label>
+
+                    <input name="method" type="radio" value="mandiri" id="mandiri" class="with-gap radio-col-red" />
+                    <label for="mandiri">MANDIRI ATM</label>
+
+                    <input name="method" type="radio" value="bni" id="bni" class="with-gap radio-col-red" />
+                    <label for="bni">BNI VA</label>
+
+                    <input name="method" type="radio" value="maybank" id="maybank" class="with-gap radio-col-red"/>
+                    <label for="maybank">MAYBANK VA</label>
+
+                    <input name="method" type="radio" value="permata" id="permata" class="with-gap radio-col-red" />
+                    <label for="permata">PERMATA VA</label> -->
                   </div>
                 </div>
-                <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12" id="transfer-form">
+                <!-- <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12" id="transfer-form">
                   <h4>Bank Name : BCA</h4>
                   <h4>Bank Account : PT. BITREXGO SOLUSI PRIMA</h4>
                   <h4>Bank Number : 5810598168</h4>
-                </div>
+                </div> -->
                 <div class="modal-footer">
                     <a href="#" class="btn btn-secondary" data-dismiss="modal">Close</a>
                     <a href="#" id="payment-bca" style="cursor:pointer; display:none;" class="btn btn-primary"></a>
-                    <button type="submit" id="topup-points" disabled=true class="btn btn-primary" style="cursor:pointer;">Topup</a>
+                    <button type="button" id="topup-points" disabled=true class="btn btn-primary" style="cursor:pointer;">Topup</a>
                 </div>
             </form>
         </div>
@@ -70,6 +85,9 @@
                         </div>
                     <button type="button" class="btn btn-raised bg-grey waves-effect" style="cursor:pointer" id="copy">Copy</button>
                 </center>
+                <br>
+                <center><p style="font-size:14px" id="nominal_plus_fee"></p></center>
+                <center><p style="font-size:14px" id="time-expired"></p></center>
                 <br>
                 <h4>Bagaimana cara melakukan Pembayaran BCA Virtual Account ?</h4>
                 <h5>1. ATM BCA</h5>
@@ -229,7 +247,11 @@
                 <div class="body">
                     <a href="#" class="btn btn-primary btn-md topup" data-toggle="modal" data-target="#topup">Topup</a>
                     <a href="#" class="btn btn-primary btn-md cek-ongkir" data-toggle="modal" data-target="#cekongkir">Cek Ongkir</a>
+<<<<<<< HEAD
                     {{---<a href="#" class="btn btn-primary btn-md convert" data-toggle="modal" data-target="#convert">Convert to BV</a>--}}
+=======
+                    {{--<a href="#" class="btn btn-primary btn-md convert" data-toggle="modal" data-target="#convert">Convert to BV</a>--}}
+>>>>>>> eb012daed85c4fa1cf6c0e6e4530b9b9a8e078d3
                     <h5 class="d-flex flex-row-reverse">Bitrex Points: {{number_format($profile->bitrex_points,0,".",".")}}</h5>
                 </div>
             </div>
@@ -290,8 +312,9 @@
 </style>
 
 @section('footer_scripts')
+<script src="{{asset('assets2/js/moment.js')}}"></script>
 <script type="text/javascript">
-    let is_bca_method = false;
+    let is_bca_method = true;
 
     $(document).ready(function () {
 
@@ -361,6 +384,8 @@
                     $('#des_noreq').text('Masukkan '+data.customer_number+' sebagai rekening tujuan');
                     $('#des_noreq2').text('Masukkan '+data.customer_number+' sebagai rekening tujuan');
                     $('#des_noreq3').text('Masukkan '+data.customer_number+' sebagai rekening tujuan');
+                    $('#time-expired').text('Transfer Sebelum '+moment(data.time_expired).format('D MMMM Y - HH:mm'));
+                    $('#nominal_plus_fee').text('Nominal Transfer '+addCommas(data.total_amount)+' (include fee)')
                     $('#no-virtual').modal('show');
                     $('#topup').modal('hide');
                 },

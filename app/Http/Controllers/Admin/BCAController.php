@@ -19,9 +19,9 @@ class BCAController extends Controller
 
     public function fundTransfer()
     {
-        $date = "2019-10-21";
-        $accountnumber = "0611102363";
-        $amount = "100000";
+        $date = "2019-10-23";
+        $accountnumber = "0201245681";
+        $amount = "100000.00";
         $remark1 = "Test Transfer";
         $remark2 = "Testing transfer";
         $transactionId = "0001".rand(1000,9999);

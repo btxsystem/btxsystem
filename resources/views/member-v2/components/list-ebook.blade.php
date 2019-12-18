@@ -34,6 +34,10 @@
 					<br>
 				</center>
 				<br>
+                <center><p style="font-size:14px" id="ammount_bca"></p></center>
+                <br>
+                <center><p style="font-size:14px" id="time-expired"></p></center>
+                <br>
 				<h4>Bagaimana cara melakukan Pembayaran BCA Virtual Account ?</h4>
 				<h5>1. ATM BCA</h5>
 				<ul style="font-size:12px">
@@ -253,16 +257,16 @@
 					  </div>
 						@endif
 						<div class="form-group">
-							<div class="form-check form-check-inline">
+							<!-- <div class="form-check form-check-inline">
 								<input class="form-check-input" type="radio" name="payment_method" id="transfer" value="transfer" checked>
 								<label class="form-check-label" for="inlineRadio1">Transfer</label>
-							</div>
-							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="radio" name="payment_method" id="ipay" value="ipay">
+							</div> -->
+							<!-- <div class="form-check form-check-inline">
+								<input class="form-check-input" type="radio" name="payment_method" id="ipay" value="ipay" checked>
 								<label class="form-check-label" for="inlineRadio1">VA & OVO</label>
-							</div>
+							</div> -->
 							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="radio" name="payment_method" id="va-bca" value="va-bca">
+								<input class="form-check-input" type="radio" name="payment_method" id="va-bca" value="va-bca" checked>
 								<label class="form-check-label" for="inlineRadio1">BCA VA</label>
 							</div>
 					  </div>
@@ -293,6 +297,7 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script src="{{asset('assetsebook/js/helper.js')}}"></script>
+<script src="{{asset('assets2/js/moment.js')}}"></script>
 <script>
 (function(w,d,t,h,l,b,p,o,a,m){w['TraducationFxObject']=o;w[o]=w[o]||function(){
 w[o].h=h;w[o].b=b;return (w[o].q=w[o].q||[]).push(arguments)};a=d.createElement(t),
@@ -409,6 +414,8 @@ $('#submit-va').click(function(){
 			$('#des_noreq').text('Masukkan '+data.customer_number+' sebagai rekening tujuan');
 			$('#des_noreq2').text('Masukkan '+data.customer_number+' sebagai rekening tujuan');
 			$('#des_noreq3').text('Masukkan '+data.customer_number+' sebagai rekening tujuan');
+            $('#ammount_bca').text('Nominal transaksi : '+data.total_amount+' (Include fee)');
+            $('#time-expired').text('Transfer Sebelum '+moment(data.time_expired).format('D MMMM Y - HH:mm'));
 			$('#no-virtual').modal('show');
 			$('#modal-subscription').modal('hide');
 
