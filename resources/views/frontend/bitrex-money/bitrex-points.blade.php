@@ -37,6 +37,9 @@
                     <input name="method" type="radio" value="bca" id="bca" class="with-gap radio-col-red" checked/>
                     <label for="bca">BCA VA</label>
 
+                    <input name="method" type="radio" value="other" id="other" class="with-gap radio-col-red"/>
+                    <label for="other">Other Transfer</label>
+
                     <!-- <input name="method" type="radio" value="ovo" id="ovo" class="with-gap radio-col-red" />
                     <label for="ovo">OVO</label>
 
@@ -247,11 +250,7 @@
                 <div class="body">
                     <a href="#" class="btn btn-primary btn-md topup" data-toggle="modal" data-target="#topup">Topup</a>
                     <a href="#" class="btn btn-primary btn-md cek-ongkir" data-toggle="modal" data-target="#cekongkir">Cek Ongkir</a>
-<<<<<<< HEAD
-                    {{---<a href="#" class="btn btn-primary btn-md convert" data-toggle="modal" data-target="#convert">Convert to BV</a>--}}
-=======
                     {{--<a href="#" class="btn btn-primary btn-md convert" data-toggle="modal" data-target="#convert">Convert to BV</a>--}}
->>>>>>> eb012daed85c4fa1cf6c0e6e4530b9b9a8e078d3
                     <h5 class="d-flex flex-row-reverse">Bitrex Points: {{number_format($profile->bitrex_points,0,".",".")}}</h5>
                 </div>
             </div>
@@ -313,10 +312,16 @@
 
 @section('footer_scripts')
 <script src="{{asset('assets2/js/moment.js')}}"></script>
+<script src="{{ !config('services.midtrans.isProduction') ? 'https://app.sandbox.midtrans.com/snap/snap.js' : 'https://app.midtrans.com/snap/snap.js' }}" data-client-key="{{ config('services.midtrans.clientKey') }}"></script>
 <script type="text/javascript">
-    let is_bca_method = true;
 
     $(document).ready(function () {
+
+    let is_bca_method = true;
+
+    if($('input[name ="method"]').val() != is_bca_method){
+        is_bca_method = false;
+    }
 
       $("#province").select2({
         placeholder: "Province",
@@ -338,6 +343,10 @@
       $('#transfer').change(function(){
           $('#topup-points').prop('type','submit');
           is_bca_method = false;
+      })
+
+      $('#other').change(function(){
+        is_bca_method = false;
       })
 
       $('#ipay').change(function(){
@@ -393,6 +402,34 @@
                     console.log("Error");
                 }
             });
+          }else{
+            $.post("{{ route('member.payment.midtrans') }}",
+            {
+                _method: 'POST',
+                _token: '{{ csrf_token() }}',
+                amount: 100000,
+                note: 'kosong',
+                donation_type: 'topup',
+                donor_username: 'eriksut',
+                donor_email: 'eriksut@gmail.com',
+            },
+            function (data, status) {
+                snap.pay(data.snap_token, {
+                    // Optional
+                    onSuccess: function (result) {
+                        location.reload();
+                    },
+                    // Optional
+                    onPending: function (result) {
+                        location.reload();
+                    },
+                    // Optional
+                    onError: function (result) {
+                        location.reload();
+                    }
+                });
+            });
+            return false;
           }
       })
 
