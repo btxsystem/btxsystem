@@ -105,6 +105,7 @@ class PaymentMindtransController extends Controller
             // TODO set payment status in merchant's database to 'Settlement'
             // $donation->addUpdate("Transaction order_id: " . $orderId ." successfully transfered using " . $type);
             $donation->setSuccess();
+            $donation->setPoints();
 
           } elseif($transaction == 'pending'){
 
