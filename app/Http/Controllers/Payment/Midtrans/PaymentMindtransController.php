@@ -8,6 +8,7 @@ use Veritrans_Config;
 use Veritrans_Snap;
 use Veritrans_Notification;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class PaymentMindtransController extends Controller
 {
@@ -26,12 +27,13 @@ class PaymentMindtransController extends Controller
     {
         DB::transaction(function(){
             // Save donasi ke database
+            $data = Auth::user();
             $donation = Donation::create([
-                'donor_username' => $this->request->donor_username,
-                'donor_email' => $this->request->donor_email,
-                'donation_type' => $this->request->donation_type,
+                'donor_username' => $data->username,
+                'donor_email' => $data->email,
+                'donation_type' => 'Topup',
                 'amount' => floatval($this->request->amount),
-                'note' => $this->request->note,
+                'note' => 'Topup Bitrex points from midtrans',
             ]);
 
             // Buat transaksi ke midtrans kemudian save snap tokennya.
@@ -93,6 +95,7 @@ class PaymentMindtransController extends Controller
                 // TODO set payment status in merchant's database to 'Success'
                 // $donation->addUpdate("Transaction order_id: " . $orderId ." successfully captured using " . $type);
                 $donation->setSuccess();
+                $donation->setPoints();
               }
 
             }

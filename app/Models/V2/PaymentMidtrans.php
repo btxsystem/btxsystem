@@ -3,6 +3,8 @@
 namespace App\Models\V2;
 
 use Illuminate\Database\Eloquent\Model;
+use App\HistoryBitrexPoints;
+use App\Employeer;
 
 class PaymentMidtrans extends Model
 {
@@ -44,6 +46,24 @@ class PaymentMidtrans extends Model
     {
         $this->attributes['va_account'] = $va;
         self::save();
+    }
+
+    public function setPoints()
+    {
+        $member = Employeer::where('username', $this->attributes['username'])->first();
+        $point = (int)$this->attributes['amount'] / 1000;
+        $member->update([
+            'bitrex_points' => $member->bitrex_points + $point
+        ]);
+        HistoryBitrexPoints::create([
+            'id_member' => $member->id,
+            'nominal'   => $this->attributes['amount'],
+            'points'    => $point,
+            'description' => $this->attributes['note'],
+            'info'  => 1,
+            'transaction_ref' => $this->attributes['va_account'],
+            'status' => 1
+        ]);
     }
 
 }

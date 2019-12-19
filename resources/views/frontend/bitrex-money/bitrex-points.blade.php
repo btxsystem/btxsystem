@@ -407,11 +407,7 @@
             {
                 _method: 'POST',
                 _token: '{{ csrf_token() }}',
-                amount: 100000,
-                note: 'kosong',
-                donation_type: 'topup',
-                donor_username: 'eriksut',
-                donor_email: 'eriksut@gmail.com',
+                amount: nominal,
             },
             function (data, status) {
                 snap.pay(data.snap_token, {
