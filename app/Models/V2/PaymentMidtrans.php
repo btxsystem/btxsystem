@@ -50,7 +50,7 @@ class PaymentMidtrans extends Model
 
     public function setPoints()
     {
-        $member = Employeer::where('username', $this->attributes['username'])->first();
+        $member = Employeer::where('username', $this->attributes['donor_username'])->first();
         $point = (int)$this->attributes['amount'] / 1000;
         $member->update([
             'bitrex_points' => $member->bitrex_points + $point
