@@ -156,7 +156,9 @@ class TransactionPaymentService
                 'term_two' => $parameter[1]->term_two
             ];
             $arr_tojson = json_encode($product_detail);
-            $cost = $parameter[1]->cost + 280000 +2750;
+
+            $cost = 280000 +2750;
+            $cost += isset($parameter[1]->kurir) ? $parameter[1]->kurir : 0;
 
             foreach ($parameter[1]->ebooks as $key => $ebook) {
                 $price_ebook = DB::table('ebooks')->where('id',$ebook)->select('price')->first();

@@ -1026,10 +1026,12 @@ class ProfileMemberController extends Controller
                     'user_id' => Auth::user()->id,
                     'product_type' => 'topup',
                     'user_type' => 'member',
-                    'total_amount' => $request->nominal+27500,
+                    'total_amount' => 282750,
                     'customer_number' => '11210'.$no_invoice,
                     'time_expired' => Carbon::create(date('Y-m-d H:i:s'))->addDay(1),
                 ];
+
+                $data['total_amount'] += isset($request['kurir']) ? $request['kurir'] : 0;
 
                 $profile['no_invoice'] = $data['customer_number'];
                 $profile['amount'] = $data['total_amount'];
@@ -1037,7 +1039,10 @@ class ProfileMemberController extends Controller
                 $va = new Va;
                 $va->register(Auth::user()->id, $request, $no_invoice);
                 DB::commit();
-
+                foreach ($request['ebooks'] as $key => $ebook) {
+                    $price_ebook = DB::table('ebooks')->where('id',$ebook)->select('price')->first();
+                    $profile['amount'] += $price_ebook->price;
+                }
                 return view('frontend.virtual-account-autoplacement')->with('profile',$profile);
             }
         } catch(\Illuminate\Database\QueryException $e) {

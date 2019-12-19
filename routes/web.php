@@ -100,7 +100,10 @@ Route::post('register-member', ['as' => 'register-member', 'uses' => 'Member\Reg
 
 Route::get('/payment-confirm', ['as' => 'payment.confirm', 'uses' => 'Payment\V2\PaymentController@confirm']);
 
+Route::post('/notification/handler', ['as' => 'notification.handler', 'uses' => 'Payment\Midtrans\PaymentMindtransController@notificationHandler']);
+
 Route::post('/payment-confirmation', ['as' => 'payment.confirmation', 'uses' => 'Member\TransactionController@paymentConfirmation']);
+
 Route::post('/response-pay-topup', ['as' => 'response.pay.topup', 'uses' => 'Member\TransactionController@responsePayment']);
 
 Route::group(['namespace' => 'Ebook\Api', 'prefix' => 'api/ebook'], function() {
@@ -116,7 +119,7 @@ Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
     });
 
     Route::post('change-photo', ['as' => 'change-photo', 'uses' => 'Member\ProfileMemberController@changePhoto'] );
-    
+
     Route::group(['prefix' => 'shipping', 'as'=> 'shipping.'], function () {
         Route::get('province', ['as' => 'province', 'uses' => 'ShippingController@getProvince']);
         Route::get('city/{id}', ['as' => 'city', 'uses' => 'ShippingController@getCity']);
@@ -131,6 +134,7 @@ Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
 
     Route::group(['prefix' => 'payment', 'as'=> 'payment.'], function () {
         Route::get('', ['as' => 'index', 'uses' => 'Member\MyBonusController@index']);
+        Route::post('midtrans', ['as' => 'midtrans', 'uses' => 'Payment\Midtrans\PaymentMindtransController@submitDonation']);
     });
 
     Route::group(['prefix' => 'history-bonus', 'as'=> 'history-bonus.'], function () {

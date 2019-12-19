@@ -13,7 +13,7 @@
                 <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{{route('member.transaction.topup')}}" method="POST">
+            <form {{--action="{{route('member.transaction.topup')}}"--}} method="POST">
                 @csrf
                 <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="form-line">
@@ -36,6 +36,9 @@
 
                     <input name="method" type="radio" value="bca" id="bca" class="with-gap radio-col-red" checked/>
                     <label for="bca">BCA VA</label>
+
+                    <input name="method" type="radio" value="other" id="other" class="with-gap radio-col-red"/>
+                    <label for="other">Other Transfer</label>
 
                     <!-- <input name="method" type="radio" value="ovo" id="ovo" class="with-gap radio-col-red" />
                     <label for="ovo">OVO</label>
@@ -61,7 +64,7 @@
                 <div class="modal-footer">
                     <a href="#" class="btn btn-secondary" data-dismiss="modal">Close</a>
                     <a href="#" id="payment-bca" style="cursor:pointer; display:none;" class="btn btn-primary"></a>
-                    <button type="submit" id="topup-points" disabled=true class="btn btn-primary" style="cursor:pointer;">Topup</a>
+                    <button type="button" id="topup-points" disabled=true class="btn btn-primary" style="cursor:pointer;">Topup</a>
                 </div>
             </form>
         </div>
@@ -309,10 +312,16 @@
 
 @section('footer_scripts')
 <script src="{{asset('assets2/js/moment.js')}}"></script>
+<script src="{{ !config('services.midtrans.isProduction') ? 'https://app.sandbox.midtrans.com/snap/snap.js' : 'https://app.midtrans.com/snap/snap.js' }}" data-client-key="{{ config('services.midtrans.clientKey') }}"></script>
 <script type="text/javascript">
-    let is_bca_method = false;
 
     $(document).ready(function () {
+
+    let is_bca_method = true;
+
+    if($('input[name ="method"]').val() != is_bca_method){
+        is_bca_method = false;
+    }
 
       $("#province").select2({
         placeholder: "Province",
@@ -334,6 +343,10 @@
       $('#transfer').change(function(){
           $('#topup-points').prop('type','submit');
           is_bca_method = false;
+      })
+
+      $('#other').change(function(){
+        is_bca_method = false;
       })
 
       $('#ipay').change(function(){
@@ -389,6 +402,30 @@
                     console.log("Error");
                 }
             });
+          }else{
+            $.post("{{ route('member.payment.midtrans') }}",
+            {
+                _method: 'POST',
+                _token: '{{ csrf_token() }}',
+                amount: nominal,
+            },
+            function (data, status) {
+                snap.pay(data.snap_token, {
+                    // Optional
+                    onSuccess: function (result) {
+                        location.reload();
+                    },
+                    // Optional
+                    onPending: function (result) {
+                        location.reload();
+                    },
+                    // Optional
+                    onError: function (result) {
+                        location.reload();
+                    }
+                });
+            });
+            return false;
           }
       })
 
