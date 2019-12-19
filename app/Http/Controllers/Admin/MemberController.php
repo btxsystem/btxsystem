@@ -96,14 +96,14 @@ class MemberController extends Controller
     }
 
     public function redirect(){
-        DB::table('close_member')->where('is_close_member', 0)->update(['is_close_member' => 1, 'updated_at' => now()]); 
-        $data['successs'] = 200;  
+        DB::table('close_member')->where('is_close_member', 0)->update(['is_close_member' => 1, 'updated_at' => now()]);
+        $data['successs'] = 200;
         return $data;
     }
 
     public function nonredirect(){
-        DB::table('close_member')->where('is_close_member', 1)->update(['is_close_member' => 0, 'updated_at' => now()]); 
-        $data['successs'] = 200;  
+        DB::table('close_member')->where('is_close_member', 1)->update(['is_close_member' => 0, 'updated_at' => now()]);
+        $data['successs'] = 200;
         return $data;
     }
 
@@ -116,14 +116,14 @@ class MemberController extends Controller
     {
         $data['status'] = 0;
         Employeer::findOrFail($id)->update($data);
-        return redirect()->back(); 
+        return redirect()->back();
     }
-    
+
     public function active($id)
     {
         $data['status'] = 1;
         Employeer::findOrFail($id)->update($data);
-        return redirect()->back(); 
+        return redirect()->back();
     }
 
     public function store(Request $request)
@@ -142,7 +142,7 @@ class MemberController extends Controller
         ]);
         DB::beginTransaction();
         try{
-    
+
             $data = new Employeer;
             $data->id_member = memberIdGenerate();
             $data->nik = $request->nik;
@@ -180,20 +180,57 @@ class MemberController extends Controller
 
             $data->save();
 
-    
- 
+
+
             DB::commit();
-            
+
             Alert::success('Sukses Menambah Data Member', 'Sukses');
             // return redirect()->route('members.index');
             return view('admin.members.active.index');
- 
+
         }catch(\Exception $e){
             // throw $e;
             DB::rollback();
-            
+
             Alert::error('Gagal Menambah Data Member', 'Gagal');
             return \redirect()->back();
+        }
+    }
+
+    public function refound(Request $request){
+        $request->points = (int)$request->points;
+        $member = Employeer::where('id', $request->name)->first();
+        if ($member->bitrex_points < $request->points) {
+            Alert::success('Gagal melakukan refund, refund points harus lebih bersar atau sama dengan total points', 'Failed');
+            return redirect()->route('members.show', $member->id);
+        }else{
+            DB::beginTransaction();
+            try{
+                $member->update([
+                    'bitrex_points' => $member->bitrex_points - $request->points
+                ]);
+
+                $topup = new HistoryBitrexPoints;
+                $topup->id_member = $request->name;
+                $topup->nominal = $request->points * 1000;
+                $topup->points = $request->points;
+                $topup->description = $request->description;
+                $topup->info = 0;
+                $topup->status = 1;
+                $topup->save();
+
+                DB::commit();
+
+                Alert::success('Sukses Melakukan Refund', 'Sukses');
+                return redirect()->route('members.show', $member->id);
+
+            }catch(\Exception $e){
+                // throw $e;
+                DB::rollback();
+
+                Alert::error('Gagal Melakukan Topup', 'Gagal');
+                return \redirect()->back();
+            }
         }
     }
 
@@ -253,21 +290,21 @@ class MemberController extends Controller
             }
             $data->save();
             DB::commit();
-            
+
             Alert::success('Sukses Update Data Member', 'Sukses');
             return redirect()->route('members.show', $data->id);
- 
+
         }catch(\Exception $e){
             throw $e;
             DB::rollback();
-            
+
             Alert::error('Gagal Update Data Member', 'Gagal');
             return \redirect()->back();
         }
     }
 
     public function updatePassword(Request $request)
-    {      
+    {
         $validator = \Validator::make($request->all(), ['password' => 'min:6']);
 
         if ($validator->fails()) {
@@ -277,7 +314,7 @@ class MemberController extends Controller
 
         DB::beginTransaction();
         try{
-            
+
             $data = Employeer::findOrFail($request->id);
             if($request->password != $request->comfirm_password ) {
                 Alert::error('Password & Confirmasi Password tidak sama !!', 'Gagal')->persistent("Close");
@@ -286,14 +323,14 @@ class MemberController extends Controller
             $data->password = bcrypt($request->password);
             $data->save();
             DB::commit();
-            
+
             Alert::success('Sukses Update Password', 'Sukses');
             return redirect()->route('members.show', $data->id);
 
         }catch(\Exception $e){
             // throw $e;
             DB::rollback();
-            
+
             Alert::error('Gagal Update Password', 'Gagal');
             return \redirect()->back();
         }
@@ -318,17 +355,17 @@ class MemberController extends Controller
             $topup->info = 1;
             $topup->status = 1;
             $topup->save();
-    
- 
+
+
             DB::commit();
-            
+
             Alert::success('Sukses Melakukan Topup', 'Sukses');
             return redirect()->route('members.show', $member->id);
- 
+
         }catch(\Exception $e){
             // throw $e;
             DB::rollback();
-            
+
             Alert::error('Gagal Melakukan Topup', 'Gagal');
             return \redirect()->back();
         }
@@ -345,29 +382,29 @@ class MemberController extends Controller
             $buy->expired_at = Carbon::now()->addYears(1)->toDateString();
 
             $buy->save();
-    
- 
+
+
             DB::commit();
-            
+
             Alert::success('Sukses Melakukan Pembelian Product', 'Sukses');
             return redirect()->route('members.show', $request->member_id);
- 
+
         }catch(\Exception $e){
             // throw $e;
             DB::rollback();
-            
+
             Alert::error('Gagal Melakukan Pembelian Product', 'Gagal');
             return \redirect()->back();
         }
     }
-    
+
     public function historyPointData($id)
     {
         // $data = Employeer::findOrFail($id);
         $data = HistoryBitrexPoints::where('id_member', $id)
                                     ->where('status', 1)
                                     ->orderBy('created_at', 'desc');
-     
+
         return Datatables::of($data)
             ->addIndexColumn()
             ->addColumn('nominal', function ($data) {
@@ -388,9 +425,9 @@ class MemberController extends Controller
     public function historyCashData($id)
     {
         // $data = Employeer::findOrFail($id);
-  
+
         $data = HistoryBitrexCash::where('id_member', $id)->orderBy('created_at', 'desc');
-     
+
         return Datatables::of($data)
             ->addIndexColumn()
             ->addColumn('nominal', function ($data) {
@@ -416,7 +453,7 @@ class MemberController extends Controller
     {
         // $data = Employeer::findOrFail($id);
         $data = HistoryPv::where('id_member', $id)->orderBy('created_at', 'desc');
-     
+
         return Datatables::of($data)
             ->addIndexColumn()
             ->make(true);
@@ -426,7 +463,7 @@ class MemberController extends Controller
     {
         $data = TransactionMember::with('ebook')->where('member_id', $id)->orderBy('created_at', 'desc');
         // $data = Employeer::with('transaction_member.ebook')->findOrFail($id);
-     
+
         return Datatables::of($data)
             ->addIndexColumn()
             ->addColumn('nominal', function ($data) {
@@ -456,13 +493,13 @@ class MemberController extends Controller
             break;
 
         }
-       
+
     }
 
     public function getStatusInfoTransaction($data)
     {
         switch($data->info) {
-            case 1; 
+            case 1;
             return 'Credit';
             break;
 
@@ -470,7 +507,7 @@ class MemberController extends Controller
             return 'Debit';
             break;
 
-        } 
+        }
     }
 
     public function getStatusPayment($data)
