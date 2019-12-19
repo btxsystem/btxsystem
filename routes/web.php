@@ -90,7 +90,7 @@ Route::redirect('/', '/login');
 Route::get('/login', 'Auth\LoginController@getLogin')->middleware('guest');
 Route::post('/login', 'Auth\LoginController@postLogin');
 Route::get('/logout', 'Auth\LoginController@logout');
-Route::post('/finish', 'Member\BitrexPointController@getHistoryPoints');
+Route::post('/finish', 'Member\BitrexPointController@index');
 Route::get('user/{user}', ['as' => 'user', 'uses' => 'Member\PvController@issetUser']);
 Route::post('register-auto', ['as' => 'register-auto', 'uses' => 'Member\ProfileMemberController@registerAuto']);
 Route::get('email/{user}', ['as' => 'email', 'uses' => 'Member\ProfileMemberController@isSameEmail']);
