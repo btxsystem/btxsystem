@@ -383,7 +383,7 @@
                 <h4 class="modal-title">Refund For {{$data->username}} / {{$data->id_member}}</h4>
             </div>
             <div class="modal-body">
-                <form class="well form-horizontal" action="{{ route('members.refound') }}">
+                <form class="well form-horizontal" action="{{ route('members.refound') }}" id="refund-target">
                     {{ csrf_field() }}
                     <fieldset>
                     <input id="name" name="name" value="{{$data->id}}" type="hidden">
@@ -407,7 +407,7 @@
                         </div>
                     </fieldset>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="button" id="submit-refund" class="btn btn-primary">Submit</button>
                     </div>
                 </form>
             </div>
@@ -476,8 +476,16 @@
           });
         });
 
-        $('#points').keyup(function () {
-            console.log($(this).val());
+        $('#submit-refund').click(function(){
+            swal({
+                    title: "Are you sure refund points ?",
+                    confirmButtonClass: "btn-danger",
+                    confirmButtonText: "Yes!",
+                    showCancelButton: true,
+                },
+                function() {
+                    $('#refund-target').submit();
+            });
         })
 
         $(document).ready(function () {
@@ -503,8 +511,6 @@
                   { data: 'current_midle', name: 'current_midle', className: "text-center"  },
                   { data: 'current_right', name: 'current_right', className: "text-center"  },
                   { data: 'created_at', name: 'created_at', className: "text-center"  },
-
-
               ]
           });
         });
@@ -574,7 +580,6 @@
         $(document).on('click', '.delete-video', function (e) {
             e.preventDefault();
             var id = $(this).data('id');
-            console.log(id)
             var urlVideo =   "{{url('backoffice/deleteVideo/')}}"
             // console.log(urlVideo);
 
