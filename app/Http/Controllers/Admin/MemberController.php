@@ -198,6 +198,7 @@ class MemberController extends Controller
     }
 
     public function refound(Request $request){
+        $request->points = (int)$request->points;
         $member = Employeer::where('id', $request->name)->first();
         if ($member->bitrex_points < $request->points) {
             Alert::success('Gagal melakukan refund, refund points harus lebih bersar atau sama dengan total points', 'Failed');
