@@ -56,12 +56,12 @@ List Of Users Active
                     <table id="active-member" class="table membership-table table-bordered table-striped table-condensed flip-content" >
                         <thead class="flip-content">
                             <tr>
-                                <th class="text-center" width="5%">No</th>
-                                <th class="text-center" width="15%">Id Member</th>
+                                <th class="text-center" width="3%">No</th>
+                                <th class="text-center" width="13%">Id Member</th>
                                 <th class="text-center" width="10%">Username</th>
-                                <th class="text-center" width="20%">Name</th>
+                                <th class="text-center" width="18%">Name</th>                                 <th class="text-center" width="10%">Sponsor</th>
                                 <th class="text-center" width="15%">Join Date</th>
-                                <th class="text-center" width="15%">Rank</th>
+                                <th class="text-center" width="12%">Rank</th>
                                 <th class="text-center" width="15%">Action</th>
                             </tr>
                         </thead>
@@ -194,6 +194,7 @@ List Of Users Active
                         { data: 'id_member', name: 'id_member'},
                         { data: 'username', name: 'username'},
                         { data: 'full_name', name: 'last_name'},
+                        { data: 'sponsor', name: 'sponsor.username', orderable: false, searchable: false},
                         { data: 'created_at', name: 'created_at'},
                         { data: 'ranking', name: 'rank.name', orderable: false, },
                         { data: 'action', name: 'action', orderable: false, searchable: false, className: 'text-center'},
@@ -204,6 +205,7 @@ List Of Users Active
             $('#filter').click(function(){
                 var from_date = $('#from_date').val();
                 var to_date = $('#to_date').val();
+                console.log(to_date);
                 if(from_date != '' &&  to_date != '')
                     {
                         $('#active-member').DataTable().destroy();
@@ -220,6 +222,31 @@ List Of Users Active
                 $('#to_date').val('');
                 $('#active-member').DataTable().destroy();
                 load_data();
+            });
+
+
+            $(document).on('click', '.nonactive-member', function (e) {
+                e.preventDefault();
+                var id = $(this).data('id');
+                // console.log(id);
+                var url =   "{{url('backoffice/members/active/nonactive/')}}"
+                swal({
+                            title: "Are you sure to set Non Active this member ?",
+                            confirmButtonClass: "btn-danger",
+                            confirmButtonText: "Yes!",
+                            showCancelButton: true,
+                        },
+                        function() {
+                            $.ajax({
+                                type: "GET",
+                                url: url +'/'+ id,
+                                data: {id:id},
+                                success: function (data) {
+                                    // console.log(data);
+                                        window.location.href = "{{ route('members.active.index') }}";
+                                    }         
+                            });
+                    });
             });
 
         });
