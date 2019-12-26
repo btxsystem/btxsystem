@@ -156,6 +156,30 @@ List Of Users Nonactive
                 load_data();
             });
 
+            $(document).on('click', '.active-member', function (e) {
+                e.preventDefault();
+                var id = $(this).data('id');
+                // console.log(id);
+                var url =   "{{url('backoffice/members/nonactive/active/')}}"
+                swal({
+                            title: "Are you sure to set Active this member ?",
+                            confirmButtonClass: "btn-danger",
+                            confirmButtonText: "Yes!",
+                            showCancelButton: true,
+                        },
+                        function() {
+                            $.ajax({
+                                type: "GET",
+                                url: url +'/'+ id,
+                                data: {id:id},
+                                success: function (data) {
+                                    // console.log(data);
+                                        window.location.href = "{{ route('members.nonactive.index') }}";
+                                    }         
+                            });
+                    });
+            });
+
         });
     </script>
 @stop

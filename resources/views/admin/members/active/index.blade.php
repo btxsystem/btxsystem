@@ -223,6 +223,31 @@ List Of Users Active
                 load_data();
             });
 
+
+            $(document).on('click', '.nonactive-member', function (e) {
+                e.preventDefault();
+                var id = $(this).data('id');
+                // console.log(id);
+                var url =   "{{url('backoffice/members/active/nonactive/')}}"
+                swal({
+                            title: "Are you sure to set Non Active this member ?",
+                            confirmButtonClass: "btn-danger",
+                            confirmButtonText: "Yes!",
+                            showCancelButton: true,
+                        },
+                        function() {
+                            $.ajax({
+                                type: "GET",
+                                url: url +'/'+ id,
+                                data: {id:id},
+                                success: function (data) {
+                                    // console.log(data);
+                                        window.location.href = "{{ route('members.active.index') }}";
+                                    }         
+                            });
+                    });
+            });
+
         });
     </script>
 @stop

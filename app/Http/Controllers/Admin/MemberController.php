@@ -117,16 +117,43 @@ class MemberController extends Controller
 
     public function nonactive($id)
     {
-        $data['status'] = 0;
-        Employeer::findOrFail($id)->update($data);
-        return redirect()->back();
+
+        // return 'aaa';
+        // $data['status'] = 0;
+        // Employeer::findOrFail($id)->update($data);
+        // return redirect()->back();
+
+        $data = Employeer::findOrFail($id);
+        if ($data) { 
+    
+            $data->update([
+                'status' => 0
+            ]); 
+
+            return 'Update Sukses';
+        } else {
+            return 'Update Gagal, data tidak ditemukan';
+        }
+
     }
 
     public function active($id)
     {
-        $data['status'] = 1;
-        Employeer::findOrFail($id)->update($data);
-        return redirect()->back();
+        // $data['status'] = 1;
+        // Employeer::findOrFail($id)->update($data);
+        // return redirect()->back();
+
+        $data = Employeer::findOrFail($id);
+        if ($data) { 
+    
+            $data->update([
+                'status' => 1
+            ]); 
+
+            return 'Update Sukses';
+        } else {
+            return 'Update Gagal, data tidak ditemukan';
+        }
     }
 
     public function store(Request $request)
@@ -484,14 +511,14 @@ class MemberController extends Controller
             case 1:
                 $show = \Auth::guard('admin')->user()->hasPermission('Members.view') ? '<a href="'.route('members.show',$row->id).'" class="btn btn-primary fa fa-eye" title="Detail"></a>' : '';
                 $edit = \Auth::guard('admin')->user()->hasPermission('Members.edit') ? '<a href="'.route('members.edit-data',$row->id).'" class="btn btn-warning fa fa-pencil" title="Edit"></a>' : '';
-                $delete = \Auth::guard('admin')->user()->hasPermission('Members.nonactive') ? '<a href="active/'.$row->id.'/nonactive" class="btn btn-danger fa fa-power-off" title="Nonactive"></a>' : '';
+                $delete = \Auth::guard('admin')->user()->hasPermission('Members.nonactive') ? '<a data-id="'.$row->id.'" class="btn btn-danger fa fa-power-off nonactive-member" title="Nonactive"></a>' : '';
                 return $show.' '.$edit.' '.$delete;
             break;
 
             case 0:
                 $show = \Auth::guard('admin')->user()->hasPermission('Members.view') ? '<a href="'.route('members.show',$row->id).'" class="btn btn-primary fa fa-eye" title="Detail"></a>' : '';
                 $edit = \Auth::guard('admin')->user()->hasPermission('Members.edit') ? '<a href="'.route('members.edit-data',$row->id).'" class="btn btn-warning fa fa-pencil" title="Edit"></a>' : '';
-                $delete = \Auth::guard('admin')->user()->hasPermission('Members.nonactive') ? '<a href="nonactive/'.$row->id.'/active" class="btn btn-success fa fa-check-square" title="Active"></a>' : '';
+                $delete = \Auth::guard('admin')->user()->hasPermission('Members.nonactive') ? '<a data-id="'.$row->id.'" class="btn btn-success fa fa-check-square active-member" title="Active"></a>' : '';
                 return $show.' '.$edit.' '.$delete;
             break;
 

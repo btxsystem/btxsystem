@@ -168,12 +168,12 @@ Route::group(['middleware' => 'admin'], function () {
         Route::group(['prefix'=>'active','as'=>'active.'], function(){
             Route::get('', ['as' => 'index', 'uses' => 'Admin\MemberController@index']);
             Route::post('', ['as' => 'store', 'uses' => 'Admin\MemberController@store']);
-            Route::get('/{id}/nonactive', ['as' => 'nonactive', 'uses' => 'Admin\MemberController@nonactive']);
+            Route::get('/nonactive/{id}', ['as' => 'nonactive', 'uses' => 'Admin\MemberController@nonactive']);
         });
 
         Route::group(['prefix' => 'nonactive','as'=>'nonactive.'], function () {
             Route::get('', ['as' => 'index', 'uses' => 'Admin\MemberController@member_nonactive']);
-            Route::get('/{id}/active', ['as' => 'active', 'uses' => 'Admin\MemberController@active']);
+            Route::get('/active/{id}', ['as' => 'active', 'uses' => 'Admin\MemberController@active']);
         });
 
         Route::get('/export-data', ['as' => 'export-data', 'uses' => 'Admin\MemberController@export']);
