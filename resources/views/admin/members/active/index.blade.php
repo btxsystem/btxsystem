@@ -204,6 +204,7 @@ List Of Users Active
             $('#filter').click(function(){
                 var from_date = $('#from_date').val();
                 var to_date = $('#to_date').val();
+                console.log(to_date);
                 if(from_date != '' &&  to_date != '')
                     {
                         $('#active-member').DataTable().destroy();
