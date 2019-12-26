@@ -23,9 +23,16 @@ class ListVaController extends Controller
     {
         if (request()->ajax()) {
             $data = DB::table('transaction_bills')->join('employeers','employeers.id','=','transaction_bills.user_id')
-                                                  ->select('employeers.username','transaction_bills.created_at','transaction_bills.payment_flag_status','transaction_bills.id','transaction_bills.product_type','transaction_bills.customer_number','transaction_bills.total_amount')->get();
+                                                  ->select('employeers.username','employeers.first_name','employeers.last_name',
+                                                           'transaction_bills.created_at','transaction_bills.payment_flag_status',
+                                                           'transaction_bills.id', 'transaction_bills.product_type','transaction_bills.customer_number',
+                                                           'transaction_bills.total_amount')
+                                                ->get();
             return Datatables::of($data)
                     ->addIndexColumn()
+                    ->editColumn('fullname', function($row) {
+                        return  $row->first_name .' '.$row->last_name;
+                    })
                     ->editColumn('username', function($row) {
                         return isset($row->username) ? $row->username : $row['username'];
                     })
