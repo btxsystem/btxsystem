@@ -28,7 +28,7 @@
     <div class="col-lg-3 col-lg-offset-1  col-md-3 col-md-offset-1  col-sm-3 col-sm-offset-1 col-xs-3 col-xs-offset-1 ">
 		<div class="form">
             <select data-column="2" class="form-control filter-select">
-            <option value="">-- Select Rank --</option>
+            <option value="">-- All Rank --</option>
             <option value="-">No Rank</option>
              @foreach($ranks as $rank)
                 <option value="{{$rank->name}}">{{$rank->name}}</option>
@@ -43,7 +43,8 @@
                 <table id="my-analizer" class="display nowrap" style="width:100%; font-size:15px">
                     <thead>
                         <tr>
-                            <th>ID</th>
+                            <th>No</th>
+                            <th>Name</th>
                             <th>Username</th>
                             <th>Rank</th>
                             <th>PV Left</th>
@@ -79,7 +80,8 @@
               
               columns: [
                   { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
-                  { data: 'username', name: 'username', className: "text-center"  },                  
+                  { data: 'full_name', name: 'full_name'},                  
+                  { data: 'username', name: 'username'},                  
                   { data: 'ranking', name: 'ranking', className: "text-center" },                  
                   { data: 'pv_left', name: 'rankipv_leftng', className: "text-center"  },                  
                   { data: 'pv_middle', name: 'pv_middle', className: "text-center"  },                  
