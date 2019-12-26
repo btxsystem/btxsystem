@@ -66,8 +66,9 @@ class MemberController extends Controller
         if (request()->ajax()) {
             if($request->from_date)
             {
+                $to_date = date('Y-m-d',strtotime($request->to_date . "+1 days"));
                 $data = Employeer::where('status', 0)
-                ->whereBetween('created_at', [$request->from_date, $request->to_date])
+                ->whereBetween('created_at', [$request->from_date, $to_date])
                 ->with('rank')
                 ->select('id','id_member','username','first_name','last_name','rank_id','created_at','status');
             }
