@@ -31,13 +31,13 @@ class MemberController extends Controller
                 // $from_date = date('Y-m-d',strtotime($request->from_date . "+1 days"));
                 $data = Employeer::where('status', 1)
                 ->whereBetween('created_at', [$request->from_date, $to_date])
-                ->with('rank')
-                ->select('id','id_member','username','first_name','last_name','rank_id','created_at','status');
+                ->with('rank','sponsor')
+                ->select('id','id_member','username','first_name','last_name','rank_id','sponsor_id','created_at','status');
             }
             else {
                 $data = Employeer::where('status', 1)
-                ->with('rank')
-                ->select('id','id_member','username','first_name','last_name','rank_id','created_at','status');
+                ->with('rank','sponsor')
+                ->select('id','id_member','username','first_name','last_name','rank_id','sponsor_id','created_at','status');
             }
 
             return Datatables::of($data)
@@ -50,6 +50,9 @@ class MemberController extends Controller
                     })
                     ->editColumn('ranking', function($data) {
                         return $data->rank ? $data->rank->name : '-';
+                    })
+                    ->editColumn('sponsor', function($data) {
+                        return $data->sponsor ? $data->sponsor->username : '-';
                     })
                     ->addColumn('action', function($row) {
                         return $this->htmlAction($row);
@@ -69,13 +72,13 @@ class MemberController extends Controller
                 $to_date = date('Y-m-d',strtotime($request->to_date . "+1 days"));
                 $data = Employeer::where('status', 0)
                 ->whereBetween('created_at', [$request->from_date, $to_date])
-                ->with('rank')
-                ->select('id','id_member','username','first_name','last_name','rank_id','created_at','status');
+                ->with('rank','sponsor')
+                ->select('id','id_member','username','first_name','last_name','rank_id','sponsor_id','created_at','status');
             }
             else {
                 $data = Employeer::where('status', 0)
                 ->with('rank')
-                ->select('id','id_member','username','first_name','last_name','rank_id','created_at','status');
+                ->select('id','id_member','username','first_name','last_name','rank_id','sponsor_id','created_at','status');
             }
 
             return Datatables::of($data)
@@ -88,6 +91,9 @@ class MemberController extends Controller
                      })
                      ->editColumn('ranking', function($data) {
                          return $data->rank ? $data->rank->name : '-';
+                     })
+                     ->editColumn('sponsor', function($data) {
+                         return $data->sponsor ? $data->sponsor->username : '-';
                      })
                      ->addColumn('action', function($row) {
                          return $this->htmlAction($row);
