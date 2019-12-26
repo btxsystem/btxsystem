@@ -32,6 +32,7 @@ List Of VA
                     <table class="table data-table table-bordered table-striped table-condensed flip-content" >
                         <thead class="flip-content">
                             <tr>
+                                <th>Name</th>
                                 <th>Username</th>
                                 <th>Description</th>
                                 <th>Nominal</th>
@@ -65,6 +66,7 @@ List Of VA
           },
 
           columns: [
+              {data: 'fullname', name: 'fullname'},
               {data: 'username', name: 'username'},
               {data: 'description', name: 'description'},
               {data: 'nominal', name: 'nominal'},
