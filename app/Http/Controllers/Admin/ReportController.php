@@ -19,7 +19,7 @@ class ReportController extends Controller
     {
         if (request()->ajax()) {
             $data = TransactionMember::with('member','ebook')->where('status', 1)->select('transaction_member.*');
-           
+
             return Datatables::of($data)
                     ->addColumn('product', function ($data){
                         return $data->ebook ? $data->ebook->title : 'No Data';
@@ -56,16 +56,17 @@ class ReportController extends Controller
     {
         if (request()->ajax()) {
             if($request->from_date) {
+            $to_date = date('Y-m-d',strtotime($request->to_date . "+1 days"));
             $data = TransactionMember::where('status', 1)
-                                 ->whereNotNull('transaction_ref')   
-                                //  ->whereDate('created_at', '>=', '2019-09-19')                                                               
-                                 ->whereBetween('created_at', [$request->from_date, $request->to_date])
+                                 ->whereNotNull('transaction_ref')
+                                //  ->whereDate('created_at', '>=', '2019-09-19')
+                                 ->whereBetween('created_at', [$request->from_date, $to_date])
                                  ->with(['ebook' => function($query) {
                                                         $query->select(['id','title','price']);
-                                                    },   
+                                                    },
                                         'member.address' => function($query) {
                                                         $query->select(['id','province','city_name','subdistrict_name','user_id']);
-                                                    },  
+                                                    },
                                         'member' => function($query) {
                                                         $query->select(['id','id_member','username']);
                                                     }
@@ -78,10 +79,10 @@ class ReportController extends Controller
                                 ->whereNotNull('transaction_ref')
                                 ->with(['ebook' => function($query) {
                                                     $query->select(['id','title','price']);
-                                                },   
+                                                },
                                     'member.address' => function($query) {
                                                     $query->select(['id','province','city_name','subdistrict_name','user_id']);
-                                                },  
+                                                },
                                     'member' => function($query) {
                                                     $query->select(['id','id_member','username']);
                                                 }
@@ -101,7 +102,7 @@ class ReportController extends Controller
     }
 
     public function export()
-    {   
+    {
         return Excel::download(new TransactionExport, now() .' ' .'transaction.xlsx');
 
     }
@@ -140,7 +141,7 @@ class ReportController extends Controller
                                 ->addColumn('birthdate', function($row){
                                     return date('d-m-Y',strtotime($row->birthdate));
                                 })
-                                ->make(true);   
+                                ->make(true);
             }
         }
         return view('admin.report.birthdate');
