@@ -37,8 +37,8 @@
                     <input name="method" type="radio" value="bca" id="bca" class="with-gap radio-col-red" checked/>
                     <label for="bca">BCA VA</label>
 
-                    <input name="method" type="radio" value="other" id="other" class="with-gap radio-col-red"/>
-                    <label for="other">Other Transfer</label>
+                    <!--<input name="method" type="radio" value="other" id="other" class="with-gap radio-col-red"/>
+                    <label for="other">Other Transfer</label>-->
 
                     <!-- <input name="method" type="radio" value="ovo" id="ovo" class="with-gap radio-col-red" />
                     <label for="ovo">OVO</label>
@@ -319,7 +319,7 @@
 
     let is_bca_method = true;
 
-    if($('input[name ="method"]').val() != is_bca_method){
+    if($('input[name ="method"]').val() != 'bca'){
         is_bca_method = false;
     }
 
