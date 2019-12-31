@@ -27,15 +27,17 @@ class MemberController extends Controller
 
             if($request->from_date)
             {
+                $to_date = date('Y-m-d',strtotime($request->to_date . "+1 days"));
+                // $from_date = date('Y-m-d',strtotime($request->from_date . "+1 days"));
                 $data = Employeer::where('status', 1)
-                ->whereBetween('created_at', [$request->from_date, $request->to_date])
-                ->with('rank')
-                ->select('id','id_member','username','first_name','last_name','rank_id','created_at','status');
+                ->whereBetween('created_at', [$request->from_date, $to_date])
+                ->with('rank','sponsor')
+                ->select('id','id_member','username','first_name','last_name','rank_id','sponsor_id','created_at','status');
             }
             else {
                 $data = Employeer::where('status', 1)
-                ->with('rank')
-                ->select('id','id_member','username','first_name','last_name','rank_id','created_at','status');
+                ->with('rank','sponsor')
+                ->select('id','id_member','username','first_name','last_name','rank_id','sponsor_id','created_at','status');
             }
 
             return Datatables::of($data)
@@ -46,8 +48,19 @@ class MemberController extends Controller
                     ->editColumn('full_name', function($data) {
                         return $data->first_name .' '. $data->last_name;
                     })
+                    ->editColumn('archive_rank',function($data){
+                        if (!isset($data->rank_id)) {
+                            return '-';
+                        }else{
+                            $archive = DB::table('got_rewards')->where('reward_id',$data->rank_id)->where('member_id',$data->id)->select('created_at')->orderByDesc('id')->first();
+                            return isset($archive->created_at) ? $archive->created_at : $archive['created_at'];
+                        }
+                    })
                     ->editColumn('ranking', function($data) {
                         return $data->rank ? $data->rank->name : '-';
+                    })
+                    ->editColumn('sponsor', function($data) {
+                        return $data->sponsor ? $data->sponsor->username : '-';
                     })
                     ->addColumn('action', function($row) {
                         return $this->htmlAction($row);
@@ -64,15 +77,16 @@ class MemberController extends Controller
         if (request()->ajax()) {
             if($request->from_date)
             {
+                $to_date = date('Y-m-d',strtotime($request->to_date . "+1 days"));
                 $data = Employeer::where('status', 0)
-                ->whereBetween('created_at', [$request->from_date, $request->to_date])
-                ->with('rank')
-                ->select('id','id_member','username','first_name','last_name','rank_id','created_at','status');
+                ->whereBetween('created_at', [$request->from_date, $to_date])
+                ->with('rank','sponsor')
+                ->select('id','id_member','username','first_name','last_name','rank_id','sponsor_id','created_at','status');
             }
             else {
                 $data = Employeer::where('status', 0)
                 ->with('rank')
-                ->select('id','id_member','username','first_name','last_name','rank_id','created_at','status');
+                ->select('id','id_member','username','first_name','last_name','rank_id','sponsor_id','created_at','status');
             }
 
             return Datatables::of($data)
@@ -85,6 +99,9 @@ class MemberController extends Controller
                      })
                      ->editColumn('ranking', function($data) {
                          return $data->rank ? $data->rank->name : '-';
+                     })
+                     ->editColumn('sponsor', function($data) {
+                         return $data->sponsor ? $data->sponsor->username : '-';
                      })
                      ->addColumn('action', function($row) {
                          return $this->htmlAction($row);
@@ -114,16 +131,43 @@ class MemberController extends Controller
 
     public function nonactive($id)
     {
-        $data['status'] = 0;
-        Employeer::findOrFail($id)->update($data);
-        return redirect()->back();
+
+        // return 'aaa';
+        // $data['status'] = 0;
+        // Employeer::findOrFail($id)->update($data);
+        // return redirect()->back();
+
+        $data = Employeer::findOrFail($id);
+        if ($data) {
+
+            $data->update([
+                'status' => 0
+            ]);
+
+            return 'Update Sukses';
+        } else {
+            return 'Update Gagal, data tidak ditemukan';
+        }
+
     }
 
     public function active($id)
     {
-        $data['status'] = 1;
-        Employeer::findOrFail($id)->update($data);
-        return redirect()->back();
+        // $data['status'] = 1;
+        // Employeer::findOrFail($id)->update($data);
+        // return redirect()->back();
+
+        $data = Employeer::findOrFail($id);
+        if ($data) {
+
+            $data->update([
+                'status' => 1
+            ]);
+
+            return 'Update Sukses';
+        } else {
+            return 'Update Gagal, data tidak ditemukan';
+        }
     }
 
     public function store(Request $request)
@@ -481,14 +525,14 @@ class MemberController extends Controller
             case 1:
                 $show = \Auth::guard('admin')->user()->hasPermission('Members.view') ? '<a href="'.route('members.show',$row->id).'" class="btn btn-primary fa fa-eye" title="Detail"></a>' : '';
                 $edit = \Auth::guard('admin')->user()->hasPermission('Members.edit') ? '<a href="'.route('members.edit-data',$row->id).'" class="btn btn-warning fa fa-pencil" title="Edit"></a>' : '';
-                $delete = \Auth::guard('admin')->user()->hasPermission('Members.nonactive') ? '<a href="active/'.$row->id.'/nonactive" class="btn btn-danger fa fa-power-off" title="Nonactive"></a>' : '';
+                $delete = \Auth::guard('admin')->user()->hasPermission('Members.nonactive') ? '<a data-id="'.$row->id.'" class="btn btn-danger fa fa-power-off nonactive-member" title="Nonactive"></a>' : '';
                 return $show.' '.$edit.' '.$delete;
             break;
 
             case 0:
                 $show = \Auth::guard('admin')->user()->hasPermission('Members.view') ? '<a href="'.route('members.show',$row->id).'" class="btn btn-primary fa fa-eye" title="Detail"></a>' : '';
                 $edit = \Auth::guard('admin')->user()->hasPermission('Members.edit') ? '<a href="'.route('members.edit-data',$row->id).'" class="btn btn-warning fa fa-pencil" title="Edit"></a>' : '';
-                $delete = \Auth::guard('admin')->user()->hasPermission('Members.nonactive') ? '<a href="nonactive/'.$row->id.'/active" class="btn btn-success fa fa-check-square" title="Active"></a>' : '';
+                $delete = \Auth::guard('admin')->user()->hasPermission('Members.nonactive') ? '<a data-id="'.$row->id.'" class="btn btn-success fa fa-check-square active-member" title="Active"></a>' : '';
                 return $show.' '.$edit.' '.$delete;
             break;
 

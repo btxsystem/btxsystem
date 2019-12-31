@@ -37,8 +37,9 @@ Claim Reward
                             <tr>
                                 <th class="text-center" width="5%">No</th>
                                 <th class="text-center" width="15%">Member ID</th>
+                                <th class="text-center" width="15%">Name</th>
                                 <th class="text-center" width="15%">Username</th>
-                                <th class="text-center" width="35%">Reward</th>
+                                <th class="text-center" width="25%">Reward</th>
                                 <th class="text-center" width="15%">Status</th>
                                 <th width="15%">Action</th>
                             </tr>
@@ -208,6 +209,7 @@ Claim Reward
               columns: [
                   { data: 'DT_RowIndex', name: 'DT_RowIndex', className: "text-center", orderable: false, searchable: false },
                   { data: 'id_member', name: 'member.id_member', className: "text-center" },                  
+                  { data: 'fullname', name: 'member.first_name', className: "text-center" },                  
                   { data: 'username', name: 'member.username', className: "text-center" },                  
                   { data: 'reward', name: 'reward.description', className: "text-center" },                  
                   { data: 'status', name: 'status', className: "text-center" },                  
