@@ -52,7 +52,7 @@ class MemberController extends Controller
                         if (!isset($data->rank_id)) {
                             return '-';
                         }else{
-                            $archive = DB::table('got_rewards')->where('reward_id',$data->rank_id)->where('member_id',$data->id)->select('created_at')->first();
+                            $archive = DB::table('got_rewards')->where('reward_id',$data->rank_id)->where('member_id',$data->id)->select('created_at')->orderByDesc('id')->first();
                             return isset($archive->created_at) ? $archive->created_at : $archive['created_at'];
                         }
                     })
@@ -138,11 +138,11 @@ class MemberController extends Controller
         // return redirect()->back();
 
         $data = Employeer::findOrFail($id);
-        if ($data) { 
-    
+        if ($data) {
+
             $data->update([
                 'status' => 0
-            ]); 
+            ]);
 
             return 'Update Sukses';
         } else {
@@ -158,11 +158,11 @@ class MemberController extends Controller
         // return redirect()->back();
 
         $data = Employeer::findOrFail($id);
-        if ($data) { 
-    
+        if ($data) {
+
             $data->update([
                 'status' => 1
-            ]); 
+            ]);
 
             return 'Update Sukses';
         } else {

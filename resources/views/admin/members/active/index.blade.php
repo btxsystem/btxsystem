@@ -61,12 +61,8 @@ List Of Users Active
                                 <th class="text-center" width="10%">Username</th>
                                 <th class="text-center" width="18%">Name</th>                                 <th class="text-center" width="10%">Sponsor</th>
                                 <th class="text-center" width="15%">Join Date</th>
-<<<<<<< HEAD
-                                <th class="text-center" width="12%">Rank</th>
-=======
                                 <th class="text-center" width="20%">Archive Rank</th>
                                 <th class="text-center" width="15%">Rank</th>
->>>>>>> 37a35802c0b9d5c35920383849b7229ec448b343
                                 <th class="text-center" width="15%">Action</th>
                             </tr>
                         </thead>
@@ -250,7 +246,7 @@ List Of Users Active
                                 success: function (data) {
                                     // console.log(data);
                                         window.location.href = "{{ route('members.active.index') }}";
-                                    }         
+                                    }
                             });
                     });
             });
