@@ -48,6 +48,14 @@ class MemberController extends Controller
                     ->editColumn('full_name', function($data) {
                         return $data->first_name .' '. $data->last_name;
                     })
+                    ->editColumn('archive_rank',function($data){
+                        if (!isset($data->rank_id)) {
+                            return '-';
+                        }else{
+                            $archive = DB::table('got_rewards')->where('reward_id',$data->rank_id)->where('member_id',$data->id)->select('created_at')->orderByDesc('id')->first();
+                            return isset($archive->created_at) ? $archive->created_at : $archive['created_at'];
+                        }
+                    })
                     ->editColumn('ranking', function($data) {
                         return $data->rank ? $data->rank->name : '-';
                     })
@@ -130,11 +138,11 @@ class MemberController extends Controller
         // return redirect()->back();
 
         $data = Employeer::findOrFail($id);
-        if ($data) { 
-    
+        if ($data) {
+
             $data->update([
                 'status' => 0
-            ]); 
+            ]);
 
             return 'Update Sukses';
         } else {
@@ -150,11 +158,11 @@ class MemberController extends Controller
         // return redirect()->back();
 
         $data = Employeer::findOrFail($id);
-        if ($data) { 
-    
+        if ($data) {
+
             $data->update([
                 'status' => 1
-            ]); 
+            ]);
 
             return 'Update Sukses';
         } else {

@@ -37,6 +37,9 @@
                     <input name="method" type="radio" value="bca" id="bca" class="with-gap radio-col-red" checked/>
                     <label for="bca">BCA VA</label>
 
+                    <!--<input name="method" type="radio" value="other" id="other" class="with-gap radio-col-red"/>
+                    <label for="other">Other Transfer</label>-->
+
                     <!-- <input name="method" type="radio" value="ovo" id="ovo" class="with-gap radio-col-red" />
                     <label for="ovo">OVO</label>
 
@@ -309,10 +312,16 @@
 
 @section('footer_scripts')
 <script src="{{asset('assets2/js/moment.js')}}"></script>
+<script src="{{ !config('services.midtrans.isProduction') ? 'https://app.sandbox.midtrans.com/snap/snap.js' : 'https://app.midtrans.com/snap/snap.js' }}" data-client-key="{{ config('services.midtrans.clientKey') }}"></script>
 <script type="text/javascript">
-    let is_bca_method = true;
 
     $(document).ready(function () {
+
+    let is_bca_method = true;
+
+    if($('input[name ="method"]').val() != 'bca'){
+        is_bca_method = false;
+    }
 
       $("#province").select2({
         placeholder: "Province",
@@ -334,6 +343,10 @@
       $('#transfer').change(function(){
           $('#topup-points').prop('type','submit');
           is_bca_method = false;
+      })
+
+      $('#other').change(function(){
+        is_bca_method = false;
       })
 
       $('#ipay').change(function(){
@@ -389,6 +402,30 @@
                     console.log("Error");
                 }
             });
+          }else{
+            $.post("{{ route('member.payment.midtrans') }}",
+            {
+                _method: 'POST',
+                _token: '{{ csrf_token() }}',
+                amount: nominal,
+            },
+            function (data, status) {
+                snap.pay(data.snap_token, {
+                    // Optional
+                    onSuccess: function (result) {
+                        location.reload();
+                    },
+                    // Optional
+                    onPending: function (result) {
+                        location.reload();
+                    },
+                    // Optional
+                    onError: function (result) {
+                        location.reload();
+                    }
+                });
+            });
+            return false;
           }
       })
 

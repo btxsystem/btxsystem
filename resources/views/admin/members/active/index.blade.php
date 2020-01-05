@@ -51,7 +51,7 @@ List Of Users Active
                                 </div>
                         </div>
                     <br/>
-                
+
                 <div class="portlet-body flip-scroll">
                     <table id="active-member" class="table membership-table table-bordered table-striped table-condensed flip-content" >
                         <thead class="flip-content">
@@ -61,7 +61,8 @@ List Of Users Active
                                 <th class="text-center" width="10%">Username</th>
                                 <th class="text-center" width="18%">Name</th>                                 <th class="text-center" width="10%">Sponsor</th>
                                 <th class="text-center" width="15%">Join Date</th>
-                                <th class="text-center" width="12%">Rank</th>
+                                <th class="text-center" width="20%">Archive Rank</th>
+                                <th class="text-center" width="15%">Rank</th>
                                 <th class="text-center" width="15%">Action</th>
                             </tr>
                         </thead>
@@ -79,7 +80,7 @@ List Of Users Active
     <div class="modal-content">
         <div class="alert alert-danger" style="display:none"></div>
       <div class="modal-header">
-        
+
         <h5 class="modal-title">Export Member To Excel or Csv</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
@@ -119,12 +120,12 @@ List Of Users Active
               processing: true,
               serverSide: true,
               ajax: {
-                url: "{{ route('members.active.index') }}", 
+                url: "{{ route('members.active.index') }}",
               },
-              
+
               columns: [
                   {
-                      data: 'DT_RowIndex', name: 'DT_RowIndex', 
+                      data: 'DT_RowIndex', name: 'DT_RowIndex',
                       orderable: false, searchable: false
                   },
                   {data: 'id_member', name: 'id_member'},
@@ -135,7 +136,7 @@ List Of Users Active
                   {data: 'action', name: 'action', orderable: false, searchable: false, className: 'text-center'},
               ]
           });
-          
+
         });
       </script> -->
 
@@ -154,8 +155,8 @@ List Of Users Active
                     console.log("Error");
                 }
             });
-            
-        } 
+
+        }
 
         let nonredirect = () => {
             $.ajax({
@@ -186,7 +187,7 @@ List Of Users Active
                     processing: true,
                     serverSide: true,
                     ajax: {
-                        url: "{{ route('members.active.index') }}", 
+                        url: "{{ route('members.active.index') }}",
                         data:{from_date:from_date, to_date:to_date}
                     },
                     columns: [
@@ -196,7 +197,8 @@ List Of Users Active
                         { data: 'full_name', name: 'last_name'},
                         { data: 'sponsor', name: 'sponsor.username', orderable: false, searchable: false},
                         { data: 'created_at', name: 'created_at'},
-                        { data: 'ranking', name: 'rank.name', orderable: false, },
+                        { data: 'archive_rank', name: 'archive_rank' , orderable: false, searchable: false},
+                        { data: 'ranking', name: 'rank.name', orderable: false },
                         { data: 'action', name: 'action', orderable: false, searchable: false, className: 'text-center'},
                     ]
                 });
@@ -244,7 +246,7 @@ List Of Users Active
                                 success: function (data) {
                                     // console.log(data);
                                         window.location.href = "{{ route('members.active.index') }}";
-                                    }         
+                                    }
                             });
                     });
             });
