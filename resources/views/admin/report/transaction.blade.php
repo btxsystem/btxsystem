@@ -63,8 +63,9 @@ List Of Transaction Report
                             <tr>
                                 <th width="15%">Transaction No</th>
                                 <th width="15%">Username</th>
-                                <th width="15%">Get Starterpack</th>
-                                <th width="15%">Product</th>
+                                <th width="10%">Starterpack</th>
+                                <th width="10%">Cost</th>
+                                <th width="10%">Product</th>
                                 <th width="10%">Price</th>
                                 <th width="15%">Buy Date</th>
                                 <th width="15%">Expired</th>
@@ -109,6 +110,7 @@ List Of Transaction Report
                         {data: 'transaction_ref', name: 'transaction_ref', className: 'text-center'},
                         {data: 'member.username', name: 'member.username', className: 'text-center', orderable: false},
                         {data: 'starterpackType', name: 'starterpackType', className: 'text-center'},
+                        {data: 'shippingCost', name: 'shippingCost', className: 'text-center'},
                         {data: 'ebook.title', name: 'ebook.title', className: 'text-center'},
                         {data: 'ebook.price', name: 'ebook.price', className: 'text-center'},
                         {data: 'created_at', name: 'created_at', className: 'text-center'},

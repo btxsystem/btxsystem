@@ -65,10 +65,10 @@ class ReportController extends Controller
                                                         $query->select(['id','title','price']);
                                                     },
                                         'member.address' => function($query) {
-                                                        $query->select(['id','province','city_name','subdistrict_name','user_id']);
+                                                        $query->select(['id','province','city_name','subdistrict_name','decription','user_id', 'kurir', 'cost']);
                                                     },
                                         'member' => function($query) {
-                                                        $query->select(['id','id_member','username']);
+                                                        $query->select(['id','id_member','username','first_name','last_name']);
                                                     }
                                         ])
                                 ->select('transaction_member.*')
@@ -80,11 +80,11 @@ class ReportController extends Controller
                                 ->with(['ebook' => function($query) {
                                                     $query->select(['id','title','price']);
                                                 },
-                                    'member.address' => function($query) {
-                                                    $query->select(['id','province','city_name','subdistrict_name','user_id']);
+                                        'member.address' => function($query) {
+                                                    $query->select(['id','province','city_name','subdistrict_name','decription','user_id', 'kurir', 'cost']);
                                                 },
-                                    'member' => function($query) {
-                                                    $query->select(['id','id_member','username']);
+                                        'member' => function($query) {
+                                                    $query->select(['id','id_member','username','first_name','last_name']);
                                                 }
                                     ])
                             ->select('transaction_member.*')
@@ -95,6 +95,9 @@ class ReportController extends Controller
                                 ->addIndexColumn()
                                 ->addColumn('starterpackType', function($data){
                                     return $data->member->address ? 'Shipping' : 'Take Away';
+                                })
+                                ->addColumn('shippingCost', function($data){
+                                    return $data->member->address ? $data->member->address->cost : 'Take Away';
                                 })
                                 ->make(true);
         }

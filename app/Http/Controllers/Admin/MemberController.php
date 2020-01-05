@@ -571,10 +571,11 @@ class MemberController extends Controller
         }
     }
 
-    public function export()
+    public function export(Request $request)
     {
         // echo 'Total memory usage : ' . (memory_get_usage() - $begin);
-        return Excel::download(new MembersExport, now() .' ' .'members.xlsx');
+        $to_date = date('Y-m-d',strtotime($request->to_date . "+1 days"));
+        return Excel::download(new MembersExport($request->from, $to_date), now() .' ' .'members.xlsx');
     }
 
 }
