@@ -27,7 +27,12 @@ List Of Transaction Report
                     </div>
 
                     <div class="pull-right">
-                        <a style=" color: white; text-decoration: none !important" onMouseOut="this.style.color='white'" onMouseOver="this.style.color='#f06262'"  href="{{ route('report.export') }}" target="_blank" data-toggle="modal"><i style="font-size:15px;" class="fa fa-file-excel-o"></i>&nbsp; &nbsp;<strong>Export Excel</strong></a>
+                        <!-- <a class="link-export" style=" color: white; text-decoration: none !important" onMouseOut="this.style.color='white'" onMouseOver="this.style.color='#f06262'"  href="{{ route('report.export') }} " target="_blank">
+                            <i style="font-size:15px;" class="fa fa-file-excel-o"></i>&nbsp; &nbsp;<strong>Export Excel</strong>
+                        </a> -->
+                        <a class="link-export" style=" color: white; text-decoration: none !important" onMouseOut="this.style.color='white'" onMouseOver="this.style.color='#f06262'" target="_blank">
+                            <i style="font-size:15px;" class="fa fa-file-excel-o"></i>&nbsp; &nbsp;<strong>Export Excel</strong>
+                        </a>
                     </div>
                 </div>
 
@@ -133,6 +138,18 @@ List Of Transaction Report
                 load_data();
             });
 
+        });
+
+        $(".link-export").click(function () {
+
+            var from_date = $('#from_date').val();
+            var to_date = $('#to_date').val();
+            var url = "{{ route('report.export') }}";
+            if (from_date != '') {
+                window.open(url + '?from=' + from_date + '&to=' + to_date, "_blank"); 
+            } else {
+                window.open(url, "_blank");
+            }
         });
     </script>
 

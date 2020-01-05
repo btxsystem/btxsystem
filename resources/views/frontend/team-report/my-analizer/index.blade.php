@@ -27,7 +27,7 @@
     &nbsp;
     <div class="col-lg-3 col-lg-offset-1  col-md-3 col-md-offset-1  col-sm-3 col-sm-offset-1 col-xs-3 col-xs-offset-1 ">
 		<div class="form">
-            <select data-column="2" class="form-control filter-select">
+            <select data-column="3" class="form-control filter-select">
             <option value="">-- All Rank --</option>
             <option value="-">No Rank</option>
              @foreach($ranks as $rank)

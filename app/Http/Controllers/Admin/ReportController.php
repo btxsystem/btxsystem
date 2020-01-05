@@ -100,9 +100,10 @@ class ReportController extends Controller
             return view('admin.report.transaction');
     }
 
-    public function export()
+    public function export(Request $request)
     {   
-        return Excel::download(new TransactionExport, now() .' ' .'transaction.xlsx');
+        $to_date = date('Y-m-d',strtotime($request->to_date . "+1 days"));
+        return Excel::download(new TransactionExport($request->from, $to_date), now() .' ' .'transaction.xlsx');
 
     }
     // public function transaction()
