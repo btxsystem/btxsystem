@@ -24,20 +24,19 @@ class MemberController extends Controller
     public function index(Request $request)
     {
         if (request()->ajax()) {
-
             if($request->from_date)
             {
                 $to_date = date('Y-m-d',strtotime($request->to_date . "+1 days"));
                 // $from_date = date('Y-m-d',strtotime($request->from_date . "+1 days"));
                 $data = Employeer::where('status', 1)
                 ->whereBetween('created_at', [$request->from_date, $to_date])
-                ->with('rank','sponsor')
-                ->select('id','id_member','username','first_name','last_name','rank_id','sponsor_id','created_at','status');
+                ->with('rank','sponsor','archive')
+                ->select('id','id_member','username','first_name','last_name','rank_id','sponsor_id','created_at','status')->get();
             }
             else {
                 $data = Employeer::where('status', 1)
-                ->with('rank','sponsor')
-                ->select('id','id_member','username','first_name','last_name','rank_id','sponsor_id','created_at','status');
+                ->with('rank','sponsor','archive')
+                ->select('id','id_member','username','first_name','last_name','rank_id','sponsor_id','created_at','status')->get();
             }
 
             return Datatables::of($data)
@@ -49,11 +48,10 @@ class MemberController extends Controller
                         return $data->first_name .' '. $data->last_name;
                     })
                     ->editColumn('archive_rank',function($data){
-                        if (!isset($data->rank_id)) {
+                        if (!isset($data->archive[0]) || $data->archive == null) {
                             return '-';
                         }else{
-                            $archive = DB::table('got_rewards')->where('reward_id',$data->rank_id)->where('member_id',$data->id)->select('created_at')->orderByDesc('id')->first();
-                            return isset($archive->created_at) ? $archive->created_at : $archive['created_at'];
+                            return isset($data->archive[0]->created_at) ? $data->archive[0]->created_at : $data->archive[0]['created_at'];
                         }
                     })
                     ->editColumn('ranking', function($data) {
