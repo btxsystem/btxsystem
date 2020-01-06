@@ -25,7 +25,9 @@ List Of Users Active
             @endif
             <!-- @if(\Auth::guard('admin')->user()->hasPermission('Members.add')) -->
             <!-- <button type="button" class="btn btn-large btn-success" data-toggle="modal" data-target="#myModal" id="open"><i class="fa fa-download" style="margin-right: 10px;"></i>Export</button> -->
-                <a class="btn btn-large btn-success" href="{{ route('members.export-data') }}" target="_blank" data-toggle="modal"><i class="fa fa-download" style="margin-right: 10px;"></i>Export</a>
+                <!-- <a class="btn btn-large btn-success" href="{{ route('members.export-data') }}" target="_blank" data-toggle="modal"><i class="fa fa-download" style="margin-right: 10px;"></i>Export</a> -->
+                <a class="btn btn-large btn-success link-export"><i class="fa fa-download" style="margin-right: 10px;"></i>Export</a>
+                
             <!-- @endif -->
             <div class="portlet box primary" style="margin-top: 15px;">
                 <div class="portlet-title">
@@ -250,7 +252,19 @@ List Of Users Active
                             });
                     });
             });
+        });
 
+        $(".link-export").click(function () {
+            var from_date = $('#from_date').val();
+            var to_date = $('#to_date').val();
+            var url = "{{ route('members.export-data') }}";
+            if (from_date != '') {
+                // alert(from_date);
+                window.open(url + '?from=' + from_date + '&to=' + to_date, "_blank"); 
+            } else {
+                // alert('Kosong');
+                window.open(url, "_blank");
+            }
         });
     </script>
 @stop
