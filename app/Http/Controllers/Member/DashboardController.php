@@ -92,7 +92,12 @@ class DashboardController extends Controller
     }
 
     public function getTree(Request $request){
-        $user = Employeer::where('id',Auth::id())->with('children','pv_down','rank')->first();
+
+        if (isset($request->username)) {
+            $user = Employeer::where('username',$request->username)->with('children','pv_down','rank')->first();
+        }else{
+            $user = Employeer::where('id',Auth::id())->with('children','pv_down','rank')->first();
+        }
         $data = [];
 
         $child = [];

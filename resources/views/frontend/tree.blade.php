@@ -1133,7 +1133,32 @@ em{
 		}
 	});
    }else{
-        searchDownline($('#username_default').val());
+    var svg = d3.select("#tree")
+		.append("svg")
+		.attr("width", 1035).attr("height", 1080)
+		.call(d3.zoom().on("zoom", function () {
+			svg.attr("transform", d3.event.transform)
+		}))
+		.append("g")
+		.attr("transform", my_transform)
+		.attr("id", "bah")
+		panzoom(document.querySelector('#bah'), {
+			zoomSpeed: 0.030
+		});
+	$.ajax({
+		type: 'POST',
+		url: '{{route("member.select.tree-analyzer")}}',
+        data: { "_token": "{{ csrf_token() }}", username : $('#username_default').val()},
+		success: function (data) {
+            parent_id = data.parent_id;
+		    $('#bah').empty('g');
+			$('#tree_button').html('<button id="upline" class="btn btn-primary zmdi zmdi-chevron-up"></button>');
+			tree(data);
+		},
+		error: function() {
+			console.log("Error");
+		}
+	});
    }
 
 	var tree_submit = (a, parent, position) => {
