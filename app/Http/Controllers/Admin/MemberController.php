@@ -31,12 +31,12 @@ class MemberController extends Controller
                 $data = Employeer::where('status', 1)
                 ->whereBetween('created_at', [$request->from_date, $to_date])
                 ->with('rank','sponsor','archive')
-                ->select('id','id_member','username','first_name','last_name','rank_id','sponsor_id','created_at','status')->get();
+                ->select('id','id_member','username','first_name','last_name','rank_id','sponsor_id','created_at','status');
             }
             else {
                 $data = Employeer::where('status', 1)
                 ->with('rank','sponsor','archive')
-                ->select('id','id_member','username','first_name','last_name','rank_id','sponsor_id','created_at','status')->get();
+                ->select('id','id_member','username','first_name','last_name','rank_id','sponsor_id','created_at','status');
             }
 
             return Datatables::of($data)
