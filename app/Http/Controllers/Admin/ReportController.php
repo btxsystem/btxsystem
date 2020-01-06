@@ -93,10 +93,10 @@ class ReportController extends Controller
 
             return Datatables::of($data)
                                 ->addIndexColumn()
-                                ->addColumn('starterpackType', function($data){
+                                ->editColumn('starterpackType', function($data){
                                     return $data->member->address ? 'Shipping' : 'Take Away';
                                 })
-                                ->addColumn('shippingCost', function($data){
+                                ->editColumn('shippingCost', function($data){
                                     return $data->member->address ? $data->member->address->cost : 'Take Away';
                                 })
                                 ->make(true);
@@ -105,7 +105,7 @@ class ReportController extends Controller
     }
 
     public function export(Request $request)
-    {   
+    {
         $to_date = date('Y-m-d',strtotime($request->to_date . "+1 days"));
         return Excel::download(new TransactionExport($request->from, $to_date), now() .' ' .'transaction.xlsx');
 
@@ -124,29 +124,38 @@ class ReportController extends Controller
 
     public function birthdate()
     {
-        if (request()->ajax()) {
-           $data = DB::select(DB::raw("SELECT * FROM employeers WHERE DATE_FORMAT(birthdate,'%m %d') BETWEEN DATE_FORMAT(CURDATE(),'%m %d') AND DATE_FORMAT((INTERVAL 2 DAY + CURDATE()),'%m %d') ORDER BY DATE_FORMAT(birthdate,'%m %d')"));
-
-            foreach ($data as $key) {
-                return Datatables::of($data)
-                                ->addIndexColumn()
-                                ->addColumn('id_member', function($row){
-                                    return $row->id_member;
-                                })
-                                ->addColumn('username', function($row){
-                                    return $row->username;
-                                })
-                                ->addColumn('name', function($row){
-                                    return ucwords(strtolower($row->first_name.' '.$row->last_name));
-                                })
-                                ->addColumn('email', function($row){
-                                    return $row->email;
-                                })
-                                ->addColumn('birthdate', function($row){
-                                    return date('d-m-Y',strtotime($row->birthdate));
-                                })
-                                ->make(true);
+            if (request()->ajax()) {
+                $now = strtotime(now());
+            $now = date('m-d',$now);
+            $to_date = strtotime(now(). "+2 days");
+            $to_date = date('m-d',$to_date);
+            $datas = Employeer::all();
+            $data = [];
+            foreach ($datas as $key => $value) {
+                $birth_date = strtotime($value->birthdate);
+                $birth_date = date('m-d',$birth_date);
+                if ( $birth_date >= $now and $birth_date<=$to_date) {
+                    $data[$key]=$value;
+                }
             }
+            return Datatables::of($data)
+                            ->addIndexColumn()
+                            ->addColumn('id_member', function($row){
+                                return $row->id_member;
+                            })
+                            ->addColumn('username', function($row){
+                                return $row->username;
+                            })
+                            ->addColumn('name', function($row){
+                                return ucwords(strtolower($row->first_name.' '.$row->last_name));
+                            })
+                            ->addColumn('email', function($row){
+                                return $row->email;
+                            })
+                            ->addColumn('birthdate', function($row){
+                                return date('d-m-Y',strtotime($row->birthdate));
+                            })
+                            ->make(true);
         }
         return view('admin.report.birthdate');
     }

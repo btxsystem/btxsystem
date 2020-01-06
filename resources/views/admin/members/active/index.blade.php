@@ -58,12 +58,12 @@ List Of Users Active
                     <table id="active-member" class="table membership-table table-bordered table-striped table-condensed flip-content" >
                         <thead class="flip-content">
                             <tr>
-                                <th class="text-center" width="3%">No</th>
+                                <th class="text-center" width="2%">No</th>
                                 <th class="text-center" width="13%">Id Member</th>
                                 <th class="text-center" width="10%">Username</th>
                                 <th class="text-center" width="18%">Name</th>                                 <th class="text-center" width="10%">Sponsor</th>
                                 <th class="text-center" width="15%">Join Date</th>
-                                <th class="text-center" width="20%">Archive Rank</th>
+                                <th class="text-center" width="15%">Archive Rank</th>
                                 <th class="text-center" width="15%">Rank</th>
                                 <th class="text-center" width="15%">Action</th>
                             </tr>
@@ -209,7 +209,6 @@ List Of Users Active
             $('#filter').click(function(){
                 var from_date = $('#from_date').val();
                 var to_date = $('#to_date').val();
-                console.log(to_date);
                 if(from_date != '' &&  to_date != '')
                     {
                         $('#active-member').DataTable().destroy();
