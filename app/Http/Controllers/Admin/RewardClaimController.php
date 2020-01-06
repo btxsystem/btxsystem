@@ -33,6 +33,12 @@ class RewardClaimController extends Controller
                     ->addColumn('status', function($row) {
                         return $this->getStatus($row);
                     })
+                    ->addColumn('archive', function($row) {
+                        return $row->created_at ? $row->created_at : 'No Data';
+                    })
+                    ->addColumn('claim', function($row) {
+                        return $row->updated_at ? $row->updated_at : 'No Data';
+                    })
                     ->addColumn('action', function($row) {
                         return $this->htmlAction($row);
                     })
@@ -53,13 +59,13 @@ class RewardClaimController extends Controller
            $data = GotReward::findOrFail($id);
            $data->update([
                'status' => 2
-           ]); 
+           ]);
            DB::commit();
            Alert::success('Success Update Data', 'Success');
        } catch (Exception $e) {
            DB::rollback();
            Alert::error('Gagal Update Data', 'Gagal');
-           return redirect()->back(); 
+           return redirect()->back();
        }
    }
 
@@ -85,7 +91,7 @@ class RewardClaimController extends Controller
        $view = \Auth::guard('admin')->user()->hasPermission('Claim_rewards.detail') ? '<a href="'.route('members.show',$row->member_id).'" target="_blank" class="btn btn-success fa fa-eye show-reward" title="Show Reward"></a>' : '';
        $approve = \Auth::guard('admin')->user()->hasPermission('Claim_rewards.confirm') ? '<a data-id="'.$row->id.' "class="btn btn-default fa fa-check approve-reward" style="background-color: #b85ebd; color: #ffffff;" title="Approve Reward"></a>' : '';
        switch($row->status) {
-           case 0; 
+           case 0;
            return $view;
            break;
 
@@ -97,6 +103,6 @@ class RewardClaimController extends Controller
            return $view;
 
        }
-      
+
    }
 }

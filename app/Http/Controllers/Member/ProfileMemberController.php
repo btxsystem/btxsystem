@@ -90,6 +90,9 @@ class ProfileMemberController extends Controller
 
     public function register(Request $request){
         try {
+            if (!isset($request->bank_name) || $request->bank_name==null) {
+                $request->bank_name = 'BCA';
+            }
             DB::beginTransaction();
 
             $cek_npwp = 0;
