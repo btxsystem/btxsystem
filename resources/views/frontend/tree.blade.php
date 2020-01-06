@@ -10,6 +10,7 @@
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
+                <input type="text" hidden id="username_default" value="{{$profile->username_default}}">
 				<h5 class="modal-title" id="exampleModalLabel">Register</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
@@ -1108,6 +1109,7 @@ em{
 
 	var my_transform = d3Transform()
    .translate([-750, -50]);
+   if ($('#username_default').val()=='no') {
    	var svg = d3.select("#tree")
 		.append("svg")
 		.attr("width", 1035).attr("height", 1080)
@@ -1130,6 +1132,9 @@ em{
 			console.log("Error");
 		}
 	});
+   }else{
+        searchDownline($('#username_default').val());
+   }
 
 	var tree_submit = (a, parent, position) => {
 		parent_id = parent;

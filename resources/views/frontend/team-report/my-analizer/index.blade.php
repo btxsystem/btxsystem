@@ -35,8 +35,11 @@
             @endforeach
 			</select>
 		</div>
-	</div>
-
+    </div>
+    <form action="{{route('member.direct-tree')}}" method="POST" id="form-direct">
+        @csrf
+        <input type="hidden" id="username_value" name="username_value">
+    </form>
     <div class="container-fluid">
         <div class="row clearfix">
             <div class="col-lg-12 col-md-12 col-sm-12" id="bill">
@@ -70,6 +73,12 @@
     </style>
     <script type="text/javascript">
         $(document).ready(function () {
+          $(document).on('click', '.direct_tree', function (e) {
+                e.preventDefault();
+                var id = $(this).data('id');
+                $('#username_value').val(id);
+                document.getElementById("form-direct").submit();
+          });
           var table = $('#my-analizer').DataTable({
               destroy: true,
               processing: true,

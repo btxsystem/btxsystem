@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use DB;
 use App\Employeer;
 use Carbon\Carbon;
+use stdClass;
 
 class DashboardController extends Controller
 {
@@ -78,11 +79,19 @@ class DashboardController extends Controller
 
     public function tree(){
         $data = Auth::user();
-        return view('frontend.tree')->with('profile',$data);;
+        $data->username_default = new \stdClass;
+        $data->username_default = 'no';
+        return view('frontend.tree')->with('profile',$data);
     }
 
-    public function getTree(){
+    public function directTree(Request $request){
+        $data = Auth::user();
+        $data->username_default = new \stdClass;
+        $data->username_default = $request->username_value;
+        return view('frontend.tree')->with('profile',$data);
+    }
 
+    public function getTree(Request $request){
         $user = Employeer::where('id',Auth::id())->with('children','pv_down','rank')->first();
         $data = [];
 
