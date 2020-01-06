@@ -28,7 +28,7 @@ class WithdrawalBonusController extends Controller
                     )->get()->filter(function($data) {
                         return $data->total_bonus > 10000;
                     });
-                    
+
             // return $data;
 
                 return Datatables::of($data)
@@ -71,8 +71,9 @@ class WithdrawalBonusController extends Controller
 
             if($request->from_date)
             {
+                $to_date = date('Y-m-d',strtotime($request->to_date . "+1 days"));
                 $data = HistoryBitrexCash::where('type', 5)->where('info', 0)
-                ->whereBetween('created_at', [$request->from_date, $request->to_date])
+                ->whereBetween('created_at', [$request->from_date, $to_date])
                 ->with(['member'  => function($query) {
                         $query->select(['id','id_member','username']);
                       }
@@ -111,7 +112,7 @@ class WithdrawalBonusController extends Controller
             foreach ($employeers as $key => $data) {
 
                 DB::table('history_bitrex_cash')->insert([
-                    'id_member' => $data->id, 
+                    'id_member' => $data->id,
                     'nominal' => $data->total_bonus,
                     'description' => 'Manual Withdraw',
                     'info' => 0,
@@ -126,7 +127,7 @@ class WithdrawalBonusController extends Controller
                 ]);
             }
 
-            // Update withdrawal time 
+            // Update withdrawal time
             // Last withdrawal ke waktu saat withdrawal
             // Next withdrawal waktu saat withdrawal ditambah 24 hours
             // DB::table('withdrawal_time')->where('id', 1)->update([
@@ -137,7 +138,7 @@ class WithdrawalBonusController extends Controller
         }catch(\Exception $e){
                 // throw $e;
                 DB::rollback();
-                
+
                 Alert::error('Gagal Melakukan Update Data', 'Gagal')->persistent("Close");
         }
 
@@ -148,7 +149,7 @@ class WithdrawalBonusController extends Controller
         DB::table('withdrawal_time')->where('id', 1)->update([
             'next_withdrawal' => Carbon::now(),
         ]);
-        
+
         return Excel::download(new EmployeerExport, now() .' ' .'withdrawal.xlsx');
         // return EmployeerExport;
     }
