@@ -150,6 +150,7 @@ Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
 
     Route::get('', ['as' => 'dashboard', 'uses' => 'Member\DashboardController@index']);
     Route::get('tree', ['as' => 'tree', 'uses' => 'Member\DashboardController@tree']);
+    Route::post('direct-tree', ['as' => 'direct-tree', 'uses' => 'Member\DashboardController@directTree']);
     Route::get('prospected-member', ['as' => 'prospected-member', 'uses' => 'Member\ProspectedMemberController@index']);
     Route::post('register-downline', ['as' => 'register-downline', 'uses' => 'Member\ProfileMemberController@register']);
     Route::get('reward', ['as' => 'reward', 'uses' => 'Member\ProfileMemberController@rewards']);

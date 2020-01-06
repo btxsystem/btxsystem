@@ -35,12 +35,12 @@ class TeamReportController extends Controller
     {
         $ranks = DB::table('ranks')->select('id','name')->get();
         $profile = Auth::user();
-      
-     
+
+
         if (request()->ajax()) {
         $downline = Downline::select('downline')->where('member_id', Auth::user()->id)->first();
 
-  
+
         $arrayDownnline = explode(",",$downline->downline);
 
         $data = DB::table('employeers')
@@ -71,11 +71,15 @@ class TeamReportController extends Controller
                 ->editColumn('pv_right', function($data) {
                     return $data->pv_right ? $data->pv_right : '0';
                 })
+                ->editColumn('username', function($data) {
+                    return '<a href="#" data-id="'.$data->username.'" class="direct_tree"><p>'.$data->username.'</p></a>';
+                })
+                ->rawColumns(['username'])
                 ->make(true);
         }
 
         return view('frontend.team-report.my-analizer.index', compact('profile', 'ranks'));
-        
+
     }
 
     public function generateAnalyzer()
@@ -103,7 +107,7 @@ class TeamReportController extends Controller
                 $this->updateDownline($data->id, implode(" ", $dataArray));
             }
 
-          
+
         }
     }
 
