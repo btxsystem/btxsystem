@@ -27,7 +27,12 @@ List Of Transaction Report
                     </div>
 
                     <div class="pull-right">
-                        <a style=" color: white; text-decoration: none !important" onMouseOut="this.style.color='white'" onMouseOver="this.style.color='#f06262'"  href="{{ route('report.export') }}" target="_blank" data-toggle="modal"><i style="font-size:15px;" class="fa fa-file-excel-o"></i>&nbsp; &nbsp;<strong>Export Excel</strong></a>
+                        <!-- <a class="link-export" style=" color: white; text-decoration: none !important" onMouseOut="this.style.color='white'" onMouseOver="this.style.color='#f06262'"  href="{{ route('report.export') }} " target="_blank">
+                            <i style="font-size:15px;" class="fa fa-file-excel-o"></i>&nbsp; &nbsp;<strong>Export Excel</strong>
+                        </a> -->
+                        <a class="link-export" style=" color: white; text-decoration: none !important" onMouseOut="this.style.color='white'" onMouseOver="this.style.color='#f06262'" target="_blank">
+                            <i style="font-size:15px;" class="fa fa-file-excel-o"></i>&nbsp; &nbsp;<strong>Export Excel</strong>
+                        </a>
                     </div>
                 </div>
 
@@ -58,8 +63,9 @@ List Of Transaction Report
                             <tr>
                                 <th width="15%">Transaction No</th>
                                 <th width="15%">Username</th>
-                                <th width="15%">Get Starterpack</th>
-                                <th width="15%">Product</th>
+                                <th width="10%">Starterpack</th>
+                                <th width="10%">Cost</th>
+                                <th width="10%">Product</th>
                                 <th width="10%">Price</th>
                                 <th width="15%">Buy Date</th>
                                 <th width="15%">Expired</th>
@@ -104,6 +110,7 @@ List Of Transaction Report
                         {data: 'transaction_ref', name: 'transaction_ref', className: 'text-center'},
                         {data: 'member.username', name: 'member.username', className: 'text-center', orderable: false},
                         {data: 'starterpackType', name: 'starterpackType', className: 'text-center'},
+                        {data: 'shippingCost', name: 'shippingCost', className: 'text-center'},
                         {data: 'ebook.title', name: 'ebook.title', className: 'text-center'},
                         {data: 'ebook.price', name: 'ebook.price', className: 'text-center'},
                         {data: 'created_at', name: 'created_at', className: 'text-center'},
@@ -133,6 +140,18 @@ List Of Transaction Report
                 load_data();
             });
 
+        });
+
+        $(".link-export").click(function () {
+
+            var from_date = $('#from_date').val();
+            var to_date = $('#to_date').val();
+            var url = "{{ route('report.export') }}";
+            if (from_date != '') {
+                window.open(url + '?from=' + from_date + '&to=' + to_date, "_blank"); 
+            } else {
+                window.open(url, "_blank");
+            }
         });
     </script>
 
