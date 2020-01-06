@@ -27,7 +27,7 @@ List Of Users Active
             <!-- <button type="button" class="btn btn-large btn-success" data-toggle="modal" data-target="#myModal" id="open"><i class="fa fa-download" style="margin-right: 10px;"></i>Export</button> -->
                 <!-- <a class="btn btn-large btn-success" href="{{ route('members.export-data') }}" target="_blank" data-toggle="modal"><i class="fa fa-download" style="margin-right: 10px;"></i>Export</a> -->
                 <a class="btn btn-large btn-success link-export"><i class="fa fa-download" style="margin-right: 10px;"></i>Export</a>
-                
+
             <!-- @endif -->
             <div class="portlet box primary" style="margin-top: 15px;">
                 <div class="portlet-title">
@@ -199,7 +199,7 @@ List Of Users Active
                         { data: 'full_name', name: 'last_name'},
                         { data: 'sponsor', name: 'sponsor.username', orderable: false, searchable: false},
                         { data: 'created_at', name: 'created_at'},
-                        { data: 'archive_rank', name: 'archive_rank' , orderable: false, searchable: false},
+                        { data: 'archive_rank', name: 'archive_rank' , searchable: false},
                         { data: 'ranking', name: 'rank.name', orderable: false },
                         { data: 'action', name: 'action', orderable: false, searchable: false, className: 'text-center'},
                     ]
@@ -260,7 +260,7 @@ List Of Users Active
             var url = "{{ route('members.export-data') }}";
             if (from_date != '') {
                 // alert(from_date);
-                window.open(url + '?from=' + from_date + '&to=' + to_date, "_blank"); 
+                window.open(url + '?from=' + from_date + '&to=' + to_date, "_blank");
             } else {
                 // alert('Kosong');
                 window.open(url, "_blank");
