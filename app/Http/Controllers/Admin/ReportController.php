@@ -97,7 +97,19 @@ class ReportController extends Controller
                                     return $data->member->address ? 'Shipping' : 'Take Away';
                                 })
                                 ->editColumn('shippingCost', function($data){
-                                    return $data->member->address ? $data->member->address->cost : 'Take Away';
+                                    return $data->member->address ? $data->member->address->cost : '-';
+                                })
+                                ->editColumn('created_at', function($data){
+                                    $time = strtotime($data->created_at);
+
+                                    $newformat = date('d M Y',$time);
+                                    return $newformat;
+                                })
+                                ->editColumn('expired_at', function($data){
+                                    $time = strtotime($data->expired_at);
+
+                                    $newformat = date('d M Y',$time);
+                                    return $newformat;
                                 })
                                 ->make(true);
         }
