@@ -50,6 +50,7 @@
                             <th>Name</th>
                             <th>Username</th>
                             <th>Rank</th>
+                            <th>Archive Rank</th>
                             <th>PV Left</th>
                             <th>PV Middle</th>
                             <th>PV Right</th>
@@ -92,6 +93,7 @@
                   { data: 'full_name', name: 'full_name'},
                   { data: 'username', name: 'username'},
                   { data: 'ranking', name: 'ranking', className: "text-center" },
+                  { data: 'archive_rank', name: 'archive_rank', className: "text-center" },
                   { data: 'pv_left', name: 'rankipv_leftng', className: "text-center"  },
                   { data: 'pv_middle', name: 'pv_middle', className: "text-center"  },
                   { data: 'pv_right', name: 'pv_right', className: "text-center"  },
