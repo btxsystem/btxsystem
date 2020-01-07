@@ -11,6 +11,7 @@ use DB;
 use Carbon\Carbon;
 use App\Employeer;
 use App\Downline;
+use App\Models\GotReward;
 
 class TeamReportController extends Controller
 {
@@ -64,6 +65,14 @@ class TeamReportController extends Controller
                 })
                 ->editColumn('full_name', function($data) {
                     return $data->first_name .' '. $data->last_name;
+                })
+                ->editColumn('archive_rank', function($data) {
+                    if ($data->rank_id=='' || !isset($data->rank_id) || $data->rank_id==null) {
+                        return '-';
+                    }else{
+                        $archive = GotReward::where('member_id', $data->id)->orderByDesc('id')->first();
+                        return date_format($archive->created_at,"d M Y");
+                    }
                 })
                 ->editColumn('pv_middle', function($data) {
                     return $data->pv_middle ? $data->pv_middle : '0';
