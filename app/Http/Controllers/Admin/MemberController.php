@@ -47,11 +47,14 @@ class MemberController extends Controller
                     ->editColumn('full_name', function($data) {
                         return $data->first_name .' '. $data->last_name;
                     })
+                    ->editColumn('join_at', function($data){
+                        return isset($data->created_at) ?  date_format($data->created_at,"d M Y") : date_format($data['created_at'],"d M Y");
+                    })
                     ->editColumn('archive_rank',function($data){
-                        if (!isset($data->archive[0]) || $data->archive == null) {
+                        if (!isset($data->archive[0]) || $data->archive[0] == null) {
                             return '-';
                         }else{
-                            return isset($data->archive[0]->created_at) ? $data->archive[0]->created_at : $data->archive[0]['created_at'];
+                            return isset($data->archive[0]->created_at) ? date_format($data->archive[0]->created_at,"d M Y") : date_format($data->archive[0]['created_at'],"d M Y");
                         }
                     })
                     ->editColumn('ranking', function($data) {
