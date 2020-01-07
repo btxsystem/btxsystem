@@ -198,7 +198,7 @@ List Of Users Active
                         { data: 'username', name: 'username'},
                         { data: 'full_name', name: 'last_name'},
                         { data: 'sponsor', name: 'sponsor.username', orderable: false, searchable: false},
-                        { data: 'join_at', name: 'join_at'},
+                        { data: 'join_at', name: 'join_at', orderable: false, searchable: false},
                         { data: 'archive_rank', name: 'archive_rank' , orderable: false, searchable: false},
                         { data: 'ranking', name: 'rank.name', orderable: false },
                         { data: 'action', name: 'action', orderable: false, searchable: false, className: 'text-center'},
