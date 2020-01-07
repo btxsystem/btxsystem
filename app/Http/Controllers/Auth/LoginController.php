@@ -10,19 +10,26 @@ use DB;
 use Alert;
 use Carbon\Carbon;
 use App\Models\Testimonial;
+use App\Models\AttachmentImage;
+use Illuminate\Routing\UrlGenerator;
 
 class LoginController extends Controller
 {
-  public function getLogin()
+  public function getLogin(UrlGenerator $url)
   {
     $testimoni = Testimonial::where('isPublished',1)->select('name','desc')->get();
-    $data = [];
+    $ourHeadQuarter = AttachmentImage::where('attachable_type','App\Models\OurHeadquarter')
+                                     ->where('isPublished',1)->select('name','path')->get();
+    $data = null;
     if ($testimoni) {
-        $data = $testimoni;
-    }else{
-        $data = null;
+        $data['testimoni'] = $testimoni;
+    }if ($ourHeadQuarter) {
+        foreach ($ourHeadQuarter as $key => $value) {
+           $value->path = $url->to('/').'/'.$value->path;
+        }
+        $data['ourHeadQuarter'] = $ourHeadQuarter;
     }
-    return view('frontend.auth.login')->with('testimoni',$data);;
+    return view('frontend.auth.login')->with('data',$data);
   }
   public function postLogin(Request $request)
   {

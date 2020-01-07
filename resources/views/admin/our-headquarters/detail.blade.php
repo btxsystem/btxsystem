@@ -19,7 +19,7 @@
 <section class="content">
     <div class="row">
         <div class="col-md-12">
-            
+
             <div class="portlet box primary" style="margin-top: 15px;">
                 <div class="portlet-title">
                     <div class="caption">
@@ -34,31 +34,31 @@
                             <!-- <a style=" color: white; text-decoration: none; margin-right: 20px; !important" href="{{ route('cms.our-products.edit', $data->id) }}"><i style="font-size:15px;" class="fa fa-pencil"></i>&nbsp; &nbsp;<strong>Edit Data</strong></a> -->
                      </div>
                 </div>
-                  
+
                     <div class="col-md-12">
                         <br>
                         <div class="col-md-1">
                             <label class="control-label">Title </label>
-                        </div>  
+                        </div>
                         <div class="col-md-1">
                             :
-                        </div>  
+                        </div>
                         <div class="col-md-8">
                           {{($data->title)}}
-                        </div>  
+                        </div>
                         <br>
                     </div>
                     <div class="col-md-12">
                         <br>
                         <div class="col-md-1">
                             <label class="control-label">Desc </label>
-                        </div>  
+                        </div>
                         <div class="col-md-1">
                             :
-                        </div>  
+                        </div>
                         <div class="col-md-8">
                             {!!$data->desc !!}
-                        </div>  
+                        </div>
                         <br>
                     </div>
             </div>
@@ -83,7 +83,7 @@
                         @endif
                     </div>
                 </div>
-                
+
                 <div class="portlet-body flip-scroll">
                     <table class="table data-table table-bordered table-striped table-condensed flip-content images" >
                         <thead class="flip-content">
@@ -113,7 +113,7 @@
                     <center><h4 class="modal-title">Edit Data</h4></center>
                 </div>
                 <div class="modal-body">
-                    <form class="well form-horizontal" action="{{ route('cms.our-headquarters.update') }}" method="post">  
+                    <form class="well form-horizontal" action="{{ route('cms.our-headquarters.update') }}" method="post">
                         {{ csrf_field() }}
                         <fieldset>
                             <input id="id" name="id" type="hidden">
@@ -153,7 +153,7 @@
                     <center><h4 class="modal-title">Attachment Form</h4></center>
                 </div>
                 <div class="modal-body">
-                    <form class="well form-horizontal" action="{{ route('cms.our-headquarters.images.upload') }}" method="post" enctype="multipart/form-data">  
+                    <form class="well form-horizontal" action="{{ route('cms.our-headquarters.images.upload') }}" method="post" enctype="multipart/form-data">
                         {{ csrf_field() }}
                         <fieldset>
                             <div class="form-group">
@@ -194,7 +194,7 @@
                     <center><h4 class="modal-title">Attachment Form</h4></center>
                 </div>
                 <div class="modal-body">
-                    <form class="well form-horizontal" action="{{ route('cms.our-headquarters.images.update') }}" method="post" enctype="multipart/form-data">  
+                    <form class="well form-horizontal" action="{{ route('cms.our-headquarters.images.update') }}" method="post" enctype="multipart/form-data">
                         {{ csrf_field() }}
                         <fieldset>
                             <input id="id" name="id" type="hidden">
@@ -239,13 +239,13 @@
               processing: true,
               serverSide: true,
               ajax: {
-                url: "{{ route('cms.our-headquarters.images') }}", 
+                url: "{{ route('cms.our-headquarters.images') }}",
               },
-              
+
               columns: [
                   { data: 'DT_RowIndex', name: 'DT_RowIndex', className: "text-center", orderable: false, searchable: false },
-                  { data: 'name', name: 'name', className: "text-center" },    
-                  { data: 'status', name: 'status', className: "text-center" },                
+                  { data: 'name', name: 'name', className: "text-center" },
+                  { data: 'status', name: 'status', className: "text-center" },
                   { data: 'image_url', name: 'image_url', className: 'text-center', searchable: false,
                     render: function(data) {
                        if(data === 'No Image') {
@@ -253,11 +253,11 @@
                        }
                        return '<image width="100px" height="100px" src="'+data+'"></image>';
                     },
-                  },                                
+                  },
                   { data: 'action', name: 'action', orderable: false, searchable: false, className: "text-center" },
               ]
           });
-          
+
         });
 
         $(document).on('click', '.delete-attachment', function (e) {
@@ -278,7 +278,7 @@
                         data: {id:id},
                         success: function (data) {
                                 window.location.href = "{{ route('cms.our-headquarters.show') }}";
-                            }         
+                            }
                     });
             });
         });
@@ -300,7 +300,7 @@
                         data: {id:id},
                         success: function (data) {
                                 window.location.href = "{{ route('cms.our-headquarters.show') }}";
-                            }         
+                            }
                     });
             });
         });
@@ -322,16 +322,16 @@
                         data: {id:id},
                         success: function (data) {
                                 window.location.href = "{{ route('cms.our-headquarters.show') }}";
-                            }         
+                            }
                     });
             });
         });
 
 
         $(document).on('click','.edit-attachment',function(){
-   
+
             var id = $(this).data('id');
-            
+
             var url =   "{{url('backoffice/cms/our-headquarters/images/')}}" +'/'+ id +'/edit';
 
             $.get(url, function (data) {
@@ -342,14 +342,14 @@
 
                 $('#btn-save').val("update");
                 $('#editAttachmentModal').modal('show');
-            }) 
+            })
         });
 
 
         $(document).on('click','.edit-headquarter',function(){
-   
+
             var id = $(this).data('id');
-            
+
             var url =   "{{url('backoffice/cms/our-headquarters/edit')}}" +'/'+ id;
             console.log(url);
 
@@ -362,9 +362,9 @@
 
                 $('#btn-save').val("update");
                 $('#editHeadquarterModal').modal('show');
-            }) 
+            })
         });
-       
+
       </script>
-      
+
 @endsection
