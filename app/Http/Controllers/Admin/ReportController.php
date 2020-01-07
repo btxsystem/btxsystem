@@ -72,7 +72,7 @@ class ReportController extends Controller
                                                     }
                                         ])
                                 ->select('transaction_member.*')
-                                ->orderBy('transaction_member.created_at','desc');
+                                ->orderBy('transaction_member.created_at','desc')->get();
             } else {
                 $data = TransactionMember::where('status','=', 1)
                                 // ->whereDate('created_at', '>=', '2019-09-19')
@@ -88,7 +88,7 @@ class ReportController extends Controller
                                                 }
                                     ])
                             ->select('transaction_member.*')
-                            ->orderBy('transaction_member.created_at','desc');
+                            ->orderBy('transaction_member.created_at','desc')->get();
             }
 
             return Datatables::of($data)
