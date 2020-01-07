@@ -116,54 +116,20 @@
                 <!-- <div class="ui-subtitle-block ui-subtitle-block_mod-b">Bitrexgo is one of the best education platform for Foreign Exchange Trading in Indonesia.</div> -->
               </div>
               <div class="posts-wrap">
-                <article class="post post_mod-a clearfix wow zoomIn" data-wow-duration="1s">
-                  <div class="entry-media">
-                    <div class="entry-thumbnail"> <a href="javascript:void(0);" ><img class="img-responsive" src="{{asset('img/1.jpg')}}" style="width: 100%;" alt="Foto"/></a> </div>
-                  </div>
-                  <div class="entry-main">
-                    <h3 class="entry-title ui-title-inner decor decor_mod-b"><a href="javascript:void(0);">Basic to Advanced Financial Education</a></h3>
-                    <div class="entry-content hidden">
-                      <p>Bitrexgo is one of the best education platform for Foreign Exchange Trading in Indonesia</p>
-                    </div>
-                  </div>
-                </article>
-                <!-- end post -->
-                <article class="post post_mod-a clearfix wow zoomIn" data-wow-duration="1s" data-wow-delay=".5s">
-                  <div class="entry-media">
-                    <div class="entry-thumbnail"> <a href="javascript:void(0);" ><img class="img-responsive" src="{{asset('img/2.jpg')}}" style="width: 100%;" width="250" height="250" alt="Foto"/></a> </div>
-                  </div>
-                  <div class="entry-main">
-                    <h3 class="entry-title ui-title-inner decor decor_mod-b"><a href="javascript:void(0);">Education Videos &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></h3>
-                    <div class="entry-content hidden">
-                      <p>Bitrexgo is one of the best education platform for Foreign Exchange Trading in Indonesia</p>
-                    </div>
-                  </div>
-                </article>
-                <!-- end post -->
-                <article class="post post_mod-a clearfix wow zoomIn" data-wow-duration="1s" data-wow-delay="1s">
-                  <div class="entry-media">
-                    <div class="entry-thumbnail"> <a href="javascript:void(0);" ><img class="img-responsive" src="{{asset('img/3.jpg')}}" style="width: 100%;" width="250" height="250" alt="Foto"/></a> </div>
-                  </div>
-                  <div class="entry-main">
-                    <h3 class="entry-title ui-title-inner decor decor_mod-b"><a href="javascript:void(0);">Online & Offline Learning</a></h3>
-                    <div class="entry-content hidden">
-                      <p>Bitrexgo is one of the best education platform for Foreign Exchange Trading in Indonesia</p>
-                    </div>
-                  </div>
-                </article>
-                <!-- end post -->
-                <article class="post post_mod-a clearfix wow zoomIn" data-wow-duration="1s" data-wow-delay="1.5s">
-                  <div class="entry-media">
-                    <div class="entry-thumbnail"> <a href="javascript:void(0);" ><img class="img-responsive" src="{{asset('img/4.jpg')}}" style="width: 100%;" width="250" height="250" alt="Foto"/></a> </div>
-                  </div>
-                  <div class="entry-main">
-                    <h3 class="entry-title ui-title-inner decor decor_mod-b"><a href="javascript:void(0);">Smart Financial Community</a></h3>
-                    <div class="entry-content hidden">
-                      <p>Bitrexgo is one of the best education platform for Foreign Exchange Trading in Indonesia</p>
-                    </div>
-                  </div>
-                </article>
-                <!-- end post -->
+                @foreach ($data['ourProduct'] as $item)
+                    <article class="post post_mod-a clearfix wow zoomIn" data-wow-duration="1s">
+                        <div class="entry-media">
+                          <div class="entry-thumbnail"> <a href="javascript:void(0);" ><img class="img-responsive" src="{{$item->path}}" style="width: 100%;" alt="Foto"/></a> </div>
+                        </div>
+                        <div class="entry-main">
+                          <h3 class="entry-title ui-title-inner decor decor_mod-b"><a href="javascript:void(0);">{{$item->name}}</a></h3>
+                          <div class="entry-content hidden">
+                            <p>Bitrexgo is one of the best education platform for Foreign Exchange Trading in Indonesia</p>
+                          </div>
+                        </div>
+                      </article>
+                    <!-- end post -->
+                @endforeach
               </div>
               <!-- end posts-wrap -->
             </div>

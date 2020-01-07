@@ -20,6 +20,8 @@ class LoginController extends Controller
     $testimoni = Testimonial::where('isPublished',1)->select('name','desc')->get();
     $ourHeadQuarter = AttachmentImage::where('attachable_type','App\Models\OurHeadquarter')
                                      ->where('isPublished',1)->select('name','path')->get();
+    $ourProduct = AttachmentImage::where('attachable_type','App\Models\EventPromotion')
+                                     ->where('isPublished',1)->select('name','path')->get();
     $data = null;
     if ($testimoni) {
         $data['testimoni'] = $testimoni;
@@ -28,6 +30,11 @@ class LoginController extends Controller
            $value->path = $url->to('/').'/'.$value->path;
         }
         $data['ourHeadQuarter'] = $ourHeadQuarter;
+    }if ($ourProduct) {
+        foreach ($ourProduct as $key => $value) {
+            $value->path = $url->to('/').'/'.$value->path;
+        }
+        $data['ourProduct'] = $ourProduct;
     }
     return view('frontend.auth.login')->with('data',$data);
   }
