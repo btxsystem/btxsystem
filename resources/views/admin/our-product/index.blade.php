@@ -8,7 +8,7 @@ List Of Our Product
 @section('content')
 
 <section class="content-header">
-    <h1>Book </h1>
+    <h1>Our Product </h1>
     <ol class="breadcrumb">
         <li>
             <a href="#">CMS</a>
@@ -34,7 +34,7 @@ List Of Our Product
                                     @endif
                                 </div>
                             </div>
-                            
+
                             <div class="portlet-body flip-scroll">
                                 <table class="table data-table table-bordered table-striped table-condensed flip-content our-product" >
                                     <thead class="flip-content">
@@ -63,16 +63,16 @@ List Of Our Product
               processing: true,
               serverSide: true,
               ajax: {
-                url: "{{ route('cms.our-products.index') }}", 
+                url: "{{ route('cms.our-products.index') }}",
               },
-              
+
               columns: [
                   { data: 'DT_RowIndex', name: 'DT_RowIndex',orderable: false, searchable: false },
-                  { data: 'title', name: 'title' },                  
+                  { data: 'title', name: 'title' },
                   { data: 'action', name: 'action', orderable: false, searchable: false, className: "text-center" },
               ]
           });
-          
+
         });
 
         $(document).on('click', '.delete-ourProduct', function (e) {
@@ -93,11 +93,11 @@ List Of Our Product
                         data: {id:id},
                         success: function (data) {
                                 window.location.href = "{{ route('cms.our-products.index') }}";
-                            }         
+                            }
                     });
             });
         });
-       
+
       </script>
-      
+
 @endsection

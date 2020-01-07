@@ -58,6 +58,7 @@
                         </div>
                       </div>
                     </li>
+
                     <li class="advantages__item"> <span class="advantages__icon"><i class="icon stroke icon-WorldGlobe"></i></span>
                       <div class="advantages__inner">
                         <h3 class="ui-title-inner decor decor_mod-a">Mission</h3>
@@ -229,26 +230,14 @@
                 <!-- <div class="ui-subtitle-block ui-subtitle-block_mod-b">Bitrexgo is one of the best education platform for Foreign Exchange Trading in Indonesia.</div> -->
               </div>
               <div class="posts-wrap">
-                <article class="post post_mod-b clearfix wow zoomIn" data-wow-duration="1s">
-                  <div class="entry-media">
-                    <div class="entry-thumbnail"> <a href="javascript:void(0);" ><img style="height:200px;object-fit:cover" class="img-responsive" src="{{asset('img/hq1.jpg')}}" width="370" height="220" alt="Foto"/></a> </div>
-                  </div>
-                </article>
-                <!-- end post -->
-
-                <article class="post post_mod-b clearfix wow zoomIn" data-wow-duration="1s" data-wow-delay=".5s">
-                  <div class="entry-media">
-                    <div class="entry-thumbnail"> <a href="javascript:void(0);" ><img style="height:200px;object-fit:cover" class="img-responsive" src="{{asset('img/hq2.jpg')}}" width="370" height="220" alt="Foto"/></a> </div>
-                  </div>
-                </article>
-                <!-- end post -->
-
-                <article class="post post_mod-b clearfix wow zoomIn" data-wow-duration="1s" data-wow-delay="1s">
-                  <div class="entry-media">
-                    <div class="entry-thumbnail"> <a href="javascript:void(0);" ><img style="height:200px;object-fit:cover" class="img-responsive" src="{{asset('img/hq3.jpg')}}" width="370" height="220" alt="Foto"/></a> </div>
-                  </div>
-                </article>
-                <!-- end post -->
+                @foreach ($data['ourHeadQuarter'] as $item)
+                    <article class="post post_mod-b clearfix wow zoomIn" data-wow-duration="1s">
+                        <div class="entry-media">
+                            <div class="entry-thumbnail"> <a href="javascript:void(0);" ><img style="height:200px;object-fit:cover" class="img-responsive" src="{{$item->path}}" width="370" height="220" alt="Foto"/></a> </div>
+                        </div>
+                    </article>
+                    <!-- end post -->
+                @endforeach
               </div>
               <!-- end posts-wrap -->
             </div>
@@ -482,8 +471,8 @@
                         data-after-init-delay="4000"
                         data-after-move-delay="2000"
                         data-stop-on-hover="true">
-                        @if (count($testimoni) >= 0)
-                            @foreach ($testimoni as $item)
+                        @if (count($data['testimoni']) >= 0)
+                            @foreach ($data['testimoni'] as $item)
                                 <div class="reviews">
                                     <div class="reviews__text" style="text-align: justify;">{{$item->desc}}</div>
                                     <span class="reviews_autor">-- {{$item->name}}</span> <span class="reviews_categories"></span>
