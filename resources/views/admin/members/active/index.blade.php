@@ -61,11 +61,11 @@ List Of Users Active
                                 <th class="text-center" width="2%">No</th>
                                 <th class="text-center" width="13%">Id Member</th>
                                 <th class="text-center" width="10%">Username</th>
-                                <th class="text-center" width="18%">Name</th>                                 <th class="text-center" width="10%">Sponsor</th>
-                                <th class="text-center" width="15%">Join Date</th>
-                                <th class="text-center" width="15%">Archive Rank</th>
-                                <th class="text-center" width="15%">Rank</th>
-                                <th class="text-center" width="15%">Action</th>
+                                <th class="text-center" width="12%">Name</th>                                 <th class="text-center" width="10%">Sponsor</th>
+                                <th class="text-center" width="8%">Join Date</th>
+                                <th class="text-center" width="8%">Archive Rank</th>
+                                <th class="text-center" width="8%">Rank</th>
+                                <th class="text-center" width="15%" class="action">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -198,7 +198,7 @@ List Of Users Active
                         { data: 'username', name: 'username'},
                         { data: 'full_name', name: 'last_name'},
                         { data: 'sponsor', name: 'sponsor.username', orderable: false, searchable: false},
-                        { data: 'created_at', name: 'created_at'},
+                        { data: 'join_at', name: 'join_at'},
                         { data: 'archive_rank', name: 'archive_rank' , orderable: false, searchable: false},
                         { data: 'ranking', name: 'rank.name', orderable: false },
                         { data: 'action', name: 'action', orderable: false, searchable: false, className: 'text-center'},
