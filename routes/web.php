@@ -115,6 +115,10 @@ Route::post('forgot-password', ['as' => 'forgot-password', 'uses' => 'Member\For
 
 Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
 
+    Route::group(['prefix' => 'testimonial', 'as'=> 'testimonial.'], function() {
+        Route::post('store', ['as' => 'store', 'uses' => 'Member\TestimonialController@store']);
+    });
+
     Route::group(['prefix' => 'bp', 'as'=> 'bp.'], function () {
         Route::post('store', ['as' => 'store', 'uses' => 'Member\BitrexPointController@store']);
     });
