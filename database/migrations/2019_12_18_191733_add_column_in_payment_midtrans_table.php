@@ -27,7 +27,8 @@ class AddColumnInPaymentMidtransTable extends Migration
     public function down()
     {
         Schema::table('payment_midtrans', function (Blueprint $table) {
-            //
+            $table->dropColumn('type_transfer');
+            $table->dropColumn('va_account');
         });
     }
 }

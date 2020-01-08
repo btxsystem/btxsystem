@@ -12,11 +12,12 @@ trait AttachableImageTrait
         return $this->morphMany(AttachmentImage::class, 'attachable');
     }
 
-    public function addAttachment($name, $path, $isPublished)
+    public function addAttachment($name, $path, $isPublished, $desc=null)
     {
         $attachment = new AttachmentImage;
         $attachment->name = $name;
         $attachment->path = $path;
+        $attachment->desc = $desc;
         $attachment->isPublished = $isPublished;
 
         $this->attachments()->save($attachment);
