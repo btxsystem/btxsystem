@@ -28,10 +28,10 @@
 </head>
 
 <body>
+
 <script src="{{asset('assets2/js/sweet.js')}}"></script>
 @include('sweet::alert')
 @extends('frontend.auth.style.header')
-
 <div id="app">
 <div class="modal fade" id="join" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
