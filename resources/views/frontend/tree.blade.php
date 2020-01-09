@@ -5,12 +5,11 @@
 @stop
 
 @section('content')
-
 <div class="modal fade" id="register" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-                <input type="text" hidden id="username_default" value="{{$profile->username_default}}">
+                <input type="text" hidden id="username_default" value="{{isset($profile->username_default) ? $profile->username_default : ''}}">
 				<h5 class="modal-title" id="exampleModalLabel">Register</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
@@ -31,7 +30,7 @@
 					</div>
 					<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div class="form-line">
-							<input class="form-control" name="username" id="username" min="8" type="text" required>
+							<input class="form-control" value="{{ isset($profile['data']['username']) ? $profile['data']['username'] : ''  }}" name="username" id="username" min="8" type="text" required>
 							<label class="form-label">Username <em>*</em></label>
 						</div>
 						<div>
@@ -40,17 +39,17 @@
 					</div>
 					<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12 row">
 						<div class="form-line col">
-							<input class="form-control" name="first_name" id="first_name" type="text" min="2" required>
+							<input class="form-control" value="{{ isset($profile['data']['first_name']) ? $profile['data']['first_name'] : ''  }}" name="first_name" id="first_name" type="text" min="2" required>
 							<label class="form-label">First Name <em>*</em></label>
 						</div>
 						<div class="form-line col">
-							<input class="form-control" name="last_name" id="last_name" type="text" min="2" required>
+							<input class="form-control" value="{{ isset($profile['data']['last_name']) ? $profile['data']['last_name'] : ''  }}" name="last_name" id="last_name" type="text" min="2" required>
 							<label class="form-label">Last Name</label>
 						</div>
 					</div>
 					<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div class="form-line">
-							<input class="form-control" name="email" id="email" type="email" min="5" required>
+							<input class="form-control" value="{{ isset($profile['data']['email']) ? $profile['data']['email'] : ''  }}" name="email" id="email" type="email" min="5" required>
 							<label class="form-label">Email <em>*</em></label>
 						</div>
 						<div>
@@ -59,31 +58,31 @@
 					</div>
 					<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div class="form-line">
-							<input class="form-control" id="phone_number" name="phone_number" type="text" min="11" max='13' required>
+							<input class="form-control" id="phone_number" value="{{ isset($profile['data']['phone_number']) ? $profile['data']['phone_number'] : ''  }}" name="phone_number" type="text" min="11" max='13' required>
 							<label class="form-label">Phone Number <em>*</em></label>
 						</div>
 					</div>
 					<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div class="form-line">
-							<input class="form-control" id="nik" name="nik" id="number_phone" type="text" min="1" required>
+							<input class="form-control" value="{{ isset($profile['data']['nik']) ? $profile['data']['nik'] : ''  }}" id="nik" name="nik" id="number_phone" type="text" min="1" required>
 							<label class="form-label">NIK / Passport <em>*</em></label>
 						</div>
 					</div>
           			<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div class="form-line">
-							<input class="form-control" id="npwp_number" name="npwp_number" type="text" min="1">
+							<input class="form-control" value="{{ isset($profile['data']['npwp_number']) ? $profile['data']['npwp_number'] : ''  }}" id="npwp_number" name="npwp_number" type="text" min="1">
 							<label class="form-label">NPWP</label>
 						</div>
 					</div>
           			<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div class="form-line">
-							<input class="form-control" id="bank_account_name" name="bank_account_name" type="text" min="1" required>
+							<input class="form-control" value="{{ isset($profile['data']['bank_account_name']) ? $profile['data']['bank_account_name'] : ''  }}" id="bank_account_name" name="bank_account_name" type="text" min="1" required>
 							<label class="form-label">Account Name <em>*</em></label>
 						</div>
 					</div>
           			<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div class="form-line">
-							<input class="form-control" id="bank_account_number" name="bank_account_number" type="text" min="1" required>
+							<input class="form-control" value="{{ isset($profile['data']['bank_account_number']) ? $profile['data']['bank_account_number'] : ''  }}" id="bank_account_number" name="bank_account_number" type="text" min="1" required>
 							<label class="form-label">Account Number <em>*</em></label>
 						</div>
 					</div>
@@ -106,7 +105,7 @@
 							<label class="form-label">Birth Date <em>*</em></label>
 						</div>
 						<div class="form-line">
-							<input type="date" id="birthdate" name="birthdate" class="form-control" placeholder="Birthdate" required>
+							<input type="date" value="{{ isset($profile['data']['birthdate']) ? $profile['data']['birthdate'] : ''  }}" id="birthdate" name="birthdate" class="form-control" placeholder="Birthdate" required>
 						</div>
 						<div style="color:red" id="birthdate_danger"></div>
 					</div>
