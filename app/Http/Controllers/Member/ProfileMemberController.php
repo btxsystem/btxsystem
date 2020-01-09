@@ -16,6 +16,7 @@ use App\Service\PaymentVa\TransactionPaymentService as Va;
 
 use Illuminate\Support\Facades\Mail;
 use App\Mail\RegisterMemberMail;
+use Redirect;
 
 class ProfileMemberController extends Controller
 {
@@ -108,7 +109,9 @@ class ProfileMemberController extends Controller
             if($checkEmail > 0) {
                 DB::rollback();
                 Alert::error('Email sudah terdaftar', 'Error')->persistent("OK");
-                return redirect()->route('member.tree');
+                $data = Auth::user();
+                $data['data'] = $request;
+                return view('frontend.tree')->with('profile',$data);
             }
 
             // $checkPhoneNumber = Employeer::where('phone_number', $request->phone_number)->count();
@@ -124,7 +127,9 @@ class ProfileMemberController extends Controller
                 if ($data->position == $request->position) {
                     DB::rollback();
                     Alert::error('the chosen position is already occupied by someone else', 'Error')->persistent("OK");
-                    return redirect()->route('member.tree');
+                    $data = Auth::user();
+                    $data['data'] = $request;
+                    return view('frontend.tree')->with('profile',$data) ;
                 }
             }
 
@@ -139,7 +144,9 @@ class ProfileMemberController extends Controller
                 if($term_one == '' || $term_two == '') {
                     DB::rollback();
                     Alert::error('Kode etik Bitrexgo belum di Centang', 'Error')->persistent("OK");
-                    return redirect()->route('member.tree');
+                    $data = Auth::user();
+                    $data['data'] = $request;
+                    return view('frontend.tree')->with('profile',$data) ;
                 }
 
                 $price = 280;
@@ -234,7 +241,9 @@ class ProfileMemberController extends Controller
                 if($sponsor->bitrex_points < $price) {
                     DB::rollback();
                     Alert::error('Bitrex Point tidak cukup', 'Error')->persistent("OK");
-                    return redirect()->route('member.tree');
+                    $data = Auth::user();
+                    $data['data'] = $request;
+                    return view('frontend.tree')->with('profile',$data) ;
                 }
 
                 // histories points
@@ -283,7 +292,9 @@ class ProfileMemberController extends Controller
         } catch(\Illuminate\Database\QueryException $e) {
             DB::rollback();
             Alert::error('Kesalahan teknis', 'Error')->persistent("OK");
-            return redirect()->route('member.tree');
+            $data = Auth::user();
+            $data['data'] = $request;
+            return view('frontend.tree')->with('profile',$data) ;
         }
     }
 
