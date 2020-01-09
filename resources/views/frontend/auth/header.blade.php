@@ -28,10 +28,10 @@
 </head>
 
 <body>
+
 <script src="{{asset('assets2/js/sweet.js')}}"></script>
 @include('sweet::alert')
 @extends('frontend.auth.style.header')
-
 <div id="app">
 <div class="modal fade" id="join" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -238,7 +238,7 @@
       <div class="container">
         <div class="row">
           <div class="col-xs-12">
-            <a class="header-logo" href="javascript:void(0);">
+            <a class="header-logo" href="/login">
               <img class="header-logo__img" src="{{asset('img/logo.png')}}"  alt="Logo" height="auto" width="190px">
             </a>
             <a class="header-logo" href="javascript:void(0);">
@@ -271,7 +271,7 @@
                   <ul class="nav navbar-nav">
                     <li><a id="about" href="#">About Us</a></li>
                     <li><a id="product" href="#">Our Product</a></li>
-                    <li><a id="event" href="#">Event</a></li>
+                    <li><a id="event" href="/event">Event</a></li>
                     <!-- <li><a href="#"><button class="btn btn-effect btn-info btn-buy" style="background: #b92240; margin-top: -10px;">JOIN</button></a></li> -->
                     <!-- <li><a data-toggle="modal" data-target="#join"><button class="btn btn-effect btn-info btn-buy" style="background: #b92240; margin-top: -10px;">JOIN</button></a></li> -->
                     {{-- <li><a href="#"><button class="btn btn-effect btn-info btn-buy" style="background: #b92240; margin-top: -10px;">JOIN</button></a></li>--}}

@@ -268,6 +268,7 @@ Route::group(['middleware' => 'admin'], function () {
 
 
         Route::resource('about-us', 'Admin\AboutUsController');
+        Route::get('get-icon', 'Admin\AboutUsController@select2');
         Route::post('update-about', 'Admin\AboutUsController@update')->name('update-about');
         Route::get('about-us/published/{id}', ['as' => 'published', 'uses' => 'Admin\AboutUsController@published']);
         Route::get('about-us/unpublished/{id}', ['as' => 'unpublished', 'uses' => 'Admin\AboutUsController@unpublished']);

@@ -12,6 +12,7 @@ use Carbon\Carbon;
 use App\Models\Testimonial;
 use App\Models\AttachmentImage;
 use Illuminate\Routing\UrlGenerator;
+use App\Models\AboutUs;
 
 class LoginController extends Controller
 {
@@ -20,6 +21,10 @@ class LoginController extends Controller
     $testimoni = Testimonial::where('isPublished',1)->select('name','desc')->get();
     $ourHeadQuarter = AttachmentImage::where('attachable_type','App\Models\OurHeadquarter')
                                      ->where('isPublished',1)->select('name','path')->get();
+    $ourProduct = AttachmentImage::where('attachable_type','App\Models\EventPromotion')
+                                     ->where('isPublished',1)->select('name','path')->get();
+    $about_us = AboutUs::where('isPublished',1)->select('title','img','desc')->get();
+
     $data = null;
     if ($testimoni) {
         $data['testimoni'] = $testimoni;
@@ -28,6 +33,13 @@ class LoginController extends Controller
            $value->path = $url->to('/').'/'.$value->path;
         }
         $data['ourHeadQuarter'] = $ourHeadQuarter;
+    }if ($ourProduct) {
+        foreach ($ourProduct as $key => $value) {
+            $value->path = $url->to('/').'/'.$value->path;
+        }
+        $data['ourProduct'] = $ourProduct;
+    }if ($about_us) {
+        $data['about_us'] = $about_us;
     }
     return view('frontend.auth.login')->with('data',$data);
   }
