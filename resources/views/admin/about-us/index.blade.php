@@ -313,7 +313,6 @@ List Of About US
 
             $.get(url, function (data) {
                 //success data
-                console.log(data);
                 $('#id').val(data.id);
                 $('#title_edit').val(data.title);
                 $('#desc_edit').val(data.desc);
