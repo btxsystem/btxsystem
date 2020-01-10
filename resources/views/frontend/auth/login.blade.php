@@ -42,39 +42,18 @@
                   <h2 class="ui-title-block ui-title-block_mod-a">About Bitrexgo</h2>
                   <div class="ui-subtitle-block ui-subtitle-block_mod-a">Bitrexgo is one of the best learning platform for financial education in Indonesia.</div>
                   <ul class="advantages advantages_mod-a list-unstyled">
-                    <li class="advantages__item"> <span class="advantages__icon"><i class="icon stroke icon-Cup"></i></span>
-                      <div class="advantages__inner">
-                        <h3 class="ui-title-inner decor decor_mod-a">Bitrexgo</h3>
-                        <div class="advantages__info">
-                          <p>We are one of the best learning platform for financial education in Indonesia.</p>
-                        </div>
-                      </div>
-                    </li>
-                    <li class="advantages__item"> <span class="advantages__icon"><i class="icon stroke icon-DesktopMonitor"></i></span>
-                      <div class="advantages__inner">
-                        <h3 class="ui-title-inner decor decor_mod-a">Vision</h3>
-                        <div class="advantages__info">
-                          <p>Educate and empower people to become financially smart.</p>
-                        </div>
-                      </div>
-                    </li>
-
-                    <li class="advantages__item"> <span class="advantages__icon"><i class="icon stroke icon-WorldGlobe"></i></span>
-                      <div class="advantages__inner">
-                        <h3 class="ui-title-inner decor decor_mod-a">Mission</h3>
-                        <div class="advantages__info">
-                          <p>Revolutionize the Financial Educational Industry, with Bitrexgo as the vehicle which will bring people to change their lives, and the lives of others.</p>
-                        </div>
-                      </div>
-                    </li>
-                    <li class="advantages__item"> <span class="advantages__icon"><i class="icon stroke icon-Users"></i></span>
-                      <div class="advantages__inner">
-                        <h3 class="ui-title-inner decor decor_mod-a">Leader</h3>
-                        <div class="advantages__info">
-                          <p>We create a leader with wisdom, great vision, and high integrity.</p>
-                        </div>
-                      </div>
-                    </li>
+                    @if (count($data['about_us']) >= 0)
+                        @foreach ($data['about_us'] as $item)
+                            <li class="advantages__item"> <span class="advantages__icon"><i class="{{$item->img}}"></i></span>
+                                <div class="advantages__inner">
+                                    <h3 class="ui-title-inner decor decor_mod-a">{{$item->title}}</h3>
+                                    <div class="advantages__info">
+                                        <p>{{$item->desc}}</p>
+                                    </div>
+                                </div>
+                            </li>
+                        @endforeach
+                    @endif
                   </ul>
                 </section>
               </div>

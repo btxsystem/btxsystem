@@ -174,7 +174,7 @@ class ProfileMemberController extends Controller
                     'bitrex_points' => 0,
                     'pv' => 0,
                     'nik' => $request->nik,
-                    'expired_at' => Carbon::create(date('Y-m-d H:i:s'))->addYear(1),
+                    'expired_at' => count($ebooks) < 2 ? Carbon::create(date('Y-m-d H:i:s'))->addYear(1) : Carbon::create(date('Y-m-d H:i:s'))->addYear(5),
                     'bank_name' => $request->bank_name,
                     'bank_account_name' => $request->bank_account_name,
                     'no_rec' => $request->bank_account_number
@@ -230,7 +230,7 @@ class ProfileMemberController extends Controller
                     $trxMember = new TransactionMember();
                     $trxMember->transaction_ref = $afterCheckRef;
                     $trxMember->ebook_id = (int) $ebook;
-                    $trxMember->expired_at = Carbon::create(date('Y-m-d H:i:s'))->addYear(1);
+                    $trxMember->expired_at = count($ebooks) < 2 ? Carbon::create(date('Y-m-d H:i:s'))->addYear(1) : Carbon::create(date('Y-m-d H:i:s'))->addYear(5);
                     $trxMember->member_id = $employeer->id;
                     $trxMember->status = 1;
                     $trxMember->save();

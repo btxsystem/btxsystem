@@ -15,6 +15,7 @@
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
         <link href="{{ asset('assets/css/app.css') }}" rel="stylesheet" type="text/css"/>
         <link rel="stylesheet" type="text/css" href="/assets/vendors/sweetalert/css/sweetalert.css">
+        <link href="{{asset('assets3/fonts/stroke/style.css')}}" rel="stylesheet">
 
         <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
         <link href="{{ asset('assets/css/chart.css') }}" rel="stylesheet" type="text/css" />

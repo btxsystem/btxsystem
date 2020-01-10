@@ -6,7 +6,6 @@ List Of About US
 @stop
 
 @section('content')
-
 <section class="content-header">
     <h1>About Us</h1>
     <ol class="breadcrumb">
@@ -32,7 +31,7 @@ List Of About US
                         @endif
                     </div>
                 </div>
-                
+
                 <div class="portlet-body flip-scroll">
                     <table class="table data-table table-bordered table-striped table-condensed flip-content about-us" >
                         <thead class="flip-content">
@@ -40,7 +39,7 @@ List Of About US
                                 <th class="text-center" width="5%">No</th>
                                 <th class="text-center" width="15%">Title</th>
                                 <th class="text-center" width="45%">Description</th>
-                                <th class="text-center" width="10%">Image</th>
+                                <th class="text-center" width="10%">Icon</th>
                                 <th class="text-center" width="10%">Status</th>
                                 <th width="15%">Action</th>
                             </tr>
@@ -64,7 +63,7 @@ List Of About US
                     <center><h4 class="modal-title">About Us Form</h4></center>
                 </div>
                 <div class="modal-body">
-                    <form class="well form-horizontal" action="{{ route('cms.about-us.store') }}" method="post" enctype="multipart/form-data">  
+                    <form class="well form-horizontal" action="{{ route('cms.about-us.store') }}" method="post" enctype="multipart/form-data">
                         {{ csrf_field() }}
                         <fieldset>
                             <div class="form-group">
@@ -78,10 +77,12 @@ List Of About US
 
 
                             <div class="form-group">
-                                <label class="col-md-2 control-label">Image</label>
+                                <label class="col-md-2 control-label">Icon</label>
                                 <div class="col-md-9 inputGroupContainer">
                                     <div class="input-group"><span class="input-group-addon"><i class="fa fa-file-photo-o"></i></span>
-                                    <input id="img" name="img"  class="form-control" required="true" type="file">
+                                    <select name="icon" id="icons" class="form-control" required="true">
+
+                                    </select>
                                 </div>
                                 </div>
                             </div>
@@ -91,7 +92,7 @@ List Of About US
                                 <label class="col-md-2 control-label">Decription</label>
                                 <div class="col-md-8 inputGroupContainer">
                                     <div class="input-group">
-                                        <textarea rows="8" cols="55" id="desc" name="desc" class="article" required="true">{{old('desc')}}</textarea>
+                                        <textarea rows="8" cols="53" id="desc" name="desc" class="article" required="true">{{old('desc')}}</textarea>
                                     </div>
                                 </div>
                             </div>
@@ -114,7 +115,7 @@ List Of About US
                     <center><h4 class="modal-title">Testimony Form</h4></center>
                 </div>
                 <div class="modal-body">
-                    <form class="well form-horizontal" action="{{ route('cms.update-about') }}" method="post" enctype="multipart/form-data">  
+                    <form class="well form-horizontal" action="{{ route('cms.update-about') }}" method="post" enctype="multipart/form-data">
                         {{ csrf_field() }}
                         <fieldset>
                             <input id="id" name="id" type="hidden">
@@ -153,12 +154,59 @@ List Of About US
             </div>
         </div>
 </div>
-
 @stop
 
 @section('footer_scripts')
     <script type="text/javascript">
         $(document).ready(function () {
+            $('#icons').select2({
+            width: '100%',
+            ajax: {
+                url: "/backoffice/cms/get-icon",
+                dataType: 'json',
+                delay: 250,
+                data: function (params) {
+                    return {
+                        q: params.term, // search term
+                        page: params.page
+                    };
+                },
+                processResults: function (data, params) {
+                    params.page = params.page || 1;
+                    return {
+                        results: data.items,
+                        pagination: {
+                            more: (params.page * 30) < data.total_count
+                        }
+                    };
+                },
+                cache: true
+            },
+            placeholder: 'Search for icon',
+            templateResult: formatRepo,
+            templateSelection: formatRepoSelection
+            });
+
+            function formatRepoSelection (repo) {
+                return repo.full_name || repo.text;
+            }
+
+            function formatRepo (repo) {
+                if (repo.loading) {
+                    return repo.text;
+                }
+
+                var $container = $(
+                    "<div class='select2-result-repository clearfix'>" +
+                    "<div class='select2-result-repository__avatar'><i class='" + repo.icon + " select2-result-repository__title' />" + "</div>"
+                );
+
+                $container.find(".select2-result-repository__title").text(' '+repo.full_name);
+
+                return $container;
+            }
+
+
           var table = $('.about-us').DataTable({
               rowCallback: function(row, data, index){
                 $(row).find('td').css('vertical-align', 'middle');
@@ -167,26 +215,26 @@ List Of About US
               processing: true,
               serverSide: true,
               ajax: {
-                url: "{{ route('cms.about-us.index') }}", 
+                url: "{{ route('cms.about-us.index') }}",
               },
-              
+
               columns: [
                   { data: 'DT_RowIndex', name: 'DT_RowIndex', className: "text-center", orderable: false, searchable: false },
-                  { data: 'title', name: 'title', className: "text-center" },                  
+                  { data: 'title', name: 'title', className: "text-center" },
                   { data: 'desc', name: 'desc', className: "text-center" },
                   { data: 'image_url', name: 'image_url', className: 'text-center', searchable: false,
                     render: function(data) {
                        if(data === 'No Image') {
                            return 'No Image';
                        }
-                       return '<image width="100px" height="100px" src="'+data+'"></image>';
+                       return '<i width="200px" height="200px" class="'+data+'"></i>';
                     },
-                  },                   
-                  { data: 'status', name: 'status', className: "text-center" },                  
+                  },
+                  { data: 'status', name: 'status', className: "text-center" },
                   { data: 'action', name: 'action', orderable: false, searchable: false, className: "text-center" },
               ]
           });
-          
+
         });
 
         $(document).on('click', '.delete-about', function (e) {
@@ -207,7 +255,7 @@ List Of About US
                         data: {id:id},
                         success: function (data) {
                                 window.location.href = "{{ route('cms.about-us.index') }}";
-                            }         
+                            }
                     });
             });
         });
@@ -229,7 +277,7 @@ List Of About US
                         data: {id:id},
                         success: function (data) {
                                 window.location.href = "{{ route('cms.about-us.index') }}";
-                            }         
+                            }
                     });
             });
         });
@@ -251,30 +299,29 @@ List Of About US
                         data: {id:id},
                         success: function (data) {
                                 window.location.href = "{{ route('cms.about-us.index') }}";
-                            }         
+                            }
                     });
             });
         });
 
 
         $(document).on('click','.edit-about',function(){
-   
+
             var id = $(this).data('id');
-            
+
             var url =   "{{url('backoffice/cms/about-us/')}}" +'/'+ id +'/edit';
 
             $.get(url, function (data) {
                 //success data
-                console.log(data);
                 $('#id').val(data.id);
                 $('#title_edit').val(data.title);
                 $('#desc_edit').val(data.desc);
 
                 $('#btn-save').val("update");
                 $('#editAboutModal').modal('show');
-            }) 
+            })
         });
-       
+
       </script>
-      
+
 @endsection
