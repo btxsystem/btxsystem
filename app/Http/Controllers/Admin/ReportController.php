@@ -138,18 +138,18 @@ class ReportController extends Controller
     {
             if (request()->ajax()) {
                 $now = strtotime(now());
-            $now = date('m-d',$now);
-            $to_date = strtotime(now(). "+2 days");
-            $to_date = date('m-d',$to_date);
-            $datas = Employeer::all();
-            $data = [];
-            foreach ($datas as $key => $value) {
-                $birth_date = strtotime($value->birthdate);
-                $birth_date = date('m-d',$birth_date);
-                if ( $birth_date >= $now and $birth_date<=$to_date) {
-                    $data[$key]=$value;
+                $now = date('m-d',$now);
+                $to_date = strtotime(now(). "+2 days");
+                $to_date = date('m-d',$to_date);
+                $datas = Employeer::all();
+                $data = [];
+                foreach ($datas as $key => $value) {
+                    $birth_date = strtotime($value->birthdate);
+                    $birth_date = date('m-d',$birth_date);
+                    if ( $birth_date >= $now and $birth_date<=$to_date) {
+                        $data[$key]=$value;
+                    }
                 }
-            }
             return Datatables::of($data)
                             ->addIndexColumn()
                             ->addColumn('id_member', function($row){

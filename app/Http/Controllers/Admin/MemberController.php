@@ -50,7 +50,7 @@ class MemberController extends Controller
                     ->editColumn('join_at', function($data){
                         return isset($data->created_at) ?  date_format($data->created_at,"d M Y") : date_format($data['created_at'],"d M Y");
                     })
-                    ->editColumn('archive_rank',function($data){
+                    ->editColumn('archive',function($data){
                         if (!isset($data->archive[0]) || $data->archive[0] == null) {
                             return '-';
                         }else{

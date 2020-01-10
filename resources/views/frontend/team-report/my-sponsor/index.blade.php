@@ -27,13 +27,7 @@
                     </thead>
                     <tbody>
                     </tbody>
-                    <tfoot>
-                            <th>Name</th>
-                            <th>Username</th>
-                            <th>Phone Number</th>
-                        </tr>
-                    </tfoot>
-                </table> 
+                </table>
             </div>
         </div>
     </div>
