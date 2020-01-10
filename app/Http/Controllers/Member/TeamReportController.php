@@ -50,7 +50,7 @@ class TeamReportController extends Controller
                     ->leftJoin('ranks','employeers.rank_id','=','ranks.id')
                     ->leftJoin('pv_rank','employeers.id','=','pv_rank.id_member')
                     ->select('employeers.id','employeers.parent_id','employeers.username',
-                             'employeers.first_name','employeers.last_name',
+                             'employeers.first_name','employeers.last_name', 'employeers.created_at',
                              'employeers.rank_id as rank_id','ranks.name as ranking',
                              'pv_rank.pv_left as pv_left','pv_rank.pv_midle as pv_middle',
                              'pv_rank.pv_right as pv_right')->get();
@@ -65,6 +65,10 @@ class TeamReportController extends Controller
                 })
                 ->editColumn('full_name', function($data) {
                     return $data->first_name .' '. $data->last_name;
+                })
+                ->editColumn('created_at', function($data) {
+                    $date=date_create($data->created_at);
+                    return date_format($date,"d M Y");
                 })
                 ->editColumn('archive_rank', function($data) {
                     if ($data->rank_id=='' || !isset($data->rank_id) || $data->rank_id==null) {

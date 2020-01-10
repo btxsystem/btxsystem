@@ -49,6 +49,7 @@
                             <th>No</th>
                             <th>Name</th>
                             <th>Username</th>
+                            <th>Join Date</th>
                             <th>Rank</th>
                             <th>Archive Rank</th>
                             <th>PV Left</th>
@@ -92,6 +93,7 @@
                   { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
                   { data: 'full_name', name: 'full_name'},
                   { data: 'username', name: 'username'},
+                  { data: 'created_at', name: 'created_at'},
                   { data: 'ranking', name: 'ranking', className: "text-center" },
                   { data: 'archive_rank', name: 'archive_rank', className: "text-center" },
                   { data: 'pv_left', name: 'rankipv_leftng', className: "text-center"  },
