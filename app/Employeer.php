@@ -122,6 +122,11 @@ class Employeer extends Authenticatable
         return $this->hasMany('App\Models\GotReward','member_id')->orderByDesc('id');
     }
 
+    public function lastArchive()
+    {
+        return $this->hasOne('App\Models\GotReward', 'member_id')->latest();
+    }
+
     public function pv_down(){
         return $this->hasOne('App\PvRank','id_member');
     }
