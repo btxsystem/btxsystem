@@ -120,7 +120,7 @@ class ReportController extends Controller
 
     public function export(Request $request)
     {
-        $to_date = date('Y-m-d',strtotime($request->to_date . "+1 days"));
+        $to_date = date('Y-m-d',strtotime($request->to . "+1 days"));
         return Excel::download(new TransactionExport($request->from, $to_date), now() .' ' .'transaction.xlsx');
 
     }
