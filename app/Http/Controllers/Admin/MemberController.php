@@ -579,7 +579,8 @@ class MemberController extends Controller
     public function export(Request $request)
     {
         // echo 'Total memory usage : ' . (memory_get_usage() - $begin);
-        $to_date = date('Y-m-d',strtotime($request->to_date . "+1 days"));
+        $to_date = date('Y-m-d',strtotime($request->to . "+1 days"));
+
         return Excel::download(new MembersExport($request->from, $to_date), now() .' ' .'members.xlsx');
     }
 
