@@ -574,6 +574,9 @@ em{
 	}
 }
 </style>
+<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.10/themes/base/jquery-ui.css">
+<!-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script> -->
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
 	var priceEbook = 0
 	var postalFee = 0
@@ -1317,5 +1320,27 @@ em{
 			},300);
 		});
 	})
+
+
+	
+
+	// $( function() {
+	// 	$('#birthdate').datepicker();
+  	// });
+	// $( function() {
+	// 	if ( $('#birthdate').prop('type') != 'date' ) {
+    // 		$('#birthdate').datepicker();
+	// 	}
+  	// });
+
+	$( function() {
+		if ( $('#birthdate')[0].type != 'date' ) $('#birthdate').datepicker({
+			   changeMonth: true,
+   			   changeYear: true
+  		});
+  	});
+
+
+
 </script>
 @stop
