@@ -75,7 +75,7 @@ class TeamReportController extends Controller
                         return '-';
                     }else{
                         $archive = GotReward::where('member_id', $data->id)->orderByDesc('id')->first();
-                        return date_format($archive->created_at,"d M Y");
+                        return $archive ? date_format($archive->created_at,"d M Y") : '-';
                     }
                 })
                 ->editColumn('pv_middle', function($data) {

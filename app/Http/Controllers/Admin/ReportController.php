@@ -72,7 +72,8 @@ class ReportController extends Controller
                                                     }
                                         ])
                                 ->select('transaction_member.*')
-                                ->orderBy('transaction_member.created_at','desc');
+                                // ->orderBy('transaction_member.created_at','desc')
+                                ;
             } else {
                 $data = TransactionMember::where('status','=', 1)
                                 // ->whereDate('created_at', '>=', '2019-09-19')
@@ -88,7 +89,8 @@ class ReportController extends Controller
                                                 }
                                     ])
                             ->select('transaction_member.*')
-                            ->orderBy('transaction_member.created_at','desc');
+                            // ->orderBy('transaction_member.created_at','desc')
+                            ;
             }
 
             return Datatables::of($data)
@@ -118,7 +120,7 @@ class ReportController extends Controller
 
     public function export(Request $request)
     {
-        $to_date = date('Y-m-d',strtotime($request->to_date . "+1 days"));
+        $to_date = date('Y-m-d',strtotime($request->to . "+1 days"));
         return Excel::download(new TransactionExport($request->from, $to_date), now() .' ' .'transaction.xlsx');
 
     }
