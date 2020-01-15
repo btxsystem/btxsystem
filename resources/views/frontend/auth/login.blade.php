@@ -29,7 +29,7 @@
       </div>
     </div>
   </div>
-</div> 
+</div>
 
       <!-- end main-slider -->
 
@@ -42,38 +42,18 @@
                   <h2 class="ui-title-block ui-title-block_mod-a">About Bitrexgo</h2>
                   <div class="ui-subtitle-block ui-subtitle-block_mod-a">Bitrexgo is one of the best learning platform for financial education in Indonesia.</div>
                   <ul class="advantages advantages_mod-a list-unstyled">
-                    <li class="advantages__item"> <span class="advantages__icon"><i class="icon stroke icon-Cup"></i></span>
-                      <div class="advantages__inner">
-                        <h3 class="ui-title-inner decor decor_mod-a">Bitrexgo</h3>
-                        <div class="advantages__info">
-                          <p>We are one of the best learning platform for financial education in Indonesia.</p>
-                        </div>
-                      </div>
-                    </li>
-                    <li class="advantages__item"> <span class="advantages__icon"><i class="icon stroke icon-DesktopMonitor"></i></span>
-                      <div class="advantages__inner">
-                        <h3 class="ui-title-inner decor decor_mod-a">Vision</h3>
-                        <div class="advantages__info">
-                          <p>Educate and empower people to become financially smart.</p>
-                        </div>
-                      </div>
-                    </li>
-                    <li class="advantages__item"> <span class="advantages__icon"><i class="icon stroke icon-WorldGlobe"></i></span>
-                      <div class="advantages__inner">
-                        <h3 class="ui-title-inner decor decor_mod-a">Mission</h3>
-                        <div class="advantages__info">
-                          <p>Revolutionize the Financial Educational Industry, with Bitrexgo as the vehicle which will bring people to change their lives, and the lives of others.</p>
-                        </div>
-                      </div>
-                    </li>
-                    <li class="advantages__item"> <span class="advantages__icon"><i class="icon stroke icon-Users"></i></span>
-                      <div class="advantages__inner">
-                        <h3 class="ui-title-inner decor decor_mod-a">Leader</h3>
-                        <div class="advantages__info">
-                          <p>We create a leader with wisdom, great vision, and high integrity.</p>
-                        </div>
-                      </div>
-                    </li>
+                    @if (count($data['about_us']) >= 0)
+                        @foreach ($data['about_us'] as $item)
+                            <li class="advantages__item"> <span class="advantages__icon"><i class="{{$item->img}}"></i></span>
+                                <div class="advantages__inner">
+                                    <h3 class="ui-title-inner decor decor_mod-a">{{$item->title}}</h3>
+                                    <div class="advantages__info">
+                                        <p>{{$item->desc}}</p>
+                                    </div>
+                                </div>
+                            </li>
+                        @endforeach
+                    @endif
                   </ul>
                 </section>
               </div>
@@ -115,54 +95,20 @@
                 <!-- <div class="ui-subtitle-block ui-subtitle-block_mod-b">Bitrexgo is one of the best education platform for Foreign Exchange Trading in Indonesia.</div> -->
               </div>
               <div class="posts-wrap">
-                <article class="post post_mod-a clearfix wow zoomIn" data-wow-duration="1s">
-                  <div class="entry-media">
-                    <div class="entry-thumbnail"> <a href="javascript:void(0);" ><img class="img-responsive" src="{{asset('img/1.jpg')}}" style="width: 100%;" alt="Foto"/></a> </div>
-                  </div>
-                  <div class="entry-main">
-                    <h3 class="entry-title ui-title-inner decor decor_mod-b"><a href="javascript:void(0);">Basic to Advanced Financial Education</a></h3>
-                    <div class="entry-content hidden">
-                      <p>Bitrexgo is one of the best education platform for Foreign Exchange Trading in Indonesia</p>
-                    </div>
-                  </div>
-                </article>
-                <!-- end post -->
-                <article class="post post_mod-a clearfix wow zoomIn" data-wow-duration="1s" data-wow-delay=".5s">
-                  <div class="entry-media">
-                    <div class="entry-thumbnail"> <a href="javascript:void(0);" ><img class="img-responsive" src="{{asset('img/2.jpg')}}" style="width: 100%;" width="250" height="250" alt="Foto"/></a> </div>
-                  </div>
-                  <div class="entry-main">
-                    <h3 class="entry-title ui-title-inner decor decor_mod-b"><a href="javascript:void(0);">Education Videos &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></h3>
-                    <div class="entry-content hidden">
-                      <p>Bitrexgo is one of the best education platform for Foreign Exchange Trading in Indonesia</p>
-                    </div>
-                  </div>
-                </article>
-                <!-- end post -->
-                <article class="post post_mod-a clearfix wow zoomIn" data-wow-duration="1s" data-wow-delay="1s">
-                  <div class="entry-media">
-                    <div class="entry-thumbnail"> <a href="javascript:void(0);" ><img class="img-responsive" src="{{asset('img/3.jpg')}}" style="width: 100%;" width="250" height="250" alt="Foto"/></a> </div>
-                  </div>
-                  <div class="entry-main">
-                    <h3 class="entry-title ui-title-inner decor decor_mod-b"><a href="javascript:void(0);">Online & Offline Learning</a></h3>
-                    <div class="entry-content hidden">
-                      <p>Bitrexgo is one of the best education platform for Foreign Exchange Trading in Indonesia</p>
-                    </div>
-                  </div>
-                </article>
-                <!-- end post -->
-                <article class="post post_mod-a clearfix wow zoomIn" data-wow-duration="1s" data-wow-delay="1.5s">
-                  <div class="entry-media">
-                    <div class="entry-thumbnail"> <a href="javascript:void(0);" ><img class="img-responsive" src="{{asset('img/4.jpg')}}" style="width: 100%;" width="250" height="250" alt="Foto"/></a> </div>
-                  </div>
-                  <div class="entry-main">
-                    <h3 class="entry-title ui-title-inner decor decor_mod-b"><a href="javascript:void(0);">Smart Financial Community</a></h3>
-                    <div class="entry-content hidden">
-                      <p>Bitrexgo is one of the best education platform for Foreign Exchange Trading in Indonesia</p>
-                    </div>
-                  </div>
-                </article>
-                <!-- end post -->
+                @foreach ($data['ourProduct'] as $item)
+                    <article class="post post_mod-a clearfix wow zoomIn" data-wow-duration="1s">
+                        <div class="entry-media">
+                          <div class="entry-thumbnail"> <a href="javascript:void(0);" ><img class="img-responsive" src="{{$item->path}}" style="width: 100%;" alt="Foto"/></a> </div>
+                        </div>
+                        <div class="entry-main">
+                          <h3 class="entry-title ui-title-inner decor decor_mod-b"><a href="javascript:void(0);">{{$item->name}}</a></h3>
+                          <div class="entry-content hidden">
+                            <p>Bitrexgo is one of the best education platform for Foreign Exchange Trading in Indonesia</p>
+                          </div>
+                        </div>
+                      </article>
+                    <!-- end post -->
+                @endforeach
               </div>
               <!-- end posts-wrap -->
             </div>
@@ -207,7 +153,7 @@
         <div class="container">
           <div class="row">
             <div class="col-xs-12">
-              <div class="video-block"> 
+              <div class="video-block">
                 <!-- <h2 class="video-block__title">Bitrexgo Video</h2> -->
                 <div class="video-block__subtitle" style="font-size:20px;font-weight:bold">“ PT. Bitrexgo Solusi Prima adalah perusahaan penjualan langsung murni yang hanya menjual produk berupa e-book dan menjalankan usahanya sesuai dengan ketentuan pada PERMENDAG No. 32 tahun 2008. PT. Bitrexgo Solusi Prima tidak menjual produk investasi dan software robot investasi. Segala pernyataan di media yang menyebutkan PT. Bitrexgo Solusi Prima menjual produk investasi dan software robot adalah bukan dari PT. Bitrexgo Solusi Prima dan Perusahaan tidak bertanggung jawab atas klaim dan pernyataan yang bukan resmi berasal dari Perusahaan. ”</div>
               </div>
@@ -229,26 +175,14 @@
                 <!-- <div class="ui-subtitle-block ui-subtitle-block_mod-b">Bitrexgo is one of the best education platform for Foreign Exchange Trading in Indonesia.</div> -->
               </div>
               <div class="posts-wrap">
-                <article class="post post_mod-b clearfix wow zoomIn" data-wow-duration="1s">
-                  <div class="entry-media">
-                    <div class="entry-thumbnail"> <a href="javascript:void(0);" ><img style="height:200px;object-fit:cover" class="img-responsive" src="{{asset('img/hq1.jpg')}}" width="370" height="220" alt="Foto"/></a> </div>
-                  </div>
-                </article>
-                <!-- end post -->
-
-                <article class="post post_mod-b clearfix wow zoomIn" data-wow-duration="1s" data-wow-delay=".5s">
-                  <div class="entry-media">
-                    <div class="entry-thumbnail"> <a href="javascript:void(0);" ><img style="height:200px;object-fit:cover" class="img-responsive" src="{{asset('img/hq2.jpg')}}" width="370" height="220" alt="Foto"/></a> </div>
-                  </div>
-                </article>
-                <!-- end post -->
-
-                <article class="post post_mod-b clearfix wow zoomIn" data-wow-duration="1s" data-wow-delay="1s">
-                  <div class="entry-media">
-                    <div class="entry-thumbnail"> <a href="javascript:void(0);" ><img style="height:200px;object-fit:cover" class="img-responsive" src="{{asset('img/hq3.jpg')}}" width="370" height="220" alt="Foto"/></a> </div>
-                  </div>
-                </article>
-                <!-- end post -->
+                @foreach ($data['ourHeadQuarter'] as $item)
+                    <article class="post post_mod-b clearfix wow zoomIn" data-wow-duration="1s">
+                        <div class="entry-media">
+                            <div class="entry-thumbnail"> <a href="javascript:void(0);" ><img style="height:200px;object-fit:cover" class="img-responsive" src="{{$item->path}}" width="370" height="220" alt="Foto"/></a> </div>
+                        </div>
+                    </article>
+                    <!-- end post -->
+                @endforeach
               </div>
               <!-- end posts-wrap -->
             </div>
@@ -266,7 +200,7 @@
           <div class="row">
             <div class="col-xs-15">
                 <div class="ui-ktp" style="font-size:20px;font-weight:bold"> ANNOUNCEMENT </div>
-                <div class="ui-ktp" style="font-size:20px;font-weight:bold"> PT BITREXGO SOLUSI PRIMA HANYA AKAN MEMBERIKAN 1 HAK USAHA UNTUK 1 KTP KEPADA SELURUH MEMBER TANPA KECUALI </div> 
+                <div class="ui-ktp" style="font-size:20px;font-weight:bold"> PT BITREXGO SOLUSI PRIMA HANYA AKAN MEMBERIKAN 1 HAK USAHA UNTUK 1 KTP KEPADA SELURUH MEMBER TANPA KECUALI </div>
                 <div class="ui-ktp" style="font-size:20px;font-weight:bold"> 1 KTP BERLAKU UNTUK 1 HAK USAHA </div><br>
                 <div class="entry-thumbnail"><img class="ui-ktp" src="{{asset('img/KTP.png')}}" width="270" height="250" alt="Foto"/></a> </div>
               </div>
@@ -353,7 +287,7 @@
                 <!-- <form class="subscribe__form" action="get"> -->
                   <!-- <input class="subscribe__input form-control" type="text" placeholder="Your Email address ..."> -->
                 <div class="btnBook">
-                  <button class="subscribe__btn btn btn-effect" data-toggle="modal" data-target="#testimony" disabled style="width: 200px;margin-right: 80px;margin-top: 20px; color: #fff;">Submit</button>
+                  <button class="subscribe__btn btn btn-effect" data-toggle="modal" data-target="#testimony" style="width: 200px;margin-right: 80px;margin-top: 20px; color: #fff;">Submit</button>
                 </div>
                 <!-- </form> -->
                 <!-- Modal -->
@@ -367,12 +301,12 @@
                         </button>
                       </div>
                       <div class="modal-body" style="height: auto;">
-                        <input class="form-control" type="text" placeholder="Nama">
-                        <input class="form-control" type="text" placeholder="Email">
-                        <textarea class="form-control" placeholder="Your Testimony Here..." style="min-width: 100%; max-width: 100%; min-height: 150px; max-height: 150px;"></textarea>  
+                        <input class="form-control" type="text" id="name_testi" name="name_testi" placeholder="Name">
+                        <input class="form-control" type="text" id="email_testi" name="email_testi" placeholder="Email">
+                        <textarea class="form-control" id="testimoni" name="testimoni" placeholder="Your Testimony Here..." style="min-width: 100%; max-width: 100%; min-height: 150px; max-height: 150px;"></textarea>
                       </div>
                       <div class="modal-footer">
-                        <button type="button" disabled class="btn" style="border-radius: 5px; background-color: #b92240; color: #fff;">Send Testimony</button>
+                        <button onclick="submit_testimoni()" type="button" class="btn" style="border-radius: 5px; background-color: #b92240; color: #fff;">Send Testimony</button>
                         <button type="button" class="btn" style="border-radius: 5px; background-color: orange; color: #fff; margin-top: -5px;" data-dismiss="modal">Close</button>
                       </div>
                       </div>
@@ -472,6 +406,7 @@
               <section class="section-default wow bounceInLeft" data-wow-duration="1s">
                 <h2 class="ui-title-block">Testimonials <strong></strong></h2>
                 <div class="slider-reviews owl-carousel owl-theme owl-theme_mod-c enable-owl-carousel"
+                name="testimoni-word"
                         data-single-item="true"
                         data-auto-play="7000"
                         data-navigation="true"
@@ -481,20 +416,17 @@
                         data-after-init-delay="4000"
                         data-after-move-delay="2000"
                         data-stop-on-hover="true">
-                  <div class="reviews">
-                    <div class="reviews__text" style="text-align: justify;">I am very satisfied with the Web, make it easier to me to know about Trading and made me want to learn more, I am very satisfied with the Web, make it easier to me to know about Trading and made me want to learn more, I am very satisfied with the Web, make it easier to me to know about Trading and made me want to learn more. Thank you </div>
-                    <span class="reviews__autor">-- Den Nie Sularso</span> <span class="reviews__categories"></span> </div>
-                  <!-- end reviews -->
+                        @if (count($data['testimoni']) >= 0)
+                            @foreach ($data['testimoni'] as $item)
+                                <div class="reviews">
+                                    <div class="reviews__text" style="text-align: justify;">{{$item->desc}}</div>
+                                    <span class="reviews_autor">-- {{$item->name}}</span> <span class="reviews_categories"></span>
+                                </div>
+                              <!-- end reviews -->
+                            @endforeach
+                        @endif
 
-                  <div class="reviews">
-                    <div class="reviews__text" style="text-align: justify;">Great Web and interesting, making me instantly memorized and remember it. I so want to know more about trading on this web, Great Web and interesting, making me instantly memorized and remember it. I so want to know more about trading on this web, Great Web and interesting, making me instantly memorized and remember it. I so want to know more about trading on this web.</div>
-                    <span class="reviews__autor">-- Felio Wijoyo</span> <span class="reviews__categories"></span> </div>
-                  <!-- end reviews -->
-
-                  <div class="reviews">
-                    <div class="reviews__text" style="text-align: justify;">Web content in an attractive and transparent, making people ask questions and want to learn about the trading. could try I am interested, Web content in an attractive and transparent, making people ask questions and want to learn about the trading. could try I am interested, Web content in an attractive and transparent.</div>
-                    <span class="reviews__autor">-- Anastasia Mirna</span> <span class="reviews__categories"></span> </div>
-                  <!-- end reviews -->
+                        </div>
                 </div>
                 <!-- end slider-reviews -->
               </section>
@@ -513,7 +445,7 @@
 
     </div>
     <!-- end main-content -->
-    
+
 
 @include('frontend.auth.footer')
 <script src="{{asset('assets2/js/moment.js')}}"></script>
@@ -526,6 +458,51 @@
         scrollTop: $("#myProduct").offset().top - 100
     }, 1000);
   });
+
+  let submit_testimoni = () => {
+        $.ajax({
+            url: "{{ route('member.testimonial.store') }}",
+            type: 'POST',
+            data: {
+                    _token: "{{ csrf_token() }}",
+                    email: $('#name_testi').val(),
+                    name: $('#name_testi').val(),
+                    desc: $('#testimoni').val(),
+                  },
+            dataType: 'JSON',
+            success: function (data) {
+                if (data.success) {
+                    swal({
+                        title: "Success",
+                        text: "Data has saved!",
+                        icon: "success",
+                        button: "ok",
+                    },function() {
+                        location.reload();
+                    });
+                }else{
+                    swal({
+                        title: "Error",
+                        text: "Data can't save!",
+                        icon: "error",
+                        button: "ok",
+                    },function() {
+                        location.reload();
+                    });
+                }
+            },error: function(response) {
+                swal({
+                    title: "Oops",
+                    text: "Name and description are required!",
+                    icon: "warning",
+                    button: "ok",
+                },function() {
+                    location.reload();
+                })
+            }
+
+        });
+  }
 
   $("#about").click(function() {
     $('html, body').animate({
@@ -578,8 +555,8 @@
 			check_email = true;
 			$('#email_danger').empty();
 		}else{
-			check_email = false;	
-			$('#email_danger').text('Email Invalid');	
+			check_email = false;
+			$('#email_danger').text('Email Invalid');
 		}
 		$.ajax({
 			type: 'GET',
@@ -591,7 +568,7 @@
 				}else{
 					$('#email_danger').empty();
 					available_email = true;
-				}	
+				}
 			},
 			error: function() {
 				console.log("Error");
@@ -607,7 +584,7 @@
 			success: function (data) {
         data.referal ? $(".alert-referal").html("<span style=color:green>Sponsor tersedia</span>") : $(".alert-referal").html("<span style=color:red>Sponsor tidak tersedia</span>");
       },
-			error: function() { 
+			error: function() {
 				console.log("Error");
 			}
 		});
@@ -621,7 +598,7 @@
 			success: function (data) {
         data.username ? $(".alert-username").html("<span style=color:green>Username dapat digunakan</span>") : $(".alert-username").html("<span style=color:red>Username tidak dapat digunakan</span>");
       },
-			error: function() { 
+			error: function() {
 				console.log("Error");
 			}
 		});

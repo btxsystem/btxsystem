@@ -15,10 +15,10 @@ List Of Transaction Report
         <li class="active">Transaction Report</li>
     </ol>
 </section>
-    <section class="content">                
+    <section class="content">
     <div class="row">
         <div class="col-md-12">
-           
+
         <div class="portlet box primary" style="margin-top: 15px;">
                 <div class="portlet-title">
                     <div class="caption">
@@ -27,7 +27,12 @@ List Of Transaction Report
                     </div>
 
                     <div class="pull-right">
-                        <a style=" color: white; text-decoration: none !important" onMouseOut="this.style.color='white'" onMouseOver="this.style.color='#f06262'"  href="{{ route('report.export') }}" target="_blank" data-toggle="modal"><i style="font-size:15px;" class="fa fa-file-excel-o"></i>&nbsp; &nbsp;<strong>Export Excel</strong></a>
+                        <!-- <a class="link-export" style=" color: white; text-decoration: none !important" onMouseOut="this.style.color='white'" onMouseOver="this.style.color='#f06262'"  href="{{ route('report.export') }} " target="_blank">
+                            <i style="font-size:15px;" class="fa fa-file-excel-o"></i>&nbsp; &nbsp;<strong>Export Excel</strong>
+                        </a> -->
+                        <a class="link-export" style=" color: white; text-decoration: none !important" onMouseOut="this.style.color='white'" onMouseOver="this.style.color='#f06262'" target="_blank">
+                            <i style="font-size:15px;" class="fa fa-file-excel-o"></i>&nbsp; &nbsp;<strong>Export Excel</strong>
+                        </a>
                     </div>
                 </div>
 
@@ -48,18 +53,19 @@ List Of Transaction Report
                                     <button type="button" name="refresh" id="refresh" style="width: 50px;" class="btn btn-default"><i class="fa fa-refresh"></i></button>
                                 </div>
                             </div>
-        
+
                     </div>
                  <br/>
-                
+
                 <div class="portlet-body flip-scroll">
                     <table id="transaction" class="table data-table table-bordered table-striped table-condensed flip-content transaction" >
                         <thead class="flip-content">
                             <tr>
                                 <th width="15%">Transaction No</th>
                                 <th width="15%">Username</th>
-                                <th width="15%">Get Starterpack</th>
-                                <th width="15%">Product</th>
+                                <th width="10%">Starterpack</th>
+                                <th width="10%">Cost</th>
+                                <th width="10%">Product</th>
                                 <th width="10%">Price</th>
                                 <th width="15%">Buy Date</th>
                                 <th width="15%">Expired</th>
@@ -97,13 +103,14 @@ List Of Transaction Report
                     processing: true,
                     serverSide: true,
                     ajax: {
-                        url: "{{ route('report.transaction') }}", 
+                        url: "{{ route('report.transaction') }}",
                         data:{from_date:from_date, to_date:to_date}
                     },
                     columns: [
                         {data: 'transaction_ref', name: 'transaction_ref', className: 'text-center'},
                         {data: 'member.username', name: 'member.username', className: 'text-center', orderable: false},
-                        {data: 'starterpackType', name: 'starterpackType', className: 'text-center'},
+                        {data: 'starterpackType', name: 'starterpackType', className: 'text-center', searchable: false, orderable: false},
+                        {data: 'shippingCost', name: 'shippingCost', className: 'text-center', searchable: false, orderable: false},
                         {data: 'ebook.title', name: 'ebook.title', className: 'text-center'},
                         {data: 'ebook.price', name: 'ebook.price', className: 'text-center'},
                         {data: 'created_at', name: 'created_at', className: 'text-center'},
@@ -133,6 +140,18 @@ List Of Transaction Report
                 load_data();
             });
 
+        });
+
+        $(".link-export").click(function () {
+
+            var from_date = $('#from_date').val();
+            var to_date = $('#to_date').val();
+            var url = "{{ route('report.export') }}";
+            if (from_date != '') {
+                window.open(url + '?from=' + from_date + '&to=' + to_date, "_blank");
+            } else {
+                window.open(url, "_blank");
+            }
         });
     </script>
 

@@ -11,6 +11,10 @@ class LoginController extends Controller
 {
   public function getLogin()
   {
+    if (Auth::guard('admin')->check()) {
+        return redirect()->route('dashboard');
+    }
+
     return view('admin.auth.login');
   }
   public function postLogin(Request $request)
@@ -23,7 +27,7 @@ class LoginController extends Controller
     ]);
       // Attempt to log the user in
       // Passwordnya pake bcrypt
-    
+
 
     if (Auth::guard('admin')->attempt(['email' => $request->email, 'password' => $request->password])) {
         // if successful, then redirect to their intended location
@@ -36,7 +40,7 @@ class LoginController extends Controller
   {
     if (Auth::guard('admin')->check()) {
       Auth::guard('admin')->logout();
-    } 
+    }
     return redirect('/login');
   }
 }

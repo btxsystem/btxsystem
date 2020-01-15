@@ -149,6 +149,7 @@ Route::group(['middleware' => 'admin'], function () {
         Route::get('/edit-data/{id}', ['as' => 'edit-data', 'uses' => 'Admin\MemberController@edit']);
         Route::patch('/update-member/{id}', ['as' => 'update-data', 'uses' => 'Admin\MemberController@update']);
         Route::get('topup', ['as' => 'topup', 'uses' => 'Admin\MemberController@topup']);
+        Route::get('refound', ['as' => 'refound', 'uses' => 'Admin\MemberController@refound']);
         Route::get('update-password', ['as' => 'update-password', 'uses' => 'Admin\MemberController@updatePassword']);
         Route::get('buy-product', ['as' => 'buy-product', 'uses' => 'Admin\MemberController@buyProduct']);
 
@@ -167,12 +168,12 @@ Route::group(['middleware' => 'admin'], function () {
         Route::group(['prefix'=>'active','as'=>'active.'], function(){
             Route::get('', ['as' => 'index', 'uses' => 'Admin\MemberController@index']);
             Route::post('', ['as' => 'store', 'uses' => 'Admin\MemberController@store']);
-            Route::get('/{id}/nonactive', ['as' => 'nonactive', 'uses' => 'Admin\MemberController@nonactive']);
+            Route::get('/nonactive/{id}', ['as' => 'nonactive', 'uses' => 'Admin\MemberController@nonactive']);
         });
 
         Route::group(['prefix' => 'nonactive','as'=>'nonactive.'], function () {
             Route::get('', ['as' => 'index', 'uses' => 'Admin\MemberController@member_nonactive']);
-            Route::get('/{id}/active', ['as' => 'active', 'uses' => 'Admin\MemberController@active']);
+            Route::get('/active/{id}', ['as' => 'active', 'uses' => 'Admin\MemberController@active']);
         });
 
         Route::get('/export-data', ['as' => 'export-data', 'uses' => 'Admin\MemberController@export']);
@@ -267,6 +268,7 @@ Route::group(['middleware' => 'admin'], function () {
 
 
         Route::resource('about-us', 'Admin\AboutUsController');
+        Route::get('get-icon', 'Admin\AboutUsController@select2');
         Route::post('update-about', 'Admin\AboutUsController@update')->name('update-about');
         Route::get('about-us/published/{id}', ['as' => 'published', 'uses' => 'Admin\AboutUsController@published']);
         Route::get('about-us/unpublished/{id}', ['as' => 'unpublished', 'uses' => 'Admin\AboutUsController@unpublished']);

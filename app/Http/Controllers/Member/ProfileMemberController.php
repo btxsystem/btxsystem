@@ -16,6 +16,7 @@ use App\Service\PaymentVa\TransactionPaymentService as Va;
 
 use Illuminate\Support\Facades\Mail;
 use App\Mail\RegisterMemberMail;
+use Redirect;
 
 class ProfileMemberController extends Controller
 {
@@ -90,6 +91,9 @@ class ProfileMemberController extends Controller
 
     public function register(Request $request){
         try {
+            if (!isset($request->bank_name) || $request->bank_name==null) {
+                $request->bank_name = 'BCA';
+            }
             DB::beginTransaction();
 
             $cek_npwp = 0;
@@ -105,7 +109,9 @@ class ProfileMemberController extends Controller
             if($checkEmail > 0) {
                 DB::rollback();
                 Alert::error('Email sudah terdaftar', 'Error')->persistent("OK");
-                return redirect()->route('member.tree');
+                $data = Auth::user();
+                $data['data'] = $request;
+                return view('frontend.tree')->with('profile',$data);
             }
 
             // $checkPhoneNumber = Employeer::where('phone_number', $request->phone_number)->count();
@@ -121,7 +127,9 @@ class ProfileMemberController extends Controller
                 if ($data->position == $request->position) {
                     DB::rollback();
                     Alert::error('the chosen position is already occupied by someone else', 'Error')->persistent("OK");
-                    return redirect()->route('member.tree');
+                    $data = Auth::user();
+                    $data['data'] = $request;
+                    return view('frontend.tree')->with('profile',$data) ;
                 }
             }
 
@@ -136,7 +144,9 @@ class ProfileMemberController extends Controller
                 if($term_one == '' || $term_two == '') {
                     DB::rollback();
                     Alert::error('Kode etik Bitrexgo belum di Centang', 'Error')->persistent("OK");
-                    return redirect()->route('member.tree');
+                    $data = Auth::user();
+                    $data['data'] = $request;
+                    return view('frontend.tree')->with('profile',$data) ;
                 }
 
                 $price = 280;
@@ -164,7 +174,7 @@ class ProfileMemberController extends Controller
                     'bitrex_points' => 0,
                     'pv' => 0,
                     'nik' => $request->nik,
-                    'expired_at' => Carbon::create(date('Y-m-d H:i:s'))->addYear(1),
+                    'expired_at' => count($ebooks) < 2 ? Carbon::create(date('Y-m-d H:i:s'))->addYear(1) : Carbon::create(date('Y-m-d H:i:s'))->addYear(5),
                     'bank_name' => $request->bank_name,
                     'bank_account_name' => $request->bank_account_name,
                     'no_rec' => $request->bank_account_number
@@ -231,7 +241,9 @@ class ProfileMemberController extends Controller
                 if($sponsor->bitrex_points < $price) {
                     DB::rollback();
                     Alert::error('Bitrex Point tidak cukup', 'Error')->persistent("OK");
-                    return redirect()->route('member.tree');
+                    $data = Auth::user();
+                    $data['data'] = $request;
+                    return view('frontend.tree')->with('profile',$data) ;
                 }
 
                 // histories points
@@ -280,7 +292,9 @@ class ProfileMemberController extends Controller
         } catch(\Illuminate\Database\QueryException $e) {
             DB::rollback();
             Alert::error('Kesalahan teknis', 'Error')->persistent("OK");
-            return redirect()->route('member.tree');
+            $data = Auth::user();
+            $data['data'] = $request;
+            return view('frontend.tree')->with('profile',$data) ;
         }
     }
 
@@ -324,18 +338,23 @@ class ProfileMemberController extends Controller
     public function claimReward(Request $request){
         $member = Auth::user();
         if($request->id==1){
-            try {
-                DB::beginTransaction();
-                    $pajak = $member->verification == 1 ? 0.025 : 0.03;
-                    DB::table('got_rewards')->where('reward_id', $request->id)->where('member_id', Auth::id())->update(['status' => 2, 'updated_at' => now()]);
-                    DB::table('history_bitrex_cash')->insert(['id_member' => Auth::id(), 'nominal' => 3000000 - (3000000 * $pajak), 'created_at' => now(), 'updated_at' => now(), 'description' => 'Bonus Rewards', 'info' => 1, 'type' => 3]);
-                    DB::table('employeers')->where('id', Auth::id())->update(['bitrex_cash' => $member->bitrex_cash += 3000000 - (3000000 * $pajak), 'updated_at' => now()]);
-                    DB::table('history_pajak')->insert(['id_member' => Auth::id(), 'id_bonus' => 4, 'persentase' => $pajak, 'nominal' => 3000000 * $pajak, 'created_at' => now(), 'updated_at' => now()]);
-                    DB::commit();
-                    Alert::success('Claim Rewards Success, Check your history', 'Success')->persistent("OK");
-            } catch (\Exception $e) {
-                DB::rollback();
-                Alert::success('Something wrong', 'Success')->persistent("OK");
+            $data = DB::table('got_rewards')->where('member_id', Auth::id())->get();
+            if(count($data%8)==$request->id){
+                Alert::success('Claim Rewards Success, Check your history', 'Success')->persistent("OK");
+            }else{
+                try {
+                    DB::beginTransaction();
+                        $pajak = $member->verification == 1 ? 0.025 : 0.03;
+                        DB::table('got_rewards')->where('reward_id', $request->id)->where('member_id', Auth::id())->update(['status' => 2, 'updated_at' => now()]);
+                        DB::table('history_bitrex_cash')->insert(['id_member' => Auth::id(), 'nominal' => 3000000 - (3000000 * $pajak), 'created_at' => now(), 'updated_at' => now(), 'description' => 'Bonus Rewards', 'info' => 1, 'type' => 3]);
+                        DB::table('employeers')->where('id', Auth::id())->update(['bitrex_cash' => $member->bitrex_cash += 3000000 - (3000000 * $pajak), 'updated_at' => now()]);
+                        DB::table('history_pajak')->insert(['id_member' => Auth::id(), 'id_bonus' => 4, 'persentase' => $pajak, 'nominal' => 3000000 * $pajak, 'created_at' => now(), 'updated_at' => now()]);
+                        DB::commit();
+                        Alert::success('Claim Rewards Success, Check your history', 'Success')->persistent("OK");
+                } catch (\Exception $e) {
+                    DB::rollback();
+                    Alert::success('Something wrong', 'Success')->persistent("OK");
+                }
             }
         }else{
             DB::table('got_rewards')->where('reward_id', $request->id)->where('member_id', Auth::id())->update(['status' => 1, 'updated_at' => now()]);

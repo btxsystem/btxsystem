@@ -19,7 +19,7 @@
 <section class="content">
     <div class="row">
         <div class="col-md-12">
-            
+
             <div class="portlet box primary" style="margin-top: 15px;">
                 <div class="portlet-title">
                     <div class="caption">
@@ -33,31 +33,31 @@
                         @endif
                     </div>
                 </div>
-                  
+
                     <div class="col-md-12">
                         <br>
                         <div class="col-md-1">
                             <label class="control-label">Title </label>
-                        </div>  
+                        </div>
                         <div class="col-md-1">
                             :
-                        </div>  
+                        </div>
                         <div class="col-md-8">
                           {{($data->title)}}
-                        </div>  
+                        </div>
                         <br>
                     </div>
                     <div class="col-md-12">
                         <br>
                         <div class="col-md-1">
                             <label class="control-label">Desc </label>
-                        </div>  
+                        </div>
                         <div class="col-md-1">
                             :
-                        </div>  
+                        </div>
                         <div class="col-md-8">
                             {!!$data->desc !!}
-                        </div>  
+                        </div>
                         <br>
                     </div>
             </div>
@@ -82,13 +82,14 @@
                         @endif
                     </div>
                 </div>
-                
+
                 <div class="portlet-body flip-scroll">
                     <table class="table data-table table-bordered table-striped table-condensed flip-content images" >
                         <thead class="flip-content">
                             <tr>
                                 <th class="text-center" width="5%">No</th>
                                 <th class="text-center" width="30%">Name</th>
+                                <th class="text-center" width="30%">Description</th>
                                 <th class="text-center" width="20%">Status</th>
                                 <th class="text-center" width="20%">Image</th>
                                 <th width="15%">Action</th>
@@ -112,7 +113,7 @@
                     <center><h4 class="modal-title">Edit Promotion</h4></center>
                 </div>
                 <div class="modal-body">
-                    <form class="well form-horizontal" action="{{ route('cms.event-promotions.update') }}" method="post">  
+                    <form class="well form-horizontal" action="{{ route('cms.event-promotions.update') }}" method="post">
                         {{ csrf_field() }}
                         <fieldset>
                             <input id="id" name="id" type="hidden">
@@ -152,7 +153,7 @@
                     <center><h4 class="modal-title">Add Event Promotion Attachment</h4></center>
                 </div>
                 <div class="modal-body">
-                    <form class="well form-horizontal" action="{{ route('cms.event-promotions.images.upload') }}" method="post" enctype="multipart/form-data">  
+                    <form class="well form-horizontal" action="{{ route('cms.event-promotions.images.upload') }}" method="post" enctype="multipart/form-data">
                         {{ csrf_field() }}
                         <fieldset>
                             <div class="form-group">
@@ -170,6 +171,16 @@
                                 <div class="col-md-9 inputGroupContainer">
                                     <div class="input-group"><span class="input-group-addon"><i class="fa fa-file-photo-o"></i></span>
                                     <input id="path" name="path"  class="form-control" required="true" type="file">
+                                </div>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">Description</label>
+                                <div class="col-md-9 inputGroupContainer">
+                                    <div class="input-group"><span class="input-group-addon"><i class="fa fa-pencil"></i></span>
+                                    <textarea id="desc" name="desc" cols="47" rows="10"></textarea>
                                 </div>
                                 </div>
                             </div>
@@ -193,7 +204,7 @@
                     <center><h4 class="modal-title">Edit Event Promotion Attachment</h4></center>
                 </div>
                 <div class="modal-body">
-                    <form class="well form-horizontal" action="{{ route('cms.event-promotions.images.update') }}" method="post" enctype="multipart/form-data">  
+                    <form class="well form-horizontal" action="{{ route('cms.event-promotions.images.update') }}" method="post" enctype="multipart/form-data">
                         {{ csrf_field() }}
                         <fieldset>
                             <input id="id_image" name="id" type="hidden">
@@ -238,13 +249,14 @@
               processing: true,
               serverSide: true,
               ajax: {
-                url: "{{ route('cms.event-promotions.images') }}", 
+                url: "{{ route('cms.event-promotions.images') }}",
               },
-              
+
               columns: [
                   { data: 'DT_RowIndex', name: 'DT_RowIndex', className: "text-center", orderable: false, searchable: false },
-                  { data: 'name', name: 'name', className: "text-center" },    
-                  { data: 'status', name: 'status', className: "text-center" },                
+                  { data: 'name', name: 'name', className: "text-center" },
+                  { data: 'desc', name: 'desc', className: "text-center" },
+                  { data: 'status', name: 'status', className: "text-center" },
                   { data: 'image_url', name: 'image_url', className: 'text-center', searchable: false,
                     render: function(data) {
                        if(data === 'No Image') {
@@ -252,11 +264,11 @@
                        }
                        return '<image width="100px" height="100px" src="'+data+'"></image>';
                     },
-                  },                                
+                  },
                   { data: 'action', name: 'action', orderable: false, searchable: false, className: "text-center" },
               ]
           });
-          
+
         });
 
         $(document).on('click', '.delete-attachment', function (e) {
@@ -277,7 +289,7 @@
                         data: {id:id},
                         success: function (data) {
                                 window.location.href = "{{ route('cms.event-promotions.show') }}";
-                            }         
+                            }
                     });
             });
         });
@@ -299,7 +311,7 @@
                         data: {id:id},
                         success: function (data) {
                                 window.location.href = "{{ route('cms.event-promotions.show') }}";
-                            }         
+                            }
                     });
             });
         });
@@ -321,7 +333,7 @@
                         data: {id:id},
                         success: function (data) {
                                 window.location.href = "{{ route('cms.event-promotions.show') }}";
-                            }         
+                            }
                     });
             });
         });
@@ -330,7 +342,7 @@
         $(document).on('click','.edit-attachment',function(){
 
             var id = $(this).data('id');
-            
+
             var url =   "{{url('backoffice/cms/our-headquarters/images/')}}" +'/'+ id +'/edit';
 
             $.get(url, function (data) {
@@ -341,7 +353,7 @@
 
                 $('#btn-save').val("update");
                 $('#editAttachmentModal').modal('show');
-            }) 
+            })
         });
 
 
@@ -352,16 +364,16 @@
 
             $.get(url, function (data) {
                 //success data
-               
+
                 $('#id').val(data.id);
                 $('#title').val(data.title);
                 $('#desc').val(data.desc);
 
                 $('#btn-save').val("update");
                 $('#editPromotionModal').modal('show');
-            }) 
+            })
         });
-       
+
       </script>
-      
+
 @endsection

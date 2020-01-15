@@ -88,8 +88,10 @@ Route::group(['prefix'=>'member','as'=>'member.'], function(){
 */
 Route::redirect('/', '/login');
 Route::get('/login', 'Auth\LoginController@getLogin')->middleware('guest');
+Route::get('/event', 'Member\EventController@index');
 Route::post('/login', 'Auth\LoginController@postLogin');
 Route::get('/logout', 'Auth\LoginController@logout');
+Route::post('/finish', 'Member\BitrexPointController@index');
 Route::get('user/{user}', ['as' => 'user', 'uses' => 'Member\PvController@issetUser']);
 Route::post('register-auto', ['as' => 'register-auto', 'uses' => 'Member\ProfileMemberController@registerAuto']);
 Route::get('email/{user}', ['as' => 'email', 'uses' => 'Member\ProfileMemberController@isSameEmail']);
@@ -100,7 +102,10 @@ Route::post('register-member', ['as' => 'register-member', 'uses' => 'Member\Reg
 
 Route::get('/payment-confirm', ['as' => 'payment.confirm', 'uses' => 'Payment\V2\PaymentController@confirm']);
 
+Route::post('/notification/handler', ['as' => 'notification.handler', 'uses' => 'Payment\Midtrans\PaymentMindtransController@notificationHandler']);
+
 Route::post('/payment-confirmation', ['as' => 'payment.confirmation', 'uses' => 'Member\TransactionController@paymentConfirmation']);
+
 Route::post('/response-pay-topup', ['as' => 'response.pay.topup', 'uses' => 'Member\TransactionController@responsePayment']);
 
 Route::group(['namespace' => 'Ebook\Api', 'prefix' => 'api/ebook'], function() {
@@ -110,6 +115,10 @@ Route::group(['namespace' => 'Ebook\Api', 'prefix' => 'api/ebook'], function() {
 Route::post('forgot-password', ['as' => 'forgot-password', 'uses' => 'Member\ForgotPasswordController@sendEmail']);
 
 Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
+
+    Route::group(['prefix' => 'testimonial', 'as'=> 'testimonial.'], function() {
+        Route::post('store', ['as' => 'store', 'uses' => 'Member\TestimonialController@store']);
+    });
 
     Route::group(['prefix' => 'bp', 'as'=> 'bp.'], function () {
         Route::post('store', ['as' => 'store', 'uses' => 'Member\BitrexPointController@store']);
@@ -131,7 +140,7 @@ Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
 
     Route::group(['prefix' => 'payment', 'as'=> 'payment.'], function () {
         Route::get('', ['as' => 'index', 'uses' => 'Member\MyBonusController@index']);
-        Route::post('bitrans', ['as' => 'bitrans', 'uses' => 'Member\MyBonusController@index']);
+        Route::post('midtrans', ['as' => 'midtrans', 'uses' => 'Payment\Midtrans\PaymentMindtransController@submitDonation']);
     });
 
     Route::group(['prefix' => 'history-bonus', 'as'=> 'history-bonus.'], function () {
@@ -146,6 +155,7 @@ Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
 
     Route::get('', ['as' => 'dashboard', 'uses' => 'Member\DashboardController@index']);
     Route::get('tree', ['as' => 'tree', 'uses' => 'Member\DashboardController@tree']);
+    Route::post('direct-tree', ['as' => 'direct-tree', 'uses' => 'Member\DashboardController@directTree']);
     Route::get('prospected-member', ['as' => 'prospected-member', 'uses' => 'Member\ProspectedMemberController@index']);
     Route::post('register-downline', ['as' => 'register-downline', 'uses' => 'Member\ProfileMemberController@register']);
     Route::get('reward', ['as' => 'reward', 'uses' => 'Member\ProfileMemberController@rewards']);
@@ -163,6 +173,7 @@ Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
         Route::get('daily-retail', ['as' => 'daily-retail', 'uses' => 'Member\DashboardController@getAutoRetailDaily']);
         Route::get('training', ['as' => 'training', 'uses' => 'Member\DashboardController@getTraining']);
         Route::get('tree', ['as' => 'tree', 'uses' => 'Member\DashboardController@getTree']);
+        Route::post('tree-analyzer', ['as' => 'tree-analyzer', 'uses' => 'Member\DashboardController@getTree']);
         Route::get('ebook', ['as' => 'ebook', 'uses' => 'Member\EbookController@getEbook']);
         Route::get('child-tree/{user}', ['as' => 'child-tree', 'uses' => 'Member\DashboardController@getChildTree']);
         Route::get('tree-upline/{user}', ['as' => 'tree-upline', 'uses' => 'Member\DashboardController@getParentTree']);

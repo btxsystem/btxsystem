@@ -13,12 +13,28 @@ use Illuminate\Support\Facades\DB;
 class MembersExport implements FromView
 {
   
+    private $from;
+    private $to;
+
+    public function __construct($from, $to)
+    {
+         $this->from = $from;
+         $this->to = $to;
+    }
+
     public function view(): View
     {
+        if(isset($this->from)) {
 
-        return view('admin.members.excel', [
-            'datas' => Employeer::cursor()
-        ]);
+            return view('admin.members.excel', [
+                'datas' => Employeer::whereBetween('created_at', [$this->from, $this->to])->get()
+            ]);
+        } else {
+            return view('admin.members.excel', [
+                'datas' => Employeer::cursor()
+            ]);
+        } 
+        
     }
 
 

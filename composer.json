@@ -26,6 +26,7 @@
         "spatie/laravel-permission": "^2.37",
         "steevenz/rajaongkir": "^2.2",
         "uxweb/sweet-alert": "^2.0",
+        "veritrans/veritrans-php": "^1.2",
         "yajra/laravel-datatables-oracle": "^9.4"
     },
     "require-dev": {

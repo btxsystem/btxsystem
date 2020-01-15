@@ -3,8 +3,10 @@
 namespace App;
 use Nestable\NestableTrait;
 use Illuminate\Database\Eloquent\Model;
+use App\models\GotReward;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
 
 class Employeer extends Authenticatable
 {
@@ -14,7 +16,7 @@ class Employeer extends Authenticatable
     protected $hidden = [
         'password',
     ];
-    
+
     protected $parent = 'parent_id';
 
     // protected $appends = [
@@ -61,8 +63,8 @@ class Employeer extends Authenticatable
     {
         return $this->middleChildren()->with('allMiddleChildren');
     }
-  
-      
+
+
     public function parent()
     {
         return $this->hasOne( 'App\Employeer', 'id', 'parent_id');
@@ -72,7 +74,7 @@ class Employeer extends Authenticatable
     {
         return $this->hasOne( 'App\Employeer', 'id', 'sponsor_id');
     }
-    
+
     public function address()
     {
         return $this->hasOne( 'App\Models\Address', 'user_id');
@@ -114,6 +116,15 @@ class Employeer extends Authenticatable
 
     public function rank(){
         return $this->belongsTo('App\Rank','rank_id');
+    }
+
+    public function archive(){
+        return $this->hasMany('App\Models\GotReward','member_id')->orderByDesc('id');
+    }
+
+    public function lastArchive()
+    {
+        return $this->hasOne('App\Models\GotReward', 'member_id')->latest();
     }
 
     public function pv_down(){

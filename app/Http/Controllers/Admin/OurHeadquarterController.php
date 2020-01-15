@@ -88,7 +88,7 @@ class OurHeadquarterController extends Controller
         }
         Alert::error('Gagal Update Data', 'Gagal');
         return \redirect()->back();
-        
+
     }
 
     public function image()
@@ -143,7 +143,7 @@ class OurHeadquarterController extends Controller
         return \response()->json($data);
     }
 
-    public function updateAttachment(Request $request) 
+    public function updateAttachment(Request $request)
     {
         $data = AttachmentImage::findOrFail($request->id);
         $data->name = $request->name;
@@ -170,9 +170,9 @@ class OurHeadquarterController extends Controller
     public function destroyAttachment($id)
     {
         $data = AttachmentImage::findOrFail($id);
-        if ($data) { 
+        if ($data) {
             \File::delete(public_path($data->path));
-            $data->delete(); 
+            $data->delete();
             Alert::success('Success Delete Data', 'Success');
         } else {
             Alert::error('Gagal Delete Data', 'Gagal');
@@ -183,31 +183,31 @@ class OurHeadquarterController extends Controller
     public function published($id)
     {
         $data = AttachmentImage::findOrFail($id);
-        if ($data) { 
-    
+        if ($data) {
+
             $data->update([
                 'isPublished' => 1
-            ]); 
+            ]);
             Alert::success('Success Update Data', 'Success');
         } else {
             Alert::error('Gagal Update Data', 'Gagal');
         }
-        return redirect()->back(); 
+        return redirect()->back();
     }
 
     public function unpublished($id)
     {
         $data = AttachmentImage::findOrFail($id);
-        if ($data) { 
-    
+        if ($data) {
+
             $data->update([
                 'isPublished' => 0
-            ]); 
+            ]);
             Alert::success('Success Update Data', 'Success');
         } else {
             Alert::error('Gagal Update Data', 'Gagal');
         }
-        return redirect()->back(); 
+        return redirect()->back();
     }
 
 
@@ -231,6 +231,6 @@ class OurHeadquarterController extends Controller
             break;
 
         }
-       
+
     }
 }
