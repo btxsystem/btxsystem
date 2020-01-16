@@ -339,7 +339,7 @@ class ProfileMemberController extends Controller
         $member = Auth::user();
         if($request->id==1){
             $data = DB::table('got_rewards')->where('member_id', Auth::id())->get();
-            if(count($data%8)==$request->id){
+            if(count($data)%8==$request->id){
                 Alert::success('Claim Rewards Success, Check your history', 'Success')->persistent("OK");
             }else{
                 try {

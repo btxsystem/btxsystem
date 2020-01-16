@@ -242,7 +242,10 @@ Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
         Route::get('my-analizer', ['as' => 'my-analizer', 'uses' => 'Member\TeamReportController@myAnalizer']);
         Route::get('team-analizer', ['as' => 'team-analizer', 'uses' => 'Member\TeamReportController@teamAnalizer']);
         Route::get('generate-analizer', ['as' => 'team-analizer', 'uses' => 'Member\TeamReportController@generateAnalyzer']);
+    });
 
+    Route::group(['prefix' => 'hall-of-fame', 'as'=> 'hall-of-fame.'], function () {
+        Route::get('', ['as' => 'index', 'uses' => 'Member\HallOfFameController@index']);
     });
 
 });
