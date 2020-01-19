@@ -304,8 +304,8 @@ w[o].h=h;w[o].b=b;return (w[o].q=w[o].q||[]).push(arguments)};a=d.createElement(
 m=d.getElementsByTagName(t)[0];a.async=1;a.src=h+l+'?b='+b+'&p='+p.join(',');a.crossorigin='use-credentials';m.parentNode.insertBefore(a,m)
 })(window,document,'script','https://embedder.traducationfx.com/','embedder.js','PCyAlXfaqVU',['modal'],'TraducationFX');
 
-$('#submit-va').hide();
-$('#submit-nonva').show();
+$('#submit-va').show();
+$('#submit-nonva').hide();
 
 </script>
 <?php if($books[0]->id == 1) { ?>
@@ -383,11 +383,94 @@ $('#ipay').change(function(){
 	$('#submit-nonva').show();
 })
 
-$('#submit-va').click(function(){
+<?php if(!Auth::guard('nonmember')->user() && !Auth::guard('user')->user()){?>
+	$('#submit-va').click(function(){
 	var $this = $(this);
+	$.ajaxSetup({
+		headers: {
+			'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+		}
+	});
+	$.ajax({
+		url: "{{ route('member.register-new') }}",
+		method: 'post',
+		data: {
+				referralCode: $('#referralCode').val(),
+				lastName: $('#lastName').val(),
+				firstName: $('#firstName').val(),
+				email: $('#email').val(),
+				phoneNumber: $('#phoneNumber').val(),
+				ebook: $('#ebook').val(),
+				username: $('#username').val(),
+				income: $('#income').val()
+		},
+		success: function(result){
+			console.log(result)
+
+			const {message, success} = result
+
+			if(!success) {
+				swal("Fail", "Cant't Register", "error");
+				$('#register').prop('disabled', false)
+				return false
+			}
+
+			var loadingText = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...';
+			if ($this.html() !== loadingText) {
+				$this.data('original-text', $this.html());
+				$this.hide();
+				$('#payment-bca').html(loadingText);
+				$('#payment-bca').show();
+			}
+			setTimeout(function() {
+				$this.html($this.data('original-text'));
+				$('#payment-bca').hide();
+				$this.show();
+			}, 100000);
+
+			$.ajaxSetup({
+				headers: {
+					'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+				}
+			});
+			$.ajax({
+				type: 'POST',
+				url: '{{route("member.buy-ebook")}}',
+				data: {ebook_id: $('#ebook').val(), non_member_id: result.data.id},
+				success: function (data) {
+
+					$('#va').val(data.customer_number);
+					$('#des_noreq').text('Masukkan '+data.customer_number+' sebagai rekening tujuan');
+					$('#des_noreq2').text('Masukkan '+data.customer_number+' sebagai rekening tujuan');
+					$('#des_noreq3').text('Masukkan '+data.customer_number+' sebagai rekening tujuan');
+								$('#ammount_bca').text('Nominal transaksi : '+data.total_amount+' (Include fee)');
+								$('#time-expired').text('Transfer Sebelum '+moment(data.time_expired).format('D MMMM Y - HH:mm'));
+					$('#no-virtual').modal('show');
+					$('#modal-subscription').modal('hide');
+
+				},
+				error: function() {
+					console.log("Error");
+				}
+			});
+		},
+		error: function(err) {
+			console.log(err)
+			$('#register').prop('disabled', false)
+			alert('Failed Register')
+		}});
+})
+<?php } else { ?>
+	$('#submit-va').click(function(){
+	var $this = $(this);
+	$.ajaxSetup({
+		headers: {
+			'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+		}
+	});
 	var loadingText = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...';
-	if ($(this).html() !== loadingText) {
-		$this.data('original-text', $(this).html());
+	if ($this.html() !== loadingText) {
+		$this.data('original-text', $this.html());
 		$this.hide();
 		$('#payment-bca').html(loadingText);
 		$('#payment-bca').show();
@@ -403,7 +486,6 @@ $('#submit-va').click(function(){
 			'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
 		}
 	});
-
 	$.ajax({
 		type: 'POST',
 		url: '{{route("member.buy-ebook")}}',
@@ -414,8 +496,8 @@ $('#submit-va').click(function(){
 			$('#des_noreq').text('Masukkan '+data.customer_number+' sebagai rekening tujuan');
 			$('#des_noreq2').text('Masukkan '+data.customer_number+' sebagai rekening tujuan');
 			$('#des_noreq3').text('Masukkan '+data.customer_number+' sebagai rekening tujuan');
-            $('#ammount_bca').text('Nominal transaksi : '+data.total_amount+' (Include fee)');
-            $('#time-expired').text('Transfer Sebelum '+moment(data.time_expired).format('D MMMM Y - HH:mm'));
+						$('#ammount_bca').text('Nominal transaksi : '+data.total_amount+' (Include fee)');
+						$('#time-expired').text('Transfer Sebelum '+moment(data.time_expired).format('D MMMM Y - HH:mm'));
 			$('#no-virtual').modal('show');
 			$('#modal-subscription').modal('hide');
 
@@ -425,6 +507,7 @@ $('#submit-va').click(function(){
 		}
 	});
 })
+<?php } ?>
 
 $('#referralCode').on('change', function() {
 	checkReferral()
