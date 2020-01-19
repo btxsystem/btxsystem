@@ -530,7 +530,7 @@ div#flag {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <script src="{{asset('assetsebook/js/helper.js')}}"></script>
-
+<script src="https://momentjs.com/downloads/moment.min.js"></script>
 <script>
 <?php if(\Request::get('redirect') != ''){?>
 showModalLogin();

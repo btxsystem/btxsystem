@@ -89,6 +89,9 @@ Route::group(['prefix'=>'member','as'=>'member.'], function(){
 Route::redirect('/', '/login');
 Route::get('/login', 'Auth\LoginController@getLogin')->middleware('guest');
 Route::get('/event', 'Member\EventController@index');
+Route::group(['prefix' => 'hall-of-fame', 'as'=> 'hall-of-fame.'], function () {
+    Route::get('', ['as' => 'index', 'uses' => 'Member\HallOfFameController@index']);
+});
 Route::post('/login', 'Auth\LoginController@postLogin');
 Route::get('/logout', 'Auth\LoginController@logout');
 Route::post('/finish', 'Member\BitrexPointController@index');
@@ -242,7 +245,6 @@ Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
         Route::get('my-analizer', ['as' => 'my-analizer', 'uses' => 'Member\TeamReportController@myAnalizer']);
         Route::get('team-analizer', ['as' => 'team-analizer', 'uses' => 'Member\TeamReportController@teamAnalizer']);
         Route::get('generate-analizer', ['as' => 'team-analizer', 'uses' => 'Member\TeamReportController@generateAnalyzer']);
-
     });
 
 });

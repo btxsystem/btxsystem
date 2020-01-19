@@ -68,6 +68,14 @@
         </li>
     @endif
 
+    <li class="{{ (request()->is('backoffice/hall-of-fame')) ? 'active' : '' }}">
+        <a href="{{ route('hall-of-fame.index') }}">
+            <i class="fa fa-diamond" style="color: #6CC66C" data-name="customer" data-size="18" data-c="#bdecb6" data-hc="#bdecb6"
+                data-loop="true"></i>
+                Hall Of Fame
+        </a>
+    </li>
+
     @if(\Auth::guard('admin')->user()->hasPermission('Verification_npwp'))
         <li class="{{ (request()->is('backoffice/verification-npwp')) ? 'active' : '' }}">
             <a href="{{ route('verification-npwp.index') }}">

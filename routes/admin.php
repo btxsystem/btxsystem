@@ -60,8 +60,6 @@ Route::group(['middleware' => 'admin'], function () {
         Route::get('/rateforex', ['as' => 'rateforex', 'uses' => 'Admin\BCAController@rateforex']);
     });
 
-
-
     Route::group(['prefix' => 'verification-npwp' ,'as'=>'verification-npwp.'], function () {
         Route::get('', ['as' => 'index', 'uses' => 'Admin\VerificarionNpwpController@index']);
         Route::get('store', ['as' => 'store', 'uses' => 'Admin\VerificarionNpwpController@store']);
@@ -334,6 +332,12 @@ Route::group(['middleware' => 'admin'], function () {
         Route::post('old-bonus', ['as' => 'old-bonus', 'uses' => 'ImportExcelController@oldBonus']);
         Route::post('account-name', ['as' => 'account-name', 'uses' => 'ImportExcelController@account_name']);
     });*/
+
+    Route::group(['prefix' => 'hall-of-fame' ,'as'=>'hall-of-fame.'], function () {
+        Route::get('/', ['as' => 'index', 'uses' => 'Admin\HallOfFameController@index']);
+        Route::get('/create', ['as' => 'create', 'uses' => 'Admin\HallOfFameController@create']);
+        Route::post('/', ['as' => 'store', 'uses' => 'Admin\HallOfFameController@store']);
+    });
 
 
     Route::get('generate-mail', ['as' => 'generate-mail', 'uses' => 'Member\SendEmailOldMember@sendMail']);
