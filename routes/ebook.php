@@ -60,6 +60,7 @@ Route::domain(env('EBOOK_URL'))->group(function () {
   Route::post('/v2/register', 'MemberV2\RegisterController@registerV2')->name('member.register-v2');
 
   Route::post('/v3/register', 'MemberV2\RegisterController@registerV3')->name('member.register-v3');
+  Route::post('/v3/register/new', 'MemberV2\RegisterController@registerNonMember')->name('member.register-new');
 
   Route::get('/v2/login', 'Auth\NonMemberController@getLogin')->middleware('guest')->name('member.login');
   Route::post('/v2/login', 'Auth\NonMemberController@postLogin')->name('member.login.post');

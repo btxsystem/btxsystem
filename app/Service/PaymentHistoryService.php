@@ -27,7 +27,7 @@ class PaymentHistoryServiceBuild implements PaymentHistoryService
 
     $payment = new PaymentHistoryNonMember();
     $payment->ebook_id = $builder->getEbookId();
-    $payment->member_id = $builder->getMemberId();
+    // $payment->member_id = $builder->getMemberId();
     $payment->non_member_id = $builder->getNonMemberId();
     $payment->ref_no = $afterCheckRef;
     $payment->payment_id = $builder->getPaymentId();
