@@ -42,6 +42,8 @@ class LoginController extends Controller
         $data['ourProduct'] = $ourProduct;
     }if ($about_us) {
         $data['about_us'] = $about_us;
+    }if ($hallOfFame) {
+        $data['hall_of_fame'] = $hallOfFame;
     }
     return view('frontend.auth.login')->with('data',$data);
   }
