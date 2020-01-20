@@ -7,7 +7,11 @@
   <meta name="csrf-token" content="{{ csrf_token() }}">
 
   <link href="{{asset('assets3/img/favicon.png')}}" type="image/x-icon" rel="shortcut icon">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   <!-- <link href="http://templines.rocks/html/academica/assets/css/master.css" rel="stylesheet"> -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
+
   <link href="{{asset('assets3/css/master.css')}}" rel="stylesheet">
   <!-- SWITCHER -->
   <link href="{{asset('assets3/css/switcher.css')}}" rel="stylesheet" id="switcher-css" media="all">
@@ -19,12 +23,10 @@
   <link href="{{asset('assets3/css/color4.css')}}" rel="alternate stylesheet" title="color4" media="all">
   <link href="{{asset('assets3/css/color5.css')}}" rel="alternate stylesheet" title="color5" media="all">
   <link rel="stylesheet" type="text/css" href="{{asset('assets2/css/select2.css')}}">
-
   <script src="{{asset('assets3/js/jquery-1.11.3.min.js')}}"></script>
 <!--   <script defer src="{{asset('js/app.js')}}"></script>
  -->  <link rel="stylesheet" href="{{asset('assets2/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css')}}">
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css">
-
 </head>
 
 <body>

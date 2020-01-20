@@ -1,5 +1,9 @@
 @include('frontend.auth.header')
 <div class="container pt-5">
+    <div class="header">
+        <center><h2>Hall Of Fame</h2></center>
+    </div>
+    <br>
     <div class="accordion" id="accordionExample">
       <div class="card">
         <div class="card-header bg-danger pointer" id="headingOne" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
@@ -9,14 +13,14 @@
             </button>
           </h2>
         </div>
-        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+        <div id="collapseOne" class="collapse {{$data['page']=='page_8s' ? 'show' : ''}}" aria-labelledby="headingOne" data-parent="#accordionExample">
           <div class="card-body">
             <div class="row">
               <div class="col-lg-4 p-4 mb-3">
                 @foreach ($data['chairman2'] as $item)
                     <div class="mb-4">
                         <div class="d-flex mx-auto align-items-center justify-content-center hall-card">
-                          <img src="{{$item['url'] != null ? url('/').$item['url'] : url('/img/logo.png')}}" class="img-fluid">
+                          <img src="{{$item['src'] != null ? asset($item['src']) : url('/img/logo.png')}}" class="img-fluid">
                         </div>
                           <img src="{{asset('img/bulu.png')}}" class="img-fluid frame">
                       </div>
@@ -37,14 +41,14 @@
           </h2>
         </div>
 
-        <div id="collapseTwo" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+        <div id="collapseTwo" class="collapse {{$data['page']=='page_7s' ? 'show' : ''}}" aria-labelledby="headingOne" data-parent="#accordionExample">
           <div class="card-body">
             <div class="row">
                 @foreach ($data['chairman1'] as $item)
                     <div class="col-lg-4 p-4 mb-3">
                         <div class="mb-4">
                             <div class="d-flex mx-auto align-items-center justify-content-center hall-card">
-                                <img src="{{$item['url'] != null ? url('/').$item['url'] : url('/img/logo.png')}}" class="img-fluid">
+                                <img src="{{$item['src'] != null ? asset($item['src']) : url('/img/logo.png')}}" class="img-fluid">
                             </div>
                             <img src="./img/bulu.png" class="img-fluid frame">
                         </div>
@@ -65,7 +69,7 @@
             </h2>
         </div>
 
-        <div id="collapseThree" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+        <div id="collapseThree" class="collapse {{$data['page']=='page_6s' ? 'show' : ''}}" aria-labelledby="headingOne" data-parent="#accordionExample">
             <div class="card-body">
                 <div class="row">
                     @foreach ($data['director3'] as $item)
@@ -74,7 +78,7 @@
                                 <div class="d-flex mx-auto align-items-center justify-content-center hall-card">
                                     <img src="./img/DC-7_resized.jpeg" class="img-fluid">
                                 </div>
-                                <img src="{{$item['url'] != null ? url('/').$item['url'] : url('/img/logo.png')}}" class="img-fluid frame">
+                                <img src="{{$item['src'] != null ? asset($item['src']) : url('/img/logo.png')}}" class="img-fluid frame">
                             </div>
                             <h4 class="text-center">{{$item['username']}}</h4>
                         </div>
@@ -94,14 +98,14 @@
             </h2>
         </div>
 
-        <div id="collapseFour" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+        <div id="collapseFour" class="collapse {{$data['page']=='page_5s' ? 'show' : ''}}" aria-labelledby="headingOne" data-parent="#accordionExample">
             <div class="card-body">
             <div class="row">
                 @foreach ($data['director2'] as $item)
                     <div class="col-lg-4 p-4 mb-3">
                         <div class="mb-4">
                         <div class="d-flex mx-auto align-items-center justify-content-center hall-card">
-                            <img src="{{$item['url'] != null ? url('/').$item['url'] : url('/img/logo.png')}}" class="img-fluid">
+                            <img src="{{$item['src'] != null ? asset($item['src']) : url('/img/logo.png')}}" class="img-fluid">
                         </div>
                             <img src="./img/bulu.png" class="img-fluid frame">
                         </div>
@@ -122,14 +126,14 @@
                 </h2>
             </div>
 
-            <div id="collapseFive" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+            <div id="collapseFive" class="collapse {{$data['page']=='page_4s' ? 'show' : ''}}" aria-labelledby="headingOne" data-parent="#accordionExample">
                 <div class="card-body">
                 <div class="row">
                     @foreach ($data['director1'] as $item)
                         <div class="col-lg-4 p-4 mb-3">
                             <div class="mb-4">
                             <div class="d-flex mx-auto align-items-center justify-content-center hall-card">
-                                <img src="{{$item['url'] != null ? url('/').$item['url'] : url('/img/logo.png')}}" class="img-fluid">
+                                <img src="{{$item['src'] != null ? asset($item['src']) : url('/img/logo.png')}}" class="img-fluid">
                             </div>
                                 <img src="./img/bulu.png" class="img-fluid frame">
                             </div>
@@ -150,14 +154,14 @@
                     </h2>
                 </div>
 
-                <div id="collapseSeven" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                <div id="collapseSeven" class="collapse {{$data['page']=='page_3s' ? 'show' : ''}}" aria-labelledby="headingOne" data-parent="#accordionExample">
                     <div class="card-body">
                         <div class="row">
                             @foreach ($data['platinum3'] as $item)
                             <div class="col-lg-4 p-4 mb-3">
                                 <div class="mb-4">
                                 <div class="d-flex mx-auto align-items-center justify-content-center hall-card">
-                                    <img src="{{$item['url'] != null ? url('/').$item['url'] : url('/img/logo.png')}}" class="img-fluid">
+                                    <img src="{{$item['src'] != null ? asset($item['src']) : url('/img/logo.png')}}" class="img-fluid">
                                 </div>
                                     <img src="./img/bulu.png" class="img-fluid frame">
                                 </div>
@@ -178,14 +182,14 @@
                         </h2>
                     </div>
 
-                    <div id="collapseSix" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                    <div id="collapseSix" class="collapse {{$data['page']=='page_2s' ? 'show' : ''}}" aria-labelledby="headingOne" data-parent="#accordionExample">
                         <div class="card-body">
                         <div class="row">
                             @foreach ($data['platinum2'] as $item)
                                 <div class="col-lg-4 p-4 mb-3">
                                     <div class="mb-4">
                                     <div class="d-flex mx-auto align-items-center justify-content-center hall-card">
-                                        <img  src="{{$item['url'] != null ? url('/').$item['url'] : url('/img/logo.png')}}" class="img-fluid">
+                                        <img  src="{{$item['src'] != null ? asset($item['src']) : url('/img/logo.png')}}" class="img-fluid">
                                     </div>
                                         <img src="./img/bulu.png" class="img-fluid frame">
                                     </div>
@@ -206,14 +210,14 @@
                             </h2>
                         </div>
 
-                        <div id="collapseEight" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                        <div id="collapseEight" class="collapse {{$data['page']=='page_1s' ? 'show' : ''}}" aria-labelledby="headingOne" data-parent="#accordionExample">
                             <div class="card-body">
                             <div class="row">
                                 @foreach ($data['platinum1'] as $item)
                                     <div class="col-lg-4 p-4 mb-3">
                                         <div class="mb-4">
                                         <div class="d-flex mx-auto align-items-center justify-content-center hall-card">
-                                            <img src="{{$item['url'] != null ? url('/').$item['url'] : url('/img/logo.png')}}" class="img-fluid">
+                                            <img src="{{$item['src'] != null ? asset($item['src']) : url('/img/logo.png')}}" class="img-fluid">
                                         </div>
                                             <img src="./img/bulu.png" class="img-fluid frame">
                                         </div>
@@ -227,8 +231,5 @@
                 </div>
     </div>
   <br>
-  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 </body>
 @include('frontend.auth.footer')

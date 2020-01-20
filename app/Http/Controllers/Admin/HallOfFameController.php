@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use DataTables;
 use App\Models\HallOfFame;
+use Alert;
 
 class HallOfFameController extends Controller
 {
@@ -21,16 +22,16 @@ class HallOfFameController extends Controller
             return Datatables::of($data)
                     ->addIndexColumn()
 
-                    ->editColumn('name', function($data) {
+                    ->editColumn('username', function($data) {
                         return $data->member->username;
                     })
 
                     ->editColumn('rank', function($data) {
-                        return $data->member->rank->name;
+                        return isset($data->member->rank->name) ? $data->member->rank->name : '-';
                     })
 
                     ->addColumn('action', function($row) {
-                        return '-';
+                        return '';
                     })
                     ->rawColumns(['action'])
                     ->make(true);
@@ -56,7 +57,13 @@ class HallOfFameController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
+        $data = [
+            'member_id' => $request->parent_id,
+            'desc' => $request->desc
+        ];
+        HallOfFame::create($data);
+        Alert::error('Data Saved', 'Success')->persistent("OK");
+        return redirect()->route('hall-of-fame.index');
     }
 
     /**
