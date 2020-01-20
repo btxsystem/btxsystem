@@ -47,7 +47,7 @@ class LoginController extends Controller
     }
     return view('frontend.auth.login')->with('data',$data);
   }
-  public function postLogin(Request $request)
+  public function postLogin(Request $request, UrlGenerator $url)
   {
 
     $this->validate($request, [
@@ -67,7 +67,33 @@ class LoginController extends Controller
       elseif(Auth::user()->status==0) {
         Auth::guard('user')->logout();
         Alert::error('Your account has been banned, please contact admin', 'Error')->persistent("OK");
-        return view('frontend.auth.login');
+        $testimoni = Testimonial::where('isPublished',1)->select('name','desc')->get();
+        $ourHeadQuarter = AttachmentImage::where('attachable_type','App\Models\OurHeadquarter')
+                                        ->where('isPublished',1)->select('name','path')->get();
+        $ourProduct = AttachmentImage::where('attachable_type','App\Models\EventPromotion')
+                                        ->where('isPublished',1)->select('name','path')->get();
+        $about_us = AboutUs::where('isPublished',1)->select('title','img','desc')->get();
+        $hallOfFame = HallOfFame::with(['member','member.rank'])->get();
+
+        $data = null;
+        if ($testimoni) {
+            $data['testimoni'] = $testimoni;
+        }if ($ourHeadQuarter) {
+            foreach ($ourHeadQuarter as $key => $value) {
+            $value->path = $url->to('/').'/'.$value->path;
+            }
+            $data['ourHeadQuarter'] = $ourHeadQuarter;
+        }if ($ourProduct) {
+            foreach ($ourProduct as $key => $value) {
+                $value->path = $url->to('/').'/'.$value->path;
+            }
+            $data['ourProduct'] = $ourProduct;
+        }if ($about_us) {
+            $data['about_us'] = $about_us;
+        }if ($hallOfFame) {
+            $data['hall_of_fame'] = $hallOfFame;
+        }
+        return view('frontend.auth.login')->with('data',$data);
       }
 
       elseif ($data->is_close_member == 1) {
@@ -88,7 +114,33 @@ class LoginController extends Controller
     else{
       Alert::error('Username or password is incorrect', 'Error')->persistent("OK");
     }
-    return view('frontend.auth.login');
+    $testimoni = Testimonial::where('isPublished',1)->select('name','desc')->get();
+    $ourHeadQuarter = AttachmentImage::where('attachable_type','App\Models\OurHeadquarter')
+                                     ->where('isPublished',1)->select('name','path')->get();
+    $ourProduct = AttachmentImage::where('attachable_type','App\Models\EventPromotion')
+                                     ->where('isPublished',1)->select('name','path')->get();
+    $about_us = AboutUs::where('isPublished',1)->select('title','img','desc')->get();
+    $hallOfFame = HallOfFame::with(['member','member.rank'])->get();
+
+    $data = null;
+    if ($testimoni) {
+        $data['testimoni'] = $testimoni;
+    }if ($ourHeadQuarter) {
+        foreach ($ourHeadQuarter as $key => $value) {
+           $value->path = $url->to('/').'/'.$value->path;
+        }
+        $data['ourHeadQuarter'] = $ourHeadQuarter;
+    }if ($ourProduct) {
+        foreach ($ourProduct as $key => $value) {
+            $value->path = $url->to('/').'/'.$value->path;
+        }
+        $data['ourProduct'] = $ourProduct;
+    }if ($about_us) {
+        $data['about_us'] = $about_us;
+    }if ($hallOfFame) {
+        $data['hall_of_fame'] = $hallOfFame;
+    }
+    return view('frontend.auth.login')->with('data',$data);
   }
 
   public function logout()

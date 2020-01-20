@@ -1,5 +1,9 @@
 @include('frontend.auth.header')
 <div class="container pt-5">
+    <div class="header">
+        <center><h2>Hall Of Fame</h2></center>
+    </div>
+    <br>
     <div class="accordion" id="accordionExample">
       <div class="card">
         <div class="card-header bg-danger pointer" id="headingOne" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">

@@ -76,7 +76,7 @@ Hall Of Fame
             },
             columns: [
                 { data: 'DT_RowIndex', name: 'DT_RowIndex', className: "text-center", orderable: false, searchable: false },
-                { data: 'name', name: 'name', className: "text-center" },
+                { data: 'username', name: 'username', className: "text-center" },
                 { data: 'rank', name: 'rank', className: "text-center" },
                 { data: 'desc', name: 'desc', className: "text-center" },
                 { data: 'action', name: 'action', orderable: false, searchable: false, className: "text-center" },

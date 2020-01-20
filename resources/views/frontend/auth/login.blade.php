@@ -18,7 +18,7 @@
                                             <img src="{{$item->member->src != null ?  asset($item->member->src) : url('/img/logo.png')}}" class="img-fluid">
                                             </div>
                                             <div class="col-lg-7 col-xs-12">
-                                            <h3 class="mb-0">{{strtoupper(trans($item->member->rank->name))}}</h3>
+                                            <h3 class="mb-0">{{isset($item->member->rank->name) ? strtoupper(trans($item->member->rank->name)) : '-'}}</h3>
                                             {{$item->desc}}
                                             </div>
                                         </div>

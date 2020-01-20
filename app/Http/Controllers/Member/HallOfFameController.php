@@ -21,7 +21,7 @@ class HallOfFameController extends Controller
     $data['director3'] = Employeer::where('rank_id',6)->with('rank')->paginate(3, ['*'], 'page_6s');
     $data['chairman1'] = Employeer::where('rank_id',7)->with('rank')->paginate(3, ['*'], 'page_7s');
     $data['chairman2'] = Employeer::where('rank_id',8)->with('rank')->paginate(3, ['*'], 'page_8s');
-    $data['page'] = array_keys($request->all())[0];
+    $data['page'] = isset(array_keys($request->all())[0]) ? array_keys($request->all())[0] : null;
     return view('frontend.auth.hall-of-fame',compact('data'));
   }
 
