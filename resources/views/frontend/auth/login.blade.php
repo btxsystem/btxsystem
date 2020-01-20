@@ -1,6 +1,5 @@
 @include('frontend.auth.header')
     <div class="main-content">
-
       <div class="slide">
         <div class="imgSlide">
           <div class="container">

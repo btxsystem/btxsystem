@@ -6,9 +6,6 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Employeer;
 use App\Models\Ebook;
-use App\Models\TransactionMember;
-use App\Models\TemporaryRegisterMember;
-use App\Models\TemporaryTransactionMember;
 
 use Carbon\Carbon;
 
