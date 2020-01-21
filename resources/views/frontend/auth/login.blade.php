@@ -7,10 +7,10 @@
               <div class="col-lg-12">
 
                 <!-- slide-banner -->
+                @if (count($data['hall_of_fame']) >= 0)
                 <div class="col-lg-6 col-xs-12 slide-banner">
                     <div class="body-banner">
                         <div class="owl-carousel">
-                            @if (count($data['hall_of_fame']) >= 0)
                                 @foreach ($data['hall_of_fame'] as $item)
                                     <div class="items">
                                         <div class="row">
@@ -24,10 +24,10 @@
                                         </div>
                                     </div>
                                 @endforeach
-                            @endif
                         </div>
                     </div>
                 </div>
+                @endif
                     <!-- endSlide-Banner -->
                 <section class="find-course find-course_mod-a wow bounceInRight colFormSignup" style="visibility: visible; animation-duration: 1s; animation-name: bounceInRight;">
                   <h2 class="find-course__title"><i class="icon stroke icon-User"></i>Login</h2>
