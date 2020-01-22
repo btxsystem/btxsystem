@@ -11,7 +11,7 @@
 
     .bg-upper:before {
         content: "";
-
+        width: 100%;
         height: 100%;
         position: fixed;
         background: #22919b;
@@ -230,6 +230,7 @@
         </div>
         {{$data['platinum1']->links()}}
 
+        </div>
     </div>
 </body>
 <br>
