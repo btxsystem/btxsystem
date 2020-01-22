@@ -271,10 +271,10 @@
                 </div>
                 <div id="navbar-collapse-1" class="navbar-collapse collapse">
                   <ul class="nav navbar-nav">
-                    <li><a id="about" href="#">About Us</a></li>
-                    <li><a id="product" href="#">Our Product</a></li>
+                    <li><a id="about" href="/login#myAbout">About Us</a></li>
+                    <li><a id="product" href="/login#myProduct">Our Product</a></li>
                     <li><a id="event" href="/event">Event</a></li>
-                    <!--<li><a id="hall-if-fame" href="/hall-of-fame">Hall Of Fame</a></li>-->
+                    <li><a id="hall-if-fame" href="/hall-of-fame">Hall Of Fame</a></li>
                     <!-- <li><a href="#"><button class="btn btn-effect btn-info btn-buy" style="background: #b92240; margin-top: -10px;">JOIN</button></a></li> -->
                     <!-- <li><a data-toggle="modal" data-target="#join"><button class="btn btn-effect btn-info btn-buy" style="background: #b92240; margin-top: -10px;">JOIN</button></a></li>-->
                      <li><a href="#"><button class="btn btn-effect btn-info btn-buy" style="background: #b92240; margin-top: -10px;">JOIN</button></a></li>
