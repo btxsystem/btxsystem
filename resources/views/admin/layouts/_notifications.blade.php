@@ -1,4 +1,4 @@
-<li class="dropdown notifications-menu">
+{{--<li class="dropdown notifications-menu">
     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
         <i class="livicon" data-name="bell" data-loop="true" data-color="#e9573f"
            data-hovercolor="#e9573f" data-size="28"></i>
@@ -78,4 +78,4 @@
             <a href="#">View all</a>
         </li>
     </ul>
-</li>
+</li>--}}
