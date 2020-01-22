@@ -204,7 +204,7 @@
         </div>
         {{$data['director1']->links()}}
 
-        <div class="row mb-4 bg-gray">
+        <div class="row bg-gray" style="margin-bottom: 30px;">
             <div class="col-lg-12 pt-3">
                 <h3 class="text-center"><span class="sub-judul-1">PLATINUM III </span><span class="sub-judul-2">ACHIEVERS</span></h3>
             </div>
@@ -220,7 +220,7 @@
         </div>
         {{$data['platinum3']->links()}}
 
-        <div class="row mb-4 bg-gray">
+        <div class="row bg-gray" style="margin-bottom: 30px;">
             <div class="col-lg-12 pt-3">
                 <h3 class="text-center"><span class="sub-judul-1">PLATINUM II </span><span class="sub-judul-2">ACHIEVERS</span></h3>
             </div>
@@ -236,7 +236,7 @@
         </div>
         {{$data['platinum2']->links()}}
 
-        <div class="row mb-4 bg-gray">
+        <div class="row bg-gray" style="margin-bottom: 30px;">
             <div class="col-lg-12 pt-3">
                 <h3 class="text-center"><span class="sub-judul-1">PLATINUM I </span><span class="sub-judul-2">ACHIEVERS</span></h3>
             </div>
