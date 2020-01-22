@@ -66,7 +66,7 @@ class EbookController extends Controller
                 'user_id' => $id,
                 'product_type' => 'ebook',
                 'user_type' => 'nonmember',
-                'total_amount' => number_format($ebook->price+2750,0,",","."),
+                'total_amount' => number_format($ebook->price+$ebook->price_markup+2750,0,",","."),
                 'customer_number' => '11210'.$no_invoice,
                 'time_expired' => Carbon::create(date('Y-m-d H:i:s'))->addDay(1),
             ];
@@ -90,7 +90,7 @@ class EbookController extends Controller
                 'user_id' => $id,
                 'product_type' => 'ebook',
                 'user_type' => 'nonmember',
-                'total_amount' => number_format($ebook->price+2750,0,",","."),
+                'total_amount' => number_format($ebook->price+$ebook->price_markup+2750,0,",","."),
                 'customer_number' => '11210'.$no_invoice,
                 'time_expired' => Carbon::create(date('Y-m-d H:i:s'))->addDay(1),
             ];
