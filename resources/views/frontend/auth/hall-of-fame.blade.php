@@ -110,7 +110,7 @@
                 <div class="col-lg-4 p-3">
                     <div class="d-flex align-items-center mx-auto justify-content-center wrap-img">
                         <img src="{{$item['src'] != null ? asset($item['src']) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user">
-                        <img src="{{asset('assets3/img/Chairman-1.png')}}" class="img-fluid img-frame">
+                        <img src="{{asset('assets3/img/Chairman2.png')}}" class="img-fluid img-frame">
                     </div>
                     <h5 class="text-center mt-2">{{$item['username']}}</h5>
                 </div>
@@ -126,7 +126,7 @@
                 <div class="col-lg-4 p-3">
                     <div class="d-flex align-items-center mx-auto justify-content-center wrap-img">
                         <img src="{{$item['src'] != null ? asset($item['src']) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user">
-                        <img src="{{asset('assets3/img/Chairman-1.png')}}" class="img-fluid img-frame">
+                        <img src="{{asset('assets3/img/Chairman1.png')}}" class="img-fluid img-frame">
                     </div>
                     <h5 class="text-center mt-2">{{$item['username']}}</h5>
                 </div>
@@ -142,7 +142,7 @@
                 <div class="col-lg-4 p-3">
                     <div class="d-flex align-items-center mx-auto justify-content-center wrap-img">
                         <img src="{{$item['src'] != null ? asset($item['src']) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user">
-                        <img src="{{asset('assets3/img/Chairman-1.png')}}" class="img-fluid img-frame">
+                        <img src="{{asset('assets3/img/Director3.png')}}" class="img-fluid img-frame">
                     </div>
                     <h5 class="text-center mt-2">{{$item['username']}}</h5>
                 </div>
@@ -158,7 +158,7 @@
                 <div class="col-lg-4 p-3">
                     <div class="d-flex align-items-center mx-auto justify-content-center wrap-img">
                         <img src="{{$item['src'] != null ? asset($item['src']) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user">
-                        <img src="{{asset('assets3/img/Chairman-1.png')}}" class="img-fluid img-frame">
+                        <img src="{{asset('assets3/img/Director2.png')}}" class="img-fluid img-frame">
                     </div>
                     <h5 class="text-center mt-2">{{$item['username']}}</h5>
                 </div>
@@ -174,7 +174,7 @@
                 <div class="col-lg-4 p-3">
                     <div class="d-flex align-items-center mx-auto justify-content-center wrap-img">
                         <img src="{{$item['src'] != null ? asset($item['src']) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user">
-                        <img src="{{asset('assets3/img/Chairman-1.png')}}" class="img-fluid img-frame">
+                        <img src="{{asset('assets3/img/Director1.png')}}" class="img-fluid img-frame">
                     </div>
                     <h5 class="text-center mt-2">{{$item['username']}}</h5>
                 </div>
@@ -190,7 +190,7 @@
                 <div class="col-lg-4 p-3">
                     <div class="d-flex align-items-center mx-auto justify-content-center wrap-img">
                         <img src="{{$item['src'] != null ? asset($item['src']) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user">
-                        <img src="{{asset('assets3/img/Chairman-1.png')}}" class="img-fluid img-frame">
+                        <img src="{{asset('assets3/img/Platinum3.png')}}" class="img-fluid img-frame">
                     </div>
                     <h5 class="text-center mt-2">{{$item['username']}}</h5>
                 </div>
@@ -206,7 +206,7 @@
                 <div class="col-lg-4 p-3">
                     <div class="d-flex align-items-center mx-auto justify-content-center wrap-img">
                         <img src="{{$item['src'] != null ? asset($item['src']) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user">
-                        <img src="{{asset('assets3/img/Chairman-1.png')}}" class="img-fluid img-frame">
+                        <img src="{{asset('assets3/img/Platinum3.png')}}" class="img-fluid img-frame">
                     </div>
                     <h5 class="text-center mt-2">{{$item['username']}}</h5>
                 </div>
@@ -222,7 +222,7 @@
                 <div class="col-lg-4 p-3">
                     <div class="d-flex align-items-center mx-auto justify-content-center wrap-img">
                         <img src="{{$item['src'] != null ? asset($item['src']) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user">
-                        <img src="{{asset('assets3/img/Chairman-1.png')}}" class="img-fluid img-frame">
+                        <img src="{{asset('assets3/img/Platinum1.png')}}" class="img-fluid img-frame">
                     </div>
                     <h5 class="text-center mt-2">{{$item['username']}}</h5>
                 </div>
