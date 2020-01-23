@@ -11,7 +11,7 @@
 
     .bg-upper:before {
         content: "";
-
+        width: 100%;
         height: 100%;
         position: fixed;
         background: #22919b;
@@ -57,7 +57,7 @@
     }
 
     .wrap-img{
-    border-radius: 50%; width: 250px; height: 250px; overflow: hidden;
+    border-radius: 50%; width: 150px; height: 150px; overflow: hidden;
     }
 
     .sub-judul-1 {
@@ -69,7 +69,7 @@
     }
 
     .img-user {
-    height: 150px; width: auto;
+    height: 75px; width: auto;
     }
 
     .bg-gray {
@@ -77,7 +77,7 @@
     }
 
     .img-frame {
-    position: absolute; width: 300px; height: 300px;
+    position: absolute; width: 150px; height: 150px;
     }
 
     @media (max-width: 480px) {
@@ -100,12 +100,34 @@
 <body class="bg-main">
     <div class="container p-5 bg-upper">
         <div class="w-100 p-3 p-4 bg-white rounded shadow">
-        <h2 class="title text-center mb-5">HALL OF FAME</h2>
+        <h2 class="title text-center" style="margin-bottom: 60px;">HALL OF FAME</h2>
 
-        <div class="row mb-4 bg-gray">
+        <div class="row bg-gray" style="margin-bottom: 30px;">
             <div class="col-lg-12 pt-3">
                 <h3 class="text-center"><span class="sub-judul-1">CHAIRMAN II </span><span class="sub-judul-2">ACHIEVERS</span></h3>
             </div>
+            <div class="col-lg-4 p-3">
+              <div class="d-flex align-items-center mx-auto justify-content-center wrap-img">
+                <img src="{{asset('./img/DC-7_resized.jpeg')}}" class="img-fluid img-user">
+                <img src="{{asset('assets3/img/Chairman2.png')}}" class="img-fluid img-frame">
+              </div>
+              <h5 class="text-center mt-2">Mr. Lorems Jere</h5>
+            </div>
+            <div class="col-lg-4 p-3">
+              <div class="d-flex align-items-center mx-auto justify-content-center wrap-img">
+                <img src="{{asset('./img/DC-7_resized.jpeg')}}" class="img-fluid img-user">
+                <img src="{{asset('assets3/img/Chairman2.png')}}" class="img-fluid img-frame">
+              </div>
+              <h5 class="text-center mt-2">Mr. Lorems Jere</h5>
+            </div>
+            <div class="col-lg-4 p-3">
+              <div class="d-flex align-items-center mx-auto justify-content-center wrap-img">
+                <img src="{{asset('./img/DC-7_resized.jpeg')}}" class="img-fluid img-user">
+                <img src="{{asset('assets3/img/Chairman2.png')}}" class="img-fluid img-frame">
+              </div>
+              <h5 class="text-center mt-2">Mr. Lorems Jere</h5>
+            </div>
+
             @foreach ($data['chairman2'] as $item)
                 <div class="col-lg-4 p-3">
                     <div class="d-flex align-items-center mx-auto justify-content-center wrap-img">
@@ -118,7 +140,7 @@
         </div>
         {{$data['chairman2']->links()}}
 
-        <div class="row mb-4 bg-gray">
+        <div class="row bg-gray" style="margin-bottom: 30px;">
             <div class="col-lg-12 pt-3">
                 <h3 class="text-center"><span class="sub-judul-1">CHAIRMAN I </span><span class="sub-judul-2">ACHIEVERS</span></h3>
             </div>
@@ -134,7 +156,7 @@
         </div>
         {{$data['chairman1']->links()}}
 
-        <div class="row mb-4 bg-gray">
+        <div class="row bg-gray" style="margin-bottom: 30px;">
             <div class="col-lg-12 pt-3">
                 <h3 class="text-center"><span class="sub-judul-1">DIRECTOR III </span><span class="sub-judul-2">ACHIEVERS</span></h3>
             </div>
@@ -150,7 +172,7 @@
         </div>
         {{$data['director3']->links()}}
 
-        <div class="row mb-4 bg-gray">
+        <div class="row bg-gray" style="margin-bottom: 30px;">
             <div class="col-lg-12 pt-3">
                 <h3 class="text-center"><span class="sub-judul-1">DIRECTOR II </span><span class="sub-judul-2">ACHIEVERS</span></h3>
             </div>
@@ -166,7 +188,7 @@
         </div>
         {{$data['director2']->links()}}
 
-        <div class="row mb-4 bg-gray">
+        <div class="row bg-gray" style="margin-bottom: 30px;">
             <div class="col-lg-12 pt-3">
                 <h3 class="text-center"><span class="sub-judul-1">DIRECTOR I </span><span class="sub-judul-2">ACHIEVERS</span></h3>
             </div>
@@ -182,7 +204,7 @@
         </div>
         {{$data['director1']->links()}}
 
-        <div class="row mb-4 bg-gray">
+        <div class="row bg-gray" style="margin-bottom: 30px;">
             <div class="col-lg-12 pt-3">
                 <h3 class="text-center"><span class="sub-judul-1">PLATINUM III </span><span class="sub-judul-2">ACHIEVERS</span></h3>
             </div>
@@ -198,7 +220,7 @@
         </div>
         {{$data['platinum3']->links()}}
 
-        <div class="row mb-4 bg-gray">
+        <div class="row bg-gray" style="margin-bottom: 30px;">
             <div class="col-lg-12 pt-3">
                 <h3 class="text-center"><span class="sub-judul-1">PLATINUM II </span><span class="sub-judul-2">ACHIEVERS</span></h3>
             </div>
@@ -214,7 +236,7 @@
         </div>
         {{$data['platinum2']->links()}}
 
-        <div class="row mb-4 bg-gray">
+        <div class="row bg-gray" style="margin-bottom: 30px;">
             <div class="col-lg-12 pt-3">
                 <h3 class="text-center"><span class="sub-judul-1">PLATINUM I </span><span class="sub-judul-2">ACHIEVERS</span></h3>
             </div>
@@ -230,6 +252,7 @@
         </div>
         {{$data['platinum1']->links()}}
 
+        </div>
     </div>
 </body>
 <br>
