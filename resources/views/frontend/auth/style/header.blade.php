@@ -238,7 +238,7 @@
     }
 
     .pagination {
-        margin-top: 0!important;
+        margin-top: -20px!important;
         margin-bottom: 10px !important;
     }
 </style>
