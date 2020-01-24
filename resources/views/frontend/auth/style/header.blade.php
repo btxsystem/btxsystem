@@ -236,4 +236,9 @@
     ul.nav.navbar-nav {
         padding-top: 10px;
     }
+
+    .pagination {
+        margin-top: 0!important;
+        margin-bottom: 10px !important;
+    }
 </style>
