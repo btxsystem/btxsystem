@@ -62,7 +62,7 @@
     }
 
     .wrap-img{
-    border-radius: 50%; width: 250px; height: 250px; overflow: hidden;
+    border-radius: 50%; width: 150px; height: 150px; overflow: hidden;
     }
 
     .sub-judul-1 {
@@ -74,7 +74,7 @@
     }
 
     .img-user {
-    height: 150px; width: auto;
+    height: 75px; width: auto;
     }
 
     .bg-gray {
@@ -82,7 +82,7 @@
     }
 
     .img-frame {
-    position: absolute; width: 300px; height: 300px;
+    position: absolute; width: 150px; height: 150px;
     }
 
     @media (max-width: 480px) {
