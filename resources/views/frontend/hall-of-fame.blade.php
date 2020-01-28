@@ -5,130 +5,102 @@
 @stop
 <head>
     <style>
-        .slide-banner {
-	position: absolute; top: 200px; z-index: 9998; left: 100px;
-}
+    .bg-main {
+        height: 100vh; background-image:  url({{asset('assets3/img/hero-fallback.jpg')}}); background-size: cover;
+    }
 
-.body-banner {
-	background-color: #fff;
-	padding: 20px;
-	border-radius: 10px;
-}
+    footer, header {
+        position: relative;
+        z-index: 100;
+    }
 
-.btn-link:hover {
-	text-decoration: none;
-}
+    .bg-upper:before {
+        content: "";
 
-.pointer {
-	cursor: pointer;
-}
+        height: 100%;
+        position: fixed;
+        background: #22919b;
+        opacity: .5;
+        top: 0px;
+        left: 0;
+        z-index: 1;
+        mix-blend-mode: saturation;
+    }
 
-.mb-0 {
-	margin-bottom: 0;
-}
+    .container {
+        width: 100% !important;
+    }
+    .bg-upper > * {
+        z-index: 100;
+        position: relative;
+    }
+    .title {
+        font-weight: bold;
+        color: #000;
+    }
+    .title:before {
+        content: "";
+        position: absolute;
+        margin-left: -66px;
+        width: 60px;
+        height: 60px;
+        background-image: url({{asset('assets3/img/Asset2.png')}});
+        background-size: 60px auto;
+        background-repeat: no-repeat;
+        mix-blend-mode: normal;
+    }
+    .title:after {
+        content: "";
+        position: absolute;
+        margin-left: 6px;
+        width: 60px;
+        height: 60px;
+        background-image: url({{asset('assets3/img/Asset1.png')}});
+        background-size: 60px auto;
+        background-repeat: no-repeat;
+        mix-blend-mode: normal;
+    }
 
-.page-item.disabled .page-link {
-	border : 0;
-}
+    .wrap-img{
+    border-radius: 50%; width: 150px; height: 150px; overflow: hidden;
+    }
 
-.page-item .page-link {
-	border : 0;
-	color: #333;
-}
+    .sub-judul-1 {
+    font-weight: bold; letter-spacing: 5px;
+    }
 
-.page-item.active .page-link {
-	background-color: transparent;
-	color: #dc3c45;
-}
+    .sub-judul-2 {
+    letter-spacing: 3px; font-weight: 300;
+    }
 
-.hall-card {
-	min-height: 250px;
-	min-width: 250px;
-	max-height: 250px;
-	max-width: 250px;
-	overflow: hidden;
-	border-radius: 50%;
-}
-.frame {
-	position: absolute;
-	left: auto;
-	right: auto;
-	top: 0;
-	bottom: 0%;
-}
+    .img-user {
+    height: 75px; width: auto;
+    }
 
-.owl-carousel .owl-dots {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 10px;
-}
-.owl-carousel button.owl-dot.active {
-  background: none repeat scroll 0 0 #869791;
-  border-radius: 20px;
-  display: block;
-  height: 12px;
-  margin: 5px 7px;
-  opacity: 0.5;
-  width: 12px;
-}
-.owl-carousel button.owl-dot {
-  background: none repeat scroll 0 0 #cacaca;
-  border-radius: 20px;
-  display: block;
-  height: 12px;
-  margin: 5px 7px;
-  opacity: 0.5;
-  width: 12px;
-}
+    .bg-gray {
+    background-color: #dadada;
+    }
 
-@media (max-width: 1024px) {
-	.slide-banner {
-		left: 0px;
-		width: 51%;
-		top: 170px;
-	}
+    .img-frame {
+    position: absolute; width: 150px; height: 150px;
+    }
 
-	.body-banner {
-		background-color: #fff;
-		padding: 20px;
-		border-radius: 10px;
-	}
+    @media (max-width: 480px) {
+    .title {
+        font-size: 25px;
+    }
+    .h3, h3 {
+        font-size: 18px;
+    }
+    .p-5 {
+        padding: 13px !important;
+    }
+    }
 
-	.frame {
-		left: 19px;
-		top: 30px;
-	}
-}
-
-@media (max-width: 480px) {
-	.slide-banner {
-		left: 0px;
-		width: 100%;
-		top: 150px;
-	}
-	.card-header h3 {
-		font-size: 20px;
-	}
-	.mb-sm-3 {
-		margin-bottom: 1.5rem;
-	}
-}
-
-@media (max-width: 375px) {
-	.frame {
-		left: 20px;
-		top: 15px;
-	}
-}
-
-@media (max-width: 360px) {
-	.frame {
-		top: 23px;
-		left: 20px;
-	}
-}
-
+    div .bg-gray {
+        margin-left: 40px !important;
+        margin-right: 40px !important;
+    }
     </style>
 </head>
 @section('content')
@@ -136,244 +108,141 @@
     <div class="container-fluid">
         <div class="row clearfix">
             <div class="col-lg-12 col-md-12">
-                <div class="card product-report">
-                    <br>
-                    <div class="header">
-                        <center><h2>Hall Of Fame</h2></center>
-                    </div>
-                    <div class="body">
-                    <div class="row clearfix m-b-15">
-                            <div class="container pt-5">
-                                    <div class="accordion" id="accordionExample">
-                                      <div class="card">
-                                        <div class="card-header bg-danger pointer" id="headingOne" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                          <h2 class="mb-0">
-                                            <button class="btn btn-link" type="button">
-                                              <h3 class="text-white">CONGRATULATION, CHAIRMAN 2</h3>
-                                            </button>
-                                          </h2>
-                                        </div>
-                                        <div id="collapseOne" class="collapse {{$data['page']=='page_8s' ? 'show' : ''}}" aria-labelledby="headingOne" data-parent="#accordionExample">
-                                          <div class="card-body">
-                                            <div class="row">
-                                              <div class="col-lg-4 p-4 mb-3">
-                                                @foreach ($data['chairman2'] as $item)
-                                                    <div class="mb-4">
-                                                        <div class="d-flex mx-auto align-items-center justify-content-center hall-card">
-                                                          <img src="{{$item['src'] != null ? asset($item['src']) : url('/img/logo.png')}}" class="img-fluid">
-                                                        </div>
-                                                          <img src="{{asset('img/bulu.png')}}" class="img-fluid frame">
-                                                      </div>
-                                                    <h4 class="text-center">{{$item['username']}}</h4>
-                                                @endforeach
-                                              </div>
-                                            {{$data['chairman2']->links()}}
-                                            </div>
-                                          </div>
-                                        </div>
-                                      </div>
-                                      <div class="card">
-                                        <div class="card-header bg-danger pointer" id="headingOne" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                          <h2 class="mb-0">
-                                            <button class="btn btn-link" type="button">
-                                              <h3 class="text-white">CONGRATULATION, CHAIRMAN 1</h3>
-                                            </button>
-                                          </h2>
-                                        </div>
+                    <body class="bg-main">
+                            <div class="container p-5 bg-upper">
+                                <div class="w-100 p-3 p-4 bg-white rounded shadow">
+                                <h2 class="title text-center mb-5">HALL OF FAME</h2>
 
-                                        <div id="collapseTwo" class="collapse {{$data['page']=='page_7s' ? 'show' : ''}}" aria-labelledby="headingOne" data-parent="#accordionExample">
-                                          <div class="card-body">
-                                            <div class="row">
-                                                @foreach ($data['chairman1'] as $item)
-                                                    <div class="col-lg-4 p-4 mb-3">
-                                                        <div class="mb-4">
-                                                            <div class="d-flex mx-auto align-items-center justify-content-center hall-card">
-                                                                <img src="{{$item['src'] != null ? asset($item['src']) : url('/img/logo.png')}}" class="img-fluid">
-                                                            </div>
-                                                            <img src="{{asset('img/bulu.png')}}" class="img-fluid frame">
-                                                        </div>
-                                                        <h4 class="text-center">{{$item['username']}}</h4>
-                                                    </div>
-                                                @endforeach
-                                            </div>
-                                            {{$data['chairman1']->links()}}
-                                            </div>
-                                        </div>
-                                      </div>
-                                      <div class="card">
-                                        <div class="card-header bg-danger pointer" id="headingOne" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseTwo">
-                                            <h2 class="mb-0">
-                                            <button class="btn btn-link" type="button">
-                                                <h3 class="text-white">CONGRATULATION, DIRECTOR 3</h3>
-                                            </button>
-                                            </h2>
-                                        </div>
-
-                                        <div id="collapseThree" class="collapse {{$data['page']=='page_6s' ? 'show' : ''}}" aria-labelledby="headingOne" data-parent="#accordionExample">
-                                            <div class="card-body">
-                                                <div class="row">
-                                                    @foreach ($data['director3'] as $item)
-                                                        <div class="col-lg-4 p-4 mb-3">
-                                                            <div class="mb-4">
-                                                                <div class="d-flex mx-auto align-items-center justify-content-center hall-card">
-                                                                    <img src="./img/DC-7_resized.jpeg" class="img-fluid">
-                                                                </div>
-                                                                <img src="{{$item['src'] != null ? asset($item['src']) : url('/img/logo.png')}}" class="img-fluid frame">
-                                                            </div>
-                                                            <h4 class="text-center">{{$item['username']}}</h4>
-                                                        </div>
-                                                    @endforeach
-                                                </div>
-                                                {{$data['director3']->links()}}
-                                            </div>
-                                        </div>
-                                        </div>
+                                <div class="row mb-4 bg-gray">
+                                    <div class="col-lg-12 pt-3">
+                                        <h3 class="text-center"><span class="sub-judul-1">CHAIRMAN II </span><span class="sub-judul-2">ACHIEVERS</span></h3>
                                     </div>
-                                    <div class="card">
-                                        <div class="card-header bg-danger pointer" id="headingOne" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseTwo">
-                                            <h2 class="mb-0">
-                                            <button class="btn btn-link" type="button">
-                                                <h3 class="text-white">CONGRATULATION, DIRECTOR 2</h3>
-                                            </button>
-                                            </h2>
+                                    @foreach ($data['chairman2'] as $item)
+                                        <div class="col-lg-4 p-3">
+                                            <div class="d-flex align-items-center mx-auto justify-content-center wrap-img">
+                                                <img src="{{$item['src'] != null ? asset($item['src']) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user">
+                                                <img src="{{asset('assets3/img/Chairman2.png')}}" class="img-fluid img-frame">
+                                            </div>
+                                            <h5 class="text-center mt-2">{{$item['username']}}</h5>
                                         </div>
+                                    @endforeach
+                                </div>
+                                {{$data['chairman2']->links()}}
 
-                                        <div id="collapseFour" class="collapse {{$data['page']=='page_5s' ? 'show' : ''}}" aria-labelledby="headingOne" data-parent="#accordionExample">
-                                            <div class="card-body">
-                                            <div class="row">
-                                                @foreach ($data['director2'] as $item)
-                                                    <div class="col-lg-4 p-4 mb-3">
-                                                        <div class="mb-4">
-                                                        <div class="d-flex mx-auto align-items-center justify-content-center hall-card">
-                                                            <img src="{{$item['src'] != null ? asset($item['src']) : url('/img/logo.png')}}" class="img-fluid">
-                                                        </div>
-                                                            <img src="{{asset('img/bulu.png')}}" class="img-fluid frame">
-                                                        </div>
-                                                        <h4 class="text-center">{{$item['username']}}</h4>
-                                                    </div>
-                                                @endforeach
-                                            </div>
-                                            {{$data['director2']->links()}}
-                                            </div>
-                                        </div>
-                                        </div>
-                                        <div class="card">
-                                            <div class="card-header bg-danger pointer" id="headingOne" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseTwo">
-                                                <h2 class="mb-0">
-                                                <button class="btn btn-link" type="button">
-                                                    <h3 class="text-white">CONGRATULATION, DIRECTOR 1</h3>
-                                                </button>
-                                                </h2>
-                                            </div>
-
-                                            <div id="collapseFive" class="collapse {{$data['page']=='page_4s' ? 'show' : ''}}" aria-labelledby="headingOne" data-parent="#accordionExample">
-                                                <div class="card-body">
-                                                <div class="row">
-                                                    @foreach ($data['director1'] as $item)
-                                                        <div class="col-lg-4 p-4 mb-3">
-                                                            <div class="mb-4">
-                                                            <div class="d-flex mx-auto align-items-center justify-content-center hall-card">
-                                                                <img src="{{$item['src'] != null ? asset($item['src']) : url('/img/logo.png')}}" class="img-fluid">
-                                                            </div>
-                                                                <img src="{{asset('img/bulu.png')}}" class="img-fluid frame">
-                                                            </div>
-                                                            <h4 class="text-center">{{$item['username']}}</h4>
-                                                        </div>
-                                                    @endforeach
-                                                </div>
-                                                {{$data['director1']->links()}}
-                                                </div>
-                                            </div>
-                                            </div>
-                                            <div class="card">
-                                                <div class="card-header bg-danger pointer" id="headingOne" data-toggle="collapse" data-target="#collapseSeven" aria-expanded="false" aria-controls="collapseTwo">
-                                                    <h2 class="mb-0">
-                                                    <button class="btn btn-link" type="button">
-                                                        <h3 class="text-white">CONGRATULATION, PLATINUM 3</h3>
-                                                    </button>
-                                                    </h2>
-                                                </div>
-
-                                                <div id="collapseSeven" class="collapse {{$data['page']=='page_3s' ? 'show' : ''}}" aria-labelledby="headingOne" data-parent="#accordionExample">
-                                                    <div class="card-body">
-                                                        <div class="row">
-                                                            @foreach ($data['platinum3'] as $item)
-                                                            <div class="col-lg-4 p-4 mb-3">
-                                                                <div class="mb-4">
-                                                                <div class="d-flex mx-auto align-items-center justify-content-center hall-card">
-                                                                    <img src="{{$item['src'] != null ? asset($item['src']) : url('/img/logo.png')}}" class="img-fluid">
-                                                                </div>
-                                                                    <img src="{{asset('img/bulu.png')}}" class="img-fluid frame">
-                                                                </div>
-                                                                <h4 class="text-center">{{$item['username']}}</h4>
-                                                            </div>
-                                                        @endforeach
-                                                    </div>
-                                                    {{$data['platinum3']->links()}}
-                                                    </div>
-                                                </div>
-                                                </div>
-                                                <div class="card">
-                                                    <div class="card-header bg-danger pointer" id="headingOne" data-toggle="collapse" data-target="#collapseSix" aria-expanded="false" aria-controls="collapseTwo">
-                                                        <h2 class="mb-0">
-                                                        <button class="btn btn-link" type="button">
-                                                            <h3 class="text-white">CONGRATULATION, PLATINUM 2</h3>
-                                                        </button>
-                                                        </h2>
-                                                    </div>
-
-                                                    <div id="collapseSix" class="collapse {{$data['page']=='page_2s' ? 'show' : ''}}" aria-labelledby="headingOne" data-parent="#accordionExample">
-                                                        <div class="card-body">
-                                                        <div class="row">
-                                                            @foreach ($data['platinum2'] as $item)
-                                                                <div class="col-lg-4 p-4 mb-3">
-                                                                    <div class="mb-4">
-                                                                    <div class="d-flex mx-auto align-items-center justify-content-center hall-card">
-                                                                        <img  src="{{$item['src'] != null ? asset($item['src']) : url('/img/logo.png')}}" class="img-fluid">
-                                                                    </div>
-                                                                        <img src="{{asset('img/bulu.png')}}" class="img-fluid frame">
-                                                                    </div>
-                                                                    <h4 class="text-center">{{$item['username']}}</h4>
-                                                                </div>
-                                                            @endforeach
-                                                        </div>
-                                                        {{$data['platinum2']->links()}}
-                                                        </div>
-                                                    </div>
-                                                    </div>
-                                                    <div class="card">
-                                                        <div class="card-header bg-danger pointer" id="headingOne" data-toggle="collapse" data-target="#collapseEight" aria-expanded="false" aria-controls="collapseTwo">
-                                                            <h2 class="mb-0">
-                                                            <button class="btn btn-link" type="button">
-                                                                <h3 class="text-white">CONGRATULATION, PLATINUM 1</h3>
-                                                            </button>
-                                                            </h2>
-                                                        </div>
-
-                                                        <div id="collapseEight" class="collapse {{$data['page']=='page_1s' ? 'show' : ''}}" aria-labelledby="headingOne" data-parent="#accordionExample">
-                                                            <div class="card-body">
-                                                            <div class="row">
-                                                                @foreach ($data['platinum1'] as $item)
-                                                                    <div class="col-lg-4 p-4 mb-3">
-                                                                        <div class="mb-4">
-                                                                        <div class="d-flex mx-auto align-items-center justify-content-center hall-card">
-                                                                            <img src="{{$item['src'] != null ? asset($item['src']) : url('/img/logo.png')}}" class="img-fluid">
-                                                                        </div>
-                                                                            <img src="{{asset('img/bulu.png')}}" class="img-fluid frame">
-                                                                        </div>
-                                                                        <h4 class="text-center">{{$item['username']}}</h4>
-                                                                    </div>
-                                                                @endforeach
-                                                            </div>
-                                                            {{$data['platinum1']->links()}}
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                <div class="row mb-4 bg-gray">
+                                    <div class="col-lg-12 pt-3">
+                                        <h3 class="text-center"><span class="sub-judul-1">CHAIRMAN I </span><span class="sub-judul-2">ACHIEVERS</span></h3>
                                     </div>
-                    </div>
-                    <div id="area_chart" class="graph"></div>
-                    </div>
-                </div>
+                                    @foreach ($data['chairman1'] as $item)
+                                        <div class="col-lg-4 p-3">
+                                            <div class="d-flex align-items-center mx-auto justify-content-center wrap-img">
+                                                <img src="{{$item['src'] != null ? asset($item['src']) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user">
+                                                <img src="{{asset('assets3/img/Chairman1.png')}}" class="img-fluid img-frame">
+                                            </div>
+                                            <h5 class="text-center mt-2">{{$item['username']}}</h5>
+                                        </div>
+                                    @endforeach
+                                </div>
+                                {{$data['chairman1']->links()}}
+
+                                <div class="row mb-4 bg-gray">
+                                    <div class="col-lg-12 pt-3">
+                                        <h3 class="text-center"><span class="sub-judul-1">DIRECTOR III </span><span class="sub-judul-2">ACHIEVERS</span></h3>
+                                    </div>
+                                    @foreach ($data['director3'] as $item)
+                                        <div class="col-lg-4 p-3">
+                                            <div class="d-flex align-items-center mx-auto justify-content-center wrap-img">
+                                                <img src="{{$item['src'] != null ? asset($item['src']) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user">
+                                                <img src="{{asset('assets3/img/Director3.png')}}" class="img-fluid img-frame">
+                                            </div>
+                                            <h5 class="text-center mt-2">{{$item['username']}}</h5>
+                                        </div>
+                                    @endforeach
+                                </div>
+                                {{$data['director3']->links()}}
+
+                                <div class="row mb-4 bg-gray">
+                                    <div class="col-lg-12 pt-3">
+                                        <h3 class="text-center"><span class="sub-judul-1">DIRECTOR II </span><span class="sub-judul-2">ACHIEVERS</span></h3>
+                                    </div>
+                                    @foreach ($data['director2'] as $item)
+                                        <div class="col-lg-4 p-3">
+                                            <div class="d-flex align-items-center mx-auto justify-content-center wrap-img">
+                                                <img src="{{$item['src'] != null ? asset($item['src']) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user">
+                                                <img src="{{asset('assets3/img/Director2.png')}}" class="img-fluid img-frame">
+                                            </div>
+                                            <h5 class="text-center mt-2">{{$item['username']}}</h5>
+                                        </div>
+                                    @endforeach
+                                </div>
+                                {{$data['director2']->links()}}
+
+                                <div class="row mb-4 bg-gray">
+                                    <div class="col-lg-12 pt-3">
+                                        <h3 class="text-center"><span class="sub-judul-1">DIRECTOR I </span><span class="sub-judul-2">ACHIEVERS</span></h3>
+                                    </div>
+                                    @foreach ($data['director1'] as $item)
+                                        <div class="col-lg-4 p-3">
+                                            <div class="d-flex align-items-center mx-auto justify-content-center wrap-img">
+                                                <img src="{{$item['src'] != null ? asset($item['src']) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user">
+                                                <img src="{{asset('assets3/img/Director1.png')}}" class="img-fluid img-frame">
+                                            </div>
+                                            <h5 class="text-center mt-2">{{$item['username']}}</h5>
+                                        </div>
+                                    @endforeach
+                                </div>
+                                {{$data['director1']->links()}}
+
+                                <div class="row mb-4 bg-gray">
+                                    <div class="col-lg-12 pt-3">
+                                        <h3 class="text-center"><span class="sub-judul-1">PLATINUM III </span><span class="sub-judul-2">ACHIEVERS</span></h3>
+                                    </div>
+                                    @foreach ($data['platinum3'] as $item)
+                                        <div class="col-lg-4 p-3">
+                                            <div class="d-flex align-items-center mx-auto justify-content-center wrap-img">
+                                                <img src="{{$item['src'] != null ? asset($item['src']) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user">
+                                                <img src="{{asset('assets3/img/Platinum3.png')}}" class="img-fluid img-frame">
+                                            </div>
+                                            <h5 class="text-center mt-2">{{$item['username']}}</h5>
+                                        </div>
+                                    @endforeach
+                                </div>
+                                {{$data['platinum3']->links()}}
+
+                                <div class="row mb-4 bg-gray">
+                                    <div class="col-lg-12 pt-3">
+                                        <h3 class="text-center"><span class="sub-judul-1">PLATINUM II </span><span class="sub-judul-2">ACHIEVERS</span></h3>
+                                    </div>
+                                    @foreach ($data['platinum2'] as $item)
+                                        <div class="col-lg-4 p-3">
+                                            <div class="d-flex align-items-center mx-auto justify-content-center wrap-img">
+                                                <img src="{{$item['src'] != null ? asset($item['src']) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user">
+                                                <img src="{{asset('assets3/img/Platinum2.png')}}" class="img-fluid img-frame">
+                                            </div>
+                                            <h5 class="text-center mt-2">{{$item['username']}}</h5>
+                                        </div>
+                                    @endforeach
+                                </div>
+                                {{$data['platinum2']->links()}}
+
+                                <div class="row mb-4 bg-gray">
+                                    <div class="col-lg-12 pt-3">
+                                        <h3 class="text-center"><span class="sub-judul-1">PLATINUM I </span><span class="sub-judul-2">ACHIEVERS</span></h3>
+                                    </div>
+                                    @foreach ($data['platinum1'] as $item)
+                                        <div class="col-lg-4 p-3">
+                                            <div class="d-flex align-items-center mx-auto justify-content-center wrap-img">
+                                                <img src="{{$item['src'] != null ? asset($item['src']) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user">
+                                                <img src="{{asset('assets3/img/Platinum1.png')}}" class="img-fluid img-frame">
+                                            </div>
+                                            <h5 class="text-center mt-2">{{$item['username']}}</h5>
+                                        </div>
+                                    @endforeach
+                                </div>
+                                {{$data['platinum1']->links()}}
+
+                            </div>
+                        </body>
             </div>
         </div>
     </div>
