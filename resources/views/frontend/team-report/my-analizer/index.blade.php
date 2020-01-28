@@ -27,7 +27,7 @@
     &nbsp;
     <div class="col-lg-3 col-lg-offset-1  col-md-3 col-md-offset-1  col-sm-3 col-sm-offset-1 col-xs-3 col-xs-offset-1 ">
 		<div class="form">
-            <select data-column="3" class="form-control filter-select">
+            <select data-column="4" class="form-control filter-select">
             <option value="">-- All Rank --</option>
             <option value="-">No Rank</option>
              @foreach($ranks as $rank)
@@ -81,6 +81,13 @@
                 $('#username_value').val(id);
                 document.getElementById("form-direct").submit();
           });
+          $('.filter-select').change(function() {
+              console.log($(this).data('column'))
+              table.column($(this).data('column'))
+              .search($(this).val())
+              .draw();
+          });
+
           var table = $('#my-analizer').DataTable({
               destroy: true,
               processing: true,
@@ -100,11 +107,6 @@
                   { data: 'pv_middle', name: 'pv_middle', className: "text-center"  },
                   { data: 'pv_right', name: 'pv_right', className: "text-center"  },
               ]
-          });
-          $('.filter-select').change(function() {
-              table.column($(this).data('column'))
-              .search($(this).val())
-              .draw();
           });
 
         });
