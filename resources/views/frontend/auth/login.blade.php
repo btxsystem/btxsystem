@@ -5,6 +5,30 @@
           <div class="container">
             <div class="row">
               <div class="col-lg-12">
+
+                <!-- slide-banner -->
+                @if (count($data['hall_of_fame']) >= 0)
+                <div class="col-lg-6 col-xs-12 slide-banner">
+                    <div class="body-banner">
+                        <div class="owl-carousel">
+                                @foreach ($data['hall_of_fame'] as $item)
+                                    <div class="items">
+                                        <div class="row">
+                                            <div class="col-lg-5 col-xs-7 mb-sm-3">
+                                            <img src="{{$item->member->src != null ?  asset($item->member->src) : url('/img/logo.png')}}" class="img-fluid">
+                                            </div>
+                                            <div class="col-lg-7 col-xs-12">
+                                            <h3 class="mb-0">{{isset($item->member->rank->name) ? strtoupper(trans($item->member->rank->name)) : '-'}}</h3>
+                                            {{$item->desc}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                        </div>
+                    </div>
+                </div>
+                @endif
+                    <!-- endSlide-Banner -->
                 <section class="find-course find-course_mod-a wow bounceInRight colFormSignup" style="visibility: visible; animation-duration: 1s; animation-name: bounceInRight;">
                   <h2 class="find-course__title"><i class="icon stroke icon-User"></i>Login</h2>
                   <form class="find-course__form" action="/login" method="post">
@@ -450,6 +474,28 @@
 <script src="{{asset('assets2/js/moment.js')}}"></script>
 <script src="{{asset('assets2/js/pages/forms/basic-form-elements.js')}}"></script>
 <script src="{{asset('assets2/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js')}}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+<script>
+  $(document).ready(function(){
+    $('.owl-carousel').owlCarousel({
+      loop:true,
+      margin:10,
+      nav:false,
+      responsiveClass:true,
+      responsive:{
+        0:{
+            items:1,
+        },
+        600:{
+            items:1,
+        },
+        1000:{
+            items:1,
+        }
+      }
+    })
+  });
+</script>
 <script>
 
   $("#product").click(function() {

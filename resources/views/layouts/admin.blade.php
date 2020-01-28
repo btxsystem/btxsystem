@@ -21,6 +21,8 @@
         <link href="{{ asset('assets/css/chart.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('assets/css/chart.min.css') }}" rel="stylesheet" type="text/css" />
 
+        <link href="{{ asset('assets/vendors/animate.min.css') }}" rel="stylesheet" type="text/css" />
+
         <!-- meta -->
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
         <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -164,7 +166,11 @@
         <script type="text/javascript" src="{{ asset('assets/js/chart.js') }}"></script>
         <script type="text/javascript" src="{{ asset('assets/js/chart.min.js') }}"></script>
         <script src="{{asset('assets2/js/number.js')}}"></script>
-
+        <script>
+            $('#message').click(function(){
+                $('.messages-menu').addClass('open');
+            })
+        </script>
         <script>
         const BASE_URL = '{{url("/")}}'
         </script>
