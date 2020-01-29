@@ -4,7 +4,7 @@
     @parent
 @stop
 <head>
-    <style>
+<style>
     .bg-main {
         height: 100vh; background-image:  url({{asset('assets3/img/hero-fallback.jpg')}}); background-size: cover;
     }
@@ -16,7 +16,7 @@
 
     .bg-upper:before {
         content: "";
-
+        width: 100%;
         height: 100%;
         position: fixed;
         background: #22919b;
@@ -74,7 +74,7 @@
     }
 
     .img-user rounded-circle {
-    height: 75px; width: auto;
+    height: 100px; width: auto;
     }
 
     .bg-gray {
@@ -101,11 +101,11 @@
         margin-left: 40px !important;
         margin-right: 40px !important;
     }
-    </style>
+</style>
 </head>
 @section('content')
 <section class="content profile-page">
-    <div class="container-fluid">
+    <div class="container-fluid bg-upper">
         <div class="row clearfix">
             <div class="col-lg-12 col-md-12">
                             <div class="container p-5">
