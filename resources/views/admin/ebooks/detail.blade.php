@@ -36,7 +36,7 @@
                     <div class="col-md-3">
                         <br>
                         <div>
-                            <label class="control-label">Pice &nbsp; : &nbsp; {{currency($data->price)}} </label>
+                            <label class="control-label">Price &nbsp; : &nbsp; {{currency($data->price)}} </label>
                         </div>  
                         <br>                              
                     </div>
