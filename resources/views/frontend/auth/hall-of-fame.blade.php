@@ -1,7 +1,7 @@
 @include('frontend.auth.header')
 <style>
     .bg-main {
-        height: 100vh; background-image:  url({{asset('assets3/img/hero-fallback.jpg')}}); background-size: cover;
+        height: 100%; background-image:  url({{asset('assets3/img/hero-fallback.jpg')}}); background-size: cover;background-repeat:no-repeat;
     }
 
     footer, header {
@@ -134,7 +134,7 @@
                         <img src="{{$item['src'] != null ? asset($item['src']) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user rounded-circle">
                         <img src="{{asset('assets3/img/Chairman2.png')}}" class="img-fluid img-frame">
                     </div>
-                    <h5 class="text-center mt-2">{{$item['username']}}</h5>
+                    <h5 class="text-center mt-2">{{strtoupper($item['first_name'])}} {{strtoupper($item['last_name'])}}</h5>
                 </div>
             @endforeach
         </div>
@@ -150,7 +150,7 @@
                         <img src="{{$item['src'] != null ? asset($item['src']) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user rounded-circle">
                         <img src="{{asset('assets3/img/Chairman1.png')}}" class="img-fluid img-frame">
                     </div>
-                    <h5 class="text-center mt-2">{{$item['username']}}</h5>
+                    <h5 class="text-center mt-2">{{strtoupper($item['first_name'])}} {{strtoupper($item['last_name'])}}</h5>
                 </div>
             @endforeach
         </div>
@@ -166,7 +166,7 @@
                         <img src="{{$item['src'] != null ? asset($item['src']) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user rounded-circle">
                         <img src="{{asset('assets3/img/Director3.png')}}" class="img-fluid img-frame">
                     </div>
-                    <h5 class="text-center mt-2">{{$item['username']}}</h5>
+                    <h5 class="text-center mt-2">{{strtoupper($item['first_name'])}} {{strtoupper($item['last_name'])}}</h5>
                 </div>
             @endforeach
         </div>
@@ -182,7 +182,7 @@
                         <img src="{{$item['src'] != null ? asset($item['src']) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user rounded-circle">
                         <img src="{{asset('assets3/img/Director2.png')}}" class="img-fluid img-frame">
                     </div>
-                    <h5 class="text-center mt-2">{{$item['username']}}</h5>
+                    <h5 class="text-center mt-2">{{strtoupper($item['first_name'])}} {{strtoupper($item['last_name'])}}</h5>
                 </div>
             @endforeach
         </div>
@@ -198,7 +198,7 @@
                         <img src="{{$item['src'] != null ? asset($item['src']) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user rounded-circle">
                         <img src="{{asset('assets3/img/Director1.png')}}" class="img-fluid img-frame">
                     </div>
-                    <h5 class="text-center mt-2">{{$item['username']}}</h5>
+                    <h5 class="text-center mt-2">{{strtoupper($item['first_name'])}} {{strtoupper($item['last_name'])}}</h5>
                 </div>
             @endforeach
         </div>
@@ -214,7 +214,7 @@
                         <img src="{{$item['src'] != null ? asset($item['src']) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user rounded-circle">
                         <img src="{{asset('assets3/img/Platinum3.png')}}" class="img-fluid img-frame">
                     </div>
-                    <h5 class="text-center mt-2">{{$item['username']}}</h5>
+                    <h5 class="text-center mt-2">{{strtoupper($item['first_name'])}} {{strtoupper($item['last_name'])}}</h5>
                 </div>
             @endforeach
         </div>
@@ -230,7 +230,7 @@
                         <img src="{{$item['src'] != null ? asset($item['src']) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user rounded-circle">
                         <img src="{{asset('assets3/img/Platinum2.png')}}" class="img-fluid img-frame">
                     </div>
-                    <h5 class="text-center mt-2">{{$item['username']}}</h5>
+                    <h5 class="text-center mt-2">{{strtoupper($item['first_name'])}} {{strtoupper($item['last_name'])}}</h5>
                 </div>
             @endforeach
         </div>
@@ -246,7 +246,7 @@
                         <img src="{{$item['src'] != null ? asset($item['src']) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user rounded-circle">
                         <img src="{{asset('assets3/img/Platinum1.png')}}" class="img-fluid img-frame">
                     </div>
-                    <h5 class="text-center mt-2">{{$item['username']}}</h5>
+                    <h5 class="text-center mt-2">{{strtoupper($item['first_name'])}} {{strtoupper($item['last_name'])}}</h5>
                 </div>
             @endforeach
         </div>
