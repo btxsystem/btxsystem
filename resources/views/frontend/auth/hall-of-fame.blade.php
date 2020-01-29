@@ -106,7 +106,7 @@
             <div class="col-lg-12 pt-3">
                 <h3 class="text-center"><span class="sub-judul-1">CHAIRMAN II </span><span class="sub-judul-2">ACHIEVERS</span></h3>
             </div>
-            <div class="col-lg-4 p-3">
+            <!-- <div class="col-lg-4 p-3">
               <div class="d-flex align-items-center mx-auto justify-content-center wrap-img">
                 <img src="{{asset('./img/DC-7_resized.jpeg')}}" class="img-fluid img-user rounded-circle">
                 <img src="{{asset('assets3/img/Chairman2.png')}}" class="img-fluid img-frame">
@@ -126,7 +126,7 @@
                 <img src="{{asset('assets3/img/Chairman2.png')}}" class="img-fluid img-frame">
               </div>
               <h5 class="text-center mt-2">Mr. Lorems Jere</h5>
-            </div>
+            </div> -->
 
             @foreach ($data['chairman2'] as $item)
                 <div class="col-lg-4 p-3">
