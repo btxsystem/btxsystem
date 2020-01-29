@@ -108,8 +108,7 @@
     <div class="container-fluid">
         <div class="row clearfix">
             <div class="col-lg-12 col-md-12">
-                    <body class="bg-main">
-                            <div class="container p-5 bg-upper">
+                            <div class="container p-5">
                                 <div class="w-100 p-3 p-4 bg-white rounded shadow">
                                 <h2 class="title text-center mb-5">HALL OF FAME</h2>
 
@@ -242,7 +241,6 @@
                                 {{$data['platinum1']->links()}}
 
                             </div>
-                        </body>
             </div>
         </div>
     </div>
@@ -254,5 +252,8 @@
 
 @section('footer_scripts')
     <script>
+        var body = document.body;
+
+        body.classList.add("bg-main");
     </script>
 @stop
