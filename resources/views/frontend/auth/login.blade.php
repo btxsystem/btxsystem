@@ -8,7 +8,7 @@
 
                 <!-- slide-banner -->
                 @if (count($data['hall_of_fame']) >= 0)
-                <div class="col-lg-6 col-xs-12 slide-banner d-none hidden">
+                <div class="col-lg-6 col-xs-12 slide-banner">
                     <div class="body-banner">
                         <div class="owl-carousel">
                                 @foreach ($data['hall_of_fame'] as $item)
