@@ -32,9 +32,9 @@ function memberIdGenerate(){
 function currency($value)
 {
     if (is_decimal($value)) {
-        return 'Rp. ' . str_replace(",",".", number_format($value, 2)).',-';
+        return 'Rp. ' . str_replace(",",".", number_format($value, 2)).'.';
     }
-    return 'Rp. ' . str_replace(",",".", number_format($value, 0)).',-';
+    return 'Rp. ' . str_replace(",",".", number_format($value, 0)).'.';
 }
 
 function is_decimal( $val )
