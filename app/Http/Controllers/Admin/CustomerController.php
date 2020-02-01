@@ -30,6 +30,9 @@ class CustomerController extends Controller
                     ->editColumn('email', function($data) {
                         return $data->email;
                     })
+                    ->editColumn('created_at', function($data) {
+                        return $data->created_at;
+                    })
 
                     ->addColumn('action', function($row) {
                         $show = \Auth::guard('admin')->user()->hasPermission('Customers.view') ? '<a href="'.route('customer.show',$row->id).'"  class="btn btn-primary fa fa-eye" title="Show"></a>' : '';
