@@ -56,7 +56,7 @@
 
       <!-- end main-slider -->
 
-      <div class="section_mod-a" id="myAbout">
+      <div class="section_mod-a" id="about">
         <div class="container">
           <div class="section_mod-a__inner">
             <div class="row">
@@ -132,7 +132,7 @@
       </div>
       <!-- end section_mod-a -->
 
-      <section class="section-default" id="myProduct">
+      <section class="section-default" id="product">
         <div class="container">
           <div class="row">
             <div class="col-xs-12">
@@ -572,9 +572,15 @@
         });
   }
 
-  $("#about").click(function() {
+  $("#myAbout").click(function() {
     $('html, body').animate({
-        scrollTop: $("#myAbout").offset().top - 180
+        scrollTop: $("#about").offset().top - 180
+    }, 1000);
+  });
+
+  $("#myProduct").click(function() {
+    $('html, body').animate({
+        scrollTop: $("#product").offset().top - 180
     }, 1000);
   });
 
