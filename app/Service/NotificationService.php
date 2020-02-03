@@ -17,8 +17,8 @@ use App\Mail\UpRankAdminMail;
 class NotificationService extends Notification
 {
     public static function getNotification(){
-    //    $notification = self::with('user')->where('isRead',0)->orderBy('created_at', 'desc')->paginate(5);
-    //    return $notification;
+        $notification = self::with('user')->where('isRead',0)->orderBy('created_at', 'desc')->paginate(5);
+        return $notification;
     }
 
     public function readNotif(){
@@ -28,8 +28,8 @@ class NotificationService extends Notification
     }
 
     public static function getTotalNotif(){
-        //$notification = self::with('user')->where('isRead',0)->orderBy('created_at', 'desc')->get()->count();
-        //return $notification;
+        $notification = self::with('user')->where('isRead',0)->orderBy('created_at', 'desc')->get()->count();
+        return $notification;
     }
 
     public static function getData(){
