@@ -2,11 +2,20 @@
 use Illuminate\Support\Facades\DB;
 use App\Employeer;
 use Carbon\Carbon;
+use App\Service\NotificationService;
+
+function getNotif(){
+    return NotificationService::getNotification();
+}
+
+function getJmlNotif(){
+    return NotificationService::getTotalNotif();
+}
 
 function invoiceNumbering(){
       $dateNow = date('ym');
       $lastInvoiceNo = Employeer::pluck('id_member')->last();
-      $lastInvoiceDate = substr($lastInvoiceNo, 0, -4); 
+      $lastInvoiceDate = substr($lastInvoiceNo, 0, -4);
       $increment = (int)substr($lastInvoiceNo, -4) + 1;
       $increment = sprintf("%06d", $increment);
       return 'M'.$dateNow.$increment;
@@ -15,7 +24,7 @@ function invoiceNumbering(){
 function memberIdGenerate(){
       $dateNow = date('ym');
       $lastInvoiceNo = Employeer::pluck('id_member')->last();
-      $lastInvoiceDate = substr($lastInvoiceNo, 0, -4); 
+      $lastInvoiceDate = substr($lastInvoiceNo, 0, -4);
       $increment = (int)substr($lastInvoiceNo, -4) + 1;
       $increment = sprintf("%06d", $increment);
       return 'M'.$dateNow.$increment;

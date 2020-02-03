@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Support\Facades\DB;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -18,7 +19,7 @@ class AppServiceProvider extends ServiceProvider
 
     }
 
-    
+
 
     /**
      * Bootstrap any application services.
@@ -35,5 +36,5 @@ class AppServiceProvider extends ServiceProvider
         $this->app->alias('bugsnag.logger', \Psr\Log\LoggerInterface::class);
         Schema::defaultStringLength(191);
     }
-    
+
 }

@@ -9,15 +9,12 @@ use DataTables;
 use Alert;
 use Validator;
 use DB;
+use App\Service\NotificationService;
 
 
 class EbookController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
         if (request()->ajax()) {
@@ -34,7 +31,6 @@ class EbookController extends Controller
                     ->rawColumns(['action'])
                     ->make(true);
         }
-    
         return view('admin.ebooks.index');
     }
 
@@ -80,7 +76,7 @@ class EbookController extends Controller
         $ebook->save();
         $ebook->position = $ebook->id;
         $ebook->save();
-       
+
 
         $ebook_renewal = new Ebook;
         $ebook_renewal->title = $request->title .' '. 'Renewal';
@@ -95,7 +91,6 @@ class EbookController extends Controller
         $ebook_renewal->save();
 
         Alert::success('Sukses Menambah Data Ebook', 'Sukses');
-
         return redirect()->route('ebook.index');
     }
 
@@ -108,7 +103,6 @@ class EbookController extends Controller
     public function show($id)
     {
         $data = Ebook::with('books')->findOrFail($id);
-
         return view('admin.ebooks.detail', compact('data'));
     }
 
@@ -121,7 +115,6 @@ class EbookController extends Controller
     public function edit($id)
     {
         $data = Ebook::findOrFail($id);
- 
         return view('admin.ebooks.edit', compact('data'));
     }
 
@@ -139,7 +132,7 @@ class EbookController extends Controller
             'src' => 'mimes:png,jpg,jpeg'
         ]);
 
-        
+
         $data = Ebook::findOrFail($id);
         $oldImage = $data->src; //Get old path to delete when updated
 
@@ -164,7 +157,6 @@ class EbookController extends Controller
 
         $data->save();
         Alert::success('Sukses Update Data Ebook', 'Sukses');
-
         return redirect()->route('ebook.show', $id);
     }
 
@@ -177,9 +169,9 @@ class EbookController extends Controller
     public function destroy($id)
     {
         $data = Ebook::findOrFail($id);
-        if ($data) { 
+        if ($data) {
             \File::delete(public_path($data->src));
-            $data->delete(); 
+            $data->delete();
             Alert::success('Success Delete Data Ebook', 'Success');
         } else {
             Alert::error('Gagal Delete Data Ebook', 'Gagal');
@@ -191,7 +183,7 @@ class EbookController extends Controller
     public function bookData($id)
     {
         $data = Ebook::with('books')->findOrFail($id);
-     
+
         return Datatables::of($data->books)
             ->addIndexColumn()
             ->addColumn('action', function($row) {
@@ -207,7 +199,7 @@ class EbookController extends Controller
     public function videoData($id)
     {
         $data = Ebook::with('videos')->findOrFail($id);
-     
+
         return Datatables::of($data->videos)
             ->addIndexColumn()
             ->addColumn('action', function($row) {

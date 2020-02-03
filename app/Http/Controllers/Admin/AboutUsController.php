@@ -12,11 +12,7 @@ use App\Models\Icon;
 
 class AboutUsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
         // return 'a';
@@ -34,7 +30,6 @@ class AboutUsController extends Controller
                     ->rawColumns(['action'])
                     ->make(true);
         }
-
         return view('admin.about-us.index');
     }
 
@@ -61,7 +56,6 @@ class AboutUsController extends Controller
         $data->desc = $request->desc;
         $icon = Icon::select('icon')->where('id',$request->icon)->first();
         $data->img = $icon->icon;
-
         if ($data->save()) {
             Alert::success('Sukses Menambah Data', 'Sukses');
 
@@ -120,7 +114,6 @@ class AboutUsController extends Controller
             \File::delete(public_path($oldImg));
             $data->img = $uploadPath;
         }
-
         if($data->save()) {
             Alert::success('Sukses Update Data', 'Sukses');
 

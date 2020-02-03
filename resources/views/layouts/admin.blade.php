@@ -60,9 +60,9 @@
 
                     <div class="navbar-right">
                         <ul class="nav navbar-nav">
-                            @include('admin.layouts._messages')
+                           {{-- @include('admin.layouts._messages') --}}
                             @include('admin.layouts._notifications')
-                            <li class="dropdown user user-menu">
+                            {{--<li class="dropdown user user-menu">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                     <i class="livicon" data-name="gear" data-loop="true" data-color="#e9573f" data-hovercolor="#e9573f" data-size="28"></i>
                                 </a>
@@ -99,7 +99,7 @@
                                     </div>
                                 </li>
                             </ul>
-                        </li>
+                        </li>--}}
                     </ul>
                 </div>
             </nav>
@@ -167,8 +167,8 @@
         <script type="text/javascript" src="{{ asset('assets/js/chart.min.js') }}"></script>
         <script src="{{asset('assets2/js/number.js')}}"></script>
         <script>
-            $('#message').click(function(){
-                $('.messages-menu').addClass('open');
+            $('.notifications-menu').click(function(){
+                $('.notifications-menu').addClass('open');
             })
         </script>
         <script>

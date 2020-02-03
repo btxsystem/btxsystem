@@ -29,7 +29,14 @@ Route::group(['prefix' => 'select', 'as'=> 'select.'], function () {
 
 
 Route::group(['middleware' => 'admin'], function () {
+
+    Route::group(['prefix'=>'notification','as'=>'notification.'], function(){
+        Route::get('', ['as' => '', 'uses' => 'Admin\NotificationController@index']);
+        Route::get('data', ['as' => 'data', 'uses' => 'Admin\NotificationController@data']);
+        Route::get('read', ['as' => 'read', 'uses' => 'Admin\NotificationController@read']);
+    });
     Route::post('redirect', ['as' => 'redirect', 'uses' => 'Admin\MemberController@redirect']);
+    Route::get('readChat', ['as' => 'readChat', 'uses' => 'Admin\NotificationController@index']);
     Route::post('non-redirect', ['as' => 'non-redirect', 'uses' => 'Admin\MemberController@nonredirect']);
     Route::group(['prefix'=>'admin-management','as'=>'admin-management.'], function(){
         Route::get('permissions', ['as' => 'permissions', 'uses' => 'Admin\PermissionsController@index']);
