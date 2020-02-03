@@ -6,7 +6,7 @@
 <head>
 <style>
     .bg-main {
-        height: 100%; background-image:  url({{asset('assets3/img/hero-fallback.jpg')}}); background-size: cover;background-repeat:no-repeat;
+        height: 100vh; background-image:  url({{asset('assets3/img/hero-fallback.jpg')}}); background-size: cover;background-repeat:no-repeat;
     }
 
     footer, header {
