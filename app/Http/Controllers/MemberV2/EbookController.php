@@ -28,7 +28,7 @@ use App\Service\PaymentVa\TransactionPaymentService as Va;
 class EbookController extends Controller
 {
     public function store(Request $request){
-        $ebook = DB::table('ebooks')->where('id',$request->ebook_id)->select('price')->first();
+        $ebook = DB::table('ebooks')->where('id',$request->ebook_id)->select('price', 'price_markup')->first();
         if (\Auth::guard('user')->user()) {
 
             $date = now();
