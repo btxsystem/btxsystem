@@ -71,7 +71,7 @@ class NotificationService extends Notification
     {
         $dataEmail = (object) [
             'description' => 'Congratulations '.$reward->member->username,
-            'nominal' => 'anda telah mendapatkan reward '. $reward->reward->description.' senilai '.$reward->reward->nominal,
+            'nominal' => 'anda telah mendapatkan reward '. $reward->reward->description,
         ];
         Mail::to($reward->member->email)->cc('cs@bitrexgo.co.id ')->send(new AccApproveRewardMail($dataEmail));
         return;
