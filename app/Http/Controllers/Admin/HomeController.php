@@ -6,6 +6,7 @@ use Auth;
 
 class HomeController
 {
+
     public function index()
     {
         return view('admin.home');

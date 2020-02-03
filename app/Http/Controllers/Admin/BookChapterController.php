@@ -8,6 +8,7 @@ use App\Models\BookChapter;
 use DataTables;
 use Alert;
 use Validator;
+use App\Service\NotificationService;
 
 class BookChapterController extends Controller
 {
@@ -45,7 +46,6 @@ class BookChapterController extends Controller
         $book->slug = \Str::slug($request->title) .'-'. date('YmdHis');
         $book->save();
         Alert::success('Sukses Menambah Chapter Book', 'Sukses');
-
         return redirect()->route('book.show', $request->book_id);
     }
 
@@ -69,9 +69,7 @@ class BookChapterController extends Controller
                     ->rawColumns(['action'])
                     ->make(true);
         }
-    
-
-        return view('admin.book-chapters.detail', compact('data'));
+        return view('admin.book-chapters.detail');
     }
 
     /**
@@ -101,12 +99,12 @@ class BookChapterController extends Controller
         $book->title = $request->title;
         $book->slug = \Str::slug($request->title) .'-'. date('YmdHis');
         $book->save();
-    
-    
+
+
         Alert::success('Sukses Update Chapter Book', 'Sukses');
-        
+
         return back();
- 
+
     }
 
     /**
@@ -118,8 +116,8 @@ class BookChapterController extends Controller
     public function destroy($id)
     {
         $data = BookChapter::findOrFail($id);
-        if ($data) { 
-            $data->delete(); 
+        if ($data) {
+            $data->delete();
             Alert::success('Success Delete Book Chapter', 'Success');
             return back();
         } else {

@@ -13,13 +13,21 @@ use Carbon\Carbon;
 use Alert;
 use File;
 use App\Service\PaymentVa\TransactionPaymentService as Va;
+use App\Service\NotificationService;
 
 use Illuminate\Support\Facades\Mail;
 use App\Mail\RegisterMemberMail;
+use App\models\GotReward;
 use Redirect;
 
 class ProfileMemberController extends Controller
 {
+    protected $service;
+
+    public function __construct(NotificationService $service)
+    {
+        $this->service = $service;
+    }
 
     public function index()
     {
@@ -337,10 +345,21 @@ class ProfileMemberController extends Controller
 
     public function claimReward(Request $request){
         $member = Auth::user();
+        DB::beginTransaction();
         if($request->id==1){
             try {
-                DB::beginTransaction();
                     $pajak = $member->verification == 1 ? 0.025 : 0.03;
+                    $reward = DB::table('gift_rewards')->where('id',$request->id)->select('*')->first();
+                    $data = [
+                        'title' => 'Achieve Reward',
+                        'desc'  => 'Telah Request Achieve Reward '.$reward->description,
+                        'isRead' => 0,
+                        'member_id' => Auth::id(),
+                        'type' => 2,
+                        'created_at' => now(),
+                        'updated_at' => now(),
+                    ];
+                    $this->service->store($data, $reward->description, $reward->nominal);
                     DB::table('got_rewards')->where('reward_id', $request->id)->where('member_id', Auth::id())->update(['status' => 2, 'updated_at' => now()]);
                     DB::table('history_bitrex_cash')->insert(['id_member' => Auth::id(), 'nominal' => 3000000 - (3000000 * $pajak), 'created_at' => now(), 'updated_at' => now(), 'description' => 'Bonus Rewards', 'info' => 1, 'type' => 3]);
                     DB::table('employeers')->where('id', Auth::id())->update(['bitrex_cash' => $member->bitrex_cash += 3000000 - (3000000 * $pajak), 'updated_at' => now()]);
@@ -349,12 +368,29 @@ class ProfileMemberController extends Controller
                 Alert::success('Claim Rewards Success, Check your history', 'Success')->persistent("OK");
             } catch (\Exception $e) {
                 DB::rollback();
-                Alert::success('Something wrong', 'Success')->persistent("OK");
+                Alert::success('Something wrong', 'Error')->persistent("OK");
             }
         }else{
-            DB::table('got_rewards')->where('reward_id', $request->id)->where('member_id', Auth::id())->update(['status' => 1, 'updated_at' => now()]);
-            Alert::success('Claim Reward Success, Waiting approval admin', 'Success')->persistent("OK");
-        }
+            try {
+                $reward = DB::table('gift_rewards')->where('id',$request->id)->select('*')->first();
+                $data = [
+                    'title' => 'Achieve Reward',
+                    'desc'  => 'Telah Request Achieve Reward '.$reward->description,
+                    'isRead' => 0,
+                    'member_id' => Auth::id(),
+                    'type' => 2,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ];
+                $this->service->store($data, $reward->description, $reward->nominal);
+                DB::table('got_rewards')->where('reward_id', $request->id)->where('member_id', Auth::id())->update(['status' => 1, 'updated_at' => now()]);
+                DB::commit();
+                Alert::success('Claim Reward Success, Waiting approval admin', 'Success')->persistent("OK");
+            } catch (\Throwable $th) {
+                DB::rollback();
+                Alert::success('Something wrong', 'Error')->persistent("OK");
+            }
+            }
         return redirect()->route('member.reward');
     }
 

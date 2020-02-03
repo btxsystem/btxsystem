@@ -9,9 +9,18 @@ use DataTables;
 use Auth;
 use Alert;
 use DB;
+use App\Service\NotificationService;
+use App\Rank;
 
 class RewardClaimController extends Controller
 {
+    protected $service;
+
+    public function __construct(NotificationService $service)
+    {
+        $this->service = $service;
+    }
+
     public function index()
     {
         if (request()->ajax()) {
@@ -53,10 +62,11 @@ class RewardClaimController extends Controller
    public function approve($id)
    {
        // If Type *Register Member* update table transaction member
-
        DB::beginTransaction();
        try {
            $data = GotReward::findOrFail($id);
+           $reward = GotReward::with('reward','member')->orderBy('id','desc')->find($data->$id)->first();
+           $this->service->sendEmail($reward);
            $data->update([
                'status' => 2
            ]);

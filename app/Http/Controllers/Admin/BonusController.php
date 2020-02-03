@@ -9,14 +9,16 @@ use App\Employeer;
 use DataTables;
 use DB;
 use Alert;
+use App\Service\NotificationService;
 
 class BonusController extends Controller
 {
+
     public function bonusSponsor()
     {
         if (request()->ajax()) {
             $data = HistoryBitrexCash::with('member')->where('type', 0)->select('history_bitrex_cash.*');
-           
+
             return Datatables::of($data)
                     ->addColumn('username', function($data) {
                         return $data->member ? $data->member->username : 'No Data';
@@ -31,7 +33,7 @@ class BonusController extends Controller
     {
         if (request()->ajax()) {
             $data = HistoryBitrexCash::with('member')->where('type', 1)->select('history_bitrex_cash.*');
-           
+
             return Datatables::of($data)
                     ->addColumn('username', function($data) {
                         return $data->member ? $data->member->username : 'No Data';
@@ -46,7 +48,7 @@ class BonusController extends Controller
     {
         if (request()->ajax()) {
             $data = HistoryBitrexCash::with('member')->where('type', 2)->select('history_bitrex_cash.*');
-           
+
             return Datatables::of($data)
                     ->addColumn('username', function($data) {
                         return $data->member ? $data->member->username : 'No Data';
@@ -108,7 +110,7 @@ class BonusController extends Controller
     {
         if (request()->ajax()) {
             $data = HistoryBitrexCash::with('member')->where('type', 3)->select('history_bitrex_cash.*');
-           
+
             return Datatables::of($data)
                     ->addColumn('username', function($data) {
                         return $data->member ? $data->member->username : 'No Data';
@@ -129,7 +131,7 @@ class BonusController extends Controller
                     return   Datatables::of($data)
                                 ->addIndexColumn()
                                 ->make(true);
-            }
+        }
         return view('admin.bonus.general');
     }
     // public function general(Request $request)
@@ -142,12 +144,12 @@ class BonusController extends Controller
     //         $filter = $model->filter($request);
     //         $object = $filter->paginate($request->length, ['*'], 'page', $page);
     //         $datas = $object->toArray();
-            
+
     //         $datas['req'] = $request->all();
     //         $datas['draw'] = (int)$request->draw;
     //         $datas['recordsTotal'] = $model->count();
     //         $datas['recordsFiltered'] = $object->total();
-            
+
     //         $datas['data'] = $object->map(function($item, $index) use($object) {
     //             $item->iteration = ($index + 1) + ($object->perPage() * ($object->currentPage() - 1));
     //             return $item;
