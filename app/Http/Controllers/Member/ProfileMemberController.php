@@ -351,8 +351,8 @@ class ProfileMemberController extends Controller
                     $pajak = $member->verification == 1 ? 0.025 : 0.03;
                     $reward = DB::table('gift_rewards')->where('id',$request->id)->select('*')->first();
                     $data = [
-                        'title' => 'Archive Reward',
-                        'desc'  => 'Telah Request Archive Reward '.$reward->description,
+                        'title' => 'Achieve Reward',
+                        'desc'  => 'Telah Request Achieve Reward '.$reward->description,
                         'isRead' => 0,
                         'member_id' => Auth::id(),
                         'type' => 2,
@@ -374,8 +374,8 @@ class ProfileMemberController extends Controller
             try {
                 $reward = DB::table('gift_rewards')->where('id',$request->id)->select('*')->first();
                 $data = [
-                    'title' => 'Archive Reward',
-                    'desc'  => 'Telah Request Archive Reward '.$reward->description,
+                    'title' => 'Achieve Reward',
+                    'desc'  => 'Telah Request Achieve Reward '.$reward->description,
                     'isRead' => 0,
                     'member_id' => Auth::id(),
                     'type' => 2,

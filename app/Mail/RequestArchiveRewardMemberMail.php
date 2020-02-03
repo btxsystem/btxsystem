@@ -31,6 +31,6 @@ class RequestArchiveRewardMemberMail extends Mailable
     {
         return $this->view('emails.req-archive-reward-member')
                     ->from('mailbitrexgo@bitrexgo.id', 'Bitrexgo')
-                    ->subject('Request Archive Reward');
+                    ->subject('Request Achieve Reward');
     }
 }

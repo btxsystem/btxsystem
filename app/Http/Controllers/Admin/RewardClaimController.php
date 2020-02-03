@@ -65,7 +65,7 @@ class RewardClaimController extends Controller
        DB::beginTransaction();
        try {
            $data = GotReward::findOrFail($id);
-           $reward = GotReward::with('reward','member')->orderBy('id','desc')->find($id)->first();
+           $reward = GotReward::with('reward','member')->orderBy('id','desc')->find($data->$id)->first();
            $this->service->sendEmail($reward);
            $data->update([
                'status' => 2

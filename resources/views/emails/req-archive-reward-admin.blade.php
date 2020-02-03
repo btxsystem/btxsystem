@@ -38,7 +38,7 @@
   </style>
 </head>
 <body>
-  <h3 style="text-align:center">REQUEST APPROVE ARCHIVE REWARD</h3>
+  <h3 style="text-align:center">REQUEST APPROVE ACHIEVE REWARD</h3>
   <table>
     <tr>
         <td>Rank</td>
@@ -49,7 +49,7 @@
         <td>: <strong>{{$data->username}}</strong></td>
     </tr>
     <tr>
-        <td>Archive Reward</td>
+        <td>Achieve Reward</td>
         <td>: <strong>{{$data->description.' dengan Nominal '.$data->nominal}}</strong></td>
     </tr>
     <tr>

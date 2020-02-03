@@ -38,7 +38,7 @@
   </style>
 </head>
 <body>
-  <h3 style="text-align:center">REQUEST ARCHIVE REWARD</h3>
+  <h3 style="text-align:center">REQUEST ACHIEVE REWARD</h3>
   <table>
     <tr>
         <td><strong>{{$data->description}}</strong></td>

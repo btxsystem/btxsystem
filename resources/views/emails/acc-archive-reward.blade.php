@@ -38,7 +38,7 @@
   </style>
 </head>
 <body>
-  <h3 style="text-align:center">RECEIVED ARCHIVE REWARD</h3>
+  <h3 style="text-align:center">RECEIVED ACHIEVE REWARD</h3>
   <table>
     <tr>
         <td>
