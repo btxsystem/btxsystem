@@ -9,6 +9,10 @@
         height: 100vh; background-image:  url({{asset('assets3/img/hero-fallback.jpg')}}); background-size: cover;background-repeat:no-repeat;
     }
 
+    .shadow {
+        box-shadow: 0 3px 3px rgba(0,0,0,0.30) !important;
+    }
+
     footer, header {
         position: relative;
         z-index: 100;
@@ -73,8 +77,8 @@
     letter-spacing: 3px; font-weight: 300;
     }
 
-    .img-user rounded-circle {
-    height: 100px; width: auto;
+    .img-user {
+        height: 100px!important; width: 100px!important;
     }
 
     .bg-gray {
