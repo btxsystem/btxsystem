@@ -352,7 +352,7 @@ class ProfileMemberController extends Controller
                     $reward = DB::table('gift_rewards')->where('id',$request->id)->select('*')->first();
                     $data = [
                         'title' => 'Archive Reward',
-                        'desc'  => 'Telah Request Archive Reward '.$reward->description.' senilai '.$reward->nominal,
+                        'desc'  => 'Telah Request Archive Reward '.$reward->description,
                         'isRead' => 0,
                         'member_id' => Auth::id(),
                         'type' => 2,
@@ -367,7 +367,6 @@ class ProfileMemberController extends Controller
                 DB::commit();
                 Alert::success('Claim Rewards Success, Check your history', 'Success')->persistent("OK");
             } catch (\Exception $e) {
-                $this->service->store($data);
                 DB::rollback();
                 Alert::success('Something wrong', 'Error')->persistent("OK");
             }
@@ -376,7 +375,7 @@ class ProfileMemberController extends Controller
                 $reward = DB::table('gift_rewards')->where('id',$request->id)->select('*')->first();
                 $data = [
                     'title' => 'Archive Reward',
-                    'desc'  => 'Telah Request Archive Reward '.$reward->description.' senilai '.$reward->nominal,
+                    'desc'  => 'Telah Request Archive Reward '.$reward->description,
                     'isRead' => 0,
                     'member_id' => Auth::id(),
                     'type' => 2,
