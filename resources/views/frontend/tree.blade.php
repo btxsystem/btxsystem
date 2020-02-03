@@ -577,6 +577,8 @@ em{
 <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.10/themes/base/jquery-ui.css">
 <!-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script> -->
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script> -->
+
 <script>
 	var priceEbook = 0
 	var postalFee = 0
@@ -812,6 +814,41 @@ em{
 			$('#cost-ebook').html(toPrice(priceEbook / 1000))
 			$('#grand-total').html(toPrice((priceEbook + postalFee + 280000) / 1000))
 			}
+		})
+
+		let isConfirmationEbook = false;
+		$('form#action-member').on('submit', function(e) {
+			let validateEbooks = [];
+			$('#checkboxEbook input[type=checkbox]').each(function(i) {
+				validateEbooks.push(i)
+			});
+
+			if(validateEbooks.length > 1 && !isConfirmationEbook) {
+				e.preventDefault();
+				var r = confirm("Apakah Anda yakin membeli 2 ebook?");
+
+				if (r == true) {
+					isConfirmationEbook = true
+					$('form#action-member').submit()
+				} else {
+					isConfirmationEbook = false
+				}
+				// swal.fire({
+				// 	title: 'Are you sure?',
+				// 	text: "Ebook lebih dari satu",
+				// 	icon: 'warning',
+				// 	showCancelButton: true,
+				// 	confirmButtonColor: '#3085d6',
+				// 	cancelButtonColor: '#d33',
+				// 	confirmButtonText: 'Yes'
+				// }).then((result) => {
+				// 	if (result.value) {
+				// 		isConfirmationEbook = true
+				// 		$('form#action-member').submit();
+				// 	}
+				// })
+			}
+
 		})
 
 		$('#checkboxEbook input[type=checkbox]').change(function(index) {
