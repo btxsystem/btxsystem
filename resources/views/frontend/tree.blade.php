@@ -817,10 +817,12 @@ em{
 		})
 
 		let isConfirmationEbook = false;
+		let validateEbooks = [];
 		$('form#action-member').on('submit', function(e) {
-			let validateEbooks = [];
 			$('#checkboxEbook input[type=checkbox]').each(function(i) {
-				validateEbooks.push(i)
+				if($(this).prop('checked')) {
+					validateEbooks.push(i)
+				}
 			});
 
 			if(validateEbooks.length > 1 && !isConfirmationEbook) {
@@ -832,6 +834,8 @@ em{
 					$('form#action-member').submit()
 				} else {
 					isConfirmationEbook = false
+					validateEbooks = [];
+					e.preventDefault();
 				}
 				// swal.fire({
 				// 	title: 'Are you sure?',
