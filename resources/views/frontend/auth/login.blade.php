@@ -8,7 +8,7 @@
 
                 <!-- slide-banner -->
                 @if (count($data['hall_of_fame']) >= 0)
-                <div class="col-lg-6 col-xs-12 slide-banner">
+                <div class="col-lg-6 col-xs-12 slide-banner d-none d-md-block">
                     <div class="body-banner">
                         <div class="owl-carousel">
                                 @foreach ($data['hall_of_fame'] as $item)
@@ -56,12 +56,35 @@
 
       <!-- end main-slider -->
 
-      <div class="section_mod-a" id="myAbout">
+      <div class="section_mod-a" id="about">
         <div class="container">
           <div class="section_mod-a__inner">
             <div class="row">
               <div class="col-md-12">
                 <section class="section-advantages wow bounceInLeft" data-wow-duration="1s" style="padding-bottom: 10px;">
+                  <div class="row">
+                  @if (count($data['hall_of_fame']) >= 0)
+                <div class="col-lg-6 col-xs-12 d-block d-md-none">
+                    <div class="body-banner">
+                        <div class="owl-carousel">
+                                @foreach ($data['hall_of_fame'] as $item)
+                                    <div class="items">
+                                        <div class="row">
+                                            <div class="col-lg-5 col-xs-7 mb-sm-3">
+                                            <img src="{{$item->member->src != null ?  asset($item->member->src) : url('/img/logo.png')}}" class="img-fluid">
+                                            </div>
+                                            <div class="col-lg-7 col-xs-12">
+                                            <h3 class="mb-0">{{isset($item->member->rank->name) ? strtoupper(trans($item->member->rank->name)) : '-'}}</h3>
+                                            {{$item->desc}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                        </div>
+                    </div>
+                </div>
+                @endif
+                  </div>
                   <h2 class="ui-title-block ui-title-block_mod-a">About Bitrexgo</h2>
                   <div class="ui-subtitle-block ui-subtitle-block_mod-a">Bitrexgo is one of the best learning platform for financial education in Indonesia.</div>
                   <ul class="advantages advantages_mod-a list-unstyled">
@@ -109,7 +132,7 @@
       </div>
       <!-- end section_mod-a -->
 
-      <section class="section-default" id="myProduct">
+      <section class="section-default" id="product">
         <div class="container">
           <div class="row">
             <div class="col-xs-12">
@@ -549,9 +572,15 @@
         });
   }
 
-  $("#about").click(function() {
+  $("#myAbout").click(function() {
     $('html, body').animate({
-        scrollTop: $("#myAbout").offset().top - 180
+        scrollTop: $("#about").offset().top - 180
+    }, 1000);
+  });
+
+  $("#myProduct").click(function() {
+    $('html, body').animate({
+        scrollTop: $("#product").offset().top - 180
     }, 1000);
   });
 

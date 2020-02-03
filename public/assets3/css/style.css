@@ -30,8 +30,8 @@
     width: 100%;
   }
   .btnBook .btn {
-    margin-top: 0px;
-    margin-left: 50px;
+    margin-top: 5px;
+    margin-left: 65px;
   }
   .btn-buy {
     margin-top: 6px !important;
@@ -40,7 +40,7 @@
 
 
 .slide-banner {
-	position: absolute; top: 100px; z-index: 9998; left: 100px;
+	position: absolute; top: 70px; z-index: 9998; left: 100px;
 }
 
 .body-banner {

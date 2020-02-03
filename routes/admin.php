@@ -343,6 +343,9 @@ Route::group(['middleware' => 'admin'], function () {
     Route::group(['prefix' => 'hall-of-fame' ,'as'=>'hall-of-fame.'], function () {
         Route::get('/', ['as' => 'index', 'uses' => 'Admin\HallOfFameController@index']);
         Route::get('/create', ['as' => 'create', 'uses' => 'Admin\HallOfFameController@create']);
+        Route::get('/edit/{id}', ['as' => 'edit', 'uses' => 'Admin\HallOfFameController@edit']);
+        Route::post('/update/{id}', ['as' => 'update', 'uses' => 'Admin\HallOfFameController@update']);
+        Route::post('/destroy/{id}', ['as' => 'destroy', 'uses' => 'Admin\HallOfFameController@destroy']);
         Route::post('/', ['as' => 'store', 'uses' => 'Admin\HallOfFameController@store']);
     });
 
