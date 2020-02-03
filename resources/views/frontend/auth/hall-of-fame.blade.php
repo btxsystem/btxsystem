@@ -112,21 +112,21 @@
             </div>
             <!-- <div class="col-lg-4 p-3">
               <div class="d-flex align-items-center mx-auto justify-content-center wrap-img">
-                <img src="{{asset('./img/DC-7_resized.jpeg')}}" class="img-fluid img-user rounded-circle">
+                <img src="{{asset('./img/DC-7_resized.jpeg')}}" class="img-fluid img-user rounded-circle" style="height: 100px!important; width: 100px!important;">
                 <img src="{{asset('assets3/img/Chairman2.png')}}" class="img-fluid img-frame">
               </div>
               <h5 class="text-center mt-2">Mr. Lorems Jere</h5>
             </div>
             <div class="col-lg-4 p-3">
               <div class="d-flex align-items-center mx-auto justify-content-center wrap-img">
-                <img src="{{asset('./img/DC-7_resized.jpeg')}}" class="img-fluid img-user rounded-circle">
+                <img src="{{asset('./img/DC-7_resized.jpeg')}}" class="img-fluid img-user rounded-circle" style="height: 100px!important; width: 100px!important;">
                 <img src="{{asset('assets3/img/Chairman2.png')}}" class="img-fluid img-frame">
               </div>
               <h5 class="text-center mt-2">Mr. Lorems Jere</h5>
             </div>
             <div class="col-lg-4 p-3">
               <div class="d-flex align-items-center mx-auto justify-content-center wrap-img">
-                <img src="{{asset('./img/DC-7_resized.jpeg')}}" class="img-fluid img-user rounded-circle">
+                <img src="{{asset('./img/DC-7_resized.jpeg')}}" class="img-fluid img-user rounded-circle" style="height: 100px!important; width: 100px!important;">
                 <img src="{{asset('assets3/img/Chairman2.png')}}" class="img-fluid img-frame">
               </div>
               <h5 class="text-center mt-2">Mr. Lorems Jere</h5>
@@ -135,7 +135,7 @@
             @foreach ($data['chairman2'] as $item)
                 <div class="col-lg-4 p-3">
                     <div class="d-flex align-items-center mx-auto justify-content-center wrap-img">
-                        <img src="{{$item['src'] != null ? asset($item['src']) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user rounded-circle">
+                        <img src="{{$item['src'] != null ? asset($item['src']) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user rounded-circle" style="height: 100px!important; width: 100px!important;">
                         <img src="{{asset('assets3/img/Chairman2.png')}}" class="img-fluid img-frame">
                     </div>
                     <h5 class="text-center mt-2">{{strtoupper($item['first_name'])}} {{strtoupper($item['last_name'])}}</h5>
@@ -151,7 +151,7 @@
             @foreach ($data['chairman1'] as $item)
                 <div class="col-lg-4 p-3">
                     <div class="d-flex align-items-center mx-auto justify-content-center wrap-img">
-                        <img src="{{$item['src'] != null ? asset($item['src']) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user rounded-circle">
+                        <img src="{{$item['src'] != null ? asset($item['src']) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user rounded-circle" style="height: 100px!important; width: 100px!important;">
                         <img src="{{asset('assets3/img/Chairman1.png')}}" class="img-fluid img-frame">
                     </div>
                     <h5 class="text-center mt-2">{{strtoupper($item['first_name'])}} {{strtoupper($item['last_name'])}}</h5>
@@ -167,7 +167,7 @@
             @foreach ($data['director3'] as $item)
                 <div class="col-lg-4 p-3">
                     <div class="d-flex align-items-center mx-auto justify-content-center wrap-img">
-                        <img src="{{$item['src'] != null ? asset($item['src']) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user rounded-circle">
+                        <img src="{{$item['src'] != null ? asset($item['src']) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user rounded-circle" style="height: 100px!important; width: 100px!important;">
                         <img src="{{asset('assets3/img/Director3.png')}}" class="img-fluid img-frame">
                     </div>
                     <h5 class="text-center mt-2">{{strtoupper($item['first_name'])}} {{strtoupper($item['last_name'])}}</h5>
@@ -183,7 +183,7 @@
             @foreach ($data['director2'] as $item)
                 <div class="col-lg-4 p-3">
                     <div class="d-flex align-items-center mx-auto justify-content-center wrap-img">
-                        <img src="{{$item['src'] != null ? asset($item['src']) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user rounded-circle">
+                        <img src="{{$item['src'] != null ? asset($item['src']) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user rounded-circle" style="height: 100px!important; width: 100px!important;">
                         <img src="{{asset('assets3/img/Director2.png')}}" class="img-fluid img-frame">
                     </div>
                     <h5 class="text-center mt-2">{{strtoupper($item['first_name'])}} {{strtoupper($item['last_name'])}}</h5>
@@ -199,7 +199,7 @@
             @foreach ($data['director1'] as $item)
                 <div class="col-lg-4 p-3">
                     <div class="d-flex align-items-center mx-auto justify-content-center wrap-img">
-                        <img src="{{$item['src'] != null ? asset($item['src']) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user rounded-circle">
+                        <img src="{{$item['src'] != null ? asset($item['src']) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user rounded-circle" style="height: 100px!important; width: 100px!important;">
                         <img src="{{asset('assets3/img/Director1.png')}}" class="img-fluid img-frame">
                     </div>
                     <h5 class="text-center mt-2">{{strtoupper($item['first_name'])}} {{strtoupper($item['last_name'])}}</h5>
@@ -215,7 +215,7 @@
             @foreach ($data['platinum3'] as $item)
                 <div class="col-lg-4 p-3">
                     <div class="d-flex align-items-center mx-auto justify-content-center wrap-img">
-                        <img src="{{$item['src'] != null ? asset($item['src']) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user rounded-circle">
+                        <img src="{{$item['src'] != null ? asset($item['src']) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user rounded-circle" style="height: 100px!important; width: 100px!important;">
                         <img src="{{asset('assets3/img/Platinum3.png')}}" class="img-fluid img-frame">
                     </div>
                     <h5 class="text-center mt-2">{{strtoupper($item['first_name'])}} {{strtoupper($item['last_name'])}}</h5>
@@ -231,7 +231,7 @@
             @foreach ($data['platinum2'] as $item)
                 <div class="col-lg-4 p-3">
                     <div class="d-flex align-items-center mx-auto justify-content-center wrap-img">
-                        <img src="{{$item['src'] != null ? asset($item['src']) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user rounded-circle">
+                        <img src="{{$item['src'] != null ? asset($item['src']) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user rounded-circle" style="height: 100px!important; width: 100px!important;">
                         <img src="{{asset('assets3/img/Platinum2.png')}}" class="img-fluid img-frame">
                     </div>
                     <h5 class="text-center mt-2">{{strtoupper($item['first_name'])}} {{strtoupper($item['last_name'])}}</h5>
@@ -247,7 +247,7 @@
             @foreach ($data['platinum1'] as $item)
                 <div class="col-lg-4 p-3">
                     <div class="d-flex align-items-center mx-auto justify-content-center wrap-img">
-                        <img src="{{$item['src'] != null ? asset($item['src']) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user rounded-circle">
+                        <img src="{{$item['src'] != null ? asset($item['src']) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user rounded-circle" style="height: 100px!important; width: 100px!important;">
                         <img src="{{asset('assets3/img/Platinum1.png')}}" class="img-fluid img-frame">
                     </div>
                     <h5 class="text-center mt-2">{{strtoupper($item['first_name'])}} {{strtoupper($item['last_name'])}}</h5>
