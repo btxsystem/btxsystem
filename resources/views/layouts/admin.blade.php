@@ -168,7 +168,14 @@
         <script src="{{asset('assets2/js/number.js')}}"></script>
         <script>
             $('.notifications-menu').click(function(){
-                $('.notifications-menu').addClass('open');
+
+                $.ajax({
+                    type: 'GET', //THIS NEEDS TO BE GET
+                    url: '{{route("notification.read")}}',
+                    success: function (data) {
+                        $('.notifications-menu').addClass('open');
+                    }
+                })
             })
         </script>
         <script>

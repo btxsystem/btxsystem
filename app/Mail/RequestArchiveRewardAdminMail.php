@@ -31,6 +31,6 @@ class RequestArchiveRewardAdminMail extends Mailable
     {
         return $this->view('emails.req-archive-reward-admin')
                     ->from('mailbitrexgo@bitrexgo.id', 'Bitrexgo')
-                    ->subject('Request Approve Archive Reward');
+                    ->subject('Request Approve Achieve Reward');
     }
 }

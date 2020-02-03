@@ -31,6 +31,6 @@ class AccApproveRewardMail extends Mailable
     {
         return $this->view('emails.acc-archive-reward')
                     ->from('mailbitrexgo@bitrexgo.id', 'Bitrexgo')
-                    ->subject('Received Archive Reward');
+                    ->subject('Received Achieve Reward');
     }
 }
