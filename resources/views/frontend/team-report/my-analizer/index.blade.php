@@ -51,7 +51,7 @@
                             <th>Username</th>
                             <th>Join Date</th>
                             <th>Rank</th>
-                            <th>Archive Rank</th>
+                            <th>Achieved Rank</th>
                             <th>PV Left</th>
                             <th>PV Middle</th>
                             <th>PV Right</th>
