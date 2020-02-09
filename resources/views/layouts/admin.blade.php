@@ -62,6 +62,17 @@
                         <ul class="nav navbar-nav">
                            {{-- @include('admin.layouts._messages') --}}
                             @include('admin.layouts._notifications')
+                            <li>
+                                <a href="{{ route('logout') }}"
+                                    onclick="event.preventDefault();
+                                                document.getElementById('logout-form').submit();">
+                                    <i class="fa fa-sign-out" style="color: #6CC66C"><br><i style="color: #6CC66C">Logout</i></i>
+                                </a>
+
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                    @csrf
+                                </form>
+                            </li>
                             {{--<li class="dropdown user user-menu">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                     <i class="livicon" data-name="gear" data-loop="true" data-color="#e9573f" data-hovercolor="#e9573f" data-size="28"></i>

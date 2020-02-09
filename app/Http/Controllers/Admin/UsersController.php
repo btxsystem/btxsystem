@@ -52,7 +52,7 @@ class UsersController extends Controller
             'email' => 'required|email|unique:users',
             'password' => 'required|min:8',
         ]);
-
+        $request['roles_id'] = $request->input('roles');
         $user = User::create($request->all());
         $user->roles()->sync($request->input('roles', []));
         Alert::success('Success add new user', 'Success');

@@ -4,7 +4,7 @@
            data-hovercolor="#e9573f" data-size="28"></i>
         <span class="label label-warning">{{getJmlNotif() < 100 ? getJmlNotif() : '99+'}}</span>
     </a>
-    <ul class=" notifications dropdown-menu drop_notify">
+    <ul class="notifications dropdown-menu drop_notify">
         <li class="dropdown-title">You have {{getJmlNotif() < 100 ? getJmlNotif() : '99+'}} notifications</li>
         <li>
             <!-- inner menu: contains the actual data -->

@@ -35,6 +35,10 @@ Route::group(['middleware' => 'admin'], function () {
         Route::get('data', ['as' => 'data', 'uses' => 'Admin\NotificationController@data']);
         Route::get('read', ['as' => 'read', 'uses' => 'Admin\NotificationController@read']);
     });
+
+
+    Route::post('logout', ['as' => 'logout', 'uses' => 'Admin\Auth\LoginController@logout']);
+
     Route::post('redirect', ['as' => 'redirect', 'uses' => 'Admin\MemberController@redirect']);
     Route::get('readChat', ['as' => 'readChat', 'uses' => 'Admin\NotificationController@index']);
     Route::post('non-redirect', ['as' => 'non-redirect', 'uses' => 'Admin\MemberController@nonredirect']);
@@ -54,7 +58,9 @@ Route::group(['middleware' => 'admin'], function () {
             Route::get('', ['as' => 'index', 'uses' => 'Admin\RolesController@index']);
             Route::get('create', ['as' => 'create', 'uses' => 'Admin\RolesController@create']);
             Route::post('store', ['as' => 'store', 'uses' => 'Admin\RolesController@store']);
-            Route::get('{id}/edit', ['as' => 'edit', 'uses' => 'Admin\UsersController@edit']);
+            Route::post('update', ['as' => 'update', 'uses' => 'Admin\RolesController@update']);
+            Route::get('{id}/edit', ['as' => 'edit', 'uses' => 'Admin\RolesController@edit']);
+            Route::get('data', ['as' => 'data', 'uses' => 'Admin\RolesController@data']);
             Route::get('/{id}',['as' => 'delete', 'uses' => 'Admin\RolesController@destroy']);
         });
 

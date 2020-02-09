@@ -12,11 +12,11 @@ class GotReward extends Model
 
     public function reward()
     {
-        return $this->belongsTo('\App\Models\GiftReward');
+        return $this->belongsTo('\App\Models\GiftReward', 'reward_id');
     }
 
     public function member()
     {
-        return $this->belongsTo('\App\Employeer');
+        return $this->belongsTo('\App\Employeer', 'member_id');
     }
 }

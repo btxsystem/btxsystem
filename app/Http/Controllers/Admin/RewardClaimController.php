@@ -61,11 +61,11 @@ class RewardClaimController extends Controller
 
    public function approve($id)
    {
-       // If Type *Register Member* update table transaction member
+        //If Type *Register Member* update table transaction member
        DB::beginTransaction();
        try {
            $data = GotReward::findOrFail($id);
-           $reward = GotReward::with('reward','member')->orderBy('id','desc')->find($data->$id)->first();
+           $reward = GotReward::with('reward','member')->orderBy('id','desc')->where('id',$id)->first();
            $this->service->sendEmail($reward);
            $data->update([
                'status' => 2

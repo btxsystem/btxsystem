@@ -38,7 +38,7 @@ class NotificationService extends Notification
                                             $q->select(['id','username']);
                                         }
                                     ]
-                            )->where('isRead',0)->orderBy('notification.created_at', 'desc')
+                            )->orderBy('notification.created_at', 'desc')
                             ->select(['notification.id','desc','member_id']);
         return $notification;
     }

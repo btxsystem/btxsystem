@@ -245,7 +245,7 @@
                                                     </li>
                                                 </div>
 
-                                                <div class="col-md-4">                                          
+                                                <div class="col-md-4">
 
                                                     <li>
                                                         <label>
@@ -451,7 +451,7 @@
                                                     </li>
                                                 </div>
 
-                                                <div class="col-md-4">                                          
+                                                <div class="col-md-4">
                                                     <!-- <label>
                                                         <input type="checkbox" name="permissions[]" value="70" />CMS
                                                     </label> -->
@@ -633,11 +633,11 @@
                                                         </ul>
                                                     </li>
 
-                                                       
-                                                   
 
-                                                  
-                                                    
+
+
+
+
                                                 </div>
                                             </ul>
                                         </div>
@@ -677,27 +677,5 @@
 
     <script type="text/javascript">
         $('#tree').checktree();
-        $(document).ready(function() {
-            $('#permissions').select2({
-            placeholder: "Choose permissions...",
-            ajax: {
-                url: '{{ route("select.permissions") }}',
-                dataType: 'json',
-                data: function (params) {
-                    console.log('masuk');
-
-                    return {
-                        q: $.trim(params.term)
-                    };
-                },
-                processResults: function (data) {
-                    return {
-                        results: data
-                    };
-                },
-                cache: true
-            }
-        });
-        });
     </script>
 @endsection
