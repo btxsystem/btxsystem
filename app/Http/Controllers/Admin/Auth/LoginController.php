@@ -41,6 +41,6 @@ class LoginController extends Controller
     if (Auth::guard('admin')->check()) {
       Auth::guard('admin')->logout();
     }
-    return redirect('/login');
+    return redirect('/backoffice/login');
   }
 }
