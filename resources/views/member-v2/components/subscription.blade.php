@@ -392,11 +392,14 @@ div#flag {
 											@endif
 										@else
                       @if($ebook->status == 6)
-                        <form action="{{route('re.payment')}}" method="post">
+                        <!-- <form action="{{route('re.payment')}}" method="post">
                           {{csrf_field()}}
                           <input type="hidden" name="ebook" value="{{$ebook->id}}">
                           <button type="submit" class="btn btn-identity-red text-white btn-sm mt-3 px-5">BUY</button>
-                        </form>
+                        </form> -->
+												<form action="">
+													<a href="{{route('member.ebook.detail', ['type' => strtolower($ebook->title), 'username' => $username])}}" class="btn btn-identity-red btn-sm mt-3 px-5">BUY</a>
+												</form>
                       @else
                       <form action="">
                         <a href="{{route('member.ebook.detail', ['type' => strtolower($ebook->title), 'username' => $username])}}" class="btn btn-identity-red btn-sm mt-3 px-5">BUY</a>
