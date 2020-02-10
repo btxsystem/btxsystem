@@ -14,7 +14,7 @@ class BitrexCashController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('backoffice');\
+        $this->middleware('backoffice');
     }
     public function index(){
         if (request()->ajax()) {
