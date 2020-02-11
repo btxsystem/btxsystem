@@ -28,7 +28,7 @@ class UsersController extends Controller
             return Datatables::of($data)
                     ->addIndexColumn()
                     ->addColumn('action', function($row) {
-                        $edit = \Auth::guard('admin')->user()->hasPermission('Admin_management.user_company.roles.edit') ? '<a href="/admin/admin-management/users/'. $row->id .'/edit" class="btn btn-warning fa fa-edit"></a>' : '';
+                        $edit = \Auth::guard('admin')->user()->hasPermission('Admin_management.user_company.roles.edit') ? '<a href="/backoffice/admin-management/users/'. $row->id .'/edit" class="btn btn-warning fa fa-edit"></a>' : '';
                         $delete = \Auth::guard('admin')->user()->hasPermission('Admin_management.user_company.roles.delete') ? '<a onclick="deleteUser('. $row->id .')" class="btn btn-danger fa fa-trash"></a>' : '';
                         return $edit.' '.$delete;
                     })
