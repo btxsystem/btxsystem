@@ -888,7 +888,6 @@ em{
 						url: '/member/select/child-tree/'+data.username,
 						success: function (data) {
 							$('#bah').empty('g');
-							$('#tree_button').html('<button id="upline" class="btn btn-primary zmdi zmdi-chevron-up"></button>');
 							tree(data)
 						},
 						error: function() {
@@ -1154,7 +1153,6 @@ em{
 		success: function (data) {
             parent_id = data.parent_id;
 		    $('#bah').empty('g');
-			$('#tree_button').html('<button id="upline" class="btn btn-primary zmdi zmdi-chevron-up"></button>');
 			tree(data);
 		},
 		error: function() {
@@ -1171,7 +1169,6 @@ em{
 				url: '/member/select/child-tree/'+a,
 				success: function (data) {
 					$('#bah').empty('g');
-					$('#tree_button').html('<button id="upline" class="btn btn-primary zmdi zmdi-chevron-up"></button>');
 					tree(data)
 				},
 				error: function() {
@@ -1200,6 +1197,8 @@ em{
 	};
 
 	var tree = (data) => {
+        my_id = {!! \Auth::id() !!};
+        data.id!=my_id ? $('#tree_button').html('<button id="upline" class="btn btn-primary zmdi zmdi-chevron-up"></button>') : $('#upline').remove();
 		$.ajax({
             url: 'select/summary/'+data.id,
             success:function(data){
@@ -1301,14 +1300,24 @@ em{
 		$('#upline').remove();
         $("#overlay").fadeIn(100);
 		cek_upline = 0;
+        cek_id = 0;
 		$.ajax({
 			type: 'GET',
 			url: '/member/select/tree-upline/'+parent_id,
 			success: function (data) {
-				parent_id = data.parent_id;
-				$('#bah').empty('g');
-				tree(data);
-				data.parent ? cek_upline = 1 : cek_upline = 0;
+                data.children.forEach(child => {
+                    if (child.id == {!! \Auth::id() !!}) {
+                        cek_id += 1;
+                    }
+                });
+
+                if (cek_id == 0) {
+                    parent_id = data.parent_id;
+                    $('#bah').empty('g');
+                    tree(data);
+                    data.parent ? cek_upline = 1 : cek_upline = 0;
+                }
+                cek_id = 0;
 			},
 			error: function() {
 				console.log("Error");
@@ -1316,13 +1325,13 @@ em{
 		}).done(function() {
 			setTimeout(function(){
 				$("#overlay").fadeOut(100);
-				cek_upline==1 ? $('#tree_button').html('<button id="upline" class="btn btn-primary zmdi zmdi-chevron-up"></button>') : $('#upline').remove();;
+				cek_upline==1 ? $('#tree_button').html('<button id="upline" class="btn btn-primary zmdi zmdi-chevron-up"></button>') : $('#upline').remove();
 			},300);
 		});
 	})
 
 
-	
+
 
 	// $( function() {
 	// 	$('#birthdate').datepicker();
