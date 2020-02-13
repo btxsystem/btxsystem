@@ -1300,14 +1300,24 @@ em{
 		$('#upline').remove();
         $("#overlay").fadeIn(100);
 		cek_upline = 0;
+        cek_id = 0;
 		$.ajax({
 			type: 'GET',
 			url: '/member/select/tree-upline/'+parent_id,
 			success: function (data) {
-				parent_id = data.parent_id;
-				$('#bah').empty('g');
-				tree(data);
-				data.parent ? cek_upline = 1 : cek_upline = 0;
+                data.children.forEach(child => {
+                    if (child.id == {!! \Auth::id() !!}) {
+                        cek_id += 1;
+                    }
+                });
+
+                if (cek_id == 0) {
+                    parent_id = data.parent_id;
+                    $('#bah').empty('g');
+                    tree(data);
+                    data.parent ? cek_upline = 1 : cek_upline = 0;
+                }
+                cek_id = 0;
 			},
 			error: function() {
 				console.log("Error");
