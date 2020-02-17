@@ -115,7 +115,8 @@
                             <div class="container p-5">
                                 <div class="w-100 p-3 p-4 bg-white rounded shadow">
                                 <h2 class="title text-center mb-5">HALL OF FAME</h2>
-
+                                
+                                @if(count($data['chairman2']) > 0)
                                 <div class="row mb-4 bg-gray">
                                     <div class="col-lg-12 pt-3">
                                         <h3 class="text-center"><span class="sub-judul-1">CHAIRMAN II </span><span class="sub-judul-2">ACHIEVERS</span></h3>
@@ -131,7 +132,9 @@
                                     @endforeach
                                 </div>
                                 {{$data['chairman2']->links()}}
+                                @endif
 
+                                @if(count($data['chairman1']) > 0)
                                 <div class="row mb-4 bg-gray">
                                     <div class="col-lg-12 pt-3">
                                         <h3 class="text-center"><span class="sub-judul-1">CHAIRMAN I </span><span class="sub-judul-2">ACHIEVERS</span></h3>
@@ -147,7 +150,9 @@
                                     @endforeach
                                 </div>
                                 {{$data['chairman1']->links()}}
+                                @endif
 
+                                @if(count($data['director3']) > 0)
                                 <div class="row mb-4 bg-gray">
                                     <div class="col-lg-12 pt-3">
                                         <h3 class="text-center"><span class="sub-judul-1">DIRECTOR III </span><span class="sub-judul-2">ACHIEVERS</span></h3>
@@ -163,7 +168,9 @@
                                     @endforeach
                                 </div>
                                 {{$data['director3']->links()}}
+                                @endif
 
+                                @if(count($data['director2']) > 0)
                                 <div class="row mb-4 bg-gray">
                                     <div class="col-lg-12 pt-3">
                                         <h3 class="text-center"><span class="sub-judul-1">DIRECTOR II </span><span class="sub-judul-2">ACHIEVERS</span></h3>
@@ -179,7 +186,9 @@
                                     @endforeach
                                 </div>
                                 {{$data['director2']->links()}}
+                                @endif
 
+                                @if(count($data['director1']) > 0)
                                 <div class="row mb-4 bg-gray">
                                     <div class="col-lg-12 pt-3">
                                         <h3 class="text-center"><span class="sub-judul-1">DIRECTOR I </span><span class="sub-judul-2">ACHIEVERS</span></h3>
@@ -195,7 +204,9 @@
                                     @endforeach
                                 </div>
                                 {{$data['director1']->links()}}
+                                @endif
 
+                                @if(count($data['platinum3']) > 0)
                                 <div class="row mb-4 bg-gray">
                                     <div class="col-lg-12 pt-3">
                                         <h3 class="text-center"><span class="sub-judul-1">PLATINUM III </span><span class="sub-judul-2">ACHIEVERS</span></h3>
@@ -211,7 +222,9 @@
                                     @endforeach
                                 </div>
                                 {{$data['platinum3']->links()}}
+                                @endif
 
+                                @if(count($data['platinum2']) > 0)
                                 <div class="row mb-4 bg-gray">
                                     <div class="col-lg-12 pt-3">
                                         <h3 class="text-center"><span class="sub-judul-1">PLATINUM II </span><span class="sub-judul-2">ACHIEVERS</span></h3>
@@ -227,7 +240,9 @@
                                     @endforeach
                                 </div>
                                 {{$data['platinum2']->links()}}
+                                @endif
 
+                                @if(count($data['platinum1']) > 0)
                                 <div class="row mb-4 bg-gray">
                                     <div class="col-lg-12 pt-3">
                                         <h3 class="text-center"><span class="sub-judul-1">PLATINUM I </span><span class="sub-judul-2">ACHIEVERS</span></h3>
@@ -243,6 +258,7 @@
                                     @endforeach
                                 </div>
                                 {{$data['platinum1']->links()}}
+                                @endif
 
                             </div>
             </div>
