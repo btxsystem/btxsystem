@@ -92,7 +92,7 @@ class ProfileMemberController extends Controller
                 Alert::error('The password must difference', 'Error')->persistent("OK");
             }
         }else{
-            Alert::error('The password you entered does not match', 'Error')->persistent("OK");
+            Alert::error('Your password incorrect', 'Error')->persistent("OK");
         }
         return redirect()->back();
     }
