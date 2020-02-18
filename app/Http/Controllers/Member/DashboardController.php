@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Member;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Member\PvController;
 use DB;
 use App\Employeer;
 use Carbon\Carbon;
@@ -402,6 +403,7 @@ class DashboardController extends Controller
     public function getChildTree($user){
 
         $user = Employeer::where('username',$user)->with('children','pv_down','rank')->first();
+
         $data = [];
 
         $child = [];
