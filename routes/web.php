@@ -93,7 +93,7 @@ Route::get('/event', 'Member\EventController@index');
 //     Route::get('', ['as' => 'index', 'uses' => 'Member\HallOfFameController@index']);
 // });
 Route::post('/login', 'Auth\LoginController@postLogin');
-Route::get('/logout', 'Auth\LoginController@logout');
+Route::post('/logout', 'Auth\LoginController@logout');
 Route::post('/finish', 'Member\BitrexPointController@index');
 Route::get('user/{user}', ['as' => 'user', 'uses' => 'Member\PvController@issetUser']);
 Route::post('register-auto', ['as' => 'register-auto', 'uses' => 'Member\ProfileMemberController@registerAuto']);
