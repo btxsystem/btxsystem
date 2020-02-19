@@ -807,6 +807,7 @@ em{
 				${render}
 			</div>
 		`)
+		
 		$('#checkboxEbook input[type=checkbox]').each(function() {
 			if(parseInt($(this).val()) == 1) {
 			$(this).prop('checked', true)
@@ -816,44 +817,59 @@ em{
 			}
 		})
 
-		let isConfirmationEbook = false;
-		let validateEbooks = [];
-		$('form#action-member').on('submit', function(e) {
-			$('#checkboxEbook input[type=checkbox]').each(function(i) {
-				if($(this).prop('checked')) {
-					validateEbooks.push(i)
-				}
-			});
+		$('#checkboxEbook input[type=checkbox]').change(function() {
+			let ebookSelected = $('#checkboxEbook input[type=checkbox]').filter(function() {
+				return $(this).prop("checked")
+			})
 
-			if(validateEbooks.length > 1 && !isConfirmationEbook) {
-				e.preventDefault();
+			if(ebookSelected.length == 2) {
 				var r = confirm("Apakah Anda yakin membeli 2 ebook?");
-
 				if (r == true) {
-					isConfirmationEbook = true
-					$('form#action-member').submit()
-				} else {
-					isConfirmationEbook = false
-					validateEbooks = [];
-					e.preventDefault();
-				}
-				// swal.fire({
-				// 	title: 'Are you sure?',
-				// 	text: "Ebook lebih dari satu",
-				// 	icon: 'warning',
-				// 	showCancelButton: true,
-				// 	confirmButtonColor: '#3085d6',
-				// 	cancelButtonColor: '#d33',
-				// 	confirmButtonText: 'Yes'
-				// }).then((result) => {
-				// 	if (result.value) {
-				// 		isConfirmationEbook = true
-				// 		$('form#action-member').submit();
-				// 	}
-				// })
-			}
 
+				} else { 
+					$(this).prop("checked", false)
+				}
+			}
 		})
+
+		// let isConfirmationEbook = false;
+		// let validateEbooks = [];
+		// $('form#action-member').on('submit', function(e) {
+		// 	$('#checkboxEbook input[type=checkbox]').each(function(i) {
+		// 		if($(this).prop('checked')) {
+		// 			validateEbooks.push(i)
+		// 		}
+		// 	});
+
+		// 	if(validateEbooks.length > 1 && !isConfirmationEbook) {
+		// 		e.preventDefault();
+		// 		var r = confirm("Apakah Anda yakin membeli 2 ebook?");
+
+		// 		if (r == true) {
+		// 			isConfirmationEbook = true
+		// 			$('form#action-member').submit()
+		// 		} else {
+		// 			isConfirmationEbook = false
+		// 			validateEbooks = [];
+		// 			e.preventDefault();
+		// 		}
+		// 		// swal.fire({
+		// 		// 	title: 'Are you sure?',
+		// 		// 	text: "Ebook lebih dari satu",
+		// 		// 	icon: 'warning',
+		// 		// 	showCancelButton: true,
+		// 		// 	confirmButtonColor: '#3085d6',
+		// 		// 	cancelButtonColor: '#d33',
+		// 		// 	confirmButtonText: 'Yes'
+		// 		// }).then((result) => {
+		// 		// 	if (result.value) {
+		// 		// 		isConfirmationEbook = true
+		// 		// 		$('form#action-member').submit();
+		// 		// 	}
+		// 		// })
+		// 	}
+
+		// })
 
 		$('#checkboxEbook input[type=checkbox]').change(function(index) {
 
