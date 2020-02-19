@@ -817,21 +817,6 @@ em{
 			}
 		})
 
-		$('#checkboxEbook input[type=checkbox]').change(function() {
-			let ebookSelected = $('#checkboxEbook input[type=checkbox]').filter(function() {
-				return $(this).prop("checked")
-			})
-
-			if(ebookSelected.length == 2) {
-				var r = confirm("Apakah Anda yakin membeli 2 ebook?");
-				if (r == true) {
-
-				} else { 
-					
-				}
-			}
-		})
-
 		// let isConfirmationEbook = false;
 		// let validateEbooks = [];
 		// $('form#action-member').on('submit', function(e) {
@@ -872,13 +857,31 @@ em{
 		// })
 
 		$('#checkboxEbook input[type=checkbox]').change(function(index) {
+			let ebookSelected = $('#checkboxEbook input[type=checkbox]').filter(function() {
+				return $(this).prop("checked")
+			})
+
+			let cancelledEbook = false;
+
+			if(ebookSelected.length == 2) {
+				var r = confirm("Apakah Anda yakin membeli 2 ebook?");
+				if (r == true) {
+
+				} else { 
+					cancelledEbook = true
+					$(this).prop("checked", false)
+				}
+			}
 
 			if($(this).prop('checked')) {
 				check += 1;
 				priceEbook = priceEbook + parseInt($(this).data('price'));
 			} else {
-				check -= 1;
-				priceEbook = priceEbook - parseInt($(this).data('price'));
+				if(!cancelledEbook) {
+					check -= 1;
+					priceEbook = priceEbook - parseInt($(this).data('price'));
+				}
+				
 			}
 			if(priceEbook != 0) {
 				$('#cost-ebook').parent().removeClass('hidden');
