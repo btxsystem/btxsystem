@@ -63,13 +63,12 @@
                            {{-- @include('admin.layouts._messages') --}}
                             @include('admin.layouts._notifications')
                             <li>
-                                <a href="{{ route('logout') }}"
-                                    onclick="event.preventDefault();
-                                                document.getElementById('logout-form').submit();">
+                                <a onclick="document.getElementById('logout-form').submit();" style="cursor:pointer">
                                     <i class="fa fa-sign-out" style="color: #6CC66C"><br><i style="color: #6CC66C">Logout</i></i>
                                 </a>
 
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                    @method('POST')
                                     @csrf
                                 </form>
                             </li>
