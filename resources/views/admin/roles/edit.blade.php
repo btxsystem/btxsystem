@@ -640,7 +640,7 @@
                                     <div class="form-group">
                                         <label class="col-md-2 control-label"></label>
                                         <div class="col-md-8 inputGroupContainer">
-                                            <button type="submit" class="btn btn-primary btn-block">Add</button>
+                                            <button type="submit" class="btn btn-primary btn-block">Update</button>
                                         </div>
                                     </div>
                                </fieldset>

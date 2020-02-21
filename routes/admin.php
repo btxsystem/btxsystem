@@ -50,7 +50,7 @@ Route::group(['middleware' => 'admin'], function () {
             Route::get('create', ['as' => 'create', 'uses' => 'Admin\UsersController@create']);
             Route::post('store', ['as' => 'store', 'uses' => 'Admin\UsersController@store']);
             Route::get('{id}/edit', ['as' => 'edit', 'uses' => 'Admin\UsersController@edit']);
-            Route::put('{id}', ['as' => 'update', 'uses' => 'Admin\UsersController@update']);
+            Route::post('{id}/update', ['as' => 'update', 'uses' => 'Admin\UsersController@update']);
             Route::delete('{id}', ['as' => 'delete', 'uses' => 'Admin\UsersController@destroy']);
         });
 
