@@ -13,6 +13,7 @@ use DB;
 use Illuminate\Support\Facades\Auth;
 use Alert;
 use Illuminate\Http\Request;
+use App\Models\Roles;
 
 class RolesController extends Controller
 {
@@ -25,7 +26,7 @@ class RolesController extends Controller
                     ->addColumn('action', function($row) {
                         $edit = \Auth::guard('admin')->user()->hasPermission('Admin_management.roles.edit') ? '<a class="btn btn-warning fa fa-edit" href="'.route('admin-management.roles.edit',$row->id).'"></a>' : '';
                         $delete = \Auth::guard('admin')->user()->hasPermission('Admin_management.roles.delete') ? '<a class="btn btn-danger fa fa-trash" href="'.route('admin-management.roles.delete',$row->id).'"></a>' : '';
-                        return $edit.' '.$delete;
+                        return $row->id!=1 ? $edit.' '.$delete : '-';
                     })
                     ->rawColumns(['action'])
                     ->make(true);

@@ -30,7 +30,11 @@ class UsersController extends Controller
                     ->addColumn('action', function($row) {
                         $edit = \Auth::guard('admin')->user()->hasPermission('Admin_management.user_company.roles.edit') ? '<a href="/backoffice/admin-management/users/'. $row->id .'/edit" class="btn btn-warning fa fa-edit"></a>' : '';
                         $delete = \Auth::guard('admin')->user()->hasPermission('Admin_management.user_company.roles.delete') ? '<a onclick="deleteUser('. $row->id .')" class="btn btn-danger fa fa-trash"></a>' : '';
-                        return $edit.' '.$delete;
+                        if ($row->id!=1) {
+                            return $edit.' '.$delete;
+                        }else{
+                            return $edit;
+                        }
                     })
                     ->rawColumns(['action'])
                     ->make(true);
@@ -63,23 +67,26 @@ class UsersController extends Controller
     {
         $roles = Role::all()->pluck('title', 'id');
         $user = User::findOrFail($id);
-
         return view('admin.users.edit', compact('roles', 'user'));
     }
 
-    public function update(Request $request,$id)
+    public function update($id, Request $request)
     {
         $validatedData = $request->validate([
             'name' => 'required|string|min:3|max:255',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|min:8',
+            'email' => 'max:255|unique:users,email,'.$id,
         ]);
-
+        if ($request['password'] == null) {
+            unset($request['password']);
+        }else{
+            $request['password'] = bcrypt($request['password']);
+        }
         $user = User::findOrFail($id);
         $user->update($request->all());
         $user->roles()->sync($request->input('roles', []));
-
-        return redirect()->route('admin.admin-management.users.index');
+        return redirect()->route('admin-management.users.index')->with([
+            'message' => 'Updated User Success'
+        ]);
     }
 
     public function show(User $user)
