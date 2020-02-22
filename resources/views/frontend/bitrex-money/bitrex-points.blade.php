@@ -29,6 +29,38 @@
                     {{--<p class="notif" style="color:green">Convert from IDR 1000</p>--}}
                 </div>
                 <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="pickup_quarter" name="pickup_quarter" value="1">
+                    <label class="form-check-label" for="pickup_quarter">
+                        Pick up at headquarter
+                    </label>
+                    </div>
+                    <div id="pickup_form">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 shipping-form">
+    						<div class="form-group">
+    							<select id="province" name="province" class="province" style="width:100%!important"></select>
+                                <input type="hidden" name="province_name" id="province_name" value="">
+    						</div>
+    						<div class="form-group city-form">
+    							<select id="city" name="city" class="city"></select>
+                                <input type="hidden" name="city_name" id="city_name" value="">
+    						</div>
+    						<div class="form-group district-form">
+    							<select id="district" name="district" class="district"></select>
+                                <input type="hidden" name="district_name" id="district_name" value="">
+    						</div>
+    						<div class="form-group kurir-form">
+    							<select id="kurir" name="kurir" class="kurir"></select>
+                                <input type="hidden" name="kurir_name" id="kurir_name" value="">
+    						</div>
+    						<div class="cost-form form-line" style="display:none">
+                                <h3>Total Ongkir : <span id="cost-summary"></span> </h3>
+                                <input type="hidden" id="cost_summary_value" value="0">
+    						</div>
+    					</div>
+                    </div>
+				</div>
+                <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
                   <div class="demo-radio-button">
                     <!-- <input name="method" type="radio" value="transfer" id="transfer" class="with-gap radio-col-red" checked />
                     <label for="transfer">Transfer</label> -->
@@ -170,23 +202,23 @@
             <div class="modal-body">
               <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 shipping-form">
     						<div class="form-group">
-    							<select id="province" name="province" class="province" style="width:100%!important"></select>
-                  <input type="hidden" name="province_name" id="province_name" value="">
+    							<select id="province_2" name="province_2" class="province" style="width:100%!important"></select>
+                  <input type="hidden" name="province_name_2" id="province_name_2" value="">
     						</div>
     						<div class="form-group city-form">
-    							<select id="city" name="city" class="city"></select>
-                  <input type="hidden" name="city_name" id="city_name" value="">
+    							<select id="city_2" name="city_2" class="city"></select>
+                  <input type="hidden" name="city_name_2" id="city_name_2" value="">
     						</div>
     						<div class="form-group district-form">
-    							<select id="district" name="district" class="district"></select>
-                  <input type="hidden" name="district_name" id="district_name" value="">
+    							<select id="district_2" name="district_2" class="district"></select>
+                  <input type="hidden" name="district_name_2" id="district_name_2" value="">
     						</div>
     						<div class="form-group kurir-form">
-    							<select id="kurir" name="kurir" class="kurir"></select>
-                  <input type="hidden" name="kurir_name" id="kurir_name" value="">
+    							<select id="kurir_2" name="kurir_2" class="kurir"></select>
+                  <input type="hidden" name="kurir_name_2" id="kurir_name_2" value="">
     						</div>
     						<div class="cost-form form-line" style="display:none">
-    							<h3>Total Ongkir : <span id="cost-summary"></span> </h3>
+    							<h3>Total Ongkir : <span id="cost-summary-2"></span> </h3>
     						</div>
     					</div>
             </div>
@@ -315,6 +347,23 @@
 <script src="{{ !config('services.midtrans.isProduction') ? 'https://app.sandbox.midtrans.com/snap/snap.js' : 'https://app.midtrans.com/snap/snap.js' }}" data-client-key="{{ config('services.midtrans.clientKey') }}"></script>
 <script type="text/javascript">
 
+    function check_button_disabled() {
+        if(!$('#pickup_quarter').prop("checked")) {
+            if(parseInt($('#cost_summary_value').val()) == 0) {
+                $("#topup-points").prop('disabled',true);
+            } else {
+                $("#topup-points").prop('disabled',false);
+            }
+        } else {
+            console.log($('#nominal').val())
+            if ($('#nominal').val() % 1000 == 0 && $('#nominal').val() >= 10000) {
+                $("#topup-points").prop('disabled',false);
+            } else {
+                $("#topup-points").prop('disabled',true);
+            }
+        }
+    }
+
     $(document).ready(function () {
 
     let is_bca_method = true;
@@ -324,6 +373,11 @@
     }
 
       $("#province").select2({
+        placeholder: "Province",
+        width: '100%'
+      });
+
+      $("#province_2").select2({
         placeholder: "Province",
         width: '100%'
       });
@@ -445,12 +499,29 @@
         }, 2000);
       })
 
+      $('#cost_summary_value').val(0)
       $('#province').html('<option disabled>Province<option>');
+      $('#province_2').html('<option disabled>Province<option>');
   		$.ajax({
   			type: 'GET',
   			url: '/member/shipping/province',
   			success: function (data) {
   				$('#province').select2({
+  					placeholder: 'Province',
+  					data: data,
+                    width: '100%'
+  				});
+                $('#cost_summary_value').val(0)
+  			},
+  			error: function() {
+  				console.log("masuk province");
+  			}
+  		});
+          $.ajax({
+  			type: 'GET',
+  			url: '/member/shipping/province',
+  			success: function (data) {
+  				$('#province_2').select2({
   					placeholder: 'Province',
   					data: data,
                     width: '100%'
@@ -477,6 +548,19 @@
         width: '100%'
       });
 
+      $("#city_2").select2({
+        placeholder: "City",
+        width: '100%'
+      });
+      $("#district_2").select2({
+        placeholder: "Kecamatan",
+        width: '100%'
+      });
+      $("#kurir_2").select2({
+        placeholder: "Kurir",
+        width: '100%'
+      });
+
       $('#province').change(function(){
     		let id = $(this).val();
         $('#province_name').val($(this).find(":checked").text())
@@ -489,6 +573,30 @@
     			url: '/member/shipping/city/'+id,
     			success: function (data) {
     				$('#city').select2({
+    					placeholder: 'City',
+    					data: data,
+              width: '100%'
+    				});
+    			},
+    			error: function() {
+    				console.log("Error");
+    			}
+    		});
+    	})
+
+
+        $('#province_2').change(function(){
+    		let id = $(this).val();
+        $('#province_name_2').val($(this).find(":checked").text())
+    		$('#city_2').empty().trigger('change');
+    		$('#district_2').empty().trigger('change');
+    		$('#kurir_2').empty().trigger('change');
+    		$('#city_2').html('<option disabled>City<option>');
+    		$.ajax({
+    			type: 'GET',
+    			url: '/member/shipping/city/'+id,
+    			success: function (data) {
+    				$('#city_2').select2({
     					placeholder: 'City',
     					data: data,
               width: '100%'
@@ -522,6 +630,28 @@
     		});
     	})
 
+        $('#city_2').change(function(){
+    		let id = this.value;
+        $('#city_name_2').val($(this).find(":checked").text())
+    		$('#district_2').empty().trigger('change');
+    		$('#kurir_2').empty().trigger('change');
+    		$('#district_2').html('<option disabled>Kecamatan<option>');
+    		$.ajax({
+    			type: 'GET',
+    			url: '/member/shipping/subdistrict/'+id,
+    			success: function (data) {
+    				$('#district_2').select2({
+    					placeholder: 'Kecamatan',
+    					data: data,
+              width: '100%'
+    				});
+    			},
+    			error: function() {
+    				console.log("Error");
+    			}
+    		});
+    	})
+
     	$('#district').change(function() {
     		let id = this.value;
     		$('#kurir').empty().trigger('change');
@@ -543,16 +673,67 @@
     		});
     	});
 
+        $('#district_2').change(function() {
+    		let id = this.value;
+    		$('#kurir_2').empty().trigger('change');
+            $('#district_name_2').val($(this).find(":checked").text())
+    		$('#kurir_2').html('<option disabled>Kurir<option>');
+    		$.ajax({
+    			type: 'GET',
+    			url: '/member/shipping/cost/'+id,
+    			success: function (data) {
+    				$('#kurir_2').select2({
+    					placeholder: 'Kurir',
+    					data: data,
+              width: '100%'
+    				});
+    			},
+    			error: function() {
+    				console.log("Error");
+    			}
+    		});
+    	});
+
     	$('#kurir').change(function(){
         if($(this).val() != null) {
           $('.cost-form').show();
           $('#cost-summary').html(`
             ${$(this).val()} = ${parseInt($(this).val()) / 1000} Points
           `)
+          $('#nominal').val(
+              parseInt($('#nominal').val()) + parseInt($(this).val())
+          )
+          $('#points').val(
+              parseInt($('#points').val()) + parseInt($(this).val() / 1000)
+          )
+
+          $('#cost_summary_value').val(parseInt($(this).val()) / 1000)
+          check_button_disabled()
         } else {
           $('.cost-form').hide();
         }
     	});
+
+        $('#kurir_2').change(function(){
+        if($(this).val() != null) {
+          $('.cost-form').show();
+          $('#cost-summary-2').html(`
+            ${$(this).val()} = ${parseInt($(this).val()) / 1000} Points
+          `)
+        } else {
+          $('.cost-form').hide();
+        }
+    	});
+
+        $('#pickup_quarter').change(function() {
+            if($(this).prop("checked")) {
+                $('#pickup_form').hide()
+            } else {
+                $('#pickup_form').show()
+            }
+
+            check_button_disabled()
+        })
 
         $.ajax({
             url: '{{route("member.select.history-points")}}',
@@ -615,7 +796,10 @@
             $("#topup-points").prop('disabled',false);
         }else{
             $("#topup-points").prop('disabled',true);
+            
         }
+
+        check_button_disabled()
     })
 
     $('#points-convert').keyup(function(){
@@ -630,6 +814,8 @@
         }else{
             $('#convert-bp').prop('disabled', true);
         }
+
+        check_button_disabled()
     })
 
     $('.demo-radio-button input').change(function() {
