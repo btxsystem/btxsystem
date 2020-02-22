@@ -164,7 +164,9 @@ div#flag {
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<img src="{{asset('img/bca.png')}}" alt="" srcset="" style="width:100px">
+					<a href="{{url('')}}">
+						<img src="{{asset('img/bca.png')}}" alt="" srcset="" style="width:100px">
+					</a>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 					</button>
