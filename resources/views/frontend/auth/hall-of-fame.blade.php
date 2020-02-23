@@ -201,7 +201,7 @@
         @endif
 
         @if(count($data['director1']) > 0)
-        <div class="row bg-gray" style="margin-bottom: 30px;">
+        <section class="row bg-gray" style="margin-bottom: 30px;" id="director1">
             <div class="col-lg-12 pt-3">
                 <h3 class="text-center"><span class="sub-judul-1">DIRECTOR I </span><span class="sub-judul-2">ACHIEVERS</span></h3>
             </div>
@@ -214,8 +214,8 @@
                     <h5 class="text-center mt-2">{{strtoupper($item['first_name'])}} {{strtoupper($item['last_name'])}}</h5>
                 </div>
             @endforeach
-        </div>
-        {{$data['director1']->links()}}
+        </section>
+        {{$data['director1']->appends(['target' => 'director1'])->links()}}
         @endif
 
         @if(count($data['platinum3']) > 0)
@@ -224,7 +224,7 @@
                 <h3 class="text-center"><span class="sub-judul-1">PLATINUM III </span><span class="sub-judul-2">ACHIEVERS</span></h3>
             </div>
             @foreach ($data['platinum3'] as $item)
-                <div class="col-lg-4 p-3">
+                <div class="col p-3">
                     <div class="d-flex align-items-center mx-auto justify-content-center wrap-img">
                         <img src="{{$item['src'] != null ? asset($item['src']) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user rounded-circle" style="height: 100px!important; width: 100px!important;">
                         <img src="{{asset('assets3/img/Platinum3.png')}}" class="img-fluid img-frame">
@@ -242,7 +242,7 @@
                 <h3 class="text-center"><span class="sub-judul-1">PLATINUM II </span><span class="sub-judul-2">ACHIEVERS</span></h3>
             </div>
             @foreach ($data['platinum2'] as $item)
-                <div class="col-lg-4 p-3">
+                <div class="col p-3">
                     <div class="d-flex align-items-center mx-auto justify-content-center wrap-img">
                         <img src="{{$item['src'] != null ? asset($item['src']) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user rounded-circle" style="height: 100px!important; width: 100px!important;">
                         <img src="{{asset('assets3/img/Platinum2.png')}}" class="img-fluid img-frame">
@@ -260,7 +260,7 @@
                 <h3 class="text-center"><span class="sub-judul-1">PLATINUM I </span><span class="sub-judul-2">ACHIEVERS</span></h3>
             </div>
             @foreach ($data['platinum1'] as $item)
-                <div class="col-lg-4 p-3">
+                <div class="col p-3">
                     <div class="d-flex align-items-center mx-auto justify-content-center wrap-img">
                         <img src="{{$item['src'] != null ? asset($item['src']) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user rounded-circle" style="height: 100px!important; width: 100px!important;">
                         <img src="{{asset('assets3/img/Platinum1.png')}}" class="img-fluid img-frame">

@@ -13,9 +13,9 @@ use DB;
 class HallOfFameController extends Controller
 {
   public function index(Request $request){
-    $data['platinum1'] = Employeer::where('rank_id',1)->where('expired_at', '>', Carbon::now())->where('status','!=',0)->with('rank')->paginate(3, ['*'], 'page_1s');
-    $data['platinum2'] = Employeer::where('rank_id',2)->where('expired_at', '>', Carbon::now())->where('status','!=',0)->with('rank')->paginate(3, ['*'], 'page_2s');
-    $data['platinum3'] = Employeer::where('rank_id',3)->where('expired_at', '>', Carbon::now())->where('status','!=',0)->with('rank')->paginate(3, ['*'], 'page_3s');
+    $data['platinum1'] = Employeer::where('rank_id',1)->where('expired_at', '>', Carbon::now())->where('status','!=',0)->with('rank')->paginate(25, ['*'], 'page_1s');
+    $data['platinum2'] = Employeer::where('rank_id',2)->where('expired_at', '>', Carbon::now())->where('status','!=',0)->with('rank')->paginate(5, ['*'], 'page_2s');
+    $data['platinum3'] = Employeer::where('rank_id',3)->where('expired_at', '>', Carbon::now())->where('status','!=',0)->with('rank')->paginate(5, ['*'], 'page_3s');
     $data['director1'] = Employeer::where('rank_id',4)->where('expired_at', '>', Carbon::now())->where('status','!=',0)->with('rank')->paginate(3, ['*'], 'page_4s');
     $data['director2'] = Employeer::where('rank_id',5)->where('expired_at', '>', Carbon::now())->where('status','!=',0)->with('rank')->paginate(3, ['*'], 'page_5s');
     $data['director3'] = Employeer::where('rank_id',6)->where('expired_at', '>', Carbon::now())->where('status','!=',0)->with('rank')->paginate(3, ['*'], 'page_6s');
