@@ -90,7 +90,7 @@
                         </div>
                     </div>
                     <div class="body">
-                        <form action="{{route('member.change-photo')}}" id="frmFileUpload" method="post" enctype="multipart/form-data">
+                        {{--<form action="{{route('member.change-photo')}}" id="frmFileUpload" method="post" enctype="multipart/form-data">
                             @csrf
                             <div class="container">
                                 <div class="row">
@@ -104,7 +104,7 @@
                                     </div>
                                 </div><!-- row -->
                             </div><!-- container -->              
-                        </form>
+                        </form>--}}
                         <br>
                         <p class="text-default">ID Member : {{$profile['id_member']}}</p>
                         <hr>
