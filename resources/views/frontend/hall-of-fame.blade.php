@@ -167,7 +167,6 @@
                                         </div>
                                     @endforeach
                                 </div>
-                                {{$data['director3']->links()}}
                                 @endif
 
                                 @if(count($data['director2']) > 0)
@@ -185,7 +184,6 @@
                                         </div>
                                     @endforeach
                                 </div>
-                                {{$data['director2']->links()}}
                                 @endif
 
                                 @if(count($data['director1']) > 0)
@@ -203,7 +201,6 @@
                                         </div>
                                     @endforeach
                                 </div>
-                                {{$data['director1']->links()}}
                                 @endif
 
                                 @if(count($data['platinum3']) > 0)
