@@ -98,6 +98,8 @@ class ProfileMemberController extends Controller
     }
 
     public function register(Request $request){
+        ini_set('memory_limit', '-1');
+        
         try {
             if (!isset($request->bank_name) || $request->bank_name==null) {
                 $request->bank_name = 'BCA';
