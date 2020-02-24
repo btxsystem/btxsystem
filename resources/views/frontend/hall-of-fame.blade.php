@@ -212,7 +212,7 @@
                                         <h3 class="text-center"><span class="sub-judul-1">PLATINUM III </span><span class="sub-judul-2">ACHIEVERS</span></h3>
                                     </div>
                                     @foreach ($data['platinum3'] as $item)
-                                        <div class="col-lg-4 p-3">
+                                        <div class="col p-3">
                                             <div class="d-flex align-items-center mx-auto justify-content-center wrap-img">
                                                 <img src="{{$item['src'] != null ? asset($item['src']) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user rounded-circle" style="height: 100px!important; width: 100px!important;">
                                                 <img src="{{asset('assets3/img/Platinum3.png')}}" class="img-fluid img-frame">
@@ -230,7 +230,7 @@
                                         <h3 class="text-center"><span class="sub-judul-1">PLATINUM II </span><span class="sub-judul-2">ACHIEVERS</span></h3>
                                     </div>
                                     @foreach ($data['platinum2'] as $item)
-                                        <div class="col-lg-4 p-3">
+                                        <div class="col p-3">
                                             <div class="d-flex align-items-center mx-auto justify-content-center wrap-img">
                                                 <img src="{{$item['src'] != null ? asset($item['src']) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user rounded-circle" style="height: 100px!important; width: 100px!important;">
                                                 <img src="{{asset('assets3/img/Platinum2.png')}}" class="img-fluid img-frame">
