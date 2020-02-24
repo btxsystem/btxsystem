@@ -1222,28 +1222,32 @@ em{
    }
 
 	var tree_submit = (a, parent, position) => {
-		$.ajax({
-			type: 'GET',
-			url: '/member/select/search-downline/'+a,
-			success: function (data) {
-				parent_id = data.parent_id;
-				if (data) {
-					$.ajax({
-						type: 'GET',
-						url: '/member/select/child-tree/'+data.username,
-						success: function (data) {
-							$('#bah').empty('g');
-							tree(data)
-						},
-						error: function() {
-							console.log("Error");
-						}
-					});
-				}else{
-					swal("sorry, username not found");
-				}
-			},
-		});
+		if (a=='available') {
+			$('#register').modal('show');
+		}else{
+			$.ajax({
+				type: 'GET',
+				url: '/member/select/search-downline/'+a,
+				success: function (data) {
+					parent_id = data.parent_id;
+					if (data) {
+						$.ajax({
+							type: 'GET',
+							url: '/member/select/child-tree/'+data.username,
+							success: function (data) {
+								$('#bah').empty('g');
+								tree(data)
+							},
+							error: function() {
+								console.log("Error");
+							}
+						});
+					}else{
+						swal("sorry, username not found");
+					}
+				},
+			});
+		}
 	};
 
 	var tree = (data) => {
