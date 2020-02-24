@@ -8,14 +8,18 @@ use App\Models\BookChapterLesson;
 use App\Models\Book;
 use Alert;
 use Validator;
+use App\Service\NotificationService;
 
 class BookChapterLessonController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
+    protected $service;
+
+    public function __construct(NotificationService $service)
+    {
+        $this->service = $service;
+    }
+
     public function index()
     {
         //
@@ -29,8 +33,8 @@ class BookChapterLessonController extends Controller
     public function create($id)
     {
         $data = Book::with('bookEbook')->find($id);
-
-        return view('admin.book-chapter-lessons.create', compact('data'));
+        $datas = $this->service->getNotification();
+        return view('admin.book-chapter-lessons.create', compact('data', 'datas'));
     }
 
     /**
@@ -55,10 +59,10 @@ class BookChapterLessonController extends Controller
         $data->type = 'paragraph';
         $data->save();
 
-
+        $datas = $this->service->getNotification();
         Alert::success('Sukses Menambah Data Book', 'Sukses');
 
-        return redirect()->route('book.show', $request->book_id);
+        return redirect()->route('book.show', $request->book_id)->with(compact('datas'));
     }
 
     /**
@@ -70,8 +74,8 @@ class BookChapterLessonController extends Controller
     public function show($id)
     {
        $data = BookChapterLesson::with('book.bookEbook')->findOrFail($id);
-
-       return view('admin.book-chapter-lessons.detail', compact('data'));
+       $datas = $this->service->getNotification();
+       return view('admin.book-chapter-lessons.detail', compact('data', 'datas'));
     }
 
     /**
@@ -83,8 +87,8 @@ class BookChapterLessonController extends Controller
     public function edit($id)
     {
         $data = BookChapterLesson::with('book.bookEbook')->findOrFail($id);
-
-        return view('admin.book-chapter-lessons.edit', compact('data'));
+        $datas = $this->service->getNotification();
+        return view('admin.book-chapter-lessons.edit', compact('data', 'datas'));
     }
 
     /**
@@ -102,11 +106,12 @@ class BookChapterLessonController extends Controller
         $data->content = $request->content;
         $data->slug = \Str::slug($request->title) .'-'. date('YmdHis');
         $data->save();
-    
-    
+
+
         Alert::success('Sukses Update Lesson', 'Sukses');
-        
-        return view('admin.book-chapter-lessons.detail', compact('data'));
+        $datas = $this->service->getNotification();
+
+        return view('admin.book-chapter-lessons.detail', compact('data', 'datas'));
     }
 
     /**
@@ -118,13 +123,13 @@ class BookChapterLessonController extends Controller
     public function destroy($id)
     {
         $data = BookChapterLesson::findOrFail($id);
-        if ($data) { 
-            $data->delete(); 
+        if ($data) {
+            $data->delete();
             Alert::success('Success Delete Book Chapter', 'Success');
         } else {
             Alert::error('Gagal Delete Data Book Chapter', 'Gagal');
         }
-
-        return back();
+        $datas = $this->service->getNotification();
+        return back()->with(compact('datas'));
     }
 }

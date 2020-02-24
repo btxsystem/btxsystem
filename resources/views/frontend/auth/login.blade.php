@@ -8,9 +8,9 @@
 
                 <!-- slide-banner -->
                 @if (count($data['hall_of_fame']) >= 0)
-                <div class="col-lg-6 col-xs-12 slide-banner d-none">
+                <div class="col-lg-6 col-xs-12 slide-banner d-none d-md-block">
                     <div class="body-banner">
-                        <div class="owl-carousel">
+                        <div class="owl-carousel" id="owl-banner">
                                 @foreach ($data['hall_of_fame'] as $item)
                                     <div class="items">
                                         <div class="row">
@@ -56,7 +56,7 @@
 
       <!-- end main-slider -->
 
-      <div class="section_mod-a" id="myAbout">
+      <div class="section_mod-a" id="about">
         <div class="container">
           <div class="section_mod-a__inner">
             <div class="row">
@@ -64,7 +64,7 @@
                 <section class="section-advantages wow bounceInLeft" data-wow-duration="1s" style="padding-bottom: 10px;">
                   <div class="row">
                   @if (count($data['hall_of_fame']) >= 0)
-                <div class="col-lg-6 col-xs-12 d-none">
+                <div class="col-lg-6 col-xs-12 d-block d-md-none">
                     <div class="body-banner">
                         <div class="owl-carousel">
                                 @foreach ($data['hall_of_fame'] as $item)
@@ -132,7 +132,7 @@
       </div>
       <!-- end section_mod-a -->
 
-      <section class="section-default" id="myProduct">
+      <section class="section-default" id="product">
         <div class="container">
           <div class="row">
             <div class="col-xs-12">
@@ -447,34 +447,46 @@
 
       <div class="container">
         <div class="row">
-          <div class="border-decor_top">
+          <div class="border-decor_top col-lg-12">
             <div class="col-md-12">
               <section class="section-default wow bounceInLeft" data-wow-duration="1s">
                 <h2 class="ui-title-block">Testimonials <strong></strong></h2>
-                <div class="slider-reviews owl-carousel owl-theme owl-theme_mod-c enable-owl-carousel"
-                name="testimoni-word"
-                        data-single-item="true"
-                        data-auto-play="7000"
-                        data-navigation="true"
-                        data-pagination="false"
-                        data-transition-style="fade"
-                        data-main-text-animation="true"
-                        data-after-init-delay="4000"
-                        data-after-move-delay="2000"
-                        data-stop-on-hover="true">
-                        @if (count($data['testimoni']) >= 0)
-                            @foreach ($data['testimoni'] as $item)
-                                <div class="reviews">
-                                    <div class="reviews__text" style="text-align: justify;">{{$item->desc}}</div>
-                                    <span class="reviews_autor">-- {{$item->name}}</span> <span class="reviews_categories"></span>
-                                </div>
-                              <!-- end reviews -->
-                            @endforeach
-                        @endif
-
-                        </div>
-                </div>
+                {{-- <div class="slider-reviews owl-carousel owl-theme owl-theme_mod-c enable-owl-carousel"
+                  name="testimoni-word"
+                  data-single-item="true"
+                  data-auto-play="7000"
+                  data-navigation="true"
+                  data-pagination="false"
+                  data-transition-style="fade"
+                  data-main-text-animation="true"
+                  data-after-init-delay="4000"
+                  data-after-move-delay="2000"
+                  data-stop-on-hover="true">
+                  @if (count($data['testimoni']) >= 0)
+                      @foreach ($data['testimoni'] as $item)
+                          <div class="reviews">
+                              <div class="reviews__text" style="text-align: justify;">{{$item->desc}}</div>
+                              <span class="reviews_autor">-- {{$item->name}}</span> <span class="reviews_categories"></span>
+                          </div>
+                        <!-- end reviews -->
+                      @endforeach
+                  @endif
+                  </div>
+                </div> --}}
                 <!-- end slider-reviews -->
+                <div class="owl-carousel" id="owl-testi">
+                  <div class="reviews">
+                    <div class="reviews__text" style="text-align: justify;">
+                      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                      quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                      consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                      cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                      proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                    </div>
+                    <span class="reviews_autor">-- Lorems</span> <span class="reviews_categories"></span>
+                  </div>
+                </div>
               </section>
               <!-- end section-default -->
             </div>
@@ -500,7 +512,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 <script>
   $(document).ready(function(){
-    $('.owl-carousel').owlCarousel({
+    $('#owl-banner').owlCarousel({
       loop:true,
       margin:10,
       nav:false,
@@ -514,6 +526,28 @@
         },
         1000:{
             items:1,
+        }
+      }
+    })
+    $('#owl-testi').owlCarousel({
+      loop:true,
+      margin:30,
+      nav:false,
+      dots:false,
+      autoplay : true,
+      responsiveClass:true,
+      responsive:{
+        0:{
+          items:1,
+          loop:true,
+        },
+        600:{
+          items:1,
+          loop:true,
+        },
+        1000:{
+          items:3,
+          loop:true,
         }
       }
     })
@@ -572,9 +606,15 @@
         });
   }
 
-  $("#about").click(function() {
+  $("#myAbout").click(function() {
     $('html, body').animate({
-        scrollTop: $("#myAbout").offset().top - 180
+        scrollTop: $("#about").offset().top - 180
+    }, 1000);
+  });
+
+  $("#myProduct").click(function() {
+    $('html, body').animate({
+        scrollTop: $("#product").offset().top - 180
     }, 1000);
   });
 
@@ -612,64 +652,64 @@
   }
 
   $('#phone_number').on('input', function() {
-		let str = this.value;
-		this.value = (str.match(/[0-9]/g)) ? str.match(/[0-9]/g).join('') : '';
-		validasiForm();
-	})
+    let str = this.value;
+    this.value = (str.match(/[0-9]/g)) ? str.match(/[0-9]/g).join('') : '';
+    validasiForm();
+  })
 
   $('#email').keyup(function(){
-		let val_email = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.value);
-		if (val_email) {
-			check_email = true;
-			$('#email_danger').empty();
-		}else{
-			check_email = false;
-			$('#email_danger').text('Email Invalid');
-		}
-		$.ajax({
-			type: 'GET',
-			url: '/email/'+this.value,
-			success: function (data) {
-				if (data.email) {
-					$('#email_danger').text('email already exist');
-					available_email = false;
-				}else{
-					$('#email_danger').empty();
-					available_email = true;
-				}
-			},
-			error: function() {
-				console.log("Error");
-			}
-		});
-		validasiForm();
-	});
+    let val_email = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.value);
+    if (val_email) {
+      check_email = true;
+      $('#email_danger').empty();
+    }else{
+      check_email = false;
+      $('#email_danger').text('Email Invalid');
+    }
+    $.ajax({
+      type: 'GET',
+      url: '/email/'+this.value,
+      success: function (data) {
+        if (data.email) {
+          $('#email_danger').text('email already exist');
+          available_email = false;
+        }else{
+          $('#email_danger').empty();
+          available_email = true;
+        }
+      },
+      error: function() {
+        console.log("Error");
+      }
+    });
+    validasiForm();
+  });
 
   $("#referal").keyup(function(){
     $.ajax({
-			type: 'GET',
-			url: '/user/'+this.value,
-			success: function (data) {
+      type: 'GET',
+      url: '/user/'+this.value,
+      success: function (data) {
         data.referal ? $(".alert-referal").html("<span style=color:green>Sponsor tersedia</span>") : $(".alert-referal").html("<span style=color:red>Sponsor tidak tersedia</span>");
       },
-			error: function() {
-				console.log("Error");
-			}
-		});
+      error: function() {
+        console.log("Error");
+      }
+    });
     validasiForm();
   })
 
   $("#username").keyup(function(){
     $.ajax({
-			type: 'GET',
-			url: '/user/'+this.value,
-			success: function (data) {
+      type: 'GET',
+      url: '/user/'+this.value,
+      success: function (data) {
         data.username ? $(".alert-username").html("<span style=color:green>Username dapat digunakan</span>") : $(".alert-username").html("<span style=color:red>Username tidak dapat digunakan</span>");
       },
-			error: function() {
-				console.log("Error");
-			}
-		});
+      error: function() {
+        console.log("Error");
+      }
+    });
     validasiForm();
   })
 </script>

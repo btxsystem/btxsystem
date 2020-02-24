@@ -39,7 +39,9 @@
             <div>
               <div class="d-flex align-items-center flex-column bd-highlight mb-3">
                 <div class="mt-auto">
-                  <button class="btn btn-identity text-white" id="next">Lanjutkan</button>
+                  <button class="btn btn-identity text-white" id="prev"><i class="fa fa-arrow-left"></i></button>
+                  <button class="btn btn-identity text-white" id="next"><i class="fa fa-arrow-right"></i></button>
+                  <!-- <button class="btn btn-identity text-white" id="next">Lanjutkan</button> -->
                 </div>
               </div>
             </div>
@@ -83,11 +85,29 @@
       width: `${percentage}%`
     }).html(`<span style="font-weight:bold">${percentage}%</span>`)
     
+  
     // $('#percentage').html(`${percentage}%`)
+    generateLessonList()
+    checkButtonPrev()
+  }
+
+  function checkButtonPrev() {
+    let currentIndexLesson = lessons.findIndex(v => v.id == currentLesson.id)
+
+    if(currentIndexLesson <= 0) {
+      $('#prev').hide();
+    } else {
+      $('#prev').show();
+    }
+  }
+
+  function generateLessonList()  {
+    let currentIndexLesson = lessons.findIndex(v => v.id == currentLesson.id)
+
     let initLessonList = ''
     lessons.map((v, i) => {
       initLessonList += `
-        <li class="nav-item" onclick="changeLesson(${i})">
+        <li class="nav-item ${i == currentIndexLesson ? 'text-warning' : ''}" onclick="changeLesson(${i})">
           <p class="float-left w8">${v.title}</p>
           <p class="float-right ${!v.solved ? 'd-none' : ''}">
             <i class="fa fa-check text-success"></i>
@@ -101,6 +121,7 @@
   function changeLesson(index) {
     currentLesson = lessons[index]
     refreshContent()
+    checkButtonPrev()
   }
 
   function nextLesson() {
@@ -143,6 +164,7 @@
 
   function refreshContent() {
     breadcrumb()
+    generateLessonList()
     $('#lesson_content').html(currentLesson.content);
   }
 
@@ -181,6 +203,14 @@
       return
     }
     currentLesson = lessons[index+1]
+    refreshContent()
+    initLesson()
+  })
+
+  $('#prev').on('click', function() {
+    let index = lessons.findIndex(data => data.id == currentLesson.id)
+
+    currentLesson = lessons[index-1]
     refreshContent()
     initLesson()
   })

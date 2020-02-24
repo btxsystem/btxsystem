@@ -10,8 +10,10 @@ use App\Permission;
 use App\Role;
 use DataTables;
 use DB;
+use Illuminate\Support\Facades\Auth;
 use Alert;
 use Illuminate\Http\Request;
+use App\Models\Roles;
 
 class RolesController extends Controller
 {
@@ -22,9 +24,9 @@ class RolesController extends Controller
             return Datatables::of($data)
                     ->addIndexColumn()
                     ->addColumn('action', function($row) {
-                        $edit = ''; //\Auth::guard('admin')->user()->hasPermission('Admin_management.roles.edit') ? '<a class="btn btn-warning fa fa-edit" href="'.route('admin-management.roles.edit',$row->id).'"></a>' : '';
+                        $edit = \Auth::guard('admin')->user()->hasPermission('Admin_management.roles.edit') ? '<a class="btn btn-warning fa fa-edit" href="'.route('admin-management.roles.edit',$row->id).'"></a>' : '';
                         $delete = \Auth::guard('admin')->user()->hasPermission('Admin_management.roles.delete') ? '<a class="btn btn-danger fa fa-trash" href="'.route('admin-management.roles.delete',$row->id).'"></a>' : '';
-                        return $edit.' '.$delete;
+                        return $row->id!=1 ? $edit.' '.$delete : '-';
                     })
                     ->rawColumns(['action'])
                     ->make(true);
@@ -47,28 +49,32 @@ class RolesController extends Controller
             DB::table('permission_role')->insert(['role_id' => $role->id, 'permission_id' => $permission]);
         }
         Alert::success('Sukses Create Data', 'Sukses')->persistent("Close");
-        return redirect()->back();
+        return redirect()->route('admin-management.roles.index');
     }
 
-    public function edit(Role $role)
+    public function edit($role)
     {
-        abort_unless(\Gate::allows('role_edit'), 403);
-
-        $permissions = Permission::all()->pluck('title', 'id');
-
-        $role->load('permissions');
-
-        return view('admin.roles.edit', compact('permissions', 'role'));
+        $role = DB::table('roles')->where('id', Auth::guard('admin')->user()->roles_id)->first();
+        return view('admin.roles.edit', compact('role'));
     }
 
-    public function update(UpdateRoleRequest $request, Role $role)
+    public function data(){
+        $permissions = DB::table('permission_role')->select('permission_id')->where('role_id', Auth::guard('admin')->user()->roles_id)->orderBy('role_id')->get();
+        return $permissions;
+    }
+
+    public function update(Request $request)
     {
-        abort_unless(\Gate::allows('role_edit'), 403);
-
-        $role->update($request->all());
-        $role->permissions()->sync($request->input('permissions', []));
-
-        return redirect()->route('admin.roles.index');
+        $data = [
+            'title' => $request->title
+        ];
+        $role = Role::where('id',$request->role_id)->update($data);
+        DB::table('permission_role')->where('role_id', $request->role_id)->delete();
+        foreach ($request->permissions as $key => $permission) {
+            DB::table('permission_role')->insert(['role_id' => $request->role_id, 'permission_id' => $permission]);
+        }
+        Alert::success('Sukses Update Data', 'Sukses')->persistent("Close");
+        return redirect()->route('admin-management.roles.index');
     }
 
     public function show(Role $role)
