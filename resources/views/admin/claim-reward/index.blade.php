@@ -42,6 +42,7 @@ Claim Reward
                                 <th class="text-center" width="15%">Status</th>
                                 <th class="text-center" width="15%">Archive Date</th>
                                 <th class="text-center" width="15%">Claim Date</th>
+                                <th class="text-center" width="15%">Approve At</th>
                                 <th class="text-center" width="25%">Action</th>
                             </tr>
                         </thead>
@@ -216,6 +217,7 @@ Claim Reward
                   { data: 'status_approve', name: 'status_approve', className: "text-center" },
                   { data: 'created_at', name: 'created_at', className: "text-center" },
                   { data: 'updated_at', name: 'updated_at', className: "text-center" },
+                  { data: 'approve_at', name: 'updated_at', className: "text-center" },
                   { data: 'action', name: 'action', orderable: false, searchable: false, className: "text-center" },
               ]
           });
