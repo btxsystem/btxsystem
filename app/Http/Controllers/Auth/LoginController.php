@@ -148,6 +148,6 @@ class LoginController extends Controller
     if (Auth::guard('user')->check()) {
       Auth::guard('user')->logout();
     }
-    return redirect('/login');
+    return redirect('/');
   }
 }

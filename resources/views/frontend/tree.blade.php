@@ -1222,36 +1222,30 @@ em{
    }
 
 	var tree_submit = (a, parent, position) => {
-		parent_id = parent;
-		if(a!="available"){
-			$.ajax({
-				type: 'GET',
-				url: '/member/select/child-tree/'+a,
-				success: function (data) {
-					$('#bah').empty('g');
-					tree(data)
-				},
-				error: function() {
-					console.log("Error");
-				}
-			});
+		if (a=='available') {
+			$('#register').modal('show');
 		}else{
 			$.ajax({
 				type: 'GET',
-				url: '/member/select/bitrex-points',
+				url: '/member/select/search-downline/'+a,
 				success: function (data) {
-					if (data.bitrex_points >= 280) {
-						$('#register').modal('show');
-            			openTree()
-						$('#parent').attr('value',parent);
-						$('#position').attr('value',position);
+					parent_id = data.parent_id;
+					if (data) {
+						$.ajax({
+							type: 'GET',
+							url: '/member/select/child-tree/'+data.username,
+							success: function (data) {
+								$('#bah').empty('g');
+								tree(data)
+							},
+							error: function() {
+								console.log("Error");
+							}
+						});
 					}else{
-						$('#warning').modal('show');
+						swal("sorry, username not found");
 					}
 				},
-				error: function() {
-					console.log("Error");
-				}
 			});
 		}
 	};
