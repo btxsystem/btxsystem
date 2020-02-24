@@ -20,7 +20,8 @@ class HallOfFameController extends Controller
     // $data['director2'] = Employeer::where('rank_id',5)->where('expired_at', '>', Carbon::now())->where('status','!=',0)->with('rank')->paginate(3, ['*'], 'page_5s');
     $data['director1'] = Employeer::where('rank_id',4)->where('expired_at', '>', Carbon::now())->where('status','!=',0)->with('rank')->get();
     $data['director2'] = Employeer::where('rank_id',5)->where('expired_at', '>', Carbon::now())->where('status','!=',0)->with('rank')->get();
-    $data['director3'] = Employeer::where('rank_id',6)->where('expired_at', '>', Carbon::now())->where('status','!=',0)->with('rank')->paginate(3, ['*'], 'page_6s');
+    $data['director3'] = Employeer::where('rank_id',6)->where('expired_at', '>', Carbon::now())->where('status','!=',0)->with('rank')->get();
+    // $data['director3'] = Employeer::where('rank_id',6)->where('expired_at', '>', Carbon::now())->where('status','!=',0)->with('rank')->paginate(3, ['*'], 'page_6s');
     $data['chairman1'] = Employeer::where('rank_id',7)->where('expired_at', '>', Carbon::now())->where('status','!=',0)->with('rank')->paginate(3, ['*'], 'page_7s');
     $data['chairman2'] = Employeer::where('rank_id',8)->where('expired_at', '>', Carbon::now())->where('status','!=',0)->with('rank')->paginate(3, ['*'], 'page_8s');
     $data['page'] = isset(array_keys($request->all())[0]) ? array_keys($request->all())[0] : null;
@@ -38,7 +39,8 @@ class HallOfFameController extends Controller
     // $data['director2'] = Employeer::where('rank_id',5)->where('expired_at', '>', Carbon::now())->where('status','!=',0)->with('rank')->paginate(3, ['*'], 'page_5s');
     $data['director1'] = Employeer::where('rank_id',4)->where('expired_at', '>', Carbon::now())->where('status','!=',0)->with('rank')->get();
     $data['director2'] = Employeer::where('rank_id',5)->where('expired_at', '>', Carbon::now())->where('status','!=',0)->with('rank')->get();
-    $data['director3'] = Employeer::where('rank_id',6)->where('expired_at', '>', Carbon::now())->where('status','!=',0)->with('rank')->paginate(3, ['*'], 'page_6s');
+    $data['director3'] = Employeer::where('rank_id',6)->where('expired_at', '>', Carbon::now())->where('status','!=',0)->with('rank')->get();
+    // $data['director3'] = Employeer::where('rank_id',6)->where('expired_at', '>', Carbon::now())->where('status','!=',0)->with('rank')->paginate(3, ['*'], 'page_6s');
     $data['chairman1'] = Employeer::where('rank_id',7)->where('expired_at', '>', Carbon::now())->where('status','!=',0)->with('rank')->paginate(3, ['*'], 'page_7s');
     $data['chairman2'] = Employeer::where('rank_id',8)->where('expired_at', '>', Carbon::now())->where('status','!=',0)->with('rank')->paginate(3, ['*'], 'page_8s');
     $profile = array(
