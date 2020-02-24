@@ -221,23 +221,19 @@ class ProfileMemberController extends Controller
                     $price = (int) $price + (int) + $request->input('cost');
                 }
 
-                $i = 1;
                 foreach($ebooks as $ebook) {
-                    $i++;
                     $prefixRef = 'BITREX02';
 
-                    //$checkRef = TransactionMember::where('transaction_ref', $prefixRef . (time() + rand(100, 500)))->first();
+                    $checkRef = TransactionMember::where('transaction_ref', $prefixRef . (time() + rand(100, 500)))->first();
 
-                    $afterCheckRef = $prefixRef . (time() + rand(100, 500) + $i);
-                    print_r($afterCheckRef);
-                    return;
+                    $afterCheckRef = $prefixRef . (time() + rand(100, 500));
 
-                    // while($checkRef) {
-                    //   $afterCheckRef = $prefixRef . (time() + rand(100, 500));
-                    //   if(!$checkRef) {
-                    //     break;
-                    //   }
-                    // }
+                    while($checkRef) {
+                      $afterCheckRef = $prefixRef . (time() + rand(100, 500));
+                      if(!$checkRef) {
+                        break;
+                      }
+                    }
 
                     $trxMember = new TransactionMember();
                     $trxMember->transaction_ref = $afterCheckRef;
@@ -246,6 +242,9 @@ class ProfileMemberController extends Controller
                     $trxMember->member_id = $employeer->id;
                     $trxMember->status = 1;
                     $trxMember->save();
+
+                    print_r($trxMember);
+                    return;
                 }
 
                 $input['bitrex_points'] = $sponsor->bitrex_points - $price;
