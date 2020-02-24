@@ -221,12 +221,14 @@ class ProfileMemberController extends Controller
                     $price = (int) $price + (int) + $request->input('cost');
                 }
 
+                $i = 1;
                 foreach($ebooks as $ebook) {
-                    // $prefixRef = 'BITREX02';
+                    $i++;
+                    $prefixRef = 'BITREX02';
 
-                    // $checkRef = TransactionMember::where('transaction_ref', $prefixRef . (time() + rand(100, 500)))->first();
+                    //$checkRef = TransactionMember::where('transaction_ref', $prefixRef . (time() + rand(100, 500)))->first();
 
-                    // $afterCheckRef = $prefixRef . (time() + rand(100, 500));
+                    $afterCheckRef = $prefixRef . (time() + rand(100, 500) + $i);
 
                     // while($checkRef) {
                     //   $afterCheckRef = $prefixRef . (time() + rand(100, 500));
@@ -235,13 +237,13 @@ class ProfileMemberController extends Controller
                     //   }
                     // }
 
-                    // $trxMember = new TransactionMember();
-                    // $trxMember->transaction_ref = $afterCheckRef;
-                    // $trxMember->ebook_id = (int) $ebook;
-                    // $trxMember->expired_at = Carbon::create(date('Y-m-d H:i:s'))->addYear(1);
-                    // $trxMember->member_id = $employeer->id;
-                    // $trxMember->status = 1;
-                    // $trxMember->save();
+                    $trxMember = new TransactionMember();
+                    $trxMember->transaction_ref = $afterCheckRef;
+                    $trxMember->ebook_id = (int) $ebook;
+                    $trxMember->expired_at = Carbon::create(date('Y-m-d H:i:s'))->addYear(1);
+                    $trxMember->member_id = $employeer->id;
+                    $trxMember->status = 1;
+                    $trxMember->save();
                 }
 
                 $input['bitrex_points'] = $sponsor->bitrex_points - $price;
