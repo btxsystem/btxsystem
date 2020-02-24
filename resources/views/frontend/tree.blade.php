@@ -1223,6 +1223,8 @@ em{
 
 	var tree_submit = (a, parent, position) => {
 		if (a=='available') {
+			$('#parent').val(parent);
+			$('#position').val(position);
 			$('#register').modal('show');
 		}else{
 			$.ajax({
