@@ -21,7 +21,6 @@
         <link href="{{ asset('assets/css/chart.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('assets/css/chart.min.css') }}" rel="stylesheet" type="text/css" />
 
-        <link href="{{ asset('assets/vendors/animate.min.css') }}" rel="stylesheet" type="text/css" />
 
         <!-- meta -->
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
@@ -61,7 +60,7 @@
                     <div class="navbar-right">
                         <ul class="nav navbar-nav">
                            {{-- @include('admin.layouts._messages') --}}
-                            @include('admin.layouts._notifications')
+                            {{--@include('admin.layouts._notifications') --}}
                             <li>
                                 <a onclick="document.getElementById('logout-form').submit();" style="cursor:pointer">
                                     <i class="fa fa-sign-out" style="color: #6CC66C"><br><i style="color: #6CC66C">Logout</i></i>
