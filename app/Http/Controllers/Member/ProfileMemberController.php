@@ -222,19 +222,26 @@ class ProfileMemberController extends Controller
                 }
 
                 foreach($ebooks as $ebook) {
-                    $prefixRef = 'BITREX02';
+                    // $prefixRef = 'BITREX02';
 
-                    $checkRef = TransactionMember::where('transaction_ref', $prefixRef . (time() + rand(100, 500)))->first();
+                    // $checkRef = TransactionMember::where('transaction_ref', $prefixRef . (time() + rand(100, 500)))->first();
 
-                    $afterCheckRef = $prefixRef . (time() + rand(100, 500));
+                    // $afterCheckRef = $prefixRef . (time() + rand(100, 500));
 
-                    $trxMember = new TransactionMember();
-                    $trxMember->transaction_ref = $afterCheckRef;
-                    $trxMember->ebook_id = (int) $ebook;
-                    $trxMember->expired_at = Carbon::create(date('Y-m-d H:i:s'))->addYear(1);
-                    $trxMember->member_id = $employeer->id;
-                    $trxMember->status = 1;
-                    $trxMember->save();
+                    // while($checkRef) {
+                    //   $afterCheckRef = $prefixRef . (time() + rand(100, 500));
+                    //   if(!$checkRef) {
+                    //     break;
+                    //   }
+                    // }
+
+                    // $trxMember = new TransactionMember();
+                    // $trxMember->transaction_ref = $afterCheckRef;
+                    // $trxMember->ebook_id = (int) $ebook;
+                    // $trxMember->expired_at = Carbon::create(date('Y-m-d H:i:s'))->addYear(1);
+                    // $trxMember->member_id = $employeer->id;
+                    // $trxMember->status = 1;
+                    // $trxMember->save();
                 }
 
                 $input['bitrex_points'] = $sponsor->bitrex_points - $price;
@@ -250,7 +257,16 @@ class ProfileMemberController extends Controller
                 // histories points
                 $prefixRefBp = 'BITREX05';
 
+                $checkRefBp = HistoryBitrexPoints::where('transaction_ref', $prefixRefBp . (time() + rand(100, 500)))->first();
+
                 $afterCheckRefBp = $prefixRefBp . (time() + rand(100, 500));
+
+                while($checkRefBp) {
+                  $afterCheckRefBp = $prefixRefBp . (time() + rand(100, 500));
+                  if(!$checkRefBp) {
+                    break;
+                  }
+                }
 
                 //insert histories points
                 HistoryBitrexPoints::insert([
