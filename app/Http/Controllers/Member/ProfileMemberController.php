@@ -242,9 +242,6 @@ class ProfileMemberController extends Controller
                     $trxMember->member_id = $employeer->id;
                     $trxMember->status = 1;
                     $trxMember->save();
-
-                    print_r($trxMember);
-                    return;
                 }
 
                 $input['bitrex_points'] = $sponsor->bitrex_points - $price;
