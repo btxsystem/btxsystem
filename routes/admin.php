@@ -29,7 +29,18 @@ Route::group(['prefix' => 'select', 'as'=> 'select.'], function () {
 
 
 Route::group(['middleware' => 'admin'], function () {
+
+    Route::group(['prefix'=>'notification','as'=>'notification.'], function(){
+        Route::get('', ['as' => '', 'uses' => 'Admin\NotificationController@index']);
+        Route::get('data', ['as' => 'data', 'uses' => 'Admin\NotificationController@data']);
+        Route::get('read', ['as' => 'read', 'uses' => 'Admin\NotificationController@read']);
+    });
+
+
+    Route::post('logout', ['as' => 'logout', 'uses' => 'Admin\Auth\LoginController@logout']);
+
     Route::post('redirect', ['as' => 'redirect', 'uses' => 'Admin\MemberController@redirect']);
+    Route::get('readChat', ['as' => 'readChat', 'uses' => 'Admin\NotificationController@index']);
     Route::post('non-redirect', ['as' => 'non-redirect', 'uses' => 'Admin\MemberController@nonredirect']);
     Route::group(['prefix'=>'admin-management','as'=>'admin-management.'], function(){
         Route::get('permissions', ['as' => 'permissions', 'uses' => 'Admin\PermissionsController@index']);
@@ -39,7 +50,7 @@ Route::group(['middleware' => 'admin'], function () {
             Route::get('create', ['as' => 'create', 'uses' => 'Admin\UsersController@create']);
             Route::post('store', ['as' => 'store', 'uses' => 'Admin\UsersController@store']);
             Route::get('{id}/edit', ['as' => 'edit', 'uses' => 'Admin\UsersController@edit']);
-            Route::put('{id}', ['as' => 'update', 'uses' => 'Admin\UsersController@update']);
+            Route::post('{id}/update', ['as' => 'update', 'uses' => 'Admin\UsersController@update']);
             Route::delete('{id}', ['as' => 'delete', 'uses' => 'Admin\UsersController@destroy']);
         });
 
@@ -47,7 +58,9 @@ Route::group(['middleware' => 'admin'], function () {
             Route::get('', ['as' => 'index', 'uses' => 'Admin\RolesController@index']);
             Route::get('create', ['as' => 'create', 'uses' => 'Admin\RolesController@create']);
             Route::post('store', ['as' => 'store', 'uses' => 'Admin\RolesController@store']);
-            Route::get('{id}/edit', ['as' => 'edit', 'uses' => 'Admin\UsersController@edit']);
+            Route::post('update', ['as' => 'update', 'uses' => 'Admin\RolesController@update']);
+            Route::get('{id}/edit', ['as' => 'edit', 'uses' => 'Admin\RolesController@edit']);
+            Route::get('data', ['as' => 'data', 'uses' => 'Admin\RolesController@data']);
             Route::get('/{id}',['as' => 'delete', 'uses' => 'Admin\RolesController@destroy']);
         });
 
@@ -336,6 +349,9 @@ Route::group(['middleware' => 'admin'], function () {
     Route::group(['prefix' => 'hall-of-fame' ,'as'=>'hall-of-fame.'], function () {
         Route::get('/', ['as' => 'index', 'uses' => 'Admin\HallOfFameController@index']);
         Route::get('/create', ['as' => 'create', 'uses' => 'Admin\HallOfFameController@create']);
+        Route::get('/edit/{id}', ['as' => 'edit', 'uses' => 'Admin\HallOfFameController@edit']);
+        Route::post('/update/{id}', ['as' => 'update', 'uses' => 'Admin\HallOfFameController@update']);
+        Route::post('/destroy/{id}', ['as' => 'destroy', 'uses' => 'Admin\HallOfFameController@destroy']);
         Route::post('/', ['as' => 'store', 'uses' => 'Admin\HallOfFameController@store']);
     });
 

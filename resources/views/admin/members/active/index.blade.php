@@ -63,7 +63,7 @@ List Of Users Active
                                 <th class="text-center" width="10%">Username</th>
                                 <th class="text-center" width="12%">Name</th>                                 <th class="text-center" width="10%">Sponsor</th>
                                 <th class="text-center" width="8%">Join Date</th>
-                                <th class="text-center" width="8%">Archive Rank</th>
+                                <th class="text-center" width="8%">Achieve Rank</th>
                                 <th class="text-center" width="8%">Rank</th>
                                 <th class="text-center" width="15%" class="action">Action</th>
                             </tr>

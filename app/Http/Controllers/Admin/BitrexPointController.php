@@ -8,9 +8,11 @@ use Illuminate\Http\Request;
 use DataTables;
 use Alert;
 use DB;
+use App\Service\NotificationService;
 
 class BitrexPointController extends Controller
 {
+
     public function index(){
         if (request()->ajax()) {
             $data = DB::table('employeers')->select('id','id_member','username','bitrex_points');

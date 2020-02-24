@@ -175,6 +175,7 @@ div#flag {
 							<div class="form-line focused success">
 								<input style="color:green; font-size:25px; font-weight:bold; text-align:center;" type="text" class="form-control" id="va" name="va" value="" readonly>
 							</div>
+							<button type="button" class="mt-3 btn btn-raised bg-grey waves-effect" style="cursor:pointer" id="copy">Copy</button>
 						<br>
                     </center>
                     <br>
@@ -392,11 +393,14 @@ div#flag {
 											@endif
 										@else
                       @if($ebook->status == 6)
-                        <form action="{{route('re.payment')}}" method="post">
+                        <!-- <form action="{{route('re.payment')}}" method="post">
                           {{csrf_field()}}
                           <input type="hidden" name="ebook" value="{{$ebook->id}}">
                           <button type="submit" class="btn btn-identity-red text-white btn-sm mt-3 px-5">BUY</button>
-                        </form>
+                        </form> -->
+												<form action="">
+													<a href="{{route('member.ebook.detail', ['type' => strtolower($ebook->title), 'username' => $username])}}" class="btn btn-identity-red btn-sm mt-3 px-5">BUY</a>
+												</form>
                       @else
                       <form action="">
                         <a href="{{route('member.ebook.detail', ['type' => strtolower($ebook->title), 'username' => $username])}}" class="btn btn-identity-red btn-sm mt-3 px-5">BUY</a>
@@ -542,6 +546,18 @@ function selectedSubscription(param = null) {
 
   $('#total_price').html(toIDR(data.price))
 }
+
+$('#copy').click(function(){
+	var copyText = document.getElementById("va");
+	var selection = document.getSelection();
+	copyText.select();
+	copyText.setSelectionRange(0, 99999);
+	try {
+			var success = document.execCommand('copy')
+	} catch (error) {
+			console.log(error)
+	}
+})
 
 $('.va-submit').change(function(){
 	$('#register').hide();

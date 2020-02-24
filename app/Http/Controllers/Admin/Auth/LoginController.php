@@ -31,7 +31,7 @@ class LoginController extends Controller
 
     if (Auth::guard('admin')->attempt(['email' => $request->email, 'password' => $request->password])) {
         // if successful, then redirect to their intended location
-      return redirect()->route('dashboard');
+        return redirect()->route('dashboard');
     }
     return view('admin.auth.login');
   }
@@ -41,6 +41,6 @@ class LoginController extends Controller
     if (Auth::guard('admin')->check()) {
       Auth::guard('admin')->logout();
     }
-    return redirect('/login');
+    return redirect('/backoffice/');
   }
 }

@@ -577,6 +577,8 @@ em{
 <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.10/themes/base/jquery-ui.css">
 <!-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script> -->
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script> -->
+
 <script>
 	var priceEbook = 0
 	var postalFee = 0
@@ -805,6 +807,7 @@ em{
 				${render}
 			</div>
 		`)
+		
 		$('#checkboxEbook input[type=checkbox]').each(function() {
 			if(parseInt($(this).val()) == 1) {
 			$(this).prop('checked', true)
@@ -814,14 +817,71 @@ em{
 			}
 		})
 
+		// let isConfirmationEbook = false;
+		// let validateEbooks = [];
+		// $('form#action-member').on('submit', function(e) {
+		// 	$('#checkboxEbook input[type=checkbox]').each(function(i) {
+		// 		if($(this).prop('checked')) {
+		// 			validateEbooks.push(i)
+		// 		}
+		// 	});
+
+		// 	if(validateEbooks.length > 1 && !isConfirmationEbook) {
+		// 		e.preventDefault();
+		// 		var r = confirm("Apakah Anda yakin membeli 2 ebook?");
+
+		// 		if (r == true) {
+		// 			isConfirmationEbook = true
+		// 			$('form#action-member').submit()
+		// 		} else {
+		// 			isConfirmationEbook = false
+		// 			validateEbooks = [];
+		// 			e.preventDefault();
+		// 		}
+		// 		// swal.fire({
+		// 		// 	title: 'Are you sure?',
+		// 		// 	text: "Ebook lebih dari satu",
+		// 		// 	icon: 'warning',
+		// 		// 	showCancelButton: true,
+		// 		// 	confirmButtonColor: '#3085d6',
+		// 		// 	cancelButtonColor: '#d33',
+		// 		// 	confirmButtonText: 'Yes'
+		// 		// }).then((result) => {
+		// 		// 	if (result.value) {
+		// 		// 		isConfirmationEbook = true
+		// 		// 		$('form#action-member').submit();
+		// 		// 	}
+		// 		// })
+		// 	}
+
+		// })
+
 		$('#checkboxEbook input[type=checkbox]').change(function(index) {
+			let ebookSelected = $('#checkboxEbook input[type=checkbox]').filter(function() {
+				return $(this).prop("checked")
+			})
+
+			let cancelledEbook = false;
+
+			if(ebookSelected.length == 2) {
+				var r = confirm("Apakah Anda yakin membeli 2 ebook?");
+				if (r == true) {
+
+				} else { 
+					cancelledEbook = true
+					$(this).prop("checked", false)
+				}
+			}
 
 			if($(this).prop('checked')) {
 				check += 1;
 				priceEbook = priceEbook + parseInt($(this).data('price'));
 			} else {
-				check -= 1;
-				priceEbook = priceEbook - parseInt($(this).data('price'));
+				if(!cancelledEbook) {
+					check -= 1;
+					priceEbook = priceEbook - parseInt($(this).data('price'));
+				}
+				
 			}
 			if(priceEbook != 0) {
 				$('#cost-ebook').parent().removeClass('hidden');
@@ -1162,28 +1222,32 @@ em{
    }
 
 	var tree_submit = (a, parent, position) => {
-		$.ajax({
-			type: 'GET',
-			url: '/member/select/search-downline/'+a,
-			success: function (data) {
-				parent_id = data.parent_id;
-				if (data) {
-					$.ajax({
-						type: 'GET',
-						url: '/member/select/child-tree/'+data.username,
-						success: function (data) {
-							$('#bah').empty('g');
-							tree(data)
-						},
-						error: function() {
-							console.log("Error");
-						}
-					});
-				}else{
-					swal("sorry, username not found");
-				}
-			},
-		});
+		if (a=='available') {
+			$('#register').modal('show');
+		}else{
+			$.ajax({
+				type: 'GET',
+				url: '/member/select/search-downline/'+a,
+				success: function (data) {
+					parent_id = data.parent_id;
+					if (data) {
+						$.ajax({
+							type: 'GET',
+							url: '/member/select/child-tree/'+data.username,
+							success: function (data) {
+								$('#bah').empty('g');
+								tree(data)
+							},
+							error: function() {
+								console.log("Error");
+							}
+						});
+					}else{
+						swal("sorry, username not found");
+					}
+				},
+			});
+		}
 	};
 
 	var tree = (data) => {

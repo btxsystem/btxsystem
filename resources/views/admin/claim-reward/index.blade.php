@@ -209,13 +209,13 @@ Claim Reward
 
               columns: [
                  // { data: 'DT_RowIndex', name: 'DT_RowIndex', className: "text-center", orderable: false, searchable: false },
-                  { data: 'id_member', name: 'member.id_member', className: "text-center" },
-                  { data: 'fullname', name: 'member.first_name', className: "text-center" },
-                  { data: 'username', name: 'member.username', className: "text-center" },
-                  { data: 'reward', name: 'reward.description', className: "text-center" },
-                  { data: 'status', name: 'status', className: "text-center" },
-                  { data: 'archive', name: 'archive', className: "text-center" },
-                  { data: 'claim', name: 'claim', className: "text-center" },
+                  { data: 'member.id_member', name: 'member.id_member', className: "text-center" },
+                  { data: 'fullname', name: 'fullname', className: "text-center", searchable:false, orderable:false  },
+                  { data: 'member.username', name: 'member.username', className: "text-center" },
+                  { data: 'reward.description', name: 'reward.description', className: "text-center" },
+                  { data: 'status_approve', name: 'status_approve', className: "text-center" },
+                  { data: 'created_at', name: 'created_at', className: "text-center" },
+                  { data: 'updated_at', name: 'updated_at', className: "text-center" },
                   { data: 'action', name: 'action', orderable: false, searchable: false, className: "text-center" },
               ]
           });

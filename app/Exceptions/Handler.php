@@ -34,7 +34,7 @@ class Handler extends ExceptionHandler
         if (!Auth::user()) {
             return redirect('/');
         }
-    }
+      }
       return parent::render($request, $exception);
     }
     protected function unauthenticated($request, \Illuminate\Auth\AuthenticationException $exception)
