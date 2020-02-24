@@ -98,8 +98,6 @@ class ProfileMemberController extends Controller
     }
 
     public function register(Request $request){
-        ini_set('memory_limit', '-1');
-        
         try {
             if (!isset($request->bank_name) || $request->bank_name==null) {
                 $request->bank_name = 'BCA';
@@ -230,13 +228,6 @@ class ProfileMemberController extends Controller
 
                     $afterCheckRef = $prefixRef . (time() + rand(100, 500));
 
-                    while($checkRef) {
-                      $afterCheckRef = $prefixRef . (time() + rand(100, 500));
-                      if(!$checkRef) {
-                        break;
-                      }
-                    }
-
                     $trxMember = new TransactionMember();
                     $trxMember->transaction_ref = $afterCheckRef;
                     $trxMember->ebook_id = (int) $ebook;
@@ -259,16 +250,7 @@ class ProfileMemberController extends Controller
                 // histories points
                 $prefixRefBp = 'BITREX05';
 
-                $checkRefBp = HistoryBitrexPoints::where('transaction_ref', $prefixRefBp . (time() + rand(100, 500)))->first();
-
                 $afterCheckRefBp = $prefixRefBp . (time() + rand(100, 500));
-
-                while($checkRefBp) {
-                  $afterCheckRefBp = $prefixRefBp . (time() + rand(100, 500));
-                  if(!$checkRefBp) {
-                    break;
-                  }
-                }
 
                 //insert histories points
                 HistoryBitrexPoints::insert([
