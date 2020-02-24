@@ -30,7 +30,7 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
         Passport::routes();
-        $service = new NotificationService();
-        $service->sendEmailRank();
+        //$service = new NotificationService();
+        //$service->sendEmailRank();
     }
 }
