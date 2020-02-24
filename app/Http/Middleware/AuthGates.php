@@ -28,7 +28,6 @@ class AuthGates
                 return redirect('/login');
             }
         }
-        
         return $next($request);
     }
 }
