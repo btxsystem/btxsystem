@@ -229,6 +229,8 @@ class ProfileMemberController extends Controller
                     //$checkRef = TransactionMember::where('transaction_ref', $prefixRef . (time() + rand(100, 500)))->first();
 
                     $afterCheckRef = $prefixRef . (time() + rand(100, 500) + $i);
+                    print_r($afterCheckRef);
+                    return;
 
                     // while($checkRef) {
                     //   $afterCheckRef = $prefixRef . (time() + rand(100, 500));
