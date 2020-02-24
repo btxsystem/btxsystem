@@ -355,7 +355,6 @@
                 $("#topup-points").prop('disabled',false);
             }
         } else {
-            console.log($('#nominal').val())
             if ($('#nominal').val() % 1000 == 0 && $('#nominal').val() >= 10000) {
                 $("#topup-points").prop('disabled',false);
             } else {
