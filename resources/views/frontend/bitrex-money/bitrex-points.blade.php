@@ -727,8 +727,37 @@
         $('#pickup_quarter').change(function() {
             if($(this).prop("checked")) {
                 $('#pickup_form').hide()
+
+                if($("#kurir").val() != null) {
+                    $('#nominal').val(
+                        parseInt($('#nominal').val()) - (parseInt($('#cost_summary_value').val()) * 1000)
+                    )
+                    $('#points').val(
+                        parseInt($('#points').val()) - parseInt( $('#cost_summary_value').val())
+                    )
+                }
+
+                $("#province").empty()
+                $("#city").empty()
+                $("#district").empty()
+                $("#kurir").empty()
             } else {
                 $('#pickup_form').show()
+                $.ajax({
+                    type: 'GET',
+                    url: '/member/shipping/province',
+                    success: function (data) {
+                        $('#province').select2({
+                            placeholder: 'Province',
+                            data: data,
+                            width: '100%'
+                        });
+                        $('#cost_summary_value').val(0)
+                    },
+                    error: function() {
+                        console.log("masuk province");
+                    }
+                });
             }
 
             check_button_disabled()
