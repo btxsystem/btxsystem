@@ -82,6 +82,9 @@ class TransactionController extends Controller
                 case 'bca';
                 return $this->paymentWithTransfer($request);
             break;
+                case 'transfer';
+                return $this->paymentWithTransfer($request);
+            break;
                 case 'ovo';
                 return $this->paymentWithIpay($request, 63);
             break;
@@ -142,7 +145,7 @@ class TransactionController extends Controller
                 'ref_no' => $afterCheckRef
             ];
 
-            Mail::to( Auth::user()->email ?? 'asepmedia18@gmail.com')
+            Mail::to( Auth::user()->email)
             ->send(new PurchaseBitrexPointTransferMail($dataOrder, null));
 
             DB::commit();
