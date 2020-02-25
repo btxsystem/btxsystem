@@ -35,7 +35,7 @@ class TransferConfirmationController extends Controller
         if (request()->ajax()) {
             $data = TransferConfirmation::with(['user' => function ($query){
                         $query->select('id','username','first_name','last_name');
-                     }])->orderBy('id','desc');
+                     }])->orderBy('status','asc');
 
 
             return Datatables::of($data)
