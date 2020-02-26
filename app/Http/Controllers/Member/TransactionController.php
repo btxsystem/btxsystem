@@ -260,15 +260,17 @@ class TransactionController extends Controller
                 $type = 'ebook_non_member';
                 $userType = 'nonmember';
               } else {
-                return redirect()->back()->with([
-                    'error' => 'Transaction not found. Please try again.'
+                return response()->json([
+                    'message' => 'Transaction not found or invalid billing type. Please try again.',
+                    'success' => false
                 ]);
               }
 
               if($selectType = $request->input('type')) {
                   if($selectType != $type) {
                     return redirect()->back()->with([
-                        'error' => "Transaction Type Should be {$messageError}. Please try again."
+                        'message' => "Transaction Type Should be {$messageError}. Please try again.",
+                        'success' => false
                     ]);
                   }
               }
@@ -287,8 +289,12 @@ class TransactionController extends Controller
                 $check  = HistoryBitrexPoints::where('transaction_ref', $invoice_number)->where('status', '=', 1)->first();
 
                 if($check) {
-                    return redirect()->back()->with([
-                        'error' => 'Transaction not found or invalid billing type. Please try again.'
+                    // return redirect()->back()->with([
+                    //     'error' => 'Transaction not found or invalid billing type. Please try again.'
+                    // ]);
+                    return response()->json([
+                        'message' => 'Transaction not found or invalid billing type. Please try again.',
+                        'success' => false
                     ]);
                 }
 
@@ -303,8 +309,12 @@ class TransactionController extends Controller
                     $check = TransactionNonMember::where('transaction_ref', $invoice_number)->where('status', '=', 1)->first();
 
                     if($check) {
-                        return redirect()->back()->with([
-                            'error' => 'Transaction not found or invalid billing type. Please try again.'
+                        // return redirect()->back()->with([
+                        //     'error' => 'Transaction not found or invalid billing type. Please try again.'
+                        // ]);
+                        return response()->json([
+                            'message' => 'Transaction not found or invalid billing type. Please try again.',
+                            'success' => false
                         ]);
                     }
 
@@ -316,32 +326,48 @@ class TransactionController extends Controller
                     $check = TransactionMember::where('transaction_ref', $invoice_number)->where('status', '=', 1)->first();
 
                     if($check) {
-                        return redirect()->back()->with([
-                            'error' => 'Transaction not found or invalid billing type. Please try again.'
+                        // return redirect()->back()->with([
+                        //     'error' => 'Transaction not found or invalid billing type. Please try again.'
+                        // ]);
+                        return response()->json([
+                            'message' => 'Transaction not found or invalid billing type. Please try again.',
+                            'success' => false
                         ]);
                     }
 
                     $username  = TransactionMember::where('transaction_ref', $invoice_number)->first()->member->username;
                     $user_id = TransactionMember::where('transaction_ref', $invoice_number)->first()->member->id;
                 } else {
-                    return redirect()->back()->with([
-                        'error' => 'Transaction not found. Please try again.'
+                    // return redirect()->back()->with([
+                    //     'error' => 'Transaction not found. Please try again.'
+                    // ]);
+                    return response()->json([
+                        'message' => 'Transaction not found. Please try again.',
+                        'success' => false
                     ]);
                 }
             } else if($type == 'ebook_non_member') {
               $check = PaymentHistoryNonMember::where('ref_no', $invoice_number)->where('status', '=', 1)->first();
 
               if($check) {
-                  return redirect()->back()->with([
-                      'error' => 'Transaction not found or invalid billing type. Please try again.'
-                  ]);
+                //   return redirect()->back()->with([
+                //       'error' => 'Transaction not found or invalid billing type. Please try again.'
+                //   ]);
+                return response()->json([
+                    'message' => 'Transaction not found or invalid billing type. Please try again.',
+                    'success' => false
+                ]);
               }
 
               $username = PaymentHistoryNonMember::where('ref_no', $invoice_number)->first()->nonMember->username;
               $user_id = PaymentHistoryNonMember::where('ref_no', $invoice_number)->first()->nonMember->id;
             } else {
-                return redirect()->back()->with([
-                    'error' => 'Transaction not found. Please try again.'
+                // return redirect()->back()->with([
+                //     'error' => 'Transaction not found. Please try again.'
+                // ]);
+                return response()->json([
+                    'message' => 'Transaction not found. Please try again.',
+                    'success' => false
                 ]);
             }
 
@@ -351,7 +377,6 @@ class TransactionController extends Controller
                 ]);
                 $imageName = time().'.'.request()->image->getClientOriginalExtension();
                 request()->image->move(public_path('upload/transfer-confirmation/'), $imageName);
-                echo $imageName;
             }
 
             DB::table('transfer_confirmations')->insert([
@@ -372,12 +397,20 @@ class TransactionController extends Controller
 
             DB::commit();
 
-            return redirect()->back()->with([
-                'message' => 'Transfer Confirmation Success. Please wait for our verification.'
+            // return redirect()->back()->with([
+            //     'message' => 'Transfer Confirmation Success. Please wait for our verification.'
+            // ]);
+            return response()->json([
+                'message' => 'Transfer Confirmation Success. Please wait for our verification',
+                'success' => true
             ]);
         } catch (\Exception $e){
-            return redirect()->back()->with([
-                'error' => $e
+            // return redirect()->back()->with([
+            //     'error' => $e
+            // ]);
+            return response()->json([
+                'message' => $e,
+                'success' => false
             ]);
         }
 
