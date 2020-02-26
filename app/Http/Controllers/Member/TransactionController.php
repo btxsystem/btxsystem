@@ -347,7 +347,7 @@ class TransactionController extends Controller
 
             if($request->hasFile('image')) {
                 $this->validate($request, [
-                    'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:15360',
+                    'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:25360',
                 ]);
                 $imageName = time().'.'.request()->image->getClientOriginalExtension();
                 request()->image->move(public_path('upload/transfer-confirmation/'), $imageName);
