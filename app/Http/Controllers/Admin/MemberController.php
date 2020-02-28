@@ -544,10 +544,7 @@ class MemberController extends Controller
 
             $employeer = Employeer::where('id', $employeer)->decrement('pv', $totalDecrementPv);
 
-            $updateTransationMember = TransactionMember::where('id', $transaction)->update([
-                'expired_at' => '2010-01-01 00:00:00',
-                'status' => 0
-            ]);
+            $updateTransationMember = TransactionMember::where('id', $transaction)->delete();
 
             if(!$updateTransationMember || !$employeer) {
                 DB::rollBack();
