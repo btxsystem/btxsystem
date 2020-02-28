@@ -5,8 +5,8 @@
 @stop
 <head>
 <style>
-    .bg-main {
-        height: 100vh; background-image:  url({{asset('assets3/img/hero-fallback.jpg')}}); background-size: cover;background-repeat:no-repeat;background-attachment: fixed;
+     .bg-main {
+        height: 100%; background-image:  url({{asset('assets3/img/hero-fallback.jpg')}}); background-size: cover;background-repeat:no-repeat;background-attachment: fixed;
     }
 
     .shadow {
@@ -66,7 +66,7 @@
     }
 
     .wrap-img{
-    border-radius: 50%; width: 150px; height: 150px; overflow: hidden;
+        border-radius: 50%; width: 140px; height: 150px; overflow: hidden;
     }
 
     .sub-judul-1 {
@@ -77,8 +77,8 @@
     letter-spacing: 3px; font-weight: 300;
     }
 
-    .img-user {
-        height: 100px!important; width: 100px!important;
+    .img-user rounded-circle {
+    height: 100px!important; width: 100px!important;
     }
 
     .bg-gray {
@@ -86,7 +86,13 @@
     }
 
     .img-frame {
-    position: absolute; width: 150px; height: 150px;
+        position: absolute; width: 150px; height: 150px;
+    }
+    .img-frame-platinum {
+        position: absolute;
+        width: 50px;
+        height: 50px;
+        top: -10px;
     }
 
     @media (max-width: 480px) {
@@ -245,17 +251,17 @@
                             <h3 class="text-center"><span class="sub-judul-1">PLATINUM I </span><span class="sub-judul-2">ACHIEVERS</span></h3>
                         </div>
                         @foreach ($data['platinum1'] as $item)
-                            <div class="col-lg-4">
-                                <div class="row">
-                                    <div class="col-lg-4 d-flex align-items-center mx-auto justify-content-center wrap-img">
-                                        <img src="{{$item['src'] != null ? asset($item['src']) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user rounded-circle" style="height: 100px!important; width: 100px!important;">
-                                        <img src="{{asset('assets3/img/Platinum1.png')}}" class="img-fluid img-frame">
-                                    </div>
-                                    <div class="col-lg-8">
-                                        <h5 class="text-center mt-2">{{strtoupper($item['first_name'])}} {{strtoupper($item['last_name'])}}</h5>
-                                    </div>
+                        <div class="col">
+                            <div class="d-flex align-items-center mx-auto justify-content-center wrap-img" style="overflow: visible; height: 90px;">
+                                <div class="col-lg-6">
+                                    <img src="{{$item['src'] != null ? asset($item['src']) : asset('assets3/img/favicon.png')}}" class="mx-auto d-block img-fluid img-user rounded-circle" style="height: 30px!important; width: 30px!important;">
+                                    <img src="{{asset('assets3/img/Platinum1.png')}}" class="img-fluid img-frame-platinum">
+                                </div>
+                                <div class="col-lg-6 p-0">
+                                    <small class="text-left mt-2">{{strtoupper($item['first_name'])}} {{strtoupper($item['last_name'])}}</small>
                                 </div>
                             </div>
+                        </div>
                         @endforeach
                     </div>
                     {{$data['platinum1']->links()}}
