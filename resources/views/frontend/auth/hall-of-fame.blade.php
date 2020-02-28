@@ -81,7 +81,13 @@
     }
 
     .img-frame {
-    position: absolute; width: 150px; height: 150px;
+        position: absolute; width: 150px; height: 150px;
+    }
+    .img-frame-platinum {
+        position: absolute;
+        width: 50px;
+        height: 50px;
+        top: -10px;
     }
 
     @media (max-width: 480px) {
@@ -258,11 +264,15 @@
             </div>
             @foreach ($data['platinum1'] as $item)
                 <div class="col p-3">
-                    <div class="d-flex align-items-center mx-auto justify-content-center wrap-img">
-                        <img src="{{$item['src'] != null ? asset($item['src']) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user rounded-circle" style="height: 100px!important; width: 100px!important;">
-                        <img src="{{asset('assets3/img/Platinum1.png')}}" class="img-fluid img-frame">
+                    <div class="d-flex align-items-center mx-auto justify-content-center wrap-img" style="overflow: visible; height: 90px;">
+                        <div class="col-lg-6">
+                            <img src="{{$item['src'] != null ? asset($item['src']) : asset('assets3/img/favicon.png')}}" class="mx-auto d-block img-fluid img-user rounded-circle" style="height: 30px!important; width: 30px!important;">
+                            <img src="{{asset('assets3/img/Platinum1.png')}}" class="img-fluid img-frame-platinum">
+                        </div>
+                        <div class="col-lg-6 p-0">
+                            <small class="text-left mt-2">{{strtoupper($item['first_name'])}} {{strtoupper($item['last_name'])}}</small>
+                        </div>
                     </div>
-                    <h5 class="text-center mt-2">{{strtoupper($item['first_name'])}} {{strtoupper($item['last_name'])}}</h5>
                 </div>
             @endforeach
         </div>

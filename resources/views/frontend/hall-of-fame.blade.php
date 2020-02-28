@@ -245,12 +245,16 @@
                             <h3 class="text-center"><span class="sub-judul-1">PLATINUM I </span><span class="sub-judul-2">ACHIEVERS</span></h3>
                         </div>
                         @foreach ($data['platinum1'] as $item)
-                            <div class="col-lg-4 p-3">
-                                <div class="d-flex align-items-center mx-auto justify-content-center wrap-img">
-                                    <img src="{{$item['src'] != null ? asset($item['src']) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user rounded-circle" style="height: 100px!important; width: 100px!important;">
-                                    <img src="{{asset('assets3/img/Platinum1.png')}}" class="img-fluid img-frame">
+                            <div class="col-lg-4">
+                                <div class="row">
+                                    <div class="col-lg-4 d-flex align-items-center mx-auto justify-content-center wrap-img">
+                                        <img src="{{$item['src'] != null ? asset($item['src']) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user rounded-circle" style="height: 100px!important; width: 100px!important;">
+                                        <img src="{{asset('assets3/img/Platinum1.png')}}" class="img-fluid img-frame">
+                                    </div>
+                                    <div class="col-lg-8">
+                                        <h5 class="text-center mt-2">{{strtoupper($item['first_name'])}} {{strtoupper($item['last_name'])}}</h5>
+                                    </div>
                                 </div>
-                                <h5 class="text-center mt-2">{{strtoupper($item['first_name'])}} {{strtoupper($item['last_name'])}}</h5>
                             </div>
                         @endforeach
                     </div>
