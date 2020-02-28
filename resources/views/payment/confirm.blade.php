@@ -59,12 +59,13 @@
                   <img id="source_image" class="hidden" style="width:100%">
                   <img id="compressed_image" class="hidden" style="width:100%">
                   @endif
+                  <a type="button" href="{{url('')}}" class="btn btn-success btn-block hidden" id="back-btn">
+                      Back
+                  </a>
                   @if(\Session::has('message'))
-                    <a type="button" href="{{url('')}}" class="btn btn-success btn-block">
-                       Back
-                    </a>
+                    
                   @else
-                    <button type="submit" class="btn btn-success btn-block">
+                    <button type="submit" class="btn btn-success btn-block" id="submit-btn">
                       Submit
                     </button>
                   @endif
@@ -162,12 +163,14 @@ function submitData () {
 
         return;
       }
-      
+
       $(`#message`).html(`
         <div class="alert alert-success">
           ${data.message}
         </div>
       `)
+
+      window.location.href = "{{url('/)}}"
     }
   })
 }
