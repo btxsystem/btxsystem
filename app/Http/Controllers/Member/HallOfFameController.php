@@ -32,9 +32,9 @@ class HallOfFameController extends Controller
     $data = Auth::user();
     $rank = DB::table('ranks')->select('name')->where('id','=',$data->rank_id)->first();
     $pv_group = DB::table('pv_rank')->select('pv_left','pv_midle','pv_right')->where('id_member','=',$data->id)->first();
-    $data['platinum1'] = Employeer::where('rank_id',1)->where('expired_at', '>', Carbon::now())->where('status','!=',0)->with('rank')->paginate(3, ['*'], 'page_1s');
-    $data['platinum2'] = Employeer::where('rank_id',2)->where('expired_at', '>', Carbon::now())->where('status','!=',0)->with('rank')->paginate(3, ['*'], 'page_2s');
-    $data['platinum3'] = Employeer::where('rank_id',3)->where('expired_at', '>', Carbon::now())->where('status','!=',0)->with('rank')->paginate(3, ['*'], 'page_3s');
+    $data['platinum1'] = Employeer::where('rank_id',1)->where('expired_at', '>', Carbon::now())->where('status','!=',0)->with('rank')->paginate(25, ['*'], 'page_1s');
+    $data['platinum2'] = Employeer::where('rank_id',2)->where('expired_at', '>', Carbon::now())->where('status','!=',0)->with('rank')->paginate(5, ['*'], 'page_2s');
+    $data['platinum3'] = Employeer::where('rank_id',3)->where('expired_at', '>', Carbon::now())->where('status','!=',0)->with('rank')->paginate(5, ['*'], 'page_3s');
     // $data['director1'] = Employeer::where('rank_id',4)->where('expired_at', '>', Carbon::now())->where('status','!=',0)->with('rank')->paginate(3, ['*'], 'page_4s');
     // $data['director2'] = Employeer::where('rank_id',5)->where('expired_at', '>', Carbon::now())->where('status','!=',0)->with('rank')->paginate(3, ['*'], 'page_5s');
     $data['director1'] = Employeer::where('rank_id',4)->where('expired_at', '>', Carbon::now())->where('status','!=',0)->with('rank')->get();
