@@ -44,7 +44,7 @@ class NotificationService extends Notification
     }
 
     public function store($data, $description, $nominal){
-        self::insert($data);
+        //self::insert($data);
 
         $dataEmail = (object) [
             'description' => 'Selamat anda telah melakukan klaim reward, mohon menunggu approval dari pihak bitrexgo dan customer service bitrexgo akan menghubungi anda',
@@ -98,9 +98,9 @@ class NotificationService extends Notification
             ];
             Mail::to('cs@bitrexgo.co.id')->send(new UpRankAdminMail($email));
 
-            self::findOrFail($notif->id)->update([
-                'send_email' => 1
-            ]);
+            // self::findOrFail($notif->id)->update([
+            //     'send_email' => 1
+            // ]);
         }
     }
 }
