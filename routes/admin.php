@@ -174,7 +174,7 @@ Route::group(['middleware' => 'admin'], function () {
         Route::get('/{id}/pv-history','Admin\MemberController@historyPV')->name('pv.history');
         Route::get('/{id}/pv-history-pairing','Admin\MemberController@historyPVPairing')->name('pv.history.pairing');
         Route::get('/{id}/transaction','Admin\MemberController@transactionMember')->name('transaction.member');
-
+        Route::get('/transaction/{id}/inactive-ebook/{employeer}','Admin\MemberController@inactiveEbook')->name('transaction.inactive.ebook');
 
         Route::group(['prefix'=>'active','as'=>'active.'], function(){
             Route::get('', ['as' => 'index', 'uses' => 'Admin\MemberController@index']);
