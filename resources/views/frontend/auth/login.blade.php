@@ -475,17 +475,15 @@
                 </div> --}}
                 <!-- end slider-reviews -->
                 <div class="owl-carousel" id="owl-testi">
-                  <div class="reviews">
-                    <div class="reviews__text" style="text-align: justify;">
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                      quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                      consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                      cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                      proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                    </div>
-                    <span class="reviews_autor">-- Lorems</span> <span class="reviews_categories"></span>
-                  </div>
+                  @if (count($data['testimoni']) >= 0)
+                    @foreach ($data['testimoni'] as $item)
+                      <div class="reviews">
+                        <div class="reviews__text" style="text-align: justify;">{{$item->desc}}</div>
+                        <span class="reviews_autor">-- {{$item->name}}</span> <span class="reviews_categories"></span>
+                      </div>
+                      <!-- end reviews -->
+                    @endforeach
+                  @endif  
                 </div>
               </section>
               <!-- end section-default -->
@@ -532,7 +530,7 @@
     $('#owl-testi').owlCarousel({
       loop:true,
       margin:30,
-      nav:false,
+      nav:true,
       dots:false,
       autoplay : true,
       responsiveClass:true,
@@ -546,7 +544,7 @@
           loop:true,
         },
         1000:{
-          items:3,
+          items:1,
           loop:true,
         }
       }
