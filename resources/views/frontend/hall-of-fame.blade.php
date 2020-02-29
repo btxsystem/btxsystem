@@ -66,7 +66,7 @@
     }
 
     .wrap-img{
-    border-radius: 50%; width: 150px; height: 150px; overflow: hidden;
+        border-radius: 50%; width: 140px; height: 150px; overflow: hidden;
     }
 
     .sub-judul-1 {
@@ -251,7 +251,7 @@
                             <h3 class="text-center"><span class="sub-judul-1">PLATINUM I </span><span class="sub-judul-2">ACHIEVERS</span></h3>
                         </div>
                         @foreach ($data['platinum1'] as $item)
-                        <div class="col p-3">
+                        <div class="col">
                             <div class="d-flex align-items-center mx-auto justify-content-center wrap-img" style="overflow: visible; height: 90px;">
                                 <div class="col-lg-6">
                                     <img src="{{$item['src'] != null ? asset($item['src']) : asset('assets3/img/favicon.png')}}" class="mx-auto d-block img-fluid img-user rounded-circle" style="height: 30px!important; width: 30px!important;">
