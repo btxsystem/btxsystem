@@ -1,5 +1,27 @@
+<style>
+    .page-item.active .page-link {
+        background-color: transparent;
+        border-color: transparent;
+        color: #b92240;
+        font-size: 13px;
+    }
+    .page-item.active .page-link:hover {
+        background-color: #b92240;
+        border-color: #b92240;
+        color: #fff;
+    }
+    .page-item.disabled .page-link, .page-link, .page-item.disabled .page-link:hover, .page-link:hover {
+        border-color: transparent;
+        color: #333;
+        font-size: 13px;
+    }
+    .page-item:first-child .page-link, .page-item:last-child .page-link {
+        border-radius: 0;
+    }
+</style>
+
 @if ($paginator->hasPages())
-    <ul class="pagination" role="navigation">
+    <ul class="pagination d-flex justify-content-center" role="navigation">
         {{-- Previous Page Link --}}
         @if ($paginator->onFirstPage())
             <li class="page-item disabled" aria-disabled="true" aria-label="@lang('pagination.previous')">
