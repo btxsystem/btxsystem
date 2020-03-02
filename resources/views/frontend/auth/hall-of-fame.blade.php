@@ -110,7 +110,8 @@
 <body class="bg-main">
     <div class="container p-5 bg-upper">
         <div class="w-100 p-3 p-4 bg-white rounded shadow">
-        <h2 class="title text-center" style="margin-bottom: 60px;">HALL OF FAME</h2>
+        <!-- <h2 class="title text-center" style="margin-bottom: 60px;">HALL OF FAME</h2> -->
+        <center><img src="{{asset('assets3/img/hof.png')}}" class="img-fluid mb-2" width="550"></center>
 
         @if(count($data['chairman2']) > 0)
         <section id="chairman_2">
@@ -302,6 +303,15 @@ $('a.page-link').click(function(e) {
     e.preventDefault()
     let section = $(this).parents()[2].id
     let link = $(this).prop("href")
-    window.location.href = link + '#' + section
+    window.location.href = link + `&element=${section}` + '#' + section
 })
+
+<?php
+
+if(request()->get('element')):?>
+    $('html, body').animate({
+        scrollTop: $("#<?=request()->get('element');?>").offset().top - 240
+    }, 1000);
+<?php endif;?>
+
 </script>
