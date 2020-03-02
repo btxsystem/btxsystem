@@ -12,6 +12,14 @@ function getJmlNotif(){
     return NotificationService::getTotalNotif();
 }
 
+function checkImageHof($image) {
+    if(!file_exists($image)) {
+        return asset('assets3/img/favicon.png');
+    }
+
+    return $image;
+}
+
 function invoiceNumbering(){
       $dateNow = date('ym');
       $lastInvoiceNo = Employeer::pluck('id_member')->last();
