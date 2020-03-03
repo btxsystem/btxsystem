@@ -170,7 +170,7 @@ function submitData () {
         </div>
       `)
 
-      window.location.href = "{{url('/)}}"
+      window.location.href = "{{url('/')}}"
     }
   })
 }
