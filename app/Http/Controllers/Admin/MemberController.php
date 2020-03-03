@@ -525,7 +525,7 @@ class MemberController extends Controller
                 $expired = date('Y-m-d H:i:s', strtotime($data->expired_at));
 
                 if($expired > date('Y-m-d') && $data->status == 1) {
-                    return "<a href='".route('members.transaction.inactive.ebook', ['id' => $data->id, 'employeer' => $data->member_id])."' class='btn btn-danger'><i class='fa fa-power-off'></i></a>";
+                    return "<a href='".route('members.transaction.inactive.ebook', ['id' => $data->id, 'employeer' => $data->member_id])."' class='btn btn-danger nonactive-ebook'><i class='fa fa-power-off'></i></a>";
                 }
 
                 return "Expired";

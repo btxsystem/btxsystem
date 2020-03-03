@@ -603,6 +603,21 @@
                     });
             });
         });
+
+        $(document).on('click', '.nonactive-ebook', function (e) {
+            e.preventDefault();
+            // console.log(id);
+            var url =   $(this).prop("href");
+            swal({
+                        title: "Are you sure to set Non Active Ebook this member ?",
+                        confirmButtonClass: "btn-danger",
+                        confirmButtonText: "Yes!",
+                        showCancelButton: true,
+                    },
+                    function() {
+                        window.location.href = url;
+                });
+        });
       </script>
 
 @endsection
