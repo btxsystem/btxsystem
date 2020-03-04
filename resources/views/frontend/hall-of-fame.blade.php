@@ -129,7 +129,7 @@
                                 <h3 class="text-center"><span class="sub-judul-1">CHAIRMAN II </span><span class="sub-judul-2">ACHIEVERS</span></h3>
                             </div>
                             @foreach ($data['chairman2'] as $item)
-                                <div class="col-lg-4 p-3">
+                                <div class="col-lg-4 p-3 mx-auto d-block">
                                     <div class="d-flex align-items-center mx-auto justify-content-center wrap-img">
                                         <img src="{{$item['src'] != null ? checkImageHof(asset($item['src'])) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user rounded-circle" style="height: 100px!important; width: 100px!important;">
                                         <img src="{{asset('assets3/img/Chairman2.png')}}" class="img-fluid img-frame">
@@ -149,7 +149,7 @@
                                 <h3 class="text-center"><span class="sub-judul-1">CHAIRMAN I </span><span class="sub-judul-2">ACHIEVERS</span></h3>
                             </div>
                             @foreach ($data['chairman1'] as $item)
-                                <div class="col-lg-4 p-3">
+                                <div class="col-lg-4 p-3 mx-auto d-block">
                                     <div class="d-flex align-items-center mx-auto justify-content-center wrap-img">
                                         <img src="{{$item['src'] != null ? checkImageHof(asset($item['src'])) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user rounded-circle" style="height: 100px!important; width: 100px!important;">
                                         <img src="{{asset('assets3/img/Chairman1.png')}}" class="img-fluid img-frame">
@@ -178,6 +178,7 @@
                                 </div>
                             @endforeach
                         </div>
+                        {{$data['director3']->links()}}
                     </section>
                     @endif
 
@@ -197,6 +198,7 @@
                                 </div>
                             @endforeach
                         </div>
+                        {{$data['director2']->links()}}
                     </section>
                     @endif
 
@@ -216,6 +218,7 @@
                                 </div>
                             @endforeach
                         </div>
+                        {{$data['director1']->links()}}
                     </section>
                     @endif
 
@@ -225,7 +228,7 @@
                             <div class="col-lg-12 pt-3">
                                 <h3 class="text-center"><span class="sub-judul-1">PLATINUM III </span><span class="sub-judul-2">ACHIEVERS</span></h3>
                             </div>
-                            @foreach ($data['platinum3'] as $item)
+                            @foreach ($data['platinum3'] as $key => $item)
                                 <div class="col p-3">
                                     <div class="d-flex align-items-center mx-auto justify-content-center wrap-img">
                                         <img src="{{$item['src'] != null ? checkImageHof(asset($item['src'])) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user rounded-circle" style="height: 100px!important; width: 100px!important;">
