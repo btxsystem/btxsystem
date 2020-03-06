@@ -175,7 +175,7 @@ div#flag {
 							<div class="form-line focused success">
 								<input style="color:green; font-size:25px; font-weight:bold; text-align:center;" type="text" class="form-control" id="va" name="va" value="" readonly>
 							</div>
-							<button type="button" class="mt-3 btn btn-raised bg-grey waves-effect" style="cursor:pointer" id="copy">Copy</button>
+							<button type="button" class="mt-3 btn btn-raised text-white bg-danger waves-effect" style="cursor:pointer" id="copy">Copy</button>
 						<br>
                     </center>
                     <br>
