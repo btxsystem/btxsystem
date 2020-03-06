@@ -616,8 +616,8 @@ $('#buy-va').click(function(){
 })
 
 function changeValueRepeat(param) {
-	$('#register').show();
-	$('#buy-va').hide();
+	$('#register').hide();
+	$('#buy-va').show();
 	let data = JSON.parse(param)
 	$('#repeatEbook').val(data.id)
 	$('#repeatPaymentMethod').val('transfer')
