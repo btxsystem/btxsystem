@@ -64,10 +64,10 @@
                     <h5 class="card-inside-title">Gender <em>*</em></h5>
                     <div class="demo-radio-button">
                         @if(Auth::user()->id == 3)
-                            <input name="bca" type="radio" value="bca" id="bca" class="with-gap radio-col-red" checked />
+                            <input name="method" type="radio" value="bca" id="bca" class="with-gap radio-col-red" checked />
                             <label for="bca">BCA VA</label> 
                         @else
-                            <input name="transfer" type="radio" value="transfer" id="transfer" class="with-gap radio-col-red" checked/>
+                            <input name="method" type="radio" value="transfer" id="transfer" class="with-gap radio-col-red" checked/>
                             <label for="transfer">Transfer</label>
                         @endif;
 
