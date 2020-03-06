@@ -13,7 +13,7 @@
                 <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{{route('member.transaction.topup')}}" method="POST">
+            <form action="{{route('member.transaction.topup')}}" method="POST" id="form-topup">
                 @csrf
                 <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="form-line">
@@ -59,16 +59,30 @@
     						</div>
     					</div>
                     </div>
-				</div>
+                </div>
                 <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <h5 class="card-inside-title">Gender <em>*</em></h5>
+                    <div class="demo-radio-button">
+                        @if(Auth::user()->id == 3)
+                            <input name="bca" type="radio" value="bca" id="bca" class="with-gap radio-col-red" checked />
+                            <label for="bca">BCA VA</label> 
+                        @else
+                            <input name="transfer" type="radio" value="transfer" id="transfer" class="with-gap radio-col-red" checked/>
+                            <label for="transfer">Transfer</label>
+                        @endif;
+
+                    </div>
+                </div>
+                <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12 d-none">
+                <h5>Select Payment Method</h5>
                   <div class="demo-radio-button">
                     <!-- <input name="method" type="radio" value="transfer" id="transfer" class="with-gap radio-col-red" checked />
                     <label for="transfer">Transfer</label> -->
-                    <h5>Select Payment Method</h5>
+                    
 
-                     <input name="method" type="radio" value="bca" id="bca" class="with-gap radio-col-red" checked/>
+                     <!-- <input name="method" type="radio" value="bca" id="bca" class="with-gap radio-col-red" checked/>
                     <label for="bca">BCA VA</label> 
-                    <!-- <input name="method" type="radio" value="transfer" id="transfer" class="with-gap radio-col-red" checked/>
+                    <input name="method" type="radio" value="transfer" id="transfer" class="with-gap radio-col-red"/>
                     <label for="bca">Transfer</label> -->
 
                     <!--<input name="method" type="radio" value="other" id="other" class="with-gap radio-col-red"/>
@@ -397,6 +411,9 @@
 
       $('#transfer').change(function(){
           $('#topup-points').prop('type','submit');
+          $('#bca').removeAttr("checked")
+          $('#bca').prop('checked', false)
+          $('#transfer').prop('checked', true)
           is_bca_method = false;
       })
 
@@ -411,6 +428,9 @@
 
       $('#bca').change(function(){
           $('#topup-points').prop('type','button');
+          $('#transfer').removeAttr("checked")
+          $('#bca').prop('checked', true)
+          $('#transfer').prop('checked', false)
           is_bca_method = true;
       })
 
@@ -458,6 +478,7 @@
                 }
             });
           }else{
+              $('#form-topup').submit()
             // $.post("{{ route('member.payment.midtrans') }}",
             // {
             //     _method: 'POST',
