@@ -468,6 +468,7 @@ class MemberController extends Controller
             ->addColumn('status', function ($data) {
                 return $data->status ? $this->getStatusPayment($data) : 'No Action';
             })
+            ->rawColumns(['description'])
             ->make(true);
     }
 
