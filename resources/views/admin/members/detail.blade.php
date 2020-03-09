@@ -356,7 +356,7 @@
                             <div class="form-group">
                                 <label class="col-md-3 control-label">Nominal</label>
                                 <div class="col-md-8 inputGroupContainer">
-                                    <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-piggy-bank"></i></span><input id="nominal" name="nominal" placeholder="Nominal" class="form-control" required="true" value="" type="number"></div>
+                                    <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-piggy-bank"></i></span><input id="nominal" name="nominal" placeholder="Nominal" class="form-control" required="true" value="" min="10000" type="number"></div>
                                 </div>
                             </div>
                             <div class="form-group">
