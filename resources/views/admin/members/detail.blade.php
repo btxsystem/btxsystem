@@ -407,7 +407,7 @@
                         </div>
                     </fieldset>
                     <div class="modal-footer">
-                        <button type="button" id="submit-refund" class="btn btn-primary">Submit</button>
+                        <button type="button" id="submit-refund" disabled class="btn btn-primary">Submit</button>
                     </div>
                 </form>
             </div>
