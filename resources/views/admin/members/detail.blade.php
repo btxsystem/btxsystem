@@ -396,7 +396,7 @@
                         <div class="form-group">
                             <label class="col-md-3 control-label">Refund points</label>
                             <div class="col-md-8 inputGroupContainer">
-                                <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-piggy-bank"></i></span><input id="points" name="points" placeholder="Refund points" class="form-control" min="1" required="true" value="" type="number"></div>
+                                <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-piggy-bank"></i></span><input id="points" name="points" placeholder="Refund points" class="form-control" min="1" max="{{$data->bitrex_points}}" required="true" value="" type="number"></div>
                             </div>
                         </div>
                         <div class="form-group">
@@ -494,6 +494,26 @@
                 $('#submit-bph').prop('disabled', true)
             } else {
                 $('#submit-bph').prop('disabled', false)
+            }
+        })
+
+        $('#points').keyup(function() {
+            let value = parseInt($(this).val())
+
+            if(value < 1 || value > parseInt($(this).prop("max"))) {
+                $('#submit-refund').prop('disabled', true)
+            } else {
+                $('#submit-refund').prop('disabled', false)
+            }
+        })
+
+        $('#points').change(function() {
+            let value = parseInt($('#points').val())
+
+            if(value < 1 || value > parseInt($('#points').prop("max"))) {
+                $('#submit-refund').prop('disabled', true)
+            } else {
+                $('#submit-refund').prop('disabled', false)
             }
         })
 
