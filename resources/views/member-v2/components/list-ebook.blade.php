@@ -307,8 +307,8 @@ w[o].h=h;w[o].b=b;return (w[o].q=w[o].q||[]).push(arguments)};a=d.createElement(
 m=d.getElementsByTagName(t)[0];a.async=1;a.src=h+l+'?b='+b+'&p='+p.join(',');a.crossorigin='use-credentials';m.parentNode.insertBefore(a,m)
 })(window,document,'script','https://embedder.traducationfx.com/','embedder.js','PCyAlXfaqVU',['modal'],'TraducationFX');
 
-$('#submit-va').show();
-$('#submit-nonva').hide();
+$('#submit-va').hide();
+$('#submit-nonva').show();
 
 </script>
 <?php if($books[0]->id == 1) { ?>

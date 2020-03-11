@@ -27,6 +27,12 @@ class Authenticate extends Middleware
             }
             return redirect()->route('member.explore');
         }
+        // if (request()->segment(1) != 'backoffice' || request()->segment(1) != 'ebook' || request()->segment(1) != 'login') {
+        //     dd(Auth::guard('user')->check());
+        //     if (!Auth::guard('user')->check()) {
+        //         return redirect('/');
+        //     }
+        // }
     }
     
 }

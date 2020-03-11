@@ -61,7 +61,7 @@
                     </div>
                 </div>
                 <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <h5 class="card-inside-title">Gender <em>*</em></h5>
+                    <h5 class="card-inside-title">Select Payment Method</h5>
                     <div class="demo-radio-button">
                         <input name="method" type="radio" value="bca" id="bca" class="with-gap radio-col-red" checked />
                         <label for="bca">BCA VA</label> 
@@ -473,7 +473,6 @@
                 }
             });
           }else{
-              $('#form-topup').submit()
             // $.post("{{ route('member.payment.midtrans') }}",
             // {
             //     _method: 'POST',

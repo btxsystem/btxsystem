@@ -210,6 +210,7 @@
                                 <th width="15%">Bitrax Value</th>
                                 <th width="15%">Time</th>
                                 <th width="15%">Expired</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                     </table>
@@ -611,6 +612,7 @@
                   { data: 'ebook.bv', name: 'bv', className: "text-center"   },
                   { data: 'created_at', name: 'created_at', className: "text-center"   },
                   { data: 'expired_at', name: 'expired_at', className: "text-center"   },
+                  { data: 'action', name: 'action', className: "text-center", orderable: false, searchable: false   },
 
               ]
           });
@@ -641,6 +643,21 @@
                             }
                     });
             });
+        });
+
+        $(document).on('click', '.nonactive-ebook', function (e) {
+            e.preventDefault();
+            // console.log(id);
+            var url =   $(this).prop("href");
+            swal({
+                        title: "Are you sure to set Non Active Ebook this member ?",
+                        confirmButtonClass: "btn-danger",
+                        confirmButtonText: "Yes!",
+                        showCancelButton: true,
+                    },
+                    function() {
+                        window.location.href = url;
+                });
         });
       </script>
 

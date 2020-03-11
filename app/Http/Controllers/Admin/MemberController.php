@@ -522,7 +522,42 @@ class MemberController extends Controller
             ->addColumn('info', function ($data) {
                 return $this->getStatusInfoTransaction($data);
             })
+            ->addColumn('action', function ($data) {
+                $expired = date('Y-m-d H:i:s', strtotime($data->expired_at));
+
+                if($expired > date('Y-m-d') && $data->status == 1) {
+                    return "<a href='".route('members.transaction.inactive.ebook', ['id' => $data->id, 'employeer' => $data->member_id])."' class='btn btn-danger nonactive-ebook'><i class='fa fa-power-off'></i></a>";
+                }
+
+                return "Expired";
+            })
             ->make(true);
+    }
+
+    public function inactiveEbook(Request $request, $transaction = 0, $employeer = 0)
+    {
+        try {
+            DB::beginTransaction();
+
+            $transactionMember = TransactionMember::where('id', $transaction)->first();
+
+            $totalDecrementPv = Ebook::where('id', $transactionMember->ebook_id)->first()->pv ?? 0;
+
+            $employeer = Employeer::where('id', $employeer)->decrement('pv', $totalDecrementPv);
+
+            $updateTransationMember = TransactionMember::where('id', $transaction)->delete();
+
+            if(!$updateTransationMember || !$employeer) {
+                DB::rollBack();
+                redirect()->back();
+                return;
+            }
+
+            DB::commit();
+            return redirect()->back();
+        } catch (\Exception $e) {
+            return redirect()->back();
+        }
     }
 
     public function htmlAction($row)
