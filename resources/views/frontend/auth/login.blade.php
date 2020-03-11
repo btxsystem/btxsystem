@@ -8,7 +8,7 @@
 
                 <!-- slide-banner -->
                 @if (count($data['hall_of_fame']) >= 0)
-                <div class="col-lg-6 col-xs-12 slide-banner d-none">
+                <div class="col-lg-6 col-xs-12 slide-banner d-none d-md-block">
                     <div class="body-banner">
                         <div class="owl-carousel" id="owl-banner">
                                 @foreach ($data['hall_of_fame'] as $item)
@@ -64,7 +64,7 @@
                 <section class="section-advantages wow bounceInLeft" data-wow-duration="1s" style="padding-bottom: 10px;">
                   <div class="row">
                   @if (count($data['hall_of_fame']) >= 0)
-                <div class="col-lg-6 col-xs-12 d-none">
+                <div class="col-lg-6 col-xs-12 d-block d-md-none">
                     <div class="body-banner">
                         <div class="owl-carousel">
                                 @foreach ($data['hall_of_fame'] as $item)
@@ -476,16 +476,6 @@
                 <!-- end slider-reviews -->
                 <div class="owl-carousel" id="owl-testi">
                   @if (count($data['testimoni']) >= 0)
-<<<<<<< HEAD
-                    @foreach ($data['testimoni'] as $item)
-                      <div class="reviews">
-                        <div class="reviews__text" style="text-align: justify;">{{$item->desc}}</div>
-                        <span class="reviews_autor">-- {{$item->name}}</span> <span class="reviews_categories"></span>
-                      </div>
-                      <!-- end reviews -->
-                    @endforeach
-                  @endif  
-=======
                       @foreach ($data['testimoni'] as $item)
                           <div class="reviews">
                               <div class="reviews__text" style="text-align: justify;">{{$item->desc}}</div>
@@ -494,7 +484,6 @@
                         <!-- end reviews -->
                       @endforeach
                   @endif
->>>>>>> 0171e5ad5d788085323674823de1776da7aa6e0f
                 </div>
               </section>
               <!-- end section-default -->

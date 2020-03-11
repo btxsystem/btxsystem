@@ -267,17 +267,10 @@
 								<label class="form-check-label" for="inlineRadio1">VA & OVO</label>
 							</div> -->
 							<div class="form-check form-check-inline">
-<<<<<<< HEAD
 								<!-- <input class="form-check-input" type="radio" name="payment_method" id="transfer" value="transfer" checked>
 								<label class="form-check-label" for="inlineRadio1">Transfer</label> -->
 								<input class="form-check-input" type="radio" name="payment_method" id="va-bca" value="va-bca" checked>
 								<label class="form-check-label" for="inlineRadio1">BCA VA</label>
-=======
-								<input class="form-check-input" type="radio" name="payment_method" id="transfer" value="transfer" checked>
-								<label class="form-check-label" for="inlineRadio1">Transfer</label>
-								<!-- <input class="form-check-input" type="radio" name="payment_method" id="va-bca" value="va-bca" checked>
-								<label class="form-check-label" for="inlineRadio1">BCA VA</label> -->
->>>>>>> 0171e5ad5d788085323674823de1776da7aa6e0f
 							</div>
 					  </div>
 					  <h4>Total yang dibayar : IDR </span><b><span id="total_price"></h4></b>
