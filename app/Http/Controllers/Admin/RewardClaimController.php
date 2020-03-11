@@ -50,6 +50,9 @@ class RewardClaimController extends Controller
                     ->editColumn('updated_at', function($row) {
                         return $row->updated_at ? $row->updated_at : 'No Data';
                     })
+                    ->editColumn('approve_at', function($row) {
+                        return $row->status ? $row->status == 2 ? $row->updated_at : '' : null;
+                    })
                     ->addColumn('action', function($row) {
                         return $this->htmlAction($row);
                     })

@@ -476,6 +476,7 @@
                 <!-- end slider-reviews -->
                 <div class="owl-carousel" id="owl-testi">
                   @if (count($data['testimoni']) >= 0)
+<<<<<<< HEAD
                     @foreach ($data['testimoni'] as $item)
                       <div class="reviews">
                         <div class="reviews__text" style="text-align: justify;">{{$item->desc}}</div>
@@ -484,6 +485,16 @@
                       <!-- end reviews -->
                     @endforeach
                   @endif  
+=======
+                      @foreach ($data['testimoni'] as $item)
+                          <div class="reviews">
+                              <div class="reviews__text" style="text-align: justify;">{{$item->desc}}</div>
+                              <span class="reviews_autor">-- {{$item->name}}</span> <span class="reviews_categories"></span>
+                          </div>
+                        <!-- end reviews -->
+                      @endforeach
+                  @endif
+>>>>>>> 0171e5ad5d788085323674823de1776da7aa6e0f
                 </div>
               </section>
               <!-- end section-default -->

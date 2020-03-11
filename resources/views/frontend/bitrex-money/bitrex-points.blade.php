@@ -13,7 +13,11 @@
                 <span aria-hidden="true">&times;</span>
                 </button>
             </div>
+<<<<<<< HEAD
             <form action="{{route('member.transaction.topup')}}" method="POST" id="form-topup">
+=======
+            <form action="{{route('member.transaction.topup')}}" method="POST">
+>>>>>>> 0171e5ad5d788085323674823de1776da7aa6e0f
                 @csrf
                 <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="form-line">
@@ -75,10 +79,17 @@
                     <label for="transfer">Transfer</label> -->
                     
 
+<<<<<<< HEAD
                      <!-- <input name="method" type="radio" value="bca" id="bca" class="with-gap radio-col-red" checked/>
                     <label for="bca">BCA VA</label> 
                     <input name="method" type="radio" value="transfer" id="transfer" class="with-gap radio-col-red"/>
                     <label for="bca">Transfer</label> -->
+=======
+                    <!-- <input name="method" type="radio" value="bca" id="bca" class="with-gap radio-col-red" checked/>
+                    <label for="bca">BCA VA</label> -->
+                    <input name="method" type="radio" value="transfer" id="transfer" class="with-gap radio-col-red" checked/>
+                    <label for="bca">Transfer</label>
+>>>>>>> 0171e5ad5d788085323674823de1776da7aa6e0f
 
                     <!--<input name="method" type="radio" value="other" id="other" class="with-gap radio-col-red"/>
                     <label for="other">Other Transfer</label>-->
@@ -107,7 +118,7 @@
                 <div class="modal-footer">
                     <a href="#" class="btn btn-secondary" data-dismiss="modal">Close</a>
                     <a href="#" id="payment-bca" style="cursor:pointer; display:none;" class="btn btn-primary"></a>
-                    <button type="button" id="topup-points" disabled=true class="btn btn-primary" style="cursor:pointer;">Topup</a>
+                    <button type="submit" id="topup-points" disabled=true class="btn btn-primary" style="cursor:pointer;">Topup</a>
                 </div>
             </form>
         </div>
@@ -473,7 +484,10 @@
                 }
             });
           }else{
+<<<<<<< HEAD
               $('#form-topup').submit()
+=======
+>>>>>>> 0171e5ad5d788085323674823de1776da7aa6e0f
             // $.post("{{ route('member.payment.midtrans') }}",
             // {
             //     _method: 'POST',

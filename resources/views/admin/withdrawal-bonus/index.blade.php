@@ -178,6 +178,7 @@ Withdrawal Bonus
               ajax: {
                 url: "{{ route('withdrawal-bonus.index') }}", 
               },
+              lengthMenu: [[100, 250, 500, 1000, -1], [100, 250, 500, 1000, "All"]],
               columns: [
                   { data: 'DT_RowIndex', name: 'DT_RowIndex', className: "text-center", orderable: false, searchable: false },
                   { data: 'fullname', name: 'first_name', className: "text-center" },                                 
