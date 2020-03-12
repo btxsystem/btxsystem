@@ -13,11 +13,11 @@ function getJmlNotif(){
 }
 
 function checkImageHof($image) {
-    if(!file_exists($image)) {
+    if(!file_exists(public_path($image))) {
         return asset('assets3/img/favicon.png');
     }
 
-    return $image;
+    return asset($image);
 }
 
 function invoiceNumbering(){
