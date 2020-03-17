@@ -21,8 +21,8 @@ class NotificationService extends Notification
         return $notification;
     }
 
-    public function readNotif(){
-        self::where('isRead', 0)->update(
+    public function readNotif($id){
+        self::where('id',$id)->update(
             array('isRead' => 1)
         );
     }
@@ -39,7 +39,7 @@ class NotificationService extends Notification
                                         }
                                     ]
                             )->orderBy('notification.created_at', 'desc')
-                            ->select(['notification.id','desc','member_id']);
+                            ->select(['notification.id','desc','member_id', 'notification.created_at', 'isRead']);
         return $notification;
     }
 

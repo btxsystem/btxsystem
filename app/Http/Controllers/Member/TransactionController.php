@@ -19,6 +19,16 @@ use App\Mail\PurchaseBitrexPointTransferMail;
 
 class TransactionController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            if (!\Auth::user()) {
+                return redirect('/');
+            }
+            return $next($request);
+        });
+    }
+    
     public function index()
     {
         $data = Auth::user();

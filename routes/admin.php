@@ -33,7 +33,7 @@ Route::group(['middleware' => 'admin'], function () {
     Route::group(['prefix'=>'notification','as'=>'notification.'], function(){
         Route::get('', ['as' => '', 'uses' => 'Admin\NotificationController@index']);
         Route::get('data', ['as' => 'data', 'uses' => 'Admin\NotificationController@data']);
-        Route::get('read', ['as' => 'read', 'uses' => 'Admin\NotificationController@read']);
+        Route::get('read/{id}', ['as' => 'read', 'uses' => 'Admin\NotificationController@read']);
     });
 
 

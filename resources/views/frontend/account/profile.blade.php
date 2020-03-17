@@ -86,8 +86,8 @@
                     <div class="header">
                         <h2><strong>My Profile</strong></h2>
                         <div class="header-dropdown">
-                            <li class="dropdown"> <a href="javascript:void(0);" class="dropdown-toggle" id="edit_profile" data-toggle="modal" role="button" aria-haspopup="true" aria-expanded="false" title="Change profile"> <i class="zmdi zmdi-edit"></i> </a></li>
-                        </div>
+                        {{--    <li class="dropdown"> <a href="javascript:void(0);" class="dropdown-toggle" id="edit_profile" data-toggle="modal" role="button" aria-haspopup="true" aria-expanded="false" title="Change profile"> <i class="zmdi zmdi-edit"></i> </a></li>
+                        --}}</div>
                     </div>
                     <div class="body">
                         {{--<form action="{{route('member.change-photo')}}" id="frmFileUpload" method="post" enctype="multipart/form-data">
@@ -234,7 +234,7 @@
                 url: '/member/profile/update',
                 success: function (data) {
                     if(data.is_update == 1){
-                        $('#edit_profile').attr('data-target','#edit-profile');
+                      //  $('#edit_profile').attr('data-target','#edit-profile');
                         $.ajax({
                             type: 'GET',
                             url: '/member/profile/data',
