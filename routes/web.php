@@ -117,7 +117,7 @@ Route::group(['namespace' => 'Ebook\Api', 'prefix' => 'api/ebook'], function() {
 
 Route::post('forgot-password', ['as' => 'forgot-password', 'uses' => 'Member\ForgotPasswordController@sendEmail']);
 
-Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
+Route::group(['middleware' => 'web', 'prefix' => 'member', 'as'=> 'member.'], function () {
 
     Route::group(['prefix' => 'testimonial', 'as'=> 'testimonial.'], function() {
         Route::post('store', ['as' => 'store', 'uses' => 'Member\TestimonialController@store']);

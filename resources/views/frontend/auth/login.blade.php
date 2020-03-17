@@ -21,7 +21,7 @@
 
                 <!-- slide-banner -->
                 @if (count($data['hall_of_fame']) >= 0)
-                <div class="col-lg-6 col-xs-12 slide-banner d-none d-md-block">
+                <div class="col-lg-6 col-xs-12 slide-banner d-none">
                     <div class="body-banner">
                         <div class="owl-carousel" id="owl-banner">
                                 @foreach ($data['hall_of_fame'] as $item)
@@ -77,7 +77,7 @@
                 <section class="section-advantages wow bounceInLeft" data-wow-duration="1s" style="padding-bottom: 10px;">
                   <div class="row">
                   @if (count($data['hall_of_fame']) >= 0)
-                <div class="col-lg-6 col-xs-12 d-block d-md-none">
+                <div class="col-lg-6 col-xs-12 d-none">
                     <div class="body-banner">
                         <div class="owl-carousel">
                                 @foreach ($data['hall_of_fame'] as $item)
