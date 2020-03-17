@@ -1,4 +1,17 @@
 @include('frontend.auth.header')
+<div aria-live="polite" aria-atomic="true" class="d-flex justify-content-center align-items-center" style="min-height: 200px;position:absolute;right:0;left:0;top:0">
+<div role="alert" aria-live="assertive" aria-atomic="true" class="toast" data-autohide="false" style="width:400px;font-size:1.6rem;margin-top:100px;z-index:9999!important;margin-right:50px">
+  <div class="toast-header">
+    <strong class="mr-auto">COVID-19 (Novel Coronavirus) Update</strong>
+    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="toast-body">
+    <a target="_blank" href="{{asset('assets3/Surat_Himbauan_Covid-19-revisi_2.pdf')}}">More Details</a>
+  </div>
+</div>
+</div>
     <div class="main-content">
       <div class="slide">
         <div class="imgSlide">
@@ -475,17 +488,15 @@
                 </div> --}}
                 <!-- end slider-reviews -->
                 <div class="owl-carousel" id="owl-testi">
-                  <div class="reviews">
-                    <div class="reviews__text" style="text-align: justify;">
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                      quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                      consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                      cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                      proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                    </div>
-                    <span class="reviews_autor">-- Lorems</span> <span class="reviews_categories"></span>
-                  </div>
+                  @if (count($data['testimoni']) >= 0)
+                      @foreach ($data['testimoni'] as $item)
+                          <div class="reviews">
+                              <div class="reviews__text" style="text-align: justify;">{{$item->desc}}</div>
+                              <span class="reviews_autor">-- {{$item->name}}</span> <span class="reviews_categories"></span>
+                          </div>
+                        <!-- end reviews -->
+                      @endforeach
+                  @endif
                 </div>
               </section>
               <!-- end section-default -->
@@ -510,8 +521,10 @@
 <script src="{{asset('assets2/js/pages/forms/basic-form-elements.js')}}"></script>
 <script src="{{asset('assets2/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js')}}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 <script>
   $(document).ready(function(){
+    $('.toast').toast('show')
     $('#owl-banner').owlCarousel({
       loop:true,
       margin:10,
@@ -532,7 +545,7 @@
     $('#owl-testi').owlCarousel({
       loop:true,
       margin:30,
-      nav:false,
+      nav:true,
       dots:false,
       autoplay : true,
       responsiveClass:true,
@@ -546,7 +559,7 @@
           loop:true,
         },
         1000:{
-          items:3,
+          items:1,
           loop:true,
         }
       }

@@ -1,3 +1,17 @@
+#owl-testi.owl-carousel .owl-nav button.owl-next, .owl-carousel .owl-nav button.owl-prev, .owl-carousel button.owl-dot {
+	border: 1px #dadada solid;
+	margin-right: 10px;
+	width: 60px;
+  height: 60px;
+}
+
+#owl-testi.owl-carousel .owl-nav button.owl-next span, .owl-carousel .owl-nav button.owl-prev span {
+	font-size: 30px;
+	line-height: .8;
+}
+
+
+
 .btnBook .btn {
   margin-top: 55px;
   border-radius: 5px;

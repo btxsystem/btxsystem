@@ -13,7 +13,7 @@
                 <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form {{--action="{{route('member.transaction.topup')}}"--}} method="POST">
+            <form action="{{route('member.transaction.topup')}}" method="POST">
                 @csrf
                 <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="form-line">
@@ -66,8 +66,10 @@
                     <label for="transfer">Transfer</label> -->
                     <h5>Select Payment Method</h5>
 
-                    <input name="method" type="radio" value="bca" id="bca" class="with-gap radio-col-red" checked/>
-                    <label for="bca">BCA VA</label>
+                    <!-- <input name="method" type="radio" value="bca" id="bca" class="with-gap radio-col-red" checked/>
+                    <label for="bca">BCA VA</label> -->
+                    <input name="method" type="radio" value="transfer" id="transfer" class="with-gap radio-col-red" checked/>
+                    <label for="bca">Transfer</label>
 
                     <!--<input name="method" type="radio" value="other" id="other" class="with-gap radio-col-red"/>
                     <label for="other">Other Transfer</label>-->
@@ -96,7 +98,7 @@
                 <div class="modal-footer">
                     <a href="#" class="btn btn-secondary" data-dismiss="modal">Close</a>
                     <a href="#" id="payment-bca" style="cursor:pointer; display:none;" class="btn btn-primary"></a>
-                    <button type="button" id="topup-points" disabled=true class="btn btn-primary" style="cursor:pointer;">Topup</a>
+                    <button type="submit" id="topup-points" disabled=true class="btn btn-primary" style="cursor:pointer;">Topup</a>
                 </div>
             </form>
         </div>
@@ -456,29 +458,29 @@
                 }
             });
           }else{
-            $.post("{{ route('member.payment.midtrans') }}",
-            {
-                _method: 'POST',
-                _token: '{{ csrf_token() }}',
-                amount: nominal,
-            },
-            function (data, status) {
-                snap.pay(data.snap_token, {
-                    // Optional
-                    onSuccess: function (result) {
-                        location.reload();
-                    },
-                    // Optional
-                    onPending: function (result) {
-                        location.reload();
-                    },
-                    // Optional
-                    onError: function (result) {
-                        location.reload();
-                    }
-                });
-            });
-            return false;
+            // $.post("{{ route('member.payment.midtrans') }}",
+            // {
+            //     _method: 'POST',
+            //     _token: '{{ csrf_token() }}',
+            //     amount: nominal,
+            // },
+            // function (data, status) {
+            //     snap.pay(data.snap_token, {
+            //         // Optional
+            //         onSuccess: function (result) {
+            //             location.reload();
+            //         },
+            //         // Optional
+            //         onPending: function (result) {
+            //             location.reload();
+            //         },
+            //         // Optional
+            //         onError: function (result) {
+            //             location.reload();
+            //         }
+            //     });
+            // });
+            // return false;
           }
       })
 
@@ -727,8 +729,37 @@
         $('#pickup_quarter').change(function() {
             if($(this).prop("checked")) {
                 $('#pickup_form').hide()
+
+                if($("#kurir").val() != null) {
+                    $('#nominal').val(
+                        parseInt($('#nominal').val()) - (parseInt($('#cost_summary_value').val()) * 1000)
+                    )
+                    $('#points').val(
+                        parseInt($('#points').val()) - parseInt( $('#cost_summary_value').val())
+                    )
+                }
+
+                $("#province").empty()
+                $("#city").empty()
+                $("#district").empty()
+                $("#kurir").empty()
             } else {
                 $('#pickup_form').show()
+                $.ajax({
+                    type: 'GET',
+                    url: '/member/shipping/province',
+                    success: function (data) {
+                        $('#province').select2({
+                            placeholder: 'Province',
+                            data: data,
+                            width: '100%'
+                        });
+                        $('#cost_summary_value').val(0)
+                    },
+                    error: function() {
+                        console.log("masuk province");
+                    }
+                });
             }
 
             check_button_disabled()

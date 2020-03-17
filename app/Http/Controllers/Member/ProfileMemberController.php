@@ -305,6 +305,8 @@ class ProfileMemberController extends Controller
             }
         } catch(\Illuminate\Database\QueryException $e) {
             DB::rollback();
+            print_r($e);
+            return;
             Alert::error('Kesalahan teknis', 'Error')->persistent("OK");
             $data = Auth::user();
             $data['data'] = $request;
