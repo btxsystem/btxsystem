@@ -8,7 +8,7 @@
     </button>
   </div>
   <div class="toast-body">
-    More Details
+    <a target="_blank" href="{{asset('assets3/Surat_Himbauan_Covid-19-revisi_2.pdf')}}">More Details</a>
   </div>
 </div>
 </div>
