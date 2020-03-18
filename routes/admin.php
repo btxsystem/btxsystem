@@ -5,7 +5,7 @@ Route::post('login', ['as' => 'login', 'uses' => 'Admin\Auth\LoginController@pos
 Route::get('dashboard', ['as' => 'dashboard', 'uses' => 'Admin\HomeController@index']);
 
 Route::get('user', ['as' => 'user', 'uses' => 'Admin\UsersController@index']);
-
+Route::get('inject', ['as' => 'inject', 'uses' => 'Admin\InjectController@run']);
 
 Route::get('permissions', ['as' => 'permissions', 'uses' => 'Admin\PermissionsController@index']);
 
