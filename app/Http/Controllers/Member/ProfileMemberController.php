@@ -27,6 +27,12 @@ class ProfileMemberController extends Controller
     public function __construct(NotificationService $service)
     {
         $this->service = $service;
+        $this->middleware(function ($request, $next) {
+            if (!\Auth::user()) {
+                return redirect('/');
+            }
+            return $next($request);
+        });
     }
 
     public function index()
