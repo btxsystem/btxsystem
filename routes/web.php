@@ -87,7 +87,7 @@ Route::group(['prefix'=>'member','as'=>'member.'], function(){
 });
 */
 Route::redirect('/', '/login');
-Route::get('/login', 'Auth\LoginController@getLogin')->middleware('guest');
+Route::get('/login', 'Auth\LoginController@getLogin')->middleware('guest')->name('guest.login');
 Route::get('/event', 'Member\EventController@index');
 // Route::group(['prefix' => 'hall-of-fame', 'as'=> 'hall-of-fame.'], function () {
 //     Route::get('', ['as' => 'index', 'uses' => 'Member\HallOfFameController@index']);
