@@ -181,6 +181,8 @@ Route::group(['middleware' => 'admin'], function () {
         Route::group(['prefix'=>'active','as'=>'active.'], function(){
             Route::get('', ['as' => 'index', 'uses' => 'Admin\MemberController@index']);
             Route::post('', ['as' => 'store', 'uses' => 'Admin\MemberController@store']);
+            Route::get('/hof', ['as' => 'hof', 'uses' => 'Admin\MemberController@member_hall_of_fame']);
+            Route::post('/hof/update', ['as' => 'hofupdate', 'uses' => 'Admin\MemberController@update_member_hall_of_fame']);
             Route::get('/nonactive/{id}', ['as' => 'nonactive', 'uses' => 'Admin\MemberController@nonactive']);
         });
 
