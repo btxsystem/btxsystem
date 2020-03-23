@@ -127,21 +127,31 @@ Hall Of Fame
                 { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
                 { data: 'id_member', name: 'id_member'},
                 { data: 'username', name: 'username'},
-                { data: 'full_name', name: 'last_name'},
-                { data: 'ranking', name: 'rank.name', orderable: false },
-                { data: 'action', name: 'action', orderable: false, searchable: false, className: 'text-center', "render": function(data, type, row) {
-                    let checkbox;
-                    
-                    if(row.show_hall_of_fame) {
-                        checkbox = `<div class="checkbox">
-                            <label><input type="checkbox" onclick="toggle_member(`+row.id+`, 'hide')" checked></label>
-                        </div>`;
+                { data: 'first_name', name: 'first_name', "render": function(data, type, row){
+                    if ( type === "sort" || type === 'type' ) {
+                        return data
                     } else {
-                        checkbox = `<div class="checkbox">
-                            <label><input type="checkbox" onclick="toggle_member(`+row.id+`, 'show')"></label>
-                        </div>`;
+                        return row.full_name
                     }
-                    return checkbox;
+                }},
+                { data: 'ranking', name: 'rank.name', orderable: false },
+                { data: 'show_hall_of_fame', name: 'show_hall_of_fame', searchable: false, className: 'text-center', "render": function(data, type, row) {
+                    if ( type === "sort" || type === 'type' ) {
+                        return data
+                    } else {
+                        let checkbox;
+                    
+                        if(row.show_hall_of_fame) {
+                            checkbox = `<div class="checkbox">
+                                <label><input type="checkbox" onclick="toggle_member(`+row.id+`, 'hide')" checked></label>
+                            </div>`;
+                        } else {
+                            checkbox = `<div class="checkbox">
+                                <label><input type="checkbox" onclick="toggle_member(`+row.id+`, 'show')"></label>
+                            </div>`;
+                        }
+                        return checkbox;
+                    }
                 }},
             ]
         });

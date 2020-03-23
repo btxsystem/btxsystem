@@ -111,8 +111,7 @@ class MemberController extends Controller
                 ->where('rank_id', '!=', null)
                 ->where('rank_id', '!=', '')
                 ->with('rank','sponsor','archive', 'lastArchive') 
-                ->select('employeers.id','id_member','username','first_name','last_name','rank_id','sponsor_id','employeers.created_at','employeers.status', 'employeers.show_hall_of_fame')
-                ->orderBy('show_hall_of_fame', 'DESC');
+                ->select('employeers.id','id_member','username','first_name','last_name','rank_id','sponsor_id','employeers.created_at','employeers.status', 'employeers.show_hall_of_fame');
             }
 
             return Datatables::of($data)
