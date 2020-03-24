@@ -177,15 +177,17 @@
         <script src="{{asset('assets2/js/number.js')}}"></script>
         <script>
             $('.notifications-menu').click(function(){
-
+                $('.notifications-menu').addClass('open');
+            })
+            let readNotif = (id) => {
                 $.ajax({
                     type: 'GET', //THIS NEEDS TO BE GET
-                    url: '{{route("notification.read")}}',
+                    url: 'notification/read/'+id,
                     success: function (data) {
-                        $('.notifications-menu').addClass('open');
+                        $(location).attr('href', '{{ url("/backoffice/notification") }}')                        
                     }
                 })
-            })
+            }
         </script>
         <script>
         const BASE_URL = '{{url("/")}}'

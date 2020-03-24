@@ -322,17 +322,17 @@
 						</div>
 					</div>
 				</div>
+				<span id="tree_button">
+
+				</span>
 				<div class="card">
 					<div class="container-fluid">
 						<div class="row">
 							<div class="col-md-12">
 								<br>
 								<div class="chart" id="tree">
-									<span id="tree_button">
-
-									</span>
+									
 								</div>
-
 								<div id="overlay">
 									<div class="cv-spinner">
 										<span class="spinner"></span>

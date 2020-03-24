@@ -54,7 +54,7 @@ class RolesController extends Controller
 
     public function edit($role)
     {
-        $role = DB::table('roles')->where('id', Auth::guard('admin')->user()->roles_id)->first();
+        $role = DB::table('roles')->where('id', $role)->first();
         return view('admin.roles.edit', compact('role'));
     }
 
