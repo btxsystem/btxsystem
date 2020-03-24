@@ -194,6 +194,7 @@ Route::group(['middleware' => 'web', 'prefix' => 'member', 'as'=> 'member.'], fu
         Route::get('reward', ['as' => 'reward', 'uses' => 'Member\ProfileMemberController@getRewards']);
         Route::get('reward-claim', ['as' => 'reward-claim', 'uses' => 'Member\ProfileMemberController@rewardClaim']);
         Route::get('bitrex-points', ['as' => 'bitrex-points', 'uses' => 'Member\BitrexPointController@getBitrexPoints']);
+        Route::get('history-topup', ['as' => 'history-topup', 'uses' => 'Member\BitrexPointController@getHistoryTransaction']);
         Route::get('history-pv-pairing', ['as' => 'history-pv-pairing', 'uses' => 'Member\PvController@historyPvPairing']);
         Route::get('bonus', ['as' => 'bonus', 'uses' => 'Member\MyBonusController@bonus']);
         Route::get('bonus-sponsor', ['as' => 'bonus-sponsor', 'uses' => 'Member\MyBonusController@bonusSponsor']);
