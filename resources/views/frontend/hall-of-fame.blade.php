@@ -38,6 +38,10 @@
         z-index: 100;
         position: relative;
     }
+
+    .color-dark {
+        color: #000!important;
+    }
     .title {
         font-weight: bold;
         color: #000;
@@ -126,15 +130,15 @@
                     <section id="chariman_2">
                         <div class="row mb-4 bg-gray">
                             <div class="col-lg-12 pt-3">
-                                <h3 class="text-center"><span class="sub-judul-1">CHAIRMAN II </span><span class="sub-judul-2">ACHIEVERS</span></h3>
+                                <h3 class="text-center color-dark"><span class="sub-judul-1">CHAIRMAN II </span><span class="sub-judul-2">ACHIEVERS</span></h3>
                             </div>
                             @foreach ($data['chairman2'] as $item)
                                 <div class="col-lg-4 p-3 mx-auto d-block">
                                     <div class="d-flex align-items-center mx-auto justify-content-center wrap-img">
-                                        <img src="{{$item['src'] != null ? checkImageHof(asset($item['src'])) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user rounded-circle" style="height: 100px!important; width: 100px!important;">
+                                        <img src="{{$item['src'] != null ? checkImageHof($item['src']) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user rounded-circle" style="height: 100px!important; width: 100px!important;">
                                         <img src="{{asset('assets3/img/Chairman2.png')}}" class="img-fluid img-frame">
                                     </div>
-                                    <h5 class="text-center mt-2">{{strtoupper($item['first_name'])}} {{strtoupper($item['last_name'])}}</h5>
+                                    <h5 class="text-center mt-2 color-dark">{{strtoupper($item['first_name'])}} {{strtoupper($item['last_name'])}}</h5>
                                 </div>
                             @endforeach
                         </div>
@@ -146,15 +150,15 @@
                     <section id="chairman_1">
                         <div class="row mb-4 bg-gray">
                             <div class="col-lg-12 pt-3">
-                                <h3 class="text-center"><span class="sub-judul-1">CHAIRMAN I </span><span class="sub-judul-2">ACHIEVERS</span></h3>
+                                <h3 class="text-center color-dark"><span class="sub-judul-1">CHAIRMAN I </span><span class="sub-judul-2">ACHIEVERS</span></h3>
                             </div>
                             @foreach ($data['chairman1'] as $item)
                                 <div class="col-lg-4 p-3 mx-auto d-block">
                                     <div class="d-flex align-items-center mx-auto justify-content-center wrap-img">
-                                        <img src="{{$item['src'] != null ? checkImageHof(asset($item['src'])) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user rounded-circle" style="height: 100px!important; width: 100px!important;">
+                                        <img src="{{$item['src'] != null ? checkImageHof($item['src']) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user rounded-circle" style="height: 100px!important; width: 100px!important;">
                                         <img src="{{asset('assets3/img/Chairman1.png')}}" class="img-fluid img-frame">
                                     </div>
-                                    <h5 class="text-center mt-2">{{strtoupper($item['first_name'])}} {{strtoupper($item['last_name'])}}</h5>
+                                    <h5 class="text-center mt-2 color-dark">{{strtoupper($item['first_name'])}} {{strtoupper($item['last_name'])}}</h5>
                                 </div>
                             @endforeach
                         </div>
@@ -166,15 +170,15 @@
                     <section id="director_3">
                         <div class="row mb-4 bg-gray">
                             <div class="col-lg-12 pt-3">
-                                <h3 class="text-center"><span class="sub-judul-1">DIRECTOR III </span><span class="sub-judul-2">ACHIEVERS</span></h3>
+                                <h3 class="text-center color-dark"><span class="sub-judul-1">DIRECTOR III </span><span class="sub-judul-2">ACHIEVERS</span></h3>
                             </div>
                             @foreach ($data['director3'] as $item)
                                 <div class="col-lg-4 p-3">
                                     <div class="d-flex align-items-center mx-auto justify-content-center wrap-img">
-                                        <img src="{{$item['src'] != null ? checkImageHof(asset($item['src'])) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user rounded-circle" style="height: 100px!important; width: 100px!important;">
+                                        <img src="{{$item['src'] != null ? checkImageHof($item['src']) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user rounded-circle" style="height: 100px!important; width: 100px!important;">
                                         <img src="{{asset('assets3/img/Director3.png')}}" class="img-fluid img-frame">
                                     </div>
-                                    <h5 class="text-center mt-2">{{strtoupper($item['first_name'])}} {{strtoupper($item['last_name'])}}</h5>
+                                    <h5 class="text-center mt-2 color-dark">{{strtoupper($item['first_name'])}} {{strtoupper($item['last_name'])}}</h5>
                                 </div>
                             @endforeach
                         </div>
@@ -186,15 +190,15 @@
                     <section id="director_2">
                         <div class="row mb-4 bg-gray">
                             <div class="col-lg-12 pt-3">
-                                <h3 class="text-center"><span class="sub-judul-1">DIRECTOR II </span><span class="sub-judul-2">ACHIEVERS</span></h3>
+                                <h3 class="text-center color-dark"><span class="sub-judul-1">DIRECTOR II </span><span class="sub-judul-2">ACHIEVERS</span></h3>
                             </div>
                             @foreach ($data['director2'] as $item)
                                 <div class="col-lg-4 p-3">
                                     <div class="d-flex align-items-center mx-auto justify-content-center wrap-img">
-                                        <img src="{{$item['src'] != null ? checkImageHof(asset($item['src'])) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user rounded-circle" style="height: 100px!important; width: 100px!important;">
+                                        <img src="{{$item['src'] != null ? checkImageHof($item['src']) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user rounded-circle" style="height: 100px!important; width: 100px!important;">
                                         <img src="{{asset('assets3/img/Director2.png')}}" class="img-fluid img-frame">
                                     </div>
-                                    <h5 class="text-center mt-2">{{strtoupper($item['first_name'])}} {{strtoupper($item['last_name'])}}</h5>
+                                    <h5 class="text-center mt-2 color-dark">{{strtoupper($item['first_name'])}} {{strtoupper($item['last_name'])}}</h5>
                                 </div>
                             @endforeach
                         </div>
@@ -206,15 +210,15 @@
                     <section id="director_1">
                         <div class="row mb-4 bg-gray">
                             <div class="col-lg-12 pt-3">
-                                <h3 class="text-center"><span class="sub-judul-1">DIRECTOR I </span><span class="sub-judul-2">ACHIEVERS</span></h3>
+                                <h3 class="text-center color-dark"><span class="sub-judul-1">DIRECTOR I </span><span class="sub-judul-2">ACHIEVERS</span></h3>
                             </div>
                             @foreach ($data['director1'] as $item)
                                 <div class="col-lg-4 p-3">
                                     <div class="d-flex align-items-center mx-auto justify-content-center wrap-img">
-                                        <img src="{{$item['src'] != null ? checkImageHof(asset($item['src'])) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user rounded-circle" style="height: 100px!important; width: 100px!important;">
+                                        <img src="{{$item['src'] != null ? checkImageHof($item['src']) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user rounded-circle" style="height: 100px!important; width: 100px!important;">
                                         <img src="{{asset('assets3/img/Director1.png')}}" class="img-fluid img-frame">
                                     </div>
-                                    <h5 class="text-center mt-2">{{strtoupper($item['first_name'])}} {{strtoupper($item['last_name'])}}</h5>
+                                    <h5 class="text-center mt-2 color-dark">{{strtoupper($item['first_name'])}} {{strtoupper($item['last_name'])}}</h5>
                                 </div>
                             @endforeach
                         </div>
@@ -226,15 +230,15 @@
                     <section id="platinum_3">
                         <div class="row mb-4 bg-gray">
                             <div class="col-lg-12 pt-3">
-                                <h3 class="text-center"><span class="sub-judul-1">PLATINUM III </span><span class="sub-judul-2">ACHIEVERS</span></h3>
+                                <h3 class="text-center color-dark"><span class="sub-judul-1">PLATINUM III </span><span class="sub-judul-2">ACHIEVERS</span></h3>
                             </div>
                             @foreach ($data['platinum3'] as $key => $item)
                                 <div class="col p-3">
                                     <div class="d-flex align-items-center mx-auto justify-content-center wrap-img">
-                                        <img src="{{$item['src'] != null ? checkImageHof(asset($item['src'])) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user rounded-circle" style="height: 100px!important; width: 100px!important;">
+                                        <img src="{{$item['src'] != null ? checkImageHof($item['src']) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user rounded-circle" style="height: 100px!important; width: 100px!important;">
                                         <img src="{{asset('assets3/img/Platinum3.png')}}" class="img-fluid img-frame">
                                     </div>
-                                    <h5 class="text-center mt-2">{{strtoupper($item['first_name'])}} {{strtoupper($item['last_name'])}}</h5>
+                                    <h5 class="text-center mt-2 color-dark">{{strtoupper($item['first_name'])}} {{strtoupper($item['last_name'])}}</h5>
                                 </div>
                             @endforeach
                         </div>
@@ -246,15 +250,15 @@
                     <section id="platinum_2">
                         <div class="row mb-4 bg-gray">
                             <div class="col-lg-12 pt-3">
-                                <h3 class="text-center"><span class="sub-judul-1">PLATINUM II </span><span class="sub-judul-2">ACHIEVERS</span></h3>
+                                <h3 class="text-center color-dark"><span class="sub-judul-1">PLATINUM II </span><span class="sub-judul-2">ACHIEVERS</span></h3>
                             </div>
                             @foreach ($data['platinum2'] as $item)
                                 <div class="col p-3">
                                     <div class="d-flex align-items-center mx-auto justify-content-center wrap-img">
-                                        <img src="{{$item['src'] != null ? checkImageHof(asset($item['src'])) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user rounded-circle" style="height: 100px!important; width: 100px!important;">
+                                        <img src="{{$item['src'] != null ? checkImageHof($item['src']) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user rounded-circle" style="height: 100px!important; width: 100px!important;">
                                         <img src="{{asset('assets3/img/Platinum2.png')}}" class="img-fluid img-frame">
                                     </div>
-                                    <h5 class="text-center mt-2">{{strtoupper($item['first_name'])}} {{strtoupper($item['last_name'])}}</h5>
+                                    <h5 class="text-center mt-2 color-dark">{{strtoupper($item['first_name'])}} {{strtoupper($item['last_name'])}}</h5>
                                 </div>
                             @endforeach
                         </div>
@@ -266,17 +270,17 @@
                     <section id="platinum_1">
                         <div class="row mb-4 bg-gray">
                             <div class="col-lg-12 pt-3">
-                                <h3 class="text-center"><span class="sub-judul-1">PLATINUM I </span><span class="sub-judul-2">ACHIEVERS</span></h3>
+                                <h3 class="text-center color-dark"><span class="sub-judul-1">PLATINUM I </span><span class="sub-judul-2">ACHIEVERS</span></h3>
                             </div>
                             @foreach ($data['platinum1'] as $item)
                             <div class="col">
                                 <div class="d-flex align-items-center mx-auto justify-content-center wrap-img" style="overflow: visible; height: 90px;">
                                     <div class="col-lg-6">
-                                        <img src="{{$item['src'] != null ? checkImageHof(asset($item['src'])) : asset('assets3/img/favicon.png')}}" class="mx-auto d-block img-fluid img-user rounded-circle" style="height: 30px!important; width: 30px!important;">
+                                        <img src="{{$item['src'] != null ? checkImageHof($item['src']) : asset('assets3/img/favicon.png')}}" class="mx-auto d-block img-fluid img-user rounded-circle" style="height: 30px!important; width: 30px!important;">
                                         <img src="{{asset('assets3/img/Platinum1.png')}}" class="img-fluid img-frame-platinum">
                                     </div>
                                     <div class="col-lg-6 p-0">
-                                        <small class="text-left mt-2">{{strtoupper($item['first_name'])}} {{strtoupper($item['last_name'])}}</small>
+                                        <small class="text-left mt-2 color-dark">{{strtoupper($item['first_name'])}} {{strtoupper($item['last_name'])}}</small>
                                     </div>
                                 </div>
                             </div>

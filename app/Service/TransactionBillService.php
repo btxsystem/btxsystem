@@ -233,7 +233,7 @@ class TransactionBillService
         'id_member' => $transactionBillRepo->user_id,
         'nominal' => $productDetail->nominal,
         'points' => $totalPoints,
-        'description' => $productDetail->description . "($affix)",
+        'description' => $productDetail->description . "($transactionBillRepo->customer_number)",
         'info' => 1,
         'transaction_ref' => "BITREX".$affix,
         'status' => 1,

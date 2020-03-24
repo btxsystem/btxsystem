@@ -357,7 +357,7 @@
                             <div class="form-group">
                                 <label class="col-md-3 control-label">Nominal</label>
                                 <div class="col-md-8 inputGroupContainer">
-                                    <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-piggy-bank"></i></span><input id="nominal" name="nominal" placeholder="Nominal" class="form-control" required="true" value="" type="number"></div>
+                                    <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-piggy-bank"></i></span><input id="nominal" name="nominal" placeholder="Nominal" class="form-control" required="true" value="" min="10000" type="number"></div>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -368,7 +368,7 @@
                             </div>
                         </fieldset>
                         <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <button type="submit" disabled id="submit-bph" class="btn btn-primary">Submit</button>
                             </div>
                     </form>
                 </div>
@@ -397,7 +397,7 @@
                         <div class="form-group">
                             <label class="col-md-3 control-label">Refund points</label>
                             <div class="col-md-8 inputGroupContainer">
-                                <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-piggy-bank"></i></span><input id="points" name="points" placeholder="Refund points" class="form-control" min="1" required="true" value="" type="number"></div>
+                                <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-piggy-bank"></i></span><input id="points" name="points" placeholder="Refund points" class="form-control" min="1" max="{{$data->bitrex_points}}" required="true" value="" type="number"></div>
                             </div>
                         </div>
                         <div class="form-group">
@@ -408,7 +408,7 @@
                         </div>
                     </fieldset>
                     <div class="modal-footer">
-                        <button type="button" id="submit-refund" class="btn btn-primary">Submit</button>
+                        <button type="button" id="submit-refund" disabled class="btn btn-primary">Submit</button>
                     </div>
                 </form>
             </div>
@@ -456,6 +456,7 @@
 @section('footer_scripts')
     <script type="text/javascript">
         $(document).ready(function () {
+        
           var table = $('.points-table').DataTable({
               destroy: true,
               processing: true,
@@ -476,6 +477,46 @@
               ]
           });
         });
+
+        $('#nominal').keyup(function() {
+            let value = parseInt($(this).val())
+
+            if(value < 10000) {
+                $('#submit-bph').prop('disabled', true)
+            } else {
+                $('#submit-bph').prop('disabled', false)
+            }
+        })
+
+        $('#nominal').change(function() {
+            let value = parseInt($('#nominal').val())
+
+            if(value < 10000) {
+                $('#submit-bph').prop('disabled', true)
+            } else {
+                $('#submit-bph').prop('disabled', false)
+            }
+        })
+
+        $('#points').keyup(function() {
+            let value = parseInt($(this).val())
+
+            if(value < 1 || value > parseInt($(this).prop("max"))) {
+                $('#submit-refund').prop('disabled', true)
+            } else {
+                $('#submit-refund').prop('disabled', false)
+            }
+        })
+
+        $('#points').change(function() {
+            let value = parseInt($('#points').val())
+
+            if(value < 1 || value > parseInt($('#points').prop("max"))) {
+                $('#submit-refund').prop('disabled', true)
+            } else {
+                $('#submit-refund').prop('disabled', false)
+            }
+        })
 
         $('#submit-refund').click(function(){
             swal({
