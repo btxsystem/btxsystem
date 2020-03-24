@@ -13,7 +13,7 @@
                 <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{{route('member.transaction.topup')}}" method="POST">
+            <form action="{{route('member.transaction.topup')}}" method="POST" id="form-topup">
                 @csrf
                 <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="form-line">
@@ -59,17 +59,26 @@
     						</div>
     					</div>
                     </div>
-				</div>
+                </div>
                 <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <h5 class="card-inside-title">Select Payment Method</h5>
+                    <div class="demo-radio-button">
+                        <input name="method" type="radio" value="bca" id="bca" class="with-gap radio-col-red" checked />
+                        <label for="bca">BCA VA</label> 
+
+                    </div>
+                </div>
+                <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12 d-none">
+                <h5>Select Payment Method</h5>
                   <div class="demo-radio-button">
                     <!-- <input name="method" type="radio" value="transfer" id="transfer" class="with-gap radio-col-red" checked />
                     <label for="transfer">Transfer</label> -->
-                    <h5>Select Payment Method</h5>
+                    
 
-                    <!-- <input name="method" type="radio" value="bca" id="bca" class="with-gap radio-col-red" checked/>
-                    <label for="bca">BCA VA</label> -->
-                    <input name="method" type="radio" value="transfer" id="transfer" class="with-gap radio-col-red" checked/>
-                    <label for="bca">Transfer</label>
+                     <!-- <input name="method" type="radio" value="bca" id="bca" class="with-gap radio-col-red" checked/>
+                    <label for="bca">BCA VA</label> 
+                    <input name="method" type="radio" value="transfer" id="transfer" class="with-gap radio-col-red"/>
+                    <label for="bca">Transfer</label> -->
 
                     <!--<input name="method" type="radio" value="other" id="other" class="with-gap radio-col-red"/>
                     <label for="other">Other Transfer</label>-->
@@ -98,7 +107,7 @@
                 <div class="modal-footer">
                     <a href="#" class="btn btn-secondary" data-dismiss="modal">Close</a>
                     <a href="#" id="payment-bca" style="cursor:pointer; display:none;" class="btn btn-primary"></a>
-                    <button type="submit" id="topup-points" disabled=true class="btn btn-primary" style="cursor:pointer;">Topup</a>
+                    <button type="button" id="topup-points" disabled=true class="btn btn-primary" style="cursor:pointer;">Topup</a>
                 </div>
             </form>
         </div>
@@ -417,6 +426,9 @@
 
       $('#transfer').change(function(){
           $('#topup-points').prop('type','submit');
+          $('#bca').removeAttr("checked")
+          $('#bca').prop('checked', false)
+          $('#transfer').prop('checked', true)
           is_bca_method = false;
       })
 
@@ -431,6 +443,9 @@
 
       $('#bca').change(function(){
           $('#topup-points').prop('type','button');
+          $('#transfer').removeAttr("checked")
+          $('#bca').prop('checked', true)
+          $('#transfer').prop('checked', false)
           is_bca_method = true;
       })
 

@@ -4,7 +4,7 @@
     @parent
 @stop
 @section('content')
-<section class="content ecommerce-page">
+<section class="content ecommerce-page" id="table-loading">
     <div class="block-header">
         <div class="row">
             <div class="col-lg-7 col-md-6 col-sm-12">
@@ -64,9 +64,11 @@
 @stop
 
 @section('footer_scripts')
+<script src="{{ asset('assets3/js/jquery.loading.min.js') }}"></script>
 <script type="text/javascript">
     let claim = (e) => {
         $('.reward').hide();
+        $('#table-loading').loading()
         $.ajax({
             type: "get",
             url: '{{route("member.claim-reward")}}',
@@ -74,6 +76,10 @@
             success:function(data){
                 location.reload();
                 $('.reward').show();
+                $('#table-loading').loading("stop")
+            },
+            error: function(data) {
+                $('#table-loading').loading()
             }
         });
     }

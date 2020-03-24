@@ -30,6 +30,11 @@ class Handler extends ExceptionHandler
       if ($exception instanceof CustomException) {
         return response()->view('errors.custom', [], 500);
       }
+      // if (request()->segment(1) != 'backoffice' || request()->segment(1) != 'ebook' || request()->segment(1) != 'login') {
+      //   if (!Auth::user()) {
+      //       return redirect('/');
+      //   }
+      // }
       return parent::render($request, $exception);
     }
     protected function unauthenticated($request, \Illuminate\Auth\AuthenticationException $exception)

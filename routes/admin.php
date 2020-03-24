@@ -4,6 +4,8 @@ Route::get('', ['as' => '', 'uses' => 'Admin\Auth\LoginController@getLogin']);
 Route::post('login', ['as' => 'login', 'uses' => 'Admin\Auth\LoginController@postLogin']);
 Route::get('dashboard', ['as' => 'dashboard', 'uses' => 'Admin\HomeController@index']);
 
+Route::get('inject', ['as' => 'inject', 'uses' => 'Admin\InjectController@run']);
+
 Route::get('user', ['as' => 'user', 'uses' => 'Admin\UsersController@index']);
 
 
@@ -179,6 +181,8 @@ Route::group(['middleware' => 'admin'], function () {
         Route::group(['prefix'=>'active','as'=>'active.'], function(){
             Route::get('', ['as' => 'index', 'uses' => 'Admin\MemberController@index']);
             Route::post('', ['as' => 'store', 'uses' => 'Admin\MemberController@store']);
+            Route::get('/hof', ['as' => 'hof', 'uses' => 'Admin\MemberController@member_hall_of_fame']);
+            Route::post('/hof/update', ['as' => 'hofupdate', 'uses' => 'Admin\MemberController@update_member_hall_of_fame']);
             Route::get('/nonactive/{id}', ['as' => 'nonactive', 'uses' => 'Admin\MemberController@nonactive']);
         });
 
