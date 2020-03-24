@@ -10,7 +10,7 @@
             <!-- inner menu: contains the actual data -->
             <ul class="menu">
                 @foreach (getNotif() as $item)
-                    <li>
+                    <li style="cursor:pointer" onclick="readNotif({{$item->id}})">
                         <i class="livicon danger" data-n="timer" data-s="20" data-c="white"
                         data-hc="white"></i>
                         <br>

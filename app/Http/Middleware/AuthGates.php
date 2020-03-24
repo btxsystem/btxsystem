@@ -28,6 +28,13 @@ class AuthGates
                 return redirect('/login');
             }
         }
+
+        // if (!Auth::guard('user')->check()) {
+        //     if(request()->segment(1)=='member'){
+        //         return redirect('/login');
+        //     }
+        // }
+
         return $next($request);
     }
 }

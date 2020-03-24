@@ -61,7 +61,7 @@ class Kernel extends HttpKernel
         'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,
         'bindings'      => \Illuminate\Routing\Middleware\SubstituteBindings::class,
         'auth.basic'    => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
-        'employeer'     => \App\Http\Middleware\Employeer::class,
+        'web'     => \App\Http\Middleware\EmployeerMiddleware::class,
         'cors'          =>  \App\Http\Middleware\Cors::class , 
         'ebook.access'          =>  \App\Http\Middleware\EbookAccess::class , 
         'admin'         => \App\Http\Middleware\AdminMiddleware::class,

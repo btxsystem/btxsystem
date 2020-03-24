@@ -32,6 +32,8 @@ List Of Notifications
                                             <th>No</th>
                                             <th>Username</th>
                                             <th>Messages</th>
+                                            <th>Date</th>
+                                            <th>Status</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -62,6 +64,8 @@ List Of Notifications
                   {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable:false, searchable:false},
                   {data: 'user.username', name: 'user.username'},
                   {data: 'desc', name: 'desc'},
+                  {data: 'created_at', name: 'created_at'},
+                  {data: 'isRead', name: 'isRead'},
               ]
           });
 

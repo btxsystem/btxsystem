@@ -15,6 +15,17 @@ use App\Models\GotReward;
 
 class TeamReportController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            if (!\Auth::user()) {
+                return redirect('/');
+            }
+            return $next($request);
+        });
+    }
+    
     public function mySponsor(){
         $data = Auth::user();
         if (request()->ajax()) {
