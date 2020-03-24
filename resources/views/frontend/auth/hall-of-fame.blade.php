@@ -311,7 +311,7 @@
                     <div class="col p-3 d-flex justify-content-center">
                         <div class="platinum">
                             <div class="d-flex align-items-center mx-auto justify-content-center wrap-img">
-                                <img src="{{$item['src'] != null ? checkImageHof(asset($item['src'])) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user rounded-circle">
+                                <img src="{{$item['src'] != null ? checkImageHof($item['src']) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user rounded-circle">
                                 <img src="{{asset('assets3/img/Platinum3.png')}}" class="img-fluid img-frame">
                             </div>
                             <span class="text-center mt-2 text-name2">{{strtoupper($item['first_name'])}} {{strtoupper($item['last_name'])}}</span>
@@ -333,7 +333,7 @@
                     <div class="col p-3 d-flex justify-content-center">
                         <div class="platinum">
                             <div class="d-flex align-items-center mx-auto justify-content-center wrap-img">
-                                <img src="{{$item['src'] != null ? checkImageHof(asset($item['src'])) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user rounded-circle">
+                                <img src="{{$item['src'] != null ? checkImageHof($item['src']) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user rounded-circle">
                                 <img src="{{asset('assets3/img/Platinum2.png')}}" class="img-fluid img-frame">
                             </div>
                             <span class="text-center text-name2 mt-2">{{strtoupper($item['first_name'])}} {{strtoupper($item['last_name'])}}</span>
@@ -355,7 +355,7 @@
                     <div class="col p-3 platinum-1">
                         <div class="d-flex align-items-center mx-auto justify-content-center wrap-img-platinum" style="overflow: hidden; border-radius: 0; height: 60px;">
                             <div class="col-lg-6 col-5">
-                                <img src="{{$item['src'] != null ? checkImageHof(asset($item['src'])) : asset('assets3/img/favicon.png')}}" class="mx-auto d-block img-fluid img-user rounded-circle">
+                                <img src="{{$item['src'] != null ? checkImageHof($item['src']) : asset('assets3/img/favicon.png')}}" class="mx-auto d-block img-fluid img-user rounded-circle">
                                 <img src="{{asset('assets3/img/Platinum1.png')}}" class="img-fluid img-frame-platinum platinum-img-1">
                             </div>
                             <div class="col-lg-6 col-7 p-0" style="line-height: 1.3;">
