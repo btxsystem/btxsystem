@@ -196,7 +196,7 @@ List Of Users Active
                         { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
                         { data: 'id_member', name: 'id_member'},
                         { data: 'username', name: 'username'},
-                        { data: 'full_name', name: 'full_name'},
+                        { data: 'full_name', name: 'first_name'},
                         { data: 'sponsor', name: 'sponsor.username', orderable: false, searchable: false},
                         { data: 'join_at', name: 'join_at', orderable: false, searchable: false},
                         { data: 'lastArchive', name: 'lastArchive.created_at' , searchable: false},
