@@ -31,7 +31,7 @@
 </head>
 
 @yield('header_styles')
-<body oncopy="return false" oncut="return false" onpaste="return false" class="@section('style_class')@show">
+<body  oncut="return false" onpaste="return false" class="@section('style_class')@show">
 <!-- Main Content -->
 @yield('content')
 

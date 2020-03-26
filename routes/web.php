@@ -87,7 +87,7 @@ Route::group(['prefix'=>'member','as'=>'member.'], function(){
 });
 */
 Route::redirect('/', '/login');
-Route::get('/login', 'Auth\LoginController@getLogin')->middleware('guest');
+Route::get('/login', 'Auth\LoginController@getLogin')->middleware('guest')->name('guest.login');
 Route::get('/event', 'Member\EventController@index');
 Route::group(['prefix' => 'hall-of-fame', 'as'=> 'hall-of-fame.'], function () {
     Route::get('', ['as' => 'index', 'uses' => 'Member\HallOfFameController@index']);
@@ -194,6 +194,7 @@ Route::group(['middleware' => 'web', 'prefix' => 'member', 'as'=> 'member.'], fu
         Route::get('reward', ['as' => 'reward', 'uses' => 'Member\ProfileMemberController@getRewards']);
         Route::get('reward-claim', ['as' => 'reward-claim', 'uses' => 'Member\ProfileMemberController@rewardClaim']);
         Route::get('bitrex-points', ['as' => 'bitrex-points', 'uses' => 'Member\BitrexPointController@getBitrexPoints']);
+        Route::get('history-topup', ['as' => 'history-topup', 'uses' => 'Member\BitrexPointController@getHistoryTransaction']);
         Route::get('history-pv-pairing', ['as' => 'history-pv-pairing', 'uses' => 'Member\PvController@historyPvPairing']);
         Route::get('bonus', ['as' => 'bonus', 'uses' => 'Member\MyBonusController@bonus']);
         Route::get('bonus-sponsor', ['as' => 'bonus-sponsor', 'uses' => 'Member\MyBonusController@bonusSponsor']);

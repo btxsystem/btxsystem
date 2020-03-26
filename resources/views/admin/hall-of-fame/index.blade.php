@@ -77,7 +77,9 @@ Hall Of Fame
                                             <th>No</th>
                                             <th>ID Member</th>
                                             <th>Username</th>
-                                            <th>Name</th>
+                                            <!-- <th>Name</th> -->
+                                            <th>First Name</th>
+                                            <th>Last Name</th>
                                             <th>Rank</th>
                                             <th>Show Member</th>
                                         </tr>
@@ -127,13 +129,15 @@ Hall Of Fame
                 { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
                 { data: 'id_member', name: 'id_member'},
                 { data: 'username', name: 'username'},
-                { data: 'first_name', name: 'first_name', "render": function(data, type, row){
-                    if ( type === "sort" || type === 'type' ) {
-                        return data
-                    } else {
-                        return row.full_name
-                    }
-                }},
+                // { data: 'first_name', name: 'first_name', "render": function(data, type, row){
+                //     if ( type === "sort" || type === 'type' ) {
+                //         return data
+                //     } else {
+                //         return row.full_name
+                //     }
+                // }},
+                { data: 'first_name', name: 'first_name'},
+                { data: 'last_name', name: 'last_name'},
                 { data: 'ranking', name: 'rank.name', orderable: false },
                 { data: 'show_hall_of_fame', name: 'show_hall_of_fame', searchable: false, className: 'text-center', "render": function(data, type, row) {
                     if ( type === "sort" || type === 'type' ) {
