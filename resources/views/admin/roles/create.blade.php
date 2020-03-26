@@ -200,6 +200,22 @@
                                                                     <input type="checkbox" name="permissions[]" value="28"/>View
                                                                 </label>
                                                             </li>
+                                                            
+                                                            <li>
+                                                                <label>
+                                                                    <input type="checkbox" name="permissions[]" value="111"/>Export
+                                                                </label>
+                                                            </li>
+                                                            <li>
+                                                                <label>
+                                                                    <input type="checkbox" name="permissions[]" value="112"/>Refound
+                                                                </label>
+                                                            </li>
+                                                            <li>
+                                                                <label>
+                                                                    <input type="checkbox" name="permissions[]" value="113"/>Edit Password
+                                                                </label>
+                                                            </li>
                                                         </ul>
                                                     </li>
 
@@ -632,27 +648,37 @@
                                                             </li>
                                                         </ul>
                                                     </li>
-
-
-
-
-
-
+                                                    <li>
+                                                        <label>
+                                                            <input type="text" value="106">List Va
+                                                        </label>
+                                                    </li>
+                                                    <li>
+                                                        <label>
+                                                            <input type="text" value="107">Birthdate
+                                                        </label>
+                                                        <ul>
+                                                            <li>
+                                                                <label>
+                                                                    <input type="checkbox" name="permissions[]" value="108"/>Add
+                                                                </label>
+                                                            </li>
+                                                            <li>
+                                                                <label>
+                                                                    <input type="checkbox" name="permissions[]" value="109"/>Edit
+                                                                </label>
+                                                            </li>
+                                                            <li>
+                                                                <label>
+                                                                    <input type="checkbox" name="permissions[]" value="110"/>Delete
+                                                                </label>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
                                                 </div>
                                             </ul>
                                         </div>
                                     </div>
-                                    <!-- <div class="form-group">
-                                        <label class="col-md-2 control-label">Permissions</label>
-                                        <div class="col-md-8 inputGroupContainer">
-                                            <div class="input-group">
-                                                <span class="input-group-addon"><i class="fa fa-key"></i></span>
-                                                <select name="permissions[]" id="permissions" class="form-control select2" multiple="multiple" required="true">
-
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div> -->
 
                                     <div class="form-group">
                                         <label class="col-md-2 control-label"></label>
