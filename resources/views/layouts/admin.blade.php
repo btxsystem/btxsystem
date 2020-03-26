@@ -60,7 +60,7 @@
                     <div class="navbar-right">
                         <ul class="nav navbar-nav">
                            {{-- @include('admin.layouts._messages') --}}
-                            @include('admin.layouts._notifications')
+                            {{--@include('admin.layouts._notifications') --}}
                             <li>
                                 <a onclick="document.getElementById('logout-form').submit();" style="cursor:pointer">
                                     <i class="fa fa-sign-out" style="color: #6CC66C"><br><i style="color: #6CC66C">Logout</i></i>

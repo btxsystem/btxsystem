@@ -31,7 +31,7 @@
 						<div class="form-line focused success">
 							<input style="color:green; font-size:25px; font-weight:bold; text-align:center;" type="text" class="form-control" id="va" name="va" value="" readonly>
 						</div>
-						<button type="button" class="mt-3 btn btn-raised bg-grey waves-effect" style="cursor:pointer" id="copy">Copy</button>
+						<button type="button" class="mt-3 btn btn-raised text-white bg-danger waves-effect" style="cursor:pointer" id="copy">Copy</button>
 					<br>
 				</center>
 				<br>
@@ -267,10 +267,10 @@
 								<label class="form-check-label" for="inlineRadio1">VA & OVO</label>
 							</div> -->
 							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="radio" name="payment_method" id="transfer" value="transfer" checked>
-								<label class="form-check-label" for="inlineRadio1">Transfer</label>
-								<!-- <input class="form-check-input" type="radio" name="payment_method" id="va-bca" value="va-bca" checked>
-								<label class="form-check-label" for="inlineRadio1">BCA VA</label> -->
+								<!-- <input class="form-check-input" type="radio" name="payment_method" id="transfer" value="transfer" checked>
+								<label class="form-check-label" for="inlineRadio1">Transfer</label> -->
+								<input class="form-check-input" type="radio" name="payment_method" id="va-bca" value="va-bca" checked>
+								<label class="form-check-label" for="inlineRadio1">BCA VA</label>
 							</div>
 					  </div>
 					  <h4>Total yang dibayar : IDR </span><b><span id="total_price"></h4></b>
