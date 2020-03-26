@@ -67,14 +67,16 @@
             </a>
         </li>
     @endif
-
-    <li class="{{ (request()->is('backoffice/hall-of-fame')) ? 'active' : '' }}">
-        <a href="{{ route('hall-of-fame.index') }}">
-            <i class="fa fa-diamond" style="color: #6CC66C" data-name="customer" data-size="18" data-c="#bdecb6" data-hc="#bdecb6"
-                data-loop="true"></i>
-                Hall Of Fame
-        </a>
-    </li>
+    
+    @if(\Auth::guard('admin')->user()->hasPermission('Hall_Of_Fame'))
+        <li class="{{ (request()->is('backoffice/hall-of-fame')) ? 'active' : '' }}">
+            <a href="{{ route('hall-of-fame.index') }}">
+                <i class="fa fa-diamond" style="color: #6CC66C" data-name="customer" data-size="18" data-c="#bdecb6" data-hc="#bdecb6"
+                    data-loop="true"></i>
+                    Hall Of Fame
+            </a>
+        </li>
+    @endif
 
     @if(\Auth::guard('admin')->user()->hasPermission('Verification_npwp'))
         <li class="{{ (request()->is('backoffice/verification-npwp')) ? 'active' : '' }}">
@@ -106,6 +108,7 @@
         </li>
     @endif
 
+    @if(\Auth::guard('admin')->user()->hasPermission('List_va'))
     <li class="{{ (request()->is('backoffice/list-va')) ? 'active' : '' }}">
         <a href="{{ route('list-va') }}">
             <i class="fa fa-credit-card" style="color: #6CC66C" data-name="money" data-size="18" data-c="#6CC66C" data-hc="#6CC66C"
@@ -113,6 +116,7 @@
             List VA
         </a>
     </li>
+    @endif
 
     @if(\Auth::guard('admin')->user()->hasPermission('Claim_rewards'))
         <li class="{{ (request()->is('backoffice/reward-claims')) ? 'active' : '' }}">
@@ -262,14 +266,14 @@
                 @endif
             </ul>
             <ul class="sub-menu">
-                <!-- @if(\Auth::guard('admin')->user()->hasPermission('Report.transaction')) -->
+                 @if(\Auth::guard('admin')->user()->hasPermission('Birthdate')) 
                     <li class="#">
                         <a href="{{ route('report.birthdate') }}">
                             <i class="fa fa-angle-double-right"></i>
                             Birthdate
                         </a>
                     </li>
-                <!-- @endif -->
+                 @endif
             </ul>
         </li>
     @endif
