@@ -272,7 +272,7 @@ Tree
 				
 				type: 'GET',
 
-				url: '/member/select/child-tree/'+e.params.data.text,
+				url: '/backoffice/new-tree/child-tree/'+e.params.data.text,
 				success: function (data) {
 					$('#bah').empty('g');
 					tree(data);
@@ -286,7 +286,7 @@ Tree
 		$('#upline').click(function(){
 			$.ajax({
 				type: 'GET',
-				url: '/member/select/tree-upline/'+parent_id,
+				url: '/backoffice/new-tree/tree-upline/'+parent_id,
 				success: function (data) {
 					parent_id = data.parent_id;
 					$('#bah').empty('g');
@@ -311,7 +311,7 @@ Tree
 			if(a!="available"){
 				$.ajax({
 					type: 'GET',
-					url: '/member/select/child-tree/'+a,
+					url: '/backoffice/new-tree/child-tree/'+a,
 					success: function (data) {
 						$('#bah').empty('g');
 						//$('#upline').show();
@@ -343,7 +343,7 @@ Tree
 
 		var tree = (data) => {
 			$.ajax({
-            url: '/member/select/summary/'+data.id,
+            url: '/backoffice/new-tree/summary/'+data.id,
             success:function(data){
 				$('#_name').text('Name: ' + data.member.first_name + ' ' +data.member.last_name);
 				$('#_username').text('Username: ' + data.member.username);
