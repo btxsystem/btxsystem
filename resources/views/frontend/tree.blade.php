@@ -508,6 +508,14 @@ text {
 rect {
 	cursor: pointer;
 }
+
+image {
+	cursor: pointer;
+}
+
+text {
+	cursor: pointer;
+}
 .bigger {
 	font-size: 13px;
 }
@@ -1297,38 +1305,47 @@ em{
 		var names = svg.append("g").selectAll("text")
 			.data(information.descendants());
 		names.enter().append("text")
+			.attr("onclick", function(d){ return `tree_submit(${d.data.username ? `'${d.data.username}'` : `'${"available"}'`}, ${d.data.parent_id}, ${d.data.position} )` })
 			.text(function(d){return d.data.username ? d.data.username : 'Available';})
 			.attr("x", function(d){return d.x+0;})
 			.attr("y", function(d){return d.y+40;})
 			.classed("bigger", true);
 
 		var levels = svg.append("g").selectAll("text")
+			.attr("onclick", function(d){ return `tree_submit(${d.data.username ? `'${d.data.username}'` : `'${"available"}'`}, ${d.data.parent_id}, ${d.data.position} )` })
 			.data(information.descendants());
 		levels.enter().append("text")
+			.attr("onclick", function(d){ return `tree_submit(${d.data.username ? `'${d.data.username}'` : `'${"available"}'`}, ${d.data.parent_id}, ${d.data.position} )` })
 			.text(function(d){return d.data.rank ? "Rank : " + d.data.rank : '';})
 			.attr("x", function(d){return d.x+0;})
 			.attr("y", function(d){return d.y+60;})
 			.classed("bigger", true)
 
 		var pv_left = svg.append("g").selectAll("text")
+			.attr("onclick", function(d){ return `tree_submit(${d.data.username ? `'${d.data.username}'` : `'${"available"}'`}, ${d.data.parent_id}, ${d.data.position} )` })
 			.data(information.descendants());
 		pv_left.enter().append("text")
+			.attr("onclick", function(d){ return `tree_submit(${d.data.username ? `'${d.data.username}'` : `'${"available"}'`}, ${d.data.parent_id}, ${d.data.position} )` })
 			.text(function(d){return d.data.pv_left >= 0 ? "L : " + addCommas(d.data.pv_left) : '';})
 			.attr("x", function(d){return d.x+0;})
 			.attr("y", function(d){return d.y+80;})
 			.classed("bigger", true);
 
 		var pv_midle = svg.append("g").selectAll("text")
+			.attr("onclick", function(d){ return `tree_submit(${d.data.username ? `'${d.data.username}'` : `'${"available"}'`}, ${d.data.parent_id}, ${d.data.position} )` })
 			.data(information.descendants());
 		pv_midle.enter().append("text")
+			.attr("onclick", function(d){ return `tree_submit(${d.data.username ? `'${d.data.username}'` : `'${"available"}'`}, ${d.data.parent_id}, ${d.data.position} )` })
 			.text(function(d){return d.data.pv_midle >= 0 ? "M : " + addCommas(d.data.pv_midle) : ''})
 			.attr("x", function(d){return d.x+0;})
 			.attr("y", function(d){return d.y+100;})
 			.classed("bigger", true);
 
 		var pv_right = svg.append("g").selectAll("text")
+			.attr("onclick", function(d){ return `tree_submit(${d.data.username ? `'${d.data.username}'` : `'${"available"}'`}, ${d.data.parent_id}, ${d.data.position} )` })
 			.data(information.descendants());
 		pv_right.enter().append("text")
+			.attr("onclick", function(d){ return `tree_submit(${d.data.username ? `'${d.data.username}'` : `'${"available"}'`}, ${d.data.parent_id}, ${d.data.position} )` })
 			.text(function(d){return d.data.pv_right >= 0 ? "R : " + addCommas(d.data.pv_right) : ''})
 			.attr("x", function(d){return d.x+0;})
 			.attr("y", function(d){return d.y+120;})
@@ -1338,6 +1355,7 @@ em{
 			.data(information.descendants());
 		image.enter().append("a")
 			.append("image")
+			.attr("onclick", function(d){ return `tree_submit(${d.data.username ? `'${d.data.username}'` : `'${"available"}'`}, ${d.data.parent_id}, ${d.data.position} )` })
 			.attr("xlink:href", function(d){return d.data.src == null ? "https://img.icons8.com/bubbles/2x/user.png" : BASE_SRC+'/'+d.data.src})
 			.attr("x", function(d){
 				if($(window).width() <= 480) {

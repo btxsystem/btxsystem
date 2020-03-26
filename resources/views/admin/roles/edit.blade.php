@@ -201,6 +201,21 @@
                                                                     <input type="checkbox" name="permissions[]" value="28"/>View
                                                                 </label>
                                                             </li>
+                                                            <li>
+                                                                <label>
+                                                                    <input type="checkbox" name="permissions[]" value="111"/>Export
+                                                                </label>
+                                                            </li>
+                                                            <li>
+                                                                <label>
+                                                                    <input type="checkbox" name="permissions[]" value="112"/>Refound
+                                                                </label>
+                                                            </li>
+                                                            <li>
+                                                                <label>
+                                                                    <input type="checkbox" name="permissions[]" value="113"/>Edit Password
+                                                                </label>
+                                                            </li>
                                                         </ul>
                                                     </li>
 
@@ -629,6 +644,33 @@
                                                             <li>
                                                                 <label>
                                                                     <input type="checkbox" name="permissions[]" value="105"/>Delete
+                                                                </label>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                    <li>
+                                                        <label>
+                                                            <input type="text" value="106">List Va
+                                                        </label>
+                                                    </li>
+                                                    <li>
+                                                        <label>
+                                                            <input type="text" value="107">Birthdate
+                                                        </label>
+                                                        <ul>
+                                                            <li>
+                                                                <label>
+                                                                    <input type="checkbox" name="permissions[]" value="108"/>Add
+                                                                </label>
+                                                            </li>
+                                                            <li>
+                                                                <label>
+                                                                    <input type="checkbox" name="permissions[]" value="109"/>Edit
+                                                                </label>
+                                                            </li>
+                                                            <li>
+                                                                <label>
+                                                                    <input type="checkbox" name="permissions[]" value="110"/>Delete
                                                                 </label>
                                                             </li>
                                                         </ul>
