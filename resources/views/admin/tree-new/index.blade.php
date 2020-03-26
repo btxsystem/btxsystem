@@ -164,7 +164,7 @@ Tree
 								<div class="col-md-12 inputGroupContainer">
 									<div class="input-group">
 										<span class="input-group-addon"><i class="fa fa-male"></i></span>
-										<select name="sponsor_id" id="sponsor_id" class="form-control cari" value="{{old('sponsor_id')}}"></select>
+										<select name="sponsor_id" id="sponsor_id" class="form-control cari" value="{{old('sponsor_id')}}" style="width: 100%!improtant;"></select>
 									</div>
 								</div>
 								<br><br>
@@ -209,6 +209,14 @@ Tree
 			stroke-width: 2;
 			cursor: pointer;
 		}
+
+		image {
+			cursor: pointer !important;
+		}
+
+		text {
+			cursor: pointer !important;
+		}
 		path {
 			fill: none;
 			stroke: #666;
@@ -238,6 +246,7 @@ Tree
     <script type="text/javascript" src="{{ asset('assets/tree/raphael.js') }}" ></script>
 	<script src="{{ asset('assets/tree/panzoom.js') }}"></script>
 	<script src="{{ asset('assets/tree/d3.js') }}"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/d3-transform/1.0.4/d3-transform.js"></script>
 	<script type="text/javascript">
 		
 		var dataUser = '';
@@ -301,10 +310,19 @@ Tree
 			});
 		})
 
-		var svg = d3.select("#tree").append("svg")
-			.attr("width",1190).attr("height",600)
-			.append("g").attr("transform", "translate(-750,-50)")
-			.attr('id', 'bah');
+		var my_transform = d3Transform()
+		var svg = d3.select("#tree")
+		.append("svg")
+		.attr("width", 1035).attr("height", 1080)
+		.call(d3.zoom().on("zoom", function () {
+			svg.attr("transform", d3.event.transform)
+		}))
+		.append("g")
+		.attr("transform", my_transform)
+		.attr("id", "bah")
+		panzoom(document.querySelector('#bah'), {
+			zoomSpeed: 0.030
+		});
 
 		var tree_submit = (a, parent, position) => {
 			parent_id = parent;
@@ -392,6 +410,7 @@ Tree
 				.data(information.descendants());
 			levels.enter().append("text")
 				.text(function(d){return d.data.rank ? "Rank : " + d.data.rank : '';})
+				.attr("onclick", function(d){ return `tree_submit(${d.data.username ? `'${d.data.username}'` : `'${"available"}'`}, ${d.data.parent_id}, ${d.data.position} )` })
 				.attr("x", function(d){return d.x+0;})
 				.attr("y", function(d){return d.y+60;})
 				.classed("bigger", true)
@@ -400,6 +419,7 @@ Tree
 				.data(information.descendants());
 			pv_left.enter().append("text")
 				.text(function(d){return d.data.pv_left >= 0 ? "L : " + addCommas(d.data.pv_left) : '';})
+				.attr("onclick", function(d){ return `tree_submit(${d.data.username ? `'${d.data.username}'` : `'${"available"}'`}, ${d.data.parent_id}, ${d.data.position} )` })
 				.attr("x", function(d){return d.x+0;})
 				.attr("y", function(d){return d.y+80;})
 				.classed("bigger", true);
@@ -408,6 +428,7 @@ Tree
 				.data(information.descendants());
 			pv_midle.enter().append("text")
 				.text(function(d){return d.data.pv_midle >= 0 ? "M : " + addCommas(d.data.pv_midle) : ''})
+				.attr("onclick", function(d){ return `tree_submit(${d.data.username ? `'${d.data.username}'` : `'${"available"}'`}, ${d.data.parent_id}, ${d.data.position} )` })
 				.attr("x", function(d){return d.x+0;})
 				.attr("y", function(d){return d.y+100;})
 				.classed("bigger", true);
@@ -416,6 +437,7 @@ Tree
 				.data(information.descendants());
 			pv_right.enter().append("text")
 				.text(function(d){return d.data.pv_right >= 0 ? "R : " + addCommas(d.data.pv_right) : ''})
+				.attr("onclick", function(d){ return `tree_submit(${d.data.username ? `'${d.data.username}'` : `'${"available"}'`}, ${d.data.parent_id}, ${d.data.position} )` })
 				.attr("x", function(d){return d.x+0;})
 				.attr("y", function(d){return d.y+120;})
 				.classed("bigger", true);
@@ -424,6 +446,7 @@ Tree
 				.data(information.descendants());
 			image.enter().append("a")
 				.append("image")
+				.attr("onclick", function(d){ return `tree_submit(${d.data.username ? `'${d.data.username}'` : `'${"available"}'`}, ${d.data.parent_id}, ${d.data.position} )` })
 				.attr("xlink:href", function(d){return "https://img.icons8.com/bubbles/2x/user.png"})
 				.attr("x", function(d){return d.x-30;})
 				.attr("y", function(d){return d.y-40;})
