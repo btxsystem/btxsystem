@@ -200,6 +200,9 @@ Route::group(['middleware' => 'admin'], function () {
             Route::get('', ['as' => 'index', 'uses' => 'Admin\NewTreeController@tree']);
             Route::get('create', ['as' => 'create', 'uses' => 'Admin\NewTreeController@create']);
             Route::get('select', ['as' => 'select', 'uses' => 'Admin\NewTreeController@getTree']);
+            Route::get('child-tree/{user}', ['as' => 'child-tree', 'uses' => 'Admin\NewTreeController@getChildTree']);
+            Route::get('tree-upline/{user}', ['as' => 'tree-upline', 'uses' => 'Admin\NewTreeController@getParentTree']);
+            Route::get('summary/{id}', ['as' => 'summary', 'uses' => 'Admin\NewTreeController@getSummary']);
     });
 
     Route::group(['prefix'=>'tree','as'=>'tree.'], function(){
