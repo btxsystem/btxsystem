@@ -365,7 +365,7 @@
                                 <h3 class="text-center color-dark"><span class="sub-judul-1">PLATINUM I </span><span class="sub-judul-2">ACHIEVERS</span></h3>
                             </div>
                             @foreach ($data['platinum1'] as $item)
-                                <div class="col p-3 platinum-1">
+                                <div class="col-5 col-md-2 p-3 platinum-1">
                                     <div class="d-flex align-items-center mx-auto justify-content-center wrap-img-platinum" style="overflow: hidden; border-radius: 0; height: 60px;">
                                         <div class="col-lg-6 col-5">
                                             <img src="{{$item['src'] != null ? checkImageHof($item['src']) : asset('assets3/img/favicon.png')}}" class="mx-auto d-block img-fluid img-user rounded-circle">
