@@ -350,6 +350,14 @@
 
 @section('footer_scripts')
 <style>
+input, textarea, button {
+    -webkit-appearance: none !important;
+    -webkit-font-smoothing: antialiased;
+    resize: none;
+}
+input[type="radio"]{
+    -webkit-appearance: radio !important;
+}
 .svg-container {
   display: inline-block;
   position: relative;
