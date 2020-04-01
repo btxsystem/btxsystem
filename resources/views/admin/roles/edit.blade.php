@@ -683,17 +683,17 @@
                                                         <ul>
                                                             <li>
                                                                 <label>
-                                                                    <input type="checkbox" name="permissions[]" value="117"/>Add
+                                                                    <input type="checkbox" name="permissions[]" value="116"/>Add
                                                                 </label>
                                                             </li>
                                                             <li>
                                                                 <label>
-                                                                    <input type="checkbox" name="permissions[]" value="118"/>Edit
+                                                                    <input type="checkbox" name="permissions[]" value="117"/>Edit
                                                                 </label>
                                                             </li>
                                                             <li>
                                                                 <label>
-                                                                    <input type="checkbox" name="permissions[]" value="119"/>Delete
+                                                                    <input type="checkbox" name="permissions[]" value="118"/>Delete
                                                                 </label>
                                                             </li>
                                                         </ul>
