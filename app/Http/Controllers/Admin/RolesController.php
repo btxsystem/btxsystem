@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Auth;
 use Alert;
 use Illuminate\Http\Request;
 use App\Models\Roles;
+use App\Models\User;
 
 class RolesController extends Controller
 {
@@ -58,8 +59,9 @@ class RolesController extends Controller
         return view('admin.roles.edit', compact('role'));
     }
 
-    public function data(){
-        $permissions = DB::table('permission_role')->select('permission_id')->where('role_id', Auth::guard('admin')->user()->roles_id)->orderBy('role_id')->get();
+    public function data($id){
+        $role = DB::table('roles')->where('id', $id)->first();
+        $permissions = DB::table('permission_role')->select('permission_id')->where('role_id', $role->id)->orderBy('role_id')->get();
         return $permissions;
     }
 

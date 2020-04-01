@@ -465,6 +465,23 @@
                                                             </li>
                                                         </ul>
                                                     </li>
+                                                    
+                                                    <li>
+                                                        <label>
+                                                            <input type="checkbox" name="permissions[]" value="106">List Va
+                                                        </label>
+                                                    </li>
+
+                                                    <li>
+                                                        <label>
+                                                            <input type="checkbox" name="permissions[]" value="96"/>Admin Management
+                                                        </label>
+                                                    </li>
+                                                    <li>
+                                                        <label>
+                                                            <input type="checkbox" name="permissions[]" value="97"/> Permission
+                                                        </label>
+                                                    </li>
                                                 </div>
 
                                                 <div class="col-md-4">
@@ -593,17 +610,6 @@
                                                             </li>
                                                         </ul>
                                                     </li>
-
-                                                    <li>
-                                                        <label>
-                                                            <input type="checkbox" name="permissions[]" value="96"/>Admin Management
-                                                        </label>
-                                                    </li>
-                                                    <li>
-                                                        <label>
-                                                            <input type="checkbox" name="permissions[]" value="97"/> Permission
-                                                        </label>
-                                                    </li>
                                                     <li>
                                                         <label>
                                                             <input type="checkbox" name="permissions[]" value="98"/> Role
@@ -650,12 +656,7 @@
                                                     </li>
                                                     <li>
                                                         <label>
-                                                            <input type="text" value="106">List Va
-                                                        </label>
-                                                    </li>
-                                                    <li>
-                                                        <label>
-                                                            <input type="text" value="107">Birthdate
+                                                            <input type="checkbox" name="permissions[]" value="107">Birthdate
                                                         </label>
                                                         <ul>
                                                             <li>
@@ -671,6 +672,28 @@
                                                             <li>
                                                                 <label>
                                                                     <input type="checkbox" name="permissions[]" value="110"/>Delete
+                                                                </label>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                    <li>
+                                                        <label>
+                                                            <input type="checkbox" name="permissions[]" value="115">Hall Of Fame
+                                                        </label>
+                                                        <ul>
+                                                            <li>
+                                                                <label>
+                                                                    <input type="checkbox" name="permissions[]" value="117"/>Add
+                                                                </label>
+                                                            </li>
+                                                            <li>
+                                                                <label>
+                                                                    <input type="checkbox" name="permissions[]" value="118"/>Edit
+                                                                </label>
+                                                            </li>
+                                                            <li>
+                                                                <label>
+                                                                    <input type="checkbox" name="permissions[]" value="119"/>Delete
                                                                 </label>
                                                             </li>
                                                         </ul>
@@ -703,11 +726,10 @@
         $('#tree').checktree();
         $(document).ready(function() {
             $.ajax({
-                url: '{{ route("admin-management.roles.data") }}',
+                url: '/backoffice/admin-management/roles/data/'+{{$role->id}},
                 success:  function (datas) {
                     datas.forEach(data => {
                         $("input[name='permissions[]'][value='"+data.permission_id+"']").prop('checked', true);
-                        console.log(data.permission_id);
                     });
                 },
             })
