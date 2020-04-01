@@ -650,12 +650,12 @@
                                                     </li>
                                                     <li>
                                                         <label>
-                                                            <input type="text" value="106">List Va
+                                                            <input type="checkbox" name="permissions[]" value="106">List Va
                                                         </label>
                                                     </li>
                                                     <li>
                                                         <label>
-                                                            <input type="text" value="107">Birthdate
+                                                            <input type="checkbox" name="permissions[]" value="107">Birthdate
                                                         </label>
                                                         <ul>
                                                             <li>
