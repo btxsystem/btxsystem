@@ -12,6 +12,8 @@ use App\User;
 use DataTables;
 use DB;
 use Alert;
+use App\Models\RolesUser;
+use App\Permission;
 
 class UsersController extends Controller
 {
@@ -67,7 +69,8 @@ class UsersController extends Controller
     {
         $roles = Role::all()->pluck('title', 'id');
         $user = User::findOrFail($id);
-        return view('admin.users.edit', compact('roles', 'user'));
+        $permission = \DB::table('role_user')->where('user_id', $id)->select('role_id')->first();
+        return view('admin.users.edit', compact('roles', 'user', 'permission'));
     }
 
     public function update($id, Request $request)

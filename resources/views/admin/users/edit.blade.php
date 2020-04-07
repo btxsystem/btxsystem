@@ -125,7 +125,7 @@ Add Training
                     <span class="input-group-addon"><i class="fa fa-eye"></i></span>
                         <select id="js-example-basic-single" class="col-md-12" name="roles">
                             @foreach($roles as $id => $roles)
-                                <option value="{{ $id }}" {{ old('roles') == $id ? 'selected' : '' }}>
+                                <option value="{{ $id }}" {{ $permission->role_id == $id ? 'selected' : '' }}>
                                     {{ $roles }}
                                 </option>
                             @endforeach
