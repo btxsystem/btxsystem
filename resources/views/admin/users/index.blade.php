@@ -41,6 +41,7 @@ List Of Users
                                             <th>No</th>
                                             <th>Name</th>
                                             <th>Email</th>
+                                            <th>Role</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -79,6 +80,7 @@ List Of Users
                   {data: 'DT_RowIndex', name: 'DT_RowIndex'},
                   {data: 'name', name: 'name'},
                   {data: 'email', name: 'email'},
+                  {data: 'title', name: 'title', orderable: false},
                  {data: 'action', name: 'action', orderable: false, searchable: false},
                 //  {data: 'email', name: 'email'},
               ]
