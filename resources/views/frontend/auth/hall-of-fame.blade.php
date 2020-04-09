@@ -118,6 +118,11 @@
     }
 
     @media (max-width: 480px) {
+        .name-platinum-1 {
+            white-space: nowrap; 
+            overflow: hidden;
+            text-overflow: ellipsis; 
+        }
         .title {
             font-size: 25px;
         }
@@ -134,6 +139,10 @@
         .wrap-img {
             height: 45px;
             width: 20px;
+        }
+        .wrap-img.director_1 {
+            height: 45px;
+            width: 65px;
         }
         .wrap-img-platinum {
             width: 130px;
@@ -161,15 +170,57 @@
             white-space: nowrap; 
             overflow: hidden; 
             text-overflow: ellipsis; 
-            width: 35px;
+            width: 40px;
         }
         .platinum-1 {
-            width: 100px;
+            padding: 0px !important;
+            width: 120px;
         }
         .img-frame-platinum.platinum-img-1 {
             height: 48px;
             left: 2px;
             top: -11px;
+        }
+    }
+    @media(max-width: 360px) {
+        .wrap-img.director_1 {
+            height: 45px;
+            width: 20px;
+        }
+        .wrap-img-platinum {
+            width: 130px;
+        }
+        .platinum {
+            width: 35px;
+        }
+    }
+    @media(max-width: 320px) {
+        .pagination > li > a, .pagination > li > span {
+            font-size: 12px;
+            padding: 9px;
+        }
+        .platinum-1 {
+            padding: 0 !important;
+        }
+        .platinum {
+            width: 25px;
+        }
+        .img-frame {
+            width: 40px;
+            height: 40px;
+        }
+        .wrap-img-platinum {
+            width : 113px;
+        }
+        .platinum-1 .img-user {
+            height: 18px;
+            width: 18px;
+        }
+        .img-frame-platinum.platinum-img-1 {
+            height: 40px;
+            width: 40px;
+            left: 3px;
+            top: -10px;
         }
     }
 </style>
@@ -289,7 +340,7 @@
                 </div>
                 @foreach ($data['director1'] as $item)
                     <div class="col-lg-4 col p-3 mx-auto d-block">
-                        <div class="d-flex align-items-center mx-auto justify-content-center wrap-img">
+                        <div class="d-flex align-items-center mx-auto justify-content-center wrap-img director_1">
                             <img src="{{$item['src'] != null ? checkImageHof($item['src']) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user rounded-circle" >
                             <img src="{{asset('assets3/img/Director1.png')}}" class="img-fluid img-frame">
                         </div>
@@ -354,11 +405,11 @@
                 @foreach ($data['platinum1'] as $item)
                     <div class="col p-3 platinum-1">
                         <div class="d-flex align-items-center mx-auto justify-content-center wrap-img-platinum" style="overflow: hidden; border-radius: 0; height: 60px;">
-                            <div class="col-lg-6 col-5">
+                            <div class="col-lg-6 col-5 p-0">
                                 <img src="{{$item['src'] != null ? checkImageHof($item['src']) : asset('assets3/img/favicon.png')}}" class="mx-auto d-block img-fluid img-user rounded-circle">
                                 <img src="{{asset('assets3/img/Platinum1.png')}}" class="img-fluid img-frame-platinum platinum-img-1">
                             </div>
-                            <div class="col-lg-6 col-7 p-0" style="line-height: 1.3;">
+                            <div class="col-lg-6 col-7 p-0 name-platinum-1" style="line-height: 1.3;">
                                 <small class="text-left text-name2 mt-2">{{strtoupper($item['first_name'])}} {{strtoupper($item['last_name'])}}</small>
                             </div>
                         </div>
