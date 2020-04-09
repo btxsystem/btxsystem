@@ -221,6 +221,12 @@ class ProfileMemberController extends Controller
                         ->whereIn('id', $ebooks)
                         ->sum('price');
                     $price = ((int) $price + (int) ($totalPriceEbook / 1000));
+                } else {
+                    DB::rollback();
+                    Alert::error('Minimal membeli 1 Ebook', 'Error')->persistent("OK");
+                    $data = Auth::user();
+                    $data['data'] = $request;
+                    return view('frontend.tree')->with('profile',$data);
                 }
 
                 if($request->input('shipping_method') == "1") {
@@ -969,6 +975,12 @@ class ProfileMemberController extends Controller
                                 ->whereIn('id', $ebooks)
                                 ->sum('price');
                             $price = ((int) $price + (int) ($totalPriceEbook / 1000));
+                        } else {
+                            DB::rollback();
+                            Alert::error('Minimal membeli 1 Ebook', 'Error')->persistent("OK");
+                            $data = Auth::user();
+                            $data['data'] = $request;
+                            return view('frontend.tree')->with('profile',$data);
                         }
 
                         if($request->input('shipping_method') == "1") {
