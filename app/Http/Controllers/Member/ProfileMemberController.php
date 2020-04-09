@@ -222,6 +222,7 @@ class ProfileMemberController extends Controller
                         ->sum('price');
                     $price = ((int) $price + (int) ($totalPriceEbook / 1000));
                 } else {
+                    DB::rollback();
                     Alert::error('Minimal membeli 1 Ebook', 'Error')->persistent("OK");
                     $data = Auth::user();
                     $data['data'] = $request;
@@ -975,6 +976,7 @@ class ProfileMemberController extends Controller
                                 ->sum('price');
                             $price = ((int) $price + (int) ($totalPriceEbook / 1000));
                         } else {
+                            DB::rollback();
                             Alert::error('Minimal membeli 1 Ebook', 'Error')->persistent("OK");
                             $data = Auth::user();
                             $data['data'] = $request;
