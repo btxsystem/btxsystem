@@ -721,7 +721,7 @@ em{
 			&& $('#nik').val() != ''
 			&& $('#birthdate').val() != ''
 			&& adult >= 18
-			&& check > 0
+			// && check > 0
 			&& check_email
 			&& check_cost
 			&& check_user
