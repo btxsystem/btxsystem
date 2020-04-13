@@ -89,9 +89,9 @@ Route::group(['prefix'=>'member','as'=>'member.'], function(){
 Route::redirect('/', '/login');
 Route::get('/login', 'Auth\LoginController@getLogin')->middleware('guest')->name('guest.login');
 Route::get('/event', 'Member\EventController@index');
-Route::group(['prefix' => 'hall-of-fame', 'as'=> 'hall-of-fame.'], function () {
-    Route::get('', ['as' => 'index', 'uses' => 'Member\HallOfFameController@index']);
-});
+// Route::group(['prefix' => 'hall-of-fame', 'as'=> 'hall-of-fame.'], function () {
+//     Route::get('', ['as' => 'index', 'uses' => 'Member\HallOfFameController@index']);
+// });
 Route::post('/login', 'Auth\LoginController@postLogin');
 Route::get('/logout', 'Auth\LoginController@logout');
 Route::post('/finish', 'Member\BitrexPointController@index');
@@ -158,7 +158,7 @@ Route::group(['middleware' => 'web', 'prefix' => 'member', 'as'=> 'member.'], fu
 
     Route::get('', ['as' => 'dashboard', 'uses' => 'Member\DashboardController@index']);
     Route::get('tree', ['as' => 'tree', 'uses' => 'Member\DashboardController@tree']);
-    Route::get('hall-of-fame', ['as' => 'hall-of-fame', 'uses' => 'Member\HallOfFameController@index2']);
+    // Route::get('hall-of-fame', ['as' => 'hall-of-fame', 'uses' => 'Member\HallOfFameController@index2']);
     Route::post('direct-tree', ['as' => 'direct-tree', 'uses' => 'Member\DashboardController@directTree']);
     Route::get('prospected-member', ['as' => 'prospected-member', 'uses' => 'Member\ProspectedMemberController@index']);
     Route::post('register-downline', ['as' => 'register-downline', 'uses' => 'Member\ProfileMemberController@register']);
