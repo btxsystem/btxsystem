@@ -265,8 +265,8 @@
         <section id="chairman_2">
             <div class="row bg-gray" style="margin-bottom: 30px; padding-bottom: 15px;">
                 <div class="col-lg-12 pt-3">
-                    <h3 class="text-center"><span class="sub-judul-1">CHAIRMAN II </span>
-                    <br><span class="sub-judul-2">ACHIEVERS</span></h3>
+                    <h1 class="text-center"><span class="sub-judul-1">CHAIRMAN II </span>
+                    <br><span class="sub-judul-2">ACHIEVERS</span></h1>
                 </div>
 
                 @foreach ($data['chairman2'] as $item)
@@ -287,8 +287,8 @@
         <section id="chairman_1">
             <div class="row bg-gray" style="margin-bottom: 30px; padding-bottom: 15px;">
                 <div class="col-lg-12 pt-3">
-                    <h3 class="text-center"><span class="sub-judul-1">CHAIRMAN I </span>
-                        <br><span class="sub-judul-2">ACHIEVERS</span></h3>
+                    <h1 class="text-center"><span class="sub-judul-1">CHAIRMAN I </span>
+                        <br><span class="sub-judul-2">ACHIEVERS</span></h1>
                 </div>
                 @foreach ($data['chairman1'] as $item)
                     <div class="g-line p-3 mx-auto d-block text-center" style="width: 50%;">
@@ -308,8 +308,8 @@
         <section id="director_3">
             <div class="row bg-gray" style="margin-bottom: 30px; padding-bottom: 15px;">
                 <div class="col-lg-12 pt-3">
-                    <h3 class="text-center"><span class="sub-judul-1">DIRECTOR III </span>
-                        <br><span class="sub-judul-2">ACHIEVERS</span></h3>
+                    <h1 class="text-center"><span class="sub-judul-1">DIRECTOR III </span>
+                        <br><span class="sub-judul-2">ACHIEVERS</span></h1>
                 </div>
                 @foreach ($data['director3'] as $item)
                     <div class="g-line p-3 mx-auto d-block text-center" style="width: 33%;">
@@ -329,8 +329,8 @@
         <section id="director_2">
             <div class="row bg-gray" style="margin-bottom: 30px; padding-bottom: 15px;">
                 <div class="col-lg-12 pt-3">
-                    <h3 class="text-center"><span class="sub-judul-1">DIRECTOR II </span>
-                        <br><span class="sub-judul-2">ACHIEVERS</span></h3>
+                    <h1 class="text-center"><span class="sub-judul-1">DIRECTOR II </span>
+                        <br><span class="sub-judul-2">ACHIEVERS</span></h1>
                 </div>
                 @foreach ($data['director2'] as $item)
                     <div class="g-line p-3 mx-auto d-block text-center" style="width: 33%;">
@@ -350,8 +350,8 @@
         <section id="director_1">
             <div class="row bg-gray" style="margin-bottom: 30px; padding-bottom: 15px;">
                 <div class="col-lg-12 pt-3">
-                    <h3 class="text-center"><span class="sub-judul-1">DIRECTOR I </span>
-                        <br><span class="sub-judul-2">ACHIEVERS</span></h3>
+                    <h1 class="text-center"><span class="sub-judul-1">DIRECTOR I </span>
+                        <br><span class="sub-judul-2">ACHIEVERS</span></h1>
                 </div>
                 @foreach ($data['director1'] as $item)
                     <div class="g-line p-3 mx-auto d-block text-center" style="width: 33%;">
@@ -371,8 +371,8 @@
         <section id="platinum_3">
             <div class="row bg-gray" style="margin-bottom: 30px; padding-bottom: 15px;">
                 <div class="col-lg-12 pt-3">
-                    <h3 class="text-center"><span class="sub-judul-1">PLATINUM III </span>
-                        <br><span class="sub-judul-2">ACHIEVERS</span></h3>
+                    <h1 class="text-center"><span class="sub-judul-1">PLATINUM III </span>
+                        <br><span class="sub-judul-2">ACHIEVERS</span></h1>
                 </div>
                 <?php
                 $getLast = 0;
@@ -403,8 +403,8 @@
         <section id="platinum_2">
             <div class="row bg-gray" style="margin-bottom: 30px; padding-bottom: 15px;">
                 <div class="col-lg-12 pt-3">
-                    <h3 class="text-center"><span class="sub-judul-1">PLATINUM II </span>
-                        <br><span class="sub-judul-2">ACHIEVERS</span></h3>
+                    <h1 class="text-center"><span class="sub-judul-1">PLATINUM II </span>
+                        <br><span class="sub-judul-2">ACHIEVERS</span></h1>
                 </div>
                 @foreach ($data['platinum2'] as $item)
                     <div class="g-line p-3 d-flex justify-content-center" style="width: 20%;">
@@ -426,8 +426,8 @@
         <section id="platinum_1">
             <div class="row bg-gray" style="margin-bottom: 30px; padding-bottom: 15px;">
                 <div class="col-lg-12 pt-3 mb-4">
-                    <h3 class="text-center"><span class="sub-judul-1">PLATINUM I </span>
-                        <br><span class="sub-judul-2">ACHIEVERS</span></h3>
+                    <h1 class="text-center"><span class="sub-judul-1">PLATINUM I </span>
+                        <br><span class="sub-judul-2">ACHIEVERS</span></h1>
                 </div>
                 @foreach ($data['platinum1'] as $item)
                     <div class="g-line p-3 platinum-1" style="width: 20%;">
