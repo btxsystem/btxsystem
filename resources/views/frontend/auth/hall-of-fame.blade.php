@@ -60,7 +60,7 @@
     }
 
     .wrap-img{
-        border-radius: 50%; width: 150px; height: 150px; overflow: hidden;
+        border-radius: 50%; width: 100px; height: 100px; overflow: hidden; padding-bottom: 5px;
     }
 
 
@@ -81,11 +81,11 @@
     }
 
     .img-frame {
-        position: absolute; width: 150px; height: 150px;
+        position: absolute; width: 100px; height: 100px;
     }
     
     .wrap-img-platinum {
-        border-radius: 50%; width: 150px; height: 150px; overflow: hidden;
+        border-radius: 50%; width: 100px; height: 100px; overflow: hidden;
     }
     
     .img-frame-platinum {
@@ -100,14 +100,11 @@
         margin-right: 40px !important;
     }
     .wrap-img .img-user {
-        height: 100px !important;
-        width: 100px !important;
+        height: 60px !important;
+        width: 60px !important;
     }
     .platinum {
         text-align: center;
-    }
-    .platinum span {
-        font-size: 16px;
     }
     .text-name2 {
         font-weight: 500;
@@ -118,16 +115,8 @@
     }
 
     @media (max-width: 480px) {
-        .name-platinum-1 {
-            white-space: nowrap; 
-            overflow: hidden;
-            text-overflow: ellipsis; 
-        }
         .title {
             font-size: 25px;
-        }
-        .h3, h3 {
-            font-size: 18px;
         }
         .p-5 {
             padding: 13px !important;
@@ -139,6 +128,7 @@
         .wrap-img {
             height: 45px;
             width: 20px;
+            padding-bottom: 5px;
         }
         .wrap-img.director_1 {
             height: 45px;
@@ -158,7 +148,7 @@
             height: 50px;
         }
         .text-name {
-            font-size: 10px;
+            font-size: 7px;
         }
         span.text-name2,small.text-name2 {
             font-size: 7px;
@@ -167,9 +157,9 @@
         }
         .platinum {
             text-align: center;
-            white-space: nowrap; 
-            overflow: hidden; 
-            text-overflow: ellipsis; 
+            /* white-space: nowrap; */
+            overflow: hidden;
+            /* text-overflow: ellipsis; */
             width: 40px;
         }
         .platinum-1 {
@@ -190,9 +180,6 @@
         .wrap-img-platinum {
             width: 130px;
         }
-        .platinum {
-            width: 35px;
-        }
     }
     @media(max-width: 320px) {
         .pagination > li > a, .pagination > li > span {
@@ -202,9 +189,7 @@
         .platinum-1 {
             padding: 0 !important;
         }
-        .platinum {
-            width: 25px;
-        }
+
         .img-frame {
             width: 40px;
             height: 40px;
@@ -223,48 +208,74 @@
             top: -10px;
         }
     }
+    p:last-child {
+        float: right;
+    }
+
+
+@media (min-width:320px)  {
+/* smartphones, iPhone, portrait 480x320 phones */
+    .text-title {
+        font-size: 7px;
+    }
+    .g-line {
+        line-height: 0.8;
+    }
+}
+@media (min-width:481px)  {
+/* portrait e-readers (Nook/Kindle), smaller tablets @ 600 or @ 640 wide. */
+    .text-title {
+        font-size: 10px;
+    }
+}
+@media (min-width:641px)  {
+/* portrait tablets, portrait iPad, landscape e-readers, landscape 800x480 or 854x480 phones */
+    .text-title {
+        font-size: 11px;
+    }
+    .g-line {
+        line-height: 1;
+    }
+}
+@media (min-width:961px)  {
+/* tablet, landscape iPad, lo-res laptops ands desktops */
+    .text-title {
+        font-size: 15px;
+    }
+    .g-line {
+        line-height: 1.2;
+    }
+}
+@media (min-width:1025px) {
+/* big landscape tablets, laptops, and desktops */
+
+}
+@media (min-width:1281px) {
+/* hi-res laptops and desktops */
+
+}
 </style>
 <body class="bg-main">
     <div class="container p-5 bg-upper">
-        <div class="w-100 p-3 p-4 bg-white rounded shadow">
-        <!-- <h2 class="title text-center" style="margin-bottom: 60px;">HALL OF FAME</h2> -->
+        <div class="w-100 bg-white rounded shadow pb-4">
         <center><img src="{{asset('assets3/img/hof.png')}}" class="img-fluid mb-2" width="550"></center>
 
+        <!-- $data['chairman2'] -->
         @if(count($data['chairman2']) > 0)
         <section id="chairman_2">
-            <div class="row bg-gray" style="margin-bottom: 30px;">
+            <div class="row bg-gray" style="margin-bottom: 30px; padding-bottom: 15px;">
                 <div class="col-lg-12 pt-3">
-                    <h3 class="text-center"><span class="sub-judul-1">CHAIRMAN II </span><span class="sub-judul-2">ACHIEVERS</span></h3>
+                    <h3 class="text-center"><span class="sub-judul-1">CHAIRMAN II </span>
+                    <br><span class="sub-judul-2">ACHIEVERS</span></h3>
                 </div>
-                <!-- <div class="col-lg-4 p-3">
-                <div class="d-flex align-items-center mx-auto justify-content-center wrap-img">
-                    <img src="{{asset('./img/DC-7_resized.jpeg')}}" class="img-fluid img-user rounded-circle" >
-                    <img src="{{asset('assets3/img/Chairman2.png')}}" class="img-fluid img-frame">
-                </div>
-                <h5 class="text-center mt-2">Mr. Lorems Jere</h5>
-                </div>
-                <div class="col-lg-4 p-3">
-                <div class="d-flex align-items-center mx-auto justify-content-center wrap-img">
-                    <img src="{{asset('./img/DC-7_resized.jpeg')}}" class="img-fluid img-user rounded-circle" >
-                    <img src="{{asset('assets3/img/Chairman2.png')}}" class="img-fluid img-frame">
-                </div>
-                <h5 class="text-center mt-2">Mr. Lorems Jere</h5>
-                </div>
-                <div class="col-lg-4 p-3">
-                <div class="d-flex align-items-center mx-auto justify-content-center wrap-img">
-                    <img src="{{asset('./img/DC-7_resized.jpeg')}}" class="img-fluid img-user rounded-circle" >
-                    <img src="{{asset('assets3/img/Chairman2.png')}}" class="img-fluid img-frame">
-                </div>
-                <h5 class="text-center mt-2">Mr. Lorems Jere</h5>
-                </div> -->
 
                 @foreach ($data['chairman2'] as $item)
-                    <div class="col-lg-4 p-3 mx-auto d-block">
+                    <div class="g-line col-lg-4 p-3 mx-auto d-block text-center">
                         <div class="d-flex align-items-center mx-auto justify-content-center wrap-img">
                             <img src="{{$item['src'] != null ? checkImageHof($item['src']) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user rounded-circle" >
                             <img src="{{asset('assets3/img/Chairman2.png')}}" class="img-fluid img-frame">
                         </div>
-                        <h5 class="text-center mt-2">{{strtoupper($item['first_name'])}} {{strtoupper($item['last_name'])}}</h5>
+                        <span class="text-title">{{strtoupper($item['first_name'])}} {{strtoupper($item['last_name'])}}</span>
                     </div>
                 @endforeach
             </div>
@@ -274,17 +285,18 @@
         
         @if(count($data['chairman1']) > 0)
         <section id="chairman_1">
-            <div class="row bg-gray" style="margin-bottom: 30px;">
+            <div class="row bg-gray" style="margin-bottom: 30px; padding-bottom: 15px;">
                 <div class="col-lg-12 pt-3">
-                    <h3 class="text-center"><span class="sub-judul-1">CHAIRMAN I </span><span class="sub-judul-2">ACHIEVERS</span></h3>
+                    <h3 class="text-center"><span class="sub-judul-1">CHAIRMAN I </span>
+                        <br><span class="sub-judul-2">ACHIEVERS</span></h3>
                 </div>
                 @foreach ($data['chairman1'] as $item)
-                    <div class="col-lg-4 p-3 mx-auto d-block">
+                    <div class="g-line p-3 mx-auto d-block text-center" style="width: 50%;">
                         <div class="d-flex align-items-center mx-auto justify-content-center wrap-img">
                             <img src="{{$item['src'] != null ? checkImageHof($item['src']) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user rounded-circle" >
                             <img src="{{asset('assets3/img/Chairman1.png')}}" class="img-fluid img-frame">
                         </div>
-                        <h5 class="text-center mt-2">{{strtoupper($item['first_name'])}} {{strtoupper($item['last_name'])}}</h5>
+                        <span class="text-title">{{strtoupper($item['first_name'])}} {{strtoupper($item['last_name'])}}</span>
                     </div>
                 @endforeach
             </div>
@@ -294,17 +306,18 @@
 
         @if(count($data['director3']) > 0)
         <section id="director_3">
-            <div class="row bg-gray" style="margin-bottom: 30px;">
+            <div class="row bg-gray" style="margin-bottom: 30px; padding-bottom: 15px;">
                 <div class="col-lg-12 pt-3">
-                    <h3 class="text-center"><span class="sub-judul-1">DIRECTOR III </span><span class="sub-judul-2">ACHIEVERS</span></h3>
+                    <h3 class="text-center"><span class="sub-judul-1">DIRECTOR III </span>
+                        <br><span class="sub-judul-2">ACHIEVERS</span></h3>
                 </div>
                 @foreach ($data['director3'] as $item)
-                    <div class="col-lg-4 p-3">
+                    <div class="g-line p-3 mx-auto d-block text-center" style="width: 33%;">
                         <div class="d-flex align-items-center mx-auto justify-content-center wrap-img">
                             <img src="{{$item['src'] != null ? checkImageHof($item['src']) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user rounded-circle" >
                             <img src="{{asset('assets3/img/Director3.png')}}" class="img-fluid img-frame">
                         </div>
-                        <h5 class="text-center mt-2">{{strtoupper($item['first_name'])}} {{strtoupper($item['last_name'])}}</h5>
+                        <span class="text-title">{{strtoupper($item['first_name'])}} {{strtoupper($item['last_name'])}}</span>
                     </div>
                 @endforeach
             </div>
@@ -314,17 +327,18 @@
 
         @if(count($data['director2']) > 0)
         <section id="director_2">
-            <div class="row bg-gray" style="margin-bottom: 30px;">
+            <div class="row bg-gray" style="margin-bottom: 30px; padding-bottom: 15px;">
                 <div class="col-lg-12 pt-3">
-                    <h3 class="text-center"><span class="sub-judul-1">DIRECTOR II </span><span class="sub-judul-2">ACHIEVERS</span></h3>
+                    <h3 class="text-center"><span class="sub-judul-1">DIRECTOR II </span>
+                        <br><span class="sub-judul-2">ACHIEVERS</span></h3>
                 </div>
                 @foreach ($data['director2'] as $item)
-                    <div class="col-lg-4 col p-3 mx-auto d-block">
+                    <div class="g-line p-3 mx-auto d-block text-center" style="width: 33%;">
                         <div class="d-flex align-items-center mx-auto justify-content-center wrap-img">
                             <img src="{{$item['src'] != null ? checkImageHof($item['src']) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user rounded-circle" >
                             <img src="{{asset('assets3/img/Director2.png')}}" class="img-fluid img-frame">
                         </div>
-                        <h5 class="text-center mt-2 text-name">{{strtoupper($item['first_name'])}} {{strtoupper($item['last_name'])}}</h5>
+                        <span class="text-title">{{strtoupper($item['first_name'])}} {{strtoupper($item['last_name'])}}</span>
                     </div>
                 @endforeach
             </div>
@@ -334,17 +348,18 @@
 
         @if(count($data['director1']) > 0)
         <section id="director_1">
-            <div class="row bg-gray" style="margin-bottom: 30px;">
+            <div class="row bg-gray" style="margin-bottom: 30px; padding-bottom: 15px;">
                 <div class="col-lg-12 pt-3">
-                    <h3 class="text-center"><span class="sub-judul-1">DIRECTOR I </span><span class="sub-judul-2">ACHIEVERS</span></h3>
+                    <h3 class="text-center"><span class="sub-judul-1">DIRECTOR I </span>
+                        <br><span class="sub-judul-2">ACHIEVERS</span></h3>
                 </div>
                 @foreach ($data['director1'] as $item)
-                    <div class="col-lg-4 col p-3 mx-auto d-block">
+                    <div class="g-line p-3 mx-auto d-block text-center" style="width: 33%;">
                         <div class="d-flex align-items-center mx-auto justify-content-center wrap-img director_1">
                             <img src="{{$item['src'] != null ? checkImageHof($item['src']) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user rounded-circle" >
                             <img src="{{asset('assets3/img/Director1.png')}}" class="img-fluid img-frame">
                         </div>
-                        <h5 class="text-center mt-2 text-name">{{strtoupper($item['first_name'])}} {{strtoupper($item['last_name'])}}</h5>
+                        <span class="text-title">{{strtoupper($item['first_name'])}} {{strtoupper($item['last_name'])}}</span>
                     </div>
                 @endforeach
             </div>
@@ -354,20 +369,30 @@
 
         @if(count($data['platinum3']) > 0)
         <section id="platinum_3">
-            <div class="row bg-gray" style="margin-bottom: 30px;">
+            <div class="row bg-gray" style="margin-bottom: 30px; padding-bottom: 15px;">
                 <div class="col-lg-12 pt-3">
-                    <h3 class="text-center"><span class="sub-judul-1">PLATINUM III </span><span class="sub-judul-2">ACHIEVERS</span></h3>
+                    <h3 class="text-center"><span class="sub-judul-1">PLATINUM III </span>
+                        <br><span class="sub-judul-2">ACHIEVERS</span></h3>
                 </div>
+                <?php
+                $getLast = 0;
+                ?>
                 @foreach ($data['platinum3'] as $item)
-                    <div class="col p-3 d-flex justify-content-center">
-                        <div class="platinum">
+                    <div class="p-3 d-flex justify-content-center"
+                     style="width: 20%; <?php if ($getLast == 11) {
+                        echo "margin-left: auto; margin-right: 20%;";
+                     } elseif ($getLast == 10) {
+                        echo "margin-left: 20%;";
+                     } ?>">
+                        <div class="g-line platinum">
                             <div class="d-flex align-items-center mx-auto justify-content-center wrap-img">
                                 <img src="{{$item['src'] != null ? checkImageHof($item['src']) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user rounded-circle">
                                 <img src="{{asset('assets3/img/Platinum3.png')}}" class="img-fluid img-frame">
                             </div>
-                            <span class="text-center mt-2 text-name2">{{strtoupper($item['first_name'])}} {{strtoupper($item['last_name'])}}</span>
+                            <span class="text-title">{{strtoupper($item['first_name'])}} {{strtoupper($item['last_name'])}}</span>
                         </div>
                     </div>
+                    <?php $getLast++; ?>
                 @endforeach
             </div>
             {{$data['platinum3']->links()}}
@@ -376,18 +401,19 @@
 
         @if(count($data['platinum2']) > 0)
         <section id="platinum_2">
-            <div class="row bg-gray" style="margin-bottom: 30px;">
+            <div class="row bg-gray" style="margin-bottom: 30px; padding-bottom: 15px;">
                 <div class="col-lg-12 pt-3">
-                    <h3 class="text-center"><span class="sub-judul-1">PLATINUM II </span><span class="sub-judul-2">ACHIEVERS</span></h3>
+                    <h3 class="text-center"><span class="sub-judul-1">PLATINUM II </span>
+                        <br><span class="sub-judul-2">ACHIEVERS</span></h3>
                 </div>
                 @foreach ($data['platinum2'] as $item)
-                    <div class="col p-3 d-flex justify-content-center">
+                    <div class="g-line p-3 d-flex justify-content-center" style="width: 20%;">
                         <div class="platinum">
                             <div class="d-flex align-items-center mx-auto justify-content-center wrap-img">
                                 <img src="{{$item['src'] != null ? checkImageHof($item['src']) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user rounded-circle">
                                 <img src="{{asset('assets3/img/Platinum2.png')}}" class="img-fluid img-frame">
                             </div>
-                            <span class="text-center text-name2 mt-2">{{strtoupper($item['first_name'])}} {{strtoupper($item['last_name'])}}</span>
+                            <span class="text-title">{{strtoupper($item['first_name'])}} {{strtoupper($item['last_name'])}}</span>
                         </div>
                     </div>
                 @endforeach
@@ -398,19 +424,17 @@
         
         @if(count($data['platinum1']) > 0)
         <section id="platinum_1">
-            <div class="row bg-gray" style="margin-bottom: 30px;">
-                <div class="col-lg-12 pt-3">
-                    <h3 class="text-center"><span class="sub-judul-1">PLATINUM I </span><span class="sub-judul-2">ACHIEVERS</span></h3>
+            <div class="row bg-gray" style="margin-bottom: 30px; padding-bottom: 15px;">
+                <div class="col-lg-12 pt-3 mb-4">
+                    <h3 class="text-center"><span class="sub-judul-1">PLATINUM I </span>
+                        <br><span class="sub-judul-2">ACHIEVERS</span></h3>
                 </div>
                 @foreach ($data['platinum1'] as $item)
-                    <div class="col p-3 platinum-1">
-                        <div class="d-flex align-items-center mx-auto justify-content-center wrap-img-platinum" style="overflow: hidden; border-radius: 0; height: 60px;">
-                            <div class="col-lg-6 col-5 p-0">
-                                <img src="{{$item['src'] != null ? checkImageHof($item['src']) : asset('assets3/img/favicon.png')}}" class="mx-auto d-block img-fluid img-user rounded-circle">
-                                <img src="{{asset('assets3/img/Platinum1.png')}}" class="img-fluid img-frame-platinum platinum-img-1">
-                            </div>
-                            <div class="col-lg-6 col-7 p-0 name-platinum-1" style="line-height: 1.3;">
-                                <small class="text-left text-name2 mt-2">{{strtoupper($item['first_name'])}} {{strtoupper($item['last_name'])}}</small>
+                    <div class="g-line p-3 platinum-1" style="width: 20%;">
+                        <div class="d-flex align-items-center mx-auto justify-content-center text-center" style="overflow: hidden; border-radius: 0; height: 60px;">
+                            <div class="col-lg-6 col-7 p-0 name-platinum-1" 
+                            style="">
+                                <span class="text-title">{{strtoupper($item['first_name'])}} {{strtoupper($item['last_name'])}}</span>
                             </div>
                         </div>
                     </div>
