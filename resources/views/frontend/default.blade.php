@@ -33,7 +33,7 @@
 
 <!-- tree -->
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/tree/Treant.css') }}">
-<link rel="stylesheet" type="text/css" href="{{ asset('assets/tree/basic-example.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/tree/basic-example.css?v=1') }}">
 
 <!-- select 2 -->
 <link rel="stylesheet" type="text/css" href="{{ asset('assets2/css/select2.css') }}">
@@ -125,7 +125,7 @@
         }
 
         #logo-bitrex{
-            height:30px !important;
+            height:31px !important;
             width: 80px !important;
             padding-left: 0px !important;
         }

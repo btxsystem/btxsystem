@@ -1,5 +1,5 @@
 
-    <footer class="footer wow fadeInUp" data-wow-duration="1s">
+    <footer class="footer">
       <div class="container">
         <div class="footer-inner border-decor_top">
           <div class="row">
