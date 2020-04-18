@@ -229,8 +229,8 @@
         height: 50px;
     }
     .logo-hall {
-        max-width: 345px;
-        max-height: 193px;
+        max-width: 294px;
+        max-height: 165px;
     }
     .ps-5 {
         margin-top: 30px;
