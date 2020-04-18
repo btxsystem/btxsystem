@@ -61,7 +61,7 @@
             <li class="header">Menu</li>
             <li class="{{ (request()->is('member')) ? 'active' : '' }}"> <a href="{{route('member.dashboard')}}"><i class="zmdi zmdi-view-dashboard col-red"></i><span>Dashboard</span> </a> </li>
             <li class="{{ (request()->is('member/tree')) ? 'active' : '' }}"> <a href="{{route('member.tree')}}"><i class="zmdi zmdi-device-hub col-blue"></i><span>Tree</span> </a> </li>
-            {{--<li class="{{ (request()->is('member/hall-of-fame')) ? 'active' : '' }}"> <a href="{{route('member.hall-of-fame')}}"><i class="zmdi zmdi-collection-image-o col-green"></i><span>Hall Of Fame</span> </a> </li>--}}
+            <li class="{{ (request()->is('member/hall-of-fame')) ? 'active' : '' }}"> <a href="{{route('member.hall-of-fame')}}"><i class="fa fa-trophy col-green"></i><span>Hall Of Fame</span> </a> </li>
             <li class="{{ (request()->is('member/ebook')) ? 'active' : '' }}"> <a href="{{ route('member.ebook.index') }}"><i class="zmdi zmdi-book col-red"></i><span>Ebook</span> </a> </li>
             <li class="{{ (request()->is('member/reward')) ? 'active' : '' }}"> <a href="{{ route('member.reward') }}"><i class="zmdi zmdi-star-half col-blue"></i><span>My Rewards</span> </a> </li>
             <li class="{{ (request()->is('member/bonus')) ? 'active' : '' }}"> <a href="{{ route('member.bonus.index') }}"><i class="zmdi zmdi-ticket-star col-red"></i><span>My Bonus</span> </a> </li>
