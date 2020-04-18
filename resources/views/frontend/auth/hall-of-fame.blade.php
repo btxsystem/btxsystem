@@ -60,7 +60,7 @@
     }
 
     .wrap-img{
-        border-radius: 50%; width: 100px; height: 100px; overflow: hidden; padding-bottom: 5px;
+        border-radius: 50%; width: 100px; height: 100px; overflow: hidden; padding-bottom: 15px;
     }
 
 
@@ -128,7 +128,7 @@
         .wrap-img {
             height: 45px;
             width: 20px;
-            padding-bottom: 5px;
+            padding-bottom: 15px;
         }
         .wrap-img.director_1 {
             height: 45px;
@@ -219,7 +219,28 @@
         font-size: 7px;
     }
     .g-line {
-        line-height: 0.8;
+        line-height: 0.7;
+    }
+    h1 span, .h1, h1 {
+        font-size: 15px;
+    }
+    .sub-judul-1 {
+        font-weight: bold;
+        letter-spacing: 7px;
+        line-height: 1;
+    }
+    .sub-judul-2 {
+        letter-spacing: 5px;
+        font-weight: 300;
+    }
+    .scale {
+        padding: 0px;
+    }
+    .plat {
+        height: 50px;
+    }
+    .mb-5, .my-5 {
+        margin-bottom: 1rem!important;
     }
 }
 @media (min-width:481px)  {
@@ -227,11 +248,14 @@
     .text-title {
         font-size: 10px;
     }
+    h1 span, .h1, h1 {
+        font-size: 17px;
+    }
 }
 @media (min-width:641px)  {
 /* portrait tablets, portrait iPad, landscape e-readers, landscape 800x480 or 854x480 phones */
     .text-title {
-        font-size: 11px;
+        font-size: 12px;
     }
     .g-line {
         line-height: 1;
@@ -240,19 +264,39 @@
 @media (min-width:961px)  {
 /* tablet, landscape iPad, lo-res laptops ands desktops */
     .text-title {
-        font-size: 15px;
+        font-size: 13px;
     }
     .g-line {
-        line-height: 1.2;
+        line-height: 1.5;
+    }
+    h1 span, .h1, h1 {
+        font-size: 28px;
+    }
+    .sub-judul-1 {
+        font-weight: bold;
+        letter-spacing: 9px;
+        line-height: 1.5;
+    }
+    .sub-judul-2 {
+        letter-spacing: 8px;
+        font-weight: 300;
+    }
+    .scale {
+        padding: 50px;
+    }
+    .plat {
+        height: 90px;
+    }
+    .mb-5, .my-5 {
+        margin-bottom: 3rem!important;
+    }
+    .mt-3, .my-3 {
+        margin-top: 1rem!important;
     }
 }
-@media (min-width:1025px) {
-/* big landscape tablets, laptops, and desktops */
 
-}
-@media (min-width:1281px) {
-/* hi-res laptops and desktops */
-
+body {
+    color: #666;
 }
 </style>
 <body class="bg-main">
@@ -263,8 +307,8 @@
         <!-- $data['chairman2'] -->
         @if(count($data['chairman2']) > 0)
         <section id="chairman_2">
-            <div class="row bg-gray" style="margin-bottom: 30px; padding-bottom: 15px;">
-                <div class="col-lg-12 pt-3">
+            <div class="row bg-gray scale" style="margin-bottom: 30px; padding-bottom: 15px;">
+                <div class="col-lg-12 mb-5 mt-3">
                     <h1 class="text-center"><span class="sub-judul-1">CHAIRMAN II </span>
                     <br><span class="sub-judul-2">ACHIEVERS</span></h1>
                 </div>
@@ -285,8 +329,8 @@
         
         @if(count($data['chairman1']) > 0)
         <section id="chairman_1">
-            <div class="row bg-gray" style="margin-bottom: 30px; padding-bottom: 15px;">
-                <div class="col-lg-12 pt-3">
+            <div class="row bg-gray scale" style="margin-bottom: 30px; padding-bottom: 15px;">
+                <div class="col-lg-12 mb-5 mt-3">
                     <h1 class="text-center"><span class="sub-judul-1">CHAIRMAN I </span>
                         <br><span class="sub-judul-2">ACHIEVERS</span></h1>
                 </div>
@@ -306,8 +350,8 @@
 
         @if(count($data['director3']) > 0)
         <section id="director_3">
-            <div class="row bg-gray" style="margin-bottom: 30px; padding-bottom: 15px;">
-                <div class="col-lg-12 pt-3">
+            <div class="row bg-gray scale" style="margin-bottom: 30px; padding-bottom: 15px;">
+                <div class="col-lg-12 mb-5 mt-3">
                     <h1 class="text-center"><span class="sub-judul-1">DIRECTOR III </span>
                         <br><span class="sub-judul-2">ACHIEVERS</span></h1>
                 </div>
@@ -327,8 +371,8 @@
 
         @if(count($data['director2']) > 0)
         <section id="director_2">
-            <div class="row bg-gray" style="margin-bottom: 30px; padding-bottom: 15px;">
-                <div class="col-lg-12 pt-3">
+            <div class="row bg-gray scale" style="margin-bottom: 30px; padding-bottom: 15px;">
+                <div class="col-lg-12 mb-5 mt-3">
                     <h1 class="text-center"><span class="sub-judul-1">DIRECTOR II </span>
                         <br><span class="sub-judul-2">ACHIEVERS</span></h1>
                 </div>
@@ -348,8 +392,8 @@
 
         @if(count($data['director1']) > 0)
         <section id="director_1">
-            <div class="row bg-gray" style="margin-bottom: 30px; padding-bottom: 15px;">
-                <div class="col-lg-12 pt-3">
+            <div class="row bg-gray scale" style="margin-bottom: 30px; padding-bottom: 15px;">
+                <div class="col-lg-12 mb-5 mt-3">
                     <h1 class="text-center"><span class="sub-judul-1">DIRECTOR I </span>
                         <br><span class="sub-judul-2">ACHIEVERS</span></h1>
                 </div>
@@ -369,8 +413,8 @@
 
         @if(count($data['platinum3']) > 0)
         <section id="platinum_3">
-            <div class="row bg-gray" style="margin-bottom: 30px; padding-bottom: 15px;">
-                <div class="col-lg-12 pt-3">
+            <div class="row bg-gray scale" style="margin-bottom: 30px; padding-bottom: 15px;">
+                <div class="col-lg-12 mb-5 mt-3">
                     <h1 class="text-center"><span class="sub-judul-1">PLATINUM III </span>
                         <br><span class="sub-judul-2">ACHIEVERS</span></h1>
                 </div>
@@ -401,8 +445,8 @@
 
         @if(count($data['platinum2']) > 0)
         <section id="platinum_2">
-            <div class="row bg-gray" style="margin-bottom: 30px; padding-bottom: 15px;">
-                <div class="col-lg-12 pt-3">
+            <div class="row bg-gray scale" style="margin-bottom: 30px; padding-bottom: 15px;">
+                <div class="col-lg-12 mb-5 mt-3">
                     <h1 class="text-center"><span class="sub-judul-1">PLATINUM II </span>
                         <br><span class="sub-judul-2">ACHIEVERS</span></h1>
                 </div>
@@ -424,16 +468,15 @@
         
         @if(count($data['platinum1']) > 0)
         <section id="platinum_1">
-            <div class="row bg-gray" style="margin-bottom: 30px; padding-bottom: 15px;">
-                <div class="col-lg-12 pt-3 mb-4">
+            <div class="row bg-gray scale" style="margin-bottom: 30px; padding-bottom: 15px;">
+                <div class="col-lg-12 mb-5 mt-3">
                     <h1 class="text-center"><span class="sub-judul-1">PLATINUM I </span>
                         <br><span class="sub-judul-2">ACHIEVERS</span></h1>
                 </div>
                 @foreach ($data['platinum1'] as $item)
-                    <div class="g-line p-3 platinum-1" style="width: 20%;">
-                        <div class="d-flex align-items-center mx-auto justify-content-center text-center" style="overflow: hidden; border-radius: 0; height: 60px;">
-                            <div class="col-lg-6 col-7 p-0 name-platinum-1" 
-                            style="">
+                    <div class="g-line p-3 platinum-1 plat" style="width: 20%;">
+                        <div class="d-flex align-items-center mx-auto justify-content-center text-center">
+                            <div class="name-platinum-1">
                                 <span class="text-title">{{strtoupper($item['first_name'])}} {{strtoupper($item['last_name'])}}</span>
                             </div>
                         </div>
