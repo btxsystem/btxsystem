@@ -114,7 +114,7 @@
         .title {
             font-size: 25px;
         }
-        .p-5 {
+        .ps-5 {
             padding: 13px !important;
         }
         div .bg-gray {
@@ -204,10 +204,6 @@
             top: -10px;
         }
     }
-    p:last-child {
-        float: right;
-    }
-
 
 @media (min-width:320px)  {
 /* smartphones, iPhone, portrait 480x320 phones */
@@ -217,13 +213,13 @@
     .g-line {
         line-height: 1.2;
     }
-    h2 span {
+    .hall-title {
         font-size: 15px;
     }
     .sub-judul-1 {
         font-weight: bold;
         letter-spacing: 7px;
-        line-height: 2;
+        line-height: 1.2;
     }
     .sub-judul-2 {
         letter-spacing: 7px;
@@ -232,11 +228,21 @@
     .plat {
         height: 50px;
     }
+    .logo-hall {
+        max-width: 345px;
+        max-height: 193px;
+    }
+    .ps-5 {
+        margin-top: 30px;
+    }
 }
 @media (min-width:481px)  {
 /* portrait e-readers (Nook/Kindle), smaller tablets @ 600 or @ 640 wide. */
     .text-title {
         font-size: 10px;
+    }
+    .ps-5 {
+        margin-top: 70px;
     }
 }
 @media (min-width:641px)  {
@@ -247,8 +253,12 @@
     .g-line {
         line-height: 1.2;
     }
-    h2 span {
+    .hall-title {
         font-size: 20px;
+    }
+    .logo-hall {
+        max-width: 550px;
+        max-height: 309px;
     }
 }
 @media (min-width:961px)  {
@@ -257,15 +267,15 @@
         font-size: 13px;
     }
     .g-line {
-        line-height: 1.2;
+        line-height: 1;
     }
-    h2 span {
+    .hall-title {
         font-size: 28px;
     }
     .sub-judul-1 {
         font-weight: bold;
         letter-spacing: 9px;
-        line-height: 1.5;
+        line-height: 1.1;
     }
     .sub-judul-2 {
         letter-spacing: 8px;
@@ -274,207 +284,234 @@
     .plat {
         height: 90px;
     }
+    .ps-5 {
+        margin-top: 80px;
+    }
 }
 
-h2 span, .g-line {
+span, .g-line {
     color: #666;
 }
 
+.wrapper-hall {
+    margin-top: 30px;
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.hall-title {
+    text-align: center;
+}
+p {
+    margin-top: 0;
+    margin-bottom: 1rem;
+}
+.title-line {
+    margin-top: 54px;
+    margin-bottom: 0px;
+}
+body {
+    line-height: 1.3;
+}
 </style>
 </head>
 @section('content')
 <section class="content profile-page">
-    <div class="container-fluid bg-upper" style="margin-top:70px!important">
-        <!-- <div class="row clearfix">
-            <div class="col-lg-12 col-md-12">
-                <div class="container"> -->
+    <div class="container-fluid ps-5 bg-upper">
         <div class="w-100 bg-white rounded shadow pb-4">
-        <center><img src="{{asset('assets3/img/hof.png')}}" class="img-fluid mb-2" width="550"></center>
+            <center>
+                <img src="{{asset('assets3/img/hof.png')}}" class="logo-hall mb-2" width="550">
+            </center>
 
-        <!-- $data['chairman2'] -->
-        @if(count($data['chairman2']) > 0)
-        <section id="chairman_2">
-            <div class="row bg-gray" style="margin-bottom: 30px; padding-bottom: 15px;">
-                <div class="col-lg-12 mb-4 mt-5">
-                    <h2 class="text-center"><span class="sub-judul-1">CHAIRMAN II </span>
-                    <br><span class="sub-judul-2">ACHIEVERS</span></h2>
-                </div>
-
-                @foreach ($data['chairman2'] as $item)
-                    <div class="g-line col-lg-4 p-3 mx-auto d-block text-center">
-                        <div class="d-flex align-items-center mx-auto justify-content-center wrap-img">
-                            <img src="{{$item['src'] != null ? checkImageHof($item['src']) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user rounded-circle" >
-                            <img src="{{asset('assets3/img/Chairman2.png')}}" class="img-fluid img-frame">
-                        </div>
-                        <span class="text-title">{{strtoupper($item['first_name'])}} {{strtoupper($item['last_name'])}}</span>
+            @if(count($data['chairman2']) > 0)
+            <section id="chairman_2">
+                <div class="row bg-gray" style="margin-bottom: 30px; padding-bottom: 15px;">
+                    <div class="col-lg-12 title-line">
+                        <p class="hall-title text-center"><span class="sub-judul-1">CHAIRMAN II </span>
+                            <br><span class="sub-judul-2">ACHIEVERS</span>
+                        </p>
                     </div>
-                @endforeach
-            </div>
-            {{$data['chairman2']->links()}}
-        </section>
-        @endif
-        
-        @if(count($data['chairman1']) > 0)
-        <section id="chairman_1">
-            <div class="row bg-gray" style="margin-bottom: 30px; padding-bottom: 15px;">
-                <div class="col-lg-12 mb-4 mt-5">
-                    <h2 class="text-center"><span class="sub-judul-1">CHAIRMAN I </span>
-                        <br><span class="sub-judul-2">ACHIEVERS</span></h2>
-                </div>
-                @foreach ($data['chairman1'] as $item)
-                    <div class="g-line p-3 mx-auto d-block text-center" style="width: 50%;">
-                        <div class="d-flex align-items-center mx-auto justify-content-center wrap-img">
-                            <img src="{{$item['src'] != null ? checkImageHof($item['src']) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user rounded-circle" >
-                            <img src="{{asset('assets3/img/Chairman1.png')}}" class="img-fluid img-frame">
-                        </div>
-                        <span class="text-title">{{strtoupper($item['first_name'])}} {{strtoupper($item['last_name'])}}</span>
-                    </div>
-                @endforeach
-            </div>
-        </section>
-        {{$data['chairman1']->links()}}
-        @endif
 
-        @if(count($data['director3']) > 0)
-        <section id="director_3">
-            <div class="row bg-gray" style="margin-bottom: 30px; padding-bottom: 15px;">
-                <div class="col-lg-12 mb-4 mt-5">
-                    <h2 class="text-center"><span class="sub-judul-1">DIRECTOR III </span>
-                        <br><span class="sub-judul-2">ACHIEVERS</span></h2>
-                </div>
-                @foreach ($data['director3'] as $item)
-                    <div class="g-line p-3 mx-auto d-block text-center" style="width: 33%;">
-                        <div class="d-flex align-items-center mx-auto justify-content-center wrap-img">
-                            <img src="{{$item['src'] != null ? checkImageHof($item['src']) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user rounded-circle" >
-                            <img src="{{asset('assets3/img/Director3.png')}}" class="img-fluid img-frame">
-                        </div>
-                        <span class="text-title">{{strtoupper($item['first_name'])}} {{strtoupper($item['last_name'])}}</span>
-                    </div>
-                @endforeach
-            </div>
-            {{$data['director3']->links()}}
-        </section>
-        @endif
-
-        @if(count($data['director2']) > 0)
-        <section id="director_2">
-            <div class="row bg-gray" style="margin-bottom: 30px; padding-bottom: 15px;">
-                <div class="col-lg-12 mb-4 mt-5">
-                    <h2 class="text-center"><span class="sub-judul-1">DIRECTOR II </span>
-                        <br><span class="sub-judul-2">ACHIEVERS</span></h2>
-                </div>
-                @foreach ($data['director2'] as $item)
-                    <div class="g-line p-3 mx-auto d-block text-center" style="width: 33%;">
-                        <div class="d-flex align-items-center mx-auto justify-content-center wrap-img">
-                            <img src="{{$item['src'] != null ? checkImageHof($item['src']) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user rounded-circle" >
-                            <img src="{{asset('assets3/img/Director2.png')}}" class="img-fluid img-frame">
-                        </div>
-                        <span class="text-title">{{strtoupper($item['first_name'])}} {{strtoupper($item['last_name'])}}</span>
-                    </div>
-                @endforeach
-            </div>
-            {{$data['director2']->links()}}
-        </section>
-        @endif
-
-        @if(count($data['director1']) > 0)
-        <section id="director_1">
-            <div class="row bg-gray" style="margin-bottom: 30px; padding-bottom: 15px;">
-                <div class="col-lg-12 mb-4 mt-5">
-                    <h2 class="text-center"><span class="sub-judul-1">DIRECTOR I </span>
-                        <br><span class="sub-judul-2">ACHIEVERS</span></h2>
-                </div>
-                @foreach ($data['director1'] as $item)
-                    <div class="g-line p-3 mx-auto d-block text-center" style="width: 33%;">
-                        <div class="d-flex align-items-center mx-auto justify-content-center wrap-img director_1">
-                            <img src="{{$item['src'] != null ? checkImageHof($item['src']) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user rounded-circle" >
-                            <img src="{{asset('assets3/img/Director1.png')}}" class="img-fluid img-frame">
-                        </div>
-                        <span class="text-title">{{strtoupper($item['first_name'])}} {{strtoupper($item['last_name'])}}</span>
-                    </div>
-                @endforeach
-            </div>
-            {{$data['director1']->links()}}
-        </section>
-        @endif
-
-        @if(count($data['platinum3']) > 0)
-        <section id="platinum_3">
-            <div class="row bg-gray" style="margin-bottom: 30px; padding-bottom: 15px;">
-                <div class="col-lg-12 mb-4 mt-5">
-                    <h2 class="text-center"><span class="sub-judul-1">PLATINUM III </span>
-                        <br><span class="sub-judul-2">ACHIEVERS</span></h2>
-                </div>
-                <?php
-                $getLast = 0;
-                ?>
-                @foreach ($data['platinum3'] as $item)
-                    <div class="p-3 d-flex justify-content-center"
-                     style="width: 20%; <?php if ($getLast == 11) {
-                        echo "margin-left: auto; margin-right: 20%;";
-                     } elseif ($getLast == 10) {
-                        echo "margin-left: 20%;";
-                     } ?>">
-                        <div class="g-line platinum">
+                    @foreach ($data['chairman2'] as $item)
+                        <div class="g-line col-lg-4 p-3 mx-auto d-block text-center">
                             <div class="d-flex align-items-center mx-auto justify-content-center wrap-img">
-                                <img src="{{$item['src'] != null ? checkImageHof($item['src']) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user rounded-circle">
-                                <img src="{{asset('assets3/img/Platinum3.png')}}" class="img-fluid img-frame">
+                                <img src="{{$item['src'] != null ? checkImageHof($item['src']) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user rounded-circle" >
+                                <img src="{{asset('assets3/img/Chairman2.png')}}" class="img-fluid img-frame">
                             </div>
                             <span class="text-title">{{strtoupper($item['first_name'])}} {{strtoupper($item['last_name'])}}</span>
                         </div>
-                    </div>
-                    <?php $getLast++; ?>
-                @endforeach
-            </div>
-            {{$data['platinum3']->links()}}
-        </section>
-        @endif
-
-        @if(count($data['platinum2']) > 0)
-        <section id="platinum_2">
-            <div class="row bg-gray" style="margin-bottom: 30px; padding-bottom: 15px;">
-                <div class="col-lg-12 mb-4 mt-5">
-                    <h2 class="text-center"><span class="sub-judul-1">PLATINUM II </span>
-                        <br><span class="sub-judul-2">ACHIEVERS</span></h2>
+                    @endforeach
                 </div>
-                @foreach ($data['platinum2'] as $item)
-                    <div class="g-line p-3 d-flex justify-content-center" style="width: 20%;">
-                        <div class="platinum">
+                {{$data['chairman2']->links()}}
+            </section>
+            @endif
+            
+            @if(count($data['chairman1']) > 0)
+            <section id="chairman_1">
+                <div class="row bg-gray" style="margin-bottom: 30px; padding-bottom: 15px;">
+                    <div class="col-lg-12 title-line">
+                        <p class="hall-title text-center"><span class="sub-judul-1">CHAIRMAN I </span>
+                            <br><span class="sub-judul-2">ACHIEVERS</span>
+                        </p>
+                    </div>
+                    @foreach ($data['chairman1'] as $item)
+                        <div class="g-line p-3 mx-auto d-block text-center" style="width: 50%;">
                             <div class="d-flex align-items-center mx-auto justify-content-center wrap-img">
-                                <img src="{{$item['src'] != null ? checkImageHof($item['src']) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user rounded-circle">
-                                <img src="{{asset('assets3/img/Platinum2.png')}}" class="img-fluid img-frame">
+                                <img src="{{$item['src'] != null ? checkImageHof($item['src']) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user rounded-circle" >
+                                <img src="{{asset('assets3/img/Chairman1.png')}}" class="img-fluid img-frame">
                             </div>
                             <span class="text-title">{{strtoupper($item['first_name'])}} {{strtoupper($item['last_name'])}}</span>
                         </div>
-                    </div>
-                @endforeach
-            </div>
-            {{$data['platinum2']->links()}}
-        </section>
-        @endif
-        
-        @if(count($data['platinum1']) > 0)
-        <section id="platinum_1">
-            <div class="row bg-gray" style="margin-bottom: 30px; padding-bottom: 15px;">
-                <div class="col-lg-12 mb-4 mt-5">
-                    <h2 class="text-center"><span class="sub-judul-1">PLATINUM I </span>
-                        <br><span class="sub-judul-2">ACHIEVERS</span></h2>
+                    @endforeach
                 </div>
-                @foreach ($data['platinum1'] as $item)
-                    <div class="g-line p-3 platinum-1 plat" style="width: 20%;">
-                        <div class="d-flex align-items-center mx-auto justify-content-center text-center">
-                            <div class="name-platinum-1">
+            </section>
+            {{$data['chairman1']->links()}}
+            @endif
+
+            @if(count($data['director3']) > 0)
+            <section id="director_3">
+                <div class="row bg-gray" style="margin-bottom: 30px; padding-bottom: 15px;">
+                    <div class="col-lg-12 title-line">
+                        <p class="hall-title text-center"><span class="sub-judul-1">DIRECTOR III </span>
+                            <br><span class="sub-judul-2">ACHIEVERS</span>
+                        </p>
+                    </div>
+                    @foreach ($data['director3'] as $item)
+                        <div class="g-line p-3 mx-auto d-block text-center" style="width: 33%;">
+                            <div class="d-flex align-items-center mx-auto justify-content-center wrap-img">
+                                <img src="{{$item['src'] != null ? checkImageHof($item['src']) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user rounded-circle" >
+                                <img src="{{asset('assets3/img/Director3.png')}}" class="img-fluid img-frame">
+                            </div>
+                            <span class="text-title">{{strtoupper($item['first_name'])}} {{strtoupper($item['last_name'])}}</span>
+                        </div>
+                    @endforeach
+                </div>
+                {{$data['director3']->links()}}
+            </section>
+            @endif
+
+            @if(count($data['director2']) > 0)
+            <section id="director_2">
+                <div class="row bg-gray" style="margin-bottom: 30px; padding-bottom: 15px;">
+                    <div class="col-lg-12 title-line">
+                        <p class="hall-title text-center"><span class="sub-judul-1">DIRECTOR II </span>
+                            <br><span class="sub-judul-2">ACHIEVERS</span>
+                        </p>
+                    </div>
+                    @foreach ($data['director2'] as $item)
+                        <div class="g-line p-3 mx-auto d-block text-center" style="width: 33%;">
+                            <div class="d-flex align-items-center mx-auto justify-content-center wrap-img">
+                                <img src="{{$item['src'] != null ? checkImageHof($item['src']) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user rounded-circle" >
+                                <img src="{{asset('assets3/img/Director2.png')}}" class="img-fluid img-frame">
+                            </div>
+                            <span class="text-title">{{strtoupper($item['first_name'])}} {{strtoupper($item['last_name'])}}</span>
+                        </div>
+                    @endforeach
+                </div>
+                {{$data['director2']->links()}}
+            </section>
+            @endif
+
+            @if(count($data['director1']) > 0)
+            <section id="director_1">
+                <div class="row bg-gray" style="margin-bottom: 30px; padding-bottom: 15px;">
+                    <div class="col-lg-12 title-line">
+                        <p class="hall-title text-center"><span class="sub-judul-1">DIRECTOR I </span>
+                            <br><span class="sub-judul-2">ACHIEVERS</span>
+                        </p>
+                    </div>
+                    @foreach ($data['director1'] as $item)
+                        <div class="g-line p-3 mx-auto d-block text-center" style="width: 33%;">
+                            <div class="d-flex align-items-center mx-auto justify-content-center wrap-img director_1">
+                                <img src="{{$item['src'] != null ? checkImageHof($item['src']) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user rounded-circle" >
+                                <img src="{{asset('assets3/img/Director1.png')}}" class="img-fluid img-frame">
+                            </div>
+                            <span class="text-title">{{strtoupper($item['first_name'])}} {{strtoupper($item['last_name'])}}</span>
+                        </div>
+                    @endforeach
+                </div>
+                {{$data['director1']->links()}}
+            </section>
+            @endif
+
+            @if(count($data['platinum3']) > 0)
+            <section id="platinum_3">
+                <div class="row bg-gray" style="margin-bottom: 30px; padding-bottom: 15px;">
+                    <div class="col-lg-12 title-line">
+                        <p class="hall-title text-center"><span class="sub-judul-1">PLATINUM III </span>
+                            <br><span class="sub-judul-2">ACHIEVERS</span>
+                        </p>
+                    </div>
+                    <?php
+                    $getLast = 0;
+                    ?>
+                    @foreach ($data['platinum3'] as $item)
+                        <div class="p-3 d-flex justify-content-center"
+                         style="width: 20%; <?php if ($getLast == 11) {
+                            echo "margin-left: auto; margin-right: 20%;";
+                         } elseif ($getLast == 10) {
+                            echo "margin-left: 20%;";
+                         } ?>">
+                            <div class="g-line platinum">
+                                <div class="d-flex align-items-center mx-auto justify-content-center wrap-img">
+                                    <img src="{{$item['src'] != null ? checkImageHof($item['src']) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user rounded-circle">
+                                    <img src="{{asset('assets3/img/Platinum3.png')}}" class="img-fluid img-frame">
+                                </div>
                                 <span class="text-title">{{strtoupper($item['first_name'])}} {{strtoupper($item['last_name'])}}</span>
                             </div>
                         </div>
+                        <?php $getLast++; ?>
+                    @endforeach
+                </div>
+                {{$data['platinum3']->links()}}
+            </section>
+            @endif
+
+            @if(count($data['platinum2']) > 0)
+            <section id="platinum_2">
+                <div class="row bg-gray" style="margin-bottom: 30px; padding-bottom: 15px;">
+                    <div class="col-lg-12 title-line">
+                        <p class="hall-title text-center"><span class="sub-judul-1">PLATINUM II </span>
+                            <br><span class="sub-judul-2">ACHIEVERS</span>
+                        </p>
                     </div>
-                @endforeach
-            </div>
-            {{$data['platinum1']->links()}}
-        </section>
-        @endif
-        </div>
-            </div>
+                    @foreach ($data['platinum2'] as $item)
+                        <div class="g-line p-3 d-flex justify-content-center" style="width: 20%;">
+                            <div class="platinum">
+                                <div class="d-flex align-items-center mx-auto justify-content-center wrap-img">
+                                    <img src="{{$item['src'] != null ? checkImageHof($item['src']) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user rounded-circle">
+                                    <img src="{{asset('assets3/img/Platinum2.png')}}" class="img-fluid img-frame">
+                                </div>
+                                <span class="text-title">{{strtoupper($item['first_name'])}} {{strtoupper($item['last_name'])}}</span>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+                {{$data['platinum2']->links()}}
+            </section>
+            @endif
+            
+            @if(count($data['platinum1']) > 0)
+            <section id="platinum_1">
+                <div class="row bg-gray" style="margin-bottom: 30px; padding-bottom: 15px;">
+                    <div class="col-lg-12 title-line">
+                        <p class="hall-title text-center"><span class="sub-judul-1">PLATINUM I </span>
+                            <br><span class="sub-judul-2">ACHIEVERS</span>
+                        </p>
+                    </div>
+                    @foreach ($data['platinum1'] as $item)
+                        <div class="g-line p-3 platinum-1 plat" style="width: 20%;">
+                            <div class="d-flex align-items-center mx-auto justify-content-center text-center">
+                                <div class="name-platinum-1">
+                                    <span class="text-title">{{strtoupper($item['first_name'])}} {{strtoupper($item['last_name'])}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+                {{$data['platinum1']->links()}}
+            </section>
+            @endif
         </div>
     </div>
 </section>
