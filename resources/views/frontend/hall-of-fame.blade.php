@@ -65,16 +65,7 @@
     }
 
     .wrap-img{
-        border-radius: 50%; width: 100px; height: 100px; overflow: hidden; padding-bottom: 5px;
-    }
-
-
-    .sub-judul-1 {
-    font-weight: bold; letter-spacing: 5px;
-    }
-
-    .sub-judul-2 {
-    letter-spacing: 3px; font-weight: 300;
+        border-radius: 50%; width: 100px; height: 100px; overflow: hidden; padding-bottom: 15px;
     }
 
     .img-user rounded-circle {
@@ -133,7 +124,7 @@
         .wrap-img {
             height: 45px;
             width: 20px;
-            padding-bottom: 5px;
+            padding-bottom: 15px;
         }
         .wrap-img.director_1 {
             height: 45px;
@@ -224,7 +215,22 @@
         font-size: 7px;
     }
     .g-line {
-        line-height: 0.8;
+        line-height: 1.2;
+    }
+    h2 span {
+        font-size: 15px;
+    }
+    .sub-judul-1 {
+        font-weight: bold;
+        letter-spacing: 7px;
+        line-height: 2;
+    }
+    .sub-judul-2 {
+        letter-spacing: 7px;
+        font-weight: 300;
+    }
+    .plat {
+        height: 50px;
     }
 }
 @media (min-width:481px)  {
@@ -236,29 +242,44 @@
 @media (min-width:641px)  {
 /* portrait tablets, portrait iPad, landscape e-readers, landscape 800x480 or 854x480 phones */
     .text-title {
-        font-size: 11px;
+        font-size: 12px;
     }
     .g-line {
-        line-height: 1;
+        line-height: 1.2;
+    }
+    h2 span {
+        font-size: 20px;
     }
 }
 @media (min-width:961px)  {
 /* tablet, landscape iPad, lo-res laptops ands desktops */
     .text-title {
-        font-size: 15px;
+        font-size: 13px;
     }
     .g-line {
         line-height: 1.2;
     }
+    h2 span {
+        font-size: 28px;
+    }
+    .sub-judul-1 {
+        font-weight: bold;
+        letter-spacing: 9px;
+        line-height: 1.5;
+    }
+    .sub-judul-2 {
+        letter-spacing: 8px;
+        font-weight: 300;
+    }
+    .plat {
+        height: 90px;
+    }
 }
-@media (min-width:1025px) {
-/* big landscape tablets, laptops, and desktops */
 
+h2 span, .g-line {
+    color: #666;
 }
-@media (min-width:1281px) {
-/* hi-res laptops and desktops */
 
-}
 </style>
 </head>
 @section('content')
@@ -274,9 +295,9 @@
         @if(count($data['chairman2']) > 0)
         <section id="chairman_2">
             <div class="row bg-gray" style="margin-bottom: 30px; padding-bottom: 15px;">
-                <div class="col-lg-12 pt-3">
-                    <h1 class="text-center"><span class="sub-judul-1">CHAIRMAN II </span>
-                    <br><span class="sub-judul-2">ACHIEVERS</span></h1>
+                <div class="col-lg-12 mb-4 mt-5">
+                    <h2 class="text-center"><span class="sub-judul-1">CHAIRMAN II </span>
+                    <br><span class="sub-judul-2">ACHIEVERS</span></h2>
                 </div>
 
                 @foreach ($data['chairman2'] as $item)
@@ -296,9 +317,9 @@
         @if(count($data['chairman1']) > 0)
         <section id="chairman_1">
             <div class="row bg-gray" style="margin-bottom: 30px; padding-bottom: 15px;">
-                <div class="col-lg-12 pt-3">
-                    <h1 class="text-center"><span class="sub-judul-1">CHAIRMAN I </span>
-                        <br><span class="sub-judul-2">ACHIEVERS</span></h1>
+                <div class="col-lg-12 mb-4 mt-5">
+                    <h2 class="text-center"><span class="sub-judul-1">CHAIRMAN I </span>
+                        <br><span class="sub-judul-2">ACHIEVERS</span></h2>
                 </div>
                 @foreach ($data['chairman1'] as $item)
                     <div class="g-line p-3 mx-auto d-block text-center" style="width: 50%;">
@@ -317,9 +338,9 @@
         @if(count($data['director3']) > 0)
         <section id="director_3">
             <div class="row bg-gray" style="margin-bottom: 30px; padding-bottom: 15px;">
-                <div class="col-lg-12 pt-3">
-                    <h1 class="text-center"><span class="sub-judul-1">DIRECTOR III </span>
-                        <br><span class="sub-judul-2">ACHIEVERS</span></h1>
+                <div class="col-lg-12 mb-4 mt-5">
+                    <h2 class="text-center"><span class="sub-judul-1">DIRECTOR III </span>
+                        <br><span class="sub-judul-2">ACHIEVERS</span></h2>
                 </div>
                 @foreach ($data['director3'] as $item)
                     <div class="g-line p-3 mx-auto d-block text-center" style="width: 33%;">
@@ -338,9 +359,9 @@
         @if(count($data['director2']) > 0)
         <section id="director_2">
             <div class="row bg-gray" style="margin-bottom: 30px; padding-bottom: 15px;">
-                <div class="col-lg-12 pt-3">
-                    <h1 class="text-center"><span class="sub-judul-1">DIRECTOR II </span>
-                        <br><span class="sub-judul-2">ACHIEVERS</span></h1>
+                <div class="col-lg-12 mb-4 mt-5">
+                    <h2 class="text-center"><span class="sub-judul-1">DIRECTOR II </span>
+                        <br><span class="sub-judul-2">ACHIEVERS</span></h2>
                 </div>
                 @foreach ($data['director2'] as $item)
                     <div class="g-line p-3 mx-auto d-block text-center" style="width: 33%;">
@@ -359,9 +380,9 @@
         @if(count($data['director1']) > 0)
         <section id="director_1">
             <div class="row bg-gray" style="margin-bottom: 30px; padding-bottom: 15px;">
-                <div class="col-lg-12 pt-3">
-                    <h1 class="text-center"><span class="sub-judul-1">DIRECTOR I </span>
-                        <br><span class="sub-judul-2">ACHIEVERS</span></h1>
+                <div class="col-lg-12 mb-4 mt-5">
+                    <h2 class="text-center"><span class="sub-judul-1">DIRECTOR I </span>
+                        <br><span class="sub-judul-2">ACHIEVERS</span></h2>
                 </div>
                 @foreach ($data['director1'] as $item)
                     <div class="g-line p-3 mx-auto d-block text-center" style="width: 33%;">
@@ -380,9 +401,9 @@
         @if(count($data['platinum3']) > 0)
         <section id="platinum_3">
             <div class="row bg-gray" style="margin-bottom: 30px; padding-bottom: 15px;">
-                <div class="col-lg-12 pt-3">
-                    <h1 class="text-center"><span class="sub-judul-1">PLATINUM III </span>
-                        <br><span class="sub-judul-2">ACHIEVERS</span></h1>
+                <div class="col-lg-12 mb-4 mt-5">
+                    <h2 class="text-center"><span class="sub-judul-1">PLATINUM III </span>
+                        <br><span class="sub-judul-2">ACHIEVERS</span></h2>
                 </div>
                 <?php
                 $getLast = 0;
@@ -412,9 +433,9 @@
         @if(count($data['platinum2']) > 0)
         <section id="platinum_2">
             <div class="row bg-gray" style="margin-bottom: 30px; padding-bottom: 15px;">
-                <div class="col-lg-12 pt-3">
-                    <h1 class="text-center"><span class="sub-judul-1">PLATINUM II </span>
-                        <br><span class="sub-judul-2">ACHIEVERS</span></h1>
+                <div class="col-lg-12 mb-4 mt-5">
+                    <h2 class="text-center"><span class="sub-judul-1">PLATINUM II </span>
+                        <br><span class="sub-judul-2">ACHIEVERS</span></h2>
                 </div>
                 @foreach ($data['platinum2'] as $item)
                     <div class="g-line p-3 d-flex justify-content-center" style="width: 20%;">
@@ -435,15 +456,14 @@
         @if(count($data['platinum1']) > 0)
         <section id="platinum_1">
             <div class="row bg-gray" style="margin-bottom: 30px; padding-bottom: 15px;">
-                <div class="col-lg-12 pt-3 mb-4">
-                    <h1 class="text-center"><span class="sub-judul-1">PLATINUM I </span>
-                        <br><span class="sub-judul-2">ACHIEVERS</span></h1>
+                <div class="col-lg-12 mb-4 mt-5">
+                    <h2 class="text-center"><span class="sub-judul-1">PLATINUM I </span>
+                        <br><span class="sub-judul-2">ACHIEVERS</span></h2>
                 </div>
                 @foreach ($data['platinum1'] as $item)
-                    <div class="g-line p-3 platinum-1" style="width: 20%;">
-                        <div class="d-flex align-items-center mx-auto justify-content-center text-center" style="overflow: hidden; border-radius: 0; height: 60px;">
-                            <div class="col-lg-6 col-7 p-0 name-platinum-1" 
-                            style="">
+                    <div class="g-line p-3 platinum-1 plat" style="width: 20%;">
+                        <div class="d-flex align-items-center mx-auto justify-content-center text-center">
+                            <div class="name-platinum-1">
                                 <span class="text-title">{{strtoupper($item['first_name'])}} {{strtoupper($item['last_name'])}}</span>
                             </div>
                         </div>
