@@ -444,14 +444,57 @@ body {
                     </div>
                     <?php
                     $getLast = 0;
+                    $count = sizeof($data['platinum3']);
+                    $first = explode(".", $count / 5)[0];
+                    $last = substr($count / 5, strpos($count / 5, ".") + 1);
                     ?>
                     @foreach ($data['platinum3'] as $item)
                         <div class="p-3 d-flex justify-content-center"
-                         style="width: 20%; <?php if ($getLast == 11) {
-                            echo "margin-left: auto; margin-right: 20%;";
-                         } elseif ($getLast == 10) {
-                            echo "margin-left: 20%;";
-                         } ?>">
+                         style="width: 20%; 
+                         <?php
+                         switch ($last) {
+                            case '2':
+                                if ($getLast == 0 && $first == 0
+                                    || $getLast == 5 && $first == 1
+                                    || $getLast == 10 && $first == 2) {
+                                    echo "margin-left: auto; margin-right: auto;";
+                                }
+                                break;
+
+                            case '4':
+                                if ($getLast == 1 && $first == 0
+                                    || $getLast == 6 && $first == 1
+                                    || $getLast == 11 && $first == 2) {
+                                    echo "margin-left: auto; margin-right: 20%;";
+                                } elseif ($getLast == 0 && $first == 0
+                                    || $getLast == 5 && $first == 1
+                                    || $getLast == 10 && $first == 2) {
+                                    echo "margin-left: 20%;";
+                                }
+                                break;
+                             
+                            case '6':
+                                if ($getLast == 2 && $first == 0
+                                    || $getLast == 7 && $first == 1
+                                    || $getLast == 12 && $first == 2) {
+                                    echo "margin-left: auto; margin-right: 20%;";
+                                } elseif ($getLast == 0 && $first == 0
+                                    || $getLast == 5 && $first == 1
+                                    || $getLast == 10 && $first == 2) {
+                                    echo "margin-left: 20%;";
+                                }
+                                break;
+
+                            case '8':
+                                if ($getLast == 0 && $first == 0
+                                    || $getLast == 5 && $first == 1
+                                    || $getLast == 10 && $first == 2) {
+                                    echo "margin-left: 10%;";
+                                }
+                                break;
+                         }
+                         ?>
+                         ">
                             <div class="g-line platinum">
                                 <div class="d-flex align-items-center mx-auto justify-content-center wrap-img">
                                     <img src="{{$item['src'] != null ? checkImageHof($item['src']) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user rounded-circle">
@@ -475,8 +518,59 @@ body {
                             <br><span class="sub-judul-2">ACHIEVERS</span>
                         </p>
                     </div>
+                    <?php
+                    $getLast = 0;
+                    $count = sizeof($data['platinum2']);
+                    $first = explode(".", $count / 5)[0];
+                    $last = substr($count / 5, strpos($count / 5, ".") + 1);
+                    ?>
                     @foreach ($data['platinum2'] as $item)
-                        <div class="g-line p-3 d-flex justify-content-center" style="width: 20%;">
+                        <div class="g-line p-3 d-flex justify-content-center" 
+                        style="width: 20%;
+                        <?php
+                         switch ($last) {
+                            case '2':
+                                if ($getLast == 0 && $first == 0
+                                    || $getLast == 5 && $first == 1
+                                    || $getLast == 10 && $first == 2) {
+                                    echo "margin-left: auto; margin-right: auto;";
+                                }
+                                break;
+
+                            case '4':
+                                if ($getLast == 1 && $first == 0
+                                    || $getLast == 6 && $first == 1
+                                    || $getLast == 11 && $first == 2) {
+                                    echo "margin-left: auto; margin-right: 20%;";
+                                } elseif ($getLast == 0 && $first == 0
+                                    || $getLast == 5 && $first == 1
+                                    || $getLast == 10 && $first == 2) {
+                                    echo "margin-left: 20%;";
+                                }
+                                break;
+                             
+                            case '6':
+                                if ($getLast == 2 && $first == 0
+                                    || $getLast == 7 && $first == 1
+                                    || $getLast == 12 && $first == 2) {
+                                    echo "margin-left: auto; margin-right: 20%;";
+                                } elseif ($getLast == 0 && $first == 0
+                                    || $getLast == 5 && $first == 1
+                                    || $getLast == 10 && $first == 2) {
+                                    echo "margin-left: 20%;";
+                                }
+                                break;
+
+                            case '8':
+                                if ($getLast == 0 && $first == 0
+                                    || $getLast == 5 && $first == 1
+                                    || $getLast == 10 && $first == 2) {
+                                    echo "margin-left: 10%;";
+                                }
+                                break;
+                         }
+                        ?>
+                        ">
                             <div class="platinum">
                                 <div class="d-flex align-items-center mx-auto justify-content-center wrap-img">
                                     <img src="{{$item['src'] != null ? checkImageHof($item['src']) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user rounded-circle">
@@ -485,6 +579,7 @@ body {
                                 <span class="text-title">{{strtoupper($item['first_name'])}} {{strtoupper($item['last_name'])}}</span>
                             </div>
                         </div>
+                        <?php $getLast++; ?>
                     @endforeach
                 </div>
                 {{$data['platinum2']->links()}}
