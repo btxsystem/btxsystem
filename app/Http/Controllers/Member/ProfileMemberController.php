@@ -104,6 +104,7 @@ class ProfileMemberController extends Controller
     }
 
     public function register(Request $request){
+        return response()->json($request()->all());
         try {
             if (!isset($request->bank_name) || $request->bank_name==null) {
                 $request->bank_name = 'BCA';
