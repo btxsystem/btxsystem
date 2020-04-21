@@ -27,6 +27,14 @@
 <!--   <script defer src="{{asset('js/app.js')}}"></script>
  -->  <link rel="stylesheet" href="{{asset('assets2/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css')}}">
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css">
+  <style>
+    .yamm .nav > li > a {
+       padding: 0px 8px 9px !important;
+    }
+    .btn-buy {
+      margin-right: -45px!important
+    }
+  </style>
 </head>
 
 <body>
@@ -273,7 +281,8 @@
                   <ul class="nav navbar-nav">
                     <li><a id="myAbout" href="/login#about">About Us</a></li>
                     <li><a id="myProduct" href="/login#product">Our Product</a></li>
-                    <li><a id="event" href="/event">Event</a></li>
+                    <!-- <li><a id="event" href="/event">Event</a></li> -->
+                    <li><a target="_blank" href="{{asset('assets/img/codethical.pdf')}}">Ethical Code</a></li>
                     <li><a id="hall-if-fame" href="/hall-of-fame">Hall Of Fame</a></li>
                     <!-- <li><a href="#"><button class="btn btn-effect btn-info btn-buy" style="background: #b92240; margin-top: -10px;">JOIN</button></a></li> -->
                     <!-- <li><a data-toggle="modal" data-target="#join"><button class="btn btn-effect btn-info btn-buy" style="background: #b92240; margin-top: -10px;">JOIN</button></a></li>-->
