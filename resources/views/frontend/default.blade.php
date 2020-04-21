@@ -33,7 +33,7 @@
 
 <!-- tree -->
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/tree/Treant.css') }}">
-<link rel="stylesheet" type="text/css" href="{{ asset('assets/tree/basic-example.css?v=1') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/tree/basic-example.css') }}">
 
 <!-- select 2 -->
 <link rel="stylesheet" type="text/css" href="{{ asset('assets2/css/select2.css') }}">
