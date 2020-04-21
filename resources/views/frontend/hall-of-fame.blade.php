@@ -5,6 +5,7 @@
 @stop
 <head>
 <style>
+
     .bg-main {
         height: 100%; background-image:  url({{asset('assets3/img/hero-fallback.jpg')}}); background-size: cover;background-repeat:no-repeat;background-attachment: fixed;
     }
@@ -313,10 +314,14 @@ p {
 body {
     line-height: 1.3;
 }
+.tree-block {
+    font: 14px 'Muli', Arial, Tahoma, sans-serif;
+    line-height: 1.4;
+}
 </style>
 </head>
 @section('content')
-<section class="content profile-page">
+<section class="content profile-page tree-block">
     <div class="container-fluid ps-5 bg-upper">
         <div class="w-100 bg-white rounded shadow pb-4">
             <center>
