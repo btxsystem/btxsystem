@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Webstore;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Mail\ContactUsMail;
 use App\Models\ContactUs;
+use Illuminate\Support\Facades\Mail;
 
 class ContactUsController extends Controller
 {
@@ -36,6 +38,9 @@ class ContactUsController extends Controller
             ]);
 
             if(!$contactUs) return redirect()->back()->with('message_failed', 'Gagal Mengirim Pesan.');
+
+            Mail::to('dhadhang.efendi@gmail.com')
+                ->send(new ContactUsMail($contactUs, null));
 
             return redirect()->back()->with('message_success', 'Berhasil Mengirim Pesan.');
         } catch(\Exception $e) {
