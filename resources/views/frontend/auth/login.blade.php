@@ -577,6 +577,12 @@
     }, 1000);
   });
 
+  <?php if(\Session::has('message_success') || \Session::has('message_failed')):?>
+    $('html, body').animate({
+        scrollTop: $("#contact-form").offset().top - 100
+    }, 1000);
+  <?php endif;?>
+
   let submit_testimoni = () => {
         $.ajax({
             url: "{{ route('member.testimonial.store') }}",
