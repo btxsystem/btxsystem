@@ -7,6 +7,11 @@
 </head>
 <body>
   Dear Team CS, <br/><br/>
-  Terdapat pesan baru, silahkan cek melalui Backoffice.
+  Terdapat pesan baru sebagai berikut :<br/><br/>
+  Pengirim : {{ $data['name'] }}<br/>
+  Email : {{ $data['email'] }}<br/>
+  Pesan : {{ $data['message'] }}<br/>
+  Tanggal & Waktu : {{ $data['created_at'] }}<br/><br/>
+  Untuk melihat pesan lainnya, dapat dilihat di Backoffice.
 </body>
 </html>

@@ -29,18 +29,20 @@ class ContactUsController extends Controller
                 }
             }
 
-            $contactUs = ContactUs::insert([
+            $dataContactUs = [
                 'name' => $request->input('name'),
                 'email' => $request->input('email'),
                 'message' => $request->input('message'),
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
-            ]);
+            ];
+
+            $contactUs = ContactUs::insert($dataContactUs);
 
             if(!$contactUs) return redirect()->back()->with('message_failed', 'Gagal Mengirim Pesan.');
 
             Mail::to('dhadhang.efendi@gmail.com')
-                ->send(new ContactUsMail($contactUs, null));
+                ->send(new ContactUsMail($dataContactUs, null));
 
             return redirect()->back()->with('message_success', 'Berhasil Mengirim Pesan.');
         } catch(\Exception $e) {
