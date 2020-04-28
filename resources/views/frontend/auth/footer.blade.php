@@ -51,14 +51,25 @@
             <!-- end col -->
 
             <div class="col-lg-4 col-sm-3">
-              <section class="footer-section">
+              <section class="footer-section" id="contact-form">
                 <h3 class="footer-title">CONTACT US</h3>
-                <form class="form">
+								@if(\Session::has('message_failed'))
+									<div class="alert alert-danger">
+										{{ Session::get('message_failed') }}
+									</div>
+								@endif
+								@if(\Session::has('message_success'))
+									<div class="alert alert-success">
+										{{ Session::get('message_success') }}
+									</div>
+								@endif
+                <form class="form" action="{{route('contact.send')}}" method="post">
                   <div class="form-group">
-                    <input class="form-control" type="text" placeholder="Your Name">
-                    <input class="form-control" type="email" placeholder="Email address">
-                    <textarea class="form-control" rows="7" placeholder="Message"></textarea>
-                    <button class="btn" disabled style="background-color: #b92240; border-radius: 5px;">SEND MESSSAGE</button>
+										{{csrf_field()}}
+                    <input class="form-control" type="text" name="name" placeholder="Your Name">
+                    <input class="form-control" type="email" name="email" placeholder="Email address">
+                    <textarea class="form-control" rows="7" name="message" placeholder="Message"></textarea>
+                    <button class="btn" style="background-color: #b92240; border-radius: 5px;">SEND MESSSAGE</button>
                   </div>
                 </form>
               </section>
