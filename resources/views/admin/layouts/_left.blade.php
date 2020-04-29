@@ -30,6 +30,14 @@
         </li>
     @endif
 
+    <li class="{{ (request()->is('backoffice/contact-us')) ? 'active' : '' }}">
+        <a href="{{ route('contact-us.index') }}">
+            <i class="fa fa-envelope" style="color: #6CC66C"  data-name="contact-us" data-size="18" data-c="#418BCA" data-hc="#418BCA"
+                data-loop="true"></i>
+            <span class="title">Contact US </span>
+        </a>
+    </li>
+
     @if(\Auth::guard('admin')->user()->hasPermission('Members'))
         <li class="{{ (request()->segment(2))=='members' ? 'active' : '' }}">
             <a href="#">
