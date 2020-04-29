@@ -41,7 +41,7 @@ class ContactUsController extends Controller
 
             if(!$contactUs) return redirect()->back()->with('message_failed', 'Gagal Mengirim Pesan.');
 
-            Mail::to('dhadhang.efendi@gmail.com')
+            Mail::to('cs@bitrexgo.co.id')
                 ->send(new ContactUsMail($dataContactUs, null));
 
             return redirect()->back()->with('message_success', 'Berhasil Mengirim Pesan.');
