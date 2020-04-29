@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Auth;
 use Alert;
 use Illuminate\Http\Request;
 use App\Models\Roles;
+use App\Models\User;
+use Exception;
 
 class RolesController extends Controller
 {
@@ -25,7 +27,7 @@ class RolesController extends Controller
                     ->addIndexColumn()
                     ->addColumn('action', function($row) {
                         $edit = \Auth::guard('admin')->user()->hasPermission('Admin_management.roles.edit') ? '<a class="btn btn-warning fa fa-edit" href="'.route('admin-management.roles.edit',$row->id).'"></a>' : '';
-                        $delete = \Auth::guard('admin')->user()->hasPermission('Admin_management.roles.delete') ? '<a class="btn btn-danger fa fa-trash" href="'.route('admin-management.roles.delete',$row->id).'"></a>' : '';
+                        $delete = \Auth::guard('admin')->user()->hasPermission('Admin_management.roles.delete') ? '<a class="btn btn-danger fa fa-trash" onclick="deleteRole('.$row->id.')"></a>' : '';
                         return $row->id!=1 ? $edit.' '.$delete : '-';
                     })
                     ->rawColumns(['action'])
@@ -41,6 +43,10 @@ class RolesController extends Controller
 
     public function store(Request $request)
     {
+        $validatedData = $request->validate([
+            'title' => 'max:255|unique:roles|required',
+            'permissions'=> 'required',
+        ]);
         $data = [
             'title' => $request->title
         ];
@@ -58,13 +64,17 @@ class RolesController extends Controller
         return view('admin.roles.edit', compact('role'));
     }
 
-    public function data(){
-        $permissions = DB::table('permission_role')->select('permission_id')->where('role_id', Auth::guard('admin')->user()->roles_id)->orderBy('role_id')->get();
+    public function data($id){
+        $role = DB::table('roles')->where('id', $id)->first();
+        $permissions = DB::table('permission_role')->select('permission_id')->where('role_id', $role->id)->orderBy('role_id')->get();
         return $permissions;
     }
 
     public function update(Request $request)
     {
+        $validatedData = $request->validate([
+            'title' => 'max:255|unique:roles,title,'.$request->role_id,
+        ]);
         $data = [
             'title' => $request->title
         ];
@@ -88,9 +98,14 @@ class RolesController extends Controller
 
     public function destroy($id)
     {
-        Role::findOrFail($id)->delete();
-        Alert::success('Sukses Deleted Data', 'Sukses')->persistent("Close");
-        return redirect()->route('admin-management.roles.index');
+        try{
+            Role::findOrFail($id)->delete();
+            Alert::success('Sukses Deleted Data', 'Sukses')->persistent("Close");
+            return redirect()->route('admin-management.roles.index');
+        }catch(Exception $e){
+            Alert::success('Cannot delete roles because it is being used by a user', 'Failed')->persistent("Close");
+            return redirect()->route('admin-management.roles.index');
+        }
     }
 
     public function massDestroy(MassDestroyRoleRequest $request)

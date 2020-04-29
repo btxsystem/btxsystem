@@ -32,14 +32,14 @@ class HallOfFameController extends Controller
                     })
 
                     ->addColumn('action', function($row) {
-                        $edit = '<a class="btn btn-warning fa fa-edit" href="'.route('hall-of-fame.edit',$row->id).'"></a>';
+                        $edit = \Auth::guard('admin')->user()->hasPermission('Hall_Of_Fame.edit') ? '<a class="btn btn-warning fa fa-edit" href="'.route('hall-of-fame.edit',$row->id).'"></a>' : '';
                         // $delete = '<a class="btn btn-danger fa fa-edit" href="'.route('hall-of-fame.destroy',$row->id).'"></a>';
-                        $delete = '
+                        $delete = \Auth::guard('admin')->user()->hasPermission('Hall_Of_fame.delete') ? '
                         <form action="'.route('hall-of-fame.destroy', $row->id).'" method="POST" onsubmit="return confirm("'.trans('global.areYouSure').'");" style="display: inline-block;">
                             <input type="hidden" name="_token" value="'.csrf_token().'">
                             <button class="btn btn-danger fa fa-trash" type="submit"></button>
                         </form>
-                        ';
+                        ':'';
                         return $edit.' '.$delete;
                     })
                     ->rawColumns(['action'])

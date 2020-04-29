@@ -42,9 +42,11 @@
                     </div>
 
                     <div class="pull-right">
-                        @if(\Auth::guard('admin')->user()->hasPermission('Members.edit'))
+                        @if(\Auth::guard('admin')->user()->hasPermission('Members.edit_password'))
                             <a style="color: white; text-decoration: none !important;" onMouseOut="this.style.color='white'" onMouseOver="this.style.color='#f06262'" href="#updatePasswordModal" data-toggle="modal"><i style="font-size:15px;" class="fa fa-refresh"></i>&nbsp; &nbsp;<strong>Update Password</strong></a>
                             &nbsp; &nbsp;
+                        @endif
+                        @if(\Auth::guard('admin')->user()->hasPermission('Members.edit'))
                             <a onMouseOut="this.style.color='white'" onMouseOver="this.style.color='#f06262'" style=" color: white; text-decoration: none; margin-right: 20px; !important" href="{{ route('members.edit-data', $data->id) }}"><i style="font-size:15px;" class="fa fa-pencil"></i>&nbsp; &nbsp;<strong>Edit Data</strong></a>
                         @endif
                      </div>
@@ -161,8 +163,10 @@
                         Bitrex Point Histories
                     </div>
                     <div class="pull-right">
-                        <a style=" color: white; text-decoration: none !important;" onMouseOut="this.style.color='white'" onMouseOver="this.style.color='#f06262'" href="#refoundModal" data-toggle="modal"><i style="font-size:15px;" class="fa fa-money"></i>&nbsp; &nbsp;<strong>Refund</strong></a>
-                        &nbsp;
+                        @if(\Auth::guard('admin')->user()->hasPermission('Members.refund'))
+                            <a style=" color: white; text-decoration: none !important;" onMouseOut="this.style.color='white'" onMouseOver="this.style.color='#f06262'" href="#refoundModal" data-toggle="modal"><i style="font-size:15px;" class="fa fa-money"></i>&nbsp; &nbsp;<strong>Refund</strong></a>
+                            &nbsp;
+                        @endif
                         @if(\Auth::guard('admin')->user()->hasPermission('Members.Topup'))
                             <a style=" color: white; text-decoration: none !important;" onMouseOut="this.style.color='white'" onMouseOver="this.style.color='#f06262'" href="#addTopUpModal" data-toggle="modal"><i style="font-size:15px;" class="fa fa-money"></i>&nbsp; &nbsp;<strong>Topup</strong></a>
                         @endif

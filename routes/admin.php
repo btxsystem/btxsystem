@@ -62,7 +62,7 @@ Route::group(['middleware' => 'admin'], function () {
             Route::post('store', ['as' => 'store', 'uses' => 'Admin\RolesController@store']);
             Route::post('update', ['as' => 'update', 'uses' => 'Admin\RolesController@update']);
             Route::get('{id}/edit', ['as' => 'edit', 'uses' => 'Admin\RolesController@edit']);
-            Route::get('data', ['as' => 'data', 'uses' => 'Admin\RolesController@data']);
+            Route::get('data/{id}', ['as' => 'data', 'uses' => 'Admin\RolesController@data']);
             Route::get('/{id}',['as' => 'delete', 'uses' => 'Admin\RolesController@destroy']);
         });
 
@@ -90,6 +90,7 @@ Route::group(['middleware' => 'admin'], function () {
     });
 
     Route::resource('customer', 'Admin\CustomerController');
+    Route::resource('contact-us', 'Admin\ContactUsController');
     Route::get('customer/data/{id}', 'Admin\CustomerController@delete');
 
     // Ebook
