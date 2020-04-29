@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Employeer;
 use DB;
 use Alert;
+use App\Http\Controllers\Member\DashboardController;
+use App\Http\Controllers\Member\PvController;
 
 class TreeController extends Controller
 {
@@ -20,26 +22,47 @@ class TreeController extends Controller
     	return view('admin.tree.index')->with('profile',$data);
     }
 
-    public function getTree(){
-        $user = Employeer::where('id',1)->with('children')->first();
-        for ($i=0; $i < 3; $i++) {
-            if(isset($user->children[$i])){
-                $user->children[$i] = Employeer::where('id',$user->children[$i]->id)->with('children')->first(); 
-                for ($j=0; $j<3; $j++){
-                    if(!(isset($user->children[$i]->children[$j]))){
-                        $user->children[$i]->children[$j] = [
-                            'available' => true,
-                            'position' => $j
-                        ];        
-                    }
-                }
-            }else{
-                $user->children[$i] = [
-                    'available' => true,
-                    'position' => $i
-                ];
-            }
-        };
-        return response()->json($user);
-    }   
+    public function getTree(Request $request)
+    {
+        return (new DashboardController)->getTree($request);
+    }
+
+    public function getParentTree($id)
+    {
+        return (new DashboardController)->getParentTree($id);
+    }
+
+    public function getChildTree($user)
+    {
+        return (new DashboardController)->getChildTree($user);
+    }
+
+    public function getSummary($id) {
+        return (new PvController())->getSummary($id);
+    }
+
+    
+
+    // public function getTree(){
+    //     $user = Employeer::where('id',1)->with('children')->first();
+    //     for ($i=0; $i < 3; $i++) {
+    //         if(isset($user->children[$i])){
+    //             $user->children[$i] = Employeer::where('id',$user->children[$i]->id)->with('children')->first(); 
+    //             for ($j=0; $j<3; $j++){
+    //                 if(!(isset($user->children[$i]->children[$j]))){
+    //                     $user->children[$i]->children[$j] = [
+    //                         'available' => true,
+    //                         'position' => $j
+    //                     ];        
+    //                 }
+    //             }
+    //         }else{
+    //             $user->children[$i] = [
+    //                 'available' => true,
+    //                 'position' => $i
+    //             ];
+    //         }
+    //     };
+    //     return response()->json($user);
+    // }   
 }

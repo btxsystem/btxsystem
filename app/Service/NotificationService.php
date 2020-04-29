@@ -98,9 +98,9 @@ class NotificationService extends Notification
             ];
             Mail::to('cs@bitrexgo.co.id')->send(new UpRankAdminMail($email));
 
-            // self::findOrFail($notif->id)->update([
-            //     'send_email' => 1
-            // ]);
+            self::findOrFail($notif->id)->update([
+                'send_email' => 1
+            ]);
         }
     }
 }

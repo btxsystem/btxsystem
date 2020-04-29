@@ -13,6 +13,7 @@ use App\Service\PaymentVa\TransactionPaymentService as Va;
 use DataTables;
 use DB;
 use Alert;
+use App\Models\TransactionBill;
 
 class BitrexPointController extends Controller
 {
@@ -64,6 +65,14 @@ class BitrexPointController extends Controller
 
     public function getBitrexPoints(){
         $data = DB::table('employeers')->where('id',Auth::id())->select('bitrex_points')->first();
+        return response()->json($data, 200);
+    }
+
+    public function getHistoryTransaction(){
+        $data = TransactionBill::where('user_id', Auth::id())
+                                ->where(function ($q) {
+                                    $q->where('payment_flag_status', null)->orWhere('payment_flag_status', '!=', 00);
+                                })->paginate();
         return response()->json($data, 200);
     }
 
