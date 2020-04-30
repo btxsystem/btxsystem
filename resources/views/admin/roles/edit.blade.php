@@ -24,7 +24,7 @@
                             @csrf
                             <fieldset>
                                     <div class="form-group">
-                                    <label class="col-md-2 control-label">Role Name</label>
+                                <label class="col-md-2 control-label">Role Name</label>
                                     <div class="col-md-8 inputGroupContainer">
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="fa fa-bookmark"></i></span>
@@ -199,6 +199,21 @@
                                                             <li>
                                                                 <label>
                                                                     <input type="checkbox" name="permissions[]" value="28"/>View
+                                                                </label>
+                                                            </li>
+                                                            <li>
+                                                                <label>
+                                                                    <input type="checkbox" name="permissions[]" value="111"/>Export
+                                                                </label>
+                                                            </li>
+                                                            <li>
+                                                                <label>
+                                                                    <input type="checkbox" name="permissions[]" value="112"/>Refund
+                                                                </label>
+                                                            </li>
+                                                            <li>
+                                                                <label>
+                                                                    <input type="checkbox" name="permissions[]" value="113"/>Edit Password
                                                                 </label>
                                                             </li>
                                                         </ul>
@@ -450,6 +465,23 @@
                                                             </li>
                                                         </ul>
                                                     </li>
+                                                    
+                                                    <li>
+                                                        <label>
+                                                            <input type="checkbox" name="permissions[]" value="106">List Va
+                                                        </label>
+                                                    </li>
+
+                                                    <li>
+                                                        <label>
+                                                            <input type="checkbox" name="permissions[]" value="96"/>Admin Management
+                                                        </label>
+                                                    </li>
+                                                    <li>
+                                                        <label>
+                                                            <input type="checkbox" name="permissions[]" value="97"/> Permission
+                                                        </label>
+                                                    </li>
                                                 </div>
 
                                                 <div class="col-md-4">
@@ -466,6 +498,28 @@
                                                                     <input type="checkbox" name="permissions[]" value="69"/>Transaction
                                                                 </label>
                                                             </li>
+                                                        <li>
+                                                            <label>
+                                                                <input type="checkbox" name="permissions[]" value="107">Birthdate
+                                                            </label>
+                                                            <ul>
+                                                                <li>
+                                                                    <label>
+                                                                        <input type="checkbox" name="permissions[]" value="108"/>Add
+                                                                    </label>
+                                                                </li>
+                                                                <li>
+                                                                    <label>
+                                                                        <input type="checkbox" name="permissions[]" value="109"/>Edit
+                                                                    </label>
+                                                                </li>
+                                                                <li>
+                                                                    <label>
+                                                                        <input type="checkbox" name="permissions[]" value="110"/>Delete
+                                                                    </label>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
                                                         </ul>
                                                     </li>
 
@@ -578,17 +632,6 @@
                                                             </li>
                                                         </ul>
                                                     </li>
-
-                                                    <li>
-                                                        <label>
-                                                            <input type="checkbox" name="permissions[]" value="96"/>Admin Management
-                                                        </label>
-                                                    </li>
-                                                    <li>
-                                                        <label>
-                                                            <input type="checkbox" name="permissions[]" value="97"/> Permission
-                                                        </label>
-                                                    </li>
                                                     <li>
                                                         <label>
                                                             <input type="checkbox" name="permissions[]" value="98"/> Role
@@ -633,6 +676,28 @@
                                                             </li>
                                                         </ul>
                                                     </li>
+                                                    <li>
+                                                        <label>
+                                                            <input type="checkbox" name="permissions[]" value="115">Hall Of Fame
+                                                        </label>
+                                                        <ul>
+                                                            <li>
+                                                                <label>
+                                                                    <input type="checkbox" name="permissions[]" value="116"/>Add
+                                                                </label>
+                                                            </li>
+                                                            <li>
+                                                                <label>
+                                                                    <input type="checkbox" name="permissions[]" value="117"/>Edit
+                                                                </label>
+                                                            </li>
+                                                            <li>
+                                                                <label>
+                                                                    <input type="checkbox" name="permissions[]" value="118"/>Delete
+                                                                </label>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
                                                 </div>
                                             </ul>
                                         </div>
@@ -661,11 +726,10 @@
         $('#tree').checktree();
         $(document).ready(function() {
             $.ajax({
-                url: '{{ route("admin-management.roles.data") }}',
+                url: '/backoffice/admin-management/roles/data/'+{{$role->id}},
                 success:  function (datas) {
                     datas.forEach(data => {
                         $("input[name='permissions[]'][value='"+data.permission_id+"']").prop('checked', true);
-                        console.log(data.permission_id);
                     });
                 },
             })

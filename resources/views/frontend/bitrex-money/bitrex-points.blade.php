@@ -291,6 +291,14 @@
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12">
                 <div class="body">
+                    <a href="#" class="btn btn-md btn-info topup" id="success-button">Success</a>
+                    <a href="#" class="btn btn-md cek-ongkir" id="failed-button">Failed</a>
+                </div>
+                <br> <br>
+                <div>
+                    <hr>
+                </div>
+                <div class="body">
                     <a href="#" class="btn btn-primary btn-md topup" data-toggle="modal" data-target="#topup">Topup</a>
                     <a href="#" class="btn btn-primary btn-md cek-ongkir" data-toggle="modal" data-target="#cekongkir">Cek Ongkir</a>
                     {{--<a href="#" class="btn btn-primary btn-md convert" data-toggle="modal" data-target="#convert">Convert to BV</a>--}}
@@ -373,6 +381,18 @@
             }
         }
     }
+
+    $('#success-button').click(function(){
+        $('#success-button').prop('class', "btn btn-md btn-info topup");
+        $('#failed-button').prop('class', "btn btn-md topup");
+        bitrexPoint();
+    })
+
+    $('#failed-button').click(function(){
+        $('#failed-button').prop('class', "btn btn-md btn-info topup");
+        $('#success-button').prop('class', "btn btn-md topup");
+        topupPoint();
+    })
 
     $(document).ready(function () {
 
@@ -779,7 +799,42 @@
 
             check_button_disabled()
         })
+        bitrexPoint();
+    });
 
+    var page = 1;
+    var isBp = 0;
+    $(window).scroll(function() {
+        if($(window).scrollTop() + $(window).height() >= $(document).height()) {
+            page++;
+            isBp==1 ? loadMoreData(page) : loadMoreData2(page) ;
+        }
+    });
+
+    let topupPoint = () => {
+        $('#bill div').remove();
+        $.ajax({
+            url: '{{route("member.select.history-topup")}}',
+            data: data,
+            success:function(data){
+                if (data.data[0]==undefined) {
+                    $('#bill').html('<div class="body" style="color:red;"><center><strong>History is currently empty</strong></center></div>');
+                }else{
+                    $.each(data.data, function(i, item) {
+                        date = moment(item.created_at).format('MMMM Do Y - HH:mm');
+                        type = item.product_type;
+                        color = 'green';
+                        nominal = addCommas(item.total_amount);
+                        $('#bill').append('<div class="card ke-'+i+'" style="border: 1px solid #ccc; box-shadow: 1px 1px 3px 0px  rgba(0,0,0,0.3);"><div class="body"><div class="row"><strong class="col-sm-4" id="date">Date Time: '+date+'</strong></div><hr><div class="row"><div class="col" id="type">Type: <b style="color:'+color+'">'+type+'</b></div><div class="col" id="nominal">Nominal: '+nominal+'</div><hr></div><div class="row"></div></div></div>');
+                    });
+                }
+                isBp = 0;
+            }
+        });
+    }
+
+    let bitrexPoint = () => {
+        $('#bill div').remove();
         $.ajax({
             url: '{{route("member.select.history-points")}}',
             data: data,
@@ -796,17 +851,36 @@
                         $('#bill').append('<div class="card ke-'+i+'" style="border: 1px solid #ccc; box-shadow: 1px 1px 3px 0px  rgba(0,0,0,0.3);"><div class="body"><div class="row"><strong class="col-sm-4" id="date">Date Time: '+date+'</strong></div><hr><div class="row"><div class="col" id="type">Type: <b style="color:'+color+'">'+type+'</b></div><div class="col" id="nominal">Nominal: '+nominal+'</div><hr></div><div class="row"><div class="col" id="description">Description: '+item.description+'</div><div class="col" id="points">Points: '+points+'</div></div></div></div>');
                     });
                 }
+                isBp = 1;
             }
         });
-    });
+    }
 
-    var page = 1;
-    $(window).scroll(function() {
-        if($(window).scrollTop() + $(window).height() >= $(document).height()) {
-            page++;
-            loadMoreData(page);
-        }
-    });
+    function loadMoreData2(page){
+        $.ajax({
+            url: '/member/select/history-topup?page=' + page,
+            beforeSend: function(){
+                $('.ajax-load').show();
+            }
+        }).done(function(data){
+            if(data.points.data[0]==undefined){
+                $('.ajax-load').html("No more records found");
+                return;
+            }
+            $('.ajax-load').hide();$.each(data.data, function(i, item) {
+                date = moment(item.created_at).format('MMMM Do Y - HH:mm');
+                type = item.product_type;
+                color = 'green';
+                nominal = addCommas(item.total_amount);
+                $('#bill').append('<div class="card ke-'+i+'" style="border: 1px solid #ccc; box-shadow: 1px 1px 3px 0px  rgba(0,0,0,0.3);"><div class="body"><div class="row"><strong class="col-sm-4" id="date">Date Time: '+date+'</strong></div><hr><div class="row"><div class="col" id="type">Type: <b style="color:'+color+'">'+type+'</b></div><div class="col" id="nominal">Nominal: '+nominal+'</div><hr></div><div class="row"></div></div></div>');
+            });
+        })
+        .fail(function(jqXHR, ajaxOptions, thrownError){
+            $('.ajax-load').html("Server not responding");
+            return;
+        });
+    }
+    
     function loadMoreData(page){
         $.ajax({
             url: '/member/select/history-points?page=' + page,
