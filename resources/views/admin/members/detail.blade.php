@@ -650,7 +650,7 @@
         });
 
         $(document).on('click', '.nonactive-ebook', function (e) {
-            e.preventDefault();
+            e.preventDefault();//
             // console.log(id);
             var url =   $(this).prop("href");
             swal({
