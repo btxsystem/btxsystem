@@ -139,7 +139,11 @@
                         </div>
 
                         <div class="form-group">
-                                <label class="control-label col-md-4">Status &nbsp; </label>: &nbsp;{{ $data->status == '1' ? 'Active' : 'Non Active' }} ({{$data->expired_at}})
+                            @php
+                                $date = str_replace('-', '/', $data->expired_at);
+                                $tomorrow = date('Y-m-d 00:00:00', strtotime($date . "+1 days"));
+                            @endphp 
+                            <label class="control-label col-md-4">Status &nbsp; </label>: &nbsp;{{ $data->status == '1' ? 'Active' : 'Non Active' }} ({{$tomorrow}})
                         </div>
 
                         <div class="form-group">
@@ -435,20 +439,24 @@
                         <fieldset>
                         <input id="member_id" name="member_id" value="{{$data->id}}" type="hidden">
                         <div class="form-group">
-                                <label class="col-md-3 control-label">Ebook</label>
-                                <div class="col-md-8 inputGroupContainer">
+                            <label class="col-md-3 control-label">Ebook</label>
+                            <div class="col-md-8 inputGroupContainer">
                                 <select name="ebook_id" id="ebook_id" class="form-control" value="{{old('ebook_id')}}">
-                                            {{-- @foreach($ebooks->whereNotIn('id', $data->ebooks->pluck('id')) as $ebook) --}}
-                                            @foreach($ebooks as $ebook)
-                                            <option value="{{$ebook->id}}">{{$ebook->title}} - {{currency($ebook->price)}}</option>
-                                            @endforeach
+                                    @foreach($ebooks as $ebook)
+                                    <option value="{{$ebook->id}}">{{$ebook->title}} - {{currency($ebook->price)}}</option>
+                                    @endforeach
                                 </select>
-                                </div>
                             </div>
+
+                            <label class="col-md-3 control-label">Use Bitrex Points</label>
+                            <div class="col-md-8 inputGroupContainer">
+                                <input type="checkbox" style="margin-top:12px" name="isBp" value="1">
+                            </div>
+                        </div>
                         </fieldset>
                         <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary">Submit</button>
-                            </div>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
                     </form>
                 </div>
             </div>
