@@ -12,8 +12,9 @@
                   </address>
                 </div>
                 <div class="footer-contacts"> <i class="icon stroke icon-Phone2"></i> <span class="footer-contacts__inner">+62 817-0380-0329, (021) 80823903</span> </div>
-                <div class="footer-contacts"> <i class="icon stroke icon-Mail"></i> <a class="footer-contacts__inner" href="mailto:Info@academica.com">cs@bitrexgo.co.id</a> </div>
-                <div class="footer-contacts">© 2019 BITREXGO. All Rights Reserved</div>
+                <div class="footer-contacts"> <i class="icon stroke icon-Mail"></i> <a class="footer-contacts__inner" href="mailto:cs@bitrexgo.co.id">cs@bitrexgo.co.id</a> </div>
+                <div class="footer-contacts">© {{ date('Y') }} BITREXGO. All Rights Reserved</div>
+								<a href="https://info.flagcounter.com/8LxJ"><img src="https://s01.flagcounter.com/count2/8LxJ/bg_FFFFFF/txt_000000/border_CCCCCC/columns_2/maxflags_10/viewers_0/labels_0/pageviews_0/flags_0/percent_0/" alt="Flag Counter" border="0"></a>
               </section>
               <!-- end footer-section -->
             </div>
@@ -51,14 +52,25 @@
             <!-- end col -->
 
             <div class="col-lg-4 col-sm-3">
-              <section class="footer-section">
+              <section class="footer-section" id="contact-form">
                 <h3 class="footer-title">CONTACT US</h3>
-                <form class="form">
+								@if(\Session::has('message_failed'))
+									<div class="alert alert-danger">
+										{{ Session::get('message_failed') }}
+									</div>
+								@endif
+								@if(\Session::has('message_success'))
+									<div class="alert alert-success">
+										{{ Session::get('message_success') }}
+									</div>
+								@endif
+                <form class="form" action="{{route('contact.send')}}" method="post">
                   <div class="form-group">
-                    <input class="form-control" type="text" placeholder="Your Name">
-                    <input class="form-control" type="email" placeholder="Email address">
-                    <textarea class="form-control" rows="7" placeholder="Message"></textarea>
-                    <button class="btn" disabled style="background-color: #b92240; border-radius: 5px;">SEND MESSSAGE</button>
+										{{csrf_field()}}
+                    <input class="form-control" type="text" name="name" placeholder="Your Name">
+                    <input class="form-control" type="email" name="email" placeholder="Email address">
+                    <textarea class="form-control" rows="7" name="message" placeholder="Message"></textarea>
+                    <button class="btn" style="background-color: #b92240; border-radius: 5px;">SEND MESSSAGE</button>
                   </div>
                 </form>
               </section>
