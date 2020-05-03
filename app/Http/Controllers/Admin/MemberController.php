@@ -506,15 +506,32 @@ class MemberController extends Controller
             $buy->ebook_id = $request->ebook_id;
             $buy->status = 1;
             $buy->expired_at = Carbon::now()->addYears(1)->toDateString();
-
             $buy->save();
 
+            if (isset($request->isBp)) {
+                $user = Employeer::where('id',$request->member_id)->first();
+                $history = new HistoryBitrexPoints;
+                $ebooks = Ebook::where('id',$request->ebook_id)->first();
+                if ($user->bitrex_points < ($ebooks->price/1000)) {
+                    DB::rollback();
+                    Alert::error('Bitrex points tidak cukup', 'Gagal');
+                    return redirect()->route('members.show', $request->member_id);
+                }
+                $user->bitrex_points = $user->bitrex_points - ($ebooks->price/1000);
+                $history->id_member = $request->member_id;
+                $history->nominal = $ebooks->price;
+                $history->points = $ebooks->price/1000;
+                $history->description = "Buy ebook ".$ebooks->title." from backoffice";
+                $history->info = 0;
+                $history->status = 1;
+                $user->save();
+                $history->save();
+            }
 
             DB::commit();
 
             Alert::success('Sukses Melakukan Pembelian Product', 'Sukses');
             return redirect()->route('members.show', $request->member_id);
-
         }catch(\Exception $e){
             // throw $e;
             DB::rollback();
