@@ -21,6 +21,31 @@ class NotificationService extends Notification
         return $notification;
     }
 
+    public function sendNotification(){
+        $now = strtotime(now());
+        $now = date('m-d',$now);
+        $datas = self::all();
+        $data = [];
+        foreach ($datas as $key => $value) {
+            $birth_date = strtotime($value->birthdate);
+            $birth_date = date('m-d',$birth_date);
+            if ( $birth_date == $now) {
+                $data[$key]=$value;
+            }
+        }
+        dd($data);
+        foreach ($data as $member) {
+            $notif = $this;
+            $notif->title = 'Birthdate';
+            $notif->desc = $member->username.' ulang tahun hari ini. Jangan lupa kirimkan ucapan!';
+            $notif->isRead = 0;
+            $notif->member_id = $member->id;
+            $notif->type = 3;
+            $notif->send_email = 1;
+            $notif->save();
+        }
+    }
+
     public function readNotif($id){
         self::where('id',$id)->update(
             array('isRead' => 1)
