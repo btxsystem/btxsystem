@@ -31,12 +31,22 @@ class MemberController extends Controller
                 // $from_date = date('Y-m-d',strtotime($request->from_date . "+1 days"));
                 $data = Employeer::where('employeers.status', 1)
                 ->whereBetween('created_at', [$request->from_date, $to_date])
-                ->with('rank','sponsor','archive','lastArchive')
-                ->select('employeers.id','id_member','username','first_name','last_name','rank_id','sponsor_id','employeers.created_at','employeers.status');
+                ->with(
+                        'rank',
+                        'sponsor',
+                        'archive',
+                        'lastArchive',
+                        'address')
+                ->select('employeers.id','id_member','username','first_name','last_name','rank_id','sponsor_id','employeers.created_at','employeers.status', 'address.member_id');
             }
             else {
                 $data = Employeer::where('employeers.status', 1)
-                ->with('rank','sponsor','archive', 'lastArchive') 
+                ->with(
+                        'rank',
+                        'sponsor',
+                        'archive', 
+                        'lastArchive',
+                        'address') 
                 ->select('employeers.id','id_member','username','first_name','last_name','rank_id','sponsor_id','employeers.created_at','employeers.status');
             }
 
@@ -66,6 +76,9 @@ class MemberController extends Controller
                     })
                     ->editColumn('sponsor', function($data) {
                         return $data->sponsor ? $data->sponsor->username : '-';
+                    })
+                    ->editColumn('address', function($data) {
+                        return $data->address ? strtolower($data->address->decription.", ".$data->address->subdistrict_name.", ".$data->address->city_name.", ".$data->address->province) : '-';
                     })
                     ->addColumn('action', function($row) {
                         return $this->htmlAction($row);

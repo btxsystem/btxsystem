@@ -40,6 +40,7 @@
         <th>src</th>
         <th>is_update</th>
         <th>nik</th>
+        <th>Address</th>
         <th>expired_at</th>
 
     </tr>
@@ -103,6 +104,13 @@
         <td>{{$data->src}}</td>
         <td>{{$data->is_update}}</td>
         <td>{{$data->nik}}</td>
+        <td>
+            @if($data->address)
+                {{strtolower($data->address->decription.", ".$data->address->subdistrict_name.", ".$data->address->city_name.", ".$data->address->province)}}
+            @else
+                {{"-"}}
+            @endif
+        </td>
         <td>{{$data->expired_at}}</td>
     </tr>
     @endforeach

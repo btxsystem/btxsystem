@@ -36,6 +36,7 @@ Route::group(['middleware' => 'admin'], function () {
         Route::get('', ['as' => '', 'uses' => 'Admin\NotificationController@index']);
         Route::get('data', ['as' => 'data', 'uses' => 'Admin\NotificationController@data']);
         Route::get('read/{id}', ['as' => 'read', 'uses' => 'Admin\NotificationController@read']);
+        Route::get('generate', ['as' => 'generate', 'uses' => 'Admin\NotificationController@generate']);
     });
 
 
