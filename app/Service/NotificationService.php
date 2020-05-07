@@ -23,26 +23,19 @@ class NotificationService extends Notification
 
     public function sendNotification(){
         $now = strtotime(now());
-        $now = date('m-d',$now);
-        $datas = self::all();
-        $data = [];
-        foreach ($datas as $key => $value) {
-            $birth_date = strtotime($value->birthdate);
-            $birth_date = date('m-d',$birth_date);
-            if ( $birth_date == $now) {
-                $data[$key]=$value;
-            }
-        }
-        dd($data);
-        foreach ($data as $member) {
-            $notif = $this;
-            $notif->title = 'Birthdate';
-            $notif->desc = $member->username.' ulang tahun hari ini. Jangan lupa kirimkan ucapan!';
-            $notif->isRead = 0;
-            $notif->member_id = $member->id;
-            $notif->type = 3;
-            $notif->send_email = 1;
-            $notif->save();
+        $now = date('z',$now);
+        $datas = Employeer::whereRaw("DAYOFYEAR(birthdate) = $now")->where('rank_id', '>', 3)->get();
+        foreach ($datas as $member) {
+            self::insert([
+               "title" => 'Birthdate',
+               "desc" => 'ulang tahun hari ini. Jangan lupa kirimkan ucapan!',
+               "isRead" => 0,
+               "member_id" => $member->id,
+               "type"   => 3,
+               "created_at" => now(),
+               "updated_at" => now(),
+               "send_email" => 1,
+            ]);
         }
     }
 

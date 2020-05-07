@@ -10,7 +10,7 @@
             <!-- inner menu: contains the actual data -->
             <ul class="menu">
                 @foreach (getNotif() as $item)
-                    <li style="cursor:pointer" onclick="readNotif({{$item->id}})">
+                    <li style="cursor:pointer; font-size:11px" onclick="readNotif({{$item->id}})">
                         <i class="livicon danger" data-n="timer" data-s="20" data-c="white"
                         data-hc="white"></i>
                         <br>
@@ -24,9 +24,9 @@
                                 }elseif ($date->d <= 3 and $date->d > 0) {
                                     echo $date->d."days ago";
                                 }elseif ($date->d <= 0 and $date->h > 0) {
-                                    echo $date->h."hours ago";
+                                    echo $date->h." hours ago";
                                 }else{
-                                    echo $date->i."minutes ago";
+                                    echo $date->i." minutes ago";
                                 }
                             @endphp
                         </small>
