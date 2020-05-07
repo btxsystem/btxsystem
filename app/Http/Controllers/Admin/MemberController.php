@@ -35,8 +35,8 @@ class MemberController extends Controller
                         'rank',
                         'sponsor',
                         'archive',
-                        'lastArchive',
-                        'address')
+                        'lastArchive'
+                        )
                 ->select('employeers.id','id_member','username','first_name','last_name','rank_id','sponsor_id','employeers.created_at','employeers.status', 'address.member_id');
             }
             else {
@@ -45,8 +45,8 @@ class MemberController extends Controller
                         'rank',
                         'sponsor',
                         'archive', 
-                        'lastArchive',
-                        'address') 
+                        'lastArchive'
+                        ) 
                 ->select('employeers.id','id_member','username','first_name','last_name','rank_id','sponsor_id','employeers.created_at','employeers.status');
             }
 
@@ -76,9 +76,6 @@ class MemberController extends Controller
                     })
                     ->editColumn('sponsor', function($data) {
                         return $data->sponsor ? $data->sponsor->username : '-';
-                    })
-                    ->editColumn('address', function($data) {
-                        return $data->address ? strtolower($data->address->decription.", ".$data->address->subdistrict_name.", ".$data->address->city_name.", ".$data->address->province) : '-';
                     })
                     ->addColumn('action', function($row) {
                         return $this->htmlAction($row);
@@ -375,7 +372,7 @@ class MemberController extends Controller
 
     public function show($id)
     {
-        $data = Employeer::with('ebooks.transactionMember','transaction','sponsor')->findOrFail($id);
+        $data = Employeer::with('ebooks.transactionMember','transaction','sponsor', 'address')->findOrFail($id);
 
         $ebooks = Ebook::orderBy('id', 'desc')->get();
 

@@ -27,9 +27,19 @@ class ContactUsController extends Controller
                     ->editColumn('created_at', function($data) {
                         return $data->created_at;
                     })
+                    ->addColumn('action', function($data) {
+                        return '<a onclick="deleteCont('. $data->id .')" class="btn btn-danger fa fa-trash"></a>';
+                    })
+                    ->rawColumns(['action'])
                     ->make(true);
         }
 
         return view('admin.contact-us.index');
+    }
+
+    public function destroy($id)
+    {
+        $data = ContactUs::find($id)->delete();
+        return $data ? 'success' : 'failed';
     }
 }

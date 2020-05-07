@@ -147,6 +147,10 @@
                         </div>
 
                         <div class="form-group">
+                            <label class="control-label col-md-4">Address &nbsp; </label>: &nbsp;{{ $data->address ? strtolower($data->address->decription.", ".$data->address->subdistrict_name.", ".$data->address->city_name.", ".$data->address->province) : '-' }}
+                        </div>
+
+                        <div class="form-group">
                                 <label class="control-label col-md-4">Profile Pict &nbsp; </label>
                                 @if ( $data->src )
                                 <img src="{{ URL::to('/') }}/{{$data->src}}" alt="profile Pic" height="200" width="200">
