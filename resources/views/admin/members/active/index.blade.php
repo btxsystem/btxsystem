@@ -62,7 +62,6 @@ List Of Users Active
                                 <th class="text-center" width="8%">Join Date</th>
                                 <th class="text-center" width="8%">Achieve Rank</th>
                                 <th class="text-center" width="8%">Rank</th>
-                                <th class="text-center" width="15%">Address</th>
                                 <th class="text-center" width="15%" class="action">Action</th>
                             </tr>
                         </thead>
@@ -199,7 +198,6 @@ List Of Users Active
                         { data: 'join_at', name: 'join_at', orderable: false, searchable: false},
                         { data: 'lastArchive', name: 'lastArchive.created_at' , searchable: false},
                         { data: 'ranking', name: 'rank.name', orderable: false },
-                        { data: 'address', name: 'address', orderable: false, searchable: false },
                         { data: 'action', name: 'action', orderable: false, searchable: false, className: 'text-center'},
                     ]
                 });

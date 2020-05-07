@@ -92,6 +92,7 @@ Route::group(['middleware' => 'admin'], function () {
 
     Route::resource('customer', 'Admin\CustomerController');
     Route::resource('contact-us', 'Admin\ContactUsController');
+    Route::delete('contact-us/delete/{id}', 'Admin\ContactUsController@destroy');
     Route::get('customer/data/{id}', 'Admin\CustomerController@delete');
 
     // Ebook
