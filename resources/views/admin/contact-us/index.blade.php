@@ -54,36 +54,20 @@ List Of Contact US
     <script type="text/javascript">
         function deleteCont(id) {
             swal({
-                title: "are you sure delete this data?",
-                text: "Once deleted, you will not be able to recover this data!",
-                icon: "warning",
-                confirmButtonClass: "btn-danger",
-                confirmButtonText: "Yes!",
-                showCancelButton: true,
+                    title: "Are you sure ?",
+                    type: "warning",
+                    confirmButtonClass: "btn-danger",
+                    confirmButtonText: "Yes!",
+                    showCancelButton: true,
                 },
                 function() {
-                        $.ajaxSetup({
-                            headers: {
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                            }
-                        });
-                    $.ajax(
-                    {
+                    $.ajax({
+                        type: "DELETE",
                         url: "/backoffice/contact-us/delete/"+id,
-                        type: 'delete', // replaced from put
-                        dataType: "JSON",
-                        data: {
-                            "id": id // method and token not needed in data
-                        },
-                        success: function (response)
-                        {
-                            table.draw();
-                            swal("Data has been deleted!", {
-                                icon: "success",
-                            });
-                        },
-                        error: function(xhr) {
-                            swal("Data cant delete!");
+                        data: {id:id},
+                        success: function (data) {
+				            swal("Success", "Data has been deleted!", "success");
+                            $('.data-table').DataTable().draw();
                         }
                     });
             });
