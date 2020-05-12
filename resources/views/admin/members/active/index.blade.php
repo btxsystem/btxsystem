@@ -56,7 +56,7 @@ List Of Users Active
                         <thead class="flip-content">
                             <tr>
                                 <th class="text-center" width="2%">No</th>
-                                <th class="text-center" width="13%">Id Member</th>
+                                <th class="text-center" width="10%">Id Member</th>
                                 <th class="text-center" width="10%">Username</th>
                                 <th class="text-center" width="12%">Name</th>                                 <th class="text-center" width="10%">Sponsor</th>
                                 <th class="text-center" width="8%">Join Date</th>

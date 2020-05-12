@@ -36,6 +36,7 @@ Route::group(['middleware' => 'admin'], function () {
         Route::get('', ['as' => '', 'uses' => 'Admin\NotificationController@index']);
         Route::get('data', ['as' => 'data', 'uses' => 'Admin\NotificationController@data']);
         Route::get('read/{id}', ['as' => 'read', 'uses' => 'Admin\NotificationController@read']);
+        Route::get('generate', ['as' => 'generate', 'uses' => 'Admin\NotificationController@generate']);
     });
 
 
@@ -91,6 +92,7 @@ Route::group(['middleware' => 'admin'], function () {
 
     Route::resource('customer', 'Admin\CustomerController');
     Route::resource('contact-us', 'Admin\ContactUsController');
+    Route::delete('contact-us/delete/{id}', 'Admin\ContactUsController@destroy');
     Route::get('customer/data/{id}', 'Admin\CustomerController@delete');
 
     // Ebook
