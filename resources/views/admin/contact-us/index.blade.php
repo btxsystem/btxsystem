@@ -36,6 +36,7 @@ List Of Contact US
                                             <th>Email</th>
                                             <th>Message</th>
                                             <th>Time</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -51,6 +52,26 @@ List Of Contact US
 
 @section('footer_scripts')
     <script type="text/javascript">
+        function deleteCont(id) {
+            swal({
+                    title: "Are you sure ?",
+                    type: "warning",
+                    confirmButtonClass: "btn-danger",
+                    confirmButtonText: "Yes!",
+                    showCancelButton: true,
+                },
+                function() {
+                    $.ajax({
+                        type: "DELETE",
+                        url: "/backoffice/contact-us/delete/"+id,
+                        data: {id:id},
+                        success: function (data) {
+				            swal("Success", "Data has been deleted!", "success");
+                            $('.data-table').DataTable().draw();
+                        }
+                    });
+            });
+        }
         $(document).ready(function () {
           var table = $('.data-table').DataTable({
               destroy: true,
@@ -68,7 +89,8 @@ List Of Contact US
                   {data: 'name', name: 'name'},
                   {data: 'email', name: 'email'},                  
                   {data: 'message', name: 'message'},                   
-                  {data: 'created_at', name: 'created_at'},                   
+                  {data: 'created_at', name: 'created_at'},              
+                  {data: 'action', name: 'action'},                   
               ]
           });
           

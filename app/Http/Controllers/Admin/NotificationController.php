@@ -40,4 +40,9 @@ class NotificationController
     {
         $this->service->readNotif($id);
     }
+
+    public function generate()
+    {
+        $this->service->sendNotification();
+    }
 }

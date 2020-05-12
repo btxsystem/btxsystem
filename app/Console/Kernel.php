@@ -6,6 +6,7 @@ use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use DB;
 use Carbon\Carbon;
+use App\Service\NotificationService;
 
 class Kernel extends ConsoleKernel
 {
@@ -124,6 +125,11 @@ class Kernel extends ConsoleKernel
                }
             }
         })->dailyAt('01:00');
+
+        $schedule->call(function() {
+            $service = new NotificationService();
+            $service->sendNotification();
+        })->dailyAt('03:00');
     }
 
     /**
