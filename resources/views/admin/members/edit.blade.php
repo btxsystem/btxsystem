@@ -66,6 +66,17 @@ Update Member
                                 </div>
                             </div>
 
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">Address</label>
+                                <div class="col-md-8 inputGroupContainer">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
+                                    <textarea id="address" name="address" class="form-control">{{$data->address->decription}}</textarea>
+                                </div>
+                                <small class="text-danger">{{ $errors->first('address') }}</small>
+                                </div>
+                            </div>
+
                             <!-- <div class="form-group">
                                 <label class="col-md-2 control-label">Password</label>
                                 <div class="col-md-8 inputGroupContainer">
