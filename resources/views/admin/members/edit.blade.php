@@ -71,7 +71,7 @@ Update Member
                                 <div class="col-md-8 inputGroupContainer">
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
-                                    <textarea id="address" name="address" class="form-control">{{$data->address->decription}}</textarea>
+                                    <textarea id="address" name="address" class="form-control">{{$data->address ? $data->address->decription : ''}}</textarea>
                                 </div>
                                 <small class="text-danger">{{ $errors->first('address') }}</small>
                                 </div>
