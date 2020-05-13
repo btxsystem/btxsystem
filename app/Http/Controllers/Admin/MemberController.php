@@ -15,6 +15,7 @@ use Alert;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use App\Exports\MembersExport;
+use App\Models\Address;
 use Maatwebsite\Excel\Facades\Excel;
 use Rap2hpoutre\FastExcel\FastExcel;
 
@@ -400,7 +401,25 @@ class MemberController extends Controller
         ]);
         DB::beginTransaction();
         try{
-            $data = Employeer::with('sponsor')->findOrFail($id);
+            $data = Employeer::with('sponsor', 'address')->findOrFail($id);
+
+            if($data->address == null) {
+                Address::insert([
+                    'decription' => $request->address,
+                    'city_id' => 0,
+                    'city_name' => 0,
+                    'province_id' => 0,
+                    'province' => 0,
+                    'subdistrict_id' => 0,
+                    'subdistrict_name' => 0,
+                    'type' => 'district',
+                    'user_id' => $id
+                ]);
+            } else {
+                Address::where('user_id', $id)->update([
+                    'decription' => $request->address,
+                ]);
+            }
 
             $data->nik = $data->nik;
             $data->first_name = $request->first_name;
