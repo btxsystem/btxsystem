@@ -147,8 +147,7 @@
                         </div>
 
                         <div class="form-group">
-                            {{-- <label class="control-label col-md-4">Address &nbsp; </label>: &nbsp;{{ $data->address ? strtolower($data->address->decription.", ".$data->address->subdistrict_name.", ".$data->address->city_name.", ".$data->address->province) : '-' }} --}}
-                            <label class="control-label col-md-4">Address &nbsp; </label>: &nbsp;{{ $data->address ? strtolower($data->address->decription) : '-'}}
+                            <label class="control-label col-md-4">Address &nbsp; </label>: &nbsp;{{ $data->address ? strtolower($data->address->decription.", ".$data->address->subdistrict_name.", ".$data->address->city_name.", ".$data->address->province) : '-' }}
                         </div>
 
                         <div class="form-group">
