@@ -403,24 +403,32 @@ class MemberController extends Controller
         try{
             $data = Employeer::with('sponsor', 'address')->findOrFail($id);
 
-            if($data->address == null) {
-                Address::insert([
-                    'decription' => $request->address,
-                    'city_id' => 0,
-                    'city_name' => 0,
-                    'province_id' => 0,
-                    'province' => 0,
-                    'subdistrict_id' => 0,
-                    'subdistrict_name' => 0,
-                    'type' => 'district',
-                    'user_id' => $id
-                ]);
-            } else {
-                Address::where('user_id', $id)->update([
-                    'decription' => $request->address,
-                ]);
+            if($request->city && $request->city_name && $request->province && $request->province_name && $request->district && $request->district_name) {
+                if($data->address == null) {
+                    Address::insert([
+                        'decription' => $request->address,
+                        'city_id' => $request->city,
+                        'city_name' => $request->city_name,
+                        'province_id' => $request->province,
+                        'province' => $request->province_name,
+                        'subdistrict_id' => $request->district,
+                        'subdistrict_name' => $request->district_name,
+                        'type' => 'district',
+                        'user_id' => $id
+                    ]);
+                } else {
+                    Address::where('user_id', $id)->update([
+                        'decription' => $request->address,
+                        'city_id' => $request->city,
+                        'city_name' => $request->city_name,
+                        'province_id' => $request->province,
+                        'province' => $request->province_name,
+                        'subdistrict_id' => $request->district,
+                        'subdistrict_name' => $request->district_name,
+                    ]);
+                }
             }
-
+            
             $data->nik = $data->nik;
             $data->first_name = $request->first_name;
             $data->username = $request->username;

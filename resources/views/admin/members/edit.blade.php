@@ -67,6 +67,39 @@ Update Member
                             </div>
 
                             <div class="form-group">
+                                <label class="col-md-2 control-label">Province</label>
+                                <div class="col-md-8 inputGroupContainer">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
+                                        <select name="province" id="province" class="form-control"></select>
+                                        <input type="hidden" name="province_name" id="province_name" value="{{$data->address ? $data->address->province_name : ''}}">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">City</label>
+                                <div class="col-md-8 inputGroupContainer">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
+                                        <select name="city" id="city" class="form-control"></select>
+                                        <input type="hidden" name="city_name" id="city_name" value="{{$data->address ? $data->address->city_name : ''}}">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">District</label>
+                                <div class="col-md-8 inputGroupContainer">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
+                                        <select name="district" id="district" class="form-control"></select>
+                                        <input type="hidden" name="district_name" id="district_name" value="{{$data->address ? $data->address->subdistrict_name : ''}}">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
                                 <label class="col-md-2 control-label">Address</label>
                                 <div class="col-md-8 inputGroupContainer">
                                 <div class="input-group">
@@ -325,5 +358,104 @@ Update Member
                 }
             });
         })
+
+        $('#province').select2({
+			placeholder: 'Province',
+		});
+
+        $('#province').html('<option disabled>Province</option>');
+
+        $('#city').select2({
+			placeholder: 'City',
+		});
+
+        $('#city').html('<option disabled>City</option>');
+
+        $('#district').select2({
+			placeholder: 'Kecamatan',
+		});
+
+        $('#district').html('<option disabled>Kecamatan</option>');
+
+        $.ajax({
+            type: 'GET',
+            url: '/member/shipping/province',
+            success: function (data) {
+                $('#province').select2({
+                    placeholder: 'Province',
+                    data: data,
+                });
+
+                <?php if($data->address):?>
+                    var $newOption = $("<option selected='selected'></option>").val("{{$data->address->province_id}}").text("{{$data->address->province}}")
+
+                    $("#province").append($newOption).trigger('change');
+                    $('#province_name').val("{{$data->address->province}}")
+                <?php endif;?>
+            },
+            error: function() {
+                console.log("Error");
+            }
+        });
+
+        $('#province').change(function(){
+            let id = this.value;
+            $('#province_name').val($(this).find(":checked").text())
+            $('#city').empty().trigger('change');
+            $('#district').empty().trigger('change');
+            $('#city').html('<option disabled>City<option>');
+            $.ajax({
+                type: 'GET',
+                url: '/member/shipping/city/'+id,
+                success: function (data) {
+                    $('#city').select2({
+                        placeholder: 'City',
+                        data: data,
+                    });
+
+                    <?php if($data->address):?>
+                        var $newOption = $("<option selected='selected'></option>").val("{{$data->address->city_id}}").text("{{$data->address->city_name}}")
+
+                        $("#city").append($newOption).trigger('change');
+                        $('#city').val("{{$data->address->city_name}}")
+                    <?php endif;?>
+                },
+                error: function() {
+                    console.log("Error");
+                }
+            });
+        })
+
+        $('#city').change(function(){
+		let id = this.value;
+    	$('#city_name').val($(this).find(":checked").text())
+		$('#district').empty().trigger('change');
+		$('#district').html('<option disabled>Kecamatan<option>');
+		$.ajax({
+			type: 'GET',
+			url: '/member/shipping/subdistrict/'+id,
+			success: function (data) {
+				$('#district').select2({
+					placeholder: 'Kecamatan',
+					data: data,
+				});
+
+                <?php if($data->address):?>
+                    var $newOption = $("<option selected='selected'></option>").val("{{$data->address->subdistrict_id}}").text("{{$data->address->subdistrict_name}}")
+
+                    $("#district").append($newOption).trigger('change');
+                    $('#district_name').val("{{$data->address->subdistrict_name}}")
+                <?php endif;?>
+        },
+			error: function() {
+				console.log("Error");
+			}
+		});
+	})
+
+	$('#district').change(function() {
+		let id = this.value;
+    	$('#district_name').val($(this).find(":checked").text())
+	});
     </script>
 @stop
