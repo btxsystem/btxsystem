@@ -27,10 +27,10 @@ class NotificationController
         return Datatables::of($data)
                 ->addIndexColumn()
                 ->editColumn('created_at', function($row) {
-                    return Carbon::createFromFormat('Y-m-d H:i:s', $row->created_at)->format('d M Y');
+                    return Carbon::createFromFormat('Y-m-d H:i:s', $row->created_at)->format('d M Y - H:i');
                 })
                 ->editColumn('isRead', function($row) {
-                    return $row->isRead==1 ? '<label class="btn btn-success">Read</label>' : '<label class="btn btn-danger">Unread</label>';
+                    return $row->isRead==1 ? '<label class="btn btn-success">Read</label>' : '<label class="btn btn-danger">Unread</label> <label onclick="readNotif('.$row->id.')" class="btn btn-primary">View</label>';
                 })
                 ->rawColumns(['isRead'])
                 ->make(true);
