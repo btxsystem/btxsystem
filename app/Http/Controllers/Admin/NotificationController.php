@@ -66,7 +66,9 @@ class NotificationController
     public function deleteAll()
     {
         try {
-            $delete = Notification::query()->delete();
+            $delete = Notification::query()->update([
+                'isRead' => 2
+            ]);
 
             if(!$delete) {
                 return response()->json([
@@ -110,7 +112,7 @@ class NotificationController
     public function unreadAll()
     {
         try {
-            $update = Notification::query()->update([
+            $update = Notification::where('isRead', 1)->update([
                 'isRead' => 0
             ]);
 
