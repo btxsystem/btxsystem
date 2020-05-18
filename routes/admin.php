@@ -36,6 +36,10 @@ Route::group(['middleware' => 'admin'], function () {
         Route::get('', ['as' => '', 'uses' => 'Admin\NotificationController@index']);
         Route::get('data', ['as' => 'data', 'uses' => 'Admin\NotificationController@data']);
         Route::get('read/{id}', ['as' => 'read', 'uses' => 'Admin\NotificationController@read']);
+        Route::get('delete/{id}', ['as' => 'delete', 'uses' => 'Admin\NotificationController@delete']);
+        Route::get('reads', ['as' => 'readall', 'uses' => 'Admin\NotificationController@readAll']);
+        Route::get('deletes', ['as' => 'deleteall', 'uses' => 'Admin\NotificationController@deleteAll']);
+        Route::get('unreads', ['as' => 'unreadall', 'uses' => 'Admin\NotificationController@unreadAll']);
         Route::get('generate', ['as' => 'generate', 'uses' => 'Admin\NotificationController@generate']);
     });
 

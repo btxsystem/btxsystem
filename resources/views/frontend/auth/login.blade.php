@@ -151,7 +151,6 @@
             <div class="col-xs-12">
               <div class="wrap-title">
                 <h2 class="ui-title-block">Our <strong>Product</strong></h2>
-                <!-- <div class="ui-subtitle-block ui-subtitle-block_mod-b">Bitrexgo is one of the best education platform for Foreign Exchange Trading in Indonesia.</div> -->
               </div>
               <div class="posts-wrap">
                 @foreach ($data['ourProduct'] as $item)
@@ -162,7 +161,7 @@
                         <div class="entry-main">
                           <h3 class="entry-title ui-title-inner decor decor_mod-b"><a href="javascript:void(0);">{{$item->name}}</a></h3>
                           <div class="entry-content hidden">
-                            <p>Bitrexgo is one of the best education platform for Foreign Exchange Trading in Indonesia</p>
+                            <p>{{$item->name}}</p>
                           </div>
                         </div>
                       </article>
@@ -179,17 +178,6 @@
       </section>
       <!-- end section-default -->
 
-      <!-- <div class="section-progress wow fadeInUp section-parallax"  data-speed="25"  data-wow-duration="1s">
-        <div class="container">
-          <div class="row">
-            <div class="col-xs-12">
-              <ul class="list-progress list-unstyled" style="font-size: 30px;margin-top: -45px;">
-                <br>The forex market is the largest and most liquid market in the world. With a daily volume over $4 trillion.
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div> -->
 
       <section class="section-video wow fadeInUp hidden" data-wow-duration="1s">
         <div class="container">
@@ -197,7 +185,6 @@
             <div class="col-xs-12">
               <div class="video-block"> <a class="video-block__link" href="https://www.youtube.com/watch?v=wh6lxMpffCo" rel="prettyPhoto"><i class="icon stroke icon-Play"></i></a>
                 <h2 class="video-block__title">Bitrexgo Video</h2>
-                <!-- <div class="video-block__subtitle">Bitrexgo is one of the best education platform for Foreign Exchange Trading in Indonesia.</div> -->
               </div>
             </div>
             <!-- end col -->
@@ -231,7 +218,6 @@
             <div class="col-xs-12">
               <div class="wrap-title">
                 <h2 class="ui-title-block">Our <strong>Headquarter</strong></h2>
-                <!-- <div class="ui-subtitle-block ui-subtitle-block_mod-b">Bitrexgo is one of the best education platform for Foreign Exchange Trading in Indonesia.</div> -->
               </div>
               <div class="posts-wrap">
                 @foreach ($data['ourHeadQuarter'] as $item)
@@ -278,7 +264,6 @@
             <div class="col-xs-12">
               <div class="wrap-title">
                 <h2 class="ui-title-block" style="color: #FFF;">Event <strong>Promotion</strong></h2>
-                <!-- <div class="ui-subtitle-block ui-subtitle-block_mod-b" style="color: #FFF;">Bitrexgo is one of the best education platform for Foreign Exchange Trading in Indonesia.</div> -->
               </div>
               <div class="posts-wrap">
                 <article class="post post_mod-b clearfix wow zoomIn" data-wow-duration="1s">
@@ -319,7 +304,6 @@
             <div class="col-xs-12">
               <div class="video-block"> <a class="video-block__link" href="https://www.youtube.com/watch?v=wh6lxMpffCo" rel="prettyPhoto"><i class="icon stroke icon-Play"></i></a>
                 <h2 class="video-block__title">Bitrexgo Slide</h2>
-                <!-- <div class="video-block__subtitle">Bitrexgo is one of the best education platform for Foreign Exchange Trading in Indonesia.</div> -->
               </div>
             </div>
             <!-- end col -->
@@ -338,7 +322,6 @@
                 <div class="subscribe__icon-wrap"> <i class="icon_bg stroke icon-Imbox"></i><i class="icon stroke icon-Imbox"></i> </div>
                 <div class="subscribe__inner">
                   <h2 class="subscribe__title">SUBMIT TESTIMONY FOR BITREXGO</h2>
-                  <!-- <div class="subscribe__description">Bitrexgo is one of the best education for Foreign Exchange Trading.</div> -->
                 </div>
               </div>
               <!-- end col -->

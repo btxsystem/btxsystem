@@ -26,6 +26,12 @@ List Of Notifications
                         <!-- BEGIN SAMPLE TABLE PORTLET-->
                         <div class="portlet box primary">
                             <div class="portlet-body flip-scroll">
+                            <div>
+                                <button onclick="readAll()" class="btn btn-success">Read All</button>
+                                <button onclick="unreadAll()" class="btn btn-warning">Unread All</button>
+                                <button onclick="deleteAll()" class="btn btn-danger">Delete All</button>
+                            </div>
+                            <br/>
                                 <table class="table data-table table-bordered table-striped table-condensed flip-content" >
                                     <thead class="flip-content">
                                         <tr>
@@ -51,8 +57,9 @@ List Of Notifications
 {{-- page level scripts --}}
 @section('footer_scripts')
     <script type="text/javascript">
+        var table = null
         $(document).ready(function () {
-          var table = $('.data-table').DataTable({
+        table = $('.data-table').DataTable({
               destroy: true,
               processing: true,
               serverSide: true,
@@ -70,5 +77,87 @@ List Of Notifications
           });
 
         });
+
+        function deleteNotif(id = 0) {
+        swal({
+                title: "Are you sure delete this data?",
+                confirmButtonClass: "btn-danger",
+                confirmButtonText: "Yes!",
+                showCancelButton: true,
+            },
+            function() {
+                $.ajax({
+                    type: 'GET', //THIS NEEDS TO BE GET
+                    url: 'notification/delete/'+id,
+                    success: function (data) {
+                        table.ajax.reload();                       
+                    }
+                })
+            });
+        }
+
+        function deleteAll() {
+        swal({
+                title: "Are you sure delete all data?",
+                confirmButtonClass: "btn-danger",
+                confirmButtonText: "Yes!",
+                showCancelButton: true,
+            },
+            function() {
+                $.ajax({
+                    type: 'GET', //THIS NEEDS TO BE GET
+                    url: 'notification/deletes',
+                    success: function (data) {
+                        table.ajax.reload();                       
+                    }
+                })
+            });
+        }
+
+        function readAll() {
+        swal({
+                title: "Are you sure read all data?",
+                confirmButtonClass: "btn-danger",
+                confirmButtonText: "Yes!",
+                showCancelButton: true,
+            },
+            function() {
+                $.ajax({
+                    type: 'GET', //THIS NEEDS TO BE GET
+                    url: 'notification/reads',
+                    success: function (data) {
+                        table.ajax.reload();                       
+                    }
+                })
+            });
+        }
+
+        function unreadAll() {
+        swal({
+                title: "Are you sure unread all data?",
+                confirmButtonClass: "btn-danger",
+                confirmButtonText: "Yes!",
+                showCancelButton: true,
+            },
+            function() {
+                $.ajax({
+                    type: 'GET', //THIS NEEDS TO BE GET
+                    url: 'notification/unreads',
+                    success: function (data) {
+                        table.ajax.reload();                       
+                    }
+                })
+            });
+        }
+
+        let readNotification = (id) => {
+            $.ajax({
+                type: 'GET', //THIS NEEDS TO BE GET
+                url: 'notification/read/'+id,
+                success: function (data) {
+                    table.ajax.reload();                       
+                }
+            })
+        }
     </script>
 @stop
