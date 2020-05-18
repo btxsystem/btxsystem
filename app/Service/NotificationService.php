@@ -23,9 +23,19 @@ class NotificationService extends Notification
 
     public function sendNotification(){
         $now = strtotime(now());
-        $now = date('z',$now);
-        $datas = Employeer::whereRaw("DAYOFYEAR(birthdate) = $now")->where('rank_id', '>', 3)->get();
-        foreach ($datas as $member) {
+        $now = date('m-d',$now);
+        $datas = Employeer::where('rank_id', '>', 3)->get();
+        $data = [];
+        foreach ($datas as $key => $value) {
+            $birth_date = strtotime($value->birthdate);
+            $birth_date = date('m-d',$birth_date);
+            if ( $birth_date == $now ) {
+                $data[$key]=$value;
+            }
+        }
+        //$datas = Employeer::where('rank_id', '>', 3)->where(DB::raw('DATE_FORMAT(birthdate, "%m-%d")'),'<=',\Carbon\Carbon::today()->format('m-d'))->get();
+       // dd($data);
+        foreach ($data as $member) {
             self::insert([
                "title" => 'Birthdate',
                "desc" => 'ulang tahun hari ini. Jangan lupa kirimkan ucapan!',
@@ -56,7 +66,9 @@ class NotificationService extends Notification
                                             $q->select(['id','username']);
                                         }
                                     ]
-                            )->orderBy('notification.created_at', 'desc')
+                            )
+                            ->where('isRead', '!=', 2)
+                            ->orderBy('notification.created_at', 'desc')
                             ->select(['notification.id','desc','member_id', 'notification.created_at', 'isRead']);
         return $notification;
     }
