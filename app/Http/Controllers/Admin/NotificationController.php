@@ -66,7 +66,7 @@ class NotificationController
     public function deleteAll()
     {
         try {
-            $delete = Notification::query()->update([
+            $delete = Notification::where('isRead', 1)->update([
                 'isRead' => 2
             ]);
 
