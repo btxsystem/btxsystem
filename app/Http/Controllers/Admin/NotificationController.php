@@ -45,7 +45,9 @@ class NotificationController
     public function delete($id)
     {
         try {
-            $delete = Notification::where('id', $id)->delete();
+            $delete = Notification::where('id', $id)->update([
+                'isRead' => 2
+            ]);
 
             if(!$delete) {
                 return response()->json([
