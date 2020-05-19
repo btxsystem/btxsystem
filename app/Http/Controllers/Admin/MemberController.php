@@ -38,7 +38,7 @@ class MemberController extends Controller
                         'archive',
                         'lastArchive'
                         )
-                ->select('employeers.id','id_member','username','first_name','last_name','rank_id','sponsor_id','employeers.created_at','employeers.status', 'address.member_id');
+                ->select('employeers.id','id_member','username','first_name','last_name','rank_id','sponsor_id','employeers.created_at','employeers.status');
             }
             else {
                 $data = Employeer::where('employeers.status', 1)
