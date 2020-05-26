@@ -118,6 +118,10 @@ class NotificationService extends Notification
 
             $dataEmail = (object) [
                 'description' => 'Anda telah naik peringkat tetap semangat untuk mencari downline agar anda bisa naik ke peringkat selanjutnya',
+                'username' => $notif->user->username,
+                'name' => $notif->user->first_name ?? '' . ' ' . $notif->user->last_name ?? '',
+                'rank'     => $rank->name,
+                'reward'   => $reward->reward->description
             ];
             Mail::to($notif->user->email)->send(new UpRankMemberMail($dataEmail));
 
