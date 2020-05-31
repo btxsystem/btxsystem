@@ -509,6 +509,9 @@
   function closeCorona() {
     $('#corona').hide()
   }
+  function toPrice(value) {
+		return value.toString().replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1\.")
+	}
   $(document).ready(function(){
     // $('.toast').toast('show')
     $('#owl-banner').owlCarousel({
@@ -635,6 +638,24 @@
   let check_email = false;
 
   let validasiForm = () => {
+    console.log("$('#referal').val()", $('#referal').val())
+    console.log("$('#firstName').val()", $('#firstName').val())
+    console.log("$('#username').val()", $('#username').val())
+    console.log("$('#passport').val()", $('#passport').val())
+    console.log("$('#phone_number').val()", $('#phone_number').val())
+    console.log("$('#account_name').val()", $('#account_name').val())
+    console.log("$('#account_number').val()", $('#account_number').val())
+    console.log("$('#birthdate').val()", $('#birthdate').val())
+    console.log("$('#basic').val()", $('#basic').val())
+    console.log("$('#advance').val()", $('#advance').val())
+    console.log("$('#shipping').val()", $('#shipping').val())
+    console.log("$('#term_one').val()", $('#term_one').val())
+    console.log("$('#term_two').val()", $('#term_two').val())
+    console.log("isset_referal", isset_referal)
+    console.log("available_username", available_username)
+    console.log("available_email", available_email)
+    console.log("check_email", check_email)
+
     if(
       $('#referal').val() != '' &&
       $('#firstName').val() != '' &&
@@ -642,19 +663,98 @@
       $('#passport').val() != '' &&
       $('#phone_number').val() != '' &&
       $('#account_name').val() != '' &&
-      $('#account_nnumber').val() != '' &&
+      $('#account_number').val() != '' &&
       $('#birthdate').val() != '' &&
       ($('#basic').val() != '' || $('#advance').val() != '') &&
       ($('#pickup').val() != '' || $('#shipping').val() != '') &&
       isset_referal == true && available_username == true &&
       check_email == true && available_email == true &&
-      $('#term_one').val( )== '' && $('#term_two').val() == ''
+      parseInt($('#term_one').val()) == 1 && parseInt($('#term_two').val()) == 1
     ){
       $(".btn-join").attr("disabled", false);
     }else{
       $(".btn-join").attr("disabled", true);
     }
   }
+
+  $.ajax({
+    type: 'GET',
+    url: '/api/ebook/ebooks'
+  }).done(function(res) {
+    const {data} = res
+    let render = data.map((v, i) => {
+      return `
+      <div class="form-check">
+      <input class="form-check-input" data-price="${v.price}" type="checkbox" name="ebooks[]" value="${v.id}" id="${v.title}">
+      <label class="form-check-label" id="${i}" for="${v.title}" ${v.id == 1 ? 'checked' : ''}>
+        ${v.title}
+      </label>
+      </div>`
+  })
+  $('#ebook-list').html(`
+    <div id="data-ebooks">
+      ${render}
+    </div>
+  `)
+
+  $('#data-ebooks input[type=checkbox]').each(function() {
+    if(parseInt($(this).val()) == 1) {
+			$(this).prop('checked', true)
+			priceEbook = priceEbook + parseInt($(this).data('price'))
+			$('#cost-ebook').html(toPrice(priceEbook))
+			$('#grand-total').html(toPrice((priceEbook + postalFee + 280000)))
+		}
+  });
+
+  $('#data-ebooks input[type=checkbox]').change(function(index) {
+    console.log('sdsds')
+			let ebookSelected = $('#data-ebooks input[type=checkbox]').filter(function() {
+				return $(this).prop("checked")
+			})
+
+			let cancelledEbook = false;
+
+			if(ebookSelected.length == 2) {
+				var r = confirm("Apakah Anda yakin membeli 2 ebook?");
+				if (r == true) {
+
+				} else { 
+					cancelledEbook = true
+					$(this).prop("checked", false)
+				}
+			}
+
+			if($(this).prop('checked')) {
+				check += 1;
+				priceEbook = priceEbook + parseInt($(this).data('price'));
+			} else {
+				if(!cancelledEbook) {
+					check -= 1;
+					priceEbook = priceEbook - parseInt($(this).data('price'));
+				}
+				
+			}
+			if(priceEbook != 0) {
+				$('#cost-ebook').parent().removeClass('hidden');
+			} else {
+				$('#cost-ebook').parent().addClass('hidden');
+				$('.register').prop('disabled', true);
+			}
+
+			if(postalFee != 0) {
+				$('#cost-postal').parent().removeClass('hidden')
+			} else {
+				$('#cost-postal').parent().addClass('hidden')
+			}
+
+			$('#cost-ebook').html(toPrice(priceEbook))
+			$('#grand-total').html(toPrice((priceEbook + postalFee + 280000)))
+
+			grandTotal = (priceEbook + postalFee + 280000);
+
+			validasiForm()
+		})
+	})
 
   $('#phone_number').on('input', function() {
     let str = this.value;
@@ -673,9 +773,9 @@
     }
     $.ajax({
       type: 'GET',
-      url: '/email/'+this.value,
+      url: '/validate-unique-email?email=' + this.value,
       success: function (data) {
-        if (data.email) {
+        if (data.success) {
           $('#email_danger').text('email already exist');
           available_email = false;
         }else{
@@ -693,9 +793,15 @@
   $("#referal").keyup(function(){
     $.ajax({
       type: 'GET',
-      url: '/user/'+this.value,
+      url: '/validate-exist-user?username=' + this.value,
       success: function (data) {
-        data.referal ? $(".alert-referal").html("<span style=color:green>Sponsor tersedia</span>") : $(".alert-referal").html("<span style=color:red>Sponsor tidak tersedia</span>");
+        if(data.success) {
+          isset_referal = true
+        } else {
+          isset_referal = false
+        }
+
+        data.success ? $(".alert-referal").html("<span style=color:green>Sponsor tersedia</span>") : $(".alert-referal").html("<span style=color:red>Sponsor tidak tersedia</span>");
       },
       error: function() {
         console.log("Error");
@@ -707,9 +813,15 @@
   $("#username").keyup(function(){
     $.ajax({
       type: 'GET',
-      url: '/user/'+this.value,
+      url: '/validate-unique-user?username=' + this.value,
       success: function (data) {
-        data.username ? $(".alert-username").html("<span style=color:green>Username dapat digunakan</span>") : $(".alert-username").html("<span style=color:red>Username tidak dapat digunakan</span>");
+        if(!data.success) {
+          available_username = true
+        } else {
+          available_username = false
+        }
+
+        !data.success ? $(".alert-username").html("<span style=color:green>Username dapat digunakan</span>") : $(".alert-username").html("<span style=color:red>Username tidak dapat digunakan</span>");
       },
       error: function() {
         console.log("Error");
