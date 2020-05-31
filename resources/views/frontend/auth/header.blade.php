@@ -27,6 +27,7 @@
 <!--   <script defer src="{{asset('js/app.js')}}"></script>
  -->  <link rel="stylesheet" href="{{asset('assets2/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css')}}">
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <style>
     .yamm .nav > li > a {
        padding: 0px 8px 9px !important;
@@ -134,10 +135,11 @@
                     <div class="input-group col-md-12">
                       <h5 class="card-inside-title">Choose a ebook</h5>
                       <div class="demo-radio-button">
-                        <div class="btn-group-toggle" data-toggle="buttons">
+                        <!-- <div class="btn-group-toggle" data-toggle="buttons" id="data-ebooks">
                             <input type="checkbox" name="basic" id="basic" checked> Basic &nbsp;&nbsp;
                             <input type="checkbox" name="advance" id="advance"> Advance
-                        </div>
+                        </div> -->
+                        <div id="ebook-list"></div>
                       </div>
                       <input type="hidden" id="choosepack">
                     </div>
@@ -180,10 +182,28 @@
                     </div>
                     <div class="input-group col-md-12">
                       <div class="form-group address-form">
-                        <h4 class="hidden">Starter Pack : <span id="cost-starter">0</span></h4>
-                        <h4 class="hidden">Total Ebook : <span id="cost-ebook">0</span></h4>
-                        <h4 class="hidden">Total Postal Fee : <span id="cost-postal">0</span></h4>
-                        <h4>Grand Total : <span id="grand-total"></span></h4>
+                        <table class="table table-borderless">
+                          <tr>
+                            <td> <h4>Starter Pack</h4> </td>
+                            <td class="text-right"> <h4><span id="cost-starter">0</span></h4> </td>
+                            <td> <h4>IDR</h4> </td>
+                          </tr>
+                          <tr>
+                            <td> <h4>Total Ebook</h4> </td>
+                            <td class="text-right"> <h4><span id="cost-ebook">0</span></h4> </td>
+                            <td> <h4>IDR</h4> </td>
+                          </tr>
+                          <tr>
+                            <td> <h4>Total Shipping</h4> </td>
+                            <td class="text-right"> <h4><span id="cost-postal">0</span></h4> </td>
+                            <td> <h4>IDR</h4> </td>
+                          </tr>
+                          <tr>
+                            <td> <h4>Grand Total</h4> </td>
+                            <td class="text-right"> <h4><span id="grand-total">0</span></h4> </td>
+                            <td> <h4>IDR</h4> </td>
+                          </tr>
+                        </table>
                       </div>
                     </div>
                     <div class="input-group col-md-12">
@@ -286,7 +306,7 @@
                     <li><a id="hall-if-fame" href="/hall-of-fame">Hall Of Fame</a></li>
                     <!-- <li><a href="#"><button class="btn btn-effect btn-info btn-buy" style="background: #b92240; margin-top: -10px;">JOIN</button></a></li> -->
                     <!-- <li><a data-toggle="modal" data-target="#join"><button class="btn btn-effect btn-info btn-buy" style="background: #b92240; margin-top: -10px;">JOIN</button></a></li>-->
-                     <li><a href="#"><button class="btn btn-effect btn-info btn-buy" style="background: #b92240; margin-top: -10px;">JOIN</button></a></li>
+                     <li><a ><button class="btn btn-effect btn-info btn-buy" style="background: #b92240; margin-top: -10px;">JOIN</button></a></li>
                    {{--<li><a data-toggle="modal" data-target="#join"><button class="btn btn-effect btn-info btn-buy" style="background: #b92240; margin-top: -10px;">JOIN</button></a></li>--}}
                     <!-- <li><a href="#"><button class="btn btn-effect btn-info btn-buy" style="background: #b92240; margin-top: -10px;">JOIN</button></a></li> -->
 
