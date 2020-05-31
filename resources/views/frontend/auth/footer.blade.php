@@ -14,7 +14,13 @@
                 <div class="footer-contacts"> <i class="icon stroke icon-Phone2"></i> <span class="footer-contacts__inner">+62 817-0380-0329, (021) 80823903</span> </div>
 								<div class="footer-contacts"> <i class="icon stroke icon-Mail"></i> <a class="footer-contacts__inner" href="mailto:cs@bitrexgo.co.id">cs@bitrexgo.co.id</a> <a class="footer-contacts__inner" href="mailto:bitrexgo@gmail.com">bitrexgo@gmail.com</a> </div>
 								<div class="footer-contacts"> <i class="fa fa-telegram"></i>
-									&nbsp; &nbsp; Telegram : <a href="https://t.me/bitrexgo">Bitrexgo Announcement</a>
+									&nbsp; &nbsp; Telegram: <a href="https://t.me/bitrexgo">Bitrexgo Announcement</a>
+								</div>
+								<div class="footer-contacts"> <i class="fa fa-instagram"></i>
+									&nbsp; &nbsp; Instagram: <a href="https://instagram.com/bitrexgo">Bitrexgo</a>
+								</div>
+								<div class="footer-contacts"> <i class="fa fa-facebook"></i>
+									&nbsp; &nbsp; Facebook: <a href="https://id-id.facebook.com/bitrexgo">Bitrexgo</a>
 								</div>
                 <div class="footer-contacts">© {{ date('Y') }} BITREXGO. All Rights Reserved</div>
 								<a href="https://info.flagcounter.com/8LxJ"><img src="https://s01.flagcounter.com/count2/8LxJ/bg_FFFFFF/txt_000000/border_CCCCCC/columns_2/maxflags_10/viewers_0/labels_0/pageviews_0/flags_0/percent_0/" alt="Flag Counter" border="0"></a>
