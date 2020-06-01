@@ -132,6 +132,11 @@ Create Video
                         //$('#uploadStatus').html('<p style="color:#EA4335;">File upload failed, please try again.</p>');
                     },
                     success: function(res){
+                        if(res.status) {
+                            $('#title').val('')
+                            $('#path').val('')
+                        }
+
                         $('#upload-status').html(`
                             <div class="alert alert-${res.status ? 'success' : 'error'}">
                                 ${res.message}
