@@ -178,7 +178,8 @@
 					<iframe class="embed-responsive-item" src="{{route('member.video.ebook.advanced')}}" allowfullscreen></iframe>
 				</div>
 				@endif;
-        <!-- @foreach($book->videoEbooks as $video)
+				{{-- @foreach($book->videoEbooks as $video)
+					@if(count($video->videos) > 0)
           <div class="col-lg-4 mb-3 hover">
 						<div class="embed-responsive embed-responsive-16by9">
 							<video controls>
@@ -188,7 +189,8 @@
 						</div><br/>
 						<span style="font-size: 20px; font-weight: bold;">{{ $video->videos[0]->title }}</span>
 					</div>
-				@endforeach -->
+					@endif
+				@endforeach --}}
 				</div>
 				@endif
         @endforeach
