@@ -58,7 +58,7 @@ class VideoController extends Controller
     {
         // return $request->all();
         $request->validate([
-            'path' => 'required|mimes:mp4,mov|max:20480'
+            'path' => 'required|mimes:mp4,mov|max:204800'
         ]);
         
         if ($request->hasFile('path')) {
