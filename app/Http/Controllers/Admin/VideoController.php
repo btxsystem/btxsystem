@@ -81,15 +81,22 @@ class VideoController extends Controller
                 'video_id' => $video->id,
                 'ebook_id' => $request->ebook_id
             ]);
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Success Upload Video'
+            ]);
             // $ebook->videos()->attach($video);
             
-            Alert::success('Sukses Menambah Data Video', 'Sukses');
+            //Alert::success('Sukses Menambah Data Video', 'Sukses');
 
-            return redirect()->route('ebook.show', $ebook->id);
+           // return redirect()->route('ebook.show', $ebook->id);
         }
 
-        Alert::error('Gagal Menambah Data', 'Gagal');
-        return \redirect()->back();
+        return response()->json([
+            'status' => false,
+            'message' => 'Failed Upload Video'
+        ]);
     }
 
     /**
@@ -148,12 +155,20 @@ class VideoController extends Controller
         
         if ($data->save())
         {
-            Alert::success('Sukses Update Data Book', 'Sukses');
+            // Alert::success('Sukses Update Data Book', 'Sukses');
 
-            return redirect()->route('video.show', $id);
+            // return redirect()->route('video.show', $id);
+            return response()->json([
+                'status' => true,
+                'message' => 'Success Update Video'
+            ]);
         }
-        Alert::error('Gagal Menambah Data', 'Gagal');
-        return \redirect()->back();
+        // Alert::error('Gagal Menambah Data', 'Gagal');
+        // return \redirect()->back();
+        return response()->json([
+            'status' => false,
+            'message' => 'Failed Update Video'
+        ]);
     }
 
     /**
