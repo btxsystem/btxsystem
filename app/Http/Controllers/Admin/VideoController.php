@@ -57,9 +57,9 @@ class VideoController extends Controller
     public function store(Request $request)
     {
         // return $request->all();
-        // $request->validate([
-        //     'path' => 'required|mimes:mp4,mov|max:2048000000'
-        // ]);
+        $request->validate([
+            'path' => 'required|mimes:mp4,mov'
+        ]);
         
         if ($request->hasFile('path')) {
             $file = $request->path;
@@ -69,7 +69,7 @@ class VideoController extends Controller
             $file->move('upload/video/', $fileName);
         }
 
-        $ebook = Ebook::findOrFail($request->ebook_id);
+        //$ebook = Ebook::findOrFail($request->ebook_id);
 
         $video = new Video;
         $video->title = $request->title;
