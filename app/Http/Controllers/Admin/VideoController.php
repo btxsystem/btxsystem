@@ -69,7 +69,7 @@ class VideoController extends Controller
             $file->move('upload/video/', $fileName);
         }
 
-        $ebook = Ebook::findOrFail($request->ebook_id);
+        //$ebook = Ebook::findOrFail($request->ebook_id);
 
         $video = new Video;
         $video->title = $request->title;
