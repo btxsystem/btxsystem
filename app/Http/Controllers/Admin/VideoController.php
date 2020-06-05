@@ -56,6 +56,8 @@ class VideoController extends Controller
      */
     public function store(Request $request)
     {
+        ini_set("memory_limit", "-1");
+        
         // return $request->all();
         $request->validate([
             'path' => 'required|mimes:mp4,mov'
