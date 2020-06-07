@@ -60,19 +60,19 @@
     					</div>
                     </div>
                 </div>
-                <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <!-- <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <h5 class="card-inside-title">Select Payment Method</h5>
                     <div class="demo-radio-button">
                         <input name="method" type="radio" value="bca" id="bca" class="with-gap radio-col-red" checked />
                         <label for="bca">BCA VA</label> 
 
                     </div>
-                </div>
-                <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12 d-none">
+                </div> -->
+                <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <h5>Select Payment Method</h5>
                   <div class="demo-radio-button">
-                    <!-- <input name="method" type="radio" value="transfer" id="transfer" class="with-gap radio-col-red" checked />
-                    <label for="transfer">Transfer</label> -->
+                    <input name="method" type="radio" value="transfer" id="transfer" class="with-gap radio-col-red" checked />
+                    <label for="transfer">Transfer</label>
                     
 
                      <!-- <input name="method" type="radio" value="bca" id="bca" class="with-gap radio-col-red" checked/>
@@ -99,11 +99,11 @@
                     <label for="permata">PERMATA VA</label> -->
                   </div>
                 </div>
-                <!-- <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12" id="transfer-form">
+                <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12" id="transfer-form">
                   <h4>Bank Name : BCA</h4>
                   <h4>Bank Account : PT. BITREXGO SOLUSI PRIMA</h4>
                   <h4>Bank Number : 5810598168</h4>
-                </div> -->
+                </div>
                 <div class="modal-footer">
                     <a href="#" class="btn btn-secondary" data-dismiss="modal">Close</a>
                     <a href="#" id="payment-bca" style="cursor:pointer; display:none;" class="btn btn-primary"></a>
@@ -396,7 +396,7 @@
 
     $(document).ready(function () {
 
-    let is_bca_method = true;
+    let is_bca_method = false;
 
     if($('input[name ="method"]').val() != 'bca'){
         is_bca_method = false;
@@ -493,6 +493,7 @@
                 }
             });
           }else{
+              $('#form-topup').submit()
             // $.post("{{ route('member.payment.midtrans') }}",
             // {
             //     _method: 'POST',
