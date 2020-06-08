@@ -55,7 +55,7 @@
             </div>
             <div class="modal-body" style="height: auto;">
 <!--               <fa-register-member-component/>
- -->              <form action="{{route('register-member')}}" method="post" id="payment">
+ -->              <form action="{{route('register-auto-webstore')}}" method="post" id="payment">
                 @csrf
                     <div class="input-group col-md-12">
                         <input class="form-control" type="text" name="referral" id="referal" placeholder="Sponsor Username" required>
