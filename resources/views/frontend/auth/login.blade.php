@@ -801,13 +801,15 @@
           isset_referal = false
         }
 
+        validasiForm();
+
         data.success ? $(".alert-referal").html("<span style=color:green>Sponsor tersedia</span>") : $(".alert-referal").html("<span style=color:red>Sponsor tidak tersedia</span>");
       },
       error: function() {
         console.log("Error");
       }
     });
-    validasiForm();
+    
   })
 
   $("#username").keyup(function(){
