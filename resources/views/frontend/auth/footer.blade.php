@@ -138,6 +138,7 @@
 	$(document).ready(function() {
     $('#shipping-form').hide();
     $('#pickup-form').hide();
+		$('#cost-starter').html(toPrice(28000))
 		// var element = document.querySelector('#bah');
 		// $('#upline').hide();
 		// panzoom(element);
@@ -148,7 +149,7 @@
 			const {data} = res
 			let render = data.map((v, i) => {
 				return `
-					<input id="ebooks" type="checkbox" value="${v.id}" id="${v.title}" class="with-gap radio-col-red" data-price="${v.price}" ${v.title == 'basic' ? 'checked' : ''} name="ebooks[]"/>
+					<input id="${v.title}" type="checkbox" value="${v.id}" id="${v.title}" class="with-gap radio-col-red" data-price="${v.price}" ${v.title == 'basic' ? 'checked' : ''} name="ebooks[]"/>
         	<label for="shipping">${v.title}</label>
 				`
 			})
@@ -179,8 +180,8 @@
 					$('#cost-postal').parent().addClass('hidden')
 				}
 
-				$('#cost-ebook').html(toIDR(priceEbook))
-				$('#grand-total').html(toIDR(priceEbook + postalFee + 280000))
+				$('#cost-ebook').html(toPrice(priceEbook))
+				$('#grand-total').html(toPrice(priceEbook + postalFee + 280000))
 			})
 			
 		})

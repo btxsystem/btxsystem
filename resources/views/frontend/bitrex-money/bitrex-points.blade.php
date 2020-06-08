@@ -60,14 +60,16 @@
     					</div>
                     </div>
                 </div>
-                <!-- <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                @if(Auth::id() == 3)
+                <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <h5 class="card-inside-title">Select Payment Method</h5>
                     <div class="demo-radio-button">
                         <input name="method" type="radio" value="bca" id="bca" class="with-gap radio-col-red" checked />
                         <label for="bca">BCA VA</label> 
 
                     </div>
-                </div> -->
+                </div>
+                @else
                 <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <h5>Select Payment Method</h5>
                   <div class="demo-radio-button">
@@ -99,6 +101,7 @@
                     <label for="permata">PERMATA VA</label> -->
                   </div>
                 </div>
+                @endif
                 <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12" id="transfer-form">
                   <h4>Bank Name : BCA</h4>
                   <h4>Bank Account : PT. BITREXGO SOLUSI PRIMA</h4>
@@ -396,7 +399,12 @@
 
     $(document).ready(function () {
 
-    let is_bca_method = false;
+    
+    <?php if(Auth::id() == 3):?>
+        let is_bca_method = true;
+    <?php else:?>
+        let is_bca_method = false;
+    <?php endif;?>
 
     if($('input[name ="method"]').val() != 'bca'){
         is_bca_method = false;
