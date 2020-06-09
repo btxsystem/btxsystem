@@ -68,7 +68,7 @@ class VideoController extends Controller
             $fileName = \Str::slug($request->title).'_'.time().'_.'.$file->getClientOriginalExtension() ; 
             $uploadPath = 'upload/video/' . $fileName;  
             
-            $file->move("upload/video/", $fileName);
+            //$file->move("upload/video/", $fileName);
 
             //$ebook = Ebook::findOrFail($request->ebook_id);
 
