@@ -60,7 +60,7 @@
     					</div>
                     </div>
                 </div>
-                @if(Auth::id() == 3)
+                @if(Auth::id() > 0)
                 <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <h5 class="card-inside-title">Select Payment Method</h5>
                     <div class="demo-radio-button">
@@ -400,7 +400,7 @@
     $(document).ready(function () {
 
     
-    <?php if(Auth::id() == 3):?>
+    <?php if(Auth::id() > 0):?>
         let is_bca_method = true;
     <?php else:?>
         let is_bca_method = false;
