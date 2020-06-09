@@ -59,16 +59,18 @@ class VideoController extends Controller
         ini_set("memory_limit", "-1");
         
         // return $request->all();
-        $request->validate([
-            'path' => 'required|mimes:mp4,mov'
-        ]);
+        // $request->validate([
+        //     'path' => 'required|mimes:mp4,mov'
+        // ]);
         
         if ($request->hasFile('path')) {
-            $file = $request->path;
+            $file = $request->file('path');
             $fileName = \Str::slug($request->title).'-'.time().'-'.$file->getClientOriginalName() ; 
             $uploadPath = 'upload/video/' . $fileName;  
+
+            $path = public_path().'/upload/video/';
             
-            $file->move('upload/video/', $fileName);
+            $file->move($path, $fileName);
         }
 
         //$ebook = Ebook::findOrFail($request->ebook_id);
