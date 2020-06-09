@@ -101,12 +101,13 @@
                     <label for="permata">PERMATA VA</label> -->
                   </div>
                 </div>
-                @endif
+                
                 <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12" id="transfer-form">
                   <h4>Bank Name : BCA</h4>
                   <h4>Bank Account : PT. BITREXGO SOLUSI PRIMA</h4>
                   <h4>Bank Number : 5810598168</h4>
                 </div>
+                @endif
                 <div class="modal-footer">
                     <a href="#" class="btn btn-secondary" data-dismiss="modal">Close</a>
                     <a href="#" id="payment-bca" style="cursor:pointer; display:none;" class="btn btn-primary"></a>
