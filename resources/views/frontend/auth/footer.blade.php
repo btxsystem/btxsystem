@@ -142,6 +142,51 @@
 		// var element = document.querySelector('#bah');
 		// $('#upline').hide();
 		// panzoom(element);
+
+		$('#bank_name_select').change(function() {
+			$('#bank_name').val($(this).val())
+		})
+
+		$('#register-webstore').submit(function(e) {
+			e.preventDefault();
+
+			$.ajax({
+				type: "POST",
+				url: $(this).attr('action'),
+				data: $(this).serialize(),
+				dataType: "json",
+				success: function(data) {
+					if(data.status) {
+						$('#va').val(data.data.no_invoice);
+						$('#des_noreq').text('Masukkan '+data.data.no_invoice+' sebagai rekening tujuan');
+						$('#des_noreq2').text('Masukkan '+data.data.no_invoice+' sebagai rekening tujuan');
+						$('#des_noreq3').text('Masukkan '+data.data.no_invoice+' sebagai rekening tujuan');
+						$('#ammount_bca').html('Nominal transaksi : <strong>'+toPrice(data.data.amount)+'</strong> (Include fee)');
+						$('#time-expired').text('Transfer Sebelum '+moment(data.data.time_expired).format('D MMMM Y - HH:mm'));
+						$('#no-virtual').modal('show')
+						$('#join').modal('hide')
+					} else {
+						alert('Gagal mendaftar, submit ulang.')
+					}
+				},
+				error: function() {
+					console.log('err')
+				}
+			});
+		})
+
+		$('#copy').click(function(){
+			var copyText = document.getElementById("va");
+			var selection = document.getSelection();
+			copyText.select();
+			copyText.setSelectionRange(0, 99999);
+			try {
+					var success = document.execCommand('copy')
+			} catch (error) {
+					console.log(error)
+			}
+		})
+
 		$.ajax({
 			type: 'GET',
 			url: '{{route("api.ebook.ebooks")}}'
