@@ -200,7 +200,7 @@ class TransactionPaymentService
                 //Mail::to('dhadhang.efendi@gmail.com')->send(new OldMemberMail($dataEmail));
                 Mail::to(Auth::user()->email)->send(new VaMail($dataEmail));
             }
-        }elseif($method == "register_webstore"){
+        }elseif($method == "registerWebstore"){
             $product_detail = [
                 'member' => [
                     'username' => $parameter[1]->username,
@@ -208,24 +208,24 @@ class TransactionPaymentService
                     'last_name' => $parameter[1]->last_name ? $parameter[1]->last_name : null,
                     'email' => $parameter[1]->email,
                     'phone_number' => $parameter[1]->phone_number,
-                    'nik' => $parameter[1]->nik,
+                    'nik' => $parameter[1]->nik ? $parameter[1]->nik : null,
                     'npwp_number' => $parameter[1]->npwp_number ? $parameter[1]->npwp_number : null,
                     'bank_account_name' => $parameter[1]->bank_account_name,
                     'bank_account_number' => $parameter[1]->bank_account_number,
                     'bank_name' => $parameter[1]->bank_name,
-                    'birthdate' => $parameter[1]->birthdate,
+                    'birthdate' => date('Y-m-d', strtotime(str_replace(" ", "-", $parameter[1]->birthdate))),
                     'gender' => $parameter[1]->gender,
                     'referral' => $parameter[1]->referral,
                 ],
                 'ebooks' => $parameter[1]->ebooks,
-                'shipping_method' => $parameter[1]->shipping_method,
+                'shipping_method' => $parameter[1]->shipping,
                 'address' => [
                     'province_name' => $parameter[1]->province_name,
                     'city_name' => $parameter[1]->province_name,
                     'district_name' => $parameter[1]->district_name,
                     'address' => $parameter[1]->address,
                     'kurir_name' => $parameter[1]->kurir_name,
-                    'cost' => $parameter[1]->cost,
+                    'cost' => $parameter[1]->postalFee,
                 ],
                 'term_one' => $parameter[1]->term_one,
                 'term_two' => $parameter[1]->term_two
@@ -233,12 +233,14 @@ class TransactionPaymentService
             $arr_tojson = json_encode($product_detail);
 
             $cost = 280000 +2750;
-            $cost += isset($parameter[1]->kurir) ? $parameter[1]->kurir : 0;
+            $cost += isset($parameter[1]->postalFee) ? (int) $parameter[1]->postalFee : 0;
 
             foreach ($parameter[1]->ebooks as $key => $ebook) {
                 $price_ebook = DB::table('ebooks')->where('id',$ebook)->select('price')->first();
-                $cost += $price_ebook->price;
+                $cost += (int) $price_ebook->price;
             }
+
+            DB::beginTransaction();
 
             $trx = DB::table('transaction_bills')
                 ->insertGetId(
@@ -264,17 +266,25 @@ class TransactionPaymentService
                     ]
                 );
 
+            DB::commit();
+
             $dataEmail = (object) [
                 'amount' => $cost.' (Include fee)',
                 'description' => 'Register Member from Autoplacement',
-                'no_invoice' => '11210'.$parameter[2],
+                'no_invoice' => "11210{$parameter[2]}",
                 'time_expired' => Carbon::create(date('Y-m-d H:i:s'))->addDay(1),
             ];
 
-            if (filter_var(Auth::user()->email, FILTER_VALIDATE_EMAIL)) {
+            if (filter_var($parameter[1]->email, FILTER_VALIDATE_EMAIL)) {
                 //Mail::to('dhadhang.efendi@gmail.com')->send(new OldMemberMail($dataEmail));
-                Mail::to(Auth::user()->email)->send(new VaMail($dataEmail));
+                Mail::to($parameter[1]->email)->send(new VaMail($dataEmail));
             }
+
+            return [
+                'amount' => (int) $cost,
+                'no_invoice' => "11210{$parameter[2]}",
+                'time_expired' => Carbon::create(date('Y-m-d H:i:s'))->addDay(1),
+            ];
         }else{
             throw new exception("Function $method does not exists ");
         }

@@ -2,6 +2,7 @@
 namespace App\Service;
 
 use App\Service\PaymentVa\TransactionPaymentService;
+use DB;
 
 class MemberService
 {
@@ -20,8 +21,11 @@ class MemberService
         $cek = DB::table('transaction_bills')->where('customer_number',$no_invoice)->select('id')->get();
     } while (count($cek)>0);   
 
+    $referral = DB::table('employeers')->where('username', $request->referral)->first()->id;
+
     $register = new TransactionPaymentService;
-    $register->register($request->referral, $request, $no_invoice);
+    
+    return $register->registerWebstore($referral, $request, $no_invoice);
   }
   
 }
