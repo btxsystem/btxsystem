@@ -211,7 +211,7 @@ Transfer Confirmation
               
               columns: [
                   { data: 'DT_RowIndex', name: 'DT_RowIndex', className: "text-center", orderable: false, searchable: false },
-                  { data: 'usernameMember', name: 'user.username', className: "text-center" },                  
+                  { data: 'usernameMember', name: 'user.username', className: "text-center", searchable: false },                  
                   // { data: 'usernameNonMember', name: 'user.username', className: "text-center" },
                   // { data: 'name', name: 'user.username', className: "text-center" },                  
                   { data: 'type', name: 'type', className: "text-center" },                  
