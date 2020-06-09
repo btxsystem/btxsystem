@@ -71,30 +71,30 @@ class VideoController extends Controller
             $path = public_path().'/upload/video/';
             
             $file->move($path, $fileName);
-        }
 
-        //$ebook = Ebook::findOrFail($request->ebook_id);
+            //$ebook = Ebook::findOrFail($request->ebook_id);
 
-        $video = new Video;
-        $video->title = $request->title;
-        $video->path = $uploadPath;
-        
-        if ($video->save()) {
-
-            VideoEbook::firstOrCreate([
-                'video_id' => $video->id,
-                'ebook_id' => $request->ebook_id
-            ]);
-
-            return response()->json([
-                'status' => true,
-                'message' => 'Success Upload Video'
-            ]);
-            // $ebook->videos()->attach($video);
+            $video = new Video;
+            $video->title = $request->title;
+            $video->path = $uploadPath;
             
-            //Alert::success('Sukses Menambah Data Video', 'Sukses');
+            if ($video->save()) {
 
-           // return redirect()->route('ebook.show', $ebook->id);
+                VideoEbook::firstOrCreate([
+                    'video_id' => $video->id,
+                    'ebook_id' => $request->ebook_id
+                ]);
+
+                return response()->json([
+                    'status' => true,
+                    'message' => 'Success Upload Video'
+                ]);
+                // $ebook->videos()->attach($video);
+                
+                //Alert::success('Sukses Menambah Data Video', 'Sukses');
+
+            // return redirect()->route('ebook.show', $ebook->id);
+            }
         }
 
         return response()->json([
