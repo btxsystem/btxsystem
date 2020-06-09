@@ -93,6 +93,11 @@ class VideoController extends Controller
 
             // return redirect()->route('ebook.show', $ebook->id);
             }
+
+            return response()->json([
+                'status' => false,
+                'message' => 'Failed Upload Video'
+            ]);
         }
 
         return response()->json([
