@@ -19,6 +19,17 @@ class MemberController extends Controller
 
     public function register(Request $request)
     {
-        return response()->json($request->all());
+        try {
+            $register = $this->memberService->registerMemberAutoPlacement($request);
+            return response()->json([
+                'status' => true,
+                'data' => $register
+            ]);
+        } catch(\Exception $e) {
+            return response()->json([
+                'status' => false,
+                'data' => null
+            ]);
+        }
     }
 }

@@ -55,7 +55,7 @@
             </div>
             <div class="modal-body" style="height: auto;">
 <!--               <fa-register-member-component/>
- -->              <form action="{{route('register-auto-webstore')}}" method="post" id="payment">
+ -->              <form action="{{route('register-auto-webstore')}}" method="post" id="register-webstore">
                 @csrf
                     <div class="input-group col-md-12">
                         <input class="form-control" type="text" name="referral" id="referal" placeholder="Sponsor Username" required>
@@ -83,7 +83,7 @@
                     </div>
                     <br>
                     <div class="input-group col-md-12">
-                        <input class="form-control" type="number" placeholder="NIK/Passport" name="passport" id="passport" required>
+                        <input class="form-control" type="number" placeholder="NIK/Passport" name="nik" id="passport" required>
                     </div>
                     <br>
                     <div class="input-group col-md-12">
@@ -91,21 +91,30 @@
                     </div>
                     <br>
                     <div class="input-group col-md-12">
-                        <input class="form-control" type="text" placeholder="NPWP" name="npwp" id="npwp">
+                        <input class="form-control" type="text" placeholder="NPWP" name="npwp_number" id="npwp">
                     </div>
                     <br>
                     <div class="input-group col-md-12">
-                        <input class="form-control" type="text" placeholder="Account Name (Bank)" name="account_name" id="account_name" required>
+                        <input class="form-control" type="text" placeholder="Account Name (Bank)" name="bank_account_name" id="account_name" required>
                     </div>
                     <br>
                     <div class="input-group col-md-12">
-                        <input class="form-control" type="text" placeholder="Account Number (Bank)" name="account_nnumber" id="account_number" required>
+                        <input class="form-control" type="text" placeholder="Account Number (Bank)" name="bank_account_number" id="account_number" required>
                     </div>
                     <br>
                     <div class="input-group col-md-12">
                         <div class="form-line">
                           <input type="date" id="birthdate" name="birthdate" class="form-control" placeholder="Birthdate" required>
                         </div>
+                    </div>
+                    <div class="input-group col-md-12 mt-4">
+                      <h5 class="card-inside-title">Gender</h5>
+                      <div class="demo-radio-button">
+                        <input name="gender" type="radio" value="0" id="male" checked class="with-gap radio-col-red" />
+                        <label for="gender">Male</label>&nbsp;&nbsp;
+                        <input name="gender" type="radio" value="1" id="female" class="with-gap radio-col-red" />
+                        <label for="gender">Female</label>
+                      </div>
                     </div>
                     <br>
                     <div class="input-group col-md-12">
@@ -157,15 +166,19 @@
                     <div class="input-group col-md-12" id="shipping-form">
                       <div class="form-group">
                         <select style="width:100%;" id="province" name="province" class="form-control province"></select>
+                        <input type="hidden" class="form-control" name="province_name" id="province_name">
                       </div>
                       <div class="form-group city-form">
                         <select style="width:100%;" id="city" name="city" class="form-control city"></select>
+                        <input type="hidden" class="form-control" name="city_name" id="city_name">
                       </div>
                       <div class="form-group district-form">
                         <select style="width:100%;" id="district" name="district" class="form-control district"></select>
+                        <input type="hidden" class="form-control" name="district_name" id="district_name">
                       </div>
                       <div class="form-group kurir-form">
                         <select style="width:100%;" id="kurir" name="kurir" class="form-control kurir"></select>
+                        <input type="hidden" class="form-control" name="kurir_name" id="kurir_name">
                       </div>
                       <div class="form-group address-form">
                         <textarea class="form-control" name="description" placeholder="Address"></textarea>
@@ -257,7 +270,94 @@
         </div>
     </div>
 </div>
-
+<div class="modal fade" id="no-virtual" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<img src="{{asset('img/bca.png')}}" alt="" srcset="" style="width:100px">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body" style="height: 450px; overflow-y: auto;">
+				<center>
+					<p style="font-size:14px">BCA Virtual Account Number</p>
+						<div class="form-line focused success">
+							<input style="color:green; font-size:25px; font-weight:bold; text-align:center;" type="text" class="form-control" id="va" name="va" value="" readonly>
+						</div>
+						<button type="button" class="mt-3 btn btn-raised text-white bg-danger waves-effect" style="cursor:pointer" id="copy">Copy</button>
+					<br>
+				</center>
+				<br>
+                <center><p style="font-size:14px" id="ammount_bca"></p></center>
+                <br>
+                <center><p style="font-size:14px" id="time-expired"></p></center>
+                <br>
+				<h4>Bagaimana cara melakukan Pembayaran BCA Virtual Account ?</h4>
+				<h5>1. ATM BCA</h5>
+				<ul style="font-size:12px">
+					<li>
+						<p>Masukkan kartu ATM dan PIN BCA anda</p>
+					</li>
+					<li>
+						<p>Pilih menu TRANSAKSI LAINNYA > TRANSFER > KE REKENING BCA VIRTUAL ACCOUNT</p>
+					</li>
+					<li>
+						<p id="des_noreq"></p>
+					</li>
+					<li>
+						<p>Masukkan jumlah transfer sesuai detail transaksi. (Jumlah pembayaran harus sama dengan jumlah tagihan yang harus dibayar).</p>
+					</li>
+					<li>
+						<p>Ikuti instruksi untuk menyelesaikan transaksi</p>
+					</li>
+				</ul>
+				<h5>2. KLIK BCA</h5>
+				<ul style="font-size:12px">
+					<li>
+						<p>Masuk ke website KLIK BCA</p>
+					</li>
+					<li>
+						<p>Pilih menu TRANSFER DANA > TRANSFER KE BCA VIRTUAL ACCOUNT</p>
+					</li>
+					<li>
+						<p id="des_noreq2"></p>
+					</li>
+					<li>
+						<p>Masukkan jumlah transfer sesuai detail transaksi. Jumlah pembayaran harus sama dengan jumlah tagihan yang harus dibayar.</p>
+					</li>
+					<li>
+						<p>Ikuti instruksi untuk menyelesaikan transaksi</p>
+					</li>
+				</ul>
+				<h5>3. m-BCA (BCA MOBILE)</h5>
+				<ul style="font-size:12px">
+					<li>
+						<p>Masuk ke aplikasi mobile m-BCA</p>
+					</li>
+					<li>
+						<p>Pilih menu M-TRANSFER > BCA VIRTUAL ACCOUNT</p>
+					</li>
+					<li>
+						<p id="des_noreq3"></p>
+					</li>
+					<li>
+						<p>Masukkan jumlah transfer sesuai detail transaksi. Jumlah pembayaran harus sama dengan jumlah tagihan yang harus dibayar.</p>
+					</li>
+					<li>
+						<p>Masukkan PIN m-BCA Anda</p>
+					</li>
+					<li>
+						<p>Ikuti instruksi untuk menyelesaikan transaksi</p>
+					</li>
+				</ul>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal" style="cursor:pointer">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
 <div class="layout-theme animated-css"  data-header="sticky" data-header-top="200">
 
   <div id="wrapper">
@@ -306,7 +406,7 @@
                     <li><a id="hall-if-fame" href="/hall-of-fame">Hall Of Fame</a></li>
                     <!-- <li><a href="#"><button class="btn btn-effect btn-info btn-buy" style="background: #b92240; margin-top: -10px;">JOIN</button></a></li> -->
                     <!-- <li><a data-toggle="modal" data-target="#join"><button class="btn btn-effect btn-info btn-buy" style="background: #b92240; margin-top: -10px;">JOIN</button></a></li>-->
-                     <li><a ><button class="btn btn-effect btn-info btn-buy" style="background: #b92240; margin-top: -10px;">JOIN</button></a></li>
+                     <li><a><button class="btn btn-effect btn-info btn-buy" style="background: #b92240; margin-top: -10px;">JOIN</button></a></li>
                    {{--<li><a data-toggle="modal" data-target="#join"><button class="btn btn-effect btn-info btn-buy" style="background: #b92240; margin-top: -10px;">JOIN</button></a></li>--}}
                     <!-- <li><a href="#"><button class="btn btn-effect btn-info btn-buy" style="background: #b92240; margin-top: -10px;">JOIN</button></a></li> -->
 
