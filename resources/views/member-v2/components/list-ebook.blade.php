@@ -170,13 +170,9 @@
 				<hr>
 				<div class="row mb-5">
 				@if($book->id == 1)
-				<div class="embed-responsive embed-responsive-16by9">
-					<iframe class="embed-responsive-item" src="{{route('member.video.ebook')}}" allowfullscreen></iframe>
-				</div>
+				
 				@elseif($book->id == 2)
-				<div class="embed-responsive embed-responsive-16by9">
-					<iframe class="embed-responsive-item" src="{{route('member.video.ebook.advanced')}}" allowfullscreen></iframe>
-				</div>
+				
 				@endif;
 				{{-- @foreach($book->videoEbooks as $video)
 					@if(count($video->videos) > 0)
