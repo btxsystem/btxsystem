@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-
+use App\Models\TransactionEbookExpired;
 class TransactionMember extends Model
 {
   protected $table = 'transaction_member';
@@ -21,8 +21,14 @@ class TransactionMember extends Model
   {
       return $this->hasOne('\App\Models\Ebook', 'id', 'ebook_id');
   }
+
   public function member()
   {
       return $this->hasOne('\App\Employeer', 'id', 'member_id');
   }
+
+  public function transaction_ebook_expired()
+    {
+        return $this->belongsTo( TransactionEbookExpired::class, 'id', 'transaction_id');
+    }
 }

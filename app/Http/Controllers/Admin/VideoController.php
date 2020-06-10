@@ -75,8 +75,9 @@ class VideoController extends Controller
             $video = new Video;
             $video->title = $request->title;
             $video->path = $uploadPath;
-            
-            if ($video->save()) {
+            $video->save();
+
+            if ($video) {
 
                 VideoEbook::firstOrCreate([
                     'video_id' => $video->id,
