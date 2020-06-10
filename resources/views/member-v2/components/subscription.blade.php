@@ -737,10 +737,10 @@ function initializeClock(id, endtime) {
 
 <?php foreach($ebooks as $ebook){?>
 	<?php if($expired_basic != null && $ebook->id == 1) {?>
-		initializeClock('clockdiv_basic', '{{$expired_basic->transaction_ebook_expired ? $expired_basic->expired_at < $expired_basic->transaction_ebook_expired->expired_at  ? $expired_basic->transaction_ebook_expired->expired_at : $expired_basic->expired_at : $expired_basic->expired_at}}');
+		initializeClock('clockdiv_basic', '{{$expired_basic->expired_at}}');
 	<?php } ?>
 	<?php if($expired_advanced != null && $ebook->id == 2) {?>
-		initializeClock('clockdiv_advanced', '{{$expired_advanced->transaction_ebook_expired ? $expired_advanced->expired_at < $expired_advanced->transaction_ebook_expired->expired_at  ? $expired_advanced->transaction_ebook_expired->expired_at : $expired_advanced->expired_at : $expired_advanced->expired_at}}');
+		initializeClock('clockdiv_advanced', '{{$expired_advanced->expired_at}}');
 	<?php } ?>
 <?php } ?>
 </script>
