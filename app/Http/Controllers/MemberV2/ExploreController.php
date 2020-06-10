@@ -342,6 +342,10 @@ class ExploreController extends Controller
     ->where('id', 4)
     ->orderBy('position', 'ASC')
     ->first();
+    
+    print_r($expiredBasic);
+
+    return;
 
     if($expiredBasic) {
       if($expiredBasic->transaction_ebook_expired) {
