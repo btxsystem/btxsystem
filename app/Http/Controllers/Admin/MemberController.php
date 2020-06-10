@@ -667,11 +667,13 @@ class MemberController extends Controller
 
                 $action = "";
 
+                $addExpired = "<a class='btn btn-primary add-expired-ebook' data-id='$data->id' data-action='".route('members.add.expired.ebook', [$data->id])."'><i class='fa fa-plus'></i></a>";
+
                 if($expired > date('Y-m-d') && $data->status == 1) {
-                    $action .= "<a href='".route('members.transaction.inactive.ebook', ['id' => $data->id, 'employeer' => $data->member_id])."' class='btn btn-danger nonactive-ebook'><i class='fa fa-power-off'></i></a>";
+                    $action .= "<a href='".route('members.transaction.inactive.ebook', ['id' => $data->id, 'employeer' => $data->member_id])."' class='btn btn-danger nonactive-ebook'><i class='fa fa-power-off'></i></a> $addExpired";
                 }
 
-                $action .="<a class='btn btn-primary add-expired-ebook' data-id='$data->id' data-action='".route('members.add.expired.ebook', [$data->id])."'><i class='fa fa-plus'></i></a> Expired";
+                $action .="$addExpired Expired";
 
                 return $action;
             })

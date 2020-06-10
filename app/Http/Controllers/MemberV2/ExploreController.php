@@ -351,7 +351,6 @@ class ExploreController extends Controller
 
     if($expiredBasic) {
       if($expiredBasic->transaction_ebook_expired) {
-        
         if($expiredBasic->expired_at < $expiredBasic->transaction_ebook_expired->expired_at) {
           $expiredBasic = $expiredBasic->transaction_ebook_expired;
         }
