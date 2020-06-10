@@ -348,20 +348,21 @@ class ExploreController extends Controller
     ->where('id', 4)
     ->orderBy('position', 'ASC')
     ->first();
-    
-    print_r($expiredBasic);
-
-    return;
 
     if($expiredBasic) {
       if($expiredBasic->transaction_ebook_expired) {
-        $expiredBasic = $expiredBasic->transaction_ebook_expired;
+        
+        if($expiredBasic->expired_at < $expiredBasic->transaction_ebook_expired->expired_at) {
+          $expiredBasic = $expiredBasic->transaction_ebook_expired;
+        }
       }
     }
 
     if($expiredAdvanced) {
       if($expiredAdvanced->transaction_ebook_expired) {
-        $expiredAdvanced = $expiredAdvanced->transaction_ebook_expired;
+        if($expiredAdvanced->expired_at < $expiredAdvanced->transaction_ebook_expired->expired_at) {
+          $expiredAdvanced = $expiredAdvanced->transaction_ebook_expired;
+        }
       }
     }
 
