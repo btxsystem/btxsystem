@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 use Nestable\NestableTrait;
 use Illuminate\Database\Eloquent\Model;
 use App\models\GotReward;

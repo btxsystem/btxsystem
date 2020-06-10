@@ -18,7 +18,7 @@ use App\Exports\MembersExport;
 use App\Models\Address;
 use Maatwebsite\Excel\Facades\Excel;
 use Rap2hpoutre\FastExcel\FastExcel;
-
+use App\Models\TransactionEbookExpired;
 
 class MemberController extends Controller
 {
@@ -642,7 +642,7 @@ class MemberController extends Controller
 
     public function transactionMember($id)
     {
-        $data = TransactionMember::with('ebook')->where('member_id', $id)->orderBy('created_at', 'desc');
+        $data = TransactionMember::with('ebook', 'transaction_ebook_expired')->where('member_id', $id)->orderBy('created_at', 'desc');
         // $data = Employeer::with('transaction_member.ebook')->findOrFail($id);
 
         return Datatables::of($data)
@@ -653,16 +653,71 @@ class MemberController extends Controller
             ->addColumn('info', function ($data) {
                 return $this->getStatusInfoTransaction($data);
             })
+            ->editColumn('expired_at', function($data) {
+                if($data->transaction_ebook_expired) {
+                    if($data->expired_at < $data->transaction_ebook_expired->expired_at) {
+                        return $data->transaction_ebook_expired->expired_at;
+                    }
+                }
+
+                return $data->expired_at;
+            })
             ->addColumn('action', function ($data) {
                 $expired = date('Y-m-d H:i:s', strtotime($data->expired_at));
 
+                $action = "";
+
                 if($expired > date('Y-m-d') && $data->status == 1) {
-                    return "<a href='".route('members.transaction.inactive.ebook', ['id' => $data->id, 'employeer' => $data->member_id])."' class='btn btn-danger nonactive-ebook'><i class='fa fa-power-off'></i></a>";
+                    $action .= "<a href='".route('members.transaction.inactive.ebook', ['id' => $data->id, 'employeer' => $data->member_id])."' class='btn btn-danger nonactive-ebook'><i class='fa fa-power-off'></i></a>";
                 }
 
-                return "Expired";
+                $action .="<a class='btn btn-primary add-expired-ebook' data-id='$data->id' data-action='".route('members.add.expired.ebook', [$data->id])."'><i class='fa fa-plus'></i></a> Expired";
+
+                return $action;
             })
             ->make(true);
+    }
+
+    public function editExpiredEbook(Request $request, $transactionId = 0)
+    {
+        try {
+            $totalTransaction = TransactionEbookExpired::where('transaction_id', $transactionId)
+                ->count();
+
+            if($totalTransaction > 0) {
+                $transaction = TransactionEbookExpired::where('transaction_id', $transactionId)->update([
+                    'expired_at' => date('Y-m-d H:i:s', strtotime(str_replace(" ", "-", $request->input('added_expired'))))
+                ]);
+
+                if(!$transaction) {
+                    Alert::error('Gagal Menambahkan Masa Aktif Ebook', 'Gagal');
+                    return redirect()->back();
+                }
+
+                Alert::error('Berhasil Menambahkan Masa Aktif Ebook', 'Sukses');
+
+                return redirect()->back();
+            }
+
+            $transaction = TransactionEbookExpired::insert([
+                'transaction_id' => $transactionId,
+                'type' => 'member',
+                'expired_at' => date('Y-m-d H:i:s', strtotime(str_replace(" ", "-", $request->input('added_expired'))))
+            ]);
+
+            if(!$transaction) {
+                Alert::error('Gagal Menambahkan Masa Aktif Ebook', 'Gagal');
+                return redirect()->back();
+            }
+
+            Alert::error('Berhasil Menambahkan Masa Aktif Ebook', 'Sukses');
+
+            return redirect()->back();
+
+
+        } catch (\Exception $e) {
+            return redirect()->back();
+        }
     }
 
     public function inactiveEbook(Request $request, $transaction = 0, $employeer = 0)
