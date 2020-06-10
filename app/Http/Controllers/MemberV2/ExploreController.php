@@ -259,7 +259,10 @@ class ExploreController extends Controller
         ->where('status', 1)
         ->where('ebook_id', 1)
         ->orWhere('ebook_id', 3)
-        ->select('expired_at')
+        ->select([
+          'id',
+          'expired_at'
+        ])
         ->latest('id')
         ->first();
 
@@ -267,7 +270,10 @@ class ExploreController extends Controller
         ->where('status', 1)
         ->where('ebook_id', 2)
         ->orWhere('ebook_id', 4)
-        ->select('expired_at')
+        ->select([
+          'id',
+          'expired_at'
+        ])
         ->latest('id')
         ->first();
 
