@@ -759,6 +759,7 @@ class MemberController extends Controller
 
 
         } catch (\Exception $e) {
+            return $e; 
             Alert::error('Gagal Menambahkan Masa Aktif Ebook', 'Gagal3');
             return redirect()->back();
         }
