@@ -704,8 +704,6 @@ class MemberController extends Controller
 
                 $diff = $previousDate->diffInDays($now);
 
-                return $employeer;
-
                 $addedExpiredMember = Carbon::parse($employeer->expired_at)->addDays($diff)->toDateString();
 
                 $employeer->update([
@@ -734,6 +732,8 @@ class MemberController extends Controller
             $now = Carbon::parse($date);
 
             $diff = $previousDate->diffInDays($now);
+
+            return $transactionMember;
 
             $addedExpiredMember = Carbon::parse($employeer->expired_at)->addDays($diff)->toDateString();
 
