@@ -694,8 +694,6 @@ class MemberController extends Controller
 
             $employeer = Employeer::find($transactionMember->member_id);
 
-            return $employeer;
-
             DB::beginTransaction();
 
             if($totalTransaction) {
@@ -707,6 +705,8 @@ class MemberController extends Controller
                 $diff = $previousDate->diffInDays($now);
 
                 $addedExpiredMember = Carbon::parse($employeer->expired_at)->addDays($diff)->toDateString();
+
+                return $addedExpiredMember;
 
                 $employeer->update([
                     'expired_at' => $addedExpiredMember
