@@ -716,7 +716,7 @@ class MemberController extends Controller
 
                 if(!$transaction || !$employeer) {
                     DB::rollBack();
-                    Alert::error('Gagal Menambahkan Masa Aktif Ebook', 'Gagal');
+                    Alert::error('Gagal Menambahkan Masa Aktif Ebook', 'Gagal1');
                     return redirect()->back();
                 }
 
@@ -759,7 +759,7 @@ class MemberController extends Controller
 
 
         } catch (\Exception $e) {
-            Alert::error('Gagal Menambahkan Masa Aktif Ebook', 'Gagal');
+            Alert::error('Gagal Menambahkan Masa Aktif Ebook', 'Gagal3');
             return redirect()->back();
         }
     }
