@@ -685,34 +685,73 @@ class MemberController extends Controller
     public function editExpiredEbook(Request $request, $transactionId = 0)
     {
         try {
-            $totalTransaction = TransactionEbookExpired::where('transaction_id', $transactionId)
-                ->count();
+            $date = date('Y-m-d H:i:s', strtotime(str_replace(" ", "-", $request->input('added_expired'))));
 
-            if($totalTransaction > 0) {
-                $transaction = TransactionEbookExpired::where('transaction_id', $transactionId)->update([
-                    'expired_at' => date('Y-m-d H:i:s', strtotime(str_replace(" ", "-", $request->input('added_expired'))))
+            $transactionMember = TransactionMember::findOrFail($transactionId);
+
+            $totalTransaction = TransactionEbookExpired::where('transaction_id', $transactionId)
+                ->first();
+
+            $employeer = Employeer::find($transactionMember->member_id);
+
+            DB::beginTransaction();
+
+            if($totalTransaction) {
+                
+                $previousDate = Carbon::parse($totalTransaction->expired_at);
+
+                $now = Carbon::parse($date);
+
+                $diff = $previousDate->diffInDays($now);
+
+                $addedExpiredMember = Carbon::parse($employeer->expired_at)->addDays($diff)->toDateString();
+
+                $employeer->update([
+                    'expired_at' => $addedExpiredMember
                 ]);
 
-                if(!$transaction) {
+                $transaction = TransactionEbookExpired::where('transaction_id', $transactionId)->update([
+                    'expired_at' => $date
+                ]);
+
+                if(!$transaction || !$employeer) {
+                    DB::rollBack();
                     Alert::error('Gagal Menambahkan Masa Aktif Ebook', 'Gagal');
                     return redirect()->back();
                 }
+
+                DB::commit();
 
                 Alert::error('Berhasil Menambahkan Masa Aktif Ebook', 'Sukses');
 
                 return redirect()->back();
             }
 
+            $previousDate = Carbon::parse($transactionMember->expired_at);
+
+            $now = Carbon::parse($date);
+
+            $diff = $previousDate->diffInDays($now);
+
+            $addedExpiredMember = Carbon::parse($employeer->expired_at)->addDays($diff)->toDateString();
+
+            $employeer->expired_at([
+                'expired_at' => $addedExpiredMember
+            ]);
+
             $transaction = TransactionEbookExpired::insert([
                 'transaction_id' => $transactionId,
                 'type' => 'member',
-                'expired_at' => date('Y-m-d H:i:s', strtotime(str_replace(" ", "-", $request->input('added_expired'))))
+                'expired_at' => $date
             ]);
 
-            if(!$transaction) {
+            if(!$transaction || !$employeer) {
+                DB::rollBack();
                 Alert::error('Gagal Menambahkan Masa Aktif Ebook', 'Gagal');
                 return redirect()->back();
             }
+
+            DB::commit();
 
             Alert::error('Berhasil Menambahkan Masa Aktif Ebook', 'Sukses');
 
@@ -720,6 +759,7 @@ class MemberController extends Controller
 
 
         } catch (\Exception $e) {
+            Alert::error('Gagal Menambahkan Masa Aktif Ebook', 'Gagal');
             return redirect()->back();
         }
     }
