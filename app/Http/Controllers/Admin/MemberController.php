@@ -692,10 +692,9 @@ class MemberController extends Controller
             $totalTransaction = TransactionEbookExpired::where('transaction_id', $transactionId)
                 ->first();
 
-            return $transactionMember;
-
-
             $employeer = Employeer::find($transactionMember->member_id);
+
+            return $employeer;
 
             DB::beginTransaction();
 
