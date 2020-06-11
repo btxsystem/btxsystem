@@ -736,9 +736,7 @@ class MemberController extends Controller
 
             $addedExpiredMember = Carbon::parse($employeer->expired_at)->addDays($diff)->toDateString();
 
-            return $employeer;
-
-            $employeer->expired_at([
+            $employeer->update([
                 'expired_at' => $addedExpiredMember
             ]);
 
@@ -762,7 +760,6 @@ class MemberController extends Controller
 
 
         } catch (\Exception $e) {
-            return $e; 
             Alert::error('Gagal Menambahkan Masa Aktif Ebook', 'Gagal3');
             return redirect()->back();
         }
