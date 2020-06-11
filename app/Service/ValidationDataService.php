@@ -24,7 +24,7 @@ class ValidationDataService
   {
     $data = DB::table('employeers')->where('username',$username)->get();
 
-    if(strlen($username) < 6) return true;
+    if(strlen($username) < 6) return false;
 
     return count($data) > 0 ? true : false;
   }
