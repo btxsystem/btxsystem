@@ -694,6 +694,8 @@ class MemberController extends Controller
 
             $employeer = Employeer::find($transactionMember->member_id);
 
+            return $employeer;
+
             DB::beginTransaction();
 
             if($totalTransaction) {
