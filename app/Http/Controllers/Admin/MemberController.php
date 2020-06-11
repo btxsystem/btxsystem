@@ -692,6 +692,9 @@ class MemberController extends Controller
             $totalTransaction = TransactionEbookExpired::where('transaction_id', $transactionId)
                 ->first();
 
+            return $transactionMember;
+
+
             $employeer = Employeer::find($transactionMember->member_id);
 
             DB::beginTransaction();
@@ -732,8 +735,6 @@ class MemberController extends Controller
             $now = Carbon::parse($date);
 
             $diff = $previousDate->diffInDays($now);
-
-            return $transactionMember;
 
             $addedExpiredMember = Carbon::parse($employeer->expired_at)->addDays($diff)->toDateString();
 
