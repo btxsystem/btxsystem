@@ -727,9 +727,10 @@ class MemberController extends Controller
                 return redirect()->back();
             }
 
-            return $employeer;
-            
+
             $previousDate = Carbon::parse($transactionMember->expired_at);
+
+            return $employeer;
 
             $now = Carbon::parse($date);
 
