@@ -329,23 +329,25 @@ class TransactionBillService
     if (isset($data->npwp_number)) {
         $cek_npwp = strlen($data->npwp_number) >= 15 ? 1 : 0;
     }
+    
     $isHaveChild = Employeer::where('parent_id',$id)->select('position')->get();
     if (count($isHaveChild) == 3) {
         $pv = DB::table('pv_rank')->where('id_member',$id)->select('pv_left', 'pv_midle', 'pv_right')->first();
+        
         if($pv != null){
             if ($pv->pv_left <= $pv->pv_midle and $pv->pv_left <= $pv->pv_right) {
                 $child = Employeer::where('parent_id',$id)->where('position',0)->select('id')->first();
-                $this->findChild($child->id, $sponsor, $data);
+                return $this->findChild($child->id, $sponsor, $data);
             }elseif ($pv->pv_midle < $pv->pv_left and $pv->pv_midle <= $pv->pv_right) {
                 $child = Employeer::where('parent_id',$id)->where('position',1)->select('id')->first();
-                $this->findChild($child->id, $sponsor, $data);
+                return $this->findChild($child->id, $sponsor, $data);
             }else {
                 $child = Employeer::where('parent_id',$id)->where('position',2)->select('id')->first();
-                $this->findChild($child->id, $sponsor, $data);
+                return $this->findChild($child->id, $sponsor, $data);
             }
         }else{
             $child = Employeer::where('parent_id',$id)->where('position',0)->select('id')->first();
-            $this->findChild($child->id, $sponsor, $data);
+            return $this->findChild($child->id, $sponsor, $data);
         }
     }elseif (count($isHaveChild)==0) {
         $member = [
@@ -474,20 +476,21 @@ class TransactionBillService
     $isHaveChild = Employeer::where('parent_id',$sponsor->id)->select('position')->get();
     if (count($isHaveChild) == 3) {
         $pv = DB::table('pv_rank')->where('id_member',$sponsor->id)->select('pv_left', 'pv_midle', 'pv_right')->first();
+        
         if($pv != null){
             if ($pv->pv_left <= $pv->pv_midle and $pv->pv_left <= $pv->pv_right) {
                 $child = Employeer::where('parent_id',$sponsor->id)->where('position',0)->select('id')->first();
-                $this->findChild($child->id, $sponsor->id, $request);
+                return $this->findChild($child->id, $sponsor->id, $request);
             }elseif ($pv->pv_midle < $pv->pv_left and $pv->pv_midle <= $pv->pv_right) {
                 $child = Employeer::where('parent_id',$sponsor->id)->where('position',1)->select('id')->first();
-                $this->findChild($child->id, $sponsor->id, $request);
+                return $this->findChild($child->id, $sponsor->id, $request);
             }else {
                 $child = Employeer::where('parent_id',$sponsor->id)->where('position',2)->select('id')->first();
-                $this->findChild($child->id, $sponsor->id, $request);
+                return $this->findChild($child->id, $sponsor->id, $request);
             }
         }else{
             $child = Employeer::where('parent_id',$sponsor->id)->where('position',0)->select('id')->first();
-            $this->findChild($child->id, $sponsor->id, $request);
+            return $this->findChild($child->id, $sponsor->id, $request);
         }
     }elseif (count($isHaveChild)==0) {
         $member = [
