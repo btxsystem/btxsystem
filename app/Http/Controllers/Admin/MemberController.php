@@ -694,8 +694,6 @@ class MemberController extends Controller
 
             $employeer = Employeer::find($transactionMember->member_id);
 
-            return $employeer;
-
             DB::beginTransaction();
 
             if($totalTransaction) {
@@ -729,6 +727,8 @@ class MemberController extends Controller
                 return redirect()->back();
             }
 
+            return $employeer;
+            
             $previousDate = Carbon::parse($transactionMember->expired_at);
 
             $now = Carbon::parse($date);
