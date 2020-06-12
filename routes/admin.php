@@ -1,6 +1,6 @@
 <?php
 
-Route::get('', ['as' => '', 'uses' => 'Admin\Auth\LoginController@getLogin']);
+// Route::get('', ['as' => '', 'uses' => 'Admin\Auth\LoginController@getLogin']);
 Route::post('login', ['as' => 'login', 'uses' => 'Admin\Auth\LoginController@postLogin']);
 Route::get('dashboard', ['as' => 'dashboard', 'uses' => 'Admin\HomeController@index']);
 
@@ -183,6 +183,7 @@ Route::group(['middleware' => 'admin'], function () {
         Route::get('/{id}/pv-history','Admin\MemberController@historyPV')->name('pv.history');
         Route::get('/{id}/pv-history-pairing','Admin\MemberController@historyPVPairing')->name('pv.history.pairing');
         Route::get('/{id}/transaction','Admin\MemberController@transactionMember')->name('transaction.member');
+        Route::post('/{id}/add-expired-ebook','Admin\MemberController@editExpiredEbook')->name('add.expired.ebook');
         Route::get('/transaction/{id}/inactive-ebook/{employeer}','Admin\MemberController@inactiveEbook')->name('transaction.inactive.ebook');
 
         Route::group(['prefix'=>'active','as'=>'active.'], function(){

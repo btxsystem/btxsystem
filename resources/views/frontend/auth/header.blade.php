@@ -106,6 +106,7 @@
                         <div class="form-line">
                           <input type="date" id="birthdate" name="birthdate" class="form-control" placeholder="Birthdate" required>
                         </div>
+                        <div id="birthdate_danger"></div>
                     </div>
                     <div class="input-group col-md-12 mt-4">
                       <h5 class="card-inside-title">Gender</h5>
@@ -181,7 +182,7 @@
                         <input type="hidden" class="form-control" name="kurir_name" id="kurir_name">
                       </div>
                       <div class="form-group address-form">
-                        <textarea class="form-control" name="description" placeholder="Address"></textarea>
+                        <textarea class="form-control" name="address" placeholder="Address"></textarea>
                       </div>
                       <input id="cost" type="hidden" name="postalFee" value=0>
                       <!-- <div class="cost-form form-line" style="display:none">
@@ -221,13 +222,13 @@
                     </div>
                     <div class="input-group col-md-12">
                       <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="term_one" name="term_one" value="1">
+                        <input class="form-check-input" type="checkbox" id="term_one" name="term_one" value="0">
                         <label class="form-check-label" for="term_one">
                           Saya telah membaca dan menyetujui <a href="https://drive.google.com/file/d/1I2pDzWx2ITxE3PKplc_6pLdP0jMrmkA1/view?usp=sharing" target="_blank">kode etik Bitrexgo</a>.
                         </label>
                       </div>
                       <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="term_two" name="term_two" value="1">
+                        <input class="form-check-input" type="checkbox" id="term_two" name="term_two" value="0">
                         <label class="form-check-label" for="term_two">
                           Saya menyatakan bahwa data yang saya isi sudah benar, dapat dipertanggung jawabkan, dan dapat digunakan untuk keperluan pembuatan ID Startpro Support System
                         </label>

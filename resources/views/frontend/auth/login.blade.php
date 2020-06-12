@@ -636,6 +636,88 @@
   let available_username = false;
   let available_email = false;
   let check_email = false;
+  var check = 1;
+  var adult = 0;
+
+  function refreshEbook() {
+    $.ajax({
+      type: 'GET',
+      url: '/api/ebook/ebooks'
+    }).done(function(res) {
+      const {data} = res
+      priceEbook = 0
+      let render = data.map((v, i) => {
+        return `
+
+        <input id="${v.title}" type="checkbox" value="${v.id}" id="${v.title}" class="with-gap radio-col-red" data-price="${v.price}" ${v.title == 'basic' ? 'checked' : ''} name="ebooks[]"/>
+        <label for="shipping">${v.title}</label>
+        `
+    })
+    $('#ebook-list').html(`
+      <div id="data-ebooks">
+        ${render}
+      </div>
+    `)
+
+    $('#data-ebooks input[type=checkbox]').each(function() {
+      if(parseInt($(this).val()) == 1) {
+        $(this).prop('checked', true)
+        priceEbook = priceEbook + parseInt($(this).data('price'))
+        $('#cost-ebook').html(toPrice(priceEbook))
+        $('#grand-total').html(toPrice((priceEbook + postalFee + 280000)))
+      }
+    });
+
+    $('#data-ebooks input[type=checkbox]').change(function(index) {
+        let ebookSelected = $('#data-ebooks input[type=checkbox]').filter(function() {
+          return $(this).prop("checked")
+        })
+
+        let cancelledEbook = false;
+
+        if(ebookSelected.length == 2) {
+          var r = confirm("Apakah Anda yakin membeli 2 ebook?");
+          if (r == true) {
+
+          } else { 
+            cancelledEbook = true
+            $(this).prop("checked", false)
+          }
+        }
+        
+
+        if($(this).prop('checked')) {
+          check += 1;
+          priceEbook = priceEbook + parseInt($(this).data('price'));
+        } else {
+          if(!cancelledEbook) {
+            check -= 1;
+            priceEbook = priceEbook - parseInt($(this).data('price'));
+          }
+          
+        }
+        if(priceEbook != 0) {
+          $('#cost-ebook').parent().removeClass('hidden');
+        } else {
+          $('#cost-ebook').parent().addClass('hidden');
+          $('.register').prop('disabled', true);
+        }
+
+        if(postalFee != 0) {
+          $('#cost-postal').parent().removeClass('hidden')
+        } else {
+          $('#cost-postal').parent().addClass('hidden')
+        }
+
+        $('#cost-ebook').html(toPrice(priceEbook))
+        $('#grand-total').html(toPrice((priceEbook + postalFee + 280000)))
+
+        grandTotal = (priceEbook + postalFee + 280000);
+
+        validasiForm()
+      })
+    })
+  }
 
   let validasiForm = () => {
     console.log("$('#referal').val()", $('#referal').val())
@@ -664,6 +746,7 @@
       $('#phone_number').val() != '' &&
       $('#account_name').val() != '' &&
       $('#account_number').val() != '' &&
+      adult >= 18 &&
       $('#birthdate').val() != '' &&
       ($('#basic').val() != '' || $('#advance').val() != '') &&
       ($('#pickup').val() != '' || $('#shipping').val() != '') &&
@@ -677,89 +760,43 @@
     }
   }
 
-  $.ajax({
-    type: 'GET',
-    url: '/api/ebook/ebooks'
-  }).done(function(res) {
-    const {data} = res
-    let render = data.map((v, i) => {
-      return `
-      <div class="form-check">
-      <input class="form-check-input" data-price="${v.price}" type="checkbox" name="ebooks[]" value="${v.id}" id="${v.title}">
-      <label class="form-check-label" id="${i}" for="${v.title}" ${v.id == 1 ? 'checked' : ''}>
-        ${v.title}
-      </label>
-      </div>`
-  })
-  $('#ebook-list').html(`
-    <div id="data-ebooks">
-      ${render}
-    </div>
-  `)
-
-  $('#data-ebooks input[type=checkbox]').each(function() {
-    if(parseInt($(this).val()) == 1) {
-			$(this).prop('checked', true)
-			priceEbook = priceEbook + parseInt($(this).data('price'))
-			$('#cost-ebook').html(toPrice(priceEbook))
-			$('#grand-total').html(toPrice((priceEbook + postalFee + 280000)))
+  $('#birthdate').on('change', function() {
+		var dob = new Date(this.value);
+		var today = new Date();
+		var age = Math.floor((today-dob) / (365.25 * 24 * 60 * 60 * 1000));
+		adult = age;
+		if (age < 18) {
+			$('#birthdate_danger').html('<p id="danger_" class="text-danger">Age must be more than 17 years</p>');
+		}else{
+			$('#danger_').empty();
 		}
-  });
+		validasiForm()
+	});
 
-  $('#data-ebooks input[type=checkbox]').change(function(index) {
-    console.log('sdsds')
-			let ebookSelected = $('#data-ebooks input[type=checkbox]').filter(function() {
-				return $(this).prop("checked")
-			})
-
-			let cancelledEbook = false;
-
-			if(ebookSelected.length == 2) {
-				var r = confirm("Apakah Anda yakin membeli 2 ebook?");
-				if (r == true) {
-
-				} else { 
-					cancelledEbook = true
-					$(this).prop("checked", false)
-				}
-			}
-
-			if($(this).prop('checked')) {
-				check += 1;
-				priceEbook = priceEbook + parseInt($(this).data('price'));
-			} else {
-				if(!cancelledEbook) {
-					check -= 1;
-					priceEbook = priceEbook - parseInt($(this).data('price'));
-				}
-				
-			}
-			if(priceEbook != 0) {
-				$('#cost-ebook').parent().removeClass('hidden');
-			} else {
-				$('#cost-ebook').parent().addClass('hidden');
-				$('.register').prop('disabled', true);
-			}
-
-			if(postalFee != 0) {
-				$('#cost-postal').parent().removeClass('hidden')
-			} else {
-				$('#cost-postal').parent().addClass('hidden')
-			}
-
-			$('#cost-ebook').html(toPrice(priceEbook))
-			$('#grand-total').html(toPrice((priceEbook + postalFee + 280000)))
-
-			grandTotal = (priceEbook + postalFee + 280000);
-
-			validasiForm()
-		})
-	})
+  refreshEbook()
 
   $('#phone_number').on('input', function() {
     let str = this.value;
     this.value = (str.match(/[0-9]/g)) ? str.match(/[0-9]/g).join('') : '';
     validasiForm();
+  })
+
+  $('#term_one').change(function() {
+    if($(this).prop('checked')) {
+      $(this).val(1)
+    } else {
+      $(this).val(0)
+    }
+    validasiForm()
+  })
+
+  $('#term_two').change(function() {
+    if($(this).prop('checked')) {
+      $(this).val(1)
+    } else {
+      $(this).val(0)
+    }
+    validasiForm()
   })
 
   $('#email').keyup(function(){
