@@ -1,6 +1,6 @@
 <?php
 
-// Route::get('', ['as' => '', 'uses' => 'Admin\Auth\LoginController@getLogin']);
+Route::get('', ['as' => '', 'uses' => 'Admin\Auth\LoginController@getLogin']);
 Route::post('login', ['as' => 'login', 'uses' => 'Admin\Auth\LoginController@postLogin']);
 Route::get('dashboard', ['as' => 'dashboard', 'uses' => 'Admin\HomeController@index']);
 
