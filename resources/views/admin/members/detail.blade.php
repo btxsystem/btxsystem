@@ -400,6 +400,36 @@
         </div>
 </div>
 
+<div id="addExpiredModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title">Add Expired Ebook {{$data->username}} / {{$data->id_member}}</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="well form-horizontal" id="form_add_expired" method="post" action="" >
+                        {{ csrf_field() }}
+                        <fieldset>
+                        <input id="transaction_id" name="transaction_id" type="hidden">
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Date</label>
+                                <div class="col-md-8 inputGroupContainer">
+                                    <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-book"></i></span>
+                                        <input id="added_expired" name="added_expired" placeholder="Date" class="form-control" required="true" type="datetime-local">
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <div class="modal-footer">
+                                <button type="submit" id="submit-expired-modal" class="btn btn-primary">Submit</button>
+                            </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+</div>
+
 <div id="refoundModal" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -686,6 +716,13 @@
                     function() {
                         window.location.href = url;
                 });
+        });
+
+        $(document).on('click', '.add-expired-ebook', function (e) {
+            e.preventDefault();
+            $('#transaction_id').val($(this).data('id'))
+            $('#addExpiredModal').modal('show')
+            $('#form_add_expired').attr('action', $(this).data('action'))
         });
       </script>
 

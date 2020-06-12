@@ -204,8 +204,8 @@ class TransactionPaymentService
             $product_detail = [
                 'member' => [
                     'username' => $parameter[1]->username,
-                    'first_name' => $parameter[1]->first_name,
-                    'last_name' => $parameter[1]->last_name ? $parameter[1]->last_name : null,
+                    'first_name' => $parameter[1]->firstName,
+                    'last_name' => $parameter[1]->lastName ? $parameter[1]->lastName : null,
                     'email' => $parameter[1]->email,
                     'phone_number' => $parameter[1]->phone_number,
                     'nik' => $parameter[1]->nik ? $parameter[1]->nik : null,

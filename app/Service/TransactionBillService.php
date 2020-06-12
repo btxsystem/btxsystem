@@ -12,6 +12,9 @@ use App\Models\Ebook;
 use App\Models\NonMember;
 use DB;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\RegisterMemberMail;
+
 class TransactionBillService
 {
 
@@ -279,9 +282,11 @@ class TransactionBillService
     try {
       DB::beginTransaction();
 
+      $password = strtolower(str_random(8));
+
       $productDetail = json_decode($transactionBillRepo->detail->product_detail);
 
-      $registerMember = $this->registerAuto($productDetail->member);
+      $registerMember = $this->registerAuto($productDetail->member, $password);
 
       if(!$registerMember) {
         DB::rollback();
@@ -315,6 +320,16 @@ class TransactionBillService
       }
       
       DB::commit();
+
+      $employeer = Employeer::where('id', $registerMember)->first();
+
+      $dataEmail = (object) [
+        'member' => $employeer,
+        'password' => $password
+      ];
+
+      Mail::to($employeer->email)
+        ->send(new RegisterMemberMail($dataEmail, null));
   
       return true;
 
@@ -324,28 +339,30 @@ class TransactionBillService
     }
   }
 
-  public function findChild($id, $sponsor, $data){
+  public function findChild($id, $sponsor, $data, $password){
     $cek_npwp = 0;
     if (isset($data->npwp_number)) {
         $cek_npwp = strlen($data->npwp_number) >= 15 ? 1 : 0;
     }
+    
     $isHaveChild = Employeer::where('parent_id',$id)->select('position')->get();
     if (count($isHaveChild) == 3) {
         $pv = DB::table('pv_rank')->where('id_member',$id)->select('pv_left', 'pv_midle', 'pv_right')->first();
+        
         if($pv != null){
             if ($pv->pv_left <= $pv->pv_midle and $pv->pv_left <= $pv->pv_right) {
                 $child = Employeer::where('parent_id',$id)->where('position',0)->select('id')->first();
-                $this->findChild($child->id, $sponsor, $data);
+                return $this->findChild($child->id, $sponsor, $data, $password);
             }elseif ($pv->pv_midle < $pv->pv_left and $pv->pv_midle <= $pv->pv_right) {
                 $child = Employeer::where('parent_id',$id)->where('position',1)->select('id')->first();
-                $this->findChild($child->id, $sponsor, $data);
+                return $this->findChild($child->id, $sponsor, $data, $password);
             }else {
                 $child = Employeer::where('parent_id',$id)->where('position',2)->select('id')->first();
-                $this->findChild($child->id, $sponsor, $data);
+                return $this->findChild($child->id, $sponsor, $data, $password);
             }
         }else{
             $child = Employeer::where('parent_id',$id)->where('position',0)->select('id')->first();
-            $this->findChild($child->id, $sponsor, $data);
+            return $this->findChild($child->id, $sponsor, $data, $password);
         }
     }elseif (count($isHaveChild)==0) {
         $member = [
@@ -355,7 +372,7 @@ class TransactionBillService
             'last_name' => $data->last_name,
             'email' => $data->email,
             "phone_number" => $data->phone_number,
-            'password' => bcrypt('password'),//bcrypt('Mbitrex'.rand(100,1000)),
+            'password' => bcrypt($password),//bcrypt('Mbitrex'.rand(100,1000)),
             'birthdate' => $data->birthdate,
             'gender' => 0,
             'position' => 0,
@@ -394,7 +411,7 @@ class TransactionBillService
                 'last_name' => $data->last_name,
                 'email' => $data->email,
                 "phone_number" => $data->phone_number,
-                'password' => bcrypt('password'),//bcrypt('Mbitrex'.rand(100,1000)),
+                'password' => bcrypt($password),//bcrypt('Mbitrex'.rand(100,1000)),
                 'birthdate' => $data->birthdate,
                 'gender' => 0,
                 'position' => 0,
@@ -420,7 +437,7 @@ class TransactionBillService
                 'last_name' => $data->last_name,
                 'email' => $data->email,
                 "phone_number" => $data->phone_number,
-                'password' => bcrypt('password'),//bcrypt('Mbitrex'.rand(100,1000)),
+                'password' => bcrypt($password),//bcrypt('Mbitrex'.rand(100,1000)),
                 'birthdate' => $data->birthdate,
                 'gender' => 0,
                 'position' => 1,
@@ -446,7 +463,7 @@ class TransactionBillService
                 'last_name' => $data->last_name,
                 'email' => $data->email,
                 "phone_number" => $data->phone_number,
-                'password' => bcrypt('password'),//bcrypt('Mbitrex'.rand(100,1000)),
+                'password' => bcrypt($password),//bcrypt('Mbitrex'.rand(100,1000)),
                 'birthdate' => $data->birthdate,
                 'gender' => 0,
                 'position' => 2,
@@ -469,25 +486,26 @@ class TransactionBillService
     return false;
 }
 
-  public function registerAuto($request){
+  public function registerAuto($request, $password){
     $sponsor = $request->referral ? Employeer::where('username',$request->referral)->select('id')->first() : 1 ;
     $isHaveChild = Employeer::where('parent_id',$sponsor->id)->select('position')->get();
     if (count($isHaveChild) == 3) {
         $pv = DB::table('pv_rank')->where('id_member',$sponsor->id)->select('pv_left', 'pv_midle', 'pv_right')->first();
+        
         if($pv != null){
             if ($pv->pv_left <= $pv->pv_midle and $pv->pv_left <= $pv->pv_right) {
                 $child = Employeer::where('parent_id',$sponsor->id)->where('position',0)->select('id')->first();
-                $this->findChild($child->id, $sponsor->id, $request);
+                return $this->findChild($child->id, $sponsor->id, $request, $password);
             }elseif ($pv->pv_midle < $pv->pv_left and $pv->pv_midle <= $pv->pv_right) {
                 $child = Employeer::where('parent_id',$sponsor->id)->where('position',1)->select('id')->first();
-                $this->findChild($child->id, $sponsor->id, $request);
+                return $this->findChild($child->id, $sponsor->id, $request, $password);
             }else {
                 $child = Employeer::where('parent_id',$sponsor->id)->where('position',2)->select('id')->first();
-                $this->findChild($child->id, $sponsor->id, $request);
+                return $this->findChild($child->id, $sponsor->id, $request, $password);
             }
         }else{
             $child = Employeer::where('parent_id',$sponsor->id)->where('position',0)->select('id')->first();
-            $this->findChild($child->id, $sponsor->id, $request);
+            return $this->findChild($child->id, $sponsor->id, $request, $password);
         }
     }elseif (count($isHaveChild)==0) {
         $member = [
@@ -497,7 +515,7 @@ class TransactionBillService
             'last_name' => $request->last_name,
             'email' => $request->email,
             "phone_number" => $request->phone_number,
-            'password' => bcrypt('password'),//bcrypt('Mbitrex'.rand(100,1000)),
+            'password' => bcrypt($password),//bcrypt('Mbitrex'.rand(100,1000)),
             'birthdate' => $request->birthdate,
             'gender' => 0,
             'position' => 0,
@@ -534,7 +552,7 @@ class TransactionBillService
                 'last_name' => $request->last_name,
                 'email' => $request->email,
                 "phone_number" => $request->phone_number,
-                'password' => bcrypt('password'),//bcrypt('Mbitrex'.rand(100,1000)),
+                'password' => bcrypt($password),//bcrypt('Mbitrex'.rand(100,1000)),
                 'birthdate' => $request->birthdate,
                 'gender' => 0,
                 'position' => 0,
@@ -558,7 +576,7 @@ class TransactionBillService
                 'last_name' => $request->last_name,
                 'email' => $request->email,
                 "phone_number" => $request->phone_number,
-                'password' => bcrypt('password'),//bcrypt('Mbitrex'.rand(100,1000)),
+                'password' => bcrypt($password),//bcrypt('Mbitrex'.rand(100,1000)),
                 'birthdate' => $request->birthdate,
                 'gender' => 0,
                 'position' => 1,
@@ -582,7 +600,7 @@ class TransactionBillService
                 'last_name' => $request->last_name,
                 'email' => $request->email,
                 "phone_number" => $request->phone_number,
-                'password' => bcrypt('password'),//bcrypt('Mbitrex'.rand(100,1000)),
+                'password' => bcrypt($password),//bcrypt('Mbitrex'.rand(100,1000)),
                 'birthdate' => $request->birthdate,
                 'gender' => 0,
                 'position' => 2,

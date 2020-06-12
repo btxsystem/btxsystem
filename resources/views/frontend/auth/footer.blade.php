@@ -150,6 +150,9 @@
 		$('#register-webstore').submit(function(e) {
 			e.preventDefault();
 
+			$('.btn-join').prop('disabled', true)
+			$('.btn-join').text('Loading...')
+
 			$.ajax({
 				type: "POST",
 				url: $(this).attr('action'),
@@ -157,6 +160,11 @@
 				dataType: "json",
 				success: function(data) {
 					if(data.status) {
+						refreshEbook()
+						$('#register-webstore')[0].reset()
+						$('#danger_').empty();
+						$(".alert-referal").html("")
+						$(".alert-username").html("")
 						$('#va').val(data.data.no_invoice);
 						$('#des_noreq').text('Masukkan '+data.data.no_invoice+' sebagai rekening tujuan');
 						$('#des_noreq2').text('Masukkan '+data.data.no_invoice+' sebagai rekening tujuan');
@@ -167,10 +175,17 @@
 						$('#join').modal('hide')
 					} else {
 						alert('Gagal mendaftar, submit ulang.')
+						$('.btn-join').prop('disabled', false)
+						$('.btn-join').text('Login')
 					}
+
+					$('.btn-join').prop('disabled', true)
+					$('.btn-join').text('Login')
 				},
 				error: function() {
 					console.log('err')
+					$('.btn-join').prop('disabled', true)
+					$('.btn-join').text('Login')
 				}
 			});
 		})
@@ -187,49 +202,49 @@
 			}
 		})
 
-		$.ajax({
-			type: 'GET',
-			url: '{{route("api.ebook.ebooks")}}'
-		}).done(function(res) {
-			const {data} = res
-			let render = data.map((v, i) => {
-				return `
-					<input id="${v.title}" type="checkbox" value="${v.id}" id="${v.title}" class="with-gap radio-col-red" data-price="${v.price}" ${v.title == 'basic' ? 'checked' : ''} name="ebooks[]"/>
-        	<label for="shipping">${v.title}</label>
-				`
-			})
+		// $.ajax({
+		// 	type: 'GET',
+		// 	url: '{{route("api.ebook.ebooks")}}'
+		// }).done(function(res) {
+		// 	const {data} = res
+		// 	let render = data.map((v, i) => {
+		// 		return `
+		// 			<input id="${v.title}" type="checkbox" value="${v.id}" id="${v.title}" class="with-gap radio-col-red" data-price="${v.price}" ${v.title == 'basic' ? 'checked' : ''} name="ebooks[]"/>
+    //     	<label for="shipping">${v.title}</label>
+		// 		`
+		// 	})
 
-			$('#ebook-list').html(`
-				<div id="checkboxEbook">
-					${render}
-				</div>
-			`)
+		// 	$('#ebook-list').html(`
+		// 		<div id="checkboxEbook">
+		// 			${render}
+		// 		</div>
+		// 	`)
 
-			$('#checkboxEbook input[type=checkbox]').change(function(index) {
+		// 	$('#checkboxEbook input[type=checkbox]').change(function(index) {
 				
-				if($(this).prop('checked')) {
-					priceEbook = priceEbook + parseInt($(this).data('price'))
-				} else {
-					priceEbook = priceEbook - parseInt($(this).data('price'))
-				}
+		// 		if($(this).prop('checked')) {
+		// 			priceEbook = priceEbook + parseInt($(this).data('price'))
+		// 		} else {
+		// 			priceEbook = priceEbook - parseInt($(this).data('price'))
+		// 		}
 
-				if(priceEbook != 0) {
-					$('#cost-ebook').parent().removeClass('hidden')
-				} else {
-					$('#cost-ebook').parent().addClass('hidden')
-				}
+		// 		if(priceEbook != 0) {
+		// 			$('#cost-ebook').parent().removeClass('hidden')
+		// 		} else {
+		// 			$('#cost-ebook').parent().addClass('hidden')
+		// 		}
 
-				if(postalFee != 0) {
-					$('#cost-postal').parent().removeClass('hidden')
-				} else {
-					$('#cost-postal').parent().addClass('hidden')
-				}
+		// 		if(postalFee != 0) {
+		// 			$('#cost-postal').parent().removeClass('hidden')
+		// 		} else {
+		// 			$('#cost-postal').parent().addClass('hidden')
+		// 		}
 
-				$('#cost-ebook').html(toPrice(priceEbook))
-				$('#grand-total').html(toPrice(priceEbook + postalFee + 280000))
-			})
+		// 		$('#cost-ebook').html(toPrice(priceEbook))
+		// 		$('#grand-total').html(toPrice(priceEbook + postalFee + 280000))
+		// 	})
 			
-		})
+		// })
 
 		$('form#paymssent').submit(function(e) {
 			e.preventDefault();
@@ -296,6 +311,7 @@
 		$('#district').empty().trigger('change');
 		$('#kurir').empty().trigger('change');
 		$('#city').html('<option disabled>City<option>');
+		$('#province_name').val($(this).find(":checked").text())
 		$.ajax({
 			type: 'GET',
 			url: '/member/shipping/city/'+id,
@@ -313,6 +329,7 @@
 
 	$('#city').change(function(){
 		let id = this.value;
+		$('#city_name').val($(this).find(":checked").text())
 		$('#district').empty().trigger('change');
 		$('#kurir').empty().trigger('change');
 		$('#district').html('<option disabled>Subdistrict<option>');
@@ -334,6 +351,7 @@
 	$('#district').change(function() {
 		let id = this.value;
 		$('#kurir').empty().trigger('change');
+		$('#district_name').val($(this).find(":checked").text())
 		$('#kurir').html('<option disabled>Kurir<option>');
 		$.ajax({
 			type: 'GET',
@@ -355,6 +373,7 @@
 		//$('#cost').val(Math.ceil(this.value/1000) + ' Points');
 		$('#cost').val(Math.ceil(this.value))
 		postalFee = Math.ceil(this.value)
+		$('#kurir_name').val($(this).find(":checked").text())
 
 		if(postalFee != 0) {
 			$('#cost-postal').parent().removeClass('hidden')

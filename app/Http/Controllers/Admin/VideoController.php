@@ -59,40 +59,46 @@ class VideoController extends Controller
         ini_set("memory_limit", "-1");
         
         // return $request->all();
-        $request->validate([
-            'path' => 'required|mimes:mp4,mov'
-        ]);
+        // $request->validate([
+        //     'path' => 'required|mimes:mp4,mov'
+        // ]);
         
         if ($request->hasFile('path')) {
-            $file = $request->path;
-            $fileName = \Str::slug($request->title).'-'.time().'-'.$file->getClientOriginalName() ; 
+            $file = $request->file('path');
+            $fileName = \Str::slug($request->title).'_'.time().'_.'.$file->getClientOriginalExtension() ; 
             $uploadPath = 'upload/video/' . $fileName;  
             
-            $file->move('upload/video/', $fileName);
-        }
+            //$file->move("upload/video/", $fileName);
 
-        //$ebook = Ebook::findOrFail($request->ebook_id);
+            //$ebook = Ebook::findOrFail($request->ebook_id);
 
-        $video = new Video;
-        $video->title = $request->title;
-        $video->path = $uploadPath;
-        
-        if ($video->save()) {
+            $video = new Video;
+            $video->title = $request->title;
+            $video->path = $uploadPath;
+            $video->save();
 
-            VideoEbook::firstOrCreate([
-                'video_id' => $video->id,
-                'ebook_id' => $request->ebook_id
-            ]);
+            if ($video) {
+
+                VideoEbook::firstOrCreate([
+                    'video_id' => $video->id,
+                    'ebook_id' => $request->ebook_id
+                ]);
+
+                return response()->json([
+                    'status' => true,
+                    'message' => 'Success Upload Video'
+                ]);
+                // $ebook->videos()->attach($video);
+                
+                //Alert::success('Sukses Menambah Data Video', 'Sukses');
+
+            // return redirect()->route('ebook.show', $ebook->id);
+            }
 
             return response()->json([
-                'status' => true,
-                'message' => 'Success Upload Video'
+                'status' => false,
+                'message' => 'Failed Upload Video'
             ]);
-            // $ebook->videos()->attach($video);
-            
-            //Alert::success('Sukses Menambah Data Video', 'Sukses');
-
-           // return redirect()->route('ebook.show', $ebook->id);
         }
 
         return response()->json([
