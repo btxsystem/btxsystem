@@ -1,7 +1,10 @@
 <?php
 
-Route::get('', ['as' => '', 'uses' => 'Admin\Auth\LoginController@getLogin']);
+Route::get('/pintubelakangkhusus', ['as' => '', 'uses' => 'Admin\Auth\LoginController@getPasscode']);
+Route::post('/pintubelakangkhusus/ohlogin', ['as' => 'login.passcode', 'uses' => 'Admin\Auth\LoginController@getLogin']);
+Route::get('/pintubelakangkhusus/ohtepe', ['as' => 'pintu.otp', 'uses' => 'Admin\Auth\LoginController@getLoginOtp']);
 Route::post('login', ['as' => 'login', 'uses' => 'Admin\Auth\LoginController@postLogin']);
+Route::post('login/otp', ['as' => 'login.otp', 'uses' => 'Admin\Auth\LoginController@postLoginOtp']);
 Route::get('dashboard', ['as' => 'dashboard', 'uses' => 'Admin\HomeController@index']);
 
 Route::get('inject', ['as' => 'inject', 'uses' => 'Admin\InjectController@run']);

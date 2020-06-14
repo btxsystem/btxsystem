@@ -47,45 +47,10 @@
                     <a class="hiddenanchor" id="toforgot"></a>
                     <div id="wrapper">
                         <div id="login" class="animate form">
-                            <form action="{{ route('login') }}" autocomplete="on" method="post" role="form" id="login_form" class="my-3">
+                            <form  autocomplete="on" role="form" id="login_form" class="my-3">
                                 <h3 class="black_bg">
                                     <img src="{{ URL::to('/') }}/img/logo.png" alt="Bitrexgo" style="height:70px">
                                     <h3>&nbsp;</h3>
-                                    <!-- CSRF Token -->
-                                    {{ csrf_field() }}
-                                <div class="form-group ">
-                                    <label style="margin-bottom:0px;" for="email" class="uname control-label"> <i class="livicon" data-name="mail" data-size="16" data-loop="true" data-c="#3c8dbc" data-hc="#3c8dbc"></i>
-                                        E-mail
-                                    </label>
-                                    <input id="email" name="email" type="email" placeholder="E-mail"
-                                           />
-                                    <div class="col-sm-12">
-
-                                    </div>
-                                </div>
-                                <div class="form-group ">
-                                    <label style="margin-bottom:0px;" for="password" class="youpasswd"> <i class="livicon" data-name="key" data-size="16" data-loop="true" data-c="#3c8dbc" data-hc="#3c8dbc"></i>
-                                        Password
-                                    </label>
-                                    <input id="password" name="password" type="password" placeholder="Enter a password" />
-                                    <div class="col-sm-12">
-
-                                    </div>
-                                </div>
-                                <div class="form-group ">
-                                @if(isset($message))
-                                <div class="alert alert-danger">
-                                    {{ $message }}
-                                </div>
-                                @endif
-                                </div>
-                                <!-- <div class="form-group">
-                                    <label>
-                                        <input type="checkbox" name="remember-me" id="remember-me" value="remember-me"
-                                               class="square-blue"/>
-                                        Keep me logged in
-                                    </label>
-                                </div> -->
                                 <p class="login button">
                                     <input type="submit" value="Log In" class="btn btn-success" />
                                 </p>
