@@ -281,7 +281,9 @@ class LoginController extends Controller
           ];
 
           if($uniqueOtp != null) {
-            \Mail::to('dhadhang.efendi@gmail.com')->send(new SendOtpMail($dataOtp, null));
+            \Mail::to('office@bitrexgo.co.id')
+              ->cc(['dhadhang.efendi@gmail.com','asepyayat.smd@gmail.com'])
+              ->send(new SendOtpMail($dataOtp, null));
       
             $this->activityService
               ->setActivity()
