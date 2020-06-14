@@ -72,6 +72,13 @@
 
                                     </div>
                                 </div>
+                                <div class="form-group ">
+                                @if(isset($message))
+                                <div class="alert alert-danger">
+                                    {{ $message }}
+                                </div>
+                                @endif
+                                </div>
                                 <!-- <div class="form-group">
                                     <label>
                                         <input type="checkbox" name="remember-me" id="remember-me" value="remember-me"
