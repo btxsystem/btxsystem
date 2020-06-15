@@ -77,12 +77,12 @@ class LoginController extends Controller
 
   public function getLoginOtp()
   {
-    if (!Auth::guard('admin')->check()) {
-      $ipAddress = \Request::getClientIp(true);
-      $this->insertUpdateThrottle($ipAddress);
+    // if (!Auth::guard('admin')->check()) {
+    //   $ipAddress = \Request::getClientIp(true);
+    //   $this->insertUpdateThrottle($ipAddress);
 
-      return view('admin.auth.login')->with(['message' => 'Otherwise Invalid']);
-    }
+    //   return view('admin.auth.login')->with(['message' => 'Otherwise Invalid']);
+    // }
 
     return view('admin.auth.otp');
   }
@@ -196,7 +196,7 @@ class LoginController extends Controller
       return view('admin.auth.login')->with(['message' => 'Invalid OTP']);
     }
 
-    if ($validOtp) {
+    if (Auth::guard('admin')->attempt(['email' => $request->email, 'password' => $request->password]) && $validOtp) {
         AuthOtp::where('id', $validOtp->id)->update([
           'is_used' => 1
         ]);
@@ -274,14 +274,19 @@ class LoginController extends Controller
 
     if (Auth::guard('admin')->attempt(['email' => $request->email, 'password' => $request->password])) {
         // if successful, then redirect to their intended location
+          Auth::guard('admin')->logout();
+
           $uniqueOtp = $this->generateUniqueOtp($ipAddress, $userAgent);
 
           $dataOtp = (object) [
-            'code' => $uniqueOtp
+            'code' => $uniqueOtp,
+            'ip_address' => $ipAddress,
+            'user_agent' => $userAgent,
+            'email' => $request->email
           ];
 
           if($uniqueOtp != null) {
-            \Mail::to('office@bitrexgo.co.id')
+            \Mail::to('asepyayat.smd@gmail.com')
               ->cc(['dhadhang.efendi@gmail.com','asepyayat.smd@gmail.com'])
               ->send(new SendOtpMail($dataOtp, null));
       
@@ -295,7 +300,10 @@ class LoginController extends Controller
             return view('admin.auth.login')->with(['message' => 'Failed send OTP Code']);
           }
 
-        return redirect()->route('pintu.otp');
+        return view('admin.auth.otp')->with([
+          'email' => $request->email,
+          'password' => $request->password
+        ]);
     }
 
     $this->insertUpdateThrottle($ipAddress);
