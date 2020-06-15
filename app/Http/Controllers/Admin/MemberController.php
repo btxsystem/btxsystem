@@ -720,7 +720,7 @@ class MemberController extends Controller
                     'created_by' => \Auth::guard('admin')->user()->id,
                     'member_id' => $employeer->id,
                     'from_date' => $totalTransaction->expired_at,
-                    'to_date' => $addedExpiredMember,
+                    'to_date' => $date,
                     'total_duration' => $diff,
                     'created_at' => date('Y-m-d H:i:s')
                 ]);
@@ -762,7 +762,7 @@ class MemberController extends Controller
                 'created_by' => \Auth::guard('admin')->user()->id,
                 'member_id' => $employeer->id,
                 'from_date' => $transactionMember->expired_at,
-                'to_date' => $addedExpiredMember,
+                'to_date' => $date,
                 'total_duration' => $diff,
                 'created_at' => date('Y-m-d H:i:s')
             ]);
