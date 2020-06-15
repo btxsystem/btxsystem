@@ -12,10 +12,25 @@ class ActivityController extends Controller
     public function index()
     {
         if (request()->ajax()) {
-            $data = ActivityLog::all();
+            $data = ActivityLog::with('user')->get();
 
             return Datatables::of($data)
                     ->addIndexColumn()
+                    ->editColumn('status', function($data) {
+                        if($data->status) {
+                            return '<span class="label label-success">Success</span>';
+                        }
+
+                        return '<span class="label label-danger">Failed</span>';
+                    })
+                    ->addColumn('username', function($data) {
+                        if($data->user != null) {
+                            return $data->user->name;
+                        }
+
+                        return 'System';
+                    })
+                    ->rawColumns(['status'])
                     ->make(true);
         }
 

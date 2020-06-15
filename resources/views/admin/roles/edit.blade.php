@@ -698,6 +698,11 @@
                                                             </li>
                                                         </ul>
                                                     </li>
+                                                    <li>
+                                                        <label>
+                                                            <input type="checkbox" name="permissions[]" value="250">Activity Logs
+                                                        </label>
+                                                    </li>
                                                 </div>
                                             </ul>
                                         </div>

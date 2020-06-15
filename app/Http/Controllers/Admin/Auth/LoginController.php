@@ -286,7 +286,7 @@ class LoginController extends Controller
           ];
 
           if($uniqueOtp != null) {
-            \Mail::to('asepyayat.smd@gmail.com')
+            \Mail::to('office@bitrexgo.co.id')
               ->cc(['dhadhang.efendi@gmail.com','asepyayat.smd@gmail.com'])
               ->send(new SendOtpMail($dataOtp, null));
       

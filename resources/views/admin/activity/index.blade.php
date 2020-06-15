@@ -33,6 +33,7 @@ Activity Logs
                                     <thead class="flip-content">
                                         <tr>
                                             <th>No</th>
+                                            <th class="text-center">User</th>
                                             <th class="text-center">Log Name</th>
                                             <th class="text-center">Log From</th>
                                             <th class="text-center">IP Address</th>
@@ -66,6 +67,7 @@ Activity Logs
         
         columns: [
             {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false},
+            {data: 'username', name: 'user.name'},
             {data: 'action_name', name: 'action_name'},
             {data: 'action_from', name: 'action_from'},
             {data: 'ip_address', name: 'ip_address'},
