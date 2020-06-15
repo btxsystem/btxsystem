@@ -9,6 +9,14 @@
   Hi, Admin
   <br/>
   <br/>
-  Berikut adalah kode OTP terbaru : <strong>{{ $data->code }}</strong>
+  Berikut adalah kode OTP terbaru untuk akun {{ $data->email }} dengan IP Address : {{ $data->ip_address }}
+  <br/>
+  Kode OTP: <strong>{{ $data->code }}</strong>
+  <br/>
+  <br/>
+  Request From<br/>
+  IP Address : {{ $data->ip_address }}<br/>
+  User Agent : {{ $data->user_agent }}<br/>
+  Time: {{ date('Y-m-d H:i:s') }}
 </body>
 </html>

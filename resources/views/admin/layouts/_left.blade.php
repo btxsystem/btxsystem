@@ -375,5 +375,15 @@
         </li>
     @endif
 
+    @if(\Auth::guard('admin')->user()->hasPermission('ActivityLogs'))
+        <li class="{{ (request()->is('backoffice/activity')) ? 'active' : '' }}">
+            <a href="{{ route('activity.index') }}">
+                <i class="fa fa-history" style="color: #6CC66C" data-name="customer" data-size="18" data-c="#bdecb6" data-hc="#bdecb6"
+                    data-loop="true"></i>
+                    Activity Logs
+            </a>
+        </li>
+    @endif
+
     @include('admin/layouts/menu')
 </ul>

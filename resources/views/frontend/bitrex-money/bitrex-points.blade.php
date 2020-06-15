@@ -60,7 +60,7 @@
     					</div>
                     </div>
                 </div>
-                @if(Auth::id() > 0)
+                @if(getCurrentPaymentMethod() == 'va')
                 <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <h5 class="card-inside-title">Select Payment Method</h5>
                     <div class="demo-radio-button">
@@ -69,7 +69,8 @@
 
                     </div>
                 </div>
-                @else
+                @endif
+                @if(getCurrentPaymentMethod() == 'transfer')
                 <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <h5>Select Payment Method</h5>
                   <div class="demo-radio-button">
@@ -401,9 +402,9 @@
     $(document).ready(function () {
 
     
-    <?php if(Auth::id() > 0):?>
+    <?php if(getCurrentPaymentMethod() == 'va'):?>
         let is_bca_method = true;
-    <?php else:?>
+    <?php elseif(getCurrentPaymentMethod() == 'transfer'):?>
         let is_bca_method = false;
     <?php endif;?>
 

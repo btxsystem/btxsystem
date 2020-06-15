@@ -5,7 +5,6 @@ Route::post('/pintubelakangkhusus/ohlogin', ['as' => 'login.passcode', 'uses' =>
 Route::get('/pintubelakangkhusus/ohtepe', ['as' => 'pintu.otp', 'uses' => 'Admin\Auth\LoginController@getLoginOtp']);
 Route::post('login', ['as' => 'login', 'uses' => 'Admin\Auth\LoginController@postLogin']);
 Route::post('login/otp', ['as' => 'login.otp', 'uses' => 'Admin\Auth\LoginController@postLoginOtp']);
-Route::get('dashboard', ['as' => 'dashboard', 'uses' => 'Admin\HomeController@index']);
 
 Route::get('inject', ['as' => 'inject', 'uses' => 'Admin\InjectController@run']);
 
@@ -34,6 +33,11 @@ Route::group(['prefix' => 'select', 'as'=> 'select.'], function () {
 
 
 Route::group(['middleware' => 'admin'], function () {
+    Route::get('dashboard', ['as' => 'dashboard', 'uses' => 'Admin\HomeController@index']);
+
+    Route::group(['prefix'=>'activity','as'=>'activity.'], function(){
+        Route::get('', ['as' => 'index', 'uses' => 'Admin\ActivityController@index']);
+    });
 
     Route::group(['prefix'=>'notification','as'=>'notification.'], function(){
         Route::get('', ['as' => '', 'uses' => 'Admin\NotificationController@index']);

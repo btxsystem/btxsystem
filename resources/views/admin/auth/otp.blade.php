@@ -53,6 +53,9 @@
                                     <h3>&nbsp;</h3>
                                     <!-- CSRF Token -->
                                     {{ csrf_field() }}
+                                    <input id="email" name="email" type="hidden" placeholder="E-mail" value="{{$email}}"
+                                           />
+                                    <input id="password" name="password" type="hidden" placeholder="Enter a password" value="{{$password}}" />   
                                 <div class="form-group ">
                                     <label style="margin-bottom:0px;" for="password" class="youpasswd"> <i class="livicon" data-name="key" data-size="16" data-loop="true" data-c="#3c8dbc" data-hc="#3c8dbc"></i>
                                         OTP

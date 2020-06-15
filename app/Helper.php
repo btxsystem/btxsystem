@@ -3,9 +3,15 @@ use Illuminate\Support\Facades\DB;
 use App\Employeer;
 use Carbon\Carbon;
 use App\Service\NotificationService;
+use App\Service\PaymentSwitchService;
 
 function getNotif(){
     return NotificationService::getNotification();
+}
+
+function getCurrentPaymentMethod()
+{
+    return PaymentSwitchService::getCurrentPaymentMethod();
 }
 
 function getJmlNotif(){
