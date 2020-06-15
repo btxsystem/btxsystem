@@ -251,6 +251,7 @@ Route::group(['middleware' => 'admin'], function () {
         Route::get('profit', ['as' => 'profit', 'uses' => 'Admin\BonusController@bonusProfit']);
         Route::get('reward', ['as' => 'reward', 'uses' => 'Admin\BonusController@bonusReward']);
         Route::get('general', ['as' => 'general', 'uses' => 'Admin\BonusController@general']);
+        Route::get('time-reward', ['as' => 'time-reward', 'uses' => 'Admin\BonusController@timeReward']);
         Route::group(['prefix'=>'event-and-promotion','as'=>'event-and-promotion.'], function(){
             Route::get('', ['as' => 'index', 'uses' => 'Admin\BonusController@event']);
             Route::get('gift-event', ['as' => 'gift-event', 'uses' => 'Admin\BonusController@giftEvent']);

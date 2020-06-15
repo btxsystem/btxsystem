@@ -19,6 +19,7 @@ use App\Models\Address;
 use Maatwebsite\Excel\Facades\Excel;
 use Rap2hpoutre\FastExcel\FastExcel;
 use App\Models\TransactionEbookExpired;
+use App\Models\HistoryActivePeriodeEbook;
 
 class MemberController extends Controller
 {
@@ -714,7 +715,17 @@ class MemberController extends Controller
                     'expired_at' => $date
                 ]);
 
-                if(!$transaction || !$employeer) {
+                $history = HistoryActivePeriodeEbook::insert([
+                    'ebook_id' => $transactionMember->ebook_id,
+                    'created_by' => \Auth::guard('admin')->user()->id,
+                    'member_id' => $employeer->id,
+                    'from_date' => $totalTransaction->expired_at,
+                    'to_date' => $addedExpiredMember,
+                    'total_duration' => $diff,
+                    'created_at' => date('Y-m-d H:i:s')
+                ]);
+
+                if(!$transaction || !$employeer || !$history) {
                     DB::rollBack();
                     Alert::error('Gagal Menambahkan Masa Aktif Ebook', 'Gagal1');
                     return redirect()->back();
@@ -746,7 +757,17 @@ class MemberController extends Controller
                 'expired_at' => $date
             ]);
 
-            if(!$transaction || !$employeer) {
+            $history = HistoryActivePeriodeEbook::insert([
+                'ebook_id' => $transactionMember->ebook_id,
+                'created_by' => \Auth::guard('admin')->user()->id,
+                'member_id' => $employeer->id,
+                'from_date' => $transactionMember->expired_at,
+                'to_date' => $addedExpiredMember,
+                'total_duration' => $diff,
+                'created_at' => date('Y-m-d H:i:s')
+            ]);
+
+            if(!$transaction || !$employeer || !$history) {
                 DB::rollBack();
                 Alert::error('Gagal Menambahkan Masa Aktif Ebook', 'Gagal');
                 return redirect()->back();
@@ -761,6 +782,7 @@ class MemberController extends Controller
 
         } catch (\Exception $e) {
             Alert::error('Gagal Menambahkan Masa Aktif Ebook', 'Gagal3');
+            return $e;
             return redirect()->back();
         }
     }
