@@ -251,6 +251,14 @@
                         </a>
                     </li>
                 @endif
+                @if(\Auth::guard('admin')->user()->hasPermission('Bonus.time_reward'))
+                    <li class="{{ (request()->is('backoffice/bonus/time-reward')) ? 'active' : '' }}">
+                        <a href="{{ route('bonus.time-reward') }}">
+                            <i class="fa fa-angle-double-right"></i>
+                            Time Reward
+                        </a>
+                    </li>
+                @endif
             </ul>
         </li>
     @endif

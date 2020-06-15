@@ -434,6 +434,11 @@
                                                                     <input type="checkbox" name="permissions[]" value="67"/>Gift Event
                                                                 </label>
                                                             </li>
+                                                            <li>
+                                                                <label>
+                                                                    <input type="checkbox" name="permissions[]" value="251"/>Time Reward
+                                                                </label>
+                                                            </li>
                                                         </ul>
                                                     </li>
 

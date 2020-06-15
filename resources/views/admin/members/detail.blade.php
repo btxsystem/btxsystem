@@ -314,6 +314,33 @@
                 </div>
             </div>
 
+            <div class="portlet box primary" style="margin-top: 55px;">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="fa fa-book"></i> &nbsp;
+                        TIme Reward Histories
+                    </div>
+                </div>
+
+                <div class="portlet-body flip-scroll">
+                <table id="time-reward" class="table data-table table-bordered table-striped table-condensed flip-content time-reward" >
+                        <thead class="flip-content">
+                            <tr>
+                                <th>Ebook</th>
+                                <th>From Date</th>
+                                <th>To Date</th>
+                                <th>Duration Ebook</th>
+                                <th>Duration Member</th>
+                                <th>Created By</th>
+                                <th>Created At</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
         </div>
     </div>
  </section>
@@ -631,6 +658,25 @@
                   { data: 'created_at', name: 'created_at', className: "text-center"  },
                   { data: 'info', name: 'info', className: "text-center"  },
 
+              ]
+          });
+
+          var tableTimeReward = $('.time-reward').DataTable({
+              destroy: true,
+              processing: true,
+              serverSide: true,
+              responsive: true,
+              ajax: {
+                url: "{{ route('bonus.time-reward') }}?member={{$data->id}}", 
+              },
+              columns: [
+                  {data: 'ebook.title', name: 'ebook.title', className: 'text-center'},
+                  {data: 'from_date', name: 'from_date', className: 'text-center'},
+                  {data: 'to_date', name: 'to_date', className: 'text-center'},
+                  {data: 'total_duration', name: 'total_duration', className: 'text-center'},
+                  {data: 'total_duration', name: 'total_duration', className: 'text-center'},
+                  {data: 'admin.name', name: 'admin.name', className: 'text-center'},
+                  {data: 'created_at', name: 'created_at', className: 'text-center'},
               ]
           });
         });
