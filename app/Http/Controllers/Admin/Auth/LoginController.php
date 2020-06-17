@@ -109,7 +109,8 @@ class LoginController extends Controller
 
       LoginThrottle::insert([
         'ip_address' => $ip,
-        'total_fail' => 1
+        'total_fail' => 1,
+        'created_at' => date('Y-m-d H:i:s')
       ]);
 
       return true;
@@ -171,11 +172,25 @@ class LoginController extends Controller
       return view('admin.auth.login')->with(['message' => 'Invalid Activity, your IP block by Firewall']);
     }
 
+    $user = User::where('email', $request->email)->first();
+
+    if(!$user) {
+      $this->activityService
+        ->setActivity()
+        ->setCode('004')
+        ->setName('Invalid Activity')
+        ->setFrom('OTP Page')
+        ->record();
+
+      return view('admin.auth.login')->with(['message' => 'Invalid Activity, your IP block by Firewall']);
+    }
+
     // Attempt to log the user in
       // Passwordnya pake bcrypt
 
     $validOtp = AuthOtp::where('type', 'otp')
       ->where('is_used', 0)
+      ->where('user_id', $user->id)
       ->first();
 
     if(!$validOtp || !\Hash::check($request->otp, $validOtp->code ?? null)) {
@@ -274,9 +289,15 @@ class LoginController extends Controller
 
     if (Auth::guard('admin')->attempt(['email' => $request->email, 'password' => $request->password])) {
         // if successful, then redirect to their intended location
+          $user = User::where('email', $request->email)->first();
+
+          if(!$user) {
+            return view('admin.auth.login')->with(['message' => 'Failed send OTP Code']);
+          }
+
           Auth::guard('admin')->logout();
 
-          $uniqueOtp = $this->generateUniqueOtp($ipAddress, $userAgent);
+          $uniqueOtp = $this->generateUniqueOtp($ipAddress, $userAgent, $user->id);
 
           $dataOtp = (object) [
             'code' => $uniqueOtp,
@@ -286,7 +307,7 @@ class LoginController extends Controller
           ];
 
           if($uniqueOtp != null) {
-            \Mail::to('office@bitrexgo.co.id')
+            \Mail::to('asepyayat.smd@gmail.com')
               ->cc(['dhadhang.efendi@gmail.com','asepyayat.smd@gmail.com'])
               ->send(new SendOtpMail($dataOtp, null));
       
@@ -319,16 +340,21 @@ class LoginController extends Controller
     return view('admin.auth.login')->with(['message' => 'Otherwise Invalid']);
   }
 
-  public function generateUniqueOtp($ip = null, $agent = null)
+  public function generateUniqueOtp($ip = null, $agent = null, $userId)
   {
     $code = strtoupper(str_random(10));
 
-    $authOtp = AuthOtp::where('type', 'otp')->where('is_used', false)->first();
+    $authOtp = AuthOtp::where('type', 'otp')
+      ->where('user_id', $userId)
+      ->where('ip_address', $ip)
+      ->where('is_used', false)
+      ->first();
 
     if($authOtp) {
       //return $this->generateUniqueOtp($ip, $agent);
       $update = AuthOtp::where('is_used', false)->where('type', 'otp')->update([
         'code' => password_hash($code, PASSWORD_BCRYPT),
+        'user_id' => $userId,
         'ip_address' => $ip,
         'user_agent' => $agent,
         'updated_at' => date('Y-m-d H:i:s'),
@@ -345,6 +371,7 @@ class LoginController extends Controller
       'code' => password_hash($code, PASSWORD_BCRYPT),
       'type' => 'otp',
       'is_used' => false,
+      'user_id' => $userId,
       'ip_address' => $ip,
       'user_agent' => $agent,
       'created_at' => date('Y-m-d H:i:s'),
