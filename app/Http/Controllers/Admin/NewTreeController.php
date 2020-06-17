@@ -36,7 +36,7 @@ class NewTreeController extends Controller
 
     public function getChildTree($user)
     {
-        return (new DashboardController)->getChildTree($user);
+        return (new DashboardController)->getChildTree($user, 'backoffice');
     }
 
     public function getSummary($id) {

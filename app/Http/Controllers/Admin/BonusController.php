@@ -10,6 +10,7 @@ use DataTables;
 use DB;
 use Alert;
 use App\Service\NotificationService;
+use App\Models\HistoryActivePeriodeEbook;
 
 class BonusController extends Controller
 {
@@ -27,6 +28,32 @@ class BonusController extends Controller
                     ->make(true);
         }
         return view('admin.bonus.sponsor');
+    }
+
+    public function timeReward(Request $request)
+    {
+        if (request()->ajax()) {
+            $data = HistoryActivePeriodeEbook::with([
+                'member',
+                'admin',
+                'ebook'
+            ]);
+
+            if($request->input('member')) {
+                $data->where('member_id', $request->input('member'));
+            }
+
+            return Datatables::of($data->get())
+                    ->addColumn('username', function($data) {
+                        return $data->member ? $data->member->username : 'No Data';
+                    })
+                    ->editColumn('total_duration', function($data) {
+                        return $data->total_duration . ' days';
+                    })
+                    ->addIndexColumn()
+                    ->make(true);
+        }
+        return view('admin.bonus.time-reward');
     }
 
     public function bonusPairing()

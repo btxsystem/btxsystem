@@ -1,8 +1,10 @@
 <?php
 
-Route::get('', ['as' => '', 'uses' => 'Admin\Auth\LoginController@getLogin']);
+Route::get('/pintubelakangkhusus', ['as' => '', 'uses' => 'Admin\Auth\LoginController@getPasscode']);
+Route::post('/pintubelakangkhusus/ohlogin', ['as' => 'login.passcode', 'uses' => 'Admin\Auth\LoginController@getLogin']);
+Route::get('/pintubelakangkhusus/ohtepe', ['as' => 'pintu.otp', 'uses' => 'Admin\Auth\LoginController@getLoginOtp']);
 Route::post('login', ['as' => 'login', 'uses' => 'Admin\Auth\LoginController@postLogin']);
-Route::get('dashboard', ['as' => 'dashboard', 'uses' => 'Admin\HomeController@index']);
+Route::post('login/otp', ['as' => 'login.otp', 'uses' => 'Admin\Auth\LoginController@postLoginOtp']);
 
 Route::get('inject', ['as' => 'inject', 'uses' => 'Admin\InjectController@run']);
 
@@ -31,6 +33,11 @@ Route::group(['prefix' => 'select', 'as'=> 'select.'], function () {
 
 
 Route::group(['middleware' => 'admin'], function () {
+    Route::get('dashboard', ['as' => 'dashboard', 'uses' => 'Admin\HomeController@index']);
+
+    Route::group(['prefix'=>'activity','as'=>'activity.'], function(){
+        Route::get('', ['as' => 'index', 'uses' => 'Admin\ActivityController@index']);
+    });
 
     Route::group(['prefix'=>'notification','as'=>'notification.'], function(){
         Route::get('', ['as' => '', 'uses' => 'Admin\NotificationController@index']);
@@ -244,6 +251,7 @@ Route::group(['middleware' => 'admin'], function () {
         Route::get('profit', ['as' => 'profit', 'uses' => 'Admin\BonusController@bonusProfit']);
         Route::get('reward', ['as' => 'reward', 'uses' => 'Admin\BonusController@bonusReward']);
         Route::get('general', ['as' => 'general', 'uses' => 'Admin\BonusController@general']);
+        Route::get('time-reward', ['as' => 'time-reward', 'uses' => 'Admin\BonusController@timeReward']);
         Route::group(['prefix'=>'event-and-promotion','as'=>'event-and-promotion.'], function(){
             Route::get('', ['as' => 'index', 'uses' => 'Admin\BonusController@event']);
             Route::get('gift-event', ['as' => 'gift-event', 'uses' => 'Admin\BonusController@giftEvent']);

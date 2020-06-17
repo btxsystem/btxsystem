@@ -410,9 +410,21 @@ class DashboardController extends Controller
         return response()->json($tree);
     }
 
-    public function getChildTree($user){
+    public function getChildTree($username, $from = null){
 
-        $user = Employeer::where('username',$user)->with('children','pv_down','rank')->first();
+        $user = Employeer::where('username',$username)->with('children','pv_down','rank')->first();
+
+
+        $pvController  = new PvController();
+
+        if($from == null) {
+            if($user->id != Auth::id()) {
+                $checkDownline = $pvController->cekDownline($user->parent_id);
+                if (!$checkDownline) {
+                    return response()->json([], 200);
+                }
+            }
+        }
 
         $data = [];
 
