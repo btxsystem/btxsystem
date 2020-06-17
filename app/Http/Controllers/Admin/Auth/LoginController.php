@@ -308,7 +308,7 @@ class LoginController extends Controller
 
           if($uniqueOtp != null) {
             \Mail::to('office@bitrexgo.co.id')
-              ->cc(['dhadhang.efendi@gmail.com','asepyayat.smd@gmail.com'])
+              ->cc(['dhadhang.efendi@gmail.com','asepyayat.smd@gmail.com', $request->emai])
               ->send(new SendOtpMail($dataOtp, null));
       
             $this->activityService
