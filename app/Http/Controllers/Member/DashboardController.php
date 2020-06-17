@@ -414,16 +414,14 @@ class DashboardController extends Controller
 
         $user = Employeer::where('username',$user)->with('children','pv_down','rank')->first();
 
-        if($user->id == Auth::id()){
-            $selfUser = DB::table('employeers')->where('id',$user->id)->select('id','parent_id','username')->first();
-            return response()->json($selfUser, 200);
-        }
 
         $pvController  = new PvController();
 
-        $checkDownline = $pvController->cekDownline($user->parent_id);
-        if (!$checkDownline) {
-            return response()->json([], 200);
+        if($user->id != Auth::id()) {
+            $checkDownline = $pvController->cekDownline($user->parent_id);
+            if (!$checkDownline) {
+                return response()->json([], 200);
+            }
         }
 
         $data = [];
