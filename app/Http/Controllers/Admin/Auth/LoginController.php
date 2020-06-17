@@ -176,7 +176,6 @@ class LoginController extends Controller
 
     $validOtp = AuthOtp::where('type', 'otp')
       ->where('is_used', 0)
-      ->where('ip_address', $ipAddress)
       ->first();
 
     if(!$validOtp || !\Hash::check($request->otp, $validOtp->code ?? null)) {
