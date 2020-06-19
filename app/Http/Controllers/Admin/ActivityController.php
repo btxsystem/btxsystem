@@ -11,6 +11,10 @@ class ActivityController extends Controller
 {
     public function index()
     {
+        if(!\Auth::guard('admin')->user()->hasPermission('ActivityLogs')) {
+            return redirect('backoffice/dashboard');
+        }
+
         if (request()->ajax()) {
             $data = ActivityLog::with('user')->get();
 
