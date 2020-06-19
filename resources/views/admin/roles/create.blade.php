@@ -704,6 +704,11 @@
                                                     </li>
                                                     <li>
                                                         <label>
+                                                            <input type="checkbox" name="permissions[]" value="252">Login Throttle
+                                                        </label>
+                                                    </li>
+                                                    <li>
+                                                        <label>
                                                             <input type="checkbox" name="permissions[]" value="250">Activity Logs
                                                         </label>
                                                     </li>

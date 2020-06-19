@@ -39,6 +39,13 @@ Route::group(['middleware' => 'admin'], function () {
         Route::get('', ['as' => 'index', 'uses' => 'Admin\ActivityController@index']);
     });
 
+    Route::group(['prefix'=>'login-throttle','as'=>'login-throttle.'], function(){
+        Route::get('', ['as' => 'index', 'uses' => 'Admin\LoginThrottleController@index']);
+        Route::get('unblock/{id}', ['as' => 'unblock', 'uses' => 'Admin\LoginThrottleController@unblock']);
+        Route::get('block/{id}', ['as' => 'block', 'uses' => 'Admin\LoginThrottleController@block']);
+        Route::get('destroy/{id}', ['as' => 'destroy', 'uses' => 'Admin\LoginThrottleController@destroy']);
+    });
+
     Route::group(['prefix'=>'notification','as'=>'notification.'], function(){
         Route::get('', ['as' => '', 'uses' => 'Admin\NotificationController@index']);
         Route::get('data', ['as' => 'data', 'uses' => 'Admin\NotificationController@data']);
