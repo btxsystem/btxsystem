@@ -320,7 +320,6 @@
 <script>
 
 const players = Array.from(document.querySelectorAll('#player')).map(p => {
-	console.log(p)
 	new Plyr(p)
 });
 $('#submit-va').hide();
