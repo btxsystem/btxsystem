@@ -25,6 +25,6 @@ class Video extends Model
     }
     public function getPathUrlAttribute()
     {
-        return url($this->path);
+        return url('upload/video/' . $this->path);
     }
 }
