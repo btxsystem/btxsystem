@@ -5,7 +5,9 @@
 @stop
 
 @section('styles')
+<link rel="stylesheet" href="https://cdn.plyr.io/3.6.2/plyr.css" />
 <link rel="stylesheet" href="{{asset('assetsebook/v2/css/style.css')}}">
+
 <style>
 .text-bold {
 	font-weight:bold !important;
@@ -173,7 +175,7 @@
 				
 				@elseif($book->id == 2)
 				
-				@endif;
+				@endif
 				{{-- @foreach($book->videoEbooks as $video)
 					@if(count($video->videos) > 0)
           <div class="col-lg-4 mb-3 hover">
@@ -187,7 +189,22 @@
 					</div>
 					@endif
 				@endforeach --}}
+					
 				</div>
+					<div class="d-flex flex-row flex-wrap">
+						@foreach($book->videoEbooks as $video)
+						@if(count($video->videos) > 0)
+						<div style="width: 25%;height:200px" class="mb-5">
+							<div class="p-2">
+								<video id="player" playsinline controls src="{{$video->videos[0]->path_url}}">
+									<source src="{{$video->videos[0]->path_url}}" type="video/mp4" />
+								</video>
+								<span style="font-size: 20px; font-weight: bold;">{{ $video->videos[0]->title }}</span>
+							</div>
+						</div>
+						@endif
+						@endforeach
+					</div>
 				@endif
         @endforeach
 				<!-- <div class="d-flex align-items-center">
@@ -299,9 +316,13 @@
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script src="{{asset('assetsebook/js/helper.js')}}"></script>
 <script src="{{asset('assets2/js/moment.js')}}"></script>
+<script src="https://cdn.plyr.io/3.6.2/plyr.polyfilled.js"></script>
 <script>
 
-
+const players = Array.from(document.querySelectorAll('#player')).map(p => {
+	console.log(p)
+	new Plyr(p)
+});
 $('#submit-va').hide();
 $('#submit-nonva').show();
 
