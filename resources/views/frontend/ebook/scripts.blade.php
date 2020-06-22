@@ -107,7 +107,7 @@ $(document).ready(function () {
         success: function (data) {
             for (let index = 0; index < data.length; index++) {
                 if(index == 0){
-                    var str = data[index].id == 3 ? data[index].title.replace('renewal_', ' ') + ' + Intermediate' : data[index].title + ' + Intermediate' ;
+                    var str = data[index].id == 3 ? data[index].title.replace('renewal_', ' ') + '' : data[index].title + '' ;
                     str = str.toLowerCase().replace(/\b[a-z]/g, function(letter) {
                         return letter.toUpperCase();
                     });
