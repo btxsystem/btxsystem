@@ -18,7 +18,10 @@ class FileController extends Controller
         $storagePath = public_path('upload/video/' .$file);
         $mimeType = mime_content_type($storagePath);
 
-        if(!isSelfRequest()) {
+        $referer = parse_url(\request()->headers->get('referer'), PHP_URL_HOST);
+        $host = parse_url(\request()->getHttpHost(), PHP_URL_HOST);
+
+        if($referer != $host) {
             return redirect('/');
         }
 
