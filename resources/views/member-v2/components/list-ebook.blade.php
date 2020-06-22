@@ -196,8 +196,8 @@
 						@if(count($video->videos) > 0)
 						<div style="width: 25%;height:200px" class="mb-5">
 							<div class="p-2">
-								<video id="player" playsinline controls src="{{$video->videos[0]->path_url}}">
-									<source src="{{$video->videos[0]->path_url}}" type="video/mp4" />
+								<video id="player" playsinline controls src="{{route('serve.video', [$video->videos[0]->path])}}">
+									<source src="{{route('serve.video', [$video->videos[0]->path])}}" type="video/mp4" />
 								</video>
 								<span style="font-size: 20px; font-weight: bold;">{{ $video->videos[0]->title }}</span>
 							</div>
@@ -320,7 +320,19 @@
 <script>
 
 const players = Array.from(document.querySelectorAll('#player')).map(p => {
-	new Plyr(p)
+	new Plyr(p, {
+		controls: [
+			'play-large', 
+			'play', 
+			'progress', 
+			'current-time', 
+			'mute', 
+			'volume', 
+			'captions', 
+			'settings', 
+			'fullscreen'
+		]
+	})
 });
 $('#submit-va').hide();
 $('#submit-nonva').show();
