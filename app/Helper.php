@@ -26,6 +26,17 @@ function checkImageHof($image) {
     return asset($image);
 }
 
+function isSelfRequest() {
+    $referer = parse_url(\request()->headers->get('referer'), PHP_URL_HOST);
+    $host = parse_url(\request()->getHttpHost(), PHP_URL_HOST);
+
+    if($referer != $host) {
+        return false;
+    }
+
+    return true;
+}
+
 function invoiceNumbering(){
       $dateNow = date('ym');
       $lastInvoiceNo = Employeer::pluck('id_member')->last();
