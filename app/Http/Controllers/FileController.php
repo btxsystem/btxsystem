@@ -26,9 +26,7 @@ class FileController extends Controller
         }
 
         if($referer != $host) {
-            return [
-                'message' => 'Video not Found'
-            ];
+            return redirect('/');
         }
 
         if( ! \File::exists($storagePath)){
