@@ -25,7 +25,8 @@ class FileController extends Controller
             return [
                 'message' => 'Video not Found',
                 'a' => $referer,
-                'h' => $host
+                'h' => $host,
+                'as' => parse_url(url(''), PHP_URL_HOST)
             ];
         }
 
