@@ -164,7 +164,7 @@
 					@endif
         @endforeach
         </div>
-				@if($access == null)
+				@if($access != null)
 				<div class="d-flex align-items-center">
 					<!-- <img src="http://demo.viewpreview.online/assets/img/star.png" class="img-fluid mr-3"> -->
 					<span class="text-bold">{{ ucwords($book->title) }} Videos</span>
