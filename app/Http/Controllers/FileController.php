@@ -21,13 +21,12 @@ class FileController extends Controller
         $referer = parse_url(\request()->headers->get('referer'), PHP_URL_HOST);
         $host = parse_url(\request()->getHttpHost(), PHP_URL_HOST);
 
+        if(is_null($host)) {
+            $host = parse_url(url(''), PHP_URL_HOST);
+        }
+
         if($referer != $host) {
-            return [
-                'message' => 'Video not Found',
-                'a' => $referer,
-                'h' => $host,
-                'as' => parse_url(url(''), PHP_URL_HOST)
-            ];
+            return redirect('/');
         }
 
         if( ! \File::exists($storagePath)){
