@@ -316,7 +316,7 @@
 <script src="{{asset('assetsebook/js/helper.js')}}"></script>
 <script src="{{asset('assets2/js/moment.js')}}"></script>
 <script src="https://cdn.plyr.io/1.8.2/plyr.js"></script>
-<script src="https://cdn.jsdelivr.net/hls.js/latest/hls.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 <script>
 
 const players = Array.from(document.querySelectorAll('#player')).map(p => {
@@ -327,7 +327,6 @@ const players = Array.from(document.querySelectorAll('#player')).map(p => {
     hls.attachMedia(p);
     hls.on(Hls.Events.MANIFEST_PARSED,function() {
     });
-		console.log('p',p)
   }
 
 	plyr.setup(p);
