@@ -5,7 +5,7 @@
 @stop
 
 @section('styles')
-<link rel="stylesheet" href="https://cdn.plyr.io/1.8.2/plyr.css">
+<link rel="stylesheet" href="https://cdn.plyr.io/3.6.2/plyr.css" />
 <link rel="stylesheet" href="{{asset('assetsebook/v2/css/style.css')}}">
 
 <style>
@@ -315,7 +315,7 @@
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script src="{{asset('assetsebook/js/helper.js')}}"></script>
 <script src="{{asset('assets2/js/moment.js')}}"></script>
-<script src="https://cdn.plyr.io/1.8.2/plyr.js"></script>
+<script src="https://cdn.plyr.io/3.6.2/plyr.polyfilled.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 <script>
 
@@ -329,7 +329,19 @@ const players = Array.from(document.querySelectorAll('#player')).map(p => {
     });
   }
 
-	plyr.setup(p);
+	new Plyr(p, {	
+		controls: [
+			'play-large', 		// new Plyr(p, {
+			'play', 		// 	controls: [
+			'progress', 		// 		'play-large', 
+			'current-time', 		// 		'play', 
+			'mute', 		// 		'progress', 
+			'volume', 		// 		'current-time', 
+			'captions', 		// 		'mute', 
+			'settings', 		// 		'volume', 
+			'fullscreen'		// 		'captions', 
+		]		// 		'settings', 
+	})
 	// new Plyr(p, {
 	// 	controls: [
 	// 		'play-large', 
