@@ -5,7 +5,7 @@
 @stop
 
 @section('styles')
-<link rel="stylesheet" href="https://cdn.plyr.io/3.6.2/plyr.css" />
+<link rel="stylesheet" href="https://cdn.plyr.io/1.8.2/plyr.css">
 <link rel="stylesheet" href="{{asset('assetsebook/v2/css/style.css')}}">
 
 <style>
@@ -164,7 +164,7 @@
 					@endif
         @endforeach
         </div>
-				@if($access != null)
+				@if($access == null)
 				<div class="d-flex align-items-center">
 					<!-- <img src="http://demo.viewpreview.online/assets/img/star.png" class="img-fluid mr-3"> -->
 					<span class="text-bold">{{ ucwords($book->title) }} Videos</span>
@@ -316,7 +316,7 @@
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script src="{{asset('assetsebook/js/helper.js')}}"></script>
 <script src="{{asset('assets2/js/moment.js')}}"></script>
-<script src="https://cdn.plyr.io/3.6.2/plyr.polyfilled.js"></script>
+<script src="https://cdn.plyr.io/1.8.2/plyr.js"></script>
 <script src="https://cdn.jsdelivr.net/hls.js/latest/hls.js"></script>
 <script>
 
@@ -327,23 +327,24 @@ const players = Array.from(document.querySelectorAll('#player')).map(p => {
 		hls.loadSource(p.getAttribute('src'));
     hls.attachMedia(p);
     hls.on(Hls.Events.MANIFEST_PARSED,function() {
-      p.play();
     });
 		console.log('p',p)
   }
-	new Plyr(p, {
-		controls: [
-			'play-large', 
-			'play', 
-			'progress', 
-			'current-time', 
-			'mute', 
-			'volume', 
-			'captions', 
-			'settings', 
-			'fullscreen'
-		]
-	})
+
+	plyr.setup(p);
+	// new Plyr(p, {
+	// 	controls: [
+	// 		'play-large', 
+	// 		'play', 
+	// 		'progress', 
+	// 		'current-time', 
+	// 		'mute', 
+	// 		'volume', 
+	// 		'captions', 
+	// 		'settings', 
+	// 		'fullscreen'
+	// 	]
+	// })
 });
 $('#submit-va').hide();
 $('#submit-nonva').show();
