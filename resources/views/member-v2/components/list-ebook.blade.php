@@ -196,8 +196,8 @@
 						@if(count($video->videos) > 0)
 						<div style="width: 25%;height:200px" class="mb-5">
 							<div class="p-2">
-								<video id="player" playsinline controls src="{{route('serve.video', [$video->videos[0]->path])}}">
-									<source src="{{route('serve.video', [$video->videos[0]->path])}}" type="video/mp4" />
+								<video id="player" playsinline controls src="{{$video->videos[0]->path_url}}">
+									<source src="{{$video->videos[0]->path_url}}" type="video/mp4" />
 								</video>
 								<span style="font-size: 20px; font-weight: bold;">{{ $video->videos[0]->title }}</span>
 							</div>
