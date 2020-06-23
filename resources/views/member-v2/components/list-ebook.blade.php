@@ -317,9 +317,19 @@
 <script src="{{asset('assetsebook/js/helper.js')}}"></script>
 <script src="{{asset('assets2/js/moment.js')}}"></script>
 <script src="https://cdn.plyr.io/3.6.2/plyr.polyfilled.js"></script>
+<script src="https://cdn.jsdelivr.net/hls.js/latest/hls.js"></script>
 <script>
 
 const players = Array.from(document.querySelectorAll('#player')).map(p => {
+	if (Hls.isSupported()) {
+    var hls = new Hls();
+
+		hls.loadSource(p.getAttribute('src'));
+    hls.attachMedia(p);
+    hls.on(Hls.Events.MANIFEST_PARSED,function() {
+      //video.play();
+    });
+  }
 	new Plyr(p, {
 		controls: [
 			'play-large', 
