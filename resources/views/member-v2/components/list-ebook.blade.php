@@ -327,8 +327,9 @@ const players = Array.from(document.querySelectorAll('#player')).map(p => {
 		hls.loadSource(p.getAttribute('src'));
     hls.attachMedia(p);
     hls.on(Hls.Events.MANIFEST_PARSED,function() {
-      //video.play();
+      p.play();
     });
+		console.log('p',p)
   }
 	new Plyr(p, {
 		controls: [
