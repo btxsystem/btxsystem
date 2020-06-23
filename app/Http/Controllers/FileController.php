@@ -23,7 +23,9 @@ class FileController extends Controller
 
         if($referer != $host) {
             return [
-                'message' => 'Video not Found'
+                'message' => 'Video not Found',
+                'a' => $referer,
+                'h' => $host
             ];
         }
 
