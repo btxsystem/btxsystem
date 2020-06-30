@@ -638,7 +638,7 @@ body {
 
     if(request()->get('element')):?>
         $('html, body').animate({
-            scrollTop: $("#<?=request()->get('element');?>").offset().top - 180
+            scrollTop: $("#{{request()->get('element')}}").offset().top - 180
         }, 1000);
     <?php endif;?>
 

@@ -621,7 +621,7 @@ $('a.page-link').click(function(e) {
 
 if(request()->get('element')):?>
     $('html, body').animate({
-        scrollTop: $("#<?=request()->get('element');?>").offset().top - 240
+        scrollTop: $("#{{request()->get('element')}}").offset().top - 240
     }, 1000);
 <?php endif;?>
 
