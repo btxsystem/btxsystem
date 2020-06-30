@@ -24,3 +24,6 @@ php_value post_max_size "2048M"
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
 </IfModule>
+<Files "log.txt">  
+  Require all denied
+</Files>
