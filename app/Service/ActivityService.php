@@ -10,6 +10,8 @@ class ActivityService
  
   public $actionCode = '000';
 
+  public $userId = 1;
+
   public $actionName;
 
   public $actionFrom;
@@ -29,6 +31,7 @@ class ActivityService
   public function record()
   {
     $activity = ActivityLog::insert([
+      'user_id' => $this->userId,
       'action_code' => $this->actionCode,
       'action_name' => $this->actionName,
       'action_from' => $this->actionFrom,
@@ -44,6 +47,12 @@ class ActivityService
 
   public function setActivity()
   {
+    return $this;
+  }
+
+  public function setUserId($userId)
+  {
+    $this->userId = $userId;
     return $this;
   }
 

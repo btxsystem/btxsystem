@@ -198,6 +198,7 @@ class LoginController extends Controller
 
       $this->activityService
         ->setActivity()
+        ->setUserId($user->id)
         ->setCode('003')
         ->setName('Input OTP')
         ->setFrom('OTP Page')
@@ -218,6 +219,7 @@ class LoginController extends Controller
 
         $this->activityService
           ->setActivity()
+          ->setUserId($user->id)
           ->setCode('003')
           ->setName('Input OTP')
           ->setFrom('OTP Page')
@@ -225,6 +227,7 @@ class LoginController extends Controller
 
         $this->activityService
           ->setActivity()
+          ->setUserId($user->id)
           ->setCode('002')
           ->setName('Login Backoffice')
           ->setFrom('Login Backoffice Page')
@@ -313,6 +316,7 @@ class LoginController extends Controller
       
             $this->activityService
               ->setActivity()
+              ->setUserId($user->id)
               ->setCode('005')
               ->setName('Send OTP Code')
               ->setFrom('Passcode Page')
