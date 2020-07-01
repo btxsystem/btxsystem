@@ -256,9 +256,9 @@ class ProfileMemberController extends Controller
                     $trxMember->save();
                 }
 
-                $input['bitrex_points'] = $sponsor->bitrex_points - $price;
+                $input['bitrex_points'] = (int) $sponsor->bitrex_points - (int) $price;
 
-                if($sponsor->bitrex_points < $price) {
+                if((int) $sponsor->bitrex_points < (int) $price) {
                     DB::rollback();
                     Alert::error('Bitrex Point tidak cukup', 'Error')->persistent("OK");
                     $data = Auth::user();
@@ -286,14 +286,23 @@ class ProfileMemberController extends Controller
                     'nominal' => (int) $price * 1000,
                     'points' => $price,
                     'description' => "Register <strong>{$employeer->username}</strong> from Tree",
-                    'transaction_ref' => $prefixRefBp,
+                    'transaction_ref' => $afterCheckRefBp,
                     'status' => 1,
                     'info' => 0,
                     'created_at' => now(),
                     'updated_at' => now()
                 ]);
 
-                Employeer::find($sponsor->id)->update($input);
+                $updateMember = Employeer::find($sponsor->id)->update($input);
+
+                if(!$updateMember) {
+                    DB::rollback();
+                    Alert::error('Gagal mendaftarkan Member', 'ERR902')->persistent("OK");
+                    $data = Auth::user();
+                    $data['data'] = $request;
+                    return view('frontend.tree')->with('profile',$data);
+                }
+
                 DB::commit();
 
                 $dataEmail = (object) [
@@ -311,8 +320,6 @@ class ProfileMemberController extends Controller
             }
         } catch(\Illuminate\Database\QueryException $e) {
             DB::rollback();
-            print_r($e);
-            return;
             Alert::error('Kesalahan teknis', 'Error')->persistent("OK");
             $data = Auth::user();
             $data['data'] = $request;
