@@ -58,11 +58,13 @@ class EbookController extends Controller
 
         $ebook = new Ebook;
         $ebook->title = $request->title;
+        $ebook->display_title = $request->display_title;
         $ebook->slug = \Str::slug($request->title) .'-'. date('YmdHis') ;
         $ebook->price = $request->price;
         $ebook->price_markup = $request->price_markup;
         $ebook->pv = $request->pv;
         $ebook->bv = $request->bv;
+        $ebook->parent_id = 0;
         $ebook->description = $request->description;
 
         if ($request->hasFile('src')) {
@@ -77,18 +79,20 @@ class EbookController extends Controller
         $ebook->position = $ebook->id;
         $ebook->save();
 
-
-        $ebook_renewal = new Ebook;
-        $ebook_renewal->title = $request->title .' '. 'Renewal';
-        $ebook_renewal->slug = \Str::slug($ebook_renewal->title) .'-'. date('YmdHis') ;
-        $ebook_renewal->price = $request->price_renewal;
-        $ebook_renewal->price_markup = $request->price_markup_renewal;
-        $ebook_renewal->pv = $request->pv_renewal;
-        $ebook_renewal->bv = $request->bv_renewal;
-        $ebook_renewal->description = $request->description;
-        $ebook_renewal->src = $ebook->src;
-        $ebook_renewal->position = $ebook->id;
-        $ebook_renewal->save();
+        if ($request->price_renewal) {
+            $ebook_renewal = new Ebook;
+            $ebook_renewal->title = $request->title .' '. 'Renewal';
+            $ebook_renewal->slug = \Str::slug($ebook_renewal->title) .'-'. date('YmdHis') ;
+            $ebook_renewal->price = $request->price_renewal;
+            $ebook_renewal->price_markup = $request->price_markup_renewal;
+            $ebook_renewal->pv = $request->pv_renewal;
+            $ebook_renewal->bv = $request->bv_renewal;
+            $ebook_renewal->description = $request->description;
+            $ebook_renewal->src = $ebook->src;
+            $ebook_renewal->parent_id = $ebook->id; 
+            $ebook_renewal->position = $ebook->id;
+            $ebook_renewal->save();
+        }
 
         Alert::success('Sukses Menambah Data Ebook', 'Sukses');
         return redirect()->route('ebook.index');
