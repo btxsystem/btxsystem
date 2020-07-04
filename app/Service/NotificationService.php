@@ -123,7 +123,10 @@ class NotificationService extends Notification
                 'rank'     => $rank->name,
                 'reward'   => $reward->reward->description
             ];
-            Mail::to($notif->user->email)->send(new UpRankMemberMail($dataEmail));
+
+            if (filter_var($notif->user->email, FILTER_VALIDATE_EMAIL)) {
+                Mail::to($notif->user->email)->send(new UpRankMemberMail($dataEmail));
+            }
 
             $email = (object) [
                 'username' => $notif->user->username,
