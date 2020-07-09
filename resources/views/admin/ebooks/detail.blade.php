@@ -66,6 +66,32 @@
             <div class="portlet box primary" style="margin-top: 15px;">
                 <div class="portlet-title">
                     <div class="caption">
+                        <i class="fa fa-video-camera"></i> &nbsp;
+                        Category List
+                    </div>
+                    @if(\Auth::guard('admin')->user()->hasPermission('Ebooks.list.video.add'))
+                        <div class="pull-right">
+                            <a style=" color: white; text-decoration: none !important" href="{{ route('ebook.create.video-category', $data->id) }}"><i style="font-size:15px;" class="fa fa-plus"></i>&nbsp; &nbsp;<strong>Create New Category</strong></a>
+                        </div>
+                    @endif
+                </div>
+                
+                <div class="portlet-body flip-scroll">
+                    <table class="table category-table table-bordered table-striped table-condensed flip-content" >
+                        <thead class="flip-content">
+                            <tr>
+                                <th>No</th>
+                                <th class="text-center" width="60%">Title</th>
+                                <th width="30%">Action</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+
+            <div class="portlet box primary" style="margin-top: 15px;">
+                <div class="portlet-title">
+                    <div class="caption">
                         <i class="fa fa-book"></i> &nbsp;
                         Book List
                     </div>
@@ -152,6 +178,23 @@
               columns: [
                   { data: 'DT_RowIndex', name: 'DT_RowIndex',orderable: false, searchable: false },
                   { data: 'title', name: 'title' },                  
+                  { data: 'action', name: 'action', orderable: false, searchable: false, className: "text-center" },
+              ]
+          });
+        });
+
+        $(document).ready(function () {
+          var table = $('.category-table').DataTable({
+              destroy: true,
+              processing: true,
+              serverSide: true,
+              ajax: {
+                url: "{{ route('video-category.index') }}?ebook={{$data->id}}", 
+              },
+              
+              columns: [
+                  { data: 'DT_RowIndex', name: 'DT_RowIndex',orderable: false, searchable: false },
+                  { data: 'name', name: 'name' },                  
                   { data: 'action', name: 'action', orderable: false, searchable: false, className: "text-center" },
               ]
           });
