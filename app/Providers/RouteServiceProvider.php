@@ -54,7 +54,7 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function mapWebRoutes()
     {
-        Route::middleware('web')
+        Route::middleware(['web', 'cors.middleware'])
              ->namespace($this->namespace)
              ->group(base_path('routes/web.php'));
     }
@@ -78,14 +78,14 @@ class RouteServiceProvider extends ServiceProvider
     protected function mapAdminRoutes(){
 
        Route::prefix('backoffice')
-             ->middleware('backoffice')
+             ->middleware(['backoffice', 'cors.middleware'])
              ->namespace($this->namespace)
              ->group(base_path('routes/admin.php'));
     }
 
     protected function mapEbookRoutes(){
 
-        Route::middleware('ebook')
+        Route::middleware(['ebook', 'cors.middleware'])
             ->namespace($this->namespace)
             ->group(base_path('routes/ebook.php'));
      }
