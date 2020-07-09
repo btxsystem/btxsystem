@@ -50,7 +50,7 @@
                     <div class="col-md-3">
                         <br>
                         <div>
-                            <label class="control-label">Point Value &nbsp; : &nbsp; {{currency($data->pv)}} </label>
+                            <label class="control-label">Point Value &nbsp; : &nbsp; {{$data->pv}} </label>
                         </div>
                         <br>                                
                     </div>
