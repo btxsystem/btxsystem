@@ -20,7 +20,7 @@ List Of Ebooks
     <div class="row">
         <div class="col-md-12">
             <!-- BEGIN SAMPLE TABLE PORTLET-->
-            <!-- <a class="btn btn-large btn-primary" href="{{ route('ebook.create') }}"></i>Add</a> -->
+            <a class="btn btn-large btn-primary" href="{{ route('ebook.create') }}"></i>Add</a>
             <div class="portlet box primary" style="margin-top: 15px;">
                 <div class="portlet-title">
                     <div class="caption">

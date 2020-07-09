@@ -489,6 +489,14 @@
                 url: '{{route("member.bp.store")}}',
                 data: {nominal: nominal, points: points},
                 success: function (data) {
+                    if(!data.status) {
+                        $('#payment-bca').hide();
+                        alert('Minimum topup is : 10.000 and multiple : 1.000');
+                        $("#topup-points").show()
+                        $("#topup-points").prop('disabled',true);
+                        return;
+                    }
+
                     $('#va').val(data.customer_number);
                     $('#des_noreq').text('Masukkan '+data.customer_number+' sebagai rekening tujuan');
                     $('#des_noreq2').text('Masukkan '+data.customer_number+' sebagai rekening tujuan');
