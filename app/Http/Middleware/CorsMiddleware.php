@@ -2,6 +2,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Dotenv\Dotenv;
 
 class CorsMiddleware
 {
@@ -14,6 +15,9 @@ class CorsMiddleware
      */
     public function handle($request, Closure $next)
     {
+        $dotenv = Dotenv::create(public_path('../'), '.env');
+        $dotenv->load();
+
         $allowedOrigins = explode(",", env("ALLOW_IFRAME") ?? "http://staging.bitrexgo.id");
 
         $response = $next($request);
