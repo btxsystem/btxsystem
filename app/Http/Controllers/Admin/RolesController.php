@@ -43,19 +43,51 @@ class RolesController extends Controller
 
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'title' => 'max:255|unique:roles|required',
-            'permissions'=> 'required',
-        ]);
-        $data = [
-            'title' => $request->title
-        ];
-        $role = Role::create($data);
-        foreach ($request->permissions as $key => $permission) {
-            DB::table('permission_role')->insert(['role_id' => $role->id, 'permission_id' => $permission]);
+        try {
+            $validatedData = $request->validate([
+                'title' => 'max:255|unique:roles|required',
+                'permissions'=> 'required',
+            ]);
+
+            $data = [
+                'title' => $request->title
+            ];
+
+            DB::beginTransaction();
+
+            $role = Role::create($data);
+
+            $rolePermissions = [];
+
+            foreach ($request->permissions as $key => $permission) {
+                //DB::table('permission_role')->insert(['role_id' => $role->id, 'permission_id' => $permission]);
+                $convertPermission = (int) $permission;
+
+                if($convertPermission != 'on' || $convertPermission > 0) {
+                    $rolePermissions[] = [
+                        'role_id' => $role->id,
+                        'permission_id' => $convertPermission
+                    ];
+                }
+            }
+
+            $insertPermission = DB::table('permission_role')->insert($rolePermissions);
+
+            if(!$insertPermission) {
+                DB::rollback();
+                Alert::error('Failed Create Data', 'Failed')->persistent("Close");
+                return redirect()->route('admin-management.roles.index');
+            }
+
+            DB::commit();
+
+            Alert::success('Sukses Create Data', 'Sukses')->persistent("Close");
+            return redirect()->route('admin-management.roles.index');
+        } catch (\Exception $e) {
+            DB::rollback();
+            Alert::error('Failed Create Data', 'Failed')->persistent("Close");
+            return redirect()->route('admin-management.roles.index');
         }
-        Alert::success('Sukses Create Data', 'Sukses')->persistent("Close");
-        return redirect()->route('admin-management.roles.index');
     }
 
     public function edit($role)
