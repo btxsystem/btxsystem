@@ -26,7 +26,8 @@ class Ebook extends Model
     'countdown_days',
     'expired_at',
     'status',
-    'expired_timestamp'
+    'expired_timestamp',
+    'access_ebook'
   ];
 
 
@@ -58,6 +59,51 @@ class Ebook extends Model
   public function transactionMember()
   {
       return $this->hasOne('\App\Models\TransactionMember', 'ebook_id', 'id');
+  }
+
+  public function children()
+  {
+    return $this->belongsTo('\App\Models\Ebook', 'id', 'parent_id');
+  }
+
+  public function getAccessEbookAttribute()
+  {
+    $expired = null;
+
+    if($user = \Auth::guard('nonmember')->user()) {
+      $expired = TransactionNonMember::where('non_member_id', $user->id)
+        ->where('status', 1)
+        ->whereIn('ebook_id', [$this->id, $this->children ? $this->children->id : 0])
+        ->select('expired_at')
+        ->latest('id')
+        ->first();
+
+    } else if($user = \Auth::guard('user')->user()) {
+      $expired = TransactionMember::with('transaction_ebook_expired')->where('member_id', $user->id)
+        ->where('status', 1)
+        ->where('ebook_id',  [$this->id, $this->children ? $this->children->id : 0])
+        ->select([
+          'id',
+          'expired_at'
+        ])
+        ->latest('id')
+        ->first();
+    }
+
+    if($expired) {
+      if($expired->transaction_ebook_expired) {
+        if($expired->expired_at < $expired->transaction_ebook_expired->expired_at) {
+          $expired = $expired->transaction_ebook_expired;
+        }
+      }
+    }
+
+    $currentTimestamp = strtotime(date('Y-m-d H:i:s'));
+    $expiredTimestamp = strtotime($expired['expired_at']);
+
+    if($currentTimestamp > $expiredTimestamp) return null;
+
+    return $expired;
   }
 
   public function getExpiredAttribute()

@@ -37,12 +37,22 @@ class BitrexPointController extends Controller
 
         $date = now();
 
+        $nominal = (int) $request->nominal;
+
+        // validasi minimal 10ribu dan kelipatan 1000 setelahnya
+        if($nominal < 10000 || ($nominal % 1000) != 0) {
+            return response()->json([
+                'status' => false
+            ], 200);
+        }
+
         do {
             $no_invoice = date_format($date,"ymdh").rand(100,999);
             $cek = DB::table('transaction_bills')->where('customer_number',$no_invoice)->select('id')->get();
         } while (count($cek)>0);
 
         $data = [
+            'status' => true,
             'user_id' => Auth::user()->id,
             'product_type' => 'topup',
             'user_type' => 'member',
