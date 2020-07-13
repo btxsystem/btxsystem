@@ -81,15 +81,17 @@
                                                         <div class="bg-white shadow rounded p-3 border-hover triangle">
                                                             <div class="row">
                                                                 <div class="col-lg-3 d-flex align-items-center">
-                                                                    <img src="{{URL::to('/')}}/{{isset($basic->src) ? $basic->src : $basic['src'] }}" class="mx-auto d-block" id="basic-photo">
+                                                                    <img src="{{URL::to('/')}}/{{isset($item->src) ? $item->src : $item['src'] }}" class="mx-auto d-block" style="width: 200px;
+                                                                    height: 250px;">
                                                                 </div>
-                                                                <input type="text" id="basic-value" hidden>
+                                                                <input type="text" value="{{$item->id}}" hidden>
                                                                 <div class="col-lg-9">
-                                                                    <h2 class="mb-0" style="color: #8543da;" id="basic"></h2>
+                                                                    <br>
+                                                                    <h2 class="mb-0" style="color: #8543da;">{!! $item->title !!}</h2>
                                                                     <br>
                                                                     <h5 style="color:black">{!! $item->description !!}</h5><br>
-                                                                    <a href="{{route('member.home')}}" class="btn btn-danger btn-sm mt-3 px-5"  id="cart1"></a>
-                                                                    <a href="{{route('member.ebook.referral', ['type' => 'basic', 'username' => isset($profile->username) ? $profile->username : $profile['username']])}}" class="btn btn-primary btn-sm mt-3 px-5" id="view1">VIEW</a>
+                                                                    <a href="{{route('member.home')}}" class="btn btn-danger btn-sm mt-3 px-5">Go to Ebook</a>
+                                                                    <a href="{{route('member.ebook.referral', ['type' => isset($item->title) ? $item->title : $item['title'], 'username' => isset($profile->username) ? $profile->username : $profile['username']])}}" class="btn btn-primary btn-sm mt-3 px-5" id="view1">VIEW</a>
                                                                 </div>
                                                             </div>
                                                         </div>
