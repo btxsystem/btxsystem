@@ -68,63 +68,36 @@
                                 <div class="ebook">
                                     <div class="my-5">
                                         <div class="container">
-                                            <div class="row">
-                                                <div class="col-lg-6 mb-3">
-                                                    <div class="row">
-                                                      <div class="col-10 mx-auto">
-                                                        <div id="basic-expired" class="ml-md-5 ml-3">
-                                                            <span id="clock-basic"></span>
-                                                        </div>
-                                                      </div>
-                                                    </div>
-                                                    <div class="bg-white shadow rounded p-3 border-hover triangle">
-                                                        <!-- <div id="basic-expired" style="position:fixed">
-                                                            <span id="clock-basic"></span>
-                                                        </div> -->
+                                            @foreach ($ebook as $item)
+                                                <div class="row">
+                                                    <div class="col-lg-12 mb-3">
                                                         <div class="row">
-                                                            <div class="col-lg-3 d-flex align-items-center">
-                                                                <img src="{{URL::to('/')}}/{{isset($basic->src) ? $basic->src : $basic['src'] }}" class="mx-auto d-block" id="basic-photo">
+                                                        <div class="col-10 mx-auto">
+                                                            <div id="basic-expired" class="ml-md-5 ml-3">
+                                                                <span id="clock-basic"></span>
                                                             </div>
-                                                            <input type="text" id="basic-value" hidden>
-                                                            <div class="col-lg-9">
-                                                                <h2 class="mb-0" style="color: #8543da;" id="basic"></h2>
-                                                                <br>
-                                                                <h5 style="color:black" id="description-basic"></h5><br>
-                                                                <a href="{{route('member.home')}}" class="btn btn-danger btn-sm mt-3 px-5"  id="cart1"></a>
-                                                                <a href="{{route('member.ebook.referral', ['type' => 'basic', 'username' => isset($profile->username) ? $profile->username : $profile['username']])}}" class="btn btn-primary btn-sm mt-3 px-5" id="view1">VIEW</a>
+                                                        </div>
+                                                        </div>
+                                                        <div class="bg-white shadow rounded p-3 border-hover triangle">
+                                                            <div class="row">
+                                                                <div class="col-lg-3 d-flex align-items-center">
+                                                                    <img src="{{URL::to('/')}}/{{isset($item->src) ? $item->src : $item['src'] }}" class="mx-auto d-block" style="width: 200px;
+                                                                    height: 250px;">
+                                                                </div>
+                                                                <input type="text" value="{{$item->id}}" hidden>
+                                                                <div class="col-lg-9">
+                                                                    <br>
+                                                                    <h2 class="mb-0" style="color: #8543da;">{!! $item->title !!}</h2>
+                                                                    <br>
+                                                                    <h5 style="color:black">{!! $item->description !!}</h5><br>
+                                                                    <a href="{{route('member.home')}}" class="btn btn-danger btn-sm mt-3 px-5">Go to Ebook</a>
+                                                                    <a href="{{route('member.ebook.referral', ['type' => isset($item->title) ? $item->title : $item['title'], 'username' => isset($profile->username) ? $profile->username : $profile['username']])}}" class="btn btn-primary btn-sm mt-3 px-5" id="view1">VIEW</a>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-6 mb-3">
-                                                  <div class="row">
-                                                    <div class="col-10 co-lg-8 mx-auto">
-                                                      <div id="advance-expired" class="ml-md-5 ml-3">
-                                                          <span id="clock-advance"></span>
-                                                      </div>
-                                                    </div>
-                                                  </div>
-                                                    <div class="bg-white shadow rounded p-3 border-hover triangle">
-                                                        <!-- <div id="advance-expired" style="position:fixed">
-                                                            <span id="clock-advance"></span>
-                                                        </div> -->
-                                                        <div class="row">
-                                                            <div class="col-lg-3 d-flex align-items-center">
-                                                            <img src="{{URL::to('/')}}/{{ isset($advance->src) ? $advance->src : $advance['src']}}" class="mx-auto d-block" id="advance-photo">
-                                                            </div>
-                                                            <input type="text" id="advance-value" hidden>
-                                                            <div class="col-lg-9">
-                                                                <h2 class="mb-0" style="color: #8543da;" id="advance"></h2>
-                                                                <br>
-                                                                <h5 style="color:black" id="advance-description"></h5><br>
-                                                                <br><br><br><br><br><br><br><br><br>
-                                                                <a href="{{route('member.home')}}" class="btn btn-danger btn-sm mt-3 px-5" id="cart2"></a>
-                                                                <a href="{{route('member.ebook.referral', ['type' => 'advance', 'username' => isset($profile->username) ? $profile->username : $profile['username']])}}" class="btn btn-primary btn-sm mt-3 px-5" id="view2">VIEW</a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            @endforeach
                                         </div>
                                     </div>
                                 </div>

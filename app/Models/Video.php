@@ -23,6 +23,12 @@ class Video extends Model
     {
       return $this->hasOne('\App\Models\VideoEbook', 'video_id');
     }
+
+    public function category()
+    {
+      return $this->belongsTo('\App\Models\VideoCategory', 'id', 'category_id');
+    }
+
     public function getPathUrlAttribute()
     {
         return url($this->path);
