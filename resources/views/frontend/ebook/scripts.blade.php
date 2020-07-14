@@ -128,8 +128,6 @@ $(document).ready(function () {
                         $('#cart1').removeClass('btn-block')
                       }
                     })
-
-                    $('#description-basic').html(data[index].description);
                     $('#basic-value').val(data[index].id);
                     price_basic = data[index].price;
                 }else{
