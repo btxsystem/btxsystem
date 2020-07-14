@@ -163,7 +163,6 @@ class ProfileMemberController extends Controller
                     return view('frontend.tree')->with('profile',$data) ;
                 }
 
-                $price = 280;
                 $sponsor = Auth::user();
                 $idMember = invoiceNumbering();
 
@@ -764,9 +763,30 @@ class ProfileMemberController extends Controller
             }
 
             if($method == 'point') {
-                if (Auth::user()->bitrex_cash > 6000) {
+                $price = 280;
+                $ebooks = $request->input('ebooks') ?? [];
 
-                    $ebooks = $request->input('ebooks') ?? [];
+                $totalPriceEbook = 0;
+
+                if(count($ebooks) > 0) {
+                    $totalPriceEbook = DB::table('ebooks')
+                        ->whereIn('id', $ebooks)
+                        ->sum('price');
+                    $price = ((int) $price + (int) ($totalPriceEbook / 1000));
+                } else {
+                    DB::rollback();
+                    Alert::error('Minimal membeli 1 Ebook', 'Error')->persistent("OK");
+                    $data = Auth::user();
+                    $data['data'] = $request;
+                    return view('frontend.tree')->with('profile',$data);
+                }
+
+                if($request->input('shipping_method') == "1") {
+                    $price = (int) $price + (int) + $request->input('cost');
+                }//
+                
+                if (Auth::user()->bitrex_cash >= $price) {
+
                     $term_one = $request->input('term_one') ?? '';
                     $term_two = $request->input('term_two') ?? '';
 
@@ -974,25 +994,6 @@ class ProfileMemberController extends Controller
                                 'cost' => $request->kurir,
                             ]);
                         }
-
-                        $totalPriceEbook = 0;
-
-                        if(count($ebooks) > 0) {
-                            $totalPriceEbook = DB::table('ebooks')
-                                ->whereIn('id', $ebooks)
-                                ->sum('price');
-                            $price = ((int) $price + (int) ($totalPriceEbook / 1000));
-                        } else {
-                            DB::rollback();
-                            Alert::error('Minimal membeli 1 Ebook', 'Error')->persistent("OK");
-                            $data = Auth::user();
-                            $data['data'] = $request;
-                            return view('frontend.tree')->with('profile',$data);
-                        }
-
-                        if($request->input('shipping_method') == "1") {
-                            $price = (int) $price + (int) + $request->input('cost');
-                        }//
 
                         foreach($ebooks as $ebook) {
                             $prefixRef = 'BITREX02';

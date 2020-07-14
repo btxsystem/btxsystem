@@ -38,6 +38,12 @@
 // });
 
 Route::domain(env('EBOOK_URL'))->group(function () {
+  Route::group(['prefix' => 'v2'], function() {
+    Route::get('/ebook', 'EbookV2\EbookController@index');
+    Route::get('/ebook/{type}/{username}', 'EbookV2\EbookController@detail')->name('member.ebookv2.referral');
+    Route::get('/ebook/{type}', 'EbookV2\EbookController@detail')->name('member.ebookv2.detail');
+  });
+
   Route::get('/videoEbook', 'MemberV2\ExploreController@videoBasic')->name('member.video.ebook');
   Route::get('/videoAdvanced', 'MemberV2\ExploreController@videoAdvanced')->name('member.video.ebook.advanced');
 

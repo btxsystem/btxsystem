@@ -12,6 +12,9 @@
 .text-bold {
 	font-weight:bold !important;
 }
+.tabs-cutom .nav-link.active {
+	background-color: #ffb320 !important;
+}
 </style>
 @stop
 
@@ -135,7 +138,7 @@
 				<hr>
         <div class="row mb-5">
         @foreach($book->bookEbooks as $ebook)
-				@if($access == null)
+				@if($access != null)
           <div class="col-lg-3 mb-3 hover">
 						<div class="shadow rounded p-3">
 							<div style="overflow: hidden;" class="mb-2">
@@ -191,19 +194,35 @@
 				@endforeach --}}
 					
 				</div>
-					<div class="d-flex flex-row flex-wrap">
-						@foreach($book->videoEbooks as $video)
-						@if(count($video->videos) > 0)
-						<div style="width: 25%;height:200px" class="mb-5">
-							<div class="p-2">
-								<video preload="none" id="player" playsinline controls src="{{$video->videos[0]->path_url}}">
-								</video>
-								<span style="font-size: 20px; font-weight: bold;">{{ $video->videos[0]->title }}</span>
-							</div>
+				<div class="row">
+					<div class="col-md-3 tabs-cutom">
+						<div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+							@foreach($videoCategories as $key => $category)
+								<a class="nav-link text-dark text-center text-md-left {{$key == 0 ? 'active' : ''}}" id="v-pills-{{$key}}-tab" data-toggle="pill" href="#v-pills-{{$key}}" role="tab" aria-controls="v-pills-{{$key}}" aria-selected="true">{{ $category->name }}</a>
+							@endforeach
 						</div>
-						@endif
-						@endforeach
 					</div>
+					<div class="col-md-9 py-0">
+						<div class="tab-content" id="v-pills-tabContent">
+							@foreach($videoCategories as $key => $category)
+							<div class="tab-pane fade show {{$key == 0 ? 'active' : ''}}" id="v-pills-{{$key}}" role="tabpanel" aria-labelledby="v-pills-{{$key}}-tab">
+								<div class="row">
+									@foreach($category->videos as $video)
+									<div  class="col-md-4 mb-5 p-0" style="height:200px">
+										<div class="p-2">
+											<video preload="none" id="player" playsinline controls src="{{$video->path_url}}">
+											</video>
+											<span style="font-size: 20px; font-weight: bold;">{{ $video->title }}</span>
+										</div>
+									</div>
+									@endforeach
+								</div>
+							</div>
+							@endforeach
+						</div>
+					</div>
+				</div>
+					
 				@endif
         @endforeach
 				<!-- <div class="d-flex align-items-center">

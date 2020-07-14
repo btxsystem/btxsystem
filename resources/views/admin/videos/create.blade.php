@@ -39,12 +39,34 @@ Create Video
                             </div>
 
                             <div class="form-group">
+                                <label class="col-md-2 control-label">Category</label>
+                                <div class="col-md-8 inputGroupContainer">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-tags"></i></span>
+                                        <select name="category_id" id="category_id" class="form-control">
+                                            @foreach($categories as $category)
+                                                <option value="{{$category->id}}">{{$category->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">Video</label>
+                                <div class="col-md-8 inputGroupContainer">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-image"></i></span>
+                                        <input id="video" name="path" placeholder="video" class="form-control" required="true" value="{{old('video')}}" type="text">
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <div class="form-group">
                                 <label class="col-md-2 control-label">Video</label>
                                 <div class="col-md-8 inputGroupContainer">
                                     <input id="path" name="path" class="form-control" required="true" value="{{old('path')}}" type="file">
                                     <small class="text-danger">{{ $errors->first('path') }}</small>
                                 </div>
-                            </div>
+                            </div> -->
 
                             <div class="form-group">
                                 <label class="col-md-2 control-label"></label>
