@@ -115,8 +115,10 @@ Route::group(['middleware' => 'admin'], function () {
 
     // Ebook
     Route::resource('ebook', 'Admin\EbookController');
+    Route::resource('video-category', 'Admin\VideoCategoryController');
     Route::get('ebook/{id}/create/book','Admin\BookController@create')->name('ebook.create.book');
     Route::get('ebook/{id}/create/video','Admin\VideoController@create')->name('ebook.create.video');
+    Route::get('ebook/{id}/create/video-category','Admin\VideoCategoryController@create')->name('ebook.create.video-category');
 
     Route::get('ebook/{id}/book-data','Admin\EbookController@bookData')->name('ebook.bookData');
     Route::get('ebook/{id}/video-data','Admin\EbookController@videoData')->name('ebook.videoData');
