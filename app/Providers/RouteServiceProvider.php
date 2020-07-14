@@ -78,7 +78,7 @@ class RouteServiceProvider extends ServiceProvider
     protected function mapAdminRoutes(){
 
        Route::prefix('backoffice')
-             ->middleware(['backoffice', 'cors.middleware'])
+             ->middleware(['backoffice'])
              ->namespace($this->namespace)
              ->group(base_path('routes/admin.php'));
     }
