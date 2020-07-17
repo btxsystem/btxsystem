@@ -10,6 +10,7 @@ use Alert;
 use Validator;
 use DB;
 use App\Service\NotificationService;
+use Carbon\Carbon;
 
 
 class EbookController extends Controller
@@ -75,6 +76,17 @@ class EbookController extends Controller
             $ebook->src = $uploadPath;
         }
 
+        if ($request->promotion) {
+
+            $request->validate([
+                'start_date' => 'required',
+                'end_date' => 'required',
+            ]);
+
+            $ebook->started_at = date('Y-m-d', strtotime(date('Y-m-d', strtotime($request->start_date))));
+            $ebook->ended_at = date('Y-m-d', strtotime(date('Y-m-d', strtotime($request->end_date))));
+        }
+
         $ebook->save();
         $ebook->position = $ebook->id;
         $ebook->save();
@@ -91,6 +103,18 @@ class EbookController extends Controller
             $ebook_renewal->src = $ebook->src;
             $ebook_renewal->parent_id = $ebook->id; 
             $ebook_renewal->position = $ebook->id;
+
+            if ($request->promotion) {
+
+                $request->validate([
+                    'start_date' => 'required',
+                    'end_date' => 'required',
+                ]);
+    
+                $ebook_renewal->started_at = date('Y-m-d', strtotime(date('Y-m-d', strtotime($request->start_date))));
+                $ebook_renewal->ended_at = date('Y-m-d', strtotime(date('Y-m-d', strtotime($request->end_date))));
+            }
+
             $ebook_renewal->save();
         }
 
@@ -158,10 +182,20 @@ class EbookController extends Controller
             $data->src = $uploadPath;
         }
 
+        if ($request->promotion) {
+
+            $request->validate([
+                'start_date' => 'required',
+                'end_date' => 'required',
+            ]);
+
+            $data->started_at = date('Y-m-d', strtotime(date('Y-m-d', strtotime($request->start_date))));
+            $data->ended_at = date('Y-m-d', strtotime(date('Y-m-d', strtotime($request->end_date))));
+        }
 
         $data->save();
         Alert::success('Sukses Update Data Ebook', 'Sukses');
-        return redirect()->route('ebook.show', $id);
+        return redirect()->route('ebook.index');
     }
 
     /**

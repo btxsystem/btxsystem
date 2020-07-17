@@ -87,6 +87,58 @@ Edit Ebook
                             </div>
 
                             <div class="form-group">
+                                <label class="col-md-2 control-label"></label>
+                                <div class="col-md-8 inputGroupContainer">
+                                    <div class="input-group">
+                                        <input type="checkbox" name="promotion[]" value="1" {{$data->started_at ? "checked" : ""}}> Product Promotion
+                                    </div>
+                                    <p class="text-danger">{{ $errors->first('promotion') }}</p>
+                                </div>
+                            </div>
+
+                            @if ($data->started_at)
+                                <div class="form-group start-date">
+                                    <label class="col-md-2 control-label">Start Date</label>
+                                    <div class="col-md-8 inputGroupContainer">
+                                        <div class="input-group">
+                                            <input type="date" name="start_date" value="{{\Carbon\Carbon::parse($data->started_at)->format('Y-m-d')}}" class="form-control" placeholder="Start Date">
+                                        </div>
+                                        <p class="text-danger">{{ $errors->first('start_date') }}</p>
+                                    </div>
+                                </div>
+
+                                <div class="form-group end-date">
+                                    <label class="col-md-2 control-label">End Date</label>
+                                    <div class="col-md-8 inputGroupContainer">
+                                        <div class="input-group">
+                                            <input type="date" name="end_date" value="{{\Carbon\Carbon::parse($data->ended_at)->format('Y-m-d')}}" class="form-control" placeholder="End Date">
+                                        </div>
+                                        <p class="text-danger">{{ $errors->first('end_date') }}</p>
+                                    </div>
+                                </div>
+                            @else
+                                <div class="form-group start-date" hidden>
+                                    <label class="col-md-2 control-label">Start Date</label>
+                                    <div class="col-md-8 inputGroupContainer">
+                                        <div class="input-group">
+                                            <input type="date" name="start_date" class="form-control" placeholder="Start Date">
+                                        </div>
+                                        <p class="text-danger">{{ $errors->first('start_date') }}</p>
+                                    </div>
+                                </div>
+
+                                <div class="form-group end-date" hidden>
+                                    <label class="col-md-2 control-label">End Date</label>
+                                    <div class="col-md-8 inputGroupContainer">
+                                        <div class="input-group">
+                                            <input type="date" name="end_date" class="form-control" placeholder="End Date">
+                                        </div>
+                                        <p class="text-danger">{{ $errors->first('end_date') }}</p>
+                                    </div>
+                                </div>
+                            @endif
+
+                            <div class="form-group">
                                 <label class="col-md-2 control-label">Description</label>
                                 <div class="col-md-8 inputGroupContainer">
                                     <div class="input-group">
@@ -123,5 +175,16 @@ Edit Ebook
             width: "710px",
             height: "350px",
         });  
+
+        $('input[type="checkbox"][name="promotion[]"]').change(function() {
+            if(this.checked) {
+                $('.start-date').show();
+                $('.end-date').show();
+            }else{
+                $('.start-date').hide();
+                $('.end-date').hide();
+            }
+        });
+
     </script>
 @stop
