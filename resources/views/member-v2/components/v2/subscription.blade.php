@@ -286,11 +286,11 @@ div#flag {
 		<div class="container pt-5">
 			<div class="row">
 				@foreach($ebooks as $ebook)
-				<div class="col-lg-6 mb-3">
+				<div class="col-lg-12 mb-3">
 					<div class="row">
 						@if(Auth::guard('nonmember')->user() || Auth::guard('user')->user())
 							@if($ebook->access_ebook != null)
-								<div class="col-8 mx-auto">
+								<div class="col-4 mx-auto">
 									<div id="clockdiv_{{$ebook->id}}" class="clockdiv mt-2">
 										<div>
 											<span class="days"></span>
@@ -355,16 +355,16 @@ div#flag {
 											@endif
 
 											@if($ebook->access_ebook != null)
-												<a href="{{route('member.ebookv2.detail', ['type' => $ebook->slug])}}" class="btn btn-secondary text-white btn-sm mt-3 px-5">VIEW</a>
+												<a href="{{route('member.ebook.detail', ['type' => $ebook->slug])}}" class="btn btn-secondary text-white btn-sm mt-3 px-5">VIEW</a>
 											@endif
 										@else
                       @if($ebook->status == 6)
 												<form action="">
-													<a href="{{route('member.ebookv2.detail', ['type' => $ebook->slug, 'username' => $username])}}" class="btn btn-identity-red btn-sm mt-3 px-5">BUY</a>
+													<a href="{{route('member.ebook.detail', ['type' => $ebook->slug, 'username' => $username])}}" class="btn btn-identity-red btn-sm mt-3 px-5">BUY</a>
 												</form>
                       @else
                       <form action="">
-                        <a href="{{route('member.ebookv2.detail', ['type' => $ebook->slug, 'username' => $username])}}" class="btn btn-identity-red btn-sm mt-3 px-5">BUY</a>
+                        <a href="{{route('member.ebook.detail', ['type' => $ebook->slug, 'username' => $username])}}" class="btn btn-identity-red btn-sm mt-3 px-5">BUY</a>
                       </form>
                       @endif
 										@endif

@@ -25,7 +25,7 @@ class Authenticate extends Middleware
                 Auth::guard('nonmember')->logout();
                 return view('frontend.auth.maintenance');
             }
-            return redirect()->route('member.explore');
+            return redirect()->route('member.home');
         }
         // if (request()->segment(1) != 'backoffice' || request()->segment(1) != 'ebook' || request()->segment(1) != 'login') {
         //     dd(Auth::guard('user')->check());

@@ -12,7 +12,7 @@ class EbookAccess
           return $next($request);
         }
 
-        return redirect()->route('member.explore');
+        return redirect()->route('member.home');
         
     }
     
