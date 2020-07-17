@@ -17,6 +17,7 @@ use App\Service\NotificationService;
 
 use Illuminate\Support\Facades\Mail;
 use App\Mail\RegisterMemberMail;
+use App\Models\Ebook;
 use App\models\GotReward;
 use Redirect;
 
@@ -148,12 +149,22 @@ class ProfileMemberController extends Controller
             }
 
             if($method == 'point') {
-                // return response()->json([
-                //     'data' => $request->all()
-                // ]);
+
                 $ebooks = $request->input('ebooks') ?? [];
                 $term_one = $request->input('term_one') ?? '';
                 $term_two = $request->input('term_two') ?? '';
+
+                $cekEbook = Ebook::whereIn('id', $ebooks)->get();
+
+                foreach ($cekEbook as $cek) {
+                    if ($cek->parent_id != 0) {
+                        DB::rollback();
+                        Alert::error('ebook tidak bisa dibeli', 'Error')->persistent("OK");
+                        $data = Auth::user();
+                        $data['data'] = $request;
+                        return view('frontend.tree')->with('profile',$data) ;
+                    }
+                }
 
                 if($term_one == '' || $term_two == '') {
                     DB::rollback();
@@ -765,7 +776,17 @@ class ProfileMemberController extends Controller
             if($method == 'point') {
                 $price = 280;
                 $ebooks = $request->input('ebooks') ?? [];
+                $cekEbook = Ebook::whereIn('id', $ebooks)->get();
 
+                foreach ($cekEbook as $cek) {
+                    if ($cek->parent_id != 0) {
+                        DB::rollback();
+                        Alert::error('ebook tidak bisa dibeli', 'Error')->persistent("OK");
+                        $data = Auth::user();
+                        $data['data'] = $request;
+                        return view('frontend.tree')->with('profile',$data) ;
+                    }
+                }
                 $totalPriceEbook = 0;
 
                 if(count($ebooks) > 0) {
@@ -783,7 +804,7 @@ class ProfileMemberController extends Controller
 
                 if($request->input('shipping_method') == "1") {
                     $price = (int) $price + (int) + $request->input('cost');
-                }//
+                }
                 
                 if (Auth::user()->bitrex_cash >= $price) {
 

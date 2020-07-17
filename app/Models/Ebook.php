@@ -9,16 +9,7 @@ class Ebook extends Model
 {
   protected $table = 'ebooks';
   
-  protected $fillable = [
-    'title',
-    'slug',
-    'price',
-    'pv',
-    'bv',
-    'price_markup',
-    'src',
-    'description'
-  ];
+  protected $guarded = [];
 
   protected $appends = [
     'expired',
