@@ -38,20 +38,23 @@
 // });
 
 Route::domain(env('EBOOK_URL'))->group(function () {
-  Route::group(['prefix' => 'v2'], function() {
-    Route::get('/ebook', 'EbookV2\EbookController@index');
-    Route::get('/ebook/{type}/{username}', 'EbookV2\EbookController@detail')->name('member.ebookv2.referral');
-    Route::get('/ebook/{type}', 'EbookV2\EbookController@detail')->name('member.ebookv2.detail');
-  });
+  // Route::group(['prefix' => 'v2'], function() {
+  //   Route::get('/ebook', 'EbookV2\EbookController@index');
+  //   Route::get('/ebook/{type}/{username}', 'EbookV2\EbookController@detail')->name('member.ebookv2.referral');
+  //   Route::get('/ebook/{type}', 'EbookV2\EbookController@detail')->name('member.ebookv2.detail');
+  // });
 
   Route::get('/videoEbook', 'MemberV2\ExploreController@videoBasic')->name('member.video.ebook');
   Route::get('/videoAdvanced', 'MemberV2\ExploreController@videoAdvanced')->name('member.video.ebook.advanced');
 
-  Route::get('/ebook', 'MemberV2\ExploreController@subscription')->name('member.home');
-
+  // Route::get('/ebook', 'MemberV2\ExploreController@subscription')->name('member.home');
+  // Route::get('explore/{type}/{username}', 'MemberV2\ExploreController@detail')->name('member.ebook.referral');
+  // Route::get('explore/{type}', 'MemberV2\ExploreController@detail')->name('member.ebook.detail');
   // Route::get('/', 'MemberV2\ExploreController@home')->name('member.home');
-  Route::get('explore/{type}/{username}', 'MemberV2\ExploreController@detail')->name('member.ebook.referral');
-  Route::get('explore/{type}', 'MemberV2\ExploreController@detail')->name('member.ebook.detail');
+  Route::get('/ebook', 'EbookV2\EbookController@index')->name('member.home');
+  Route::get('/ebook/{type}/{username}', 'EbookV2\EbookController@detail')->name('member.ebook.referral');
+  Route::get('/ebook/{type}', 'EbookV2\EbookController@detail')->name('member.ebook.detail');
+
   // Route::get('explores', 'MemberV2\ExploreController@index')->name('member.explore');
   // Route::get('/member/{username}', 'MemberV2\ExploreController@subscription')->name('member.subscription.referral');
 
