@@ -9,10 +9,10 @@ use App\Employeer;
 use App\Models\NonMember;
 use App\Models\TransactionNonMember;
 use App\Models\TransactionMember;
+use App\Models\VideoCategory;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
 use DB;
-
 class EbookController extends Controller
 {
     //
@@ -64,10 +64,10 @@ class EbookController extends Controller
         }
     }
 
-    public function detail(Request $request, $slug = '')
+    public function detail(Request $request, $slug = '', $username = null)
     {
         try {
-            $ebook = Ebook::with(['children'])
+            $ebooks = Ebook::with(['children'])
                 ->where('parent_id', 0)
                 ->where('slug', $slug)
                 ->with([
@@ -89,9 +89,45 @@ class EbookController extends Controller
                             'videos'
                         ]);
                     }
+            ])->get();
+
+            if($user = Auth::guard('nonmember')->user()) {
+                $check  = TransactionNonMember::where([
+                  'non_member_id' => $user->id,
+                ])->with([
+                  'member'
                 ])->first();
-            
-            return response()->json($ebook);
+          
+                if($check) {
+                  $referral = $check->member->username;
+                } else {
+                  $referral = '';
+                }
+          
+              } else {
+                $referral = $request->input('username') ?? \Session::get('referral');
+          
+          
+                if(Employeer::where('username', $username)->count() > 0 || \Session::has('referral')) {
+                  if(\Session::has('referral')) {
+                    $referral = \Session::get('referral');
+                    if($referral != $username) {
+                      // \Session::forget('referral');
+                    }
+                  } else {
+                    $referral = $username;
+                    \Session::put('referral', $username);
+                  }
+                }
+              }
+
+            $videoCategories = VideoCategory::with('videos')->where('ebook_id', $ebooks[0]->id)->get();
+
+            return view('member-v2.components.v2.list-ebook')->with([
+                'books' => $ebooks,
+                'username' => $referral,
+                'videoCategories' => $videoCategories
+            ]);
         } catch(\Exception $e) {
             return redirect()->route('member.home');
         }
