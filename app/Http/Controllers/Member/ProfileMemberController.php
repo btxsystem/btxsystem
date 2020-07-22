@@ -806,7 +806,7 @@ class ProfileMemberController extends Controller
                     $price = (int) $price + (int) + $request->input('cost');
                 }
                 
-                if (Auth::user()->bitrex_cash >= $price) {
+                if (Auth::user()->bitrex_points >= $price) {
 
                     $term_one = $request->input('term_one') ?? '';
                     $term_two = $request->input('term_two') ?? '';
