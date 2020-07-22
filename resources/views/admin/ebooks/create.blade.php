@@ -120,6 +120,36 @@ Create Book
                             </div>
 
                             <div class="form-group">
+                                <label class="col-md-2 control-label"></label>
+                                <div class="col-md-8 inputGroupContainer">
+                                    <div class="input-group">
+                                        <input type="checkbox" name="promotion[]" value="1"> Product Promotion
+                                    </div>
+                                    <p class="text-danger">{{ $errors->first('promotion') }}</p>
+                                </div>
+                            </div>
+
+                            <div class="form-group start-date" hidden>
+                                <label class="col-md-2 control-label">Start Date</label>
+                                <div class="col-md-8 inputGroupContainer">
+                                    <div class="input-group">
+                                        <input type="date" name="start_date" class="form-control" placeholder="Start Date">
+                                    </div>
+                                    <p class="text-danger">{{ $errors->first('start_date') }}</p>
+                                </div>
+                            </div>
+
+                            <div class="form-group end-date" hidden>
+                                <label class="col-md-2 control-label">End Date</label>
+                                <div class="col-md-8 inputGroupContainer">
+                                    <div class="input-group">
+                                        <input type="date" name="end_date" class="form-control" placeholder="End Date">
+                                    </div>
+                                    <p class="text-danger">{{ $errors->first('end_date') }}</p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
                                 <label class="col-md-2 control-label">Description</label>
                                 <div class="col-md-8 inputGroupContainer">
                                     <div class="input-group">
@@ -151,11 +181,21 @@ Create Book
 @stop
 
 @section('footer_scripts')
-<script src="/editor/ckeditor/ckeditor.js"></script>  
+    <script src="/editor/ckeditor/ckeditor.js"></script>  
     <script>
         CKEDITOR.replace( 'description',{
             width: "710px",
             height: "350px",
+        });
+
+        $('input[type="checkbox"][name="promotion[]"]').change(function() {
+            if(this.checked) {
+                $('.start-date').show();
+                $('.end-date').show();
+            }else{
+                $('.start-date').hide();
+                $('.end-date').hide();
+            }
         });  
     </script>
 @stop
