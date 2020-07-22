@@ -817,7 +817,6 @@ class ProfileMemberController extends Controller
                         return redirect()->route('member.tree');
                     }
 
-                    $price = 280;
                     $sponsor = Auth::user();
                     $idMember = invoiceNumbering();
 
