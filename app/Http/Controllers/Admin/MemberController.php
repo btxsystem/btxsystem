@@ -698,6 +698,14 @@ class MemberController extends Controller
             DB::beginTransaction();
 
             if($totalTransaction) {
+                $previousTime = strtotime($totalTransaction->expired_at);
+                $currentTime = strtotime($date);
+
+                if($currentTime < $previousTime) {
+                    DB::rollBack();
+                    Alert::error('Gagal Menambahkan Masa Aktif Ebook, Penambahan Harus lebih besar dari tanggal sebelumnya', 'Gagal');
+                    return redirect()->back();
+                }
                 
                 $previousDate = Carbon::parse($totalTransaction->expired_at);
 
@@ -738,6 +746,14 @@ class MemberController extends Controller
                 return redirect()->back();
             }
 
+            $previousTime = strtotime($transactionMember->expired_at);
+            $currentTime = strtotime($date);
+
+            if($currentTime < $previousTime) {
+                DB::rollBack();
+                Alert::error('Gagal Menambahkan Masa Aktif Ebook, Penambahan Harus lebih besar dari tanggal sebelumnya', 'Gagal');
+                return redirect()->back();
+            }
 
             $previousDate = Carbon::parse($transactionMember->expired_at);
 

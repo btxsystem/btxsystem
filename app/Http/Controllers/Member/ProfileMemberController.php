@@ -174,6 +174,7 @@ class ProfileMemberController extends Controller
                     return view('frontend.tree')->with('profile',$data) ;
                 }
 
+                $price = 280;
                 $sponsor = Auth::user();
                 $idMember = invoiceNumbering();
 
