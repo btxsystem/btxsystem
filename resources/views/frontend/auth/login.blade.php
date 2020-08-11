@@ -154,7 +154,7 @@
               </div>
               <div class="posts-wrap">
                 @foreach ($data['ourProduct'] as $item)
-                    <article class="post post_mod-a clearfix wow zoomIn" data-wow-duration="1s">
+                    <article class="post post_mod-a clearfix wow zoomIn" data-wow-duration="1s" style="width: 46%!important;">
                         <div class="entry-media">
                           <div class="entry-thumbnail"> <a href="javascript:void(0);" ><img class="img-responsive" src="{{$item->img}}" style="width: 100%;" alt="Foto"/></a> </div>
                         </div>

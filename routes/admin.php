@@ -306,6 +306,7 @@ Route::group(['middleware' => 'admin'], function () {
 
         Route::resource('testimonials', 'Admin\TestimonialController');
         Route::post('update-testimony', 'Admin\TestimonialController@update')->name('update-testimony');
+        Route::post('testimonials/delete/{id}', 'Admin\TestimonialController@destroy')->name('delete-testimony');
         Route::get('testimonials/published/{id}', ['as' => 'published', 'uses' => 'Admin\TestimonialController@published']);
         Route::get('testimonials/unpublished/{id}', ['as' => 'unpublished', 'uses' => 'Admin\TestimonialController@unpublished']);
 

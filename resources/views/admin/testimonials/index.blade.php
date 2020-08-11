@@ -162,7 +162,7 @@ List Of Testimonial
         $(document).on('click', '.delete-ourProduct', function (e) {
             e.preventDefault();
             var id = $(this).data('id');
-            var url =   "{{url('backoffice/cms/our-products/')}}"
+            var url =   "{{url('backoffice/cms/testimonials/delete/')}}"
             swal({
                     title: "Are you sure ?",
                     type: "error",
@@ -172,11 +172,10 @@ List Of Testimonial
                 },
                 function() {
                     $.ajax({
-                        type: "DELETE",
+                        type: "POST",
                         url: url +'/'+ id,
-                        data: {id:id},
                         success: function (data) {
-                                window.location.href = "{{ route('cms.our-products.index') }}";
+                                window.location.href = "{{ route('cms.testimonials.index') }}";
                             }         
                     });
             });
