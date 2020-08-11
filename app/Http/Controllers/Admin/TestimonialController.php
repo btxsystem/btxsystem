@@ -132,6 +132,14 @@ class TestimonialController extends Controller
     public function destroy($id)
     {
         //
+        $data = Testimonial::findOrFail($id);
+        if ($data) { 
+            $data->delete(); 
+            Alert::success('Success Delete Data', 'Success');
+        } else {
+            Alert::error('Gagal Delete Data', 'Gagal');
+        }
+        return \redirect()->back();
     }
 
     public function published($id)
