@@ -14,6 +14,7 @@ use App\Models\AttachmentImage;
 use Illuminate\Routing\UrlGenerator;
 use App\Models\AboutUs;
 use App\Models\HallOfFame;
+use App\Models\OurProduct;
 
 class LoginController extends Controller
 {
@@ -22,8 +23,9 @@ class LoginController extends Controller
     $testimoni = Testimonial::where('isPublished',1)->select('name','desc')->get();
     $ourHeadQuarter = AttachmentImage::where('attachable_type','App\Models\OurHeadquarter')
                                      ->where('isPublished',1)->select('name','path')->get();
-    $ourProduct = AttachmentImage::where('attachable_type','App\Models\EventPromotion')
-                                     ->where('isPublished',1)->select('name','path')->get();
+    // $ourProduct = AttachmentImage::where('attachable_type','App\Models\EventPromotion')
+    //                                  ->where('isPublished',1)->select('name','path')->get();
+    $ourProduct = OurProduct::all();
     $about_us = AboutUs::where('isPublished',1)->select('title','img','desc')->get();
     $hallOfFame = HallOfFame::with(['member','member.rank'])->get();
 
@@ -37,7 +39,7 @@ class LoginController extends Controller
         $data['ourHeadQuarter'] = $ourHeadQuarter;
     }if ($ourProduct) {
         foreach ($ourProduct as $key => $value) {
-            $value->path = $url->to('/').'/'.$value->path;
+            $value->img = $url->to('/').'/'.$value->img;
         }
         $data['ourProduct'] = $ourProduct;
     }if ($about_us) {
