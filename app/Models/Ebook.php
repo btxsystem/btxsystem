@@ -87,12 +87,12 @@ class Ebook extends Model
           $expired = $expired->transaction_ebook_expired;
         }
       }
+
+      $currentTimestamp = strtotime(date('Y-m-d H:i:s'));
+      $expiredTimestamp = strtotime($expired['expired_at']);
+
+      if($currentTimestamp > $expiredTimestamp) return null;
     }
-
-    $currentTimestamp = strtotime(date('Y-m-d H:i:s'));
-    $expiredTimestamp = strtotime($expired['expired_at']);
-
-    if($currentTimestamp > $expiredTimestamp) return null;
 
     return $expired;
   }

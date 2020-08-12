@@ -375,8 +375,8 @@ const players = Array.from(document.querySelectorAll('#player')).map(p => {
 	// 	]
 	// })
 });
-$('#submit-va').hide();
-$('#submit-nonva').show();
+$('#submit-va').show();
+$('#submit-nonva').hide();
 
 </script>
 
