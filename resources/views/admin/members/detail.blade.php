@@ -507,7 +507,7 @@
                     <h4 class="modal-title">Buy Product For {{$data->username}} / {{$data->id_member}}</h4>
                 </div>
                 <div class="modal-body">
-                    <form class="well form-horizontal" action="{{ route('members.buy-product') }}">
+                    <form class="well form-horizontal" id="form-buy-product" action="{{ route('members.buy-product') }}">
                         {{ csrf_field() }}
                         <fieldset>
                         <input id="member_id" name="member_id" value="{{$data->id}}" type="hidden">
@@ -528,7 +528,7 @@
                         </div>
                         </fieldset>
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <button type="submit" class="btn btn-primary" id="submit-buy-product">Submit</button>
                         </div>
                     </form>
                 </div>
@@ -541,6 +541,11 @@
 @section('footer_scripts')
     <script type="text/javascript">
         $(document).ready(function () {
+
+            $('#submit-buy-product').click(function() {
+                $(this).attr('disabled', true)
+                $('#form-buy-product').submit()
+            })
         
           var table = $('.points-table').DataTable({
               destroy: true,
