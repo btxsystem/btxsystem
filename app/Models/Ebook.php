@@ -18,7 +18,9 @@ class Ebook extends Model
     'expired_at',
     'status',
     'expired_timestamp',
-    'access_ebook'
+    'access_ebook',
+    'total_price_discount',
+    'is_promotion'
   ];
 
 
@@ -55,6 +57,29 @@ class Ebook extends Model
   public function children()
   {
     return $this->belongsTo('\App\Models\Ebook', 'id', 'parent_id');
+  }
+
+  public function getTotalPriceDiscountAttribute()
+  {
+    if($this->price_discount > 0) {
+      return (($this->price * $this->price_discount) / 100);
+    }
+    return 0;
+  }
+
+  public function getIsPromotionAttribute()
+  {
+    if($this->started_at && $this->ended_at) {
+      $currentTimestamp = strtotime(date('Y-m-d H:i:s'));
+      $startedTimestamp = strtotime($this->started_at);
+      $endedTimestamp = strtotime($this->ended_at);
+
+      if($currentTimestamp >= $startedTimestamp && $currentTimestamp <= $endedTimestamp) {
+        return true;
+      }
+    }
+
+    return false;
   }
 
   public function getAccessEbookAttribute()

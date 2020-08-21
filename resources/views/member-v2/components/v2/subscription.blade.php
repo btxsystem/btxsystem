@@ -351,7 +351,7 @@ div#flag {
                       <input type="hidden" name="repeat" value="true">
 
 											@if($ebook->children != null)
-												<button onclick="changeValueRepeat(JSON.stringify({'price': '{{$ebook->children->price}}', 'price_markup': '{{$ebook->children->price_markup}}', 'id': '{{$ebook->children->id}}'}))" data-toggle="modal" data-target="#repeatModal" type="button" class="btn btn-identity-red text-white btn-sm mt-3 px-5">REPEAT ORDER</button>
+												<button onclick="changeValueRepeat(JSON.stringify({'price': '{{$ebook->children->price}}', 'price_markup': '{{$ebook->children->price_markup}}', 'id': '{{$ebook->children->id}}', 'total_price_discount': '{{$ebook->children->total_price_discount}}', 'minimum_product': '{{$ebook->children->minimum_product}}', 'is_promotion': '{{$ebook->children->is_promotion ?? false}}'}))" data-toggle="modal" data-target="#repeatModal" type="button" class="btn btn-identity-red text-white btn-sm mt-3 px-5">REPEAT ORDER</button>
 											@endif
 
 											@if($ebook->access_ebook != null)
@@ -432,7 +432,9 @@ div#flag {
 									<label class="form-check-label" for="inlineRadio1">BCA VA</label>
 								</div>
 							</div>
-							<h4>Total yang dibayar : IDR </span><b><span id="total_price"></h4></b>
+							<span id="normal_price"></span>
+						<span id="price_discount"></span>
+					  <h4 id="total_price_wrapper">Total yang dibayar : IDR </span><b><span id="total_price"></h4></b>
 						</div>
 						<div class="modal-footer justify-content-center">
 							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -583,11 +585,41 @@ function changeValueRepeat(param) {
 	$('#repeatEbook').val(data.id)
 	$('#repeatPaymentMethod').val('transfer')
 
-	<?php if(Auth::guard('user')->user()){?>
-		$('#total_price').html(toIDR(data.price))
+	let totalHasProduct = 0;
+	let isPromotion = false;
+	let price = 0;
+
+	<?php if($user = Auth::guard('user')->user()){?>
+		// logic for member
+		totalHasProduct = parseInt("{{$user->total_product}}")
+		isPromotion = totalHasProduct >= data.minimum_product && data.is_promotion
+		price = parseInt(data.price)
+	<?php } else if($user = Auth::guard('nonmember')->user()){?>
+		// login for non member
+		totalHasProduct = parseInt("0")
+		isPromotion = totalHasProduct >= data.minimum_product && data.is_promotion
+		price = parseInt(data.price) + parseInt(data.price_markup)
 	<?php } else {?>
-		$('#total_price').html(toIDR(parseInt(data.price) + parseInt(data.price_markup)))
-	<?php } ?>
+	  // login for guest
+		totalHasProduct = parseInt("0")
+		isPromotion = totalHasProduct >= data.minimum_product && data.is_promotion
+		price = parseInt(data.price) + parseInt(data.price_markup)
+	<?php } ?>	
+
+	// check is promotion
+	if(isPromotion) {
+		$('#price_discount').html(`
+			<h3 class="text-success">Diskon : IDR <b>${toIDR(data.total_price_discount)}</b></h3>
+		`)
+		$('#normal_price').html(`
+			<s><h4>Harga : IDR <b>${toIDR(price)}</b></h4></s>
+		`)
+		$('#total_price_wrapper').addClass('text-warning')
+		$('#total_price').html(toIDR(price - parseInt(data.total_price_discount)))
+	} else {
+		$('#total_price').html(toIDR(price))
+	}
+
 	$('#ebook').val(data.id)
 	$('#income').val(data.price_markup)
 }
