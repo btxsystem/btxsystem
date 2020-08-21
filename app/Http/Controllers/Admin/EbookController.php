@@ -67,6 +67,8 @@ class EbookController extends Controller
         $ebook->bv = $request->bv;
         $ebook->parent_id = 0;
         $ebook->description = $request->description;
+        $ebook->price_discount = $request->price_discount;
+        $ebook->minimum_product = $request->minimum_product;
 
         if ($request->hasFile('src')) {
             $image = $request->src;
@@ -103,6 +105,9 @@ class EbookController extends Controller
             $ebook_renewal->src = $ebook->src;
             $ebook_renewal->parent_id = $ebook->id; 
             $ebook_renewal->position = $ebook->id;
+            $ebook_renewal->display_title = $ebook->display_title .' '. 'Renewal';;
+            $ebook_renewal->price_discount = $ebook->price_discount;
+            $ebook_renewal->minimum_product = $ebook->minimum_product;
 
             if ($request->promotion) {
 
@@ -171,6 +176,9 @@ class EbookController extends Controller
         $data->pv = $request->pv;
         $data->bv = $request->bv;
         $data->description = $request->description;
+        $data->display_title = $request->display_title;
+        $data->price_discount = $request->price_discount;
+        $data->minimum_product = $request->minimum_product;
 
         if ($request->hasFile('src')) {
             $image = $request->src;

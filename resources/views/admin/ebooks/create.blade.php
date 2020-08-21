@@ -36,6 +36,16 @@ Create Book
                             </div>
 
                             <div class="form-group">
+                                <label class="col-md-2 control-label">Display Title</label>
+                                <div class="col-md-8 inputGroupContainer">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-pencil"></i></span>
+                                        <input id="display_title" name="display_title" placeholder="Display Title" class="form-control" required="true" value="{{old('display_title')}}" type="text">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
                                 <label class="col-md-2 control-label">Price</label>
                                 <div class="col-md-3 inputGroupContainer">
                                     <div class="input-group">
@@ -129,23 +139,45 @@ Create Book
                                 </div>
                             </div>
 
-                            <div class="form-group start-date" hidden>
-                                <label class="col-md-2 control-label">Start Date</label>
-                                <div class="col-md-8 inputGroupContainer">
-                                    <div class="input-group">
-                                        <input type="date" name="start_date" class="form-control" placeholder="Start Date">
+                            <div class="form-group">
+                                <div class="start-date" hidden>
+                                    <label class="col-md-2 control-label">Start Date</label>
+                                    <div class="col-md-3 inputGroupContainer">
+                                        <div class="input-group">
+                                            <input type="date" name="start_date" class="form-control" placeholder="Start Date">
+                                        </div>
+                                        <p class="text-danger">{{ $errors->first('start_date') }}</p>
                                     </div>
-                                    <p class="text-danger">{{ $errors->first('start_date') }}</p>
+                                </div>
+
+                                <div class="end-date" hidden>
+                                    <label class="col-md-2 control-label">End Date</label>
+                                    <div class="col-md-3 inputGroupContainer">
+                                        <div class="input-group">
+                                            <input type="date" name="end_date" class="form-control" placeholder="End Date">
+                                        </div>
+                                        <p class="text-danger">{{ $errors->first('end_date') }}</p>
+                                    </div>
                                 </div>
                             </div>
 
-                            <div class="form-group end-date" hidden>
-                                <label class="col-md-2 control-label">End Date</label>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">Discount (%)</label>
                                 <div class="col-md-8 inputGroupContainer">
                                     <div class="input-group">
-                                        <input type="date" name="end_date" class="form-control" placeholder="End Date">
+                                        <span class="input-group-addon"><i class="fa fa-money"></i></span>
+                                        <input id="price_discount" name="price_discount" placeholder="Discount" class="form-control" required="true" type="number" min="0" max="100">
                                     </div>
-                                    <p class="text-danger">{{ $errors->first('end_date') }}</p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">Kepemilikan Ebook</label>
+                                <div class="col-md-8 inputGroupContainer">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-money"></i></span>
+                                        <input id="minimum_product" name="minimum_product" placeholder="Kepemilikan Ebook" class="form-control" required="true" type="number">
+                                    </div>
                                 </div>
                             </div>
 

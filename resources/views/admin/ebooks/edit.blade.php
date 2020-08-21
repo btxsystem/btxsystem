@@ -36,6 +36,16 @@ Edit Ebook
                             </div>
 
                             <div class="form-group">
+                                <label class="col-md-2 control-label">Display Title</label>
+                                <div class="col-md-8 inputGroupContainer">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-pencil"></i></span>
+                                        <input id="display_title" name="display_title" placeholder="Display Title" class="form-control" required="true" value="{{$data->display_title}}" type="text">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
                                 <label class="col-md-2 control-label">Price</label>
                                 <div class="col-md-8 inputGroupContainer">
                                     <div class="input-group">
@@ -96,10 +106,11 @@ Edit Ebook
                                 </div>
                             </div>
 
+                            <div class="form-group">
                             @if ($data->started_at)
-                                <div class="form-group start-date">
+                                <div class="start-date">
                                     <label class="col-md-2 control-label">Start Date</label>
-                                    <div class="col-md-8 inputGroupContainer">
+                                    <div class="col-md-3 inputGroupContainer">
                                         <div class="input-group">
                                             <input type="date" name="start_date" value="{{\Carbon\Carbon::parse($data->started_at)->format('Y-m-d')}}" class="form-control" placeholder="Start Date">
                                         </div>
@@ -107,9 +118,9 @@ Edit Ebook
                                     </div>
                                 </div>
 
-                                <div class="form-group end-date">
+                                <div class="end-date">
                                     <label class="col-md-2 control-label">End Date</label>
-                                    <div class="col-md-8 inputGroupContainer">
+                                    <div class="col-md-3 inputGroupContainer">
                                         <div class="input-group">
                                             <input type="date" name="end_date" value="{{\Carbon\Carbon::parse($data->ended_at)->format('Y-m-d')}}" class="form-control" placeholder="End Date">
                                         </div>
@@ -117,7 +128,7 @@ Edit Ebook
                                     </div>
                                 </div>
                             @else
-                                <div class="form-group start-date" hidden>
+                                <div class="start-date" hidden>
                                     <label class="col-md-2 control-label">Start Date</label>
                                     <div class="col-md-8 inputGroupContainer">
                                         <div class="input-group">
@@ -127,7 +138,7 @@ Edit Ebook
                                     </div>
                                 </div>
 
-                                <div class="form-group end-date" hidden>
+                                <div class="end-date" hidden>
                                     <label class="col-md-2 control-label">End Date</label>
                                     <div class="col-md-8 inputGroupContainer">
                                         <div class="input-group">
@@ -137,6 +148,27 @@ Edit Ebook
                                     </div>
                                 </div>
                             @endif
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">Discount (%)</label>
+                                <div class="col-md-8 inputGroupContainer">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-money"></i></span>
+                                        <input id="price_discount" name="price_discount" placeholder="Discount" class="form-control" required="true" value="{{$data->price_discount}}" type="number" min="0" max="100">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">Kepemilikan Ebook</label>
+                                <div class="col-md-8 inputGroupContainer">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-money"></i></span>
+                                        <input id="minimum_product" name="minimum_product" placeholder="Kepemilikan Ebook" class="form-control" required="true" value="{{$data->minimum_product}}" type="number">
+                                    </div>
+                                </div>
+                            </div>
 
                             <div class="form-group">
                                 <label class="col-md-2 control-label">Description</label>
