@@ -54,4 +54,17 @@ class ValidationDataController extends Controller
             ]);
         }
     }
+
+    public function validateExistIdentity(Request $request)
+    {
+        try {
+            return response()->json([
+                'success' => $this->validationService->validateExistIdentity($request->input('nik'))
+            ]);
+        } catch(\Exception $e) {
+            return response()->json([
+                'success' => false
+            ]);
+        }
+    }
 }
