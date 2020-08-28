@@ -879,6 +879,22 @@ em{
 				return $(this).prop("checked")
 			})
 
+			n=ebookSelected.length; //Tambah value untuk stored temporary
+			let cancelledEbook = false;
+		
+
+			if(n>=2){
+				var r = confirm("Apakah Anda yakin membeli " + n +" ebook?");
+				if (r == true) {
+
+				} else { 
+					cancelledEbook = true
+					$(this).prop("checked", false)
+				}
+			}
+
+			/*
+
 			let cancelledEbook = false;
 
 			if(ebookSelected.length == 2) {
@@ -901,6 +917,7 @@ em{
 				}
 				
 			}
+			*/
 			if(priceEbook != 0) {
 				$('#cost-ebook').parent().removeClass('hidden');
 			} else {
