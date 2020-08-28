@@ -1169,12 +1169,18 @@ em{
 	})
 
 	$('#phone_number').on('input', function() {
+		let str = this.value;
+		this.value = (str.match(/[0-9]/g)) ? str.match(/[0-9]/g).join('') : '';
+		checkTerm()
+	})
+
+	$('#nik').on('input', function() {
 		let str = /^[a-zA-Z0-9_]*$/.test(this.value);
 		this.value = !str ? $(this).val().match(/[a-zA-Z0-9_]/g).join('') : this.value;
 		var text = this.value;
 		$.ajax({
 			type: 'GET',
-			url: '/member/select/username/'+text,
+			url: '/member/select/nik/'+text,
 			success: function (data) {
 				data.nik ? $('#nik_danger').text('identity you entered already exists') : $('#nik_danger').empty();
 				check_nik = data.nik ? false  : true;
@@ -1183,12 +1189,8 @@ em{
 				console.log("Error");
 			}
 		});checkTerm()
-	})
 
-	$('#nik').on('input', function() {
-		let str = this.value;
-		this.value = (str.match(/[0-9]/g)) ? str.match(/[0-9]/g).join('') : '';
-		checkTerm()
+
 	})
 
 	$('#bank_account_number').on('input', function() {
