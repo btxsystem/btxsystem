@@ -183,7 +183,7 @@
         <div class="container">
           <div class="row">
             <div class="col-xs-12">
-              <div class="video-block"> <a class="video-block__link" href="https://www.youtube.com/watch?v=wh6lxMpffCo" rel="prettyPhoto"><i class="icon stroke icon-Play"></i></a>
+              <div class="video-block"> <a class="video-block__link" href="https://www.youtube.com/watch?v=eaQ0x93SxGY" rel="prettyPhoto"><i class="icon stroke icon-Play"></i></a>
                 <h2 class="video-block__title">Bitrexgo Video</h2>
               </div>
             </div>
@@ -302,8 +302,8 @@
         <div class="container">
           <div class="row">
             <div class="col-xs-12">
-              <div class="video-block"> <a class="video-block__link" href="https://www.youtube.com/watch?v=wh6lxMpffCo" rel="prettyPhoto"><i class="icon stroke icon-Play"></i></a>
-                <h2 class="video-block__title">Bitrexgo Slide</h2>
+              <div class="video-block"> <a class="video-block__link" href="https://www.youtube.com/watch?v=eaQ0x93SxGY" rel="prettyPhoto"><i class="icon stroke icon-Play"></i></a>
+                <h2 class="video-block__title">Our Company</h2>
               </div>
             </div>
             <!-- end col -->
@@ -672,7 +672,20 @@
         let ebookSelected = $('#data-ebooks input[type=checkbox]').filter(function() {
           return $(this).prop("checked")
         })
+        n=ebookSelected.length; //Tambah value untuk stored temporary
+			let cancelledEbook = false;
+		
 
+			if(n>=2){
+				var r = confirm("Apakah Anda yakin membeli " + n +" ebook?");
+				if (r == true) {
+
+				} else { 
+					cancelledEbook = true
+					$(this).prop("checked", false)
+				}
+			}
+/*
         let cancelledEbook = false;
 
         if(ebookSelected.length == 2) {
@@ -683,7 +696,7 @@
             cancelledEbook = true
             $(this).prop("checked", false)
           }
-        }
+        }*/
         
 
         if($(this).prop('checked')) {
