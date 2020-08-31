@@ -161,22 +161,40 @@ Create Book
                                 </div>
                             </div>
 
-                            <div class="form-group">
-                                <label class="col-md-2 control-label">Discount (%)</label>
-                                <div class="col-md-8 inputGroupContainer">
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><i class="fa fa-money"></i></span>
-                                        <input id="price_discount" name="price_discount" placeholder="Discount" class="form-control" required="true" type="number" min="0" max="100">
+                            <div id="is_promotion" hidden>
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label"></label>
+                                    <div class="col-md-8 inputGroupContainer">
+                                        <div class="input-group">
+                                            <input type="checkbox" name="register_promotion" value="1"> Allow new register join promotion
+                                        </div>
+                                        <p class="text-danger">{{ $errors->first('promotion') }}</p>
                                     </div>
                                 </div>
-                            </div>
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label">Discount (%)</label>
+                                    <div class="col-md-8 inputGroupContainer">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="fa fa-money"></i></span>
+                                            <input id="price_discount" name="price_discount" placeholder="Discount" class="form-control" required="true" type="number" min="0" max="100">
+                                        </div>
+                                    </div>
+                                </div>
 
-                            <div class="form-group">
-                                <label class="col-md-2 control-label">Kepemilikan Ebook</label>
-                                <div class="col-md-8 inputGroupContainer">
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><i class="fa fa-money"></i></span>
-                                        <input id="minimum_product" name="minimum_product" placeholder="Kepemilikan Ebook" class="form-control" required="true" type="number">
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label">Kepemilikan Ebook</label>
+                                    <div class="col-md-8 inputGroupContainer">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="fa fa-money"></i></span>
+                                            <input id="minimum_product" name="minimum_product" placeholder="Kepemilikan Ebook" class="form-control" required="true" type="number">
+                                        </div>
+                                        <br/>
+                                        <span>s.d</span>
+                                        <br/><br/>
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="fa fa-money"></i></span>
+                                            <input id="maximum_product" name="maximum_product" placeholder="Kepemilikan Ebook" class="form-control" required="true" type="number" disabled>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -224,10 +242,20 @@ Create Book
             if(this.checked) {
                 $('.start-date').show();
                 $('.end-date').show();
+                $('#is_promotion').show();
             }else{
                 $('.start-date').hide();
                 $('.end-date').hide();
+                $('#is_promotion').hide();
             }
         });  
+
+        $('#minimum_product').change(function() {
+            if($(this).val() >= 0) {
+                $('#maximum_product').attr('disabled', false)
+                $('#maximum_product').attr('min', $(this).val())
+                $('#maximum_product').val() == '' ? $('#maximum_product').val(parseInt($(this).val()) + 1) : ''
+            }
+        })
     </script>
 @stop
