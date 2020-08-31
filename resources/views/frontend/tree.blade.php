@@ -213,7 +213,7 @@
             <div class="form-check">
               <input class="form-check-input" type="checkbox" id="term_one" name="term_one" value="1">
               <label class="form-check-label" for="term_one">
-                Saya telah membaca dan menyetujui <a href="https://drive.google.com/file/d/1I2pDzWx2ITxE3PKplc_6pLdP0jMrmkA1/view?usp=sharing" target="_blank">kode etik Bitrexgo</a>.
+                Saya telah membaca dan menyetujui <a href="https://bitrexgo.co.id/assets/img/codethical.pdf" target="_blank">kode etik Bitrexgo</a>.
               </label>
             </div>
             <div class="form-check">
@@ -604,6 +604,7 @@ em{
 	var check = 1;
 	var check_email = false;
 	var check_user = false;
+	var check_nik = false;
 	var available_email = false;
 	var parent_id = undefined;
 	var check_cost = true;
@@ -725,6 +726,7 @@ em{
 			&& check_email
 			&& check_cost
 			&& check_user
+			&& check_nik
 			&& available_email
 		) {
 			$('.register').prop('disabled', false)
@@ -877,6 +879,22 @@ em{
 				return $(this).prop("checked")
 			})
 
+			n=ebookSelected.length; //Tambah value untuk stored temporary
+			let cancelledEbook = false;
+		
+
+			if(n>=2){
+				var r = confirm("Apakah Anda yakin membeli " + n +" ebook?");
+				if (r == true) {
+
+				} else { 
+					cancelledEbook = true
+					$(this).prop("checked", false)
+				}
+			}
+
+			/*
+
 			let cancelledEbook = false;
 
 			if(ebookSelected.length == 2) {
@@ -899,6 +917,7 @@ em{
 				}
 				
 			}
+			*/
 			if(priceEbook != 0) {
 				$('#cost-ebook').parent().removeClass('hidden');
 			} else {
@@ -1173,9 +1192,22 @@ em{
 	})
 
 	$('#nik').on('input', function() {
-		let str = this.value;
-		this.value = (str.match(/[0-9]/g)) ? str.match(/[0-9]/g).join('') : '';
-		checkTerm()
+		let str = /^[a-zA-Z0-9_]*$/.test(this.value);
+		this.value = !str ? $(this).val().match(/[a-zA-Z0-9_]/g).join('') : this.value;
+		var text = this.value;
+		$.ajax({
+			type: 'GET',
+			url: '/member/select/nik/'+text,
+			success: function (data) {
+				data.nik ? $('#nik_danger').text('identity you entered already exists') : $('#nik_danger').empty();
+				check_nik = data.nik ? false  : true;
+			},
+			error: function() {
+				console.log("Error");
+			}
+		});checkTerm()
+
+
 	})
 
 	$('#bank_account_number').on('input', function() {
