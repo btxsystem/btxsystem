@@ -199,6 +199,11 @@
                     <td> <h4>Total Shipping</h4> </td>
                     <td class="text-right"> <h4><span id="cost-postal">0</span></h4> </td>
                     <td> <h4>Points</h4> </td>
+									</tr>
+									<tr id="total-discount-tr" class="hidden">
+                    <td> <h4>Total Discount</h4> </td>
+                    <td class="text-right"> <h4><span id="total-discount">0</span></h4> </td>
+                    <td> <h4>Points</h4> </td>
                   </tr>
                   <tr>
                     <td> <h4>Grand Total</h4> </td>
@@ -812,7 +817,7 @@ em{
 			let render = data.map((v, i) => {
 				return `
 				<div class="form-check">
-				<input class="form-check-input" data-price="${v.price}" type="checkbox" name="ebooks[]" value="${v.id}" id="${v.title}">
+				<input class="form-check-input" data-maximum-product="${v.maximum_product}" data-register-promotion="${v.register_promotion}" data-minimum-product="${v.minimum_product}" data-price-discount="${v.total_price_discount}" data-promotion="${v.is_promotion}" data-price="${v.price}" type="checkbox" name="ebooks[]" value="${v.id}" id="${v.title}">
 				<label class="form-check-label" id="${i}" for="${v.title}" ${v.id == 1 ? 'checked' : ''}>
 					${v.title}
 				</label>
@@ -889,15 +894,66 @@ em{
 				}
 			}
 
-			if($(this).prop('checked')) {
-				check += 1;
-				priceEbook = priceEbook + parseInt($(this).data('price'));
-			} else {
+			// if($(this).prop('checked')) {
+			// 	check += 1;
+
+			// 	if($(this).data('promotion')) {
+			// 		if(ebookSelected.length >= $(this).data('minimum-product')) {
+			// 			priceEbook = priceEbook + (parseInt($(this).data('price')) - parseInt($(this).data('price-discount')));
+			// 		} else {
+			// 			priceEbook = priceEbook + (parseInt($(this).data('price')));
+			// 		}
+			// 	} else {
+			// 		priceEbook = priceEbook + parseInt($(this).data('price'));
+			// 	}
+
+			// } else {
+			// 	if(!cancelledEbook) {
+			// 		check -= 1;
+
+			// 		if($(this).data('promotion')) {
+			// 			priceEbook = priceEbook - (parseInt($(this).data('price')) - parseInt($(this).data('price-discount')));
+			// 		} else {	
+			// 			priceEbook = priceEbook - parseInt($(this).data('price'));
+			// 		}
+			// 	}
+				
+			// }
+
+			priceEbook = 0
+			let totalDiscount = 0;
+			ebookSelected.each(function(index, book) {
+				if($(this).prop('checked')) {
+					if($(this).data('promotion') && $(this).data('register-promotion')) {
+						if(ebookSelected.length >= $(this).data('minimum-product') && ebookSelected.length <= $(this).data('maximum-product')) {
+							priceEbook = priceEbook + (parseInt($(this).data('price')) - parseInt($(this).data('price-discount')));
+							totalDiscount += parseInt($(this).data('price-discount'))
+						} else {
+							priceEbook = priceEbook + (parseInt($(this).data('price')));
+						}
+					} else {
+						priceEbook = priceEbook + parseInt($(this).data('price'));
+					}
+				} else {
 				if(!cancelledEbook) {
 					check -= 1;
-					priceEbook = priceEbook - parseInt($(this).data('price'));
+
+					if($(this).data('promotion') && $(this).data('register-promotion') && ebookSelected.length <= $(this).data('maximum-product')) {
+						priceEbook = priceEbook - (parseInt($(this).data('price')) - parseInt($(this).data('price-discount')));
+						totalDiscount -= parseInt($(this).data('price-discount'))
+					} else {	
+						priceEbook = priceEbook - parseInt($(this).data('price'));
+					}
+				}
 				}
 				
+			})
+
+			if(totalDiscount > 0) {
+				$('#total-discount-tr').show()
+				$('#total-discount').html(`${toPrice(totalDiscount / 1000)}`)
+			} else {
+				$('#total-discount-tr').hide()
 			}
 			if(priceEbook != 0) {
 				$('#cost-ebook').parent().removeClass('hidden');

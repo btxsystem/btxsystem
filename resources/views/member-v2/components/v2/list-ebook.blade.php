@@ -132,7 +132,7 @@
 					<!-- <img src="http://demo.viewpreview.online/assets/img/star.png" class="img-fluid mr-3"> -->
 					<span class="text-bold">{{ ucwords($book->title) }} Module</span>
 					@if($book->access_ebook == null)
-					<button class="btn btn-identity-red text-white px-5 ml-3" onclick="selectedSubscription(JSON.stringify({'price': '{{$book->price}}', 'price_markup': '{{$book->price_markup}}', 'id': '{{$book->id}}', 'total_price_discount': '{{$book->total_price_discount}}', 'minimum_product': '{{$book->minimum_product}}', 'is_promotion': '{{$book->is_promotion}}'}))">BUY</button>
+					<button class="btn btn-identity-red text-white px-5 ml-3" onclick="selectedSubscription(JSON.stringify({'price': '{{$book->price}}', 'price_markup': '{{$book->price_markup}}', 'id': '{{$book->id}}', 'total_price_discount': '{{$book->total_price_discount}}', 'minimum_product': '{{$book->minimum_product}}', 'is_promotion': '{{$book->is_promotion}}', 'register_promotion': '{{$book->register_promotion}}', 'maximum_product': '{{$book->maximum_product}}'}))">BUY</button>
 					@endif
 				</div>
 				<hr>
@@ -547,17 +547,17 @@ function selectedSubscription(param) {
 	<?php if($user = Auth::guard('user')->user()){?>
 		// logic for member
 		totalHasProduct = parseInt("{{$user->total_product}}")
-		isPromotion = totalHasProduct >= data.minimum_product && data.is_promotion
+		isPromotion = (totalHasProduct >= data.minimum_product && totalHasProduct <= data.maximum_product) && data.is_promotion
 		price = parseInt(data.price)
 	<?php } else if($user = Auth::guard('nonmember')->user()){?>
 		// login for non member
 		totalHasProduct = parseInt("0")
-		isPromotion = totalHasProduct >= data.minimum_product && data.is_promotion
+		isPromotion = (totalHasProduct >= data.minimum_product && totalHasProduct <= data.maximum_product) && data.is_promotion
 		price = parseInt(data.price) + parseInt(data.price_markup)
 	<?php } else {?>
 	  // login for guest
 		totalHasProduct = parseInt("0")
-		isPromotion = totalHasProduct >= data.minimum_product && data.is_promotion
+		isPromotion = (totalHasProduct >= data.minimum_product && totalHasProduct <= data.maximum_product) && data.is_promotion
 		price = parseInt(data.price) + parseInt(data.price_markup)
 	<?php } ?>	
 

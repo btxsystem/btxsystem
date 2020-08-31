@@ -69,6 +69,8 @@ class EbookController extends Controller
         $ebook->description = $request->description;
         $ebook->price_discount = $request->price_discount;
         $ebook->minimum_product = $request->minimum_product;
+        $ebook->maximum_product = $request->maximum_product;
+        $ebook->register_promotion = $request->register_promotion ? true : false;
 
         if ($request->hasFile('src')) {
             $image = $request->src;
@@ -108,6 +110,8 @@ class EbookController extends Controller
             $ebook_renewal->display_title = $ebook->display_title .' '. 'Renewal';;
             $ebook_renewal->price_discount = $ebook->price_discount;
             $ebook_renewal->minimum_product = $ebook->minimum_product;
+            $ebook_renewal->maximum_product = $ebook->maximum_product;
+            $ebook_renewal->register_promotion = $ebook->register_promotion;
 
             if ($request->promotion) {
 
@@ -165,7 +169,6 @@ class EbookController extends Controller
             'src' => 'mimes:png,jpg,jpeg'
         ]);
 
-
         $data = Ebook::findOrFail($id);
         $oldImage = $data->src; //Get old path to delete when updated
 
@@ -179,6 +182,8 @@ class EbookController extends Controller
         $data->display_title = $request->display_title;
         $data->price_discount = $request->price_discount;
         $data->minimum_product = $request->minimum_product;
+        $data->maximum_product = $request->maximum_product;
+        $data->register_promotion = $request->register_promotion ? true : false;
 
         if ($request->hasFile('src')) {
             $image = $request->src;

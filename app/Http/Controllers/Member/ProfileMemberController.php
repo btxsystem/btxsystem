@@ -228,9 +228,22 @@ class ProfileMemberController extends Controller
                 $totalPriceEbook = 0;
 
                 if(count($ebooks) > 0) {
-                    $totalPriceEbook = DB::table('ebooks')
-                        ->whereIn('id', $ebooks)
-                        ->sum('price');
+                    $dataEbooks = Ebook::whereIn('id', $ebooks)->get();
+
+                    foreach($dataEbooks as $ebook) {
+                        if($ebook->is_promotion) {
+                            if(count($dataEbooks) >= $ebook->minimum_product) {
+                                $totalPriceEbook += ((int) $ebook->price - (int) $ebook->total_price_discount);
+                            }
+                        } else {
+                            $totalPriceEbook += (int) $ebook->price;
+                        }
+                    }
+
+                    // $totalPriceEbook = DB::table('ebooks')
+                    //     ->whereIn('id', $ebooks)
+                    //     ->sum('price');
+
                     $price = ((int) $price + (int) ($totalPriceEbook / 1000));
                 } else {
                     DB::rollback();
@@ -791,9 +804,21 @@ class ProfileMemberController extends Controller
                 $totalPriceEbook = 0;
 
                 if(count($ebooks) > 0) {
-                    $totalPriceEbook = DB::table('ebooks')
-                        ->whereIn('id', $ebooks)
-                        ->sum('price');
+                    // $totalPriceEbook = DB::table('ebooks')
+                    //     ->whereIn('id', $ebooks)
+                    //     ->sum('price');
+                    $dataEbooks = Ebook::whereIn('id', $ebooks)->get();
+
+                    foreach($dataEbooks as $ebook) {
+                        if($ebook->is_promotion) {
+                            if(count($dataEbooks) >= $ebook->minimum_product) {
+                                $totalPriceEbook += ((int) $ebook->price - (int) $ebook->total_price_discount);
+                            }
+                        } else {
+                            $totalPriceEbook += (int) $ebook->price;
+                        }
+                    }
+                    
                     $price = ((int) $price + (int) ($totalPriceEbook / 1000));
                 } else {
                     DB::rollback();

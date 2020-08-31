@@ -29,7 +29,7 @@ class EbookController extends Controller
 {
     public function store(Request $request){
         $ebook = Ebook::where('id',$request->ebook_id)
-            ->select('id','price', 'price_markup', 'parent_id', 'price_discount', 'minimum_product', 'started_at', 'ended_at')
+            ->select('id','price', 'price_markup', 'parent_id', 'price_discount', 'minimum_product', 'started_at', 'ended_at', 'maximum_product', 'register_promotion')
             ->first();
 
         if (\Auth::guard('user')->user()) {
@@ -44,7 +44,7 @@ class EbookController extends Controller
             $price = $ebook->price+2750;
             $user = Auth::user();
 
-            if($user->total_product >= $ebook->minimum_product && $ebook->is_promotion) {
+            if(($user->total_product >= $ebook->minimum_product && $user->total_product <= $ebook->maximum_product) && $ebook->is_promotion) {
                 if($ebook->price_discount > 0) {
                     $price -= (int) ($ebook->price * $ebook->price_discount) / 100;
                 }
@@ -79,7 +79,7 @@ class EbookController extends Controller
             $price = $ebook->price+2750;
             $user = Auth::guard('nonmember')->user();
 
-            if($user->total_product >= $ebook->minimum_product && $ebook->is_promotion) {
+            if(($user->total_product >= $ebook->minimum_product && $user->total_product <= $ebook->maximum_product) && $ebook->is_promotion) {
                 if($ebook->price_discount > 0) {
                     $price -= (int) ($ebook->price * $ebook->price_discount) / 100;
                 }
