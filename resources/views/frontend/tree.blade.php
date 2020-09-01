@@ -936,7 +936,7 @@ em{
 			// 		}
 			// 	}
 				
-			// }
+			// }*/
 
 			priceEbook = 0
 			let totalDiscount = 0;
@@ -973,7 +973,7 @@ em{
 			} else {
 				$('#total-discount-tr').hide()
 			}
-			*/
+			
 			if(priceEbook != 0) {
 				$('#cost-ebook').parent().removeClass('hidden');
 			} else {
