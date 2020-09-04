@@ -163,12 +163,25 @@ Create Book
 
                             <div id="is_promotion" hidden>
                                 <div class="form-group">
-                                    <label class="col-md-2 control-label"></label>
-                                    <div class="col-md-8 inputGroupContainer">
-                                        <div class="input-group">
-                                            <input type="checkbox" name="register_promotion" value="1"> Allow new register join promotion
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label class="col-md-4 control-label"></label>
+                                            <div class="col-md-6 inputGroupContainer">
+                                                <div class="input-group">
+                                                    <input type="checkbox" name="register_promotion" value="1"> Allow new register join promotion
+                                                </div>
+                                                <p class="text-danger">{{ $errors->first('register_promotion') }}</p>
+                                            </div>
                                         </div>
-                                        <p class="text-danger">{{ $errors->first('promotion') }}</p>
+                                        <div class="col-md-6">
+                                            <label class="col-md-2 control-label"></label>
+                                            <div class="col-md-8 inputGroupContainer">
+                                                <div class="input-group">
+                                                    <input type="checkbox" name="allow_merge_discount" value="1"> Allow merge/stack promottion
+                                                </div>
+                                                <p class="text-danger">{{ $errors->first('allow_merge_discount') }}</p>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-group">

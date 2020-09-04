@@ -71,6 +71,7 @@ class EbookController extends Controller
         $ebook->minimum_product = $request->minimum_product;
         $ebook->maximum_product = $request->maximum_product;
         $ebook->register_promotion = $request->register_promotion ? true : false;
+        $ebook->allow_merge_discount = $request->allow_merge_discount ? true : false;
 
         if ($request->hasFile('src')) {
             $image = $request->src;
@@ -112,6 +113,7 @@ class EbookController extends Controller
             $ebook_renewal->minimum_product = $ebook->minimum_product;
             $ebook_renewal->maximum_product = $ebook->maximum_product;
             $ebook_renewal->register_promotion = $ebook->register_promotion;
+            $ebook_renewal->allow_merge_discount = $ebook->allow_merge_discount;
 
             if ($request->promotion) {
 
@@ -184,6 +186,7 @@ class EbookController extends Controller
         $data->minimum_product = $request->minimum_product;
         $data->maximum_product = $request->maximum_product;
         $data->register_promotion = $request->register_promotion ? true : false;
+        $data->allow_merge_discount = $request->allow_merge_discount ? true : false;
 
         if ($request->hasFile('src')) {
             $image = $request->src;
