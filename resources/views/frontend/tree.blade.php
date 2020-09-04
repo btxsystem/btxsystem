@@ -97,6 +97,7 @@
 								<option value="CIMB NIAGA">CIMB NIAGA</option>
 								<option value="other">Other Bank</option>
 							</select>
+							<input type="hidden" id="selected_ebook" name="selected_ebook">
   							<input type="hidden" class="form-control" name="bank_name" id="bank_name" required>
 						</div>
 					</div>
@@ -819,7 +820,7 @@ em{
 			let render = data.map((v, i) => {
 				return `
 				<div class="form-check">
-				<input class="form-check-input" data-maximum-product="${v.maximum_product}" data-register-promotion="${v.register_promotion}" data-minimum-product="${v.minimum_product}" data-price-discount="${v.total_price_discount}" data-promotion="${v.is_promotion}" data-price="${v.price}" type="checkbox" name="ebooks[]" value="${v.id}" id="${v.title}">
+				<input class="form-check-input" data-id="${v.id}" data-allow-merge-discount="${v.allow_merge_discount}" data-maximum-product="${v.maximum_product}" data-register-promotion="${v.register_promotion}" data-minimum-product="${v.minimum_product}" data-price-discount="${v.total_price_discount}" data-promotion="${v.is_promotion}" data-price="${v.price}" type="checkbox" name="ebooks[]" value="${v.id}" id="${v.title}">
 				<label class="form-check-label" id="${i}" for="${v.title}" ${v.id == 1 ? 'checked' : ''}>
 					${v.title}
 				</label>
@@ -879,10 +880,17 @@ em{
 
 		// })
 
+		let discountEbooks = []
+
 		$('#checkboxEbook input[type=checkbox]').change(function(index) {
 			let ebookSelected = $('#checkboxEbook input[type=checkbox]').filter(function() {
 				return $(this).prop("checked")
 			})
+
+			if(!$(this).prop("checked")) {
+				let indexEbook = discountEbooks.findIndex(data => data == $(this).prop("id"))
+				discountEbooks.splice(indexEbook, 1);
+			}
 
 			n=ebookSelected.length; //Tambah value untuk stored temporary
 			let cancelledEbook = false;
@@ -941,31 +949,71 @@ em{
 			priceEbook = 0
 			let totalDiscount = 0;
 			ebookSelected.each(function(index, book) {
+				let idEbook = $(this).data('id')
+				let allowMergeDiscount = $(this).data('allow-merge-discount');
+				let isPromotion = $(this).data('promotion')
+				let isRegisterPromotion = $(this).data('register-promotion')
+				let minimumProduct = $(this).data('minimum-product')
+				let maximumProduct = $(this).data('maximum-product')
+				let price = $(this).data('price')
+				let priceDiscount = $(this).data('price-discount')
+
 				if($(this).prop('checked')) {
-					if($(this).data('promotion') && $(this).data('register-promotion')) {
-						if(ebookSelected.length >= $(this).data('minimum-product') && ebookSelected.length <= $(this).data('maximum-product')) {
-							priceEbook = priceEbook + (parseInt($(this).data('price')) - parseInt($(this).data('price-discount')));
-							totalDiscount += parseInt($(this).data('price-discount'))
+					if(isPromotion && isRegisterPromotion) {
+						if(ebookSelected.length >= minimumProduct && ebookSelected.length <= maximumProduct) {
+							priceEbook = priceEbook + (parseInt(price) - parseInt(priceDiscount));
+							totalDiscount += parseInt(priceDiscount)
+
+							/*jika member sudah pilih ebook yg ada discount, 
+								maka blok dan cek apakah ebook lain bisa dapat discount juga
+								Jika belum memilih, masukan nilai id ebook yang promosi ke temporary
+							*/
+							if(discountEbooks.length > 0) {
+								// cek allow merge / stack promotion
+								if(allowMergeDiscount == 0 && !discountEbooks.includes(idEbook)) {
+									priceEbook +=  parseInt(priceDiscount);
+									totalDiscount -= parseInt(priceDiscount)
+								}
+							} else {
+								// create temporary untuk cek
+								discountEbooks.push(idEbook)
+							}
 						} else {
-							priceEbook = priceEbook + (parseInt($(this).data('price')));
+							priceEbook = priceEbook + (parseInt(price));
 						}
 					} else {
-						priceEbook = priceEbook + parseInt($(this).data('price'));
+						priceEbook = priceEbook + parseInt(price);
 					}
 				} else {
 				if(!cancelledEbook) {
 					check -= 1;
 
-					if($(this).data('promotion') && $(this).data('register-promotion') && ebookSelected.length <= $(this).data('maximum-product')) {
-						priceEbook = priceEbook - (parseInt($(this).data('price')) - parseInt($(this).data('price-discount')));
-						totalDiscount -= parseInt($(this).data('price-discount'))
+					if(isPromotion && isRegisterPromotion && ebookSelected.length <= maximumProduct) {
+						priceEbook = priceEbook - (parseInt(price) - parseInt(priceDiscount));
+						totalDiscount -= parseInt(priceDiscount)
 					} else {	
-						priceEbook = priceEbook - parseInt($(this).data('price'));
+						priceEbook = priceEbook - parseInt(price);
 					}
 				}
 				}
 				
 			})
+
+			// parsing value
+			console.log(discountEbooks)
+			if(discountEbooks.length > 0) {
+				$('#selected_ebook').val(discountEbooks[0])
+			} else {
+				$('#selected_ebook').val('')
+			}
+
+			// filters data temporary, hanya ambil data yang tidak boleh di join/stack promotion
+			// let notAllowMergeDiscountIds = discountEbooks.filter(value => value.allowMergePromotion == 0)
+			// if(notAllowMergeDiscountIds.length > 0) {
+			// 	notAllowMergeDiscountIds = notAllowMergeDiscountIds.map((data, index) => {
+			// 		return index > 0 ? data.id : null
+			// 	}).filter(data => data != null)
+			// }
 
 			if(totalDiscount > 0) {
 				$('#total-discount-tr').show()

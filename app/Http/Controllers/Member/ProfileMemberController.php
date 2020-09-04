@@ -228,17 +228,7 @@ class ProfileMemberController extends Controller
                 $totalPriceEbook = 0;
 
                 if(count($ebooks) > 0) {
-                    $dataEbooks = Ebook::whereIn('id', $ebooks)->get();
-
-                    foreach($dataEbooks as $ebook) {
-                        if($ebook->is_promotion) {
-                            if(count($dataEbooks) >= $ebook->minimum_product) {
-                                $totalPriceEbook += ((int) $ebook->price - (int) $ebook->total_price_discount);
-                            }
-                        } else {
-                            $totalPriceEbook += (int) $ebook->price;
-                        }
-                    }
+                    $totalPriceEbook = calculateEbookPriceWithValidate($ebooks, $request);
 
                     // $totalPriceEbook = DB::table('ebooks')
                     //     ->whereIn('id', $ebooks)
@@ -790,6 +780,7 @@ class ProfileMemberController extends Controller
             if($method == 'point') {
                 $price = 280;
                 $ebooks = $request->input('ebooks') ?? [];
+                $ebookSelected = $request->input('selected_ebook');
                 $cekEbook = Ebook::whereIn('id', $ebooks)->get();
 
                 foreach ($cekEbook as $cek) {
@@ -807,17 +798,7 @@ class ProfileMemberController extends Controller
                     // $totalPriceEbook = DB::table('ebooks')
                     //     ->whereIn('id', $ebooks)
                     //     ->sum('price');
-                    $dataEbooks = Ebook::whereIn('id', $ebooks)->get();
-
-                    foreach($dataEbooks as $ebook) {
-                        if($ebook->is_promotion) {
-                            if(count($dataEbooks) >= $ebook->minimum_product) {
-                                $totalPriceEbook += ((int) $ebook->price - (int) $ebook->total_price_discount);
-                            }
-                        } else {
-                            $totalPriceEbook += (int) $ebook->price;
-                        }
-                    }
+                    $totalPriceEbook = calculateEbookPriceWithValidate($ebooks, $request);
                     
                     $price = ((int) $price + (int) ($totalPriceEbook / 1000));
                 } else {
@@ -1163,10 +1144,15 @@ class ProfileMemberController extends Controller
                 $va = new Va;
                 $va->register(Auth::user()->id, $request, $no_invoice);
                 DB::commit();
-                foreach ($request['ebooks'] as $key => $ebook) {
-                    $price_ebook = DB::table('ebooks')->where('id',$ebook)->select('price')->first();
-                    $profile['amount'] += $price_ebook->price;
-                }
+
+                $totalPriceEbook = calculateEbookPriceWithValidate($request['ebooks'], $request);
+
+                $profile['amount'] += $totalPriceEbook;
+
+                // foreach ($request['ebooks'] as $key => $ebook) {
+                //     $price_ebook = DB::table('ebooks')->where('id',$ebook)->select('price')->first();
+                //     $profile['amount'] += $price_ebook->price;
+                // }
                 return view('frontend.virtual-account-autoplacement')->with('profile',$profile);
             }
         } catch(\Illuminate\Database\QueryException $e) {
