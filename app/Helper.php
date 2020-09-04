@@ -1,9 +1,37 @@
 <?php
 use Illuminate\Support\Facades\DB;
 use App\Employeer;
+use App\Models\Ebook;
 use Carbon\Carbon;
 use App\Service\NotificationService;
 use App\Service\PaymentSwitchService;
+use Illuminate\Http\Request;
+
+function calculateEbookPriceWithValidate($ebooks, Request $request)
+{
+    $dataEbooks = Ebook::whereIn('id', $ebooks)->get();
+    $totalPriceEbook = 0;
+
+    foreach($dataEbooks as $ebook) {
+        if($ebook->is_promotion && $ebook->register_promotion) {
+            if(count($dataEbooks) >= $ebook->minimum_product && count($dataEbooks) <= $ebook->maximum_product) {
+                $totalPriceEbook += ((int) $ebook->price - (int) $ebook->total_price_discount);
+
+                if($request->input('selected_ebook')) {
+                    if($ebook->allow_merge_discount == 0 && (int) $ebook->id != (int) $request->input('selected_ebook')) {
+                        $totalPriceEbook += (int) $ebook->total_price_discount;
+                    }
+                }
+            } else {
+                $totalPriceEbook += (int) $ebook->price;
+            }
+        } else {
+            $totalPriceEbook += (int) $ebook->price;
+        }
+    }
+
+    return (int) $totalPriceEbook;
+}
 
 function getNotif(){
     return NotificationService::getNotification();

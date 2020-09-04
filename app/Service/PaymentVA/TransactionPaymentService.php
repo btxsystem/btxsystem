@@ -8,6 +8,7 @@ use Auth;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\VirtualAccountMail as VaMail;
+use App\Models\Ebook;
 
 class TransactionPaymentService
 {
@@ -160,10 +161,14 @@ class TransactionPaymentService
             $cost = 280000 +2750;
             $cost += isset($parameter[1]->kurir) ? $parameter[1]->kurir : 0;
 
-            foreach ($parameter[1]->ebooks as $key => $ebook) {
-                $price_ebook = DB::table('ebooks')->where('id',$ebook)->select('price')->first();
-                $cost += $price_ebook->price;
-            }
+            // foreach ($parameter[1]->ebooks as $key => $ebook) {
+            //     $price_ebook = DB::table('ebooks')->where('id',$ebook)->select('price')->first();
+            //     $cost += $price_ebook->price;
+            // }
+
+            $totalPriceEbook = calculateEbookPriceWithValidate($parameter[1]->ebooks, $parameter[1]);
+
+            $cost += $totalPriceEbook;
 
             $trx = DB::table('transaction_bills')
                 ->insertGetId(
