@@ -33,6 +33,26 @@ function calculateEbookPriceWithValidate($ebooks, Request $request)
     return (int) $totalPriceEbook;
 }
 
+function calculateEbookPromotionAdmin($ebookIds = [], $totalEbook = 0, Request $request)
+{
+    $dataEbooks = Ebook::whereIn('id', $ebookIds)->get();
+    $totalPriceEbook = 0;
+
+    foreach($dataEbooks as $ebook) {
+        if($ebook->is_promotion) {
+            if($totalEbook >= $ebook->minimum_product && $totalEbook <= $ebook->maximum_product) {
+                $totalPriceEbook += ((int) $ebook->price - (int) $ebook->total_price_discount);
+            } else {
+                $totalPriceEbook += (int) $ebook->price;
+            }
+        } else {
+            $totalPriceEbook += (int) $ebook->price;
+        }
+    }
+
+    return (int) $totalPriceEbook;
+}
+
 function getNotif(){
     return NotificationService::getNotification();
 }
