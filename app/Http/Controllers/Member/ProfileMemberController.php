@@ -360,6 +360,17 @@ class ProfileMemberController extends Controller
         $cek ? $data['email'] = true : $data['email'] = false;
         return response()->json($data);
     }
+    //Is Same NIK
+    
+    public function isSameNik($user){
+        $data = [
+            'status' => 200,
+            'nik' => false,
+        ];
+        $cek = Employeer::where('nik',$user)->select('id')->first();
+        $cek ? $data['nik'] = true : $data['nik'] = false;
+        return response()->json($data);
+    }
 
     public function rewards(){
         $data = Auth::user();
