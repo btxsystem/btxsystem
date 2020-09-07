@@ -207,6 +207,9 @@ class EbookController extends Controller
 
             $data->started_at = date('Y-m-d', strtotime(date('Y-m-d', strtotime($request->start_date))));
             $data->ended_at = date('Y-m-d', strtotime(date('Y-m-d', strtotime($request->end_date))));
+        } else {
+            $data->started_at = null;
+            $data->ended_at = null;
         }
 
         $data->save();

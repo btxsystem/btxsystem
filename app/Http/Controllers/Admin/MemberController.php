@@ -550,15 +550,18 @@ class MemberController extends Controller
                 $user = Employeer::where('id',$request->member_id)->first();
                 $history = new HistoryBitrexPoints;
                 $ebooks = Ebook::where('id',$request->ebook_id)->first();
-                if ($user->bitrex_points < ($ebooks->price/1000)) {
+
+                $totalPrice = calculateEbookPromotionAdmin([$request->ebook_id], $user->total_product, $request);
+
+                if ($user->bitrex_points < ($totalPrice/1000)) {
                     DB::rollback();
                     Alert::error('Bitrex points tidak cukup', 'Gagal');
                     return redirect()->route('members.show', $request->member_id);
                 }
-                $user->bitrex_points = $user->bitrex_points - ($ebooks->price/1000);
+                $user->bitrex_points = $user->bitrex_points - ($totalPrice/1000);
                 $history->id_member = $request->member_id;
-                $history->nominal = $ebooks->price;
-                $history->points = $ebooks->price/1000;
+                $history->nominal = $totalPrice;
+                $history->points = $totalPrice/1000;
                 $history->description = "Buy ebook ".$ebooks->title." from backoffice";
                 $history->info = 0;
                 $history->status = 1;
