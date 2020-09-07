@@ -68,8 +68,8 @@ class EbookController extends Controller
         $ebook->parent_id = 0;
         $ebook->description = $request->description;
         $ebook->price_discount = $request->price_discount;
-        $ebook->minimum_product = $request->minimum_product;
-        $ebook->maximum_product = $request->maximum_product;
+        $ebook->minimum_product = $request->minimum_product ?? 0;
+        $ebook->maximum_product = $request->maximum_product ?? 0;
         $ebook->register_promotion = $request->register_promotion ? true : false;
         $ebook->allow_merge_discount = $request->allow_merge_discount ? true : false;
 

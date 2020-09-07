@@ -189,7 +189,7 @@ Create Book
                                     <div class="col-md-8 inputGroupContainer">
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="fa fa-money"></i></span>
-                                            <input id="price_discount" name="price_discount" placeholder="Discount" class="form-control" required="true" type="number" min="0" max="100">
+                                            <input id="price_discount" name="price_discount" placeholder="Discount" class="form-control" required="true" type="number" min="0" max="100" value="0">
                                         </div>
                                     </div>
                                 </div>
@@ -199,14 +199,14 @@ Create Book
                                     <div class="col-md-8 inputGroupContainer">
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="fa fa-money"></i></span>
-                                            <input id="minimum_product" name="minimum_product" placeholder="Kepemilikan Ebook" class="form-control" required="true" type="number">
+                                            <input id="minimum_product" name="minimum_product" placeholder="Kepemilikan Ebook" class="form-control" required="true" type="number" value="0">
                                         </div>
                                         <br/>
                                         <span>s.d</span>
                                         <br/><br/>
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="fa fa-money"></i></span>
-                                            <input id="maximum_product" name="maximum_product" placeholder="Kepemilikan Ebook" class="form-control" required="true" type="number" disabled>
+                                            <input id="maximum_product" name="maximum_product" placeholder="Kepemilikan Ebook" class="form-control" required="true" type="number" disabled value="0">
                                         </div>
                                     </div>
                                 </div>

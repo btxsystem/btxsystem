@@ -239,6 +239,12 @@ Edit Ebook
             height: "350px",
         });  
 
+        <?php if($data->started_at):?>
+            $('#is_promotion').show();
+        <?php else:?>
+            $('#is_promotion').hide();
+        <?php endif;?>
+
         $('input[type="checkbox"][name="promotion[]"]').change(function() {
             if(this.checked) {
                 $('.start-date').show();
