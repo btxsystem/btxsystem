@@ -351,7 +351,7 @@ div#flag {
                       <input type="hidden" name="repeat" value="true">
 
 											@if($ebook->children != null)
-												<button onclick="changeValueRepeat(JSON.stringify({'price': '{{$ebook->children->price}}', 'price_markup': '{{$ebook->children->price_markup}}', 'id': '{{$ebook->children->id}}', 'total_price_discount': '{{$ebook->children->total_price_discount}}', 'minimum_product': '{{$ebook->children->minimum_product}}', 'is_promotion': '{{$ebook->children->is_promotion ?? false}}'}))" data-toggle="modal" data-target="#repeatModal" type="button" class="btn btn-identity-red text-white btn-sm mt-3 px-5">REPEAT ORDER</button>
+												<button onclick="changeValueRepeat(JSON.stringify({'price': '{{$ebook->children->price}}', 'price_markup': '{{$ebook->children->price_markup}}', 'id': '{{$ebook->children->id}}', 'total_price_discount': '{{$ebook->children->total_price_discount}}', 'minimum_product': '{{$ebook->children->minimum_product}}', 'is_promotion': '{{$ebook->children->is_promotion ?? false}}', 'maximum_product': '{{$ebook->children->maximum_product}}',}))" data-toggle="modal" data-target="#repeatModal" type="button" class="btn btn-identity-red text-white btn-sm mt-3 px-5">REPEAT ORDER</button>
 											@endif
 
 											@if($ebook->access_ebook != null)
@@ -592,17 +592,17 @@ function changeValueRepeat(param) {
 	<?php if($user = Auth::guard('user')->user()){?>
 		// logic for member
 		totalHasProduct = parseInt("{{$user->total_product}}")
-		isPromotion = totalHasProduct >= data.minimum_product && data.is_promotion
+		isPromotion = (totalHasProduct >= data.minimum_product && totalHasProduct <= data.maximum_product) && data.is_promotion
 		price = parseInt(data.price)
 	<?php } else if($user = Auth::guard('nonmember')->user()){?>
 		// login for non member
 		totalHasProduct = parseInt("0")
-		isPromotion = totalHasProduct >= data.minimum_product && data.is_promotion
+		isPromotion = (totalHasProduct >= data.minimum_product && totalHasProduct <= data.maximum_product) && data.is_promotion
 		price = parseInt(data.price) + parseInt(data.price_markup)
 	<?php } else {?>
 	  // login for guest
 		totalHasProduct = parseInt("0")
-		isPromotion = totalHasProduct >= data.minimum_product && data.is_promotion
+		isPromotion = (totalHasProduct >= data.minimum_product && totalHasProduct <= data.maximum_product) && data.is_promotion
 		price = parseInt(data.price) + parseInt(data.price_markup)
 	<?php } ?>	
 

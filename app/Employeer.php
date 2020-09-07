@@ -77,7 +77,7 @@ class Employeer extends Authenticatable
             ')
             ->count();
 
-        return $totalProducts;
+        return (int) $totalProducts + 1;
     }
 
     public function children()
