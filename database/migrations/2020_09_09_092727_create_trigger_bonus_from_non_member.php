@@ -108,10 +108,8 @@ class CreateTriggerBonusFromNonMember extends Migration
         CREATE TRIGGER tr_bonus_sponsor_from_member_tf_langsung AFTER INSERT ON `transaction_member` 
             FOR EACH ROW BEGIN
                 DECLARE bonus_bv decimal(15, 0);
-                DECLARE total_bv, bonus_pv, sponsor, pv_now, is_promo, discount integer;
+                DECLARE bonus_pv, sponsor, pv_now, is_promo, discount integer;
                 set is_promo = (SELECT count(id) FROM `transaction_members_promotion` WHERE `member_id` = NEW.member_id AND `ebook_id` = NEW.ebook_id AND type = "member");
-                SET total_bv = (SELECT bv FROM `ebooks` WHERE id = NEW.ebook_id);
-                SET bonus_pv = (SELECT pv FROM `ebooks` WHERE id = NEW.ebook_id);
                 SET sponsor = (SELECT sponsor_id FROM `employeers` WHERE id = NEW.member_id);
                 set @verif = (SELECT verification FROM `employeers` WHERE employeers.id = sponsor);
                 set @username = (SELECT username FROM `employeers` WHERE employeers.id = new.member_id);
@@ -119,10 +117,14 @@ class CreateTriggerBonusFromNonMember extends Migration
                 set @condition1 = (SELECT count(id) FROM `transaction_member` WHERE member_id = new.member_id and status = 1);
                 set @condition2 = (SELECT count(id) FROM `transaction_non_members` WHERE member_id = new.member_id and status = 1);
                 IF is_promo > 0 THEN
-                    SET discount = (SELECT price_discount FROM `ebooks` WHERE id = NEW.ebook_id);
-                    SET bonus_bv = total_bv - (total_bv * ((discount / 100)));
-                    SET bonus_pv = bonus_pv - (bonus_pv * (discount / 100));
+                    SET discount = (SELECT price_discount
+            FROM `ebooks` WHERE id = NEW.ebook_id);
+                    SET bonus_bv = bonus_bv * (discount / 100);
+                    SET bonus_pv = bonus_pv * (discount / 100);
                     DELETE FROM `transaction_members_promotion` WHERE `member_id` = NEW.member_id AND `ebook_id` = NEW.ebook_id AND type = "member";
+                ELSE
+                    SET bonus_bv = (SELECT bv FROM `ebooks` WHERE id = NEW.ebook_id);
+                    SET bonus_pv = (SELECT pv FROM `ebooks` WHERE id = NEW.ebook_id);
                 END IF;
                 IF @verif = 0 THEN
                     set @pajak = 0.03;
@@ -148,10 +150,8 @@ class CreateTriggerBonusFromNonMember extends Migration
         CREATE TRIGGER tr_bonus_sponsor_from_member AFTER UPDATE ON `transaction_member` 
             FOR EACH ROW BEGIN
                 DECLARE bonus_bv decimal(15, 0);
-                DECLARE total_bv, bonus_pv, sponsor, pv_now, is_promo, discount integer;
+                DECLARE bonus_pv, sponsor, pv_now, is_promo, discount integer;
                 set is_promo = (SELECT count(id) FROM `transaction_members_promotion` WHERE `member_id` = NEW.member_id AND `ebook_id` = NEW.ebook_id AND type = "member");
-                SET total_bv = (SELECT bv FROM `ebooks` WHERE id = NEW.ebook_id);
-                SET bonus_pv = (SELECT pv FROM `ebooks` WHERE id = NEW.ebook_id);
                 SET sponsor = (SELECT sponsor_id FROM `employeers` WHERE id = NEW.member_id);
                 set @verif = (SELECT verification FROM `employeers` WHERE employeers.id = sponsor);
                 set @username = (SELECT username FROM `employeers` WHERE employeers.id = new.member_id);
@@ -159,10 +159,14 @@ class CreateTriggerBonusFromNonMember extends Migration
                 set @condition1 = (SELECT count(id) FROM `transaction_member` WHERE member_id = new.member_id and status = 1);
                 set @condition2 = (SELECT count(id) FROM `transaction_non_members` WHERE member_id = new.member_id and status = 1);
                 IF is_promo > 0 THEN
-                    SET discount = (SELECT price_discount FROM `ebooks` WHERE id = NEW.ebook_id);
-                    SET bonus_bv = total_bv - (total_bv * ((discount / 100)));
-                    SET bonus_pv = bonus_pv - (bonus_pv * (discount / 100));
+                    SET discount = (SELECT price_discount
+            FROM `ebooks` WHERE id = NEW.ebook_id);
+                    SET bonus_bv = bonus_bv * (discount / 100);
+                    SET bonus_pv = bonus_pv * (discount / 100);
                     DELETE FROM `transaction_members_promotion` WHERE `member_id` = NEW.member_id AND `ebook_id` = NEW.ebook_id AND type = "member";
+                ELSE
+                    SET bonus_bv = (SELECT bv FROM `ebooks` WHERE id = NEW.ebook_id);
+                    SET bonus_pv = (SELECT pv FROM `ebooks` WHERE id = NEW.ebook_id);
                 END IF;
                 IF @verif = 0 THEN
                     set @pajak = 0.03;

@@ -1088,17 +1088,17 @@ class ProfileMemberController extends Controller
                         }
 
                         //insert histories points
-                        // HistoryBitrexPoints::insert([
-                        //     'id_member' => Auth::id(),
-                        //     'nominal' => (int) $price * 1000,
-                        //     'points' => $price,
-                        //     'description' => "Register <strong>{$employeer->username}</strong> Auto-Placement",
-                        //     'transaction_ref' => $prefixRefBp,
-                        //     'status' => 1,
-                        //     'info' => 0,
-                        //     'created_at' => now(),
-                        //     'updated_at' => now()
-                        // ]);
+                        HistoryBitrexPoints::insert([
+                            'id_member' => Auth::id(),
+                            'nominal' => (int) $price * 1000,
+                            'points' => $price,
+                            'description' => "Register <strong>{$employeer->username}</strong> Auto-Placement",
+                            'transaction_ref' => $prefixRefBp,
+                            'status' => 1,
+                            'info' => 0,
+                            'created_at' => now(),
+                            'updated_at' => now()
+                        ]);
 
                         Employeer::find($sponsor->id)->update($input);
                         DB::commit();
