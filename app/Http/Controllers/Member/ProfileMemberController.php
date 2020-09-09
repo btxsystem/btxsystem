@@ -1176,8 +1176,10 @@ class ProfileMemberController extends Controller
                 // }
                 return view('frontend.virtual-account-autoplacement')->with('profile',$profile);
             }
-        } catch(\Illuminate\Database\QueryException $e) {
+        } catch(\Exception $e) {
             DB::rollback();
+            dd($e);
+            return;
             Alert::error('Kesalahan teknis', 'Error')->persistent("OK");
             return redirect()->route('member.tree');
         }
