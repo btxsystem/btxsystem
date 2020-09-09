@@ -1021,7 +1021,7 @@ class ProfileMemberController extends Controller
                         //Employeer::create($data);
                         $employeer = Employeer::where('id_member', $idMember)->first();
 
-                        $calculateEbookPrice = calculateEbookPriceWithPromotion($request, $ebooks, $idMember);
+                        $calculateEbookPrice = calculateEbookPriceWithPromotion($request, $ebooks, $employeer->id);
                         TransactionMemberPromotion::insert($calculateEbookPrice['promotions']);
                         $price += $calculateEbookPrice['total_price'];
 
