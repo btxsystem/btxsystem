@@ -539,13 +539,6 @@ class MemberController extends Controller
     {
         DB::beginTransaction();
         try{
-            $buy = new TransactionMember;
-            $buy->member_id = $request->member_id;
-            $buy->ebook_id = $request->ebook_id;
-            $buy->status = 1;
-            $buy->expired_at = Carbon::now()->addYears(1)->toDateString();
-            $buy->save();
-
             if (isset($request->isBp)) {
                 $user = Employeer::where('id',$request->member_id)->first();
                 $history = new HistoryBitrexPoints;
@@ -568,6 +561,13 @@ class MemberController extends Controller
                 $user->save();
                 $history->save();
             }
+
+            $buy = new TransactionMember;
+            $buy->member_id = $request->member_id;
+            $buy->ebook_id = $request->ebook_id;
+            $buy->status = 1;
+            $buy->expired_at = Carbon::now()->addYears(1)->toDateString();
+            $buy->save();
 
             DB::commit();
 
