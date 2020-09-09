@@ -111,6 +111,8 @@ class CreateTriggerBonusFromNonMember extends Migration
                 DECLARE bonus_pv, sponsor, pv_now, is_promo, discount integer;
                 set is_promo = (SELECT count(id) FROM `transaction_members_promotion` WHERE `member_id` = NEW.member_id AND `ebook_id` = NEW.ebook_id AND type = "member");
                 SET sponsor = (SELECT sponsor_id FROM `employeers` WHERE id = NEW.member_id);
+                SET bonus_bv = (SELECT bv FROM `ebooks` WHERE id = NEW.ebook_id);
+                SET bonus_pv = (SELECT pv FROM `ebooks` WHERE id = NEW.ebook_id);
                 set @verif = (SELECT verification FROM `employeers` WHERE employeers.id = sponsor);
                 set @username = (SELECT username FROM `employeers` WHERE employeers.id = new.member_id);
                 set @pajak = 0.0;
@@ -153,6 +155,8 @@ class CreateTriggerBonusFromNonMember extends Migration
                 DECLARE bonus_pv, sponsor, pv_now, is_promo, discount integer;
                 set is_promo = (SELECT count(id) FROM `transaction_members_promotion` WHERE `member_id` = NEW.member_id AND `ebook_id` = NEW.ebook_id AND type = "member");
                 SET sponsor = (SELECT sponsor_id FROM `employeers` WHERE id = NEW.member_id);
+                SET bonus_bv = (SELECT bv FROM `ebooks` WHERE id = NEW.ebook_id);
+                SET bonus_pv = (SELECT pv FROM `ebooks` WHERE id = NEW.ebook_id);
                 set @verif = (SELECT verification FROM `employeers` WHERE employeers.id = sponsor);
                 set @username = (SELECT username FROM `employeers` WHERE employeers.id = new.member_id);
                 set @pajak = 0.0;
