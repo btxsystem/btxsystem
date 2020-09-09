@@ -33,6 +33,15 @@ function calculateEbookPriceWithValidate($ebooks, Request $request)
     return (int) $totalPriceEbook;
 }
 
+function removeElementWithValue($array, $key, $value){
+    foreach($array as $subKey => $subArray){
+         if($subArray[$key] == $value){
+              unset($array[$subKey]);
+         }
+    }
+    return $array;
+}
+
 function calculateEbookPriceWithPromotion(Request $request, $ebooks = [], $memberId = 0)
 {
     $dataEbooks = Ebook::whereIn('id', $ebooks)->get();
@@ -44,17 +53,19 @@ function calculateEbookPriceWithPromotion(Request $request, $ebooks = [], $membe
             if(count($dataEbooks) >= $ebook->minimum_product && count($dataEbooks) <= $ebook->maximum_product) {
                 $totalPriceEbook += ((int) $ebook->price - (int) $ebook->total_price_discount);
 
-                if($request->input('selected_ebook')) {
-                    if($ebook->allow_merge_discount == 0 && (int) $ebook->id != (int) $request->input('selected_ebook')) {
-                        $totalPriceEbook += (int) $ebook->total_price_discount;
-                    }
-                }
-
                 $transactionMemberPromotion[] = [
                     'member_id' => $memberId,
                     'ebook_id' => $ebook->id,
                     'type' => 'member'
                 ];
+
+                if($request->input('selected_ebook')) {
+                    if($ebook->allow_merge_discount == 0 && (int) $ebook->id != (int) $request->input('selected_ebook')) {
+                        $totalPriceEbook += (int) $ebook->total_price_discount;
+                        $transactionMemberPromotion = removeElementWithValue($transactionMemberPromotion, "ebook_id", $ebook->id);
+                    }
+                }
+
             } else {
                 $totalPriceEbook += (int) $ebook->price;
             }
