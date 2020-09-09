@@ -511,7 +511,7 @@ $('#ipay').change(function(){
 	$.ajax({
 		type: 'POST',
 		url: '{{route("member.buy-ebook")}}',
-		data: {ebook_id: $('#ebook').val()},
+		data: {ebook_id: $('#ebook').val(), referral: $('#referralCode').val()},
 		success: function (data) {
 
 			$('#va').val(data.customer_number);
@@ -551,12 +551,12 @@ function selectedSubscription(param) {
 		price = parseInt(data.price)
 	<?php } else if($user = Auth::guard('nonmember')->user()){?>
 		// login for non member
-		totalHasProduct = parseInt("0")
+		totalHasProduct = parseInt("{{$user->total_product}}")
 		isPromotion = (totalHasProduct >= data.minimum_product && totalHasProduct <= data.maximum_product) && data.is_promotion
 		price = parseInt(data.price) + parseInt(data.price_markup)
 	<?php } else {?>
 	  // login for guest
-		totalHasProduct = parseInt("0")
+		totalHasProduct = parseInt("1")
 		isPromotion = (totalHasProduct >= data.minimum_product && totalHasProduct <= data.maximum_product) && data.is_promotion
 		price = parseInt(data.price) + parseInt(data.price_markup)
 	<?php } ?>	
