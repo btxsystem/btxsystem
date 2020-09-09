@@ -32,6 +32,8 @@ class EbookController extends Controller
             ->select('id','price', 'price_markup', 'parent_id', 'price_discount', 'minimum_product', 'started_at', 'ended_at', 'maximum_product', 'register_promotion')
             ->first();
 
+        $ebookIdDiscount = 0;
+
         if (\Auth::guard('user')->user()) {
 
             $date = now();
@@ -47,6 +49,7 @@ class EbookController extends Controller
             if(($user->total_product >= $ebook->minimum_product && $user->total_product <= $ebook->maximum_product) && $ebook->is_promotion) {
                 if($ebook->price_discount > 0) {
                     $price -= (int) ($ebook->price * $ebook->price_discount) / 100;
+                    $ebookIdDiscount = $ebook->id;
                 }
             }
 
@@ -64,10 +67,11 @@ class EbookController extends Controller
             $renewal = $ebook->parent_id == 0 ? null : $ebook->id;
             
             $va = new Va;
-            $va->transactionMember(Auth::user()->id, $request->ebook_id, $renewal, 'member', $price, $no_invoice);
+            $va->transactionMember(Auth::user()->id, $request->ebook_id, $renewal, 'member', $price, $no_invoice, $ebookIdDiscount);
 
             return response()->json($data, 200);
         }else if(\Auth::guard('nonmember')->user()){
+            $referral = Employeer::select('id')->where('username', $request->input('referral'))->first()->id;
             $id = \Auth::guard('nonmember')->id();
             $date = now();
 
@@ -82,12 +86,13 @@ class EbookController extends Controller
             if(($user->total_product >= $ebook->minimum_product && $user->total_product <= $ebook->maximum_product) && $ebook->is_promotion) {
                 if($ebook->price_discount > 0) {
                     $price -= (int) ($ebook->price * $ebook->price_discount) / 100;
+                    $ebookIdDiscount = $ebook->id;
                 }
             }
 
             $data = [
                 'user_id' => $id,
-                'product_type' => 'ebook',
+                'product_type' => 'ebook_nonmember',
                 'user_type' => 'nonmember',
                 'total_amount' => number_format($price+$ebook->price_markup,0,",","."),
                 'customer_number' => '11210'.$no_invoice,
@@ -98,10 +103,11 @@ class EbookController extends Controller
             $renewal = $ebook->parent_id == 0 ? null : $ebook->id;
 
             $va = new Va;
-            $va->transactionNonMember($id, $request->ebook_id, $renewal, 'nonmember', $price, $no_invoice);
+            $va->transactionNonMember($id, $request->ebook_id, $renewal, 'nonmember', $price, $no_invoice, $ebookIdDiscount, $referral);
 
             return response()->json($data, 200);
         } else {
+            $referral = Employeer::select('id')->where('username', $request->input('referral'))->first()->id;
             $id = $request->non_member_id;
             $date = now();
 
@@ -115,12 +121,13 @@ class EbookController extends Controller
             if($ebook->minimum_product == 0 && $ebook->is_promotion) {
                 if($ebook->price_discount > 0) {
                     $price -= (int) ($ebook->price * $ebook->price_discount) / 100;
+                    $ebookIdDiscount = $ebook->id;
                 }
             }
 
             $data = [
                 'user_id' => $id,
-                'product_type' => 'ebook',
+                'product_type' => 'ebook_nonmember',
                 'user_type' => 'nonmember',
                 'total_amount' => number_format($price+$ebook->price_markup,0,",","."),
                 'customer_number' => '11210'.$no_invoice,
@@ -131,7 +138,7 @@ class EbookController extends Controller
             $renewal = $ebook->parent_id == 0 ? null : $ebook->id;
             
             $va = new Va;
-            $va->transactionNonMember($id, $request->ebook_id, $renewal, 'nonmember', $price, $no_invoice);
+            $va->transactionNonMember($id, $request->ebook_id, $renewal, 'nonmember', $price, $no_invoice, $ebookIdDiscount, $referral);
 
             return response()->json($data, 200);
         }

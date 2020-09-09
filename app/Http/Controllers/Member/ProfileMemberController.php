@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\RegisterMemberMail;
 use App\Models\Ebook;
 use App\models\GotReward;
+use App\Models\TransactionMemberPromotion;
 use Redirect;
 
 class ProfileMemberController extends Controller
@@ -228,7 +229,8 @@ class ProfileMemberController extends Controller
                 $totalPriceEbook = 0;
 
                 if(count($ebooks) > 0) {
-                    $totalPriceEbook = calculateEbookPriceWithValidate($ebooks, $request);
+                    $calculateEbookPrice = calculateEbookPriceWithPromotion($request, $ebooks, $employeer->id);
+                    $totalPriceEbook = $calculateEbookPrice['total_price'];
 
                     // $totalPriceEbook = DB::table('ebooks')
                     //     ->whereIn('id', $ebooks)
@@ -246,6 +248,9 @@ class ProfileMemberController extends Controller
                 if($request->input('shipping_method') == "1") {
                     $price = (int) $price + (int) + $request->input('cost');
                 }
+
+                // insert temporary
+                TransactionMemberPromotion::insert($calculateEbookPrice['promotions']);
 
                 foreach($ebooks as $ebook) {
                     $prefixRef = 'BITREX02';
@@ -809,8 +814,8 @@ class ProfileMemberController extends Controller
                     // $totalPriceEbook = DB::table('ebooks')
                     //     ->whereIn('id', $ebooks)
                     //     ->sum('price');
-                    $totalPriceEbook = calculateEbookPriceWithValidate($ebooks, $request);
-                    
+                    // $calculateEbookPrice = calculateEbookPriceWithPromotion($request, $ebooks, Auth::user()->id);
+                    // TransactionMemberPromotion::insert($calculateEbookPrice['promotions']);                    
                     $price = ((int) $price + (int) ($totalPriceEbook / 1000));
                 } else {
                     DB::rollback();
@@ -1016,6 +1021,10 @@ class ProfileMemberController extends Controller
                         //Employeer::create($data);
                         $employeer = Employeer::where('id_member', $idMember)->first();
 
+                        $calculateEbookPrice = calculateEbookPriceWithPromotion($request, $ebooks, $idMember);
+                        TransactionMemberPromotion::insert($calculateEbookPrice['promotions']);
+                        $price += $calculateEbookPrice['total_price'];
+
                         if((int)$shippingMethod == 1) {
                             $kurir = substr($request->kurir_name, 0, strpos($request->kurir_name, " -"));
                             DB::table('address')->insert([
@@ -1156,7 +1165,8 @@ class ProfileMemberController extends Controller
                 $va->register(Auth::user()->id, $request, $no_invoice);
                 DB::commit();
 
-                $totalPriceEbook = calculateEbookPriceWithValidate($request['ebooks'], $request);
+                $calculateEbookPrice = calculateEbookPriceWithPromotion($request, $request['ebooks'], Auth::user()->id);
+                $totalPriceEbook = $calculateEbookPrice['total_price'];
 
                 $profile['amount'] += $totalPriceEbook;
 

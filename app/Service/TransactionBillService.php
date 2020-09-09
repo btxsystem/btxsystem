@@ -14,6 +14,7 @@ use DB;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\RegisterMemberMail;
+use App\Models\TransactionMemberPromotion;
 
 class TransactionBillService
 {
@@ -137,6 +138,14 @@ class TransactionBillService
   
       if(!$user) return false;
 
+      if(isset($productDetail->discount) && $productDetail->discount > 0) {
+        TransactionMemberPromotion::insert([
+          'type' => 'member',
+          'member_id' => $productDetail->user_id ?? 0,
+          'ebook_id' => $productDetail->discount ?? 0
+        ]);
+      }
+
       $saveEbook = $this->createEbookMember(
         $productDetail->ebook_id,
         $user->id,
@@ -184,6 +193,15 @@ class TransactionBillService
       $user = NonMember::where('id', $productDetail->user_id)->first();
       
       if(!$user) return false;
+
+      if(isset($productDetail->discount) && $productDetail->discount > 0) {
+        TransactionMemberPromotion::insert([
+          'type' => 'nonmember',
+          'member_id' => $productDetail->user_id ?? 0,
+          'ebook_id' => $productDetail->discount ?? 0
+        ]);
+      }
+      
       
       $saveEbook = $this->createEbookNonMember(
         $productDetail,
