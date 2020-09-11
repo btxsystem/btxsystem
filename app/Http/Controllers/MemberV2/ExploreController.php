@@ -19,6 +19,7 @@ use App\Models\TransactionNonMember;
 use App\Models\TransactionMember;
 
 use App\Mail\WelcomeMail;
+use App\Models\VideoCategory;
 use Illuminate\Support\Facades\Mail;
 
 class ExploreController extends Controller
@@ -184,6 +185,8 @@ class ExploreController extends Controller
         }
     }
 
+    $videoCategories = VideoCategory::with('videos')->where('ebook_id', $books[0]->id)->get();
+
     // return response()->json([
     //   'data' => $books
     // ], 200);
@@ -193,7 +196,8 @@ class ExploreController extends Controller
       'username' => $referral,
       'expiredBasic' => $expiredBasic,
       'expiredAdvanced' => $expiredAdvanced,
-      'access' => $access
+      'access' => $access,
+      'videoCategories' => $videoCategories
     ]);
   }
 

@@ -17,7 +17,7 @@ use App\Builder\TransactionNonMemberBuilder;
 use App\Factory\RegisterFactoryMake;
 use App\Factory\PaymentHistoryFactoryBuild;
 use App\Factory\TransactionFactoryRegister;
-
+use App\Models\Ebook;
 use App\Models\TransactionMember;
 use App\Models\TransactionNonMember;
 use Illuminate\Support\Carbon;
@@ -28,7 +28,12 @@ use App\Service\PaymentVa\TransactionPaymentService as Va;
 class EbookController extends Controller
 {
     public function store(Request $request){
-        $ebook = DB::table('ebooks')->where('id',$request->ebook_id)->select('price', 'price_markup')->first();
+        $ebook = Ebook::where('id',$request->ebook_id)
+            ->select('id','price', 'price_markup', 'parent_id', 'price_discount', 'minimum_product', 'started_at', 'ended_at', 'maximum_product', 'register_promotion')
+            ->first();
+
+        $ebookIdDiscount = 0;
+
         if (\Auth::guard('user')->user()) {
 
             $date = now();
@@ -38,22 +43,35 @@ class EbookController extends Controller
                 $cek = DB::table('transaction_bills')->where('customer_number',$no_invoice)->select('id')->get();
             } while (count($cek)>0);
 
+            $price = $ebook->price+2750;
+            $user = Auth::user();
+
+            if(($user->total_product >= $ebook->minimum_product && $user->total_product <= $ebook->maximum_product) && $ebook->is_promotion) {
+                if($ebook->price_discount > 0) {
+                    $price -= (int) ($ebook->price * $ebook->price_discount) / 100;
+                    $ebookIdDiscount = $ebook->id;
+                }
+            }
+
             $data = [
                 'user_id' => Auth::user()->id,
+                'ebook' => $ebook,
                 'product_type' => 'ebook',
                 'user_type' => 'member',
-                'total_amount' => number_format($ebook->price+2750,0,",","."),
+                'total_amount' => number_format($price,0,",","."),
                 'customer_number' => '11210'.$no_invoice,
                 'time_expired' => Carbon::create(date('Y-m-d H:i:s'))->addDay(1),
             ];
 
-            $renewal = $request->ebook_id == 3 || $request->ebook_id == 4 ? $request->ebook_id : null;
-
+            // $renewal = $request->ebook_id == 3 || $request->ebook_id == 4 ? $request->ebook_id : null;
+            $renewal = $ebook->parent_id == 0 ? null : $ebook->id;
+            
             $va = new Va;
-            $va->transactionMember(Auth::user()->id, $request->ebook_id, $renewal, 'member', $ebook->price+2750, $no_invoice);
+            $va->transactionMember(Auth::user()->id, $request->ebook_id, $renewal, 'member', $price, $no_invoice, $ebookIdDiscount);
 
             return response()->json($data, 200);
         }else if(\Auth::guard('nonmember')->user()){
+            $referral = Employeer::select('id')->where('username', $request->input('referral'))->first()->id;
             $id = \Auth::guard('nonmember')->id();
             $date = now();
 
@@ -62,22 +80,34 @@ class EbookController extends Controller
                 $cek = DB::table('transaction_bills')->where('customer_number',$no_invoice)->select('id')->get();
             } while (count($cek)>0);
 
+            $price = $ebook->price+2750;
+            $user = Auth::guard('nonmember')->user();
+
+            if(($user->total_product >= $ebook->minimum_product && $user->total_product <= $ebook->maximum_product) && $ebook->is_promotion) {
+                if($ebook->price_discount > 0) {
+                    $price -= (int) ($ebook->price * $ebook->price_discount) / 100;
+                    $ebookIdDiscount = $ebook->id;
+                }
+            }
+
             $data = [
                 'user_id' => $id,
-                'product_type' => 'ebook',
+                'product_type' => 'ebook_nonmember',
                 'user_type' => 'nonmember',
-                'total_amount' => number_format($ebook->price+$ebook->price_markup+2750,0,",","."),
+                'total_amount' => number_format($price+$ebook->price_markup,0,",","."),
                 'customer_number' => '11210'.$no_invoice,
                 'time_expired' => Carbon::create(date('Y-m-d H:i:s'))->addDay(1),
             ];
 
-            $renewal = $request->ebook_id == 3 || $request->ebook_id == 4 ? $request->ebook_id : null;
+            // $renewal = $request->ebook_id == 3 || $request->ebook_id == 4 ? $request->ebook_id : null;
+            $renewal = $ebook->parent_id == 0 ? null : $ebook->id;
 
             $va = new Va;
-            $va->transactionNonMember($id, $request->ebook_id, $renewal, 'nonmember', $ebook->price+2750, $no_invoice);
+            $va->transactionNonMember($id, $request->ebook_id, $renewal, 'nonmember', $price, $no_invoice, $ebookIdDiscount, $referral);
 
             return response()->json($data, 200);
         } else {
+            $referral = Employeer::select('id')->where('username', $request->input('referral'))->first()->id;
             $id = $request->non_member_id;
             $date = now();
 
@@ -86,19 +116,29 @@ class EbookController extends Controller
                 $cek = DB::table('transaction_bills')->where('customer_number',$no_invoice)->select('id')->get();
             } while (count($cek)>0);
 
+            $price = $ebook->price+2750;
+
+            if($ebook->minimum_product == 0 && $ebook->is_promotion) {
+                if($ebook->price_discount > 0) {
+                    $price -= (int) ($ebook->price * $ebook->price_discount) / 100;
+                    $ebookIdDiscount = $ebook->id;
+                }
+            }
+
             $data = [
                 'user_id' => $id,
-                'product_type' => 'ebook',
+                'product_type' => 'ebook_nonmember',
                 'user_type' => 'nonmember',
-                'total_amount' => number_format($ebook->price+$ebook->price_markup+2750,0,",","."),
+                'total_amount' => number_format($price+$ebook->price_markup,0,",","."),
                 'customer_number' => '11210'.$no_invoice,
                 'time_expired' => Carbon::create(date('Y-m-d H:i:s'))->addDay(1),
             ];
 
-            $renewal = $request->ebook_id == 3 || $request->ebook_id == 4 ? $request->ebook_id : null;
-
+            // $renewal = $request->ebook_id == 3 || $request->ebook_id == 4 ? $request->ebook_id : null;
+            $renewal = $ebook->parent_id == 0 ? null : $ebook->id;
+            
             $va = new Va;
-            $va->transactionNonMember($id, $request->ebook_id, $renewal, 'nonmember', $ebook->price+2750, $no_invoice);
+            $va->transactionNonMember($id, $request->ebook_id, $renewal, 'nonmember', $price, $no_invoice, $ebookIdDiscount, $referral);
 
             return response()->json($data, 200);
         }

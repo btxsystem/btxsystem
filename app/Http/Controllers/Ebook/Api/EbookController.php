@@ -17,50 +17,8 @@ class EbookController extends Controller
 {
   public function all(Request $request)
   {
-    $excludesEbooks = [3, 4];
-    
-    if($user = Auth::guard('nonmember')->user()) {
-      $transaction = TransactionNonMember::select('ebook_id')->where([
-        'non_member_id' => $user->id,
-        'status' => 1
-      ])->get();
-  
-      foreach($transaction as $trx) {
-        if(count($transaction) == 1) {
-          if($trx->ebook_id == 1) {
-            $excludesEbooks = [$trx->ebook_id, 4];
-          } else {
-            $excludesEbooks = [$trx->ebook_id, 3];
-          }
-        } else {
-          $excludesEbooks = [1, 2];
-        }
-      }
-    } else if($user = Auth::guard('user')->user()) {
-      $transaction = TransactionMember::select('ebook_id')->where([
-        'member_id' => $user->id,
-        'status' => 1
-      ])->get();
-  
-      foreach($transaction as $trx) {
-        if(count($transaction) == 1) {
-          if($trx->ebook_id == 1) {
-            $excludesEbooks = [$trx->ebook_id, 4];
-          } else {
-            $excludesEbooks = [$trx->ebook_id, 3];
-          }
-        } else if(count($transaction) == 2){
-          $excludesEbooks = [1, 2];
-        } else {
-          $excludesEbooks = [3, 4];
-        }
-      }
-    } else {
-      $excludesEbooks = [3, 4];
-    }
-  
-    $ebooks = Ebook::whereNotIn('id', [3, 4])
-      ->select('id', 'price', 'pv', 'bv', 'price_markup', 'description', 'title')
+    $ebooks = Ebook::where('parent_id', 0)
+      ->select('id', 'price', 'pv', 'bv', 'price_markup', 'description', 'title', 'price_discount', 'minimum_product', 'started_at', 'ended_at', 'maximum_product', 'register_promotion', 'allow_merge_discount')
       ->orderBy('position', 'ASC')
       ->get();
   

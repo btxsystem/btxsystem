@@ -115,8 +115,10 @@ Route::group(['middleware' => 'admin'], function () {
 
     // Ebook
     Route::resource('ebook', 'Admin\EbookController');
+    Route::resource('video-category', 'Admin\VideoCategoryController');
     Route::get('ebook/{id}/create/book','Admin\BookController@create')->name('ebook.create.book');
     Route::get('ebook/{id}/create/video','Admin\VideoController@create')->name('ebook.create.video');
+    Route::get('ebook/{id}/create/video-category','Admin\VideoCategoryController@create')->name('ebook.create.video-category');
 
     Route::get('ebook/{id}/book-data','Admin\EbookController@bookData')->name('ebook.bookData');
     Route::get('ebook/{id}/video-data','Admin\EbookController@videoData')->name('ebook.videoData');
@@ -304,6 +306,7 @@ Route::group(['middleware' => 'admin'], function () {
 
         Route::resource('testimonials', 'Admin\TestimonialController');
         Route::post('update-testimony', 'Admin\TestimonialController@update')->name('update-testimony');
+        Route::post('testimonials/delete/{id}', 'Admin\TestimonialController@destroy')->name('delete-testimony');
         Route::get('testimonials/published/{id}', ['as' => 'published', 'uses' => 'Admin\TestimonialController@published']);
         Route::get('testimonials/unpublished/{id}', ['as' => 'unpublished', 'uses' => 'Admin\TestimonialController@unpublished']);
 

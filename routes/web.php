@@ -99,6 +99,7 @@ Route::get('/logout', 'Auth\LoginController@logout');
 Route::post('/finish', 'Member\BitrexPointController@index');
 Route::get('/validate-unique-user', 'ValidationDataController@validateUniqueMemberUsername');
 Route::get('/validate-exist-user', 'ValidationDataController@validateExistMember');
+Route::get('/validate-exist-identity', 'ValidationDataController@validateExistIdentity');
 Route::get('/validate-unique-email', 'ValidationDataController@validateUniqueMemberEmail');
 Route::get('user/{user}', ['as' => 'user', 'uses' => 'Member\PvController@issetUser']);
 Route::post('register-auto', ['as' => 'register-auto', 'uses' => 'Member\ProfileMemberController@registerAuto']);
@@ -189,6 +190,7 @@ Route::group(['middleware' => 'web', 'prefix' => 'member', 'as'=> 'member.'], fu
         Route::get('tree-upline/{user}', ['as' => 'tree-upline', 'uses' => 'Member\DashboardController@getParentTree']);
         Route::get('username/{user}', ['as' => 'username', 'uses' => 'Member\ProfileMemberController@isSameUsername']);
         Route::get('email/{user}', ['as' => 'email', 'uses' => 'Member\ProfileMemberController@isSameEmail']);
+        Route::get('nik/{user}', ['as' => 'nik', 'uses' => 'Member\ProfileMemberController@isSameNik']);
         Route::get('history-points', ['as' => 'history-points', 'uses' => 'Member\BitrexPointController@getHistoryPoints']);
         Route::get('history-value', ['as' => 'history-cash', 'uses' => 'Member\BitrexCashController@getHistoryCash']);
         Route::get('history-pv', ['as' => 'history-pv', 'uses' => 'Member\PvController@getHistoryPv']);

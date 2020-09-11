@@ -2,13 +2,16 @@
 <div aria-live="polite" aria-atomic="true" class="d-flex justify-content-center align-items-center" style="min-height: 200px;position:absolute;right:0;left:0;top:0">
 <div role="alert" aria-live="assertive" aria-atomic="true" class="bg-white border" id="corona" data-autohide="false" style="width:400px;font-size:1.6rem;margin-top:100px;z-index:999!important;margin-right:120px">
   <div class="toast-header bg-light">
-    <strong class="mr-auto">COVID-19 (Novel Coronavirus) Update</strong>
+    <strong class="mr-auto">ANNOUNCEMENT</strong>
     <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close" onclick="closeCorona()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="toast-body">
-    <a target="_blank" href="{{asset('assets3/Surat_Himbauan_Covid-19-revisi_2.pdf')}}">More Details</a>
+    <a target="_blank" href="{{asset('assets3/Surat_Himbauan_Covid-19-revisi_2.pdf')}}">Corona Virus Update</a>
+  </div>
+  <div class="toast-body">
+    <a target="_blank" href="{{asset('assets3/maintenance_announcement.pdf')}}">Update for Maintenance</a>
   </div>
 </div>
 </div>
@@ -154,14 +157,14 @@
               </div>
               <div class="posts-wrap">
                 @foreach ($data['ourProduct'] as $item)
-                    <article class="post post_mod-a clearfix wow zoomIn" data-wow-duration="1s">
+                    <article class="post post_mod-a clearfix wow zoomIn" data-wow-duration="1s" style="width: 46%!important;">
                         <div class="entry-media">
-                          <div class="entry-thumbnail"> <a href="javascript:void(0);" ><img class="img-responsive" src="{{$item->path}}" style="width: 100%;" alt="Foto"/></a> </div>
+                          <div class="entry-thumbnail"> <a href="javascript:void(0);" ><img class="img-responsive" src="{{$item->img}}" style="width: 100%;" alt="Foto"/></a> </div>
                         </div>
                         <div class="entry-main">
-                          <h3 class="entry-title ui-title-inner decor decor_mod-b"><a href="javascript:void(0);">{{$item->name}}</a></h3>
+                          <h3 class="entry-title ui-title-inner decor decor_mod-b"><a href="javascript:void(0);">{{$item->title}}</a></h3>
                           <div class="entry-content hidden">
-                            <p>{{$item->name}}</p>
+                            <p>{{$item->title}}</p>
                           </div>
                         </div>
                       </article>
@@ -183,7 +186,7 @@
         <div class="container">
           <div class="row">
             <div class="col-xs-12">
-              <div class="video-block"> <a class="video-block__link" href="https://www.youtube.com/watch?v=wh6lxMpffCo" rel="prettyPhoto"><i class="icon stroke icon-Play"></i></a>
+              <div class="video-block"> <a class="video-block__link" href="https://www.youtube.com/watch?v=eaQ0x93SxGY" rel="prettyPhoto"><i class="icon stroke icon-Play"></i></a>
                 <h2 class="video-block__title">Bitrexgo Video</h2>
               </div>
             </div>
@@ -302,8 +305,8 @@
         <div class="container">
           <div class="row">
             <div class="col-xs-12">
-              <div class="video-block"> <a class="video-block__link" href="https://www.youtube.com/watch?v=wh6lxMpffCo" rel="prettyPhoto"><i class="icon stroke icon-Play"></i></a>
-                <h2 class="video-block__title">Bitrexgo Slide</h2>
+              <div class="video-block"> <a class="video-block__link" href="https://www.youtube.com/watch?v=eaQ0x93SxGY" rel="prettyPhoto"><i class="icon stroke icon-Play"></i></a>
+                <h2 class="video-block__title">Our Company</h2>
               </div>
             </div>
             <!-- end col -->
@@ -672,7 +675,20 @@
         let ebookSelected = $('#data-ebooks input[type=checkbox]').filter(function() {
           return $(this).prop("checked")
         })
+        n=ebookSelected.length; //Tambah value untuk stored temporary
+			let cancelledEbook = false;
+		
 
+			if(n>=2){
+				var r = confirm("Apakah Anda yakin membeli " + n +" ebook?");
+				if (r == true) {
+
+				} else { 
+					cancelledEbook = true
+					$(this).prop("checked", false)
+				}
+			}
+/*
         let cancelledEbook = false;
 
         if(ebookSelected.length == 2) {
@@ -683,7 +699,7 @@
             cancelledEbook = true
             $(this).prop("checked", false)
           }
-        }
+        }*/
         
 
         if($(this).prop('checked')) {

@@ -10,6 +10,7 @@ use App\Models\Ebook;
 use DataTables;
 use Alert;
 use Validator;
+use App\Models\VideoCategory;
 
 class VideoController extends Controller
 {
@@ -44,8 +45,9 @@ class VideoController extends Controller
     public function create($id)
     {
         $data = Ebook::find($id);
+        $categories = VideoCategory::where('ebook_id', $id)->get();
 
-        return view('admin.videos.create', compact('data'));
+        return view('admin.videos.create', compact('data', 'categories'));
     }
 
     /**
@@ -67,6 +69,9 @@ class VideoController extends Controller
             $file = $request->file('path');
             $fileName = \Str::slug($request->title).'_'.time().'_.'.$file->getClientOriginalExtension() ; 
             $uploadPath = 'upload/video/' . $fileName;  
+        } else {
+            $uploadPath = $request->path;
+        }
             
             //$file->move("upload/video/", $fileName);
 
@@ -74,6 +79,7 @@ class VideoController extends Controller
 
             $video = new Video;
             $video->title = $request->title;
+            $video->category_id = $request->category_id;
             $video->path = $uploadPath;
             $video->save();
 
@@ -99,7 +105,7 @@ class VideoController extends Controller
                 'status' => false,
                 'message' => 'Failed Upload Video'
             ]);
-        }
+        //}
 
         return response()->json([
             'status' => false,
@@ -129,8 +135,9 @@ class VideoController extends Controller
     public function edit($id)
     {
         $data = Video::with('videoEbook.ebook')->findOrFail($id);
+        $categories = VideoCategory::where('ebook_id', $data->videoEbook->ebook->id)->get();
 
-        return view('admin.videos.edit', compact('data'));
+        return view('admin.videos.edit', compact('data', 'categories'));
     }
 
     /**
@@ -142,12 +149,13 @@ class VideoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'path' => 'required|mimes:mp4,mov'
-        ]);
+        // $request->validate([
+        //     'path' => 'required|mimes:mp4,mov'
+        // ]);
         
         $data = Video::findOrFail($id);
         $oldPath = $data->path;
+        $uploadPath = $request->path;
         if ($request->hasFile('path')) {
             $file = $request->path;
             $fileName = \Str::slug($request->title).'-'.time().'-'.$file->getClientOriginalName() ; 
@@ -159,7 +167,9 @@ class VideoController extends Controller
 
   
         $data->title = $request->title;
-        $data->path = $uploadPath ? $uploadPath : $oldPath;
+        $data->category_id = $request->category_id;
+        // $data->path = $uploadPath ? $uploadPath : $oldPath;
+        $data->path = $request->path;
         
         if ($data->save())
         {

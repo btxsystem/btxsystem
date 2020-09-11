@@ -27,7 +27,11 @@ class EbookController extends Controller
         $data = Auth::user();
         $basic = Ebook::select('src')->where('id', 1)->first();
         $advance = Ebook::select('src')->where('id', 2)->first();
-        return view('frontend.ebook.index',['profile'=>$data, 'basic'=> $basic, 'advance'=>$advance]);
+        $ebook = Ebook::with(['children'])
+                        ->where('parent_id', 0)
+                        ->orderBy('position', 'ASC')
+                        ->get();
+        return view('frontend.ebook.index',['profile'=>$data, 'basic'=> $basic, 'advance'=>$advance, 'ebook' => $ebook]);
     }
 
     public function getEbook(){
