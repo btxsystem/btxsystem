@@ -28,4 +28,13 @@ class ValidationDataService
 
     return count($data) > 0 ? true : false;
   }
+
+  public function validateExistIdentity($nik = null)
+  {
+    $data = DB::table('employeers')->where('nik',$nik)->get();
+
+    if(strlen($nik) < 1) return false;
+
+    return count($data) > 0 ? true : false;
+  }
 }

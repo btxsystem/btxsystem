@@ -8,6 +8,7 @@ use Auth;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\VirtualAccountMail as VaMail;
+use App\Models\Ebook;
 
 class TransactionPaymentService
 {
@@ -36,7 +37,8 @@ class TransactionPaymentService
                     'ebook_id' => $parameter[1],
                     'ebook_renewal_id' => $parameter[2],
                     'member_id' => $parameter[0],
-                    'renewal' => $parameter[2] != null ? true : false
+                    'renewal' => $parameter[2] != null ? true : false,
+                    'discount' => $parameter[6]
                 ];
                 $arr_tojson = json_encode($product_detail);
                 DB::beginTransaction();
@@ -78,12 +80,13 @@ class TransactionPaymentService
                     'user_id' => $parameter[0],
                     'ebook_id' => $parameter[1],
                     'ebook_renewal_id' => $parameter[2],
-                    'member_id' => $parameter[0],
-                    'renewal' => $parameter[2] != null ? true : false
+                    'member_id' => $parameter[7],
+                    'renewal' => $parameter[2] != null ? true : false,
+                    'discount' => $parameter[6]
                 ];
                 $arr_tojson = json_encode($product_detail);
                 DB::beginTransaction();
-                $trx = DB::table('transaction_bills')->insertGetId(['user_id' => $parameter[0], 'product_type' => 'ebook', 'user_type' => $parameter[3],'customer_number' => $parameter[5], 'total_amount' => $parameter[4], 'created_at' => now(), 'updated_at' => now()]);
+                $trx = DB::table('transaction_bills')->insertGetId(['user_id' => $parameter[0], 'product_type' => 'ebook_nonmember', 'user_type' => $parameter[3],'customer_number' => $parameter[5], 'total_amount' => $parameter[4], 'created_at' => now(), 'updated_at' => now()]);
                 DB::table('transaction_bills_details')->insert(['transaction_bill_id'=>$trx, 'bill_number'=>$parameter[4],  'product_detail'=>$arr_tojson, 'created_at' => now(), 'updated_at' => now()]);
                 $dataEmail = (object) [
                     'amount' => $parameter[4].' Include fee',
@@ -92,9 +95,9 @@ class TransactionPaymentService
                     'time_expired' => Carbon::create(date('Y-m-d H:i:s'))->addDay(1),
                 ];
 
-                if (filter_var(Auth::user()->email, FILTER_VALIDATE_EMAIL)) {
+                if (filter_var(Auth::guard('nonmember')->user()->email, FILTER_VALIDATE_EMAIL)) {
                     //Mail::to('dhadhang.efendi@gmail.com')->send(new OldMemberMail($dataEmail));
-                    Mail::to(Auth::user()->email)->send(new VaMail($dataEmail));
+                    Mail::to(Auth::guard('nonmember')->user()->email)->send(new VaMail($dataEmail));
                 }
                 DB::commit();
             } catch (\Exception $e) {
@@ -126,6 +129,8 @@ class TransactionPaymentService
                 DB::rollBack();
             }
         }elseif($method == "register"){
+            $calculateEbookPrice = calculateEbookPriceWithPromotion($parameter[1], $parameter[1]->ebooks, 0);
+
             $product_detail = [
                 'member' => [
                     'username' => $parameter[1]->username,
@@ -143,6 +148,7 @@ class TransactionPaymentService
                     'referral' => Auth::user()->username,
                 ],
                 'ebooks' => $parameter[1]->ebooks,
+                'promotions' => $calculateEbookPrice['promotions'],
                 'shipping_method' => $parameter[1]->shipping_method,
                 'address' => [
                     'province_name' => $parameter[1]->province_name,
@@ -160,10 +166,14 @@ class TransactionPaymentService
             $cost = 280000 +2750;
             $cost += isset($parameter[1]->kurir) ? $parameter[1]->kurir : 0;
 
-            foreach ($parameter[1]->ebooks as $key => $ebook) {
-                $price_ebook = DB::table('ebooks')->where('id',$ebook)->select('price')->first();
-                $cost += $price_ebook->price;
-            }
+            // foreach ($parameter[1]->ebooks as $key => $ebook) {
+            //     $price_ebook = DB::table('ebooks')->where('id',$ebook)->select('price')->first();
+            //     $cost += $price_ebook->price;
+            // }
+
+            $totalPriceEbook = $calculateEbookPrice['total_price'];
+
+            $cost += $totalPriceEbook;
 
             $trx = DB::table('transaction_bills')
                 ->insertGetId(

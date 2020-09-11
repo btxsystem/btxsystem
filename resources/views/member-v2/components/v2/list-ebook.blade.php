@@ -131,14 +131,14 @@
 				<div class="d-flex align-items-center">
 					<!-- <img src="http://demo.viewpreview.online/assets/img/star.png" class="img-fluid mr-3"> -->
 					<span class="text-bold">{{ ucwords($book->title) }} Module</span>
-					@if($access == null)
-					<button class="btn btn-identity-red text-white px-5 ml-3" onclick="selectedSubscription(JSON.stringify({'price': '{{$book->price}}', 'price_markup': '{{$book->price_markup}}', 'id': '{{$book->id}}'}))">BUY</button>
+					@if($book->access_ebook == null)
+					<button class="btn btn-identity-red text-white px-5 ml-3" onclick="selectedSubscription(JSON.stringify({'price': '{{$book->price}}', 'price_markup': '{{$book->price_markup}}', 'id': '{{$book->id}}', 'total_price_discount': '{{$book->total_price_discount}}', 'minimum_product': '{{$book->minimum_product}}', 'is_promotion': '{{$book->is_promotion}}', 'register_promotion': '{{$book->register_promotion}}', 'maximum_product': '{{$book->maximum_product}}'}))">BUY</button>
 					@endif
 				</div>
 				<hr>
         <div class="row mb-5">
         @foreach($book->bookEbooks as $ebook)
-				@if($access != null)
+				@if($book->access_ebook == null)
           <div class="col-lg-3 mb-3 hover">
 						<div class="shadow rounded p-3">
 							<div style="overflow: hidden;" class="mb-2">
@@ -167,7 +167,7 @@
 					@endif
         @endforeach
         </div>
-				@if($access != null)
+				@if($book->access_ebook != null)
 				<div class="d-flex align-items-center">
 					<!-- <img src="http://demo.viewpreview.online/assets/img/star.png" class="img-fluid mr-3"> -->
 					<span class="text-bold">{{ ucwords($book->title) }} Videos</span>
@@ -306,7 +306,9 @@
 								<label class="form-check-label" for="inlineRadio1">BCA VA</label>
 							</div>
 					  </div>
-					  <h4>Total yang dibayar : IDR </span><b><span id="total_price"></h4></b>
+						<span id="normal_price"></span>
+						<span id="price_discount"></span>
+					  <h4 id="total_price_wrapper">Total yang dibayar : IDR </span><b><span id="total_price"></h4></b>
 		      </div>
 		      <div class="modal-footer justify-content-center">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -375,8 +377,8 @@ const players = Array.from(document.querySelectorAll('#player')).map(p => {
 	// 	]
 	// })
 });
-$('#submit-va').hide();
-$('#submit-nonva').show();
+$('#submit-va').show();
+$('#submit-nonva').hide();
 
 </script>
 
@@ -509,7 +511,7 @@ $('#ipay').change(function(){
 	$.ajax({
 		type: 'POST',
 		url: '{{route("member.buy-ebook")}}',
-		data: {ebook_id: $('#ebook').val()},
+		data: {ebook_id: $('#ebook').val(), referral: $('#referralCode').val()},
 		success: function (data) {
 
 			$('#va').val(data.customer_number);
@@ -538,11 +540,42 @@ function selectedSubscription(param) {
 
   const data = JSON.parse(param)
 
-	<?php if(Auth::guard('user')->user()){?>
-		$('#total_price').html(toIDR(data.price))
+	let totalHasProduct = 0;
+	let isPromotion = false;
+	let price = 0;
+
+	<?php if($user = Auth::guard('user')->user()){?>
+		// logic for member
+		totalHasProduct = parseInt("{{$user->total_product}}")
+		isPromotion = (totalHasProduct >= data.minimum_product && totalHasProduct <= data.maximum_product) && data.is_promotion
+		price = parseInt(data.price)
+	<?php } else if($user = Auth::guard('nonmember')->user()){?>
+		// login for non member
+		totalHasProduct = parseInt("{{$user->total_product}}")
+		isPromotion = (totalHasProduct >= data.minimum_product && totalHasProduct <= data.maximum_product) && data.is_promotion
+		price = parseInt(data.price) + parseInt(data.price_markup)
 	<?php } else {?>
-		$('#total_price').html(toIDR(parseInt(data.price) + parseInt(data.price_markup)))
-	<?php } ?>
+	  // login for guest
+		totalHasProduct = parseInt("1")
+		isPromotion = (totalHasProduct >= data.minimum_product && totalHasProduct <= data.maximum_product) && data.is_promotion
+		price = parseInt(data.price) + parseInt(data.price_markup)
+	<?php } ?>	
+
+	// check is promotion
+	if(isPromotion) {
+		$('#price_discount').html(`
+			<h3 class="text-success">Diskon : IDR <b>${toIDR(data.total_price_discount)}</b></h3>
+		`)
+		$('#normal_price').html(`
+			<s><h4>Harga : IDR <b>${toIDR(price)}</b></h4></s>
+		`)
+		$('#total_price_wrapper').addClass('text-warning')
+		$('#total_price').html(toIDR(price - parseInt(data.total_price_discount)))
+	} else {
+		$('#total_price').html(toIDR(price))
+	}
+
+
 	$('#ebook').val(data.id)
 	$('#income').val(data.price_markup)
 }

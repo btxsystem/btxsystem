@@ -1,9 +1,104 @@
 <?php
 use Illuminate\Support\Facades\DB;
 use App\Employeer;
+use App\Models\Ebook;
 use Carbon\Carbon;
 use App\Service\NotificationService;
 use App\Service\PaymentSwitchService;
+use Illuminate\Http\Request;
+
+function calculateEbookPriceWithValidate($ebooks, Request $request)
+{
+    $dataEbooks = Ebook::whereIn('id', $ebooks)->get();
+    $totalPriceEbook = 0;
+
+    foreach($dataEbooks as $ebook) {
+        if($ebook->is_promotion && $ebook->register_promotion) {
+            if(count($dataEbooks) >= $ebook->minimum_product && count($dataEbooks) <= $ebook->maximum_product) {
+                $totalPriceEbook += ((int) $ebook->price - (int) $ebook->total_price_discount);
+
+                if($request->input('selected_ebook')) {
+                    if($ebook->allow_merge_discount == 0 && (int) $ebook->id != (int) $request->input('selected_ebook')) {
+                        $totalPriceEbook += (int) $ebook->total_price_discount;
+                    }
+                }
+            } else {
+                $totalPriceEbook += (int) $ebook->price;
+            }
+        } else {
+            $totalPriceEbook += (int) $ebook->price;
+        }
+    }
+
+    return (int) $totalPriceEbook;
+}
+
+function removeElementWithValue($array, $key, $value){
+    foreach($array as $subKey => $subArray){
+         if($subArray[$key] == $value){
+              unset($array[$subKey]);
+         }
+    }
+    return $array;
+}
+
+function calculateEbookPriceWithPromotion(Request $request, $ebooks = [], $memberId = 0)
+{
+    $dataEbooks = Ebook::whereIn('id', $ebooks)->get();
+    $totalPriceEbook = 0;
+    $transactionMemberPromotion = [];
+
+    foreach($dataEbooks as $ebook) {
+        if($ebook->is_promotion && $ebook->register_promotion) {
+            if(count($dataEbooks) >= $ebook->minimum_product && count($dataEbooks) <= $ebook->maximum_product) {
+                $totalPriceEbook += ((int) $ebook->price - (int) $ebook->total_price_discount);
+
+                $transactionMemberPromotion[] = [
+                    'member_id' => $memberId,
+                    'ebook_id' => $ebook->id,
+                    'type' => 'member'
+                ];
+
+                if($request->input('selected_ebook')) {
+                    if($ebook->allow_merge_discount == 0 && (int) $ebook->id != (int) $request->input('selected_ebook')) {
+                        $totalPriceEbook += (int) $ebook->total_price_discount;
+                        $transactionMemberPromotion = removeElementWithValue($transactionMemberPromotion, "ebook_id", $ebook->id);
+                    }
+                }
+
+            } else {
+                $totalPriceEbook += (int) $ebook->price;
+            }
+        } else {
+            $totalPriceEbook += (int) $ebook->price;
+        }
+    }
+
+    return [
+        'total_price' => (int) $totalPriceEbook,
+        'promotions' => $transactionMemberPromotion
+    ];
+}
+
+function calculateEbookPromotionAdmin($ebookIds = [], $totalEbook = 0, Request $request)
+{
+    $dataEbooks = Ebook::whereIn('id', $ebookIds)->get();
+    $totalPriceEbook = 0;
+
+    foreach($dataEbooks as $ebook) {
+        if($ebook->is_promotion) {
+            if($totalEbook >= $ebook->minimum_product && $totalEbook <= $ebook->maximum_product) {
+                $totalPriceEbook += ((int) $ebook->price - (int) $ebook->total_price_discount);
+            } else {
+                $totalPriceEbook += (int) $ebook->price;
+            }
+        } else {
+            $totalPriceEbook += (int) $ebook->price;
+        }
+    }
+
+    return (int) $totalPriceEbook;
+}
 
 function getNotif(){
     return NotificationService::getNotification();

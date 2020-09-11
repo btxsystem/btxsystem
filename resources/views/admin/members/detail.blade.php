@@ -507,7 +507,7 @@
                     <h4 class="modal-title">Buy Product For {{$data->username}} / {{$data->id_member}}</h4>
                 </div>
                 <div class="modal-body">
-                    <form class="well form-horizontal" action="{{ route('members.buy-product') }}">
+                    <form class="well form-horizontal" id="form-buy-product" action="{{ route('members.buy-product') }}">
                         {{ csrf_field() }}
                         <fieldset>
                         <input id="member_id" name="member_id" value="{{$data->id}}" type="hidden">
@@ -516,7 +516,18 @@
                             <div class="col-md-8 inputGroupContainer">
                                 <select name="ebook_id" id="ebook_id" class="form-control" value="{{old('ebook_id')}}">
                                     @foreach($ebooks as $ebook)
-                                    <option value="{{$ebook->id}}">{{$ebook->title}} - {{currency($ebook->price)}}</option>
+                                    <option 
+                                        data-id="{{ $ebook->id }}" 
+                                        data-allow-merge-discount="{{$ebook->allow_merge_discount}}" 
+                                        data-maximum-product="{{$ebook->maximum_product}}" 
+                                        data-register-promotion="{{$ebook->register_promotion}}" 
+                                        data-minimum-product="{{$ebook->minimum_product}}" 
+                                        data-price-discount="{{$ebook->total_price_discount}}" 
+                                        data-promotion="{{$ebook->is_promotion}}" 
+                                        data-price="{{$ebook->price}}" 
+                                        value="{{$ebook->id}}">
+                                            {{$ebook->title}} - {{currency($ebook->price)}}
+                                    </option>
                                     @endforeach
                                 </select>
                             </div>
@@ -525,10 +536,23 @@
                             <div class="col-md-8 inputGroupContainer">
                                 <input type="checkbox" style="margin-top:12px" name="isBp" value="1">
                             </div>
+                            <div class="clearfix"></div>
+                            <hr/>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                        <span id="normal_price"></span>
+                                        <span id="price_discount"></span>
+                                        <h4 id="total_price_wrapper">Total yang dibayar : IDR </span><b><span id="total_price"></h4></b>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         </fieldset>
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <button type="submit" class="btn btn-primary" id="submit-buy-product">Submit</button>
                         </div>
                     </form>
                 </div>
@@ -539,8 +563,64 @@
 @stop
 
 @section('footer_scripts')
+    <script src="{{asset('assets/js/admin/module-promotion.js')}}"></script>
     <script type="text/javascript">
+
         $(document).ready(function () {
+            let totalHasProduct = parseInt("{{$data->total_product}}")
+
+            $('#ebook_id').change(function() {
+                let selected = $(this).find(':selected')
+                let idEbook = selected.data('id')
+				let allowMergeDiscount = selected.data('allow-merge-discount');
+				let promotion = selected.data('promotion')
+				let registerPromotion = selected.data('register-promotion')
+				let minimumProduct = selected.data('minimum-product')
+				let maximumProduct = selected.data('maximum-product')
+				let price = selected.data('price')
+				let priceDiscount = selected.data('price-discount')
+                let isPromotion = (totalHasProduct >= minimumProduct && totalHasProduct <= maximumProduct) && promotion
+
+                let promotionEbook = new PromotionEbook({
+                    id: idEbook,
+                    allowMergeDiscount: allowMergeDiscount,
+                    promotion: promotion,
+                    registerPromotion: registerPromotion,
+                    minimumProduct: minimumProduct,
+                    maximumProduct: maximumProduct,
+                    price: price,
+                    priceDiscount: priceDiscount,
+                    totalHasProduct: totalHasProduct
+                })
+
+                // running promo
+                promotionEbook.run()
+
+                if(promotionEbook.isPromotion) {
+                    $('#price_discount').html(`
+                        <h3 class="text-success">Diskon : IDR <b>${promotionEbook.totalDiscount}</b></h3>
+                    `)
+                    $('#normal_price').html(`
+                        <s><h4>Harga : IDR <b>${promotionEbook.price}</b></h4></s>
+                    `)
+                    $('#total_price_wrapper').addClass('text-warning')
+                    $('#total_price').html(promotionEbook.totalPrice)
+                } else {
+                    $('#price_discount').html(`
+                        
+                    `)
+                    $('#normal_price').html(`
+                        
+                    `)
+                    $('#total_price_wrapper').removeClass('text-warning')
+                    $('#total_price').html(promotionEbook.totalPrice)
+                }
+            })
+
+            $('#submit-buy-product').click(function() {
+                $(this).attr('disabled', true)
+                $('#form-buy-product').submit()
+            })
         
           var table = $('.points-table').DataTable({
               destroy: true,

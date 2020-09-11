@@ -9,7 +9,7 @@ class EbookMiddleware
     public function handle($request, Closure $next)
     {
         if (\Auth::guard('nonmember')->user() == false) {
-          return redirect()->route('member.explore');
+          return redirect()->route('member.home');
         }
 
         return $next($request);

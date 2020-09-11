@@ -17,7 +17,9 @@ use App\Service\NotificationService;
 
 use Illuminate\Support\Facades\Mail;
 use App\Mail\RegisterMemberMail;
+use App\Models\Ebook;
 use App\models\GotReward;
+use App\Models\TransactionMemberPromotion;
 use Redirect;
 
 class ProfileMemberController extends Controller
@@ -148,12 +150,22 @@ class ProfileMemberController extends Controller
             }
 
             if($method == 'point') {
-                // return response()->json([
-                //     'data' => $request->all()
-                // ]);
+
                 $ebooks = $request->input('ebooks') ?? [];
                 $term_one = $request->input('term_one') ?? '';
                 $term_two = $request->input('term_two') ?? '';
+
+                $cekEbook = Ebook::whereIn('id', $ebooks)->get();
+
+                foreach ($cekEbook as $cek) {
+                    if ($cek->parent_id != 0) {
+                        DB::rollback();
+                        Alert::error('ebook tidak bisa dibeli', 'Error')->persistent("OK");
+                        $data = Auth::user();
+                        $data['data'] = $request;
+                        return view('frontend.tree')->with('profile',$data) ;
+                    }
+                }
 
                 if($term_one == '' || $term_two == '') {
                     DB::rollback();
@@ -217,9 +229,13 @@ class ProfileMemberController extends Controller
                 $totalPriceEbook = 0;
 
                 if(count($ebooks) > 0) {
-                    $totalPriceEbook = DB::table('ebooks')
-                        ->whereIn('id', $ebooks)
-                        ->sum('price');
+                    $calculateEbookPrice = calculateEbookPriceWithPromotion($request, $ebooks, $employeer->id);
+                    $totalPriceEbook = $calculateEbookPrice['total_price'];
+
+                    // $totalPriceEbook = DB::table('ebooks')
+                    //     ->whereIn('id', $ebooks)
+                    //     ->sum('price');
+
                     $price = ((int) $price + (int) ($totalPriceEbook / 1000));
                 } else {
                     DB::rollback();
@@ -232,6 +248,9 @@ class ProfileMemberController extends Controller
                 if($request->input('shipping_method') == "1") {
                     $price = (int) $price + (int) + $request->input('cost');
                 }
+
+                // insert temporary
+                TransactionMemberPromotion::insert($calculateEbookPrice['promotions']);
 
                 foreach($ebooks as $ebook) {
                     $prefixRef = 'BITREX02';
@@ -344,6 +363,17 @@ class ProfileMemberController extends Controller
         ];
         $cek = Employeer::where('email',$user)->select('id')->first();
         $cek ? $data['email'] = true : $data['email'] = false;
+        return response()->json($data);
+    }
+    //Is Same NIK
+    
+    public function isSameNik($user){
+        $data = [
+            'status' => 200,
+            'nik' => false,
+        ];
+        $cek = Employeer::where('nik',$user)->select('id')->first();
+        $cek ? $data['nik'] = true : $data['nik'] = false;
         return response()->json($data);
     }
 
@@ -764,9 +794,43 @@ class ProfileMemberController extends Controller
             }
 
             if($method == 'point') {
-                if (Auth::user()->bitrex_cash > 6000) {
+                $price = 280;
+                $ebooks = $request->input('ebooks') ?? [];
+                $ebookSelected = $request->input('selected_ebook');
+                $cekEbook = Ebook::whereIn('id', $ebooks)->get();
 
-                    $ebooks = $request->input('ebooks') ?? [];
+                foreach ($cekEbook as $cek) {
+                    if ($cek->parent_id != 0) {
+                        DB::rollback();
+                        Alert::error('ebook tidak bisa dibeli', 'Error')->persistent("OK");
+                        $data = Auth::user();
+                        $data['data'] = $request;
+                        return view('frontend.tree')->with('profile',$data) ;
+                    }
+                }
+                $totalPriceEbook = 0;
+
+                if(count($ebooks) > 0) {
+                    // $totalPriceEbook = DB::table('ebooks')
+                    //     ->whereIn('id', $ebooks)
+                    //     ->sum('price');
+                    // $calculateEbookPrice = calculateEbookPriceWithPromotion($request, $ebooks, Auth::user()->id);
+                    // TransactionMemberPromotion::insert($calculateEbookPrice['promotions']);                    
+                    $price = ((int) $price + (int) ($totalPriceEbook / 1000));
+                } else {
+                    DB::rollback();
+                    Alert::error('Minimal membeli 1 Ebook', 'Error')->persistent("OK");
+                    $data = Auth::user();
+                    $data['data'] = $request;
+                    return view('frontend.tree')->with('profile',$data);
+                }
+
+                if($request->input('shipping_method') == "1") {
+                    $price = (int) $price + (int) + $request->input('cost');
+                }
+                
+                if (Auth::user()->bitrex_points >= $price) {
+
                     $term_one = $request->input('term_one') ?? '';
                     $term_two = $request->input('term_two') ?? '';
 
@@ -776,7 +840,6 @@ class ProfileMemberController extends Controller
                         return redirect()->route('member.tree');
                     }
 
-                    $price = 280;
                     $sponsor = Auth::user();
                     $idMember = invoiceNumbering();
 
@@ -958,6 +1021,10 @@ class ProfileMemberController extends Controller
                         //Employeer::create($data);
                         $employeer = Employeer::where('id_member', $idMember)->first();
 
+                        $calculateEbookPrice = calculateEbookPriceWithPromotion($request, $ebooks, $employeer->id);
+                        TransactionMemberPromotion::insert($calculateEbookPrice['promotions']);
+                        $price += (int) $calculateEbookPrice['total_price'] / 1000;
+
                         if((int)$shippingMethod == 1) {
                             $kurir = substr($request->kurir_name, 0, strpos($request->kurir_name, " -"));
                             DB::table('address')->insert([
@@ -974,25 +1041,6 @@ class ProfileMemberController extends Controller
                                 'cost' => $request->kurir,
                             ]);
                         }
-
-                        $totalPriceEbook = 0;
-
-                        if(count($ebooks) > 0) {
-                            $totalPriceEbook = DB::table('ebooks')
-                                ->whereIn('id', $ebooks)
-                                ->sum('price');
-                            $price = ((int) $price + (int) ($totalPriceEbook / 1000));
-                        } else {
-                            DB::rollback();
-                            Alert::error('Minimal membeli 1 Ebook', 'Error')->persistent("OK");
-                            $data = Auth::user();
-                            $data['data'] = $request;
-                            return view('frontend.tree')->with('profile',$data);
-                        }
-
-                        if($request->input('shipping_method') == "1") {
-                            $price = (int) $price + (int) + $request->input('cost');
-                        }//
 
                         foreach($ebooks as $ebook) {
                             $prefixRef = 'BITREX02';
@@ -1116,14 +1164,22 @@ class ProfileMemberController extends Controller
                 $va = new Va;
                 $va->register(Auth::user()->id, $request, $no_invoice);
                 DB::commit();
-                foreach ($request['ebooks'] as $key => $ebook) {
-                    $price_ebook = DB::table('ebooks')->where('id',$ebook)->select('price')->first();
-                    $profile['amount'] += $price_ebook->price;
-                }
+
+                $calculateEbookPrice = calculateEbookPriceWithPromotion($request, $request['ebooks'], Auth::user()->id);
+                $totalPriceEbook = $calculateEbookPrice['total_price'];
+
+                $profile['amount'] += $totalPriceEbook;
+
+                // foreach ($request['ebooks'] as $key => $ebook) {
+                //     $price_ebook = DB::table('ebooks')->where('id',$ebook)->select('price')->first();
+                //     $profile['amount'] += $price_ebook->price;
+                // }
                 return view('frontend.virtual-account-autoplacement')->with('profile',$profile);
             }
-        } catch(\Illuminate\Database\QueryException $e) {
+        } catch(\Exception $e) {
             DB::rollback();
+            dd($e);
+            return;
             Alert::error('Kesalahan teknis', 'Error')->persistent("OK");
             return redirect()->route('member.tree');
         }

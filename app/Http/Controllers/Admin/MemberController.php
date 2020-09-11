@@ -539,32 +539,35 @@ class MemberController extends Controller
     {
         DB::beginTransaction();
         try{
-            $buy = new TransactionMember;
-            $buy->member_id = $request->member_id;
-            $buy->ebook_id = $request->ebook_id;
-            $buy->status = 1;
-            $buy->expired_at = Carbon::now()->addYears(1)->toDateString();
-            $buy->save();
-
             if (isset($request->isBp)) {
                 $user = Employeer::where('id',$request->member_id)->first();
                 $history = new HistoryBitrexPoints;
                 $ebooks = Ebook::where('id',$request->ebook_id)->first();
-                if ($user->bitrex_points < ($ebooks->price/1000)) {
+
+                $totalPrice = calculateEbookPromotionAdmin([$request->ebook_id], $user->total_product, $request);
+
+                if ($user->bitrex_points < ($totalPrice/1000)) {
                     DB::rollback();
                     Alert::error('Bitrex points tidak cukup', 'Gagal');
                     return redirect()->route('members.show', $request->member_id);
                 }
-                $user->bitrex_points = $user->bitrex_points - ($ebooks->price/1000);
+                $user->bitrex_points = $user->bitrex_points - ($totalPrice/1000);
                 $history->id_member = $request->member_id;
-                $history->nominal = $ebooks->price;
-                $history->points = $ebooks->price/1000;
+                $history->nominal = $totalPrice;
+                $history->points = $totalPrice/1000;
                 $history->description = "Buy ebook ".$ebooks->title." from backoffice";
                 $history->info = 0;
                 $history->status = 1;
                 $user->save();
                 $history->save();
             }
+
+            $buy = new TransactionMember;
+            $buy->member_id = $request->member_id;
+            $buy->ebook_id = $request->ebook_id;
+            $buy->status = 1;
+            $buy->expired_at = Carbon::now()->addYears(1)->toDateString();
+            $buy->save();
 
             DB::commit();
 
@@ -698,6 +701,14 @@ class MemberController extends Controller
             DB::beginTransaction();
 
             if($totalTransaction) {
+                $previousTime = strtotime($totalTransaction->expired_at);
+                $currentTime = strtotime($date);
+
+                if($currentTime < $previousTime) {
+                    DB::rollBack();
+                    Alert::error('Gagal Menambahkan Masa Aktif Ebook, Penambahan Harus lebih besar dari tanggal sebelumnya', 'Gagal');
+                    return redirect()->back();
+                }
                 
                 $previousDate = Carbon::parse($totalTransaction->expired_at);
 
@@ -738,6 +749,14 @@ class MemberController extends Controller
                 return redirect()->back();
             }
 
+            $previousTime = strtotime($transactionMember->expired_at);
+            $currentTime = strtotime($date);
+
+            if($currentTime < $previousTime) {
+                DB::rollBack();
+                Alert::error('Gagal Menambahkan Masa Aktif Ebook, Penambahan Harus lebih besar dari tanggal sebelumnya', 'Gagal');
+                return redirect()->back();
+            }
 
             $previousDate = Carbon::parse($transactionMember->expired_at);
 
