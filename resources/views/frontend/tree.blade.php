@@ -766,6 +766,16 @@ em{
               				<label for="va" aria-hidden="true">Virtual Account BCA</label>`);
 		$('#action-member').attr('action', '{{route("register-autoplacement")}}');
 		$('#register').modal('show');
+
+		$('#va').change(function(){
+			checkTerm();
+			is_va = true;
+		})
+
+		$('#bp').change(function(){
+			checkTerm();
+			is_va = false;
+		})
 	}
 
 	function openTree() {
@@ -1040,7 +1050,11 @@ em{
 
 			grandTotal = (priceEbook + postalFee + 280000) / 1000;
 
-			check_cost = bitrexPoint < grandTotal ? false : true;
+			if(is_va) {
+				check_cost = true
+			} else {
+				check_cost = bitrexPoint < grandTotal ? false : true;
+			}
 
 			checkTerm()
 		})
@@ -1204,8 +1218,13 @@ em{
 
 		grandTotal = (priceEbook + postalFee + 280000) / 1000;
 
-		if(bitrexPoint < grandTotal) {
-			$('.register').prop('disabled', true)
+		if(is_va) {
+			check_cost = true
+		} else {
+			if(bitrexPoint < grandTotal) {
+				$('.register').prop('disabled', true)
+				check_cost = false
+			}
 		}
 		checkTerm()
 	});
@@ -1222,7 +1241,12 @@ em{
 		$('#district').empty().trigger('change');
 		$('#kurir').empty().trigger('change');
 		grandTotal = (priceEbook + postalFee + 280000) / 1000;
-		check_cost = bitrexPoint < grandTotal ? false : true;
+		
+		if(is_va) {
+			check_cost = true
+		} else {
+			check_cost = bitrexPoint < grandTotal ? false : true;
+		}
 		$('#cost-postal').text(postalFee);
 		$('#grand-total').text(grandTotal);
 		checkTerm();
@@ -1237,7 +1261,12 @@ em{
 		grandTotal -= postalFee;
 		postalFee = 0;
 		grandTotal = (priceEbook - postalFee + 280000) / 1000;
-		check_cost = bitrexPoint < grandTotal ? false : true;
+		
+		if(is_va) {
+			check_cost = true
+		} else {
+			check_cost = bitrexPoint < grandTotal ? false : true;
+		}
 		$('#cost-postal').text(postalFee);
 		$('#grand-total').text(grandTotal);
 		checkTerm();
