@@ -719,6 +719,8 @@ em{
 	function checkTerm() {
 		if(is_va) {
 			check_cost = true
+		} else {
+			check_cost = bitrexPoint < grandTotal ? false : true;
 		}
 		if(!$('#term_one').prop('checked') || !$('#term_two').prop('checked')) {
 			$('.register').prop('disabled', true)
@@ -1226,7 +1228,10 @@ em{
 		} else {
 			if(bitrexPoint < grandTotal) {
 				$('.register').prop('disabled', true)
+				console.log('false')
 				check_cost = false
+			} else {
+				check_cost = true
 			}
 		}
 		checkTerm()
