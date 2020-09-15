@@ -717,6 +717,9 @@ em{
 	})
 
 	function checkTerm() {
+		if(is_va) {
+			check_cost = true
+		}
 		if(!$('#term_one').prop('checked') || !$('#term_two').prop('checked')) {
 			$('.register').prop('disabled', true)
 		} else {
