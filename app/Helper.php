@@ -80,15 +80,25 @@ function calculateEbookPriceWithPromotion(Request $request, $ebooks = [], $membe
     ];
 }
 
-function calculateEbookPromotionAdmin($ebookIds = [], $totalEbook = 0, Request $request)
+function calculateEbookPromotionAdmin($ebookIds = [], $user, Request $request)
 {
     $dataEbooks = Ebook::whereIn('id', $ebookIds)->get();
     $totalPriceEbook = 0;
+    $transactionMemberPromotion = [];
+    $totalEbook = $user->total_product;
+    $memberId = $user->id;
 
     foreach($dataEbooks as $ebook) {
         if($ebook->is_promotion) {
             if($totalEbook >= $ebook->minimum_product && $totalEbook <= $ebook->maximum_product) {
                 $totalPriceEbook += ((int) $ebook->price - (int) $ebook->total_price_discount);
+
+                $transactionMemberPromotion[] = [
+                    'member_id' => $memberId,
+                    'ebook_id' => $ebook->id,
+                    'type' => 'member'
+                ];
+
             } else {
                 $totalPriceEbook += (int) $ebook->price;
             }
@@ -97,7 +107,10 @@ function calculateEbookPromotionAdmin($ebookIds = [], $totalEbook = 0, Request $
         }
     }
 
-    return (int) $totalPriceEbook;
+    return [
+        'total_price' => (int) $totalPriceEbook,
+        'promotions' => $transactionMemberPromotion
+    ];
 }
 
 function getNotif(){

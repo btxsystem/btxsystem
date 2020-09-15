@@ -20,6 +20,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use Rap2hpoutre\FastExcel\FastExcel;
 use App\Models\TransactionEbookExpired;
 use App\Models\HistoryActivePeriodeEbook;
+use App\Models\TransactionMemberPromotion;
 
 class MemberController extends Controller
 {
@@ -544,13 +545,18 @@ class MemberController extends Controller
                 $history = new HistoryBitrexPoints;
                 $ebooks = Ebook::where('id',$request->ebook_id)->first();
 
-                $totalPrice = calculateEbookPromotionAdmin([$request->ebook_id], $user->total_product, $request);
+                $promotion = calculateEbookPromotionAdmin([$request->ebook_id], $user, $request);
+                $totalPrice = $promotion['total_price'];
 
                 if ($user->bitrex_points < ($totalPrice/1000)) {
                     DB::rollback();
                     Alert::error('Bitrex points tidak cukup', 'Gagal');
                     return redirect()->route('members.show', $request->member_id);
                 }
+
+                // add transaction member promot
+                TransactionMemberPromotion::insert($promotion['promotions']);
+
                 $user->bitrex_points = $user->bitrex_points - ($totalPrice/1000);
                 $history->id_member = $request->member_id;
                 $history->nominal = $totalPrice;
