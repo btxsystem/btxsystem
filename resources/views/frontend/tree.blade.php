@@ -773,14 +773,14 @@ em{
 		$('#register').modal('show');
 
 		$('#va').change(function(){
-			checkTerm();
 			is_va = true;
-			check_cost = true
+			check_cost = true;
+			checkTerm();
 		})
 
 		$('#bp').change(function(){
-			checkTerm();
 			is_va = false;
+			checkTerm();
 		})
 	}
 
