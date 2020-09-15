@@ -775,6 +775,7 @@ em{
 		$('#va').change(function(){
 			checkTerm();
 			is_va = true;
+			check_cost = true
 		})
 
 		$('#bp').change(function(){
