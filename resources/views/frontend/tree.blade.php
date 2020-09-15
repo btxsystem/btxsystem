@@ -717,6 +717,11 @@ em{
 	})
 
 	function checkTerm() {
+		if(is_va) {
+			check_cost = true
+		} else {
+			check_cost = bitrexPoint < grandTotal ? false : true;
+		}
 		if(!$('#term_one').prop('checked') || !$('#term_two').prop('checked')) {
 			$('.register').prop('disabled', true)
 		} else {
@@ -766,6 +771,17 @@ em{
               				<label for="va" aria-hidden="true">Virtual Account BCA</label>`);
 		$('#action-member').attr('action', '{{route("register-autoplacement")}}');
 		$('#register').modal('show');
+
+		$('#va').change(function(){
+			is_va = true;
+			check_cost = true;
+			checkTerm();
+		})
+
+		$('#bp').change(function(){
+			is_va = false;
+			checkTerm();
+		})
 	}
 
 	function openTree() {
@@ -1040,7 +1056,11 @@ em{
 
 			grandTotal = (priceEbook + postalFee + 280000) / 1000;
 
-			check_cost = bitrexPoint < grandTotal ? false : true;
+			if(is_va) {
+				check_cost = true
+			} else {
+				check_cost = bitrexPoint < grandTotal ? false : true;
+			}
 
 			checkTerm()
 		})
@@ -1204,8 +1224,16 @@ em{
 
 		grandTotal = (priceEbook + postalFee + 280000) / 1000;
 
-		if(bitrexPoint < grandTotal) {
-			$('.register').prop('disabled', true)
+		if(is_va) {
+			check_cost = true
+		} else {
+			if(bitrexPoint < grandTotal) {
+				$('.register').prop('disabled', true)
+				console.log('false')
+				check_cost = false
+			} else {
+				check_cost = true
+			}
 		}
 		checkTerm()
 	});
@@ -1222,7 +1250,12 @@ em{
 		$('#district').empty().trigger('change');
 		$('#kurir').empty().trigger('change');
 		grandTotal = (priceEbook + postalFee + 280000) / 1000;
-		check_cost = bitrexPoint < grandTotal ? false : true;
+		
+		if(is_va) {
+			check_cost = true
+		} else {
+			check_cost = bitrexPoint < grandTotal ? false : true;
+		}
 		$('#cost-postal').text(postalFee);
 		$('#grand-total').text(grandTotal);
 		checkTerm();
@@ -1237,7 +1270,12 @@ em{
 		grandTotal -= postalFee;
 		postalFee = 0;
 		grandTotal = (priceEbook - postalFee + 280000) / 1000;
-		check_cost = bitrexPoint < grandTotal ? false : true;
+		
+		if(is_va) {
+			check_cost = true
+		} else {
+			check_cost = bitrexPoint < grandTotal ? false : true;
+		}
 		$('#cost-postal').text(postalFee);
 		$('#grand-total').text(grandTotal);
 		checkTerm();
