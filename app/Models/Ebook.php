@@ -89,20 +89,29 @@ class Ebook extends Model
     if($user = \Auth::guard('nonmember')->user()) {
       $expired = TransactionNonMember::where('non_member_id', $user->id)
         ->where('status', 1)
-        ->whereIn('ebook_id', [$this->id, $this->children ? $this->children->id : 0])
-        ->select('expired_at')
-        ->latest('id')
-        ->first();
-
-    } else if($user = \Auth::guard('user')->user()) {
-      $expired = TransactionMember::with('transaction_ebook_expired')->where('member_id', $user->id)
-        ->where('status', 1)
-        ->where('ebook_id',  [$this->id, $this->children ? $this->children->id : 0])
+        ->whereHas('ebook', function($ebook) {
+          return $ebook->whereIn('id', [$this->id, $this->children ? $this->children->id : 0]);
+        })
         ->select([
           'id',
           'expired_at'
         ])
-        ->latest('id')
+        ->orderBy('expired_at', 'DESC')
+        ->first();
+
+    } else if($user = \Auth::guard('user')->user()) {
+      $ebook = Ebook::with('children')->where('id', $this->id)->first();
+
+      $expired = TransactionMember::with('transaction_ebook_expired')->where('member_id', $user->id)
+        ->where('status', 1)
+        ->whereHas('ebook', function($ebook) {
+          return $ebook->whereIn('id', [$this->id, $this->children ? $this->children->id : 0]);
+        })
+        ->select([
+          'id',
+          'expired_at'
+        ])
+        ->orderBy('expired_at', 'DESC')
         ->first();
     }
 
@@ -113,6 +122,7 @@ class Ebook extends Model
         }
       }
 
+    
       $currentTimestamp = strtotime(date('Y-m-d H:i:s'));
       $expiredTimestamp = strtotime($expired['expired_at']);
 

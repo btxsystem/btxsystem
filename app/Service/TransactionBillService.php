@@ -45,7 +45,9 @@ class TransactionBillService
 
       // jika renewal
       if($renewal) {
-        $check = TransactionMember::where([
+        $check = TransactionMember::with([
+          'transaction_ebook_expired'
+        ])->where([
           'status' => 1,
           'member_id' => $user
         ])->latest('id')->first();
@@ -53,7 +55,15 @@ class TransactionBillService
         // jika blm ada transaksi
         if(!$check) return false;
 
-        $data['expired_at'] = Carbon::create($check->expired_at)->addYears($duration);
+        $totalExpired = $check->expired_at;
+
+        if($check->transaction_ebook_expired) {
+          if($check->expired_at < $check->transaction_ebook_expired->expired_at) {
+            $totalExpired = $check->transaction_ebook_expired->expired_at;
+          }
+        }
+
+        $data['expired_at'] = Carbon::create($totalExpired)->addYears($duration);
       }
 
       $saveEbook = TransactionMember::insert($data);
