@@ -45,15 +45,46 @@ class TransactionBillService
 
       // jika renewal
       if($renewal) {
-        $check = TransactionMember::where([
+        $hasRenewal = TransactionMember::where([
           'status' => 1,
+          'ebook_id' => $id,
+          'member_id' => $user
+        ])->latest('id')->first();
+
+        // set default last transaction
+        $ebookRenewalId = $id;
+
+        if(!$hasRenewal) {
+          $ebookRenewal = Ebook::where('id', $id)->first();
+
+          // dipastikan invalid request
+          if(!$ebookRenewal) return false;
+          if(!$ebookRenewal->parent_id) return false;
+
+          // set id ebook renewal jika sblmnya sudah renewal
+          $ebookRenewalId = $ebookRenewal->parent_id;
+        }
+
+        $check = TransactionMember::with([
+          'transaction_ebook_expired'
+        ])->where([
+          'status' => 1,
+          'ebook_id' => $ebookRenewalId,
           'member_id' => $user
         ])->latest('id')->first();
 
         // jika blm ada transaksi
         if(!$check) return false;
 
-        $data['expired_at'] = Carbon::create($check->expired_at)->addYears($duration);
+        $totalExpired = $check->expired_at;
+
+        if($check->transaction_ebook_expired) {
+          if($check->expired_at < $check->transaction_ebook_expired->expired_at) {
+            $totalExpired = $check->transaction_ebook_expired->expired_at;
+          }
+        }
+
+        $data['expired_at'] = Carbon::create($totalExpired)->addYears($duration);
       }
 
       $saveEbook = TransactionMember::insert($data);
@@ -98,8 +129,29 @@ class TransactionBillService
 
       // jika renewal
       if($productDetail->renewal) {
+        $hasRenewal = TransactionMember::where([
+          'status' => 1,
+          'ebook_id' => $productDetail->ebook_renewal_id,
+          'member_id' => $productDetail->user_id
+        ])->latest('id')->first();
+
+        // set default last transaction
+        $ebookRenewalId = $productDetail->ebook_renewal_id;
+
+        if(!$hasRenewal) {
+          $ebookRenewal = Ebook::where('id', $productDetail->ebook_renewal_id)->first();
+
+          // dipastikan invalid request
+          if(!$ebookRenewal) return false;
+          if(!$ebookRenewal->parent_id) return false;
+
+          // set id ebook renewal jika sblmnya sudah renewal
+          $ebookRenewalId = $ebookRenewal->parent_id;
+        }
+
         $check = TransactionNonMember::where([
           'status' => 1,
+          'ebook_id' => $ebookRenewalId,
           'non_member_id' => $productDetail->user_id
         ])->latest('id')->first();
 

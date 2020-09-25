@@ -765,10 +765,11 @@ em{
 			}
 		});
 		$('#payment_method').html(`
-							<input name="payment_method" type="radio" value="point" id="bp" class="with-gap radio-col-red" checked />
-              				<label for="bp">Bitrex Points</label>
-							<input name="payment_method" type="radio" value="va" aria-hidden="true" id="va" class="with-gap radio-col-red"/>
-              				<label for="va" aria-hidden="true">Virtual Account BCA</label>`);
+				<input name="payment_method" type="radio" value="point" id="bp" class="with-gap radio-col-red" checked/>
+				<label for="bp">Bitrex Points</label>
+				<input name="payment_method" type="radio" value="va" id="va" class="with-gap radio-col-red" />
+				<label for="va">Virtual Account BCA</label>
+		`);
 		$('#action-member').attr('action', '{{route("register-autoplacement")}}');
 		$('#register').modal('show');
 
@@ -786,8 +787,9 @@ em{
 
 	function openTree() {
 		$('#payment_method').html(`
-							<input name="payment_method" type="radio" value="point" id="payment_method" class="with-gap radio-col-red" checked />
-              				<label for="payment_method">Bitrex Points</label>`);
+			<input name="payment_method" type="radio" value="point" id="bp" class="with-gap radio-col-red" checked/>
+			<label for="bp">Bitrex Points</label>
+		`);
 		$('#action-member').attr('action', '{{route("member.register-downline")}}')
 	}
 
@@ -1415,6 +1417,7 @@ em{
 		if (a=='available') {
 			$('#parent').val(parent);
 			$('#position').val(position);
+			openTree()
 			$('#register').modal('show');
 		}else{
 			$.ajax({
