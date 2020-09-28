@@ -52,11 +52,6 @@ class EditTriggerBonusRemoveBonus extends Migration
                     UPDATE employeers SET updated_at = now(), pv = pv + bonus_pv WHERE id = NEW.member_id;
                     UPDATE employeers SET updated_at = now(), bitrex_cash = bitrex_cash + (bonus_bv * 0.2 - @ppn) WHERE id = sponsor;
                     INSERT INTO history_pv (`pv`, `pv_today`, `id_member`, `created_at`, `updated_at`) VALUES (pv_now , bonus_pv, NEW.member_id, now(), now());
-                    if @condition1 > 1 or @condition2 > 1 THEN
-                        set @inter = (select pv from ebooks where id = new.ebook_id);
-                        set @inter = @inter/25; 
-                        UPDATE employeers SET expired_at = expired_at + INTERVAL @inter YEAR WHERE id = NEW.member_id;
-                    END IF;
                 END IF;
             END
         ');
@@ -101,11 +96,6 @@ class EditTriggerBonusRemoveBonus extends Migration
                     UPDATE employeers SET updated_at = now(), pv = pv + bonus_pv WHERE id = NEW.member_id;
                     UPDATE employeers SET updated_at = now(), bitrex_cash = bitrex_cash + (bonus_bv * 0.2 - @ppn) WHERE id = sponsor;
                     INSERT INTO history_pv (`pv`, `pv_today`, `id_member`, `created_at`, `updated_at`) VALUES (pv_now , bonus_pv, NEW.member_id, now(), now());
-                    if @condition1 > 1 or @condition2 > 1 THEN
-                        set @inter = (select pv from ebooks where id = new.ebook_id);
-                        set @inter = @inter/25; 
-                        UPDATE employeers SET expired_at = expired_at + INTERVAL @inter YEAR WHERE id = NEW.member_id;
-                    END IF;
                 END IF;
             END
         ');
