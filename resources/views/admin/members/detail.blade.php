@@ -515,6 +515,7 @@
                             <label class="col-md-3 control-label">Ebook</label>
                             <div class="col-md-8 inputGroupContainer">
                                 <select name="ebook_id" id="ebook_id" class="form-control" value="{{old('ebook_id')}}">
+                                    <option value="">Silahkan pilih ebook</option>
                                     @foreach($ebooks as $ebook)
                                     <option 
                                         data-id="{{ $ebook->id }}" 
