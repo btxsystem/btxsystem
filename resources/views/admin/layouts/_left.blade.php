@@ -62,6 +62,14 @@
                         </a>
                     </li>
                 @endif
+                @if(\Auth::guard('admin')->user()->hasPermission('Members.add-expired'))
+                    <li class="{{ (request()->is('backoffice/member-expired')) ? 'active' : '' }}">
+                        <a href="{{ route('member-expired.index') }}">
+                            <i class="fa fa-angle-double-right"></i>
+                            Add Expired Member
+                        </a>
+                    </li>
+                @endif
             </ul>
         </li>
     @endif
