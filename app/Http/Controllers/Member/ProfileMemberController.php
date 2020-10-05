@@ -200,7 +200,8 @@ class ProfileMemberController extends Controller
                     'bitrex_points' => 0,
                     'pv' => 0,
                     'nik' => $request->nik,
-                    'expired_at' => count($ebooks) < 2 ? Carbon::create(date('Y-m-d H:i:s'))->addYear(1) : Carbon::create(date('Y-m-d H:i:s'))->addYear(5),
+                    // 'expired_at' => count($ebooks) < 2 ? Carbon::create(date('Y-m-d H:i:s'))->addYear(1) : Carbon::create(date('Y-m-d H:i:s'))->addYear(5),
+                    'expired_at' => Carbon::create(date('Y-m-d H:i:s'))->addYear(1),
                     'bank_name' => $request->bank_name,
                     'bank_account_name' => $request->bank_account_name,
                     'no_rec' => $request->bank_account_number

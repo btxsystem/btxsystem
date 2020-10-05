@@ -230,6 +230,12 @@
                                                                     <input type="checkbox" name="permissions[]" value="23"/>Members Inactive
                                                                 </label>
                                                             </li>
+
+                                                            <li>
+                                                                <label>
+                                                                    <input type="checkbox" name="permissions[]" value="253"/>Add Expired Member
+                                                                </label>
+                                                            </li>
                                                         </li>
                                                     </li>
                                                     <li>

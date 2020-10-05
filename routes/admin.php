@@ -168,6 +168,8 @@ Route::group(['middleware' => 'admin'], function () {
     Route::resource('video', 'Admin\VideoController');
     Route::get('video/delete/{id}', 'Admin\VideoController@destroy')->name('deleteVideo');
 
+    Route::resource('member-expired', 'Admin\MemberExpiredController');
+
 
 
     Route::group(['prefix'=>'trainings','as'=>'trainings.'],function(){
