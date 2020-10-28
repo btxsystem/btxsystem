@@ -118,7 +118,9 @@ class UsersController extends Controller
 
     public function memberDaily(){
         $datas = DB::table('employeers')->select(DB::raw('DAY(created_at) as tanggal'), DB::raw('count(id) as views'))
-                                                ->where(DB::raw('MONTH(created_at)'),now()->month)->where('status',1)
+                                                ->where(DB::raw('MONTH(created_at)'),now()->month)
+                                                ->where(DB::raw('YEAR(created_at)'),now()->year)
+                                                ->where('status',1)
                                                 ->groupBy('tanggal')->get();
         $tmp_data = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
         foreach ($datas as $key => $data) {
