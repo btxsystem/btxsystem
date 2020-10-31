@@ -31,4 +31,9 @@ class TransactionMember extends Model
     {
         return $this->belongsTo( TransactionEbookExpired::class, 'id', 'transaction_id');
     }
+
+  public function history()
+  {
+      return $this->belongsTo(TransactionMemberHistory::class, 'id', 'transaction_id');
+  }
 }
