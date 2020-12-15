@@ -2,12 +2,14 @@
 
 namespace App\Service;
 use App\Models\Notification;
+use App\Models\User;
 use Illuminate\Support\Facades\Mail;
 use Auth;
 use App\Mail\RequestArchiveRewardMemberMail;
 use App\Mail\RequestArchiveRewardAdminMail;
 use App\Rank;
 use App\Mail\AccApproveRewardMail;
+use App\Mail\BonusPairingMail;
 use Illuminate\Support\Facades\DB;
 use App\models\GotReward;
 use App\Employeer;
@@ -139,5 +141,17 @@ class NotificationService extends Notification
                 'send_email' => 1
             ]);
         }
+    }
+
+    //FUNCTION SEND EMAIL BONUS PAIRING
+    public function sendEmailBonusPairing($idmember, $bonus_pairing) {
+        $user = User::where('id_member',$idmember)->first();
+        $dataEmail = (object) [
+            'description' => 'Congratulations '.$user->username,
+            'nominal' => 'Anda telah mendapatkan bonus pairing '. $bonus_pairing,
+        ];
+        Mail::to($user->email)->cc('cs@bitrexgo.co.id')->send(new BonusPairingMail($dataEmail));
+        return;
+
     }
 }

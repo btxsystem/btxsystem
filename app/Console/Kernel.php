@@ -7,6 +7,7 @@ use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use DB;
 use Carbon\Carbon;
 use App\Service\NotificationService;
+use Illuminate\Support\Facades\Mail;
 
 class Kernel extends ConsoleKernel
 {
@@ -27,7 +28,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->call(function() {
+        /*$schedule->call(function() {
 
             $pairings = DB::table('pairings')->join('employeers','pairings.id_member','=','employeers.id')
                                              ->select('pairings.pv_left','pairings.pv_midle','pairings.pv_right','pairings.id_member','employeers.rank_id','employeers.bitrex_cash','employeers.verification')
@@ -109,11 +110,11 @@ class Kernel extends ConsoleKernel
                     $fail_pairing = ($bonus_pairing - 10000000) / 100000 ;
                     $bonus_pairing = 10000000;
                 }
-               if($bonus_pairing>0){
+                if ($bonus_pairing > 0) {
                     try {
                         DB::beginTransaction();
-                        DB::table('history_pv_pairing')->insert(['id_member' => $pairing->id_member, 'total_pairing' => $has_pairing, 'fail_pairing' => $fail_pairing , 'left' => $left_pairing, 'midle' => $midle_pairing, 'right' => $right_pairing, 'created_at' => Carbon::now(), 'updated_at' => Carbon::now(), 'current_left' => $pairing->pv_left, 'current_midle' => $pairing->pv_midle, 'current_right' => $pairing->pv_right]);
-                        DB::table('pairings')->where('id_member', $pairing->id_member)->update(['pv_left' => $pairing->pv_left,'pv_midle' => $pairing->pv_midle, 'pv_right' => $pairing->pv_right, 'updated_at' => Carbon::now()]);
+                        DB::table('history_pv_pairing')->insert(['id_member' => $pairing->id_member, 'total_pairing' => $has_pairing, 'fail_pairing' => $fail_pairing, 'left' => $left_pairing, 'midle' => $midle_pairing, 'right' => $right_pairing, 'created_at' => Carbon::now(), 'updated_at' => Carbon::now(), 'current_left' => $pairing->pv_left, 'current_midle' => $pairing->pv_midle, 'current_right' => $pairing->pv_right]);
+                        DB::table('pairings')->where('id_member', $pairing->id_member)->update(['pv_left' => $pairing->pv_left, 'pv_midle' => $pairing->pv_midle, 'pv_right' => $pairing->pv_right, 'updated_at' => Carbon::now()]);
                         DB::table('history_bitrex_cash')->insert(['id_member' => $pairing->id_member, 'nominal' => $bonus_pairing - ($bonus_pairing * $pajak), 'created_at' => Carbon::now(), 'updated_at' => Carbon::now(), 'description' => 'Bonus Pairing', 'info' => 1, 'type' => 1]);
                         DB::table('employeers')->where('id', $pairing->id_member)->update(['bitrex_cash' => $pairing->bitrex_cash += $bonus_pairing - ($bonus_pairing * $pajak), 'updated_at' => Carbon::now()]);
                         DB::table('history_pajak')->insert(['id_member' => $pairing->id_member, 'id_bonus' => 3, 'persentase' => $pajak, 'nominal' => $bonus_pairing - ($bonus_pairing * $pajak), 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()]);
@@ -122,14 +123,21 @@ class Kernel extends ConsoleKernel
                         DB::rollback();
                         return 'gagal';
                     }
-               }
-            }
-        })->dailyAt('01:00');
+                }
 
-        $schedule->call(function() {
-            $service = new NotificationService();
-            $service->sendNotification();
-        })->dailyAt('03:00');
+                //EMAIL BONUS PAIRING ON REKAP EVERY DAY
+                $final_bonus_pairing = $bonus_pairing - ($bonus_pairing * $pajak);
+               	if ($pairing->id_member == 7403) {
+			$service = new NotificationService();
+        	        $service->sendEmailBonusPairing($pairing->id_member, $final_bonus_pairing);
+            	}
+		}
+        })->dailyAt('18:00');*/
+
+        //$schedule->call(function() {
+            //$service = new NotificationService();
+            //$service->sendNotification();
+        //})->dailyAt('03:00');
     }
 
     /**
