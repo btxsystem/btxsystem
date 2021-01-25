@@ -17,6 +17,7 @@ use App\Service\NotificationService;
 
 use Illuminate\Support\Facades\Mail;
 use App\Mail\RegisterMemberMail;
+use App\Mail\SponsorshipMail;
 use App\Models\Ebook;
 use App\models\GotReward;
 use App\Models\TransactionMemberPromotion;
@@ -367,7 +368,7 @@ class ProfileMemberController extends Controller
         return response()->json($data);
     }
     //Is Same NIK
-    
+
     public function isSameNik($user){
         $data = [
             'status' => 200,
@@ -824,7 +825,7 @@ class ProfileMemberController extends Controller
                     //     ->whereIn('id', $ebooks)
                     //     ->sum('price');
                     // $calculateEbookPrice = calculateEbookPriceWithPromotion($request, $ebooks, Auth::user()->id);
-                    // TransactionMemberPromotion::insert($calculateEbookPrice['promotions']);                    
+                    // TransactionMemberPromotion::insert($calculateEbookPrice['promotions']);
                     $price = ((int) $price + (int) ($totalPriceEbook / 1000));
                 } else {
                     DB::rollback();
@@ -837,7 +838,7 @@ class ProfileMemberController extends Controller
                 if($request->input('shipping_method') == "1") {
                     $price = (int) $price + (int) + $request->input('cost');
                 }
-                
+
                 if (Auth::user()->bitrex_points >= $price) {
 
                     $term_one = $request->input('term_one') ?? '';
@@ -1116,9 +1117,13 @@ class ProfileMemberController extends Controller
                         'member' => $employeer,
                         'password' => $password
                         ];
+                        $sponsor = Employeer::find($employeer->sponsor_id);
 
                         Mail::to($employeer->email)
                         ->send(new RegisterMemberMail($dataEmail, null));
+
+                        Mail::to($sponsor->email)
+                        ->send(new SponsorshipMail($sponsor, null));
                         Alert::success('Berhasil Register Member Autoplacement', 'Success')->persistent("OK");
                         return redirect()->route('member.tree');
                     }else{

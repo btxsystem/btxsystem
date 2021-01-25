@@ -45,8 +45,9 @@ class EbookController extends Controller
 
             $price = $ebook->price+2750;
             $user = Auth::user();
+            $haveExistEbook = TransactionMember::where('member_id', $user->id)->where('expired_at', '>', Carbon::now())->where('ebook_id',$ebook->id)->first();
 
-            if(($user->total_product >= $ebook->minimum_product && $user->total_product <= $ebook->maximum_product) && $ebook->is_promotion) {
+            if($user->total_product >= $ebook->minimum_product && $user->total_product <= $ebook->maximum_product && $ebook->is_promotion && $haveExistEbook && $user->status!=0) {
                 if($ebook->price_discount > 0) {
                     $price -= (int) ($ebook->price * $ebook->price_discount) / 100;
                     $ebookIdDiscount = $ebook->id;
@@ -65,7 +66,7 @@ class EbookController extends Controller
 
             // $renewal = $request->ebook_id == 3 || $request->ebook_id == 4 ? $request->ebook_id : null;
             $renewal = $ebook->parent_id == 0 ? null : $ebook->id;
-            
+
             $va = new Va;
             $va->transactionMember(Auth::user()->id, $request->ebook_id, $renewal, 'member', $price, $no_invoice, $ebookIdDiscount);
 
@@ -136,7 +137,7 @@ class EbookController extends Controller
 
             // $renewal = $request->ebook_id == 3 || $request->ebook_id == 4 ? $request->ebook_id : null;
             $renewal = $ebook->parent_id == 0 ? null : $ebook->id;
-            
+
             $va = new Va;
             $va->transactionNonMember($id, $request->ebook_id, $renewal, 'nonmember', $price, $no_invoice, $ebookIdDiscount, $referral);
 

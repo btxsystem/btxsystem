@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers\Payment;
 
+use App\Employeer;
+use Illuminate\Support\Facades\Mail;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\TransactionNonMember;
 use App\Models\TransactionMember;
+use APP\Mail\SponsorshipMail;
 use App\Models\Ebook;
 
 class PaymentController extends Controller
@@ -223,6 +226,10 @@ class PaymentController extends Controller
       DB::commit();
 
       if($status == 1) {
+        $transaction = TransactionNonMember::where('transaction_ref', $code);
+        $emplooyer = Employeer::find($transaction->member_id);
+        $sponsor = Employeer::find($emplooyer->sponsor_id);
+        Mail::to($sponsor->email)->send(new SponsorshipMail($sponsor, null));
         return view('payment.success');
       } else if($status == 0) {
         return view('payment.failed');

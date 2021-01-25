@@ -57,7 +57,7 @@ class VirtualAccountService
     $transactionBill = (new TransactionBillRepository())
       ->findByCustomerNumber($customerNumber ?? 0);
 
-    
+
     $checkInquiryBills = (new TransactionBillEntity())
       ->setCompanyCode($companyCode ?? "")
       ->setCustomerNumber($customerNumber ?? "")
@@ -81,14 +81,14 @@ class VirtualAccountService
       //     ->setBillNumber("008271822372")
       //     ->setBillSubCompany("00001")
       //   ];
-  
+
       //   return $detailBills;
       // })
       ->setInquiryReason(
         ((new LanguageEntity())
           ->setIndonesian('Sukses')
           ->setEnglish('Success'))
-      );    
+      );
 
       //check transaction bills
       if($transactionBill) {
@@ -96,7 +96,7 @@ class VirtualAccountService
         ->setTotalAmount($transactionBill->total_amount.".00")
         ->setPaidAmount($transactionBill->paid_amount.".00")
         ->setCustomerName($transactionBill->user_type == 'member' ? $transactionBill->member->username : $transactionBill->nonMember->username);
-        
+
         if($this->validateIsPayment($checkInquiryBills, $transactionBill->payment_flag_status)) {
           return $this->responseBills($checkInquiryBills);
         }
@@ -108,11 +108,11 @@ class VirtualAccountService
             ->setEnglish('Failed'))
         );
       }
-      
+
 
       $this->validationBillPresentment($checkInquiryBills, $request);
-      
-    
+
+
     return $this->responseBills($checkInquiryBills);
   }
 
@@ -125,11 +125,11 @@ class VirtualAccountService
    */
   public function validationBillPresentment($builder, $request){
     if(
-      $request->input('CompanyCode') == '' || 
-      $request->input('CustomerNumber') == '' || 
-      $request->input('RequestID') == '' || 
+      $request->input('CompanyCode') == '' ||
+      $request->input('CustomerNumber') == '' ||
+      $request->input('RequestID') == '' ||
       $request->input('ChannelType') == '' ||
-      $request->input('TransactionDate') == '' || 
+      $request->input('TransactionDate') == '' ||
       !$this->validateFormatDate($request->input('TransactionDate'))
     ) {
       $builder->setInquiryStatus(BcaStatusType::REJECT_FLAG)
@@ -138,7 +138,7 @@ class VirtualAccountService
             ->setIndonesian('Gagal')
             ->setEnglish('Failed'))
         );
-      
+
     }
   }
 
@@ -253,25 +253,25 @@ class VirtualAccountService
       //       ->setBillSubCompany($list->BillSubCompany)
       //     ];
       //   }
-  
+
       //   return $detailBillLists;
-      // });    
+      // });
 
       //get transaction type
       $transactionBillRepo = $this->transactionBillRepo
         ->findByCustomerNumber($customerNumber);
-      
+
       // jika SIT tidakterpenuhi
       if(!$this->validateFlagPayment($paymentBills, $transactionBillRepo ?? null, $request)) {
         return $this->responsePayments($paymentBills);
       }
-      
+
       // jika user sudah membayar
       if($this->validateIsPayment($paymentBills, $transactionBillRepo->payment_flag_status ?? null)) {
         return $this->responsePayments($paymentBills);
-      } 
-      
-      
+      }
+
+
       $paymentBills->setPaymentFlagStatus(BcaStatusType::SUCCESS_FLAG)
         ->setPaymentFlagReason(
           (new LanguageEntity())
@@ -280,7 +280,7 @@ class VirtualAccountService
         );
 
       $paymentBillProduct = $this->paymentBillProduct($paymentBills, $transactionBillRepo);
-      
+
       if($paymentBillProduct && $transactionBillRepo) {
         $paymentBills->setPaymentFlagStatus(BcaStatusType::SUCCESS_FLAG)
         ->setPaymentFlagReason(
@@ -302,7 +302,7 @@ class VirtualAccountService
         //     ->setIndonesian('Sukses')
         //     ->setEnglish('Success'))
         //   ];
-    
+
         //   return $freeTexts;
         // });
       } else {
@@ -318,8 +318,8 @@ class VirtualAccountService
               ->setEnglish('Failed'))
           );
       }
-        
-    return $this->responsePayments($paymentBills);    
+
+    return $this->responsePayments($paymentBills);
   }
 
   /**
@@ -332,19 +332,19 @@ class VirtualAccountService
   public function validateFlagPayment($builder, $transactionBillRepo, $request)
   {
     if(
-      $transactionBillRepo == null || 
-      $request->input('CompanyCode') == '' || 
-      $request->input('CustomerNumber') == '' || 
-      $request->input('CustomerName') == '' || 
-      $request->input('CurrencyCode') == '' || 
-      $request->input('RequestID') == '' || 
+      $transactionBillRepo == null ||
+      $request->input('CompanyCode') == '' ||
+      $request->input('CustomerNumber') == '' ||
+      $request->input('CustomerName') == '' ||
+      $request->input('CurrencyCode') == '' ||
+      $request->input('RequestID') == '' ||
       $request->input('ChannelType') == '' ||
-      $request->input('TransactionDate') == '' || 
-      $request->input('TotalAmount') == '' || 
-      $request->input('PaidAmount') == '' || 
-      $request->input('FlagAdvice') == '' || 
-      $request->input('SubCompany') == '' || 
-      $request->input('Reference') == '' || 
+      $request->input('TransactionDate') == '' ||
+      $request->input('TotalAmount') == '' ||
+      $request->input('PaidAmount') == '' ||
+      $request->input('FlagAdvice') == '' ||
+      $request->input('SubCompany') == '' ||
+      $request->input('Reference') == '' ||
       $request->input('FlagAdvice') != 'Y' &&
       $request->input('FlagAdvice') != 'N' ||
       !$this->validateFormatDate($request->input('TransactionDate')) ||
@@ -363,7 +363,7 @@ class VirtualAccountService
             ->setIndonesian('Gagal')
             ->setEnglish('Failed'))
         );
-      
+
       return false;
     } else {
       return true;
@@ -410,7 +410,7 @@ class VirtualAccountService
    * @return void
    */
   public function paymentBillProduct($builder, $transactionBillRepo)
-  { 
+  {
     if(!$transactionBillRepo) return false;
 
     switch($transactionBillRepo->product_type) {

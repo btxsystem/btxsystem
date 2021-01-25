@@ -29,7 +29,7 @@ class RegisterController extends Controller
             return $next($request);
         });
     }
-    
+
   public function registerMember(Request $request)
   {
     $method = $request->input('method') ?? 'transfer';
@@ -439,7 +439,7 @@ class RegisterController extends Controller
 
           // Mail::to($idNewMember->email)
           //   ->send(new RegisterMemberMail($dataEmail, null));
-            
+
         } else if($orderType == 'BITREX04') { //witout ebbook
           $password = strtolower(str_random(8));
 

@@ -36,13 +36,6 @@
       'FCMGroup' => 'LaravelFCM\\Facades\\FCMGroup',
     ),
   ),
-  'fideloper/proxy' => 
-  array (
-    'providers' => 
-    array (
-      0 => 'Fideloper\\Proxy\\TrustedProxyServiceProvider',
-    ),
-  ),
   'laravel/passport' => 
   array (
     'providers' => 
