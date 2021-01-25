@@ -286,6 +286,7 @@ div#flag {
 		<div class="container pt-5">
 			<div class="row">
 				@foreach($ebooks as $ebook)
+				dd($ebook);
 				<div class="col-lg-12 mb-3">
 					<div class="row">
 						@if(Auth::guard('nonmember')->user() || Auth::guard('user')->user())
@@ -604,7 +605,7 @@ function changeValueRepeat(param) {
 		totalHasProduct = parseInt("0")
 		isPromotion = (totalHasProduct >= data.minimum_product && totalHasProduct <= data.maximum_product) && data.is_promotion
 		price = parseInt(data.price) + parseInt(data.price_markup)
-	<?php } ?>	
+	<?php } ?>
 
 	// check is promotion
 	if(isPromotion) {

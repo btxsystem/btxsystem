@@ -213,7 +213,7 @@
                 success:function(data){
                     console.log(data);
                     
-                    if (data.des) {
+                    if (data.des && !data.grace && !data.max) {
                         $('#clock').countdown(data.date.expired_at, function(event) {
                             $(this).html(`
                             <span>Status membership: </span>
@@ -227,12 +227,49 @@
 
                             `);
                         });
-                    }else{
+                    }
+
+                    if (data.des && data.grace) {
+                        $('#clock').countdown(data.graceperiod, function(event) {
+                            $(this).html(`
+                            <span>Status grace period: </span>
+                            <span>${event.strftime('%D')}<span class="text-warning"> Days :</span></span>
+
+                            <span>${event.strftime('%H')}<span class="text-warning">h :</span></span>
+
+                            <span>${event.strftime('%M')}<span class="text-warning">m :</span></span>
+
+                            <span>${event.strftime('%S')}<span class="text-warning">s</span></span>
+
+                            `);
+                        });
+                    }
+
+                    if (data.des && data.max) {
+                        $('#clock').countdown(data.maxperiod, function(event) {
+                            $(this).html(`
+                            <span>Status final grace period: </span>
+                            <span>${event.strftime('%D')}<span class="text-warning"> Days :</span></span>
+
+                            <span>${event.strftime('%H')}<span class="text-warning">h :</span></span>
+
+                            <span>${event.strftime('%M')}<span class="text-warning">m :</span></span>
+
+                            <span>${event.strftime('%S')}<span class="text-warning">s</span></span>
+
+                            `);
+                        });
+                    }
+                    
+                    if(!data.des) {
                         $('#clock').html(`
                             <span>Membership active until: </span>
                             <span class="text-warning">${moment(data.date.expired_at).format('D MMMM Y')}</span>
                         `);
                     }
+                },
+                error : function(err) {
+                    console.log(err)
                 }
             })
 

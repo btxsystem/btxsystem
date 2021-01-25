@@ -652,7 +652,7 @@ class MemberController extends Controller
 
     public function transactionMember($id)
     {
-        $data = TransactionMember::with('ebook', 'transaction_ebook_expired', 'history')->where('member_id', $id);
+        $data = TransactionMember::with('ebook', 'transaction_ebook_expired')->where('member_id', $id)->orderBy('created_at', 'desc');
         // $data = Employeer::with('transaction_member.ebook')->findOrFail($id);
 
         return Datatables::of($data)

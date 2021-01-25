@@ -56,6 +56,12 @@
             <div class="email" style="color:white">{{isset($profile->email) ? $profile->email : $profile['email'] }}</div>
         </div>
     </div>
+    <style>
+        .theme-orange .sidebar .menu .list li.disabled {
+            pointer-events:none;
+            background-color:lightgrey;
+        }
+    </style>
     <div class="menu">
         <ul class="list">
             <li class="header">Menu</li>

@@ -27,6 +27,8 @@ class EbookController extends Controller
                 ->orderBy('position', 'ASC')
                 ->get();
 
+            dd($ebooks);
+            exit();
             // return response()->json($ebooks);
 
             if($user = Auth::guard('nonmember')->user()) {

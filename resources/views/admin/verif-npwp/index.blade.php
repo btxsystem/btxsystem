@@ -34,25 +34,6 @@ List Of Verification npwp
         </div>
     </div>
 </div>
-<div id="detail-unvefification" class="modal fade">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title">Unverification NPWP Confirmation</h4>
-            </div>
-            <div class="modal-body">
-                <fieldset>
-                    <center><b id="info-unverif"></b></center>
-                </fieldset>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" id="unverification">Unverification</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 <section class="content">
     <div class="row">
         <div class="col-md-12">
@@ -71,7 +52,6 @@ List Of Verification npwp
                                 <th>Username</th>
                                 <th>Name</th>
                                 <th>NPWP</th>
-                                <th>Status</th>
                                 <th style="width:5px;">Action</th>
                             </tr>
                         </thead>

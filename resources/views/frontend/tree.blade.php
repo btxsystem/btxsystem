@@ -267,7 +267,7 @@
 				<small class="text-muted">Bitrexgo</small>
 				</h2>
         <div class="pull-right mt-2">
-          <button onclick="openAutoPlacement()" class="btn btn-primary btn-md" style="cursor:pointer">Add new Member with Auto-placement</button>
+          <button onclick="openAutoPlacement()" class="btn btn-primary btn-md" style="cursor:pointer" {{ session('expired') == true ? 'disabled' : '' }}>Add new Member with Auto-placement</button>
         </div>
 			</div>
       <div class="clearfix">
@@ -1415,10 +1415,13 @@ em{
 
 	var tree_submit = (a, parent, position) => {
 		if (a=='available') {
-			$('#parent').val(parent);
-			$('#position').val(position);
-			openTree()
-			$('#register').modal('show');
+			var expired = "{{ session('expired') }}"
+			if (expired != '1') {
+				$('#parent').val(parent);
+				$('#position').val(position);
+				openTree()
+				$('#register').modal('show');
+			}
 		}else{
 			$.ajax({
 				type: 'GET',

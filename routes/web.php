@@ -89,6 +89,7 @@ Route::group(['prefix'=>'member','as'=>'member.'], function(){
 Route::redirect('/', '/login');
 Route::get('/login', 'Auth\LoginController@getLogin')->middleware('guest')->name('guest.login');
 Route::get('/event', 'Member\EventController@index');
+
 Route::post('/contact-us/send', 'Webstore\ContactUsController@sendMessage')->name('contact.send');
 Route::get('/video/{file}', 'FileController@serveVideo')->name('serve.video');
 Route::group(['prefix' => 'hall-of-fame', 'as'=> 'hall-of-fame.'], function () {

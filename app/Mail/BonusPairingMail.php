@@ -31,6 +31,6 @@ class BonusPairingMail extends Mailable
     {
         return $this->view('emails.pairingmail')
                     ->from('mailbitrexgo@bitrexgo.id', 'Bitrexgo')
-                    ->subject('Pairing Bonus');
+                    ->subject("Congratulations, you've just earned Pairing Bonus !");
     }
 }

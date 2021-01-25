@@ -8,6 +8,7 @@ use DB;
 use Carbon\Carbon;
 use App\Service\NotificationService;
 use Illuminate\Support\Facades\Mail;
+use App\Service\LotCommissionQualifiedService;
 
 class Kernel extends ConsoleKernel
 {
@@ -28,13 +29,19 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        /*$schedule->call(function() {
+        $schedule->call(function() {
 
             $pairings = DB::table('pairings')->join('employeers','pairings.id_member','=','employeers.id')
-                                             ->select('pairings.pv_left','pairings.pv_midle','pairings.pv_right','pairings.id_member','employeers.rank_id','employeers.bitrex_cash','employeers.verification')
+                                             ->select('pairings.pv_left','pairings.pv_midle','pairings.pv_right','pairings.id_member','employeers.rank_id','employeers.bitrex_cash','employeers.verification','employeers.expired_at')
                                              ->get();
 
             foreach ($pairings as $key => $pairing) {
+
+                $cekExpired = cekExpiredMember($pairing->id_member);
+
+                if ($cekExpired['des'] && ($cekExpired['grace'] || $cekExpired['max'])) {
+                    continue;
+                }
 
                 $bonus = 0;
                 $bonus_pairing = 0;
@@ -126,18 +133,21 @@ class Kernel extends ConsoleKernel
                 }
 
                 //EMAIL BONUS PAIRING ON REKAP EVERY DAY
-                $final_bonus_pairing = $bonus_pairing - ($bonus_pairing * $pajak);
-               	if ($pairing->id_member == 7403) {
-			$service = new NotificationService();
-        	        $service->sendEmailBonusPairing($pairing->id_member, $final_bonus_pairing);
-            	}
-		}
-        })->dailyAt('18:00');*/
+                // $final_bonus_pairing = $bonus_pairing - ($bonus_pairing * $pajak);
+                // $service = new NotificationService();
+                // $service->sendEmailBonusPairing($pairing->id_member, $final_bonus_pairing);
+            }
+        })->dailyAt('01:00');
 
-        //$schedule->call(function() {
-            //$service = new NotificationService();
-            //$service->sendNotification();
-        //})->dailyAt('03:00');
+        $schedule->call(function() {
+            $service = new LotCommissionQualifiedService();
+            $service->_start();
+        })->weekly()->thursdays()->at('02:00');
+
+        $schedule->call(function() {
+            $service = new NotificationService();
+            $service->sendNotification();
+        })->dailyAt('03:00');
     }
 
     /**

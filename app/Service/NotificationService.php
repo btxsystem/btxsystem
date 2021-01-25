@@ -145,10 +145,10 @@ class NotificationService extends Notification
 
     //FUNCTION SEND EMAIL BONUS PAIRING
     public function sendEmailBonusPairing($idmember, $bonus_pairing) {
-        $user = User::where('id_member',$idmember)->first();
+        $user = DB::table('employeers')->where('id',$idmember)->first();
         $dataEmail = (object) [
-            'description' => 'Congratulations '.$user->username,
-            'nominal' => 'Anda telah mendapatkan bonus pairing '. $bonus_pairing,
+            'username' => $user->username,
+            'nominal' => 'Rp.'. $bonus_pairing,
         ];
         Mail::to($user->email)->cc('cs@bitrexgo.co.id')->send(new BonusPairingMail($dataEmail));
         return;

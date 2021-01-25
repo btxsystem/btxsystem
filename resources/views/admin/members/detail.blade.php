@@ -785,94 +785,19 @@
               destroy: true,
               processing: true,
               serverSide: true,
-			  order: [
-				[5, "desc"]
-			  ],
               ajax: {
                 url: "{{ route('members.transaction.member', $data->id) }}",
               },
 
               columns: [
-				{ data: 'DT_RowIndex', name: 'DT_RowIndex',orderable: false, searchable: false },
-				{ data: 'ebook.title', name: 'ebook.title', className: "text-center"  },
-			//   { data: 'ebook.price', name: 'price', className: "text-center"   },
-				{
-					data: 'ebook.price',
-					render: function(data, type, row) {
-						if(type === "sort" || type === "type") {
-							return data
-						} else {
-							let ebookPrice = row.ebook.price
-
-							if(row.history) {
-								if(row.history.discount > 0) {
-									ebookPrice = `
-										Before Disc. : <span class="text-danger"><s>${row.ebook.price}</s></span><br/>
-										Disc. : <span style="font-weight:bold;" class="text-warning">${row.history.discount}%</span><br/>
-										After Disc. : <span style="font-weight:bold;" class="text-success">${row.history.price - row.history.price_discount}</span>
-									`
-								} else {
-									ebookPrice = row.history.price
-								}
-							}
-
-							return ebookPrice;
-						}
-					}
-				},
-				// { data: 'ebook.pv', name: 'pv', className: "text-center"   },
-				{
-					data: 'ebook.pv',
-					render: function(data, type, row) {
-						if(type === "sort" || type === "type") {
-							return data
-						} else {
-							let ebookPv = row.ebook.pv
-
-							if(row.history) {
-								if(row.history.discount > 0) {
-									ebookPv = `
-										Before Disc. : <span class="text-danger"><s>${row.ebook.pv}</s></span><br/>
-										Disc. : <span style="font-weight:bold;" class="text-warning">${row.history.discount}%</span><br/>
-										After Disc. : <span style="font-weight:bold;" class="text-success">${row.history.pv}</span>
-									`
-								} else {
-									ebookPv = row.history.pv
-								}
-							}
-
-							return ebookPv;
-						}
-					}
-				},
-				// { data: 'ebook.bv', name: 'bv', className: "text-center"   },
-				{
-					data: 'ebook.bv',
-					render: function(data, type, row) {
-						if(type === "sort" || type === "type") {
-							return data
-						} else {
-							let ebookBv = row.ebook.bv
-
-							if(row.history) {
-								if(row.history.discount > 0) {
-									ebookBv = `
-										Before Discount : <span class="text-danger"><s>${row.ebook.bv}</s></span><br/>
-										Discount : <span style="font-weight:bold;" class="text-warning">${row.history.discount}%</span><br/>
-										After Discount : <span style="font-weight:bold;" class="text-success">${row.history.bv}</span>
-									`
-								} else {
-									ebookBv = row.history.bv
-								}
-							}
-
-							return ebookBv;
-						}
-					}
-				},
-				{ data: 'created_at', name: 'created_at', className: "text-center"   },
-				{ data: 'expired_at', name: 'expired_at', className: "text-center"   },
-				{ data: 'action', name: 'action', className: "text-center", orderable: false, searchable: false   },
+                  { data: 'DT_RowIndex', name: 'DT_RowIndex',orderable: false, searchable: false },
+                  { data: 'ebook.title', name: 'title', className: "text-center"  },
+                  { data: 'ebook.price', name: 'price', className: "text-center"   },
+                  { data: 'ebook.pv', name: 'pv', className: "text-center"   },
+                  { data: 'ebook.bv', name: 'bv', className: "text-center"   },
+                  { data: 'created_at', name: 'created_at', className: "text-center"   },
+                  { data: 'expired_at', name: 'expired_at', className: "text-center"   },
+                  { data: 'action', name: 'action', className: "text-center", orderable: false, searchable: false   },
 
               ]
           });

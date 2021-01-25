@@ -49,7 +49,7 @@
             <div class="error-container">
                 <div class="error-main">
                     <h1>
-                        Sorry
+                        Sory
                     </h1>
                     <h3>
                         Expired,
