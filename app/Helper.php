@@ -184,6 +184,20 @@ function is_decimal( $val )
     return is_numeric( $val ) && floor( $val ) != $val;
 }
 
+function cekExpiredMember($id_member) {
+    $time['date'] = DB::table('employeers')->where('id',$id_member)->select('expired_at')->first();
+    $time['des'] = Auth::user()->expired_at <= Carbon::now()->addMonths(3) ? true : false;
+    $exp = new Carbon($time['date']->expired_at);
+    $graceperiod = $exp->addMonth();
+    $time['grace'] = (Auth::user()->expired_at <= Carbon::now()) && (Auth::user()->expired_at <= $graceperiod) ? true : false;
+    $time['graceperiod'] = $graceperiod->format('Y-m-d 23:59:59');
+    $exp = new Carbon($time['date']->expired_at);
+    $maxperiod = $exp->addMonths(2);
+    $time['max'] = (Auth::user()->expired_at <= Carbon::now()) && (Auth::user()->expired_at <= $graceperiod) && (Auth::user()->expired_at <= $maxperiod) ? true : false;
+    $time['maxperiod'] = $maxperiod->format('Y-m-d 23:59:59');
+    return $time;
+}
+
 function findChild($id, $sponsor, $data){
     $idMember = invoiceNumbering();
     $isHaveChild = Employeer::where('parent_id',$id)->select('position')->get();

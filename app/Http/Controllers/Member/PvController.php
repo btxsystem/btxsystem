@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\HistoryPv;
+use Illuminate\Support\Facades\Crypt;
 use DataTables;
 use DB;
 use Carbon\Carbon;
@@ -65,7 +66,15 @@ class PvController extends Controller
         }
     }
 
-    public function searchDownline($id){
+    public function searchDownline(Request $req, $id){
+
+        $xmlheader = $req->header('x-requested-with');
+
+        if ($xmlheader != 'XMLHttpRequest') {
+            $status = 'not allowed';
+            return response()->json($status, 200);
+        }
+
         $datas = DB::table('employeers')->where('username',$id)->select('id','parent_id','username')->first();
         if($datas!=null){
             if($datas->id == Auth::id()){

@@ -60,13 +60,11 @@ class LoginController extends Controller
     $data = DB::table('close_member')->select('is_close_member')->first();
 
     if (Auth::guard('user')->attempt(['username' => $request->username, 'password' => $request->password]) || Auth::guard('user')->attempt(['email' => $request->username, 'password' => $request->password])) {
-
-      if (Auth::user()->expired_at <= Carbon::now() || Auth::user()->expired_at==null) {
-        Auth::guard('user')->logout();
-        return view('frontend.expired-member');
-      }
-
-      elseif(Auth::user()->status==0) {
+      session([
+        'expired' => false
+      ]);
+      
+      if(Auth::user()->status==0) {
         Auth::guard('user')->logout();
         Alert::error('Your account has been banned, please contact admin', 'Error')->persistent("OK");
         $testimoni = Testimonial::where('isPublished',1)->select('name','desc')->get();

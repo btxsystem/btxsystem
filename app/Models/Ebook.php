@@ -123,10 +123,10 @@ class Ebook extends Model
       }
 
     
-      $currentTimestamp = strtotime(date('Y-m-d H:i:s'));
-      $expiredTimestamp = strtotime($expired['expired_at']);
+      // $currentTimestamp = strtotime(date('Y-m-d H:i:s'));
+      // $expiredTimestamp = strtotime($expired['expired_at']);
 
-      if($currentTimestamp > $expiredTimestamp) return null;
+      // if($currentTimestamp < $expiredTimestamp) return null;
     }
 
     return $expired;
