@@ -63,7 +63,7 @@ class LoginController extends Controller
       session([
         'expired' => false
       ]);
-      
+
       if(Auth::user()->status==0) {
         Auth::guard('user')->logout();
         Alert::error('Your account has been banned, please contact admin', 'Error')->persistent("OK");

@@ -35,11 +35,11 @@ class Kernel extends ConsoleKernel
                                              ->select('pairings.pv_left','pairings.pv_midle','pairings.pv_right','pairings.id_member','employeers.rank_id','employeers.bitrex_cash','employeers.verification','employeers.expired_at')
                                              ->get();
 
+            $now = date('Y-m-d H:i:s');
+
             foreach ($pairings as $key => $pairing) {
 
-                $cekExpired = cekExpiredMember($pairing->id_member);
-
-                if ($cekExpired['des'] && ($cekExpired['grace'] || $cekExpired['max'])) {
+                if ($pairing->expired_at < $now) {
                     continue;
                 }
 

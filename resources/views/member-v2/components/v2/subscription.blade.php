@@ -355,7 +355,12 @@ div#flag {
 												<button onclick="changeValueRepeat(JSON.stringify({'price': '{{$ebook->children->price}}', 'price_markup': '{{$ebook->children->price_markup}}', 'id': '{{$ebook->children->id}}', 'total_price_discount': '{{$ebook->children->total_price_discount}}', 'minimum_product': '{{$ebook->children->minimum_product}}', 'is_promotion': '{{$ebook->children->is_promotion ?? false}}', 'maximum_product': '{{$ebook->children->maximum_product}}',}))" data-toggle="modal" data-target="#repeatModal" type="button" class="btn btn-identity-red text-white btn-sm mt-3 px-5">REPEAT ORDER</button>
 											@endif
 
-											@if($ebook->access_ebook != null)
+											@php
+												$expired = $ebook->access_ebook->expired_at;
+												$now = date('Y-m-d H:i:s');
+											@endphp
+
+											@if($expired > $now)
 												<a href="{{route('member.ebook.detail', ['type' => $ebook->slug])}}" class="btn btn-secondary text-white btn-sm mt-3 px-5">VIEW</a>
 											@endif
 										@else
@@ -696,6 +701,14 @@ function getTimeRemaining(endtime) {
   var minutes = Math.floor((t / 1000 / 60) % 60);
   var hours = Math.floor((t / (1000 * 60 * 60)) % 24);
   var days = Math.floor(t / (1000 * 60 * 60 * 24));
+
+	if (days < 0) {
+		days = 0
+		hours = 0
+		minutes = 0
+		seconds = 0
+	}
+
   return {
     'total': t,
     'days': days,

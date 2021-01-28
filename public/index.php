@@ -1,9 +1,6 @@
 <?php
 //phpinfo();
 //die;
-
-//sleep(35);
-
 /**
  * Laravel - A PHP Framework For Web Artisans
  *

@@ -904,25 +904,27 @@ em{
 			let ebookSelected = $('#checkboxEbook input[type=checkbox]').filter(function() {
 				return $(this).prop("checked")
 			})
+			let indexEbook = discountEbooks.findIndex(data => data == $(this).prop("id"))
 
 			if(!$(this).prop("checked")) {
-				let indexEbook = discountEbooks.findIndex(data => data == $(this).prop("id"))
 				discountEbooks.splice(indexEbook, 1);
 			}
 
 			n=ebookSelected.length; //Tambah value untuk stored temporary
+			
 			let cancelledEbook = false;
 		
-
-			if(n>=2){
+			if(n>=2 && $(this).prop("checked")){
 				var r = confirm("Apakah Anda yakin membeli " + n +" ebook?");
 				if (r == true) {
 
 				} else { 
 					cancelledEbook = true
 					$(this).prop("checked", false)
+					ebookSelected.splice(indexEbook,1)
 				}
 			}
+
 
 			/*
 
@@ -976,6 +978,7 @@ em{
 				let price = $(this).data('price')
 				let priceDiscount = $(this).data('price-discount')
 
+
 				if($(this).prop('checked')) {
 					if(isPromotion && isRegisterPromotion) {
 						if(ebookSelected.length >= minimumProduct && ebookSelected.length <= maximumProduct) {
@@ -1003,16 +1006,15 @@ em{
 						priceEbook = priceEbook + parseInt(price);
 					}
 				} else {
-				if(!cancelledEbook) {
-					check -= 1;
-
-					if(isPromotion && isRegisterPromotion && ebookSelected.length <= maximumProduct) {
-						priceEbook = priceEbook - (parseInt(price) - parseInt(priceDiscount));
-						totalDiscount -= parseInt(priceDiscount)
-					} else {	
-						priceEbook = priceEbook - parseInt(price);
+					if(!cancelledEbook) {
+						check -= 1;
+						if(isPromotion && isRegisterPromotion && ebookSelected.length <= maximumProduct) {
+							priceEbook = priceEbook - (parseInt(price) - parseInt(priceDiscount));
+							totalDiscount -= parseInt(priceDiscount)
+						} else {	
+							priceEbook = priceEbook - parseInt(price);
+						}
 					}
-				}
 				}
 				
 			})
@@ -1033,7 +1035,7 @@ em{
 			// 	}).filter(data => data != null)
 			// }
 
-			if(totalDiscount > 0) {
+			if(totalDiscount >= 0) {
 				$('#total-discount-tr').show()
 				$('#total-discount').html(`${toPrice(totalDiscount / 1000)}`)
 			} else {

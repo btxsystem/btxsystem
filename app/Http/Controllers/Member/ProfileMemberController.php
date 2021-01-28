@@ -476,13 +476,14 @@ class ProfileMemberController extends Controller
         $time['date'] = DB::table('employeers')->where('id',Auth::id())->select('expired_at')->first();
         $time['des'] = Auth::user()->expired_at <= Carbon::now()->addMonths(3) ? true : false;
         $exp = new Carbon($time['date']->expired_at);
-        $graceperiod = $exp->addMonth();
+        $graceperiod = $exp->addMonths(3);
         $time['grace'] = (Auth::user()->expired_at <= Carbon::now()) && (Carbon::now() <= $graceperiod) ? true : false;
         $time['graceperiod'] = $graceperiod->format('Y-m-d 23:59:59');
-        $exp2 = new Carbon($time['date']->expired_at);
-        $maxperiod = $exp2->addMonths(2);
-        $time['max'] = (Auth::user()->expired_at <= Carbon::now()) && (Carbon::now() > $graceperiod) && (Carbon::now() <= $maxperiod) ? true : false;
-        $time['maxperiod'] = $maxperiod->format('Y-m-d 23:59:59');
+
+        // $exp2 = new Carbon($time['date']->expired_at);
+        // $maxperiod = $exp2->addMonths(2);
+        // $time['max'] = (Auth::user()->expired_at <= Carbon::now()) && (Carbon::now() > $graceperiod) && (Carbon::now() <= $maxperiod) ? true : false;
+        // $time['maxperiod'] = $maxperiod->format('Y-m-d 23:59:59');
         return response()->json($time, 200);
     }
 
