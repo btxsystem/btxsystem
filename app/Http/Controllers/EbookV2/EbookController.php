@@ -27,8 +27,6 @@ class EbookController extends Controller
                 ->orderBy('position', 'ASC')
                 ->get();
 
-            dd($ebooks);
-            exit();
             // return response()->json($ebooks);
 
             if($user = Auth::guard('nonmember')->user()) {
@@ -37,7 +35,7 @@ class EbookController extends Controller
                 ])->with([
                     'member'
                 ])->first();
-        
+
                 if($check) {
                     $referral = $check->member->username;
                 } else {
@@ -99,17 +97,17 @@ class EbookController extends Controller
                 ])->with([
                   'member'
                 ])->first();
-          
+
                 if($check) {
                   $referral = $check->member->username;
                 } else {
                   $referral = '';
                 }
-          
+
               } else {
                 $referral = $request->input('username') ?? \Session::get('referral');
-          
-          
+
+
                 if(Employeer::where('username', $username)->count() > 0 || \Session::has('referral')) {
                   if(\Session::has('referral')) {
                     $referral = \Session::get('referral');

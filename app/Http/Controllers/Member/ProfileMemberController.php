@@ -1193,8 +1193,6 @@ class ProfileMemberController extends Controller
             }
         } catch(\Exception $e) {
             DB::rollback();
-            dd($e);
-            return;
             Alert::error('Kesalahan teknis', 'Error')->persistent("OK");
             return redirect()->route('member.tree');
         }
