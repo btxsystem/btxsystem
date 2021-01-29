@@ -8,13 +8,25 @@ use Illuminate\Support\Facades\Auth;
 use App\HistoryBitrexPoints;
 use App\HistoryBitrexCash;
 use App\Employeer;
+use Illuminate\Support\Carbon;
 use App\Service\PaymentVa\TransactionPaymentService as Va;
 use DataTables;
 use DB;
 use Alert;
+use App\Models\TransactionBill;
 
 class BitrexPointController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            if (!\Auth::user()) {
+                return redirect('/');
+            }
+            return $next($request);
+        });
+    }
+    
     public function index()
     {
         $data = Auth::user();
@@ -25,21 +37,32 @@ class BitrexPointController extends Controller
 
         $date = now();
 
+        $nominal = (int) $request->nominal;
+
+        // validasi minimal 10ribu dan kelipatan 1000 setelahnya
+        if($nominal < 10000 || ($nominal % 1000) != 0) {
+            return response()->json([
+                'status' => false
+            ], 200);
+        }
+
         do {
             $no_invoice = date_format($date,"ymdh").rand(100,999);
             $cek = DB::table('transaction_bills')->where('customer_number',$no_invoice)->select('id')->get();
         } while (count($cek)>0);
-       
+
         $data = [
+            'status' => true,
             'user_id' => Auth::user()->id,
             'product_type' => 'topup',
             'user_type' => 'member',
-            'total_amount' => $request->nominal,
-            'customer_number' => '11210'.$no_invoice
+            'total_amount' => $request->nominal+2750,
+            'customer_number' => '11210'.$no_invoice,
+            'time_expired' => Carbon::create(date('Y-m-d H:i:s'))->addDay(1),
         ];
 
         $va = new Va;
-        $va->topup(Auth::user()->id, $request->nominal, $no_invoice);
+        $va->topup(Auth::user()->id, $request->nominal+2750, $no_invoice);
 
         return response()->json($data, 200);
     }
@@ -47,11 +70,19 @@ class BitrexPointController extends Controller
     public function getHistoryPoints(){
         $data = Auth::user();
         $history = HistoryBitrexPoints::where('id_member',$data->id)->orderBy('created_at','desc')->where('status',1)->paginate(4);
-        return response()->json(['points'=>$history]); 
+        return response()->json(['points'=>$history]);
     }
 
     public function getBitrexPoints(){
         $data = DB::table('employeers')->where('id',Auth::id())->select('bitrex_points')->first();
+        return response()->json($data, 200);
+    }
+
+    public function getHistoryTransaction(){
+        $data = TransactionBill::where('user_id', Auth::id())
+                                ->where(function ($q) {
+                                    $q->where('payment_flag_status', null)->orWhere('payment_flag_status', '!=', 00);
+                                })->paginate();
         return response()->json($data, 200);
     }
 

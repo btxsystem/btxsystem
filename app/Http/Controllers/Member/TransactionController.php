@@ -19,6 +19,16 @@ use App\Mail\PurchaseBitrexPointTransferMail;
 
 class TransactionController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            if (!\Auth::user()) {
+                return redirect('/');
+            }
+            return $next($request);
+        });
+    }
+    
     public function index()
     {
         $data = Auth::user();
@@ -48,26 +58,66 @@ class TransactionController extends Controller
         return response()->json(['transaction'=>$data]);
     }
 
+    // public function topup(Request $request){
+
+    //     return $request->all();
+    //     $method = $request->input('method') ?? 'transfer';
+    //     //points
+    //     //nominal
+    //     try {
+    //         if($method == 'transfer') {
+    //             return $this->paymentWithTransfer($request);
+    //         } else {
+    //             return $this->paymentWithIpay($request);
+    //         }
+    //         // DB::beginTransaction();
+    //         // $data = DB::table('employeers')->where('id',Auth::id())->select('bitrex_points')->first();
+    //         // DB::table('employeers')->where('id', Auth::id())->update(['bitrex_points' => $data->bitrex_points + $request->points, 'updated_at' => Carbon::now()]);
+    //         // DB::table('history_bitrex_point')->insert(['id_member' => Auth::id(), 'nominal' => $request->nominal, 'points' => $request->points, 'description' => 'Topup', 'info' => 1, 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()]);
+    //         // DB::commit();
+    //     } catch (\Exception $e) {
+    //         DB::rollback();
+    //         return 'gagal';
+    //     }
+    //     //return redirect()->route('member.bitrex-money.bitrex-points');
+    // }
+
     public function topup(Request $request){
-        $method = $request->input('method') ?? 'transfer';
-        //points
-        //nominal
+
+    
+        $method = $request->input('method') ?? 'bca';
+
         try {
-            if($method == 'transfer') {
+            switch($method) {
+                case 'bca';
                 return $this->paymentWithTransfer($request);
-            } else {
-                return $this->paymentWithIpay($request);
+            break;
+                case 'transfer';
+                return $this->paymentWithTransfer($request);
+            break;
+                case 'ovo';
+                return $this->paymentWithIpay($request, 63);
+            break;
+                case 'mandiri';
+                return $this->paymentWithIpay($request, 17);
+            break;
+                case 'bni';
+                return $this->paymentWithIpay($request, 26);
+            break;
+                case 'maybank';
+                return $this->paymentWithIpay($request, 9);
+            break;
+                case 'permata';
+                return $this->paymentWithIpay($request, 31);
+            break;
+
             }
-            // DB::beginTransaction();
-            // $data = DB::table('employeers')->where('id',Auth::id())->select('bitrex_points')->first();
-            // DB::table('employeers')->where('id', Auth::id())->update(['bitrex_points' => $data->bitrex_points + $request->points, 'updated_at' => Carbon::now()]);
-            // DB::table('history_bitrex_point')->insert(['id_member' => Auth::id(), 'nominal' => $request->nominal, 'points' => $request->points, 'description' => 'Topup', 'info' => 1, 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()]);
-            // DB::commit();
+
         } catch (\Exception $e) {
             DB::rollback();
             return 'gagal';
         }
-        //return redirect()->route('member.bitrex-money.bitrex-points');
+    
     }
 
     public function paymentWithTransfer($request)
@@ -105,7 +155,7 @@ class TransactionController extends Controller
                 'ref_no' => $afterCheckRef
             ];
 
-            Mail::to( Auth::user()->email ?? 'asepmedia18@gmail.com')
+            Mail::to( Auth::user()->email)
             ->send(new PurchaseBitrexPointTransferMail($dataOrder, null));
 
             DB::commit();
@@ -123,8 +173,9 @@ class TransactionController extends Controller
         }
     }
 
-    public function paymentWithIpay($request)
-    {
+    public function paymentWithIpay($request, $payment_method = null)
+    {   
+
         try {
             DB::beginTransaction();
             $prefixRef = 'BITREX05';
@@ -154,10 +205,12 @@ class TransactionController extends Controller
 
             $orderAmount = (int) $request->nominal;
 
+            
+
             $data['merchant_key'] = env('IPAY_MERCHANT_KEY');
             $data['merchant_code'] = env('IPAY_MERCHANT_CODE');
             $data['currency'] = "IDR";
-            $data['payment_id'] = 1;
+            $data['payment_id'] = $payment_method == null ? 1 : $payment_method ;
             $data['product_desc'] = "Topup {$request->points} Bitrex Point";
             $data['user_name'] = Auth::user()->username;
             $data['user_email'] = Auth::user()->email;
@@ -217,15 +270,17 @@ class TransactionController extends Controller
                 $type = 'ebook_non_member';
                 $userType = 'nonmember';
               } else {
-                return redirect()->back()->with([
-                    'error' => 'Transaction not found. Please try again.'
+                return response()->json([
+                    'message' => 'Transaction not found or invalid billing type. Please try again.',
+                    'success' => false
                 ]);
               }
 
               if($selectType = $request->input('type')) {
                   if($selectType != $type) {
                     return redirect()->back()->with([
-                        'error' => "Transaction Type Should be {$messageError}. Please try again."
+                        'message' => "Transaction Type Should be {$messageError}. Please try again.",
+                        'success' => false
                     ]);
                   }
               }
@@ -244,8 +299,12 @@ class TransactionController extends Controller
                 $check  = HistoryBitrexPoints::where('transaction_ref', $invoice_number)->where('status', '=', 1)->first();
 
                 if($check) {
-                    return redirect()->back()->with([
-                        'error' => 'Transaction not found or invalid billing type. Please try again.'
+                    // return redirect()->back()->with([
+                    //     'error' => 'Transaction not found or invalid billing type. Please try again.'
+                    // ]);
+                    return response()->json([
+                        'message' => 'Transaction not found or invalid billing type. Please try again.',
+                        'success' => false
                     ]);
                 }
 
@@ -260,8 +319,12 @@ class TransactionController extends Controller
                     $check = TransactionNonMember::where('transaction_ref', $invoice_number)->where('status', '=', 1)->first();
 
                     if($check) {
-                        return redirect()->back()->with([
-                            'error' => 'Transaction not found or invalid billing type. Please try again.'
+                        // return redirect()->back()->with([
+                        //     'error' => 'Transaction not found or invalid billing type. Please try again.'
+                        // ]);
+                        return response()->json([
+                            'message' => 'Transaction not found or invalid billing type. Please try again.',
+                            'success' => false
                         ]);
                     }
 
@@ -273,42 +336,57 @@ class TransactionController extends Controller
                     $check = TransactionMember::where('transaction_ref', $invoice_number)->where('status', '=', 1)->first();
 
                     if($check) {
-                        return redirect()->back()->with([
-                            'error' => 'Transaction not found or invalid billing type. Please try again.'
+                        // return redirect()->back()->with([
+                        //     'error' => 'Transaction not found or invalid billing type. Please try again.'
+                        // ]);
+                        return response()->json([
+                            'message' => 'Transaction not found or invalid billing type. Please try again.',
+                            'success' => false
                         ]);
                     }
 
                     $username  = TransactionMember::where('transaction_ref', $invoice_number)->first()->member->username;
                     $user_id = TransactionMember::where('transaction_ref', $invoice_number)->first()->member->id;
                 } else {
-                    return redirect()->back()->with([
-                        'error' => 'Transaction not found. Please try again.'
+                    // return redirect()->back()->with([
+                    //     'error' => 'Transaction not found. Please try again.'
+                    // ]);
+                    return response()->json([
+                        'message' => 'Transaction not found. Please try again.',
+                        'success' => false
                     ]);
                 }
             } else if($type == 'ebook_non_member') {
               $check = PaymentHistoryNonMember::where('ref_no', $invoice_number)->where('status', '=', 1)->first();
 
               if($check) {
-                  return redirect()->back()->with([
-                      'error' => 'Transaction not found or invalid billing type. Please try again.'
-                  ]);
+                //   return redirect()->back()->with([
+                //       'error' => 'Transaction not found or invalid billing type. Please try again.'
+                //   ]);
+                return response()->json([
+                    'message' => 'Transaction not found or invalid billing type. Please try again.',
+                    'success' => false
+                ]);
               }
 
               $username = PaymentHistoryNonMember::where('ref_no', $invoice_number)->first()->nonMember->username;
               $user_id = PaymentHistoryNonMember::where('ref_no', $invoice_number)->first()->nonMember->id;
             } else {
-                return redirect()->back()->with([
-                    'error' => 'Transaction not found. Please try again.'
+                // return redirect()->back()->with([
+                //     'error' => 'Transaction not found. Please try again.'
+                // ]);
+                return response()->json([
+                    'message' => 'Transaction not found. Please try again.',
+                    'success' => false
                 ]);
             }
 
             if($request->hasFile('image')) {
                 $this->validate($request, [
-                    'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                    'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:25360',
                 ]);
                 $imageName = time().'.'.request()->image->getClientOriginalExtension();
                 request()->image->move(public_path('upload/transfer-confirmation/'), $imageName);
-                echo $imageName;
             }
 
             DB::table('transfer_confirmations')->insert([
@@ -329,12 +407,20 @@ class TransactionController extends Controller
 
             DB::commit();
 
-            return redirect()->back()->with([
-                'message' => 'Transfer Confirmation Success. Please wait for our verification.'
+            // return redirect()->back()->with([
+            //     'message' => 'Transfer Confirmation Success. Please wait for our verification.'
+            // ]);
+            return response()->json([
+                'message' => 'Transfer Confirmation Success. Please wait for our verification',
+                'success' => true
             ]);
         } catch (\Exception $e){
-            return redirect()->back()->with([
-                'error' => $e
+            // return redirect()->back()->with([
+            //     'error' => $e
+            // ]);
+            return response()->json([
+                'message' => $e,
+                'success' => false
             ]);
         }
 

@@ -15,7 +15,7 @@ Bonus Sponsor
         <!-- <li class="active">Sponsor</li> -->
     </ol>
 </section>
-<section class="content">                
+<section class="content">
     <div class="row">
         <div class="col-md-12">
             <section class="content">
@@ -84,7 +84,7 @@ Bonus Sponsor
             <br>
             <div id="trfx-embed"><canvas id="memberChart" width="100" height="40"></canvas></div>
             <br>
-            <hr>    
+            <hr>
             <div id="trfx-embed"><canvas id="myChart" width="100" height="40"></canvas></div>
         </div>
     </div>
@@ -155,7 +155,7 @@ $.ajax({
                         'rgba(54, 162, 235, 1)',
                     ],
                     borderColor: [
-                        
+
                         'rgba(54, 162, 235, 1)',
                         'rgba(54, 162, 235, 1)',
                         'rgba(54, 162, 235, 1)',
@@ -276,7 +276,8 @@ $(document).ready(function() {
         }
     });
 });
+
 </script>
 
-   
+
 @stop

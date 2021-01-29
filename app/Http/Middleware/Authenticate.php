@@ -12,8 +12,11 @@ class Authenticate extends Middleware
         $data = DB::table('close_member')->select('is_close_member')->first();
         if (Auth::guard('user')->check()) {
             if (Auth::user()->expired_at <= Carbon::now() || Auth::user()->expired_at==null) {
-                Auth::guard('user')->logout();
-                return view('frontend.expired-member');
+                // Auth::guard('user')->logout();
+                // return view('frontend.expired-member');
+                session([
+                    'expired' => true
+                ]);
             }
             elseif ($data->is_close_member == 1) {
                 Auth::guard('user')->logout();
@@ -25,8 +28,14 @@ class Authenticate extends Middleware
                 Auth::guard('nonmember')->logout();
                 return view('frontend.auth.maintenance');
             }
-            return redirect()->route('member.explore');
+            return redirect()->route('member.home');
         }
+        // if (request()->segment(1) != 'backoffice' || request()->segment(1) != 'ebook' || request()->segment(1) != 'login') {
+        //     dd(Auth::guard('user')->check());
+        //     if (!Auth::guard('user')->check()) {
+        //         return redirect('/');
+        //     }
+        // }
     }
     
 }

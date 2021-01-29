@@ -5,10 +5,15 @@
 @stop
 
 @section('styles')
+<link rel="stylesheet" href="https://cdn.plyr.io/3.6.2/plyr.css" />
 <link rel="stylesheet" href="{{asset('assetsebook/v2/css/style.css')}}">
+
 <style>
 .text-bold {
 	font-weight:bold !important;
+}
+.tabs-cutom .nav-link.active {
+	background-color: #ffb320 !important;
 }
 </style>
 @stop
@@ -31,9 +36,14 @@
 						<div class="form-line focused success">
 							<input style="color:green; font-size:25px; font-weight:bold; text-align:center;" type="text" class="form-control" id="va" name="va" value="" readonly>
 						</div>
+						<button type="button" class="mt-3 btn btn-raised text-white bg-danger waves-effect" style="cursor:pointer" id="copy">Copy</button>
 					<br>
 				</center>
 				<br>
+                <center><p style="font-size:14px" id="ammount_bca"></p></center>
+                <br>
+                <center><p style="font-size:14px" id="time-expired"></p></center>
+                <br>
 				<h4>Bagaimana cara melakukan Pembayaran BCA Virtual Account ?</h4>
 				<h5>1. ATM BCA</h5>
 				<ul style="font-size:12px">
@@ -128,7 +138,7 @@
 				<hr>
         <div class="row mb-5">
         @foreach($book->bookEbooks as $ebook)
-				@if($access == null)
+				@if($access != null)
           <div class="col-lg-3 mb-3 hover">
 						<div class="shadow rounded p-3">
 							<div style="overflow: hidden;" class="mb-2">
@@ -165,15 +175,12 @@
 				<hr>
 				<div class="row mb-5">
 				@if($book->id == 1)
-				<div class="embed-responsive embed-responsive-16by9">
-					<iframe class="embed-responsive-item" src="{{route('member.video.ebook')}}" allowfullscreen></iframe>
-				</div>
+				
 				@elseif($book->id == 2)
-				<div class="embed-responsive embed-responsive-16by9">
-					<iframe class="embed-responsive-item" src="{{route('member.video.ebook.advanced')}}" allowfullscreen></iframe>
-				</div>
-				@endif;
-        <!-- @foreach($book->videoEbooks as $video)
+				
+				@endif
+				{{-- @foreach($book->videoEbooks as $video)
+					@if(count($video->videos) > 0)
           <div class="col-lg-4 mb-3 hover">
 						<div class="embed-responsive embed-responsive-16by9">
 							<video controls>
@@ -183,8 +190,39 @@
 						</div><br/>
 						<span style="font-size: 20px; font-weight: bold;">{{ $video->videos[0]->title }}</span>
 					</div>
-				@endforeach -->
+					@endif
+				@endforeach --}}
+					
 				</div>
+				<div class="row">
+					<div class="col-md-3 tabs-cutom">
+						<div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+							@foreach($videoCategories as $key => $category)
+								<a class="nav-link text-dark text-center text-md-left {{$key == 0 ? 'active' : ''}}" id="v-pills-{{$key}}-tab" data-toggle="pill" href="#v-pills-{{$key}}" role="tab" aria-controls="v-pills-{{$key}}" aria-selected="true">{{ $category->name }}</a>
+							@endforeach
+						</div>
+					</div>
+					<div class="col-md-9 py-0">
+						<div class="tab-content" id="v-pills-tabContent">
+							@foreach($videoCategories as $key => $category)
+							<div class="tab-pane fade show {{$key == 0 ? 'active' : ''}}" id="v-pills-{{$key}}" role="tabpanel" aria-labelledby="v-pills-{{$key}}-tab">
+								<div class="row">
+									@foreach($category->videos as $video)
+									<div  class="col-md-4 mb-5 p-0" style="height:200px">
+										<div class="p-2">
+											<video preload="none" id="player" playsinline controls src="{{$video->path_url}}">
+											</video>
+											<span style="font-size: 20px; font-weight: bold;">{{ $video->title }}</span>
+										</div>
+									</div>
+									@endforeach
+								</div>
+							</div>
+							@endforeach
+						</div>
+					</div>
+				</div>
+					
 				@endif
         @endforeach
 				<!-- <div class="d-flex align-items-center">
@@ -253,18 +291,20 @@
 					  </div>
 						@endif
 						<div class="form-group">
-							<div class="form-check form-check-inline">
+							<!-- <div class="form-check form-check-inline">
 								<input class="form-check-input" type="radio" name="payment_method" id="transfer" value="transfer" checked>
 								<label class="form-check-label" for="inlineRadio1">Transfer</label>
-							</div>
-							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="radio" name="payment_method" id="ipay" value="ipay">
+							</div> -->
+							<!-- <div class="form-check form-check-inline">
+								<input class="form-check-input" type="radio" name="payment_method" id="ipay" value="ipay" checked>
 								<label class="form-check-label" for="inlineRadio1">VA & OVO</label>
-							</div>
-							{{--<div class="form-check form-check-inline">
-								<input class="form-check-input" type="radio" name="payment_method" id="va-bca" value="va-bca">
+							</div> -->
+							<div class="form-check form-check-inline">
+								<!-- <input class="form-check-input" type="radio" name="payment_method" id="transfer" value="transfer" checked>
+								<label class="form-check-label" for="inlineRadio1">Transfer</label> -->
+								<input class="form-check-input" type="radio" name="payment_method" id="va-bca" value="va-bca" checked>
 								<label class="form-check-label" for="inlineRadio1">BCA VA</label>
-							</div>--}}
+							</div>
 					  </div>
 					  <h4>Total yang dibayar : IDR </span><b><span id="total_price"></h4></b>
 		      </div>
@@ -293,68 +333,53 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script src="{{asset('assetsebook/js/helper.js')}}"></script>
+<script src="{{asset('assets2/js/moment.js')}}"></script>
+<script src="https://cdn.plyr.io/3.6.2/plyr.polyfilled.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 <script>
-(function(w,d,t,h,l,b,p,o,a,m){w['TraducationFxObject']=o;w[o]=w[o]||function(){
-w[o].h=h;w[o].b=b;return (w[o].q=w[o].q||[]).push(arguments)};a=d.createElement(t),
-m=d.getElementsByTagName(t)[0];a.async=1;a.src=h+l+'?b='+b+'&p='+p.join(',');a.crossorigin='use-credentials';m.parentNode.insertBefore(a,m)
-})(window,document,'script','https://embedder.traducationfx.com/','embedder.js','PCyAlXfaqVU',['modal'],'TraducationFX');
 
+const players = Array.from(document.querySelectorAll('#player')).map(p => {
+	if (Hls.isSupported()) {
+    var hls = new Hls();
+
+		hls.loadSource(p.getAttribute('src'));
+    hls.attachMedia(p);
+    hls.on(Hls.Events.MANIFEST_PARSED,function() {
+    });
+  }
+
+	new Plyr(p, {	
+		controls: [
+			'play-large', 		// new Plyr(p, {
+			'play', 		// 	controls: [
+			'progress', 		// 		'play-large', 
+			'current-time', 		// 		'play', 
+			'mute', 		// 		'progress', 
+			'volume', 		// 		'current-time', 
+			'captions', 		// 		'mute', 
+			'settings', 		// 		'volume', 
+			'fullscreen'		// 		'captions', 
+		]		// 		'settings', 
+	})
+	// new Plyr(p, {
+	// 	controls: [
+	// 		'play-large', 
+	// 		'play', 
+	// 		'progress', 
+	// 		'current-time', 
+	// 		'mute', 
+	// 		'volume', 
+	// 		'captions', 
+	// 		'settings', 
+	// 		'fullscreen'
+	// 	]
+	// })
+});
 $('#submit-va').hide();
 $('#submit-nonva').show();
 
 </script>
-<?php if($books[0]->id == 1) { ?>
-<script>
 
-TraducationFX('settings', 'configure', {
-    langCode: 'id'
-});
-TraducationFX('video', 'configure', {
-    containerId: 'trfx-embed',
-    playlistKey: 'GMFE0LClS3s',
-    layout: 'vertical-tabs'
-});
-TraducationFX('video', 'embed');
-</script>  
-<script>
-
-TraducationFX('settings', 'configure', {
-    langCode: 'id'
-});
-TraducationFX('video', 'configure', {
-    containerId: 'trfx-embed-2',
-    playlistKey: 'aOsg9RGyoZM',
-    layout: 'vertical-tabs'
-});
-TraducationFX('video', 'embed');
-</script>
-<?php } ?>
-<?php if($books[0]->id == 2) { ?>
-<script>
-
-TraducationFX('settings', 'configure', {
-    langCode: 'id'
-});
-TraducationFX('video', 'configure', {
-    containerId: 'trfx-embed',
-    playlistKey: 'LsyYK1bzoXu',
-    layout: 'vertical-tabs'
-});
-TraducationFX('video', 'embed');
-</script>
-<script>
-
-TraducationFX('settings', 'configure', {
-    langCode: 'id'
-});
-TraducationFX('video', 'configure', {
-    containerId: 'trfx-embed-2',
-    playlistKey: 'noClRzzV5n9',
-    layout: 'vertical-tabs'
-});
-TraducationFX('video', 'embed');
-</script>
-<?php } ?>
 <script>
 let auth = "{{Auth::guard('nonmember')->user() || Auth::guard('user')->user()}}";
 
@@ -378,11 +403,94 @@ $('#ipay').change(function(){
 	$('#submit-nonva').show();
 })
 
-$('#submit-va').click(function(){
+<?php if(!Auth::guard('nonmember')->user() && !Auth::guard('user')->user()){?>
+	$('#submit-va').click(function(){
 	var $this = $(this);
+	$.ajaxSetup({
+		headers: {
+			'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+		}
+	});
+	$.ajax({
+		url: "{{ route('member.register-new') }}",
+		method: 'post',
+		data: {
+				referralCode: $('#referralCode').val(),
+				lastName: $('#lastName').val(),
+				firstName: $('#firstName').val(),
+				email: $('#email').val(),
+				phoneNumber: $('#phoneNumber').val(),
+				ebook: $('#ebook').val(),
+				username: $('#username').val(),
+				income: $('#income').val()
+		},
+		success: function(result){
+			console.log(result)
+
+			const {message, success} = result
+
+			if(!success) {
+				swal("Fail", "Cant't Register", "error");
+				$('#register').prop('disabled', false)
+				return false
+			}
+
+			var loadingText = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...';
+			if ($this.html() !== loadingText) {
+				$this.data('original-text', $this.html());
+				$this.hide();
+				$('#payment-bca').html(loadingText);
+				$('#payment-bca').show();
+			}
+			setTimeout(function() {
+				$this.html($this.data('original-text'));
+				$('#payment-bca').hide();
+				$this.show();
+			}, 100000);
+
+			$.ajaxSetup({
+				headers: {
+					'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+				}
+			});
+			$.ajax({
+				type: 'POST',
+				url: '{{route("member.buy-ebook")}}',
+				data: {ebook_id: $('#ebook').val(), non_member_id: result.data.id},
+				success: function (data) {
+
+					$('#va').val(data.customer_number);
+					$('#des_noreq').text('Masukkan '+data.customer_number+' sebagai rekening tujuan');
+					$('#des_noreq2').text('Masukkan '+data.customer_number+' sebagai rekening tujuan');
+					$('#des_noreq3').text('Masukkan '+data.customer_number+' sebagai rekening tujuan');
+								$('#ammount_bca').text('Nominal transaksi : '+data.total_amount+' (Include fee)');
+								$('#time-expired').text('Transfer Sebelum '+moment(data.time_expired).format('D MMMM Y - HH:mm'));
+					$('#no-virtual').modal('show');
+					$('#modal-subscription').modal('hide');
+
+				},
+				error: function() {
+					console.log("Error");
+				}
+			});
+		},
+		error: function(err) {
+			console.log(err)
+			$('#register').prop('disabled', false)
+			alert('Failed Register')
+		}});
+})
+<?php } else { ?>
+	$('#submit-va').click(function(){
+	var $this = $(this);
+	$.ajaxSetup({
+		headers: {
+			'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+		}
+	});
 	var loadingText = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...';
-	if ($(this).html() !== loadingText) {
-		$this.data('original-text', $(this).html());
+	if ($this.html() !== loadingText) {
+		$this.data('original-text', $this.html());
 		$this.hide();
 		$('#payment-bca').html(loadingText);
 		$('#payment-bca').show();
@@ -398,26 +506,28 @@ $('#submit-va').click(function(){
 			'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
 		}
 	});
-
 	$.ajax({
 		type: 'POST',
 		url: '{{route("member.buy-ebook")}}',
 		data: {ebook_id: $('#ebook').val()},
 		success: function (data) {
-			
+
 			$('#va').val(data.customer_number);
 			$('#des_noreq').text('Masukkan '+data.customer_number+' sebagai rekening tujuan');
 			$('#des_noreq2').text('Masukkan '+data.customer_number+' sebagai rekening tujuan');
 			$('#des_noreq3').text('Masukkan '+data.customer_number+' sebagai rekening tujuan');
+						$('#ammount_bca').text('Nominal transaksi : '+data.total_amount+' (Include fee)');
+						$('#time-expired').text('Transfer Sebelum '+moment(data.time_expired).format('D MMMM Y - HH:mm'));
 			$('#no-virtual').modal('show');
 			$('#modal-subscription').modal('hide');
-			
+
 		},
 		error: function() {
 			console.log("Error");
 		}
 	});
 })
+<?php } ?>
 
 $('#referralCode').on('change', function() {
 	checkReferral()
@@ -591,7 +701,7 @@ function submit() {
 			// 	// 	window.location.href = '{{ route("payment") }}?transactionRef=' + result.data.transaction_ref
 			// 	// } else {
 			// 	// 	window.location.href = '{{ route("payment") }}?transactionRef=' + result.data.transaction_ref
-			// 	// }	
+			// 	// }
 			// });
 			//$('#register').prop('disabled', false)
 		},
@@ -601,5 +711,18 @@ function submit() {
 			alert('Failed Register')
 		}});
 }
+
+$('#copy').click(function(){
+	var copyText = document.getElementById("va");
+	var selection = document.getSelection();
+	copyText.select();
+	copyText.setSelectionRange(0, 99999);
+	try {
+			var success = document.execCommand('copy')
+	} catch (error) {
+			console.log(error)
+	}
+})
+
 </script>
 @stop

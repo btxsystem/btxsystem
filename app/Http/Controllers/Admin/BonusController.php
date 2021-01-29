@@ -9,14 +9,17 @@ use App\Employeer;
 use DataTables;
 use DB;
 use Alert;
+use App\Service\NotificationService;
+use App\Models\HistoryActivePeriodeEbook;
 
 class BonusController extends Controller
 {
+
     public function bonusSponsor()
     {
         if (request()->ajax()) {
             $data = HistoryBitrexCash::with('member')->where('type', 0)->select('history_bitrex_cash.*');
-           
+
             return Datatables::of($data)
                     ->addColumn('username', function($data) {
                         return $data->member ? $data->member->username : 'No Data';
@@ -27,11 +30,37 @@ class BonusController extends Controller
         return view('admin.bonus.sponsor');
     }
 
+    public function timeReward(Request $request)
+    {
+        if (request()->ajax()) {
+            $data = HistoryActivePeriodeEbook::with([
+                'member',
+                'admin',
+                'ebook'
+            ]);
+
+            if($request->input('member')) {
+                $data->where('member_id', $request->input('member'));
+            }
+
+            return Datatables::of($data->get())
+                    ->addColumn('username', function($data) {
+                        return $data->member ? $data->member->username : 'No Data';
+                    })
+                    ->editColumn('total_duration', function($data) {
+                        return $data->total_duration . ' days';
+                    })
+                    ->addIndexColumn()
+                    ->make(true);
+        }
+        return view('admin.bonus.time-reward');
+    }
+
     public function bonusPairing()
     {
         if (request()->ajax()) {
             $data = HistoryBitrexCash::with('member')->where('type', 1)->select('history_bitrex_cash.*');
-           
+
             return Datatables::of($data)
                     ->addColumn('username', function($data) {
                         return $data->member ? $data->member->username : 'No Data';
@@ -46,7 +75,7 @@ class BonusController extends Controller
     {
         if (request()->ajax()) {
             $data = HistoryBitrexCash::with('member')->where('type', 2)->select('history_bitrex_cash.*');
-           
+
             return Datatables::of($data)
                     ->addColumn('username', function($data) {
                         return $data->member ? $data->member->username : 'No Data';
@@ -108,7 +137,7 @@ class BonusController extends Controller
     {
         if (request()->ajax()) {
             $data = HistoryBitrexCash::with('member')->where('type', 3)->select('history_bitrex_cash.*');
-           
+
             return Datatables::of($data)
                     ->addColumn('username', function($data) {
                         return $data->member ? $data->member->username : 'No Data';
@@ -129,7 +158,7 @@ class BonusController extends Controller
                     return   Datatables::of($data)
                                 ->addIndexColumn()
                                 ->make(true);
-            }
+        }
         return view('admin.bonus.general');
     }
     // public function general(Request $request)
@@ -142,12 +171,12 @@ class BonusController extends Controller
     //         $filter = $model->filter($request);
     //         $object = $filter->paginate($request->length, ['*'], 'page', $page);
     //         $datas = $object->toArray();
-            
+
     //         $datas['req'] = $request->all();
     //         $datas['draw'] = (int)$request->draw;
     //         $datas['recordsTotal'] = $model->count();
     //         $datas['recordsFiltered'] = $object->total();
-            
+
     //         $datas['data'] = $object->map(function($item, $index) use($object) {
     //             $item->iteration = ($index + 1) + ($object->perPage() * ($object->currentPage() - 1));
     //             return $item;

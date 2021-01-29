@@ -19,7 +19,7 @@ class ReportController extends Controller
     {
         if (request()->ajax()) {
             $data = TransactionMember::with('member','ebook')->where('status', 1)->select('transaction_member.*');
-           
+
             return Datatables::of($data)
                     ->addColumn('product', function ($data){
                         return $data->ebook ? $data->ebook->title : 'No Data';
@@ -56,53 +56,72 @@ class ReportController extends Controller
     {
         if (request()->ajax()) {
             if($request->from_date) {
+            $to_date = date('Y-m-d',strtotime($request->to_date . "+1 days"));
             $data = TransactionMember::where('status', 1)
-                                 ->whereNotNull('transaction_ref')   
-                                //  ->whereDate('created_at', '>=', '2019-09-19')                                                               
-                                 ->whereBetween('created_at', [$request->from_date, $request->to_date])
+                                 ->whereNotNull('transaction_ref')
+                                //  ->whereDate('created_at', '>=', '2019-09-19')
+                                 ->whereBetween('created_at', [$request->from_date, $to_date])
                                  ->with(['ebook' => function($query) {
                                                         $query->select(['id','title','price']);
-                                                    },   
+                                                    },
                                         'member.address' => function($query) {
-                                                        $query->select(['id','province','city_name','subdistrict_name','user_id']);
-                                                    },  
+                                                        $query->select(['id','province','city_name','subdistrict_name','decription','user_id', 'kurir', 'cost']);
+                                                    },
                                         'member' => function($query) {
-                                                        $query->select(['id','id_member','username']);
+                                                        $query->select(['id','id_member','username','first_name','last_name']);
                                                     }
                                         ])
                                 ->select('transaction_member.*')
-                                ->orderBy('transaction_member.created_at','desc');
+                                // ->orderBy('transaction_member.created_at','desc')
+                                ;
             } else {
                 $data = TransactionMember::where('status','=', 1)
                                 // ->whereDate('created_at', '>=', '2019-09-19')
                                 ->whereNotNull('transaction_ref')
                                 ->with(['ebook' => function($query) {
                                                     $query->select(['id','title','price']);
-                                                },   
-                                    'member.address' => function($query) {
-                                                    $query->select(['id','province','city_name','subdistrict_name','user_id']);
-                                                },  
-                                    'member' => function($query) {
-                                                    $query->select(['id','id_member','username']);
+                                                },
+                                        'member.address' => function($query) {
+                                                    $query->select(['id','province','city_name','subdistrict_name','decription','user_id', 'kurir', 'cost']);
+                                                },
+                                        'member' => function($query) {
+                                                    $query->select(['id','id_member','username','first_name','last_name']);
                                                 }
                                     ])
                             ->select('transaction_member.*')
-                            ->orderBy('transaction_member.created_at','desc');
+                            // ->orderBy('transaction_member.created_at','desc')
+                            ;
             }
 
             return Datatables::of($data)
                                 ->addIndexColumn()
-                                ->addColumn('starterpackType', function($data){
+                                ->editColumn('starterpackType', function($data){
                                     return $data->member->address ? 'Shipping' : 'Take Away';
+                                })
+                                ->editColumn('shippingCost', function($data){
+                                    return $data->member->address ? $data->member->address->cost : '-';
+                                })
+                                ->editColumn('created_at', function($data){
+                                    $time = strtotime($data->created_at);
+
+                                    $newformat = date('d M Y',$time);
+                                    return $newformat;
+                                })
+                                ->editColumn('expired_at', function($data){
+                                    $time = strtotime($data->expired_at);
+
+                                    $newformat = date('d M Y',$time);
+                                    return $newformat;
                                 })
                                 ->make(true);
         }
             return view('admin.report.transaction');
     }
 
-    public function export()
-    {   
-        return Excel::download(new TransactionExport, now() .' ' .'transaction.xlsx');
+    public function export(Request $request)
+    {
+        $to_date = date('Y-m-d',strtotime($request->to . "+1 days"));
+        return Excel::download(new TransactionExport($request->from, $to_date), now() .' ' .'transaction.xlsx');
 
     }
     // public function transaction()
@@ -116,4 +135,42 @@ class ReportController extends Controller
 
     //     return $data;
     // }
+
+    public function birthdate()
+    {
+            if (request()->ajax()) {
+                $now = strtotime(now());
+                $now = date('m-d',$now);
+                $to_date = strtotime(now(). "+2 days");
+                $to_date = date('m-d',$to_date);
+                $datas = Employeer::all();
+                $data = [];
+                foreach ($datas as $key => $value) {
+                    $birth_date = strtotime($value->birthdate);
+                    $birth_date = date('m-d',$birth_date);
+                    if ( $birth_date >= $now and $birth_date<=$to_date) {
+                        $data[$key]=$value;
+                    }
+                }
+            return Datatables::of($data)
+                            ->addIndexColumn()
+                            ->addColumn('id_member', function($row){
+                                return $row->id_member;
+                            })
+                            ->addColumn('username', function($row){
+                                return $row->username;
+                            })
+                            ->addColumn('name', function($row){
+                                return ucwords(strtolower($row->first_name.' '.$row->last_name));
+                            })
+                            ->addColumn('email', function($row){
+                                return $row->email;
+                            })
+                            ->addColumn('birthdate', function($row){
+                                return date('d-m-Y',strtotime($row->birthdate));
+                            })
+                            ->make(true);
+        }
+        return view('admin.report.birthdate');
+    }
 }

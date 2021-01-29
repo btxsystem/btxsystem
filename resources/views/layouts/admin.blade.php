@@ -15,10 +15,12 @@
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
         <link href="{{ asset('assets/css/app.css') }}" rel="stylesheet" type="text/css"/>
         <link rel="stylesheet" type="text/css" href="/assets/vendors/sweetalert/css/sweetalert.css">
+        <link href="{{asset('assets3/fonts/stroke/style.css')}}" rel="stylesheet">
 
         <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
         <link href="{{ asset('assets/css/chart.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('assets/css/chart.min.css') }}" rel="stylesheet" type="text/css" />
+
 
         <!-- meta -->
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
@@ -57,9 +59,19 @@
 
                     <div class="navbar-right">
                         <ul class="nav navbar-nav">
-                            @include('admin.layouts._messages')
+                           {{-- @include('admin.layouts._messages') --}}
                             @include('admin.layouts._notifications')
-                            <li class="dropdown user user-menu">
+                            <li>
+                                <a onclick="document.getElementById('logout-form').submit();" style="cursor:pointer">
+                                    <i class="fa fa-sign-out" style="color: #6CC66C"><br><i style="color: #6CC66C">Logout</i></i>
+                                </a>
+
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                    @method('POST')
+                                    @csrf
+                                </form>
+                            </li>
+                            {{--<li class="dropdown user user-menu">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                     <i class="livicon" data-name="gear" data-loop="true" data-color="#e9573f" data-hovercolor="#e9573f" data-size="28"></i>
                                 </a>
@@ -96,7 +108,7 @@
                                     </div>
                                 </li>
                             </ul>
-                        </li>
+                        </li>--}}
                     </ul>
                 </div>
             </nav>
@@ -163,7 +175,20 @@
         <script type="text/javascript" src="{{ asset('assets/js/chart.js') }}"></script>
         <script type="text/javascript" src="{{ asset('assets/js/chart.min.js') }}"></script>
         <script src="{{asset('assets2/js/number.js')}}"></script>
-
+        <script>
+            $('.notifications-menu').click(function(){
+                $('.notifications-menu').addClass('open');
+            })
+            let readNotif = (id) => {
+                $.ajax({
+                    type: 'GET', //THIS NEEDS TO BE GET
+                    url: 'notification/read/'+id,
+                    success: function (data) {
+                        $(location).attr('href', '{{ url("/backoffice/notification") }}')                        
+                    }
+                })
+            }
+        </script>
         <script>
         const BASE_URL = '{{url("/")}}'
         </script>

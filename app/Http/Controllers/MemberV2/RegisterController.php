@@ -29,6 +29,51 @@ class RegisterController extends Controller
     return ["success" => false, "code"=> 406 , "message" => "forbidden" , "errors" =>$errors];
   }
 
+  public function registerNonMember(Request $request)
+  {
+    try {
+      $referralId = '';
+      $referralCode = $request->input('referralCode') ?? '';
+
+      //cek referal code
+      if($referralCode != '') {
+        $referralUser = Employeer::where('username', $referralCode);
+        \Session::put('referral', $referralCode);
+        if($referralUser->count() > 0) {
+          $referralId = $referralUser->first()->id;
+        } else {
+          return response()->json([
+            'success' => false,
+            'message' => 'Failed register'
+          ]);
+        }
+      }
+
+      $builder = (new NonMemberBuilder())
+        ->setFirstName($request->input('firstName'))
+        ->setLastName($request->input('lastName'))
+        ->setEmail($request->input('email'))
+        ->setUsername($request->input('username'))
+        ->setPassword('secret');
+
+      $nonMember = (new RegisterFactoryMake())
+        ->call()
+        ->createNonMember($builder);
+
+      return response()->json([
+        'success' => true,
+        'message' => 'Success register',
+        'data' => $nonMember
+      ]);
+    } catch (\Exception $e) {
+      return response()->json([
+        'success' => false,
+        'message' => 'Failed register',
+        'data' => $e
+      ]);
+    }
+  }
+
   public function registerV3(Request $request)
   {
     try {
@@ -36,6 +81,7 @@ class RegisterController extends Controller
 
       $ebook = $request->input('ebook');
       $income = $request->input('income');
+      
 
       if(Auth::guard('nonmember')->user()) {
         $nonMember = true;
@@ -146,7 +192,7 @@ class RegisterController extends Controller
           $transaction = true;
           $builderPayment = (new PaymentHistoryBuilder())
             ->setEbookId($ebook)
-            ->setMemberId($referralId)
+            // ->setMemberId($referralId)
             ->setNonMemberId($nonMember->id);
 
           $payment = (new PaymentHistoryFactoryBuild())

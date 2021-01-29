@@ -17,7 +17,7 @@ class AdminMiddleware
     public function handle($request, Closure $next)
     {
         if (Auth::guard('admin')->check() == false) {
-            return redirect('/backoffice');
+            return redirect('/');
         }
         return $next($request);
     }

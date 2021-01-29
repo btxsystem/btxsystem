@@ -25,22 +25,25 @@ Claim Reward
                         <i class="livicon" data-name="notebook" data-size="16" data-loop="true" data-c="#fff" data-hc="white"></i>
                         Claim Reward  Table
                     </div>
-<!-- 
+<!--
                     <div class="pull-right">
                         <a style=" color: white; text-decoration: none !important" href="#addTestimoniModal" data-toggle="modal"><i style="font-size:15px;" class="fa fa-plus"></i>&nbsp; &nbsp;<strong>Add New Testimony</strong></a>
                     </div> -->
                 </div>
-                
+
                 <div class="portlet-body flip-scroll">
                     <table class="table data-table table-bordered table-striped table-condensed flip-content testimonial" >
                         <thead class="flip-content">
                             <tr>
-                                <th class="text-center" width="5%">No</th>
-                                <th class="text-center" width="15%">Member ID</th>
+                                <th class="text-center" width="12%">Member ID</th>
+                                <th class="text-center" width="15%">Name</th>
                                 <th class="text-center" width="15%">Username</th>
-                                <th class="text-center" width="35%">Reward</th>
+                                <th class="text-center" width="25%">Reward</th>
                                 <th class="text-center" width="15%">Status</th>
-                                <th width="15%">Action</th>
+                                <th class="text-center" width="15%">Archive Date</th>
+                                <th class="text-center" width="15%">Claim Date</th>
+                                <th class="text-center" width="15%">Approve At</th>
+                                <th class="text-center" width="25%">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -62,7 +65,7 @@ Claim Reward
                     <center><h4 class="modal-title">Testimony Form</h4></center>
                 </div>
                 <div class="modal-body">
-                    <form class="well form-horizontal" action="{{ route('cms.testimonials.store') }}" method="post">  
+                    <form class="well form-horizontal" action="{{ route('cms.testimonials.store') }}" method="post">
                         {{ csrf_field() }}
                         <fieldset>
                             <div class="form-group">
@@ -101,7 +104,7 @@ Claim Reward
                     <center><h4 class="modal-title">Claim Reward Overview</h4></center>
                 </div>
                 <div class="modal-body">
-                    <form class="well form-horizontal">  
+                    <form class="well form-horizontal">
                         <fieldset>
                             <div class="form-group">
                                 <label class="col-md-2 control-label">Type</label>
@@ -173,7 +176,7 @@ Claim Reward
                                 </div>
                                 </div>
                             </div>
-<!-- 
+<!--
                             <div class="form-group">
                                 <label class="col-md-2 control-label">Testimony</label>
                                 <div class="col-md-8 inputGroupContainer">
@@ -202,19 +205,23 @@ Claim Reward
               processing: true,
               serverSide: true,
               ajax: {
-                url: "{{ route('reward-claims.index') }}", 
+                url: "{{ route('reward-claims.index') }}",
               },
-              
+
               columns: [
-                  { data: 'DT_RowIndex', name: 'DT_RowIndex', className: "text-center", orderable: false, searchable: false },
-                  { data: 'id_member', name: 'member.id_member', className: "text-center" },                  
-                  { data: 'username', name: 'member.username', className: "text-center" },                  
-                  { data: 'reward', name: 'reward.description', className: "text-center" },                  
-                  { data: 'status', name: 'status', className: "text-center" },                  
+                 // { data: 'DT_RowIndex', name: 'DT_RowIndex', className: "text-center", orderable: false, searchable: false },
+                  { data: 'member.id_member', name: 'member.id_member', className: "text-center" },
+                  { data: 'fullname', name: 'fullname', className: "text-center", searchable:false, orderable:false  },
+                  { data: 'member.username', name: 'member.username', className: "text-center" },
+                  { data: 'reward.description', name: 'reward.description', className: "text-center" },
+                  { data: 'status_approve', name: 'status_approve', className: "text-center" },
+                  { data: 'created_at', name: 'created_at', className: "text-center" },
+                  { data: 'updated_at', name: 'updated_at', className: "text-center" },
+                  { data: 'approve_at', name: 'updated_at', className: "text-center" },
                   { data: 'action', name: 'action', orderable: false, searchable: false, className: "text-center" },
               ]
           });
-          
+
         });
 
         $(document).on('click', '.approve-reward', function (e) {
@@ -234,20 +241,20 @@ Claim Reward
                         data: {id:id},
                         success: function (data) {
                                 window.location.href = "{{ route('reward-claims.index') }}";
-                            }         
+                            }
                     });
             });
         });
 
         $(document).on('click','.show-reward',function(){
             var id = $(this).data('id');
-            
+
             var url =   "{{url('backoffice/transfer-confirmation/')}}" +'/'+ id +'/show';
 
             $.get(url, function (data) {
                 //success data
                 console.log(BASE_URL +'/'+ data.image);
-  
+
                 $('#type').val(data.type);
                 $('#invoice').val(data.invoice_number);
                 $('#account_name').val(data.account_name);
@@ -259,17 +266,17 @@ Claim Reward
 
                 $('#btn-save').val("update");
                 $('#editTestimoniModal').modal('show');
-            }) 
+            })
         });
 
         function convertToRupiah(angka)
         {
-        	var rupiah = '';		
+        	var rupiah = '';
         	var angkarev = angka.toString().split('').reverse().join('');
         	for(var i = 0; i < angkarev.length; i++) if(i%3 == 0) rupiah += angkarev.substr(i,3)+'.';
         	return 'Rp. '+rupiah.split('',rupiah.length-1).reverse().join('') + ',-';
         }
-       
+
       </script>
-      
+
 @endsection

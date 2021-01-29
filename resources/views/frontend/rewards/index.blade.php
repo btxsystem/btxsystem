@@ -4,7 +4,7 @@
     @parent
 @stop
 @section('content')
-<section class="content ecommerce-page">
+<section class="content ecommerce-page" id="table-loading">
     <div class="block-header">
         <div class="row">
             <div class="col-lg-7 col-md-6 col-sm-12">
@@ -14,7 +14,7 @@
             </div>
         </div>
     </div>
-    
+
     <div class="row clearfix">
         <div class="col-lg-12 col-md-12">
             <div class="card product-report">
@@ -63,10 +63,12 @@
 </section>
 @stop
 
-@section('footer_scripts')  
+@section('footer_scripts')
+<script src="{{ asset('assets3/js/jquery.loading.min.js') }}"></script>
 <script type="text/javascript">
     let claim = (e) => {
         $('.reward').hide();
+        $('#table-loading').loading()
         $.ajax({
             type: "get",
             url: '{{route("member.claim-reward")}}',
@@ -74,6 +76,10 @@
             success:function(data){
                 location.reload();
                 $('.reward').show();
+                $('#table-loading').loading("stop")
+            },
+            error: function(data) {
+                $('#table-loading').loading()
             }
         });
     }
@@ -111,7 +117,7 @@
                     for (let index = 0; index < 8; index++) {
                         $('.reward-status-'+index).html('<button type="button" style="cursor:no-drop" class="btn btn-secondary">Unlock</button>');
                     }
-                }        
+                }
             }
         });
     });

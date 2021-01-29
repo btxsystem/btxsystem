@@ -13,7 +13,7 @@
                 <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{{route('member.transaction.topup')}}" method="POST">
+            <form action="{{route('member.transaction.topup')}}" method="POST" id="form-topup">
                 @csrf
                 <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="form-line">
@@ -29,24 +29,90 @@
                     {{--<p class="notif" style="color:green">Convert from IDR 1000</p>--}}
                 </div>
                 <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="pickup_quarter" name="pickup_quarter" value="1">
+                    <label class="form-check-label" for="pickup_quarter">
+                        Pick up at headquarter
+                    </label>
+                    </div>
+                    <div id="pickup_form">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 shipping-form">
+    						<div class="form-group">
+    							<select id="province" name="province" class="province" style="width:100%!important"></select>
+                                <input type="hidden" name="province_name" id="province_name" value="">
+    						</div>
+    						<div class="form-group city-form">
+    							<select id="city" name="city" class="city"></select>
+                                <input type="hidden" name="city_name" id="city_name" value="">
+    						</div>
+    						<div class="form-group district-form">
+    							<select id="district" name="district" class="district"></select>
+                                <input type="hidden" name="district_name" id="district_name" value="">
+    						</div>
+    						<div class="form-group kurir-form">
+    							<select id="kurir" name="kurir" class="kurir"></select>
+                                <input type="hidden" name="kurir_name" id="kurir_name" value="">
+    						</div>
+    						<div class="cost-form form-line" style="display:none">
+                                <h3>Total Ongkir : <span id="cost-summary"></span> </h3>
+                                <input type="hidden" id="cost_summary_value" value="0">
+    						</div>
+    					</div>
+                    </div>
+                </div>
+                @if(getCurrentPaymentMethod() == 'va')
+                <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <h5 class="card-inside-title">Select Payment Method</h5>
+                    <div class="demo-radio-button">
+                        <input name="method" type="radio" value="bca" id="bca" class="with-gap radio-col-red" checked />
+                        <label for="bca">BCA VA</label> 
+
+                    </div>
+                </div>
+                @endif
+                @if(getCurrentPaymentMethod() == 'transfer')
+                <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <h5>Select Payment Method</h5>
                   <div class="demo-radio-button">
                     <input name="method" type="radio" value="transfer" id="transfer" class="with-gap radio-col-red" checked />
                     <label for="transfer">Transfer</label>
-                    <input name="method" type="radio" value="ipay" id="ipay" class="with-gap radio-col-red" />
-                    <label for="ipay">VA & OVO</label>
-                    {{--!<input name="method" type="radio" value="bca" id="bca" class="with-gap radio-col-red" />
-                    <label for="bca">BCA VA</label>--}}
+                    
+
+                     <!-- <input name="method" type="radio" value="bca" id="bca" class="with-gap radio-col-red" checked/>
+                    <label for="bca">BCA VA</label> 
+                    <input name="method" type="radio" value="transfer" id="transfer" class="with-gap radio-col-red"/>
+                    <label for="bca">Transfer</label> -->
+
+                    <!--<input name="method" type="radio" value="other" id="other" class="with-gap radio-col-red"/>
+                    <label for="other">Other Transfer</label>-->
+
+                    <!-- <input name="method" type="radio" value="ovo" id="ovo" class="with-gap radio-col-red" />
+                    <label for="ovo">OVO</label>
+
+                    <input name="method" type="radio" value="mandiri" id="mandiri" class="with-gap radio-col-red" />
+                    <label for="mandiri">MANDIRI ATM</label>
+
+                    <input name="method" type="radio" value="bni" id="bni" class="with-gap radio-col-red" />
+                    <label for="bni">BNI VA</label>
+
+                    <input name="method" type="radio" value="maybank" id="maybank" class="with-gap radio-col-red"/>
+                    <label for="maybank">MAYBANK VA</label>
+
+                    <input name="method" type="radio" value="permata" id="permata" class="with-gap radio-col-red" />
+                    <label for="permata">PERMATA VA</label> -->
                   </div>
                 </div>
+                
                 <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12" id="transfer-form">
                   <h4>Bank Name : BCA</h4>
                   <h4>Bank Account : PT. BITREXGO SOLUSI PRIMA</h4>
                   <h4>Bank Number : 5810598168</h4>
                 </div>
+                @endif
                 <div class="modal-footer">
                     <a href="#" class="btn btn-secondary" data-dismiss="modal">Close</a>
                     <a href="#" id="payment-bca" style="cursor:pointer; display:none;" class="btn btn-primary"></a>
-                    <button type="submit" id="topup-points" disabled=true class="btn btn-primary" style="cursor:pointer;">Topup</a>
+                    <button type="button" id="topup-points" disabled=true class="btn btn-primary" style="cursor:pointer;">Topup</a>
                 </div>
             </form>
         </div>
@@ -70,6 +136,9 @@
                         </div>
                     <button type="button" class="btn btn-raised bg-grey waves-effect" style="cursor:pointer" id="copy">Copy</button>
                 </center>
+                <br>
+                <center><p style="font-size:14px" id="nominal_plus_fee"></p></center>
+                <center><p style="font-size:14px" id="time-expired"></p></center>
                 <br>
                 <h4>Bagaimana cara melakukan Pembayaran BCA Virtual Account ?</h4>
                 <h5>1. ATM BCA</h5>
@@ -149,23 +218,23 @@
             <div class="modal-body">
               <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 shipping-form">
     						<div class="form-group">
-    							<select id="province" name="province" class="province" style="width:100%!important"></select>
-                  <input type="hidden" name="province_name" id="province_name" value="">
+    							<select id="province_2" name="province_2" class="province" style="width:100%!important"></select>
+                  <input type="hidden" name="province_name_2" id="province_name_2" value="">
     						</div>
     						<div class="form-group city-form">
-    							<select id="city" name="city" class="city"></select>
-                  <input type="hidden" name="city_name" id="city_name" value="">
+    							<select id="city_2" name="city_2" class="city"></select>
+                  <input type="hidden" name="city_name_2" id="city_name_2" value="">
     						</div>
     						<div class="form-group district-form">
-    							<select id="district" name="district" class="district"></select>
-                  <input type="hidden" name="district_name" id="district_name" value="">
+    							<select id="district_2" name="district_2" class="district"></select>
+                  <input type="hidden" name="district_name_2" id="district_name_2" value="">
     						</div>
     						<div class="form-group kurir-form">
-    							<select id="kurir" name="kurir" class="kurir"></select>
-                  <input type="hidden" name="kurir_name" id="kurir_name" value="">
+    							<select id="kurir_2" name="kurir_2" class="kurir"></select>
+                  <input type="hidden" name="kurir_name_2" id="kurir_name_2" value="">
     						</div>
     						<div class="cost-form form-line" style="display:none">
-    							<h3>Total Ongkir : <span id="cost-summary"></span> </h3>
+    							<h3>Total Ongkir : <span id="cost-summary-2"></span> </h3>
     						</div>
     					</div>
             </div>
@@ -227,9 +296,17 @@
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12">
                 <div class="body">
+                    <a href="#" class="btn btn-md btn-info topup" id="success-button">Success</a>
+                    <a href="#" class="btn btn-md cek-ongkir" id="failed-button">Failed</a>
+                </div>
+                <br> <br>
+                <div>
+                    <hr>
+                </div>
+                <div class="body">
                     <a href="#" class="btn btn-primary btn-md topup" data-toggle="modal" data-target="#topup">Topup</a>
                     <a href="#" class="btn btn-primary btn-md cek-ongkir" data-toggle="modal" data-target="#cekongkir">Cek Ongkir</a>
-                    <a href="#" class="btn btn-primary btn-md convert" data-toggle="modal" data-target="#convert">Convert to BV</a>
+                    {{--<a href="#" class="btn btn-primary btn-md convert" data-toggle="modal" data-target="#convert">Convert to BV</a>--}}
                     <h5 class="d-flex flex-row-reverse">Bitrex Points: {{number_format($profile->bitrex_points,0,".",".")}}</h5>
                 </div>
             </div>
@@ -290,12 +367,57 @@
 </style>
 
 @section('footer_scripts')
+<script src="{{asset('assets2/js/moment.js')}}"></script>
+<script src="{{ !config('services.midtrans.isProduction') ? 'https://app.sandbox.midtrans.com/snap/snap.js' : 'https://app.midtrans.com/snap/snap.js' }}" data-client-key="{{ config('services.midtrans.clientKey') }}"></script>
 <script type="text/javascript">
-    let is_bca_method = false;
+
+    function check_button_disabled() {
+        if(!$('#pickup_quarter').prop("checked")) {
+            if(parseInt($('#cost_summary_value').val()) == 0) {
+                $("#topup-points").prop('disabled',true);
+            } else {
+                $("#topup-points").prop('disabled',false);
+            }
+        } else {
+            if ($('#nominal').val() % 1000 == 0 && $('#nominal').val() >= 10000) {
+                $("#topup-points").prop('disabled',false);
+            } else {
+                $("#topup-points").prop('disabled',true);
+            }
+        }
+    }
+
+    $('#success-button').click(function(){
+        $('#success-button').prop('class', "btn btn-md btn-info topup");
+        $('#failed-button').prop('class', "btn btn-md topup");
+        bitrexPoint();
+    })
+
+    $('#failed-button').click(function(){
+        $('#failed-button').prop('class', "btn btn-md btn-info topup");
+        $('#success-button').prop('class', "btn btn-md topup");
+        topupPoint();
+    })
 
     $(document).ready(function () {
 
+    
+    <?php if(getCurrentPaymentMethod() == 'va'):?>
+        let is_bca_method = true;
+    <?php elseif(getCurrentPaymentMethod() == 'transfer'):?>
+        let is_bca_method = false;
+    <?php endif;?>
+
+    if($('input[name ="method"]').val() != 'bca'){
+        is_bca_method = false;
+    }
+
       $("#province").select2({
+        placeholder: "Province",
+        width: '100%'
+      });
+
+      $("#province_2").select2({
         placeholder: "Province",
         width: '100%'
       });
@@ -314,7 +436,14 @@
 
       $('#transfer').change(function(){
           $('#topup-points').prop('type','submit');
+          $('#bca').removeAttr("checked")
+          $('#bca').prop('checked', false)
+          $('#transfer').prop('checked', true)
           is_bca_method = false;
+      })
+
+      $('#other').change(function(){
+        is_bca_method = false;
       })
 
       $('#ipay').change(function(){
@@ -324,6 +453,9 @@
 
       $('#bca').change(function(){
           $('#topup-points').prop('type','button');
+          $('#transfer').removeAttr("checked")
+          $('#bca').prop('checked', true)
+          $('#transfer').prop('checked', false)
           is_bca_method = true;
       })
 
@@ -357,10 +489,20 @@
                 url: '{{route("member.bp.store")}}',
                 data: {nominal: nominal, points: points},
                 success: function (data) {
+                    if(!data.status) {
+                        $('#payment-bca').hide();
+                        alert('Minimum topup is : 10.000 and multiple : 1.000');
+                        $("#topup-points").show()
+                        $("#topup-points").prop('disabled',true);
+                        return;
+                    }
+
                     $('#va').val(data.customer_number);
                     $('#des_noreq').text('Masukkan '+data.customer_number+' sebagai rekening tujuan');
                     $('#des_noreq2').text('Masukkan '+data.customer_number+' sebagai rekening tujuan');
                     $('#des_noreq3').text('Masukkan '+data.customer_number+' sebagai rekening tujuan');
+                    $('#time-expired').text('Transfer Sebelum '+moment(data.time_expired).format('D MMMM Y - HH:mm'));
+                    $('#nominal_plus_fee').text('Nominal Transfer '+addCommas(data.total_amount)+' (include fee)')
                     $('#no-virtual').modal('show');
                     $('#topup').modal('hide');
                 },
@@ -368,6 +510,31 @@
                     console.log("Error");
                 }
             });
+          }else{
+              $('#form-topup').submit()
+            // $.post("{{ route('member.payment.midtrans') }}",
+            // {
+            //     _method: 'POST',
+            //     _token: '{{ csrf_token() }}',
+            //     amount: nominal,
+            // },
+            // function (data, status) {
+            //     snap.pay(data.snap_token, {
+            //         // Optional
+            //         onSuccess: function (result) {
+            //             location.reload();
+            //         },
+            //         // Optional
+            //         onPending: function (result) {
+            //             location.reload();
+            //         },
+            //         // Optional
+            //         onError: function (result) {
+            //             location.reload();
+            //         }
+            //     });
+            // });
+            // return false;
           }
       })
 
@@ -387,7 +554,9 @@
         }, 2000);
       })
 
+      $('#cost_summary_value').val(0)
       $('#province').html('<option disabled>Province<option>');
+      $('#province_2').html('<option disabled>Province<option>');
   		$.ajax({
   			type: 'GET',
   			url: '/member/shipping/province',
@@ -395,11 +564,26 @@
   				$('#province').select2({
   					placeholder: 'Province',
   					data: data,
-            width: '100%'
+                    width: '100%'
+  				});
+                $('#cost_summary_value').val(0)
+  			},
+  			error: function() {
+  				console.log("masuk province");
+  			}
+  		});
+          $.ajax({
+  			type: 'GET',
+  			url: '/member/shipping/province',
+  			success: function (data) {
+  				$('#province_2').select2({
+  					placeholder: 'Province',
+  					data: data,
+                    width: '100%'
   				});
   			},
   			error: function() {
-  				console.log("Error");
+  				console.log("masuk province");
   			}
   		});
       $('.dropdown-toggle').remove();
@@ -419,6 +603,19 @@
         width: '100%'
       });
 
+      $("#city_2").select2({
+        placeholder: "City",
+        width: '100%'
+      });
+      $("#district_2").select2({
+        placeholder: "Kecamatan",
+        width: '100%'
+      });
+      $("#kurir_2").select2({
+        placeholder: "Kurir",
+        width: '100%'
+      });
+
       $('#province').change(function(){
     		let id = $(this).val();
         $('#province_name').val($(this).find(":checked").text())
@@ -431,6 +628,30 @@
     			url: '/member/shipping/city/'+id,
     			success: function (data) {
     				$('#city').select2({
+    					placeholder: 'City',
+    					data: data,
+              width: '100%'
+    				});
+    			},
+    			error: function() {
+    				console.log("Error");
+    			}
+    		});
+    	})
+
+
+        $('#province_2').change(function(){
+    		let id = $(this).val();
+        $('#province_name_2').val($(this).find(":checked").text())
+    		$('#city_2').empty().trigger('change');
+    		$('#district_2').empty().trigger('change');
+    		$('#kurir_2').empty().trigger('change');
+    		$('#city_2').html('<option disabled>City<option>');
+    		$.ajax({
+    			type: 'GET',
+    			url: '/member/shipping/city/'+id,
+    			success: function (data) {
+    				$('#city_2').select2({
     					placeholder: 'City',
     					data: data,
               width: '100%'
@@ -464,6 +685,28 @@
     		});
     	})
 
+        $('#city_2').change(function(){
+    		let id = this.value;
+        $('#city_name_2').val($(this).find(":checked").text())
+    		$('#district_2').empty().trigger('change');
+    		$('#kurir_2').empty().trigger('change');
+    		$('#district_2').html('<option disabled>Kecamatan<option>');
+    		$.ajax({
+    			type: 'GET',
+    			url: '/member/shipping/subdistrict/'+id,
+    			success: function (data) {
+    				$('#district_2').select2({
+    					placeholder: 'Kecamatan',
+    					data: data,
+              width: '100%'
+    				});
+    			},
+    			error: function() {
+    				console.log("Error");
+    			}
+    		});
+    	})
+
     	$('#district').change(function() {
     		let id = this.value;
     		$('#kurir').empty().trigger('change');
@@ -485,10 +728,51 @@
     		});
     	});
 
+        $('#district_2').change(function() {
+    		let id = this.value;
+    		$('#kurir_2').empty().trigger('change');
+            $('#district_name_2').val($(this).find(":checked").text())
+    		$('#kurir_2').html('<option disabled>Kurir<option>');
+    		$.ajax({
+    			type: 'GET',
+    			url: '/member/shipping/cost/'+id,
+    			success: function (data) {
+    				$('#kurir_2').select2({
+    					placeholder: 'Kurir',
+    					data: data,
+              width: '100%'
+    				});
+    			},
+    			error: function() {
+    				console.log("Error");
+    			}
+    		});
+    	});
+
     	$('#kurir').change(function(){
         if($(this).val() != null) {
           $('.cost-form').show();
           $('#cost-summary').html(`
+            ${$(this).val()} = ${parseInt($(this).val()) / 1000} Points
+          `)
+          $('#nominal').val(
+              parseInt($('#nominal').val()) + parseInt($(this).val())
+          )
+          $('#points').val(
+              parseInt($('#points').val()) + parseInt($(this).val() / 1000)
+          )
+
+          $('#cost_summary_value').val(parseInt($(this).val()) / 1000)
+          check_button_disabled()
+        } else {
+          $('.cost-form').hide();
+        }
+    	});
+
+        $('#kurir_2').change(function(){
+        if($(this).val() != null) {
+          $('.cost-form').show();
+          $('#cost-summary-2').html(`
             ${$(this).val()} = ${parseInt($(this).val()) / 1000} Points
           `)
         } else {
@@ -496,6 +780,80 @@
         }
     	});
 
+        $('#pickup_quarter').change(function() {
+            if($(this).prop("checked")) {
+                $('#pickup_form').hide()
+
+                if($("#kurir").val() != null) {
+                    $('#nominal').val(
+                        parseInt($('#nominal').val()) - (parseInt($('#cost_summary_value').val()) * 1000)
+                    )
+                    $('#points').val(
+                        parseInt($('#points').val()) - parseInt( $('#cost_summary_value').val())
+                    )
+                }
+
+                $("#province").empty()
+                $("#city").empty()
+                $("#district").empty()
+                $("#kurir").empty()
+            } else {
+                $('#pickup_form').show()
+                $.ajax({
+                    type: 'GET',
+                    url: '/member/shipping/province',
+                    success: function (data) {
+                        $('#province').select2({
+                            placeholder: 'Province',
+                            data: data,
+                            width: '100%'
+                        });
+                        $('#cost_summary_value').val(0)
+                    },
+                    error: function() {
+                        console.log("masuk province");
+                    }
+                });
+            }
+
+            check_button_disabled()
+        })
+        bitrexPoint();
+    });
+
+    var page = 1;
+    var isBp = 0;
+    $(window).scroll(function() {
+        if($(window).scrollTop() + $(window).height() >= $(document).height()) {
+            page++;
+            isBp==1 ? loadMoreData(page) : loadMoreData2(page) ;
+        }
+    });
+
+    let topupPoint = () => {
+        $('#bill div').remove();
+        $.ajax({
+            url: '{{route("member.select.history-topup")}}',
+            data: data,
+            success:function(data){
+                if (data.data[0]==undefined) {
+                    $('#bill').html('<div class="body" style="color:red;"><center><strong>History is currently empty</strong></center></div>');
+                }else{
+                    $.each(data.data, function(i, item) {
+                        date = moment(item.created_at).format('MMMM Do Y - HH:mm');
+                        type = item.product_type;
+                        color = 'green';
+                        nominal = addCommas(item.total_amount);
+                        $('#bill').append('<div class="card ke-'+i+'" style="border: 1px solid #ccc; box-shadow: 1px 1px 3px 0px  rgba(0,0,0,0.3);"><div class="body"><div class="row"><strong class="col-sm-4" id="date">Date Time: '+date+'</strong></div><hr><div class="row"><div class="col" id="type">Type: <b style="color:'+color+'">'+type+'</b></div><div class="col" id="nominal">Nominal: '+nominal+'</div><hr></div><div class="row"></div></div></div>');
+                    });
+                }
+                isBp = 0;
+            }
+        });
+    }
+
+    let bitrexPoint = () => {
+        $('#bill div').remove();
         $.ajax({
             url: '{{route("member.select.history-points")}}',
             data: data,
@@ -512,17 +870,36 @@
                         $('#bill').append('<div class="card ke-'+i+'" style="border: 1px solid #ccc; box-shadow: 1px 1px 3px 0px  rgba(0,0,0,0.3);"><div class="body"><div class="row"><strong class="col-sm-4" id="date">Date Time: '+date+'</strong></div><hr><div class="row"><div class="col" id="type">Type: <b style="color:'+color+'">'+type+'</b></div><div class="col" id="nominal">Nominal: '+nominal+'</div><hr></div><div class="row"><div class="col" id="description">Description: '+item.description+'</div><div class="col" id="points">Points: '+points+'</div></div></div></div>');
                     });
                 }
+                isBp = 1;
             }
         });
-    });
+    }
 
-    var page = 1;
-    $(window).scroll(function() {
-        if($(window).scrollTop() + $(window).height() >= $(document).height()) {
-            page++;
-            loadMoreData(page);
-        }
-    });
+    function loadMoreData2(page){
+        $.ajax({
+            url: '/member/select/history-topup?page=' + page,
+            beforeSend: function(){
+                $('.ajax-load').show();
+            }
+        }).done(function(data){
+            if(data.points.data[0]==undefined){
+                $('.ajax-load').html("No more records found");
+                return;
+            }
+            $('.ajax-load').hide();$.each(data.data, function(i, item) {
+                date = moment(item.created_at).format('MMMM Do Y - HH:mm');
+                type = item.product_type;
+                color = 'green';
+                nominal = addCommas(item.total_amount);
+                $('#bill').append('<div class="card ke-'+i+'" style="border: 1px solid #ccc; box-shadow: 1px 1px 3px 0px  rgba(0,0,0,0.3);"><div class="body"><div class="row"><strong class="col-sm-4" id="date">Date Time: '+date+'</strong></div><hr><div class="row"><div class="col" id="type">Type: <b style="color:'+color+'">'+type+'</b></div><div class="col" id="nominal">Nominal: '+nominal+'</div><hr></div><div class="row"></div></div></div>');
+            });
+        })
+        .fail(function(jqXHR, ajaxOptions, thrownError){
+            $('.ajax-load').html("Server not responding");
+            return;
+        });
+    }
+    
     function loadMoreData(page){
         $.ajax({
             url: '/member/select/history-points?page=' + page,
@@ -557,7 +934,10 @@
             $("#topup-points").prop('disabled',false);
         }else{
             $("#topup-points").prop('disabled',true);
+            
         }
+
+        check_button_disabled()
     })
 
     $('#points-convert').keyup(function(){
@@ -572,6 +952,8 @@
         }else{
             $('#convert-bp').prop('disabled', true);
         }
+
+        check_button_disabled()
     })
 
     $('.demo-radio-button input').change(function() {

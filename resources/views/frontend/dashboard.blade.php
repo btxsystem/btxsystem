@@ -34,6 +34,33 @@
     </div>
 </div>
 
+<div class="modal fade" id="expired" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="train">ANNOUNCEMENT EXPIRED</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h3>
+                    Bagi member yang masa aktif keanggotaan telah habis (non-aktif), member dapat memperpanjang masa aktif, berikut adalah cara-caranya :
+                </h3>
+                <h3>
+                    1. Login ke dalam cabinet,  status keanggotaan dapat dilihat di sudut kanan atas (tertulis non-aktif).
+                </h3>
+                <h3>
+                    2. Untuk pembelian ebook, renewal, dapat diakses melalui menu ebook seperti biasa.
+                </h3>
+                <h3>
+                    3. Selama dalam status non-aktif, member tidak dapat melakukan penjoinan dan tidak mendapatkan pv dari jaringan dan komisi.
+                </h3>
+            </div>
+        </div>
+    </div>
+</div>
+
 <section class="content profile-page">
     <section class="boxs-simple">
         <div class="profile-header">
@@ -211,9 +238,8 @@
                 url: '{{route("member.select.expired-member")}}',
                 data: data,
                 success:function(data){
-                    console.log(data);
-                    
-                    if (data.des) {
+
+                    if (data.des && !data.grace && !data.max) {
                         $('#clock').countdown(data.date.expired_at, function(event) {
                             $(this).html(`
                             <span>Status membership: </span>
@@ -227,12 +253,34 @@
 
                             `);
                         });
-                    }else{
+                    }
+
+                    if (data.des && data.grace) {
+                        $('#expired').modal('show')
+                        $('#clock').countdown(data.graceperiod, function(event) {
+                            $(this).html(`
+                            <span>Status non-aktif: </span>
+                            <span>${event.strftime('%D')}<span class="text-warning"> Days :</span></span>
+
+                            <span>${event.strftime('%H')}<span class="text-warning">h :</span></span>
+
+                            <span>${event.strftime('%M')}<span class="text-warning">m :</span></span>
+
+                            <span>${event.strftime('%S')}<span class="text-warning">s</span></span>
+
+                            `);
+                        });
+                    }
+
+                    if(!data.des) {
                         $('#clock').html(`
                             <span>Membership active until: </span>
                             <span class="text-warning">${moment(data.date.expired_at).format('D MMMM Y')}</span>
                         `);
                     }
+                },
+                error : function(err) {
+                    console.log(err)
                 }
             })
 

@@ -5,11 +5,11 @@
 @stop
 
 @section('content')
-
 <div class="modal fade" id="register" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
+                <input type="text" hidden id="username_default" value="{{isset($profile->username_default) ? $profile->username_default : ''}}">
 				<h5 class="modal-title" id="exampleModalLabel">Register</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
@@ -30,7 +30,7 @@
 					</div>
 					<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div class="form-line">
-							<input class="form-control" name="username" id="username" min="8" type="text" required>
+							<input class="form-control" value="{{ isset($profile['data']['username']) ? $profile['data']['username'] : ''  }}" name="username" id="username" min="8" type="text" required>
 							<label class="form-label">Username <em>*</em></label>
 						</div>
 						<div>
@@ -39,17 +39,17 @@
 					</div>
 					<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12 row">
 						<div class="form-line col">
-							<input class="form-control" name="first_name" id="first_name" type="text" min="2" required>
+							<input class="form-control" value="{{ isset($profile['data']['first_name']) ? $profile['data']['first_name'] : ''  }}" name="first_name" id="first_name" type="text" min="2" required>
 							<label class="form-label">First Name <em>*</em></label>
 						</div>
 						<div class="form-line col">
-							<input class="form-control" name="last_name" id="last_name" type="text" min="2" required>
+							<input class="form-control" value="{{ isset($profile['data']['last_name']) ? $profile['data']['last_name'] : ''  }}" name="last_name" id="last_name" type="text" min="2" required>
 							<label class="form-label">Last Name</label>
 						</div>
 					</div>
 					<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div class="form-line">
-							<input class="form-control" name="email" id="email" type="email" min="5" required>
+							<input class="form-control" value="{{ isset($profile['data']['email']) ? $profile['data']['email'] : ''  }}" name="email" id="email" type="email" min="5" required>
 							<label class="form-label">Email <em>*</em></label>
 						</div>
 						<div>
@@ -58,31 +58,31 @@
 					</div>
 					<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div class="form-line">
-							<input class="form-control" id="phone_number" name="phone_number" type="text" min="11" max='13' required>
+							<input class="form-control" id="phone_number" value="{{ isset($profile['data']['phone_number']) ? $profile['data']['phone_number'] : ''  }}" name="phone_number" type="text" min="11" max='13' required>
 							<label class="form-label">Phone Number <em>*</em></label>
 						</div>
 					</div>
 					<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div class="form-line">
-							<input class="form-control" id="nik" name="nik" id="number_phone" type="text" min="1" required>
+							<input class="form-control" value="{{ isset($profile['data']['nik']) ? $profile['data']['nik'] : ''  }}" id="nik" name="nik" id="number_phone" type="text" min="1" required>
 							<label class="form-label">NIK / Passport <em>*</em></label>
 						</div>
 					</div>
           			<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div class="form-line">
-							<input class="form-control" id="npwp_number" name="npwp_number" type="text" min="1">
+							<input class="form-control" value="{{ isset($profile['data']['npwp_number']) ? $profile['data']['npwp_number'] : ''  }}" id="npwp_number" name="npwp_number" type="text" min="1">
 							<label class="form-label">NPWP</label>
 						</div>
 					</div>
           			<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div class="form-line">
-							<input class="form-control" id="bank_account_name" name="bank_account_name" type="text" min="1" required>
+							<input class="form-control" value="{{ isset($profile['data']['bank_account_name']) ? $profile['data']['bank_account_name'] : ''  }}" id="bank_account_name" name="bank_account_name" type="text" min="1" required>
 							<label class="form-label">Account Name <em>*</em></label>
 						</div>
 					</div>
           			<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div class="form-line">
-							<input class="form-control" id="bank_account_number" name="bank_account_number" type="text" min="1" required>
+							<input class="form-control" value="{{ isset($profile['data']['bank_account_number']) ? $profile['data']['bank_account_number'] : ''  }}" id="bank_account_number" name="bank_account_number" type="text" min="1" required>
 							<label class="form-label">Account Number <em>*</em></label>
 						</div>
 					</div>
@@ -97,6 +97,7 @@
 								<option value="CIMB NIAGA">CIMB NIAGA</option>
 								<option value="other">Other Bank</option>
 							</select>
+							<input type="hidden" id="selected_ebook" name="selected_ebook">
   							<input type="hidden" class="form-control" name="bank_name" id="bank_name" required>
 						</div>
 					</div>
@@ -105,7 +106,7 @@
 							<label class="form-label">Birth Date <em>*</em></label>
 						</div>
 						<div class="form-line">
-							<input type="date" id="birthdate" name="birthdate" class="form-control" placeholder="Birthdate" required>
+							<input type="date" value="{{ isset($profile['data']['birthdate']) ? $profile['data']['birthdate'] : ''  }}" id="birthdate" name="birthdate" class="form-control" placeholder="Birthdate" required>
 						</div>
 						<div style="color:red" id="birthdate_danger"></div>
 					</div>
@@ -199,6 +200,11 @@
                     <td> <h4>Total Shipping</h4> </td>
                     <td class="text-right"> <h4><span id="cost-postal">0</span></h4> </td>
                     <td> <h4>Points</h4> </td>
+									</tr>
+									<tr id="total-discount-tr" class="hidden">
+                    <td> <h4>Total Discount</h4> </td>
+                    <td class="text-right"> <h4><span id="total-discount">0</span></h4> </td>
+                    <td> <h4>Points</h4> </td>
                   </tr>
                   <tr>
                     <td> <h4>Grand Total</h4> </td>
@@ -213,7 +219,7 @@
             <div class="form-check">
               <input class="form-check-input" type="checkbox" id="term_one" name="term_one" value="1">
               <label class="form-check-label" for="term_one">
-                Saya telah membaca dan menyetujui <a href="https://drive.google.com/file/d/1I2pDzWx2ITxE3PKplc_6pLdP0jMrmkA1/view?usp=sharing" target="_blank">kode etik Bitrexgo</a>.
+                Saya telah membaca dan menyetujui <a href="https://bitrexgo.co.id/assets/img/codethical.pdf" target="_blank">kode etik Bitrexgo</a>.
               </label>
             </div>
             <div class="form-check">
@@ -261,7 +267,7 @@
 				<small class="text-muted">Bitrexgo</small>
 				</h2>
         <div class="pull-right mt-2">
-          <button onclick="openAutoPlacement()" class="btn btn-primary btn-md" style="cursor:pointer">Add new Member with Auto-placement</button>
+          <button onclick="openAutoPlacement()" class="btn btn-primary btn-md" style="cursor:pointer" {{ session('expired') == true ? 'disabled' : '' }}>Add new Member with Auto-placement</button>
         </div>
 			</div>
       <div class="clearfix">
@@ -322,15 +328,22 @@
 						</div>
 					</div>
 				</div>
+				<span id="tree_button">
+
+				</span>
 				<div class="card">
 					<div class="container-fluid">
 						<div class="row">
 							<div class="col-md-12">
 								<br>
 								<div class="chart" id="tree">
-									<button id="upline" class='btn btn-primary zmdi zmdi-chevron-up'></button>
+									
 								</div>
-
+								<div id="overlay">
+									<div class="cv-spinner">
+										<span class="spinner"></span>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -343,6 +356,14 @@
 
 @section('footer_scripts')
 <style>
+input, textarea, button {
+    -webkit-appearance: none !important;
+    -webkit-font-smoothing: antialiased;
+    resize: none;
+}
+input[type="radio"]{
+    -webkit-appearance: radio !important;
+}
 .svg-container {
   display: inline-block;
   position: relative;
@@ -501,6 +522,14 @@ text {
 rect {
 	cursor: pointer;
 }
+
+image {
+	cursor: pointer;
+}
+
+text {
+	cursor: pointer;
+}
 .bigger {
 	font-size: 13px;
 }
@@ -525,6 +554,41 @@ em{
 	width: 100% !important;
 }
 
+#overlay{
+	position: fixed;
+	top: 0;
+	z-index: 100;
+	width: 100%;
+	height:100%;
+	display: none;
+	background: rgba(0,0,0,0.6);
+}
+.cv-spinner {
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.spinner {
+	width: 40px;
+	height: 40px;
+	border: 4px #ddd solid;
+	border-top: 4px #2e93e6 solid;
+	border-radius: 50%;
+	animation: sp-anime 0.8s infinite linear;
+}
+@keyframes sp-anime {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(359deg);
+	}
+}
+.is-hide{
+	display:none;
+}
+
 @media (pointer: coarse) {
 	g{
 		transform-origin: 0 0;
@@ -532,6 +596,11 @@ em{
 	}
 }
 </style>
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.10/themes/base/jquery-ui.css">
+<!-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script> -->
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script> -->
+
 <script>
 	var priceEbook = 0
 	var postalFee = 0
@@ -541,6 +610,7 @@ em{
 	var check = 1;
 	var check_email = false;
 	var check_user = false;
+	var check_nik = false;
 	var available_email = false;
 	var parent_id = undefined;
 	var check_cost = true;
@@ -640,13 +710,18 @@ em{
 		checkTerm();
 		is_va = true;
 	})
-	
+
 	$('#bp').change(function(){
 		checkTerm();
 		is_va = false;
 	})
 
 	function checkTerm() {
+		if(is_va) {
+			check_cost = true
+		} else {
+			check_cost = bitrexPoint < grandTotal ? false : true;
+		}
 		if(!$('#term_one').prop('checked') || !$('#term_two').prop('checked')) {
 			$('.register').prop('disabled', true)
 		} else {
@@ -658,10 +733,11 @@ em{
 			&& $('#nik').val() != ''
 			&& $('#birthdate').val() != ''
 			&& adult >= 18
-			&& check > 0 
-			&& check_email 
-			&& check_cost 
-			&& check_user 
+			&& check > 0
+			&& check_email
+			&& check_cost
+			&& check_user
+			&& check_nik
 			&& available_email
 		) {
 			$('.register').prop('disabled', false)
@@ -672,19 +748,48 @@ em{
 	}
 
 	function openAutoPlacement() {
+		$('#action-member').attr('action', '{{route("register-autoplacement")}}')
+		$.ajax({
+			type: 'GET',
+			url: '/member/select/bitrex-points',
+			success: function (data) {
+				if (data.bitrex_points >= 280) {
+					$('#register').modal('show');
+				}else{
+					$('#register').modal('hide');
+					$('#warning').modal('show');
+				}
+			},
+			error: function() {
+				console.log("Error");
+			}
+		});
 		$('#payment_method').html(`
-							<input name="payment_method" type="radio" value="point" id="bp" class="with-gap radio-col-red" checked />
-              				<label for="payment_method">Bitrex Points</label>
-							<input name="payment_method" type="radio" value="va" aria-hidden="true" id="va" class="with-gap radio-col-red"/>
-              				<label for="va" aria-hidden="true">Virtual Account BCA</label>`);
+				<input name="payment_method" type="radio" value="point" id="bp" class="with-gap radio-col-red" checked/>
+				<label for="bp">Bitrex Points</label>
+				<input name="payment_method" type="radio" value="va" id="va" class="with-gap radio-col-red" />
+				<label for="va">Virtual Account BCA</label>
+		`);
 		$('#action-member').attr('action', '{{route("register-autoplacement")}}');
 		$('#register').modal('show');
+
+		$('#va').change(function(){
+			is_va = true;
+			check_cost = true;
+			checkTerm();
+		})
+
+		$('#bp').change(function(){
+			is_va = false;
+			checkTerm();
+		})
 	}
 
 	function openTree() {
 		$('#payment_method').html(`
-							<input name="payment_method" type="radio" value="point" id="payment_method" class="with-gap radio-col-red" checked />
-              				<label for="payment_method">Bitrex Points</label>`);
+			<input name="payment_method" type="radio" value="point" id="bp" class="with-gap radio-col-red" checked/>
+			<label for="bp">Bitrex Points</label>
+		`);
 		$('#action-member').attr('action', '{{route("member.register-downline")}}')
 	}
 
@@ -707,7 +812,7 @@ em{
 	$(document).ready(function() {
 		$('.register').prop('disabled', true)
 		$('#cost-starter').html('280')
-		
+
 		var element = document.querySelector('#bah');
 
     	checkTerm()
@@ -719,10 +824,9 @@ em{
 		$('#term_two').change(function() {
 			checkTerm()
 		})
-	
+
     	$('.shipping-form').hide();
 
-		$('#upline').hide();
 		$('#province').select2({
 			placeholder: 'Province',
 		});
@@ -734,17 +838,18 @@ em{
 			let render = data.map((v, i) => {
 				return `
 				<div class="form-check">
-				<input class="form-check-input" data-price="${v.price}" type="checkbox" name="ebooks[]" value="${v.id}" id="${v.title}">
+				<input class="form-check-input" data-id="${v.id}" data-allow-merge-discount="${v.allow_merge_discount}" data-maximum-product="${v.maximum_product}" data-register-promotion="${v.register_promotion}" data-minimum-product="${v.minimum_product}" data-price-discount="${v.total_price_discount}" data-promotion="${v.is_promotion}" data-price="${v.price}" type="checkbox" name="ebooks[]" value="${v.id}" id="${v.title}">
 				<label class="form-check-label" id="${i}" for="${v.title}" ${v.id == 1 ? 'checked' : ''}>
 					${v.title}
 				</label>
 				</div>`
-			})
+		})
 		$('#ebook-list').html(`
 			<div id="checkboxEbook">
 				${render}
 			</div>
 		`)
+		
 		$('#checkboxEbook input[type=checkbox]').each(function() {
 			if(parseInt($(this).val()) == 1) {
 			$(this).prop('checked', true)
@@ -753,16 +858,190 @@ em{
 			$('#grand-total').html(toPrice((priceEbook + postalFee + 280000) / 1000))
 			}
 		})
-	 
+
+		// let isConfirmationEbook = false;
+		// let validateEbooks = [];
+		// $('form#action-member').on('submit', function(e) {
+		// 	$('#checkboxEbook input[type=checkbox]').each(function(i) {
+		// 		if($(this).prop('checked')) {
+		// 			validateEbooks.push(i)
+		// 		}
+		// 	});
+
+		// 	if(validateEbooks.length > 1 && !isConfirmationEbook) {
+		// 		e.preventDefault();
+		// 		var r = confirm("Apakah Anda yakin membeli 2 ebook?");
+
+		// 		if (r == true) {
+		// 			isConfirmationEbook = true
+		// 			$('form#action-member').submit()
+		// 		} else {
+		// 			isConfirmationEbook = false
+		// 			validateEbooks = [];
+		// 			e.preventDefault();
+		// 		}
+		// 		// swal.fire({
+		// 		// 	title: 'Are you sure?',
+		// 		// 	text: "Ebook lebih dari satu",
+		// 		// 	icon: 'warning',
+		// 		// 	showCancelButton: true,
+		// 		// 	confirmButtonColor: '#3085d6',
+		// 		// 	cancelButtonColor: '#d33',
+		// 		// 	confirmButtonText: 'Yes'
+		// 		// }).then((result) => {
+		// 		// 	if (result.value) {
+		// 		// 		isConfirmationEbook = true
+		// 		// 		$('form#action-member').submit();
+		// 		// 	}
+		// 		// })
+		// 	}
+
+		// })
+
+		let discountEbooks = []
+
 		$('#checkboxEbook input[type=checkbox]').change(function(index) {
-			
-			if($(this).prop('checked')) {
-				check += 1;
-				priceEbook = priceEbook + parseInt($(this).data('price'));
-			} else {
-				check -= 1;
-				priceEbook = priceEbook - parseInt($(this).data('price'));
+			let ebookSelected = $('#checkboxEbook input[type=checkbox]').filter(function() {
+				return $(this).prop("checked")
+			})
+			let indexEbook = discountEbooks.findIndex(data => data == $(this).prop("id"))
+
+			if(!$(this).prop("checked")) {
+				discountEbooks.splice(indexEbook, 1);
 			}
+
+			n=ebookSelected.length; //Tambah value untuk stored temporary
+			
+			let cancelledEbook = false;
+		
+			if(n>=2 && $(this).prop("checked")){
+				var r = confirm("Apakah Anda yakin membeli " + n +" ebook?");
+				if (r == true) {
+
+				} else { 
+					cancelledEbook = true
+					$(this).prop("checked", false)
+					ebookSelected.splice(indexEbook,1)
+				}
+			}
+
+
+			/*
+
+			let cancelledEbook = false;
+
+			if(ebookSelected.length == 2) {
+				var r = confirm("Apakah Anda yakin membeli 2 ebook?");
+				if (r == true) {
+
+				} else { 
+					cancelledEbook = true
+					$(this).prop("checked", false)
+				}
+			}
+
+			// if($(this).prop('checked')) {
+			// 	check += 1;
+
+			// 	if($(this).data('promotion')) {
+			// 		if(ebookSelected.length >= $(this).data('minimum-product')) {
+			// 			priceEbook = priceEbook + (parseInt($(this).data('price')) - parseInt($(this).data('price-discount')));
+			// 		} else {
+			// 			priceEbook = priceEbook + (parseInt($(this).data('price')));
+			// 		}
+			// 	} else {
+			// 		priceEbook = priceEbook + parseInt($(this).data('price'));
+			// 	}
+
+			// } else {
+			// 	if(!cancelledEbook) {
+			// 		check -= 1;
+
+			// 		if($(this).data('promotion')) {
+			// 			priceEbook = priceEbook - (parseInt($(this).data('price')) - parseInt($(this).data('price-discount')));
+			// 		} else {	
+			// 			priceEbook = priceEbook - parseInt($(this).data('price'));
+			// 		}
+			// 	}
+				
+			// }*/
+
+			priceEbook = 0
+			let totalDiscount = 0;
+			ebookSelected.each(function(index, book) {
+				let idEbook = $(this).data('id')
+				let allowMergeDiscount = $(this).data('allow-merge-discount');
+				let isPromotion = $(this).data('promotion')
+				let isRegisterPromotion = $(this).data('register-promotion')
+				let minimumProduct = $(this).data('minimum-product')
+				let maximumProduct = $(this).data('maximum-product')
+				let price = $(this).data('price')
+				let priceDiscount = $(this).data('price-discount')
+
+
+				if($(this).prop('checked')) {
+					if(isPromotion && isRegisterPromotion) {
+						if(ebookSelected.length >= minimumProduct && ebookSelected.length <= maximumProduct) {
+							priceEbook = priceEbook + (parseInt(price) - parseInt(priceDiscount));
+							totalDiscount += parseInt(priceDiscount)
+
+							/*jika member sudah pilih ebook yg ada discount, 
+								maka blok dan cek apakah ebook lain bisa dapat discount juga
+								Jika belum memilih, masukan nilai id ebook yang promosi ke temporary
+							*/
+							if(discountEbooks.length > 0) {
+								// cek allow merge / stack promotion
+								if(allowMergeDiscount == 0 && !discountEbooks.includes(idEbook)) {
+									priceEbook +=  parseInt(priceDiscount);
+									totalDiscount -= parseInt(priceDiscount)
+								}
+							} else {
+								// create temporary untuk cek
+								discountEbooks.push(idEbook)
+							}
+						} else {
+							priceEbook = priceEbook + (parseInt(price));
+						}
+					} else {
+						priceEbook = priceEbook + parseInt(price);
+					}
+				} else {
+					if(!cancelledEbook) {
+						check -= 1;
+						if(isPromotion && isRegisterPromotion && ebookSelected.length <= maximumProduct) {
+							priceEbook = priceEbook - (parseInt(price) - parseInt(priceDiscount));
+							totalDiscount -= parseInt(priceDiscount)
+						} else {	
+							priceEbook = priceEbook - parseInt(price);
+						}
+					}
+				}
+				
+			})
+
+			// parsing value
+			console.log(discountEbooks)
+			if(discountEbooks.length > 0) {
+				$('#selected_ebook').val(discountEbooks[0])
+			} else {
+				$('#selected_ebook').val('')
+			}
+
+			// filters data temporary, hanya ambil data yang tidak boleh di join/stack promotion
+			// let notAllowMergeDiscountIds = discountEbooks.filter(value => value.allowMergePromotion == 0)
+			// if(notAllowMergeDiscountIds.length > 0) {
+			// 	notAllowMergeDiscountIds = notAllowMergeDiscountIds.map((data, index) => {
+			// 		return index > 0 ? data.id : null
+			// 	}).filter(data => data != null)
+			// }
+
+			if(totalDiscount >= 0) {
+				$('#total-discount-tr').show()
+				$('#total-discount').html(`${toPrice(totalDiscount / 1000)}`)
+			} else {
+				$('#total-discount-tr').hide()
+			}
+			
 			if(priceEbook != 0) {
 				$('#cost-ebook').parent().removeClass('hidden');
 			} else {
@@ -781,8 +1060,12 @@ em{
 
 			grandTotal = (priceEbook + postalFee + 280000) / 1000;
 
-			check_cost = bitrexPoint < grandTotal ? false : true;
-	
+			if(is_va) {
+				check_cost = true
+			} else {
+				check_cost = bitrexPoint < grandTotal ? false : true;
+			}
+
 			checkTerm()
 		})
 	})
@@ -800,7 +1083,7 @@ em{
 			console.log("Error");
 		}
 	});
-		
+
 		$('.dropdown-toggle').remove();
 		$('div').removeClass('btn-group');
 		$('.div').removeClass('bootstrap-select');
@@ -816,9 +1099,8 @@ em{
 		});
 	});
 
-	$('#search-downline').click(function(){
-		let data = $('.search').val();
-		$.ajax({
+    let searchDownline = (data) => {
+        $.ajax({
 			type: 'GET',
 			url: '/member/select/search-downline/'+data,
 			success: function (data) {
@@ -829,21 +1111,25 @@ em{
 						url: '/member/select/child-tree/'+data.username,
 						success: function (data) {
 							$('#bah').empty('g');
-							$('#upline').show();
 							tree(data)
 						},
 						error: function() {
 							console.log("Error");
 						}
-					});	
+					});
 				}else{
-					alert('Username not found');
+					swal("sorry, username not found");
 				}
 			},
 			error: function() {
 				console.log("Error");
 			}
 		});
+    }
+
+	$('#search-downline').click(function(){
+		let data = $('.search').val();
+	    searchDownline(data);
 	});
 
   $('#bank_name_select').change(function() {
@@ -925,7 +1211,7 @@ em{
 	});
 
 	$('#kurir').change(function(){
-		
+
 		$('#kurir_name').val($(this).find(":checked").text())
 		$('#cost').val(Math.ceil(this.value/1000))
 		$('#cost-starter').html('280')
@@ -942,8 +1228,16 @@ em{
 
 		grandTotal = (priceEbook + postalFee + 280000) / 1000;
 
-		if(bitrexPoint < grandTotal) {
-			$('.register').prop('disabled', true)
+		if(is_va) {
+			check_cost = true
+		} else {
+			if(bitrexPoint < grandTotal) {
+				$('.register').prop('disabled', true)
+				console.log('false')
+				check_cost = false
+			} else {
+				check_cost = true
+			}
 		}
 		checkTerm()
 	});
@@ -960,7 +1254,12 @@ em{
 		$('#district').empty().trigger('change');
 		$('#kurir').empty().trigger('change');
 		grandTotal = (priceEbook + postalFee + 280000) / 1000;
-		check_cost = bitrexPoint < grandTotal ? false : true;
+		
+		if(is_va) {
+			check_cost = true
+		} else {
+			check_cost = bitrexPoint < grandTotal ? false : true;
+		}
 		$('#cost-postal').text(postalFee);
 		$('#grand-total').text(grandTotal);
 		checkTerm();
@@ -975,7 +1274,12 @@ em{
 		grandTotal -= postalFee;
 		postalFee = 0;
 		grandTotal = (priceEbook - postalFee + 280000) / 1000;
-		check_cost = bitrexPoint < grandTotal ? false : true;
+		
+		if(is_va) {
+			check_cost = true
+		} else {
+			check_cost = bitrexPoint < grandTotal ? false : true;
+		}
 		$('#cost-postal').text(postalFee);
 		$('#grand-total').text(grandTotal);
 		checkTerm();
@@ -987,8 +1291,8 @@ em{
 			check_email = true;
 			$('#email_danger').empty();
 		}else{
-			check_email = false;	
-			$('#email_danger').text('Email Invalid');	
+			check_email = false;
+			$('#email_danger').text('Email Invalid');
 		}
 		$.ajax({
 			type: 'GET',
@@ -1000,7 +1304,7 @@ em{
 				}else{
 					$('#email_danger').empty();
 					available_email = true;
-				}	
+				}
 			},
 			error: function() {
 				console.log("Error");
@@ -1034,9 +1338,22 @@ em{
 	})
 
 	$('#nik').on('input', function() {
-		let str = this.value;
-		this.value = (str.match(/[0-9]/g)) ? str.match(/[0-9]/g).join('') : '';
-		checkTerm()
+		let str = /^[a-zA-Z0-9_]*$/.test(this.value);
+		this.value = !str ? $(this).val().match(/[a-zA-Z0-9_]/g).join('') : this.value;
+		var text = this.value;
+		$.ajax({
+			type: 'GET',
+			url: '/member/select/nik/'+text,
+			success: function (data) {
+				data.nik ? $('#nik_danger').text('identity you entered already exists') : $('#nik_danger').empty();
+				check_nik = data.nik ? false  : true;
+			},
+			error: function() {
+				console.log("Error");
+			}
+		});checkTerm()
+
+
 	})
 
 	$('#bank_account_number').on('input', function() {
@@ -1047,6 +1364,7 @@ em{
 
 	var my_transform = d3Transform()
    .translate([-750, -50]);
+   if ($('#username_default').val()=='no') {
    	var svg = d3.select("#tree")
 		.append("svg")
 		.attr("width", 1035).attr("height", 1080)
@@ -1059,7 +1377,6 @@ em{
 		panzoom(document.querySelector('#bah'), {
 			zoomSpeed: 0.030
 		});
-
 	$.ajax({
 		type: 'GET',
 		url: '{{route("member.select.tree")}}',
@@ -1070,44 +1387,72 @@ em{
 			console.log("Error");
 		}
 	});
+   }else{
+    var svg = d3.select("#tree")
+		.append("svg")
+		.attr("width", 1035).attr("height", 1080)
+		.call(d3.zoom().on("zoom", function () {
+			svg.attr("transform", d3.event.transform)
+		}))
+		.append("g")
+		.attr("transform", my_transform)
+		.attr("id", "bah")
+		panzoom(document.querySelector('#bah'), {
+			zoomSpeed: 0.030
+		});
+	$.ajax({
+		type: 'POST',
+		url: '{{route("member.select.tree-analyzer")}}',
+        data: { "_token": "{{ csrf_token() }}", username : $('#username_default').val()},
+		success: function (data) {
+            parent_id = data.parent_id;
+		    $('#bah').empty('g');
+			tree(data);
+		},
+		error: function() {
+			console.log("Error");
+		}
+	});
+   }
 
 	var tree_submit = (a, parent, position) => {
-		parent_id = parent;
-		if(a!="available"){
-			$.ajax({
-				type: 'GET',
-				url: '/member/select/child-tree/'+a,
-				success: function (data) {
-					$('#bah').empty('g');
-					$('#upline').show();
-					tree(data)
-				},
-				error: function() {
-					console.log("Error");
-				}
-			});
+		if (a=='available') {
+			var expired = "{{ session('expired') }}"
+			if (expired != '1') {
+				$('#parent').val(parent);
+				$('#position').val(position);
+				openTree()
+				$('#register').modal('show');
+			}
 		}else{
 			$.ajax({
 				type: 'GET',
-				url: '/member/select/bitrex-points',
+				url: '/member/select/search-downline/'+a,
 				success: function (data) {
-					if (data.bitrex_points >= 280) {
-						$('#register').modal('show');
-            			openTree()
-						$('#parent').attr('value',parent);
-						$('#position').attr('value',position);
+					parent_id = data.parent_id;
+					if (data) {
+						$.ajax({
+							type: 'GET',
+							url: '/member/select/child-tree/'+data.username,
+							success: function (data) {
+								$('#bah').empty('g');
+								tree(data)
+							},
+							error: function() {
+								console.log("Error");
+							}
+						});
 					}else{
-						$('#warning').modal('show');
+						swal("sorry, username not found");
 					}
 				},
-				error: function() {
-					console.log("Error");
-				}
 			});
 		}
 	};
 
 	var tree = (data) => {
+        my_id = {!! \Auth::id() !!};
+        data.id!=my_id ? $('#tree_button').html('<button id="upline" class="btn btn-primary zmdi zmdi-chevron-up"></button>') : $('#upline').remove();
 		$.ajax({
             url: 'select/summary/'+data.id,
             success:function(data){
@@ -1122,7 +1467,7 @@ em{
 				data.pv_group ? $('#_pv_group_r').text('PV Rank R: ' + addCommas(data.pv_group.pv_right)) : $('#_pv_group_r').text('PV Rank: 0 ');
             }
         });
-		
+
 		var treeStructure = d3.tree().size([2000,480]);
 		var root = d3.hierarchy(data).sort(function(a, b) {return a.data.position - b.data.position ;});
 		treeStructure(root);
@@ -1150,38 +1495,47 @@ em{
 		var names = svg.append("g").selectAll("text")
 			.data(information.descendants());
 		names.enter().append("text")
+			.attr("onclick", function(d){ return `tree_submit(${d.data.username ? `'${d.data.username}'` : `'${"available"}'`}, ${d.data.parent_id}, ${d.data.position} )` })
 			.text(function(d){return d.data.username ? d.data.username : 'Available';})
 			.attr("x", function(d){return d.x+0;})
 			.attr("y", function(d){return d.y+40;})
 			.classed("bigger", true);
 
 		var levels = svg.append("g").selectAll("text")
+			.attr("onclick", function(d){ return `tree_submit(${d.data.username ? `'${d.data.username}'` : `'${"available"}'`}, ${d.data.parent_id}, ${d.data.position} )` })
 			.data(information.descendants());
 		levels.enter().append("text")
+			.attr("onclick", function(d){ return `tree_submit(${d.data.username ? `'${d.data.username}'` : `'${"available"}'`}, ${d.data.parent_id}, ${d.data.position} )` })
 			.text(function(d){return d.data.rank ? "Rank : " + d.data.rank : '';})
 			.attr("x", function(d){return d.x+0;})
 			.attr("y", function(d){return d.y+60;})
 			.classed("bigger", true)
 
 		var pv_left = svg.append("g").selectAll("text")
+			.attr("onclick", function(d){ return `tree_submit(${d.data.username ? `'${d.data.username}'` : `'${"available"}'`}, ${d.data.parent_id}, ${d.data.position} )` })
 			.data(information.descendants());
 		pv_left.enter().append("text")
+			.attr("onclick", function(d){ return `tree_submit(${d.data.username ? `'${d.data.username}'` : `'${"available"}'`}, ${d.data.parent_id}, ${d.data.position} )` })
 			.text(function(d){return d.data.pv_left >= 0 ? "L : " + addCommas(d.data.pv_left) : '';})
 			.attr("x", function(d){return d.x+0;})
 			.attr("y", function(d){return d.y+80;})
 			.classed("bigger", true);
 
 		var pv_midle = svg.append("g").selectAll("text")
+			.attr("onclick", function(d){ return `tree_submit(${d.data.username ? `'${d.data.username}'` : `'${"available"}'`}, ${d.data.parent_id}, ${d.data.position} )` })
 			.data(information.descendants());
 		pv_midle.enter().append("text")
+			.attr("onclick", function(d){ return `tree_submit(${d.data.username ? `'${d.data.username}'` : `'${"available"}'`}, ${d.data.parent_id}, ${d.data.position} )` })
 			.text(function(d){return d.data.pv_midle >= 0 ? "M : " + addCommas(d.data.pv_midle) : ''})
 			.attr("x", function(d){return d.x+0;})
 			.attr("y", function(d){return d.y+100;})
 			.classed("bigger", true);
 
 		var pv_right = svg.append("g").selectAll("text")
+			.attr("onclick", function(d){ return `tree_submit(${d.data.username ? `'${d.data.username}'` : `'${"available"}'`}, ${d.data.parent_id}, ${d.data.position} )` })
 			.data(information.descendants());
 		pv_right.enter().append("text")
+			.attr("onclick", function(d){ return `tree_submit(${d.data.username ? `'${d.data.username}'` : `'${"available"}'`}, ${d.data.parent_id}, ${d.data.position} )` })
 			.text(function(d){return d.data.pv_right >= 0 ? "R : " + addCommas(d.data.pv_right) : ''})
 			.attr("x", function(d){return d.x+0;})
 			.attr("y", function(d){return d.y+120;})
@@ -1191,9 +1545,10 @@ em{
 			.data(information.descendants());
 		image.enter().append("a")
 			.append("image")
+			.attr("onclick", function(d){ return `tree_submit(${d.data.username ? `'${d.data.username}'` : `'${"available"}'`}, ${d.data.parent_id}, ${d.data.position} )` })
 			.attr("xlink:href", function(d){return d.data.src == null ? "https://img.icons8.com/bubbles/2x/user.png" : BASE_SRC+'/'+d.data.src})
 			.attr("x", function(d){
-				if($(window).width() <= 480) {  
+				if($(window).width() <= 480) {
 					return d.x-80;
 				}else{
 					return d.x-30;
@@ -1205,22 +1560,60 @@ em{
   	function toPrice(value) {
 		return value.toString().replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1\.")
 	}
-	$('#upline').click(function(){
+	$(document).on('click','#upline',function(){
+		$('#upline').remove();
+        $("#overlay").fadeIn(100);
+		cek_upline = 0;
+        cek_id = 0;
 		$.ajax({
 			type: 'GET',
 			url: '/member/select/tree-upline/'+parent_id,
 			success: function (data) {
-				parent_id = data.parent_id;
-				$('#bah').empty('g');
-				tree(data);
-				if (!data.parent) {
-					$('#upline').hide();
-				}
+                data.children.forEach(child => {
+                    if (child.id == {!! \Auth::id() !!}) {
+                        cek_id += 1;
+                    }
+                });
+
+                if (cek_id == 0) {
+                    parent_id = data.parent_id;
+                    $('#bah').empty('g');
+                    tree(data);
+                    data.parent ? cek_upline = 1 : cek_upline = 0;
+                }
+                cek_id = 0;
 			},
 			error: function() {
 				console.log("Error");
 			}
+		}).done(function() {
+			setTimeout(function(){
+				$("#overlay").fadeOut(100);
+				cek_upline==1 ? $('#tree_button').html('<button id="upline" class="btn btn-primary zmdi zmdi-chevron-up"></button>') : $('#upline').remove();
+			},300);
 		});
 	})
+
+
+
+
+	// $( function() {
+	// 	$('#birthdate').datepicker();
+  	// });
+	// $( function() {
+	// 	if ( $('#birthdate').prop('type') != 'date' ) {
+    // 		$('#birthdate').datepicker();
+	// 	}
+  	// });
+
+	$( function() {
+		if ( $('#birthdate')[0].type != 'date' ) $('#birthdate').datepicker({
+			   changeMonth: true,
+   			   changeYear: true
+  		});
+  	});
+
+
+
 </script>
 @stop

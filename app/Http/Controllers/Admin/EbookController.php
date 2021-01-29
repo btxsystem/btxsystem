@@ -9,15 +9,13 @@ use DataTables;
 use Alert;
 use Validator;
 use DB;
+use App\Service\NotificationService;
+use Carbon\Carbon;
 
 
 class EbookController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
         if (request()->ajax()) {
@@ -34,7 +32,6 @@ class EbookController extends Controller
                     ->rawColumns(['action'])
                     ->make(true);
         }
-    
         return view('admin.ebooks.index');
     }
 
@@ -62,12 +59,19 @@ class EbookController extends Controller
 
         $ebook = new Ebook;
         $ebook->title = $request->title;
+        $ebook->display_title = $request->display_title;
         $ebook->slug = \Str::slug($request->title) .'-'. date('YmdHis') ;
         $ebook->price = $request->price;
         $ebook->price_markup = $request->price_markup;
         $ebook->pv = $request->pv;
         $ebook->bv = $request->bv;
+        $ebook->parent_id = 0;
         $ebook->description = $request->description;
+        $ebook->price_discount = $request->price_discount;
+        $ebook->minimum_product = $request->minimum_product ?? 0;
+        $ebook->maximum_product = $request->maximum_product ?? 0;
+        $ebook->register_promotion = $request->register_promotion ? true : false;
+        $ebook->allow_merge_discount = $request->allow_merge_discount ? true : false;
 
         if ($request->hasFile('src')) {
             $image = $request->src;
@@ -77,25 +81,55 @@ class EbookController extends Controller
             $ebook->src = $uploadPath;
         }
 
+        if ($request->promotion) {
+
+            $request->validate([
+                'start_date' => 'required',
+                'end_date' => 'required',
+            ]);
+
+            $ebook->started_at = date('Y-m-d', strtotime(date('Y-m-d', strtotime($request->start_date))));
+            $ebook->ended_at = date('Y-m-d', strtotime(date('Y-m-d', strtotime($request->end_date))));
+        }
+
         $ebook->save();
         $ebook->position = $ebook->id;
         $ebook->save();
-       
 
-        $ebook_renewal = new Ebook;
-        $ebook_renewal->title = $request->title .' '. 'Renewal';
-        $ebook_renewal->slug = \Str::slug($ebook_renewal->title) .'-'. date('YmdHis') ;
-        $ebook_renewal->price = $request->price_renewal;
-        $ebook_renewal->price_markup = $request->price_markup_renewal;
-        $ebook_renewal->pv = $request->pv_renewal;
-        $ebook_renewal->bv = $request->bv_renewal;
-        $ebook_renewal->description = $request->description;
-        $ebook_renewal->src = $ebook->src;
-        $ebook_renewal->position = $ebook->id;
-        $ebook_renewal->save();
+        if ($request->price_renewal) {
+            $ebook_renewal = new Ebook;
+            $ebook_renewal->title = $request->title .' '. 'Renewal';
+            $ebook_renewal->slug = \Str::slug($ebook_renewal->title) .'-'. date('YmdHis') ;
+            $ebook_renewal->price = $request->price_renewal;
+            $ebook_renewal->price_markup = $request->price_markup_renewal;
+            $ebook_renewal->pv = $request->pv_renewal;
+            $ebook_renewal->bv = $request->bv_renewal;
+            $ebook_renewal->description = $request->description;
+            $ebook_renewal->src = $ebook->src;
+            $ebook_renewal->parent_id = $ebook->id; 
+            $ebook_renewal->position = $ebook->id;
+            $ebook_renewal->display_title = $ebook->display_title .' '. 'Renewal';;
+            $ebook_renewal->price_discount = $ebook->price_discount;
+            $ebook_renewal->minimum_product = $ebook->minimum_product;
+            $ebook_renewal->maximum_product = $ebook->maximum_product;
+            $ebook_renewal->register_promotion = $ebook->register_promotion;
+            $ebook_renewal->allow_merge_discount = $ebook->allow_merge_discount;
+
+            if ($request->promotion) {
+
+                $request->validate([
+                    'start_date' => 'required',
+                    'end_date' => 'required',
+                ]);
+    
+                $ebook_renewal->started_at = date('Y-m-d', strtotime(date('Y-m-d', strtotime($request->start_date))));
+                $ebook_renewal->ended_at = date('Y-m-d', strtotime(date('Y-m-d', strtotime($request->end_date))));
+            }
+
+            $ebook_renewal->save();
+        }
 
         Alert::success('Sukses Menambah Data Ebook', 'Sukses');
-
         return redirect()->route('ebook.index');
     }
 
@@ -108,7 +142,6 @@ class EbookController extends Controller
     public function show($id)
     {
         $data = Ebook::with('books')->findOrFail($id);
-
         return view('admin.ebooks.detail', compact('data'));
     }
 
@@ -121,7 +154,6 @@ class EbookController extends Controller
     public function edit($id)
     {
         $data = Ebook::findOrFail($id);
- 
         return view('admin.ebooks.edit', compact('data'));
     }
 
@@ -139,7 +171,6 @@ class EbookController extends Controller
             'src' => 'mimes:png,jpg,jpeg'
         ]);
 
-        
         $data = Ebook::findOrFail($id);
         $oldImage = $data->src; //Get old path to delete when updated
 
@@ -150,6 +181,12 @@ class EbookController extends Controller
         $data->pv = $request->pv;
         $data->bv = $request->bv;
         $data->description = $request->description;
+        $data->display_title = $request->display_title;
+        $data->price_discount = $request->price_discount;
+        $data->minimum_product = $request->minimum_product;
+        $data->maximum_product = $request->maximum_product;
+        $data->register_promotion = $request->register_promotion ? true : false;
+        $data->allow_merge_discount = $request->allow_merge_discount ? true : false;
 
         if ($request->hasFile('src')) {
             $image = $request->src;
@@ -161,11 +198,23 @@ class EbookController extends Controller
             $data->src = $uploadPath;
         }
 
+        if ($request->promotion) {
+
+            $request->validate([
+                'start_date' => 'required',
+                'end_date' => 'required',
+            ]);
+
+            $data->started_at = date('Y-m-d', strtotime(date('Y-m-d', strtotime($request->start_date))));
+            $data->ended_at = date('Y-m-d', strtotime(date('Y-m-d', strtotime($request->end_date))));
+        } else {
+            $data->started_at = null;
+            $data->ended_at = null;
+        }
 
         $data->save();
         Alert::success('Sukses Update Data Ebook', 'Sukses');
-
-        return redirect()->route('ebook.show', $id);
+        return redirect()->route('ebook.index');
     }
 
     /**
@@ -177,9 +226,9 @@ class EbookController extends Controller
     public function destroy($id)
     {
         $data = Ebook::findOrFail($id);
-        if ($data) { 
+        if ($data) {
             \File::delete(public_path($data->src));
-            $data->delete(); 
+            $data->delete();
             Alert::success('Success Delete Data Ebook', 'Success');
         } else {
             Alert::error('Gagal Delete Data Ebook', 'Gagal');
@@ -191,7 +240,7 @@ class EbookController extends Controller
     public function bookData($id)
     {
         $data = Ebook::with('books')->findOrFail($id);
-     
+
         return Datatables::of($data->books)
             ->addIndexColumn()
             ->addColumn('action', function($row) {
@@ -207,7 +256,7 @@ class EbookController extends Controller
     public function videoData($id)
     {
         $data = Ebook::with('videos')->findOrFail($id);
-     
+
         return Datatables::of($data->videos)
             ->addIndexColumn()
             ->addColumn('action', function($row) {

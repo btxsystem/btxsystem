@@ -1,5 +1,5 @@
 
-    <footer class="footer wow fadeInUp" data-wow-duration="1s">
+    <footer class="footer">
       <div class="container">
         <div class="footer-inner border-decor_top">
           <div class="row">
@@ -12,8 +12,18 @@
                   </address>
                 </div>
                 <div class="footer-contacts"> <i class="icon stroke icon-Phone2"></i> <span class="footer-contacts__inner">+62 817-0380-0329, (021) 80823903</span> </div>
-                <div class="footer-contacts"> <i class="icon stroke icon-Mail"></i> <a class="footer-contacts__inner" href="mailto:Info@academica.com">cs@bitrexgo.co.id</a> </div>
-                <div class="footer-contacts">© 2019 BITREXGO. All Rights Reserved</div>
+								<div class="footer-contacts"> <i class="icon stroke icon-Mail"></i> <a class="footer-contacts__inner" href="mailto:cs@bitrexgo.co.id">cs@bitrexgo.co.id</a> <a class="footer-contacts__inner" href="mailto:bitrexgo@gmail.com">bitrexgo@gmail.com</a> </div>
+								<div class="footer-contacts"> <i class="fa fa-telegram"></i>
+									&nbsp; &nbsp; Telegram: <a href="https://t.me/bitrexgo">Bitrexgo Announcement</a>
+								</div>
+								<div class="footer-contacts"> <i class="fa fa-instagram"></i>
+									&nbsp; &nbsp; Instagram: <a href="https://instagram.com/bitrexgo">Bitrexgo</a>
+								</div>
+								<div class="footer-contacts"> <i class="fa fa-facebook"></i>
+									&nbsp; &nbsp; Facebook: <a href="https://id-id.facebook.com/bitrexgo">Bitrexgo</a>
+								</div>
+                <div class="footer-contacts">© {{ date('Y') }} BITREXGO. All Rights Reserved</div>
+								<a href="https://info.flagcounter.com/8LxJ"><img src="https://s01.flagcounter.com/count2/8LxJ/bg_FFFFFF/txt_000000/border_CCCCCC/columns_2/maxflags_10/viewers_0/labels_0/pageviews_0/flags_0/percent_0/" alt="Flag Counter" border="0"></a>
               </section>
               <!-- end footer-section -->
             </div>
@@ -51,14 +61,25 @@
             <!-- end col -->
 
             <div class="col-lg-4 col-sm-3">
-              <section class="footer-section">
+              <section class="footer-section" id="contact-form">
                 <h3 class="footer-title">CONTACT US</h3>
-                <form class="form">
+								@if(\Session::has('message_failed'))
+									<div class="alert alert-danger">
+										{{ Session::get('message_failed') }}
+									</div>
+								@endif
+								@if(\Session::has('message_success'))
+									<div class="alert alert-success">
+										{{ Session::get('message_success') }}
+									</div>
+								@endif
+                <form class="form" action="{{route('contact.send')}}" method="post">
                   <div class="form-group">
-                    <input class="form-control" type="text" placeholder="Your Name">
-                    <input class="form-control" type="email" placeholder="Email address">
-                    <textarea class="form-control" rows="7" placeholder="Message"></textarea>
-                    <button class="btn" disabled style="background-color: #b92240; border-radius: 5px;">SEND MESSSAGE</button>
+										{{csrf_field()}}
+                    <input class="form-control" type="text" name="name" placeholder="Your Name">
+                    <input class="form-control" type="email" name="email" placeholder="Email address">
+                    <textarea class="form-control" rows="7" name="message" placeholder="Message"></textarea>
+                    <button class="btn" style="background-color: #b92240; border-radius: 5px;">SEND MESSSAGE</button>
                   </div>
                 </form>
               </section>
@@ -117,52 +138,113 @@
 	$(document).ready(function() {
     $('#shipping-form').hide();
     $('#pickup-form').hide();
+		$('#cost-starter').html(toPrice(28000))
 		// var element = document.querySelector('#bah');
 		// $('#upline').hide();
 		// panzoom(element);
-		$.ajax({
-			type: 'GET',
-			url: '{{route("api.ebook.ebooks")}}'
-		}).done(function(res) {
-			const {data} = res
-			let render = data.map((v, i) => {
-				return `
-					<input id="ebooks" type="checkbox" value="${v.id}" id="${v.title}" class="with-gap radio-col-red" data-price="${v.price}" ${v.title == 'basic' ? 'checked' : ''} name="ebooks[]"/>
-        	<label for="shipping">${v.title}</label>
-				`
-			})
 
-			$('#ebook-list').html(`
-				<div id="checkboxEbook">
-					${render}
-				</div>
-			`)
-
-			$('#checkboxEbook input[type=checkbox]').change(function(index) {
-				
-				if($(this).prop('checked')) {
-					priceEbook = priceEbook + parseInt($(this).data('price'))
-				} else {
-					priceEbook = priceEbook - parseInt($(this).data('price'))
-				}
-
-				if(priceEbook != 0) {
-					$('#cost-ebook').parent().removeClass('hidden')
-				} else {
-					$('#cost-ebook').parent().addClass('hidden')
-				}
-
-				if(postalFee != 0) {
-					$('#cost-postal').parent().removeClass('hidden')
-				} else {
-					$('#cost-postal').parent().addClass('hidden')
-				}
-
-				$('#cost-ebook').html(toIDR(priceEbook))
-				$('#grand-total').html(toIDR(priceEbook + postalFee + 280000))
-			})
-			
+		$('#bank_name_select').change(function() {
+			$('#bank_name').val($(this).val())
 		})
+
+		$('#register-webstore').submit(function(e) {
+			e.preventDefault();
+
+			$('.btn-join').prop('disabled', true)
+			$('.btn-join').text('Loading...')
+
+			$.ajax({
+				type: "POST",
+				url: $(this).attr('action'),
+				data: $(this).serialize(),
+				dataType: "json",
+				success: function(data) {
+					if(data.status) {
+						refreshEbook()
+						$('#register-webstore')[0].reset()
+						$('#danger_').empty();
+						$(".alert-referal").html("")
+						$(".alert-username").html("")
+						$('#va').val(data.data.no_invoice);
+						$('#des_noreq').text('Masukkan '+data.data.no_invoice+' sebagai rekening tujuan');
+						$('#des_noreq2').text('Masukkan '+data.data.no_invoice+' sebagai rekening tujuan');
+						$('#des_noreq3').text('Masukkan '+data.data.no_invoice+' sebagai rekening tujuan');
+						$('#ammount_bca').html('Nominal transaksi : <strong>'+toPrice(data.data.amount)+'</strong> (Include fee)');
+						$('#time-expired').text('Transfer Sebelum '+moment(data.data.time_expired).format('D MMMM Y - HH:mm'));
+						$('#no-virtual').modal('show')
+						$('#join').modal('hide')
+					} else {
+						alert('Gagal mendaftar, submit ulang.')
+						$('.btn-join').prop('disabled', false)
+						$('.btn-join').text('Login')
+					}
+
+					$('.btn-join').prop('disabled', true)
+					$('.btn-join').text('Login')
+				},
+				error: function() {
+					console.log('err')
+					$('.btn-join').prop('disabled', true)
+					$('.btn-join').text('Login')
+				}
+			});
+		})
+
+		$('#copy').click(function(){
+			var copyText = document.getElementById("va");
+			var selection = document.getSelection();
+			copyText.select();
+			copyText.setSelectionRange(0, 99999);
+			try {
+					var success = document.execCommand('copy')
+			} catch (error) {
+					console.log(error)
+			}
+		})
+
+		// $.ajax({
+		// 	type: 'GET',
+		// 	url: '{{route("api.ebook.ebooks")}}'
+		// }).done(function(res) {
+		// 	const {data} = res
+		// 	let render = data.map((v, i) => {
+		// 		return `
+		// 			<input id="${v.title}" type="checkbox" value="${v.id}" id="${v.title}" class="with-gap radio-col-red" data-price="${v.price}" ${v.title == 'basic' ? 'checked' : ''} name="ebooks[]"/>
+    //     	<label for="shipping">${v.title}</label>
+		// 		`
+		// 	})
+
+		// 	$('#ebook-list').html(`
+		// 		<div id="checkboxEbook">
+		// 			${render}
+		// 		</div>
+		// 	`)
+
+		// 	$('#checkboxEbook input[type=checkbox]').change(function(index) {
+				
+		// 		if($(this).prop('checked')) {
+		// 			priceEbook = priceEbook + parseInt($(this).data('price'))
+		// 		} else {
+		// 			priceEbook = priceEbook - parseInt($(this).data('price'))
+		// 		}
+
+		// 		if(priceEbook != 0) {
+		// 			$('#cost-ebook').parent().removeClass('hidden')
+		// 		} else {
+		// 			$('#cost-ebook').parent().addClass('hidden')
+		// 		}
+
+		// 		if(postalFee != 0) {
+		// 			$('#cost-postal').parent().removeClass('hidden')
+		// 		} else {
+		// 			$('#cost-postal').parent().addClass('hidden')
+		// 		}
+
+		// 		$('#cost-ebook').html(toPrice(priceEbook))
+		// 		$('#grand-total').html(toPrice(priceEbook + postalFee + 280000))
+		// 	})
+			
+		// })
 
 		$('form#paymssent').submit(function(e) {
 			e.preventDefault();
@@ -229,6 +311,7 @@
 		$('#district').empty().trigger('change');
 		$('#kurir').empty().trigger('change');
 		$('#city').html('<option disabled>City<option>');
+		$('#province_name').val($(this).find(":checked").text())
 		$.ajax({
 			type: 'GET',
 			url: '/member/shipping/city/'+id,
@@ -246,6 +329,7 @@
 
 	$('#city').change(function(){
 		let id = this.value;
+		$('#city_name').val($(this).find(":checked").text())
 		$('#district').empty().trigger('change');
 		$('#kurir').empty().trigger('change');
 		$('#district').html('<option disabled>Subdistrict<option>');
@@ -267,6 +351,7 @@
 	$('#district').change(function() {
 		let id = this.value;
 		$('#kurir').empty().trigger('change');
+		$('#district_name').val($(this).find(":checked").text())
 		$('#kurir').html('<option disabled>Kurir<option>');
 		$.ajax({
 			type: 'GET',
@@ -288,6 +373,7 @@
 		//$('#cost').val(Math.ceil(this.value/1000) + ' Points');
 		$('#cost').val(Math.ceil(this.value))
 		postalFee = Math.ceil(this.value)
+		$('#kurir_name').val($(this).find(":checked").text())
 
 		if(postalFee != 0) {
 			$('#cost-postal').parent().removeClass('hidden')

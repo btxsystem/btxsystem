@@ -1,81 +1,36 @@
-<li class="dropdown messages-menu">
-    <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <i class="livicon"
-                                                                   data-name="message-flag"
-                                                                   data-loop="true" data-color="#42aaca"
-                                                                   data-hovercolor="#42aaca"
-                                                                   data-size="28"></i>
-        <span class="label label-success">4</span>
-    </a>
-    <ul class="dropdown-menu dropdown-messages pull-right">
-        <li class="dropdown-title">4 New Messages</li>
-        <li class="unread message">
-            <a href="javascript:;" class="message"> <i class="pull-right" data-toggle="tooltip"
-                                                       data-placement="top" title="Mark as Read"><span
-                            class="pull-right ol livicon" data-n="adjust" data-s="10"
-                            data-c="#287b0b"></span></i>
-                <img src="{{ asset('assets/img/authors/avatar.jpg') }}"
-                     class="img-responsive message-image" alt="icon">
-
-                <div class="message-body">
-                    <strong>Riot Zeast</strong>
-                    <br>Hello, You there?
-                    <br>
-                    <small>8 minutes ago</small>
-                </div>
-            </a>
-        </li>
-        <li class="unread message">
-            <a href="javascript:;" class="message">
-                <i class="pull-right" data-toggle="tooltip" data-placement="top"
-                   title="Mark as Read"><span class="pull-right ol livicon" data-n="adjust" data-s="10"
-                                              data-c="#287b0b"></span></i>
-                <img src="{{ asset('assets/img/authors/avatar1.jpg') }}"
-                     class="img-responsive message-image" alt="icon">
-
-                <div class="message-body">
-                    <strong>John Kerry</strong>
-                    <br>Can we Meet ?
-                    <br>
-                    <small>45 minutes ago</small>
-                </div>
-            </a>
-        </li>
-        <li class="unread message">
-            <a href="" class="message">
-                <i class="pull-right" data-toggle="tooltip" data-placement="top" title="Mark as Read">
-                                    <span class="pull-right ol livicon" data-n="adjust" data-s="10"
-                                          data-c="#287b0b"></span>
-                </i>
-                <img src="{{ asset('assets/img/authors/avatar5.jpg') }}"
-                     class="img-responsive message-image" alt="icon">
-
-                <div class="message-body">
-                    <strong>Jenny Kerry</strong>
-                    <br>Dont forgot to call...
-                    <br>
-                    <small>An hour ago</small>
-                </div>
-            </a>
-        </li>
-        <li class="unread message">
-            <a href="javascript:;" class="message">
-                <i class="pull-right" data-toggle="tooltip" data-placement="top" title="Mark as Read">
-                                    <span class="pull-right ol livicon" data-n="adjust" data-s="10"
-                                          data-c="#287b0b"></span>
-                </i>
-                <img src="{{ asset('assets/img/authors/avatar4.jpg') }}"
-                     class="img-responsive message-image" alt="icon">
-
-                <div class="message-body">
-                    <strong>Ronny</strong>
-                    <br>Hey! sup Dude?
-                    <br>
-                    <small>3 Hours ago</small>
-                </div>
-            </a>
-        </li>
-        <li class="footer">
-            <a href="#">View all</a>
-        </li>
-    </ul>
+<li class="dropdown messages-menu" id="message">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <i class="livicon" data-name="message-flag" data-loop="true" data-color="#42aaca" data-hovercolor="#42aaca" data-size="28"></i>
+            <span class="label label-success">{{getJmlNotif() < 100 ? getJmlNotif() : '99+'}}</span>
+        </a>
+        <ul class="dropdown-menu dropdown-messages pull-right">
+            <li class="dropdown-title">{{getJmlNotif() < 100 ? getJmlNotif() : '99+'}} New Messages</li>
+            @foreach (getNotif() as $item)
+                    <li class="unread message">
+                        <a href="/backoffice/readChat" class="message"> <i class="pull-right" data-toggle="tooltip" data-placement="top" title="Mark as Read"><span class="pull-right ol livicon" data-n="adjust" data-s="10" data-c="#287b0b"></span></i>
+                            <div class="message-body">
+                                <strong>{{$item->user->username}}</strong>
+                                <br>{{$item->title}}
+                                <br>
+                                <small>
+                                    @php
+                                        $date = date_diff($item->created_at,now());
+                                        if ($date->d > 3) {
+                                            echo "more than 3 days ago";
+                                        }elseif ($date->d <= 3 and $date->d > 0) {
+                                            echo $date->d."days ago";
+                                        }elseif ($date->d <= 0 and $date->h > 0) {
+                                            echo $date->h."hours ago";
+                                        }else{
+                                            echo $date->i."minutes ago";
+                                        }
+                                    @endphp
+                                </small>
+                            </div>
+                        </a>
+                    </li>
+            @endforeach
+            <li class="footer">
+                <a href="#">View all</a>
+            </li>
+        </ul>
 </li>

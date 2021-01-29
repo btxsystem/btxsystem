@@ -1,6 +1,6 @@
 <ul id="menu" class="page-sidebar-menu">
 
-    @if(\Auth::guard('admin')->user()->hasPermission('Dashboard'))    
+    @if(\Auth::guard('admin')->user()->hasPermission('Dashboard'))
         <li class="{{ (request()->is('backoffice/dashboard')) ? 'active' : '' }}">
             <a href="{{ route('dashboard') }}">
                 <i class="fa fa-dashboard" style="color: #6CC66C"  data-name="dashboard" data-size="18" data-c="#418BCA" data-hc="#418BCA"
@@ -9,7 +9,7 @@
             </a>
         </li>
     @endif
-    
+
     @if(\Auth::guard('admin')->user()->hasPermission('Ebooks'))
         <li class="{{ (request()->segment(2))=='ebook' ? 'active' : '' }}">
             <a href="#">
@@ -29,7 +29,15 @@
             </ul>
         </li>
     @endif
-    
+
+    <li class="{{ (request()->is('backoffice/contact-us')) ? 'active' : '' }}">
+        <a href="{{ route('contact-us.index') }}">
+            <i class="fa fa-envelope" style="color: #6CC66C"  data-name="contact-us" data-size="18" data-c="#418BCA" data-hc="#418BCA"
+                data-loop="true"></i>
+            <span class="title">Contact US </span>
+        </a>
+    </li>
+
     @if(\Auth::guard('admin')->user()->hasPermission('Members'))
         <li class="{{ (request()->segment(2))=='members' ? 'active' : '' }}">
             <a href="#">
@@ -54,16 +62,34 @@
                         </a>
                     </li>
                 @endif
+                @if(\Auth::guard('admin')->user()->hasPermission('Members.add-expired'))
+                    <li class="{{ (request()->is('backoffice/member-expired')) ? 'active' : '' }}">
+                        <a href="{{ route('member-expired.index') }}">
+                            <i class="fa fa-angle-double-right"></i>
+                            Add Expired Member
+                        </a>
+                    </li>
+                @endif
             </ul>
         </li>
     @endif
-    
+
     @if(\Auth::guard('admin')->user()->hasPermission('Customers'))
         <li class="{{ (request()->is('backoffice/customer')) ? 'active' : '' }}">
             <a href="{{ route('customer.index') }}">
                 <i class="fa fa-users" style="color: #6CC66C" data-name="customer" data-size="18" data-c="#bdecb6" data-hc="#bdecb6"
                     data-loop="true"></i>
                     Customers
+            </a>
+        </li>
+    @endif
+    
+    @if(\Auth::guard('admin')->user()->hasPermission('Hall_Of_Fame'))
+        <li class="{{ (request()->is('backoffice/hall-of-fame')) ? 'active' : '' }}">
+            <a href="{{ route('hall-of-fame.index') }}">
+                <i class="fa fa-diamond" style="color: #6CC66C" data-name="customer" data-size="18" data-c="#bdecb6" data-hc="#bdecb6"
+                    data-loop="true"></i>
+                    Hall Of Fame
             </a>
         </li>
     @endif
@@ -77,7 +103,7 @@
             </a>
         </li>
     @endif
-    
+
     @if(\Auth::guard('admin')->user()->hasPermission('Tree'))
         <li class="{{ (request()->is('backoffice/new-tree')) ? 'active' : '' }}">
             <a href="{{ route('new-tree.index') }}">
@@ -96,6 +122,16 @@
                 Transfer Confirmation
             </a>
         </li>
+    @endif
+
+    @if(\Auth::guard('admin')->user()->hasPermission('List_va'))
+    <li class="{{ (request()->is('backoffice/list-va')) ? 'active' : '' }}">
+        <a href="{{ route('list-va') }}">
+            <i class="fa fa-credit-card" style="color: #6CC66C" data-name="money" data-size="18" data-c="#6CC66C" data-hc="#6CC66C"
+            data-loop="true"></i>
+            List VA
+        </a>
+    </li>
     @endif
 
     @if(\Auth::guard('admin')->user()->hasPermission('Claim_rewards'))
@@ -144,7 +180,7 @@
             </ul>
         </li>
     @endif
-    
+
     @if(\Auth::guard('admin')->user()->hasPermission('Bitrex-money'))
         <li class="{{ (request()->segment(2))=='bitrex-money' ? 'active' : '' }}">
             <a href="#">
@@ -223,10 +259,18 @@
                         </a>
                     </li>
                 @endif
+                @if(\Auth::guard('admin')->user()->hasPermission('Bonus.time_reward'))
+                    <li class="{{ (request()->is('backoffice/bonus/time-reward')) ? 'active' : '' }}">
+                        <a href="{{ route('bonus.time-reward') }}">
+                            <i class="fa fa-angle-double-right"></i>
+                            Time Reward
+                        </a>
+                    </li>
+                @endif
             </ul>
         </li>
     @endif
-    
+
     @if(\Auth::guard('admin')->user()->hasPermission('Report'))
         <li class="{{ (request()->segment(2))=='report' ? 'active' : '' }}">
             <a href="#">
@@ -245,9 +289,19 @@
                     </li>
                 @endif
             </ul>
+            <ul class="sub-menu">
+                 @if(\Auth::guard('admin')->user()->hasPermission('Birthdate')) 
+                    <li class="#">
+                        <a href="{{ route('report.birthdate') }}">
+                            <i class="fa fa-angle-double-right"></i>
+                            Birthdate
+                        </a>
+                    </li>
+                 @endif
+            </ul>
         </li>
     @endif
-    
+
     @if(\Auth::guard('admin')->user()->hasPermission('Cms'))
         <li class="{{ (request()->segment(2))=='cms' ? 'active' : '' }}">
             <a href="#">
@@ -300,7 +354,7 @@
             </ul>
         </li>
     @endif
-    
+
     @if(\Auth::guard('admin')->user()->hasPermission('Admin_management'))
         <li class="{{ (request()->segment(2))=='admin-management' ? 'active' : '' }}">
             <a href="">
@@ -334,6 +388,26 @@
                     </li>
                 @endif
             </ul>
+        </li>
+    @endif
+
+    @if(\Auth::guard('admin')->user()->hasPermission('Login_throttle'))
+        <li class="{{ (request()->is('backoffice/login-throttle')) ? 'active' : '' }}">
+            <a href="{{ route('login-throttle.index') }}">
+                <i class="fa fa-lock" style="color: #6CC66C" data-name="customer" data-size="18" data-c="#bdecb6" data-hc="#bdecb6"
+                    data-loop="true"></i>
+                    Login Throttle
+            </a>
+        </li>
+    @endif
+
+    @if(\Auth::guard('admin')->user()->hasPermission('ActivityLogs'))
+        <li class="{{ (request()->is('backoffice/activity')) ? 'active' : '' }}">
+            <a href="{{ route('activity.index') }}">
+                <i class="fa fa-history" style="color: #6CC66C" data-name="customer" data-size="18" data-c="#bdecb6" data-hc="#bdecb6"
+                    data-loop="true"></i>
+                    Activity Logs
+            </a>
         </li>
     @endif
 

@@ -51,12 +51,13 @@ List Of Users Nonactive
                                 <table id="nonactive-member"  class="table data-table table-bordered table-striped table-condensed flip-content nonactive-user" >
                                     <thead class="flip-content">
                                         <tr>
-                                            <th class="text-center" width="5%">No</th>
-                                            <th class="text-center" width="15%">Id Member</th>
+                                            <th class="text-center" width="3%">No</th>
+                                            <th class="text-center" width="13%">Id Member</th>
                                             <th class="text-center" width="10%">Username</th>
-                                            <th class="text-center" width="20%">Name</th>
+                                            <th class="text-center" width="18%">Name</th>
+                                            <th class="text-center" width="10%">Sponsor</th>
                                             <th class="text-center" width="15%">Join Date</th>
-                                            <th class="text-center" width="15%">Rank</th>
+                                            <th class="text-center" width="12%">Rank</th>
                                             <th class="text-center" width="15%">Action</th>
                                         </tr>
                                     </thead>
@@ -128,6 +129,7 @@ List Of Users Nonactive
                         { data: 'id_member', name: 'id_member'},
                         { data: 'username', name: 'username'},
                         { data: 'full_name', name: 'last_name'},
+                        { data: 'sponsor', name: 'sponsor.username', orderable: false, searchable: false},
                         { data: 'created_at', name: 'created_at'},
                         { data: 'ranking', name: 'rank.name', orderable: false, },
                         { data: 'action', name: 'action', orderable: false, searchable: false, className: 'text-center'},
@@ -154,6 +156,30 @@ List Of Users Nonactive
                 $('#to_date').val('');
                 $('#nonactive-member').DataTable().destroy();
                 load_data();
+            });
+
+            $(document).on('click', '.active-member', function (e) {
+                e.preventDefault();
+                var id = $(this).data('id');
+                // console.log(id);
+                var url =   "{{url('backoffice/members/nonactive/active/')}}"
+                swal({
+                            title: "Are you sure to set Active this member ?",
+                            confirmButtonClass: "btn-danger",
+                            confirmButtonText: "Yes!",
+                            showCancelButton: true,
+                        },
+                        function() {
+                            $.ajax({
+                                type: "GET",
+                                url: url +'/'+ id,
+                                data: {id:id},
+                                success: function (data) {
+                                    // console.log(data);
+                                        window.location.href = "{{ route('members.nonactive.index') }}";
+                                    }         
+                            });
+                    });
             });
 
         });

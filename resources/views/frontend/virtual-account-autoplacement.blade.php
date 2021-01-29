@@ -28,7 +28,7 @@
 							<div class="col-md-12">
                                 <br>
                                 <div class="container-fluid h-100 bg-light text-dark">
-                                    <div class="row justify-content-center align-items-center"> 
+                                    <div class="row justify-content-center align-items-center">
                                         <div class="col col-sm-12 col-md-12 col-lg-12 col-xl-4">
                                             <center>
                                                 <img src="{{asset('img/bca.png')}}" alt="" srcset="" style="width:150px">
@@ -46,6 +46,10 @@
                                                 <br>
                                                 <button type="button" class="btn btn-raised bg-grey waves-effect" style="cursor:pointer" id="copy">Copy</button>
                                             </center>
+                                            <br><br>
+                                            <center><h5>Nominal Transfer : {{number_format($profile['amount'],0,",",".")}} (Include fee)</h5></center>
+                                            <br><br>
+                                            <center><h5>Transfer Sebelum : {{$profile['expired']}} (Include fee)</h5></center>
                                             <br><br>
                                             <b><p style="font-size:10px">Bagaimana cara melakukan Pembayaran BCA Virtual Account ?</p></b>
                                         </div>

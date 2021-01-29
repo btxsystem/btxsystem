@@ -1,12 +1,154 @@
 <?php
 use Illuminate\Support\Facades\DB;
 use App\Employeer;
+use App\Models\Ebook;
 use Carbon\Carbon;
+use App\Service\NotificationService;
+use App\Service\PaymentSwitchService;
+use Illuminate\Http\Request;
+
+function calculateEbookPriceWithValidate($ebooks, Request $request)
+{
+    $dataEbooks = Ebook::whereIn('id', $ebooks)->get();
+    $totalPriceEbook = 0;
+
+    foreach($dataEbooks as $ebook) {
+        if($ebook->is_promotion && $ebook->register_promotion) {
+            if(count($dataEbooks) >= $ebook->minimum_product && count($dataEbooks) <= $ebook->maximum_product) {
+                $totalPriceEbook += ((int) $ebook->price - (int) $ebook->total_price_discount);
+
+                if($request->input('selected_ebook')) {
+                    if($ebook->allow_merge_discount == 0 && (int) $ebook->id != (int) $request->input('selected_ebook')) {
+                        $totalPriceEbook += (int) $ebook->total_price_discount;
+                    }
+                }
+            } else {
+                $totalPriceEbook += (int) $ebook->price;
+            }
+        } else {
+            $totalPriceEbook += (int) $ebook->price;
+        }
+    }
+
+    return (int) $totalPriceEbook;
+}
+
+function removeElementWithValue($array, $key, $value){
+    foreach($array as $subKey => $subArray){
+         if($subArray[$key] == $value){
+              unset($array[$subKey]);
+         }
+    }
+    return $array;
+}
+
+function calculateEbookPriceWithPromotion(Request $request, $ebooks = [], $memberId = 0)
+{
+    $dataEbooks = Ebook::whereIn('id', $ebooks)->get();
+    $totalPriceEbook = 0;
+    $transactionMemberPromotion = [];
+
+    foreach($dataEbooks as $ebook) {
+        if($ebook->is_promotion && $ebook->register_promotion) {
+            if(count($dataEbooks) >= $ebook->minimum_product && count($dataEbooks) <= $ebook->maximum_product) {
+                $totalPriceEbook += ((int) $ebook->price - (int) $ebook->total_price_discount);
+
+                $transactionMemberPromotion[] = [
+                    'member_id' => $memberId,
+                    'ebook_id' => $ebook->id,
+                    'type' => 'member'
+                ];
+
+                if($request->input('selected_ebook')) {
+                    if($ebook->allow_merge_discount == 0 && (int) $ebook->id != (int) $request->input('selected_ebook')) {
+                        $totalPriceEbook += (int) $ebook->total_price_discount;
+                        $transactionMemberPromotion = removeElementWithValue($transactionMemberPromotion, "ebook_id", $ebook->id);
+                    }
+                }
+
+            } else {
+                $totalPriceEbook += (int) $ebook->price;
+            }
+        } else {
+            $totalPriceEbook += (int) $ebook->price;
+        }
+    }
+
+    return [
+        'total_price' => (int) $totalPriceEbook,
+        'promotions' => $transactionMemberPromotion
+    ];
+}
+
+function calculateEbookPromotionAdmin($ebookIds = [], $user, Request $request)
+{
+    $dataEbooks = Ebook::whereIn('id', $ebookIds)->get();
+    $totalPriceEbook = 0;
+    $transactionMemberPromotion = [];
+    $totalEbook = $user->total_product;
+    $memberId = $user->id;
+
+    foreach($dataEbooks as $ebook) {
+        if($ebook->is_promotion) {
+            if($totalEbook >= $ebook->minimum_product && $totalEbook <= $ebook->maximum_product) {
+                $totalPriceEbook += ((int) $ebook->price - (int) $ebook->total_price_discount);
+
+                $transactionMemberPromotion[] = [
+                    'member_id' => $memberId,
+                    'ebook_id' => $ebook->id,
+                    'type' => 'member'
+                ];
+
+            } else {
+                $totalPriceEbook += (int) $ebook->price;
+            }
+        } else {
+            $totalPriceEbook += (int) $ebook->price;
+        }
+    }
+
+    return [
+        'total_price' => (int) $totalPriceEbook,
+        'promotions' => $transactionMemberPromotion
+    ];
+}
+
+function getNotif(){
+    return NotificationService::getNotification();
+}
+
+function getCurrentPaymentMethod()
+{
+    return PaymentSwitchService::getCurrentPaymentMethod();
+}
+
+function getJmlNotif(){
+    return NotificationService::getTotalNotif();
+}
+
+function checkImageHof($image) {
+    if(!file_exists(public_path($image))) {
+        return asset('assets3/img/favicon.png');
+    }
+
+    return asset($image);
+}
+
+function isSelfRequest() {
+    $referer = parse_url(\request()->headers->get('referer'), PHP_URL_HOST);
+    $host = parse_url(\request()->getHttpHost(), PHP_URL_HOST);
+
+    if($referer != $host) {
+        return false;
+    }
+
+    return true;
+}
 
 function invoiceNumbering(){
       $dateNow = date('ym');
       $lastInvoiceNo = Employeer::pluck('id_member')->last();
-      $lastInvoiceDate = substr($lastInvoiceNo, 0, -4); 
+      $lastInvoiceDate = substr($lastInvoiceNo, 0, -4);
       $increment = (int)substr($lastInvoiceNo, -4) + 1;
       $increment = sprintf("%06d", $increment);
       return 'M'.$dateNow.$increment;
@@ -15,23 +157,45 @@ function invoiceNumbering(){
 function memberIdGenerate(){
       $dateNow = date('ym');
       $lastInvoiceNo = Employeer::pluck('id_member')->last();
-      $lastInvoiceDate = substr($lastInvoiceNo, 0, -4); 
+      $lastInvoiceDate = substr($lastInvoiceNo, 0, -4);
       $increment = (int)substr($lastInvoiceNo, -4) + 1;
       $increment = sprintf("%06d", $increment);
       return 'M'.$dateNow.$increment;
 }
 
+// function currency($value)
+// {
+//     if (is_decimal($value)) {
+//         return 'Rp. ' . number_format($value, 2).',-';
+//     }
+//     return 'Rp. ' . number_format($value, 0).',-';
+// }
+
 function currency($value)
 {
     if (is_decimal($value)) {
-        return 'Rp. ' . number_format($value, 2).',-';
+        return 'Rp. ' . str_replace(",",".", number_format($value, 2)).',-';
     }
-    return 'Rp. ' . number_format($value, 0).',-';
+    return 'Rp. ' . str_replace(",",".", number_format($value, 0)).',-';
 }
 
 function is_decimal( $val )
 {
     return is_numeric( $val ) && floor( $val ) != $val;
+}
+
+function cekExpiredMember($id_member) {
+    $time['date'] = DB::table('employeers')->where('id',$id_member)->select('expired_at')->first();
+    $time['des'] = Auth::user()->expired_at <= Carbon::now()->addMonths(3) ? true : false;
+    $exp = new Carbon($time['date']->expired_at);
+    $graceperiod = $exp->addMonth();
+    $time['grace'] = (Auth::user()->expired_at <= Carbon::now()) && (Auth::user()->expired_at <= $graceperiod) ? true : false;
+    $time['graceperiod'] = $graceperiod->format('Y-m-d 23:59:59');
+    $exp = new Carbon($time['date']->expired_at);
+    $maxperiod = $exp->addMonths(2);
+    $time['max'] = (Auth::user()->expired_at <= Carbon::now()) && (Auth::user()->expired_at <= $graceperiod) && (Auth::user()->expired_at <= $maxperiod) ? true : false;
+    $time['maxperiod'] = $maxperiod->format('Y-m-d 23:59:59');
+    return $time;
 }
 
 function findChild($id, $sponsor, $data){

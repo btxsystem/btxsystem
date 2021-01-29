@@ -20,6 +20,7 @@ class BCAController extends Controller
     public function fundTransfer()
     {
 <<<<<<< HEAD
+<<<<<<< HEAD
         $date = "2019-10-21";
         $accountnumber = "0611102363";
         $amount = "100000";
@@ -28,6 +29,11 @@ class BCAController extends Controller
         $accountnumber = "0201245681";
         $amount = "100000.00";
 >>>>>>> dfe78b8b445fec57845ddd1443f736041b9aae70
+=======
+        $date = "2019-10-23";
+        $accountnumber = "0201245681";
+        $amount = "100000.00";
+>>>>>>> a679e33fcd3e4237b069563cda26791ebdb52780
         $remark1 = "Test Transfer";
         $remark2 = "Testing transfer";
         $transactionId = "0001".rand(1000,9999);
@@ -38,7 +44,7 @@ class BCAController extends Controller
         // if($response)
 
         $nganu = json_encode($response);
-        return $nganu;        
+        return $nganu;
     }
 
     public function domesticTransfer()
@@ -65,5 +71,5 @@ class BCAController extends Controller
         $response = $bca->rateforex();
         return $response;
     }
-    
+
 }

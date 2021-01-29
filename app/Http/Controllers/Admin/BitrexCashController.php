@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use DataTables;
 use Alert;
 use DB;
+use App\Service\NotificationService;
 
 class BitrexCashController extends Controller
 {
@@ -47,16 +48,16 @@ class BitrexCashController extends Controller
             }
             // $data = DB::table('history_bitrex_cash')->select('id','id_member', 'nominal','description', 'created_at')->where('id_member',$id);
             return Datatables::of($data)
-            ->addIndexColumn()         
+            ->addIndexColumn()
             ->editColumn('nominal', function($data){
                 return number_format($data->nominal, 0);
             })
             ->editColumn('created_at', function($data){
                 return date('d-m-Y', strtotime($data->created_at));
-            })  
+            })
             ->make(true);
         }
     }
 
-   
+
 }

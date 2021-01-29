@@ -19,6 +19,17 @@ use App\Mail\RegisterMemberMail;
 
 class RegisterController extends Controller
 {
+
+  public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            if (!\Auth::user()) {
+                return redirect('/');
+            }
+            return $next($request);
+        });
+    }
+
   public function registerMember(Request $request)
   {
     $method = $request->input('method') ?? 'transfer';
@@ -428,7 +439,7 @@ class RegisterController extends Controller
 
           // Mail::to($idNewMember->email)
           //   ->send(new RegisterMemberMail($dataEmail, null));
-            
+
         } else if($orderType == 'BITREX04') { //witout ebbook
           $password = strtolower(str_random(8));
 

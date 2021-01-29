@@ -12,7 +12,7 @@ use Validator;
 
 class CustomerController extends Controller
 {
-    public function index(){    
+    public function index(){
         if (request()->ajax()) {
             $data = Customer::all();
 
@@ -30,11 +30,14 @@ class CustomerController extends Controller
                     ->editColumn('email', function($data) {
                         return $data->email;
                     })
-                  
+                    ->editColumn('created_at', function($data) {
+                        return $data->created_at;
+                    })
+
                     ->addColumn('action', function($row) {
                         $show = \Auth::guard('admin')->user()->hasPermission('Customers.view') ? '<a href="'.route('customer.show',$row->id).'"  class="btn btn-primary fa fa-eye" title="Show"></a>' : '';
                         $edit = \Auth::guard('admin')->user()->hasPermission('Customers.edit') ? '<a href="'.route('customer.edit',$row->id).'"  class="btn btn-warning fa fa-pencil" title="Edit"></a>' : '';
-                        $delete = \Auth::guard('admin')->user()->hasPermission('Customers.delete') ? '<a href="customer/data/'.$row->id.'" class="btn btn-danger fa fa-trash" title="Delete"></a>' : ''; 
+                        $delete = \Auth::guard('admin')->user()->hasPermission('Customers.delete') ? '<a href="customer/data/'.$row->id.'" class="btn btn-danger fa fa-trash" title="Delete"></a>' : '';
                         return $show.' '.$edit.' '.$delete;
                     })
                     ->rawColumns(['action'])
@@ -64,7 +67,7 @@ class CustomerController extends Controller
 
             return redirect()->back();
         }
-             
+
 
 
         $input['password'] = bcrypt($input['password']);
@@ -129,8 +132,8 @@ class CustomerController extends Controller
 
         $data = Customer::findOrFail($id);
 
-        if ($data) { 
-            $data->delete(); 
+        if ($data) {
+            $data->delete();
             Alert::success('Success Delete Data Customer', 'Success');
         } else {
             Alert::error('Gagal Delete Data Customer', 'Gagal');

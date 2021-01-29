@@ -9,6 +9,13 @@ Add Training
 
 {{-- page level styles --}}
 @section('header_styles')
+    <link rel="stylesheet" href="{{ asset('assets/vendors/datatables/css/dataTables.bootstrap.css') }}" />
+	<link href="{{ asset('assets/css/pages/tables.css') }}" rel="stylesheet" type="text/css" />
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/css/select2.min.css" rel="stylesheet" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <!-- end of page level css-->
     <style>
         body {
             background : #ddd;
@@ -18,7 +25,7 @@ Add Training
 
 <section class="content-header">
     <!--section starts-->
-    <h1>Edit User</h1>
+    <h1>Add User</h1>
     <ol class="breadcrumb">
         <li>
             <a href="#">User</a>
@@ -26,7 +33,7 @@ Add Training
         <li>
             <a href="#">User Management</a>
         </li>
-        <li class="active">Edit User</li>
+        <li class="active">Add User</li>
     </ol>
 </section>
 <section class="content">
@@ -36,14 +43,13 @@ Add Training
                         <div class="portlet-title">
                             <div class="caption">
                                 <i class="livicon" data-name="form" data-size="16" data-loop="true" data-c="#fff" data-hc="white"></i>
-                                Edit User
+                                User Registration
                             </div>
                         </div>
 
         <div class="portlet-body flip-scroll">
-        <form class="form-horizontal" action="/admin/admin-management/users/{{ $user->id }}" method="POST">
+        <form class="form-horizontal" action="{{ route('admin-management.users.update', [$user->id]) }}" method="POST">
             @csrf
-            @method('PUT')
             <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
                 <label class="col-md-2 control-label" for="name">{{ trans('global.user.fields.name') }}</label>
                 <div class="col-md-8">
@@ -61,10 +67,27 @@ Add Training
                     {{ trans('global.user.fields.name_helper') }}
                 </p>
             </div>
+            <div class="form-group {{ $errors->has('username') ? 'has-error' : '' }}">
+                <label class="col-md-2 control-label" for="username">Username</label>
+                <div class="col-md-8">
+                   <div class="input-group">
+                       <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                        <input type="text" id="username" name="username" class="form-control" value="{{ old('username', isset($user) ? $user->username : '') }}">
+                   </div>
+                    @if($errors->has('username'))
+                    <em class="text-danger">
+                        {{ $errors->first('username') }}
+                    </em>
+                @endif
+                </div>
+                <p class="helper-block">
+                    {{ trans('global.user.fields.name_helper') }}
+                </p>
+            </div>
             <div class="form-group {{ $errors->has('email') ? 'has-error' : '' }}">
                 <label class="col-md-2 control-label" for="email">{{ trans('global.user.fields.email') }}</label>
                 <div class="col-md-8">
-                   <div class="input-group"></div>
+                   <div class="input-group">
                        <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
                         <input type="email" id="email" name="email" class="form-control" value="{{ old('email', isset($user) ? $user->email : '') }}">
                    </div>
@@ -79,11 +102,11 @@ Add Training
                         </p>
             </div>
             <div class="form-group {{ $errors->has('password') ? 'has-error' : '' }}">
-                <label class="col-md-2 control-label" for="password">New Password</label>
+                <label class="col-md-2 control-label" for="password">{{ trans('global.user.fields.password') }}</label>
                 <div class="col-md-8">
                    <div class="input-group">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                   <input type="password" id="password" name="password" class="form-control" value="{{ old('password') }}">
+                   <input type="password" id="password" name="password" class="form-control">
                    </div>
                         @if($errors->has('password'))
                             <em class="text-danger">
@@ -102,7 +125,7 @@ Add Training
                     <span class="input-group-addon"><i class="fa fa-eye"></i></span>
                         <select id="js-example-basic-single" class="col-md-12" name="roles">
                             @foreach($roles as $id => $roles)
-                                <option value="{{ $id }}" {{ $id ? 'selected' : '' }}>
+                                <option value="{{ $id }}" {{ $permission->role_id == $id ? 'selected' : '' }}>
                                     {{ $roles }}
                                 </option>
                             @endforeach
@@ -131,6 +154,11 @@ Add Training
 
 {{-- page level scripts --}}
 @section('footer_scripts')
+    <script type="text/javascript" src="{{ asset('assets/vendors/datatables/js/jquery.dataTables.js') }}" ></script>
+    <script type="text/javascript" src="{{ asset('assets/vendors/datatables/js/dataTables.bootstrap.js') }}" ></script>
+    <script type="text/javascript" src="{{ asset('assets/vendors/datatables/js/dataTables.responsive.js') }}" ></script>
+    <script src="{{ asset('assets/js/pages/table-responsive.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js"></script>
     <script>
     // In your Javascript (external .js resource or <script> tag)
         $(document).ready(function() {

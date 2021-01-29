@@ -125,7 +125,7 @@
         }
 
         #logo-bitrex{
-            height:30px !important;
+            height:31px !important;
             width: 80px !important;
             padding-left: 0px !important;
         }

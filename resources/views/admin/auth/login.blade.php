@@ -8,6 +8,7 @@
     <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('assets/vendors/bootstrapvalidator/css/bootstrapValidator.min.css') }}" rel="stylesheet"/>
     <!-- end of global level css -->
+
     <!-- page level css -->
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/pages/login.css') }}" />
     <link href="{{ asset('assets/vendors/iCheck/css/square/blue.css') }}" rel="stylesheet"/>
@@ -59,7 +60,7 @@
                                     <input id="email" name="email" type="email" placeholder="E-mail"
                                            />
                                     <div class="col-sm-12">
-                                        
+
                                     </div>
                                 </div>
                                 <div class="form-group ">
@@ -68,8 +69,15 @@
                                     </label>
                                     <input id="password" name="password" type="password" placeholder="Enter a password" />
                                     <div class="col-sm-12">
-                                        
+
                                     </div>
+                                </div>
+                                <div class="form-group ">
+                                @if(isset($message))
+                                <div class="alert alert-danger">
+                                    {{ $message }}
+                                </div>
+                                @endif
                                 </div>
                                 <!-- <div class="form-group">
                                     <label>
@@ -85,7 +93,7 @@
                                     <a href="#toforgot">
                                         <button type="button" class="btn btn-responsive botton-alignment btn-warning btn-sm">Forgot password</button>
                                     </a>
-                                    
+
                                 </p> -->
                             </form>
                         </div>
@@ -97,7 +105,7 @@
                                     Enter your email address below and we'll send a special reset password link to your inbox.
                                 </p>
 
-                               
+
                                 <input type="hidden" name="_token" />
 
                                 <div class="form-group ">
@@ -108,7 +116,7 @@
                                     <input id="email" name="email" required type="email" placeholder="your@mail.com"
                                            />
                                     <div class="col-sm-12">
-                                        
+
                                     </div>
                                 </div>
                                 <p class="login button">

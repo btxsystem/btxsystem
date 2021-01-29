@@ -12,12 +12,26 @@ use Carbon\Carbon;
 
 class EbookController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            if (!\Auth::user()) {
+                return redirect('/');
+            }
+            return $next($request);
+        });
+    }
+    
     public function index()
     {
         $data = Auth::user();
         $basic = Ebook::select('src')->where('id', 1)->first();
         $advance = Ebook::select('src')->where('id', 2)->first();
-        return view('frontend.ebook.index',['profile'=>$data, 'basic'=> $basic, 'advance'=>$advance]);
+        $ebook = Ebook::with(['children'])
+                        ->where('parent_id', 0)
+                        ->orderBy('position', 'ASC')
+                        ->get();
+        return view('frontend.ebook.index',['profile'=>$data, 'basic'=> $basic, 'advance'=>$advance, 'ebook' => $ebook]);
     }
 
     public function getEbook(){

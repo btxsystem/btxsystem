@@ -87,11 +87,24 @@ Route::group(['prefix'=>'member','as'=>'member.'], function(){
 });
 */
 Route::redirect('/', '/login');
-Route::get('/login', 'Auth\LoginController@getLogin')->middleware('guest');
+Route::get('/login', 'Auth\LoginController@getLogin')->middleware('guest')->name('guest.login');
+Route::get('/event', 'Member\EventController@index');
+
+Route::post('/contact-us/send', 'Webstore\ContactUsController@sendMessage')->name('contact.send');
+Route::get('/video/{file}', 'FileController@serveVideo')->name('serve.video');
+Route::group(['prefix' => 'hall-of-fame', 'as'=> 'hall-of-fame.'], function () {
+    Route::get('', ['as' => 'index', 'uses' => 'Member\HallOfFameController@index']);
+});
 Route::post('/login', 'Auth\LoginController@postLogin');
 Route::get('/logout', 'Auth\LoginController@logout');
+Route::post('/finish', 'Member\BitrexPointController@index');
+Route::get('/validate-unique-user', 'ValidationDataController@validateUniqueMemberUsername');
+Route::get('/validate-exist-user', 'ValidationDataController@validateExistMember');
+Route::get('/validate-exist-identity', 'ValidationDataController@validateExistIdentity');
+Route::get('/validate-unique-email', 'ValidationDataController@validateUniqueMemberEmail');
 Route::get('user/{user}', ['as' => 'user', 'uses' => 'Member\PvController@issetUser']);
 Route::post('register-auto', ['as' => 'register-auto', 'uses' => 'Member\ProfileMemberController@registerAuto']);
+Route::post('register-auto-webstore', ['as' => 'register-auto-webstore', 'uses' => 'Webstore\MemberController@register']);
 Route::get('email/{user}', ['as' => 'email', 'uses' => 'Member\ProfileMemberController@isSameEmail']);
 
 Route::post('register-autoplacement', ['as' => 'register-autoplacement', 'uses' => 'Member\ProfileMemberController@registerAutoPlacement']);
@@ -100,7 +113,10 @@ Route::post('register-member', ['as' => 'register-member', 'uses' => 'Member\Reg
 
 Route::get('/payment-confirm', ['as' => 'payment.confirm', 'uses' => 'Payment\V2\PaymentController@confirm']);
 
+Route::post('/notification/handler', ['as' => 'notification.handler', 'uses' => 'Payment\Midtrans\PaymentMindtransController@notificationHandler']);
+
 Route::post('/payment-confirmation', ['as' => 'payment.confirmation', 'uses' => 'Member\TransactionController@paymentConfirmation']);
+
 Route::post('/response-pay-topup', ['as' => 'response.pay.topup', 'uses' => 'Member\TransactionController@responsePayment']);
 
 Route::group(['namespace' => 'Ebook\Api', 'prefix' => 'api/ebook'], function() {
@@ -109,14 +125,18 @@ Route::group(['namespace' => 'Ebook\Api', 'prefix' => 'api/ebook'], function() {
 
 Route::post('forgot-password', ['as' => 'forgot-password', 'uses' => 'Member\ForgotPasswordController@sendEmail']);
 
-Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
+Route::group(['middleware' => 'web', 'prefix' => 'member', 'as'=> 'member.'], function () {
+
+    Route::group(['prefix' => 'testimonial', 'as'=> 'testimonial.'], function() {
+        Route::post('store', ['as' => 'store', 'uses' => 'Member\TestimonialController@store']);
+    });
 
     Route::group(['prefix' => 'bp', 'as'=> 'bp.'], function () {
         Route::post('store', ['as' => 'store', 'uses' => 'Member\BitrexPointController@store']);
     });
 
     Route::post('change-photo', ['as' => 'change-photo', 'uses' => 'Member\ProfileMemberController@changePhoto'] );
-    
+
     Route::group(['prefix' => 'shipping', 'as'=> 'shipping.'], function () {
         Route::get('province', ['as' => 'province', 'uses' => 'ShippingController@getProvince']);
         Route::get('city/{id}', ['as' => 'city', 'uses' => 'ShippingController@getCity']);
@@ -131,6 +151,7 @@ Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
 
     Route::group(['prefix' => 'payment', 'as'=> 'payment.'], function () {
         Route::get('', ['as' => 'index', 'uses' => 'Member\MyBonusController@index']);
+        Route::post('midtrans', ['as' => 'midtrans', 'uses' => 'Payment\Midtrans\PaymentMindtransController@submitDonation']);
     });
 
     Route::group(['prefix' => 'history-bonus', 'as'=> 'history-bonus.'], function () {
@@ -145,6 +166,8 @@ Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
 
     Route::get('', ['as' => 'dashboard', 'uses' => 'Member\DashboardController@index']);
     Route::get('tree', ['as' => 'tree', 'uses' => 'Member\DashboardController@tree']);
+    Route::get('hall-of-fame', ['as' => 'hall-of-fame', 'uses' => 'Member\HallOfFameController@index2']);
+    Route::post('direct-tree', ['as' => 'direct-tree', 'uses' => 'Member\DashboardController@directTree']);
     Route::get('prospected-member', ['as' => 'prospected-member', 'uses' => 'Member\ProspectedMemberController@index']);
     Route::post('register-downline', ['as' => 'register-downline', 'uses' => 'Member\ProfileMemberController@register']);
     Route::get('reward', ['as' => 'reward', 'uses' => 'Member\ProfileMemberController@rewards']);
@@ -162,11 +185,13 @@ Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
         Route::get('daily-retail', ['as' => 'daily-retail', 'uses' => 'Member\DashboardController@getAutoRetailDaily']);
         Route::get('training', ['as' => 'training', 'uses' => 'Member\DashboardController@getTraining']);
         Route::get('tree', ['as' => 'tree', 'uses' => 'Member\DashboardController@getTree']);
+        Route::post('tree-analyzer', ['as' => 'tree-analyzer', 'uses' => 'Member\DashboardController@getTree']);
         Route::get('ebook', ['as' => 'ebook', 'uses' => 'Member\EbookController@getEbook']);
         Route::get('child-tree/{user}', ['as' => 'child-tree', 'uses' => 'Member\DashboardController@getChildTree']);
         Route::get('tree-upline/{user}', ['as' => 'tree-upline', 'uses' => 'Member\DashboardController@getParentTree']);
         Route::get('username/{user}', ['as' => 'username', 'uses' => 'Member\ProfileMemberController@isSameUsername']);
         Route::get('email/{user}', ['as' => 'email', 'uses' => 'Member\ProfileMemberController@isSameEmail']);
+        Route::get('nik/{user}', ['as' => 'nik', 'uses' => 'Member\ProfileMemberController@isSameNik']);
         Route::get('history-points', ['as' => 'history-points', 'uses' => 'Member\BitrexPointController@getHistoryPoints']);
         Route::get('history-value', ['as' => 'history-cash', 'uses' => 'Member\BitrexCashController@getHistoryCash']);
         Route::get('history-pv', ['as' => 'history-pv', 'uses' => 'Member\PvController@getHistoryPv']);
@@ -178,6 +203,7 @@ Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
         Route::get('reward', ['as' => 'reward', 'uses' => 'Member\ProfileMemberController@getRewards']);
         Route::get('reward-claim', ['as' => 'reward-claim', 'uses' => 'Member\ProfileMemberController@rewardClaim']);
         Route::get('bitrex-points', ['as' => 'bitrex-points', 'uses' => 'Member\BitrexPointController@getBitrexPoints']);
+        Route::get('history-topup', ['as' => 'history-topup', 'uses' => 'Member\BitrexPointController@getHistoryTransaction']);
         Route::get('history-pv-pairing', ['as' => 'history-pv-pairing', 'uses' => 'Member\PvController@historyPvPairing']);
         Route::get('bonus', ['as' => 'bonus', 'uses' => 'Member\MyBonusController@bonus']);
         Route::get('bonus-sponsor', ['as' => 'bonus-sponsor', 'uses' => 'Member\MyBonusController@bonusSponsor']);
@@ -227,7 +253,9 @@ Route::group(['prefix' => 'member', 'as'=> 'member.'], function () {
 
     Route::group(['prefix' => 'team-report', 'as'=> 'team-report.'], function () {
         Route::get('my-sponsor', ['as' => 'my-sponsor', 'uses' => 'Member\TeamReportController@mySponsor']);
+        Route::get('my-analizer', ['as' => 'my-analizer', 'uses' => 'Member\TeamReportController@myAnalizer']);
         Route::get('team-analizer', ['as' => 'team-analizer', 'uses' => 'Member\TeamReportController@teamAnalizer']);
+        Route::get('generate-analizer', ['as' => 'team-analizer', 'uses' => 'Member\TeamReportController@generateAnalyzer']);
     });
 
 });

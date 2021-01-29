@@ -3,8 +3,11 @@
 namespace App;
 use Nestable\NestableTrait;
 use Illuminate\Database\Eloquent\Model;
+use App\models\GotReward;
+use App\Models\TransactionMember;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
 
 class Employeer extends Authenticatable
 {
@@ -14,7 +17,7 @@ class Employeer extends Authenticatable
     protected $hidden = [
         'password',
     ];
-    
+
     protected $parent = 'parent_id';
 
     // protected $appends = [
@@ -25,6 +28,10 @@ class Employeer extends Authenticatable
     //     'total_bonus'
     //   ];
 
+    // protected $appends = [
+    //     'total_product'
+    // ];
+
     protected $guarded = [];
 
     public function getName()
@@ -32,11 +39,78 @@ class Employeer extends Authenticatable
         return $this->first_name.' '.$this->last_name;
     }
 
+    public function getTotalProductAttribute()
+    {
+        // raw query
+        // $totalProducts = DB::select(DB::raw('
+        //     SELECT 
+        //        COUNT(transaction_member.id) as total_product
+        //     FROM `transaction_member` 
+        //     LEFT JOIN transaction_ebook_expired ON transaction_member.id = transaction_ebook_expired.transaction_id
+        //     WHERE transaction_member.member_id = 3 
+        //     AND transaction_member.status = 1 
+        //     AND (
+        //         CASE
+        //             WHEN transaction_ebook_expired.expired_at IS NULL THEN transaction_member.expired_at > NOW()
+        //             ELSE transaction_ebook_expired.expired_at > NOW()
+        //         END
+        //     )
+        // '));
+
+        // return $totalProducts[0]->total_product;
+
+        // versi query builder
+        $totalProducts = DB::table('transaction_member')
+            ->select([
+                'transaction_member.id',
+                'transaction_member.expired_at',
+                'transaction_ebook_expired.expired_at as ebook_expired',
+            ])
+            ->leftJoin('transaction_ebook_expired', 'transaction_ebook_expired.transaction_id', '=', 'transaction_member.id')
+            ->where('transaction_member.member_id', $this->id)
+            ->where('transaction_member.status', 1)
+            ->whereRaw('
+                CASE
+                    WHEN transaction_ebook_expired.expired_at IS NULL THEN transaction_member.expired_at > NOW()
+                    ELSE transaction_ebook_expired.expired_at > NOW()
+                END
+            ')
+            ->count();
+
+        return (int) $totalProducts + 1;
+    }
+
     public function children()
     {
         return $this->hasMany( 'App\Employeer', 'parent_id', 'id');
     }
-      
+
+    public function allChildren()
+    {
+        return $this->children()->with('allChildren')->select(['id','parent_id','username','pv',]);
+    }
+
+    public function leftChildren()
+    {
+        return $this->hasMany( 'App\Employeer', 'parent_id', 'id')->where('position', 0)->select(['id','parent_id','username','pv']);
+    }
+
+    public function allLeftChildren()
+    {
+        return $this->leftChildren()->with('allLeftChildren');
+    }
+
+    public function middleChildren()
+    {
+        return $this->hasMany( 'App\Employeer', 'parent_id', 'id')->where('position', 1)->select(['id','parent_id','username','pv']);
+    }
+
+    public function allMiddleChildren()
+    {
+        return $this->middleChildren()->with('allMiddleChildren');
+    }
+
+
     public function parent()
     {
         return $this->hasOne( 'App\Employeer', 'id', 'parent_id');
@@ -46,7 +120,7 @@ class Employeer extends Authenticatable
     {
         return $this->hasOne( 'App\Employeer', 'id', 'sponsor_id');
     }
-    
+
     public function address()
     {
         return $this->hasOne( 'App\Models\Address', 'user_id');
@@ -88,6 +162,15 @@ class Employeer extends Authenticatable
 
     public function rank(){
         return $this->belongsTo('App\Rank','rank_id');
+    }
+
+    public function archive(){
+        return $this->hasMany('App\Models\GotReward','member_id')->orderByDesc('id');
+    }
+
+    public function lastArchive()
+    {
+        return $this->hasOne('App\Models\GotReward', 'member_id')->latest();
     }
 
     public function pv_down(){

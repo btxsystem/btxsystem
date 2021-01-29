@@ -1,3 +1,17 @@
+#owl-testi.owl-carousel .owl-nav button.owl-next, .owl-carousel .owl-nav button.owl-prev, .owl-carousel button.owl-dot {
+	border: 1px #dadada solid;
+	margin-right: 10px;
+	width: 60px;
+  height: 60px;
+}
+
+#owl-testi.owl-carousel .owl-nav button.owl-next span, .owl-carousel .owl-nav button.owl-prev span {
+	font-size: 30px;
+	line-height: .8;
+}
+
+
+
 .btnBook .btn {
   margin-top: 55px;
   border-radius: 5px;
@@ -30,10 +44,135 @@
     width: 100%;
   }
   .btnBook .btn {
-    margin-top: 0px;
-    margin-left: 50px;
+    margin-top: 5px;
+    margin-left: 65px;
   }
   .btn-buy {
     margin-top: 6px !important;
   }
+}
+
+
+.slide-banner {
+	position: absolute; top: 70px; z-index: 9998; left: 100px;
+}
+
+.body-banner {
+	background-color: #fff;
+	padding: 20px;
+	border-radius: 10px;
+}
+
+.btn-link:hover {
+	text-decoration: none;
+}
+
+.pointer {
+	cursor: pointer;
+}
+
+.mb-0 {
+	margin-bottom: 0;
+}
+
+.page-item.disabled .page-link {
+	border : 0;
+}
+
+.page-item .page-link {
+	border : 0;
+	color: #333;
+}
+
+.page-item.active .page-link {
+	background-color: transparent;
+	color: #dc3c45;
+}
+
+.hall-card {
+	min-height: 250px;
+	min-width: 250px;
+	max-height: 250px;
+	max-width: 250px;
+	overflow: hidden;
+	border-radius: 50%;
+}
+.frame {
+	position: absolute;
+	left: auto;
+	right: auto;
+	top: 0;
+	bottom: 0%;
+}
+
+.owl-carousel .owl-dots {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+}
+.owl-carousel button.owl-dot.active {
+  background: none repeat scroll 0 0 #869791;
+  border-radius: 20px;
+  display: block;
+  height: 12px;
+  margin: 5px 7px;
+  opacity: 0.5;
+  width: 12px;
+}
+.owl-carousel button.owl-dot {
+  background: none repeat scroll 0 0 #cacaca;
+  border-radius: 20px;
+  display: block;
+  height: 12px;
+  margin: 5px 7px;
+  opacity: 0.5;
+  width: 12px;
+}
+
+@media (max-width: 1024px) {
+	.slide-banner {
+		left: 0px;
+		width: 51%;
+		top: 170px;
+	}
+
+	.body-banner {
+		background-color: #fff;
+		padding: 20px;
+		border-radius: 10px;
+	}
+
+	.frame {
+		left: 19px;
+		top: 30px;
+	}
+}
+
+@media (max-width: 480px) {
+	.slide-banner {
+		left: 0px;
+		width: 100%;
+		top: 150px;
+	}
+	.card-header h3 {
+		font-size: 20px;
+	}
+	.mb-sm-3 {
+		margin-bottom: 1.5rem;
+	}
+}
+
+@media (max-width: 375px) {
+	.frame {
+		left: 20px;
+		top: 15px;
+	}
+}
+
+@media (max-width: 360px) {
+	.frame {
+		top: 23px;
+		left: 20px;
+	}
 }

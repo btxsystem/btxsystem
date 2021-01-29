@@ -19,6 +19,7 @@ use App\Models\TransactionNonMember;
 use App\Models\TransactionMember;
 
 use App\Mail\WelcomeMail;
+use App\Models\VideoCategory;
 use Illuminate\Support\Facades\Mail;
 
 class ExploreController extends Controller
@@ -161,7 +162,7 @@ class ExploreController extends Controller
         $access = $expiredAdvanced;
       }
     } else if($user = Auth::guard('user')->user()) {
-      $expiredBasic = TransactionMember::where('member_id', $user->id)
+      $expiredBasic = TransactionMember::with('transaction_ebook_expired')->where('member_id', $user->id)
         ->where('status', 1)
         ->where('ebook_id', 1)
         ->orWhere('ebook_id', 3)
@@ -169,7 +170,7 @@ class ExploreController extends Controller
         ->latest('id')
         ->first();
 
-      $expiredAdvanced = TransactionMember::where('member_id', $user->id)
+      $expiredAdvanced = TransactionMember::with('transaction_ebook_expired')->where('member_id', $user->id)
         ->where('status', 1)
         ->where('ebook_id', 2)
         ->orWhere('ebook_id', 4)
@@ -184,6 +185,8 @@ class ExploreController extends Controller
         }
     }
 
+    $videoCategories = VideoCategory::with('videos')->where('ebook_id', $books[0]->id)->get();
+
     // return response()->json([
     //   'data' => $books
     // ], 200);
@@ -193,7 +196,8 @@ class ExploreController extends Controller
       'username' => $referral,
       'expiredBasic' => $expiredBasic,
       'expiredAdvanced' => $expiredAdvanced,
-      'access' => $access
+      'access' => $access,
+      'videoCategories' => $videoCategories
     ]);
   }
 
@@ -255,19 +259,25 @@ class ExploreController extends Controller
         'status' => 1
       ])->get();
 
-      $expiredBasic = TransactionMember::where('member_id', $user->id)
+      $expiredBasic = TransactionMember::with('transaction_ebook_expired')->where('member_id', $user->id)
         ->where('status', 1)
         ->where('ebook_id', 1)
         ->orWhere('ebook_id', 3)
-        ->select('expired_at')
+        ->select([
+          'id',
+          'expired_at'
+        ])
         ->latest('id')
         ->first();
 
-      $expiredAdvanced = TransactionMember::where('member_id', $user->id)
+      $expiredAdvanced = TransactionMember::with('transaction_ebook_expired')->where('member_id', $user->id)
         ->where('status', 1)
         ->where('ebook_id', 2)
         ->orWhere('ebook_id', 4)
-        ->select('expired_at')
+        ->select([
+          'id',
+          'expired_at'
+        ])
         ->latest('id')
         ->first();
 
@@ -342,6 +352,22 @@ class ExploreController extends Controller
     ->where('id', 4)
     ->orderBy('position', 'ASC')
     ->first();
+
+    if($expiredBasic) {
+      if($expiredBasic->transaction_ebook_expired) {
+        if($expiredBasic->expired_at < $expiredBasic->transaction_ebook_expired->expired_at) {
+          $expiredBasic = $expiredBasic->transaction_ebook_expired;
+        }
+      }
+    }
+
+    if($expiredAdvanced) {
+      if($expiredAdvanced->transaction_ebook_expired) {
+        if($expiredAdvanced->expired_at < $expiredAdvanced->transaction_ebook_expired->expired_at) {
+          $expiredAdvanced = $expiredAdvanced->transaction_ebook_expired;
+        }
+      }
+    }
 
 
     return view($this->pathView . '.components.subscription')->with([

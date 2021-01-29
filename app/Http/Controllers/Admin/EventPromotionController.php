@@ -126,8 +126,7 @@ class EventPromotionController extends Controller
             $image->move('upload/event-promotion/', $imageName);
             $path = $uploadPath;
         }
-
-        if($data->addAttachment($request->name, $uploadPath, 0)) {
+        if($data->addAttachment($request->name, $uploadPath, 0, $request->desc)) {
             Alert::success('Sukses Menambah Data', 'Sukses');
 
             return redirect()->route('cms.event-promotions.show');
@@ -142,7 +141,7 @@ class EventPromotionController extends Controller
         return \response()->json($data);
     }
 
-    public function updateAttachment(Request $request) 
+    public function updateAttachment(Request $request)
     {
         $data = AttachmentImage::findOrFail($request->id);
         $data->name = $request->name;
@@ -169,9 +168,9 @@ class EventPromotionController extends Controller
     public function destroyAttachment($id)
     {
         $data = AttachmentImage::findOrFail($id);
-        if ($data) { 
+        if ($data) {
             \File::delete(public_path($data->path));
-            $data->delete(); 
+            $data->delete();
             Alert::success('Success Delete Data', 'Success');
         } else {
             Alert::error('Gagal Delete Data', 'Gagal');
@@ -182,31 +181,31 @@ class EventPromotionController extends Controller
     public function published($id)
     {
         $data = AttachmentImage::findOrFail($id);
-        if ($data) { 
-    
+        if ($data) {
+
             $data->update([
                 'isPublished' => 1
-            ]); 
+            ]);
             Alert::success('Success Update Data', 'Success');
         } else {
             Alert::error('Gagal Update Data', 'Gagal');
         }
-        return redirect()->back(); 
+        return redirect()->back();
     }
 
     public function unpublished($id)
     {
         $data = AttachmentImage::findOrFail($id);
-        if ($data) { 
-    
+        if ($data) {
+
             $data->update([
                 'isPublished' => 0
-            ]); 
+            ]);
             Alert::success('Success Update Data', 'Success');
         } else {
             Alert::error('Gagal Update Data', 'Gagal');
         }
-        return redirect()->back(); 
+        return redirect()->back();
     }
 
 
@@ -230,7 +229,7 @@ class EventPromotionController extends Controller
             break;
 
         }
-       
+
     }
 
 

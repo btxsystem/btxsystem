@@ -8,14 +8,11 @@ use App\Models\AboutUs;
 use DataTables;
 use Auth;
 use Alert;
+use App\Models\Icon;
 
 class AboutUsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
         // return 'a';
@@ -33,7 +30,6 @@ class AboutUsController extends Controller
                     ->rawColumns(['action'])
                     ->make(true);
         }
-    
         return view('admin.about-us.index');
     }
 
@@ -55,24 +51,11 @@ class AboutUsController extends Controller
      */
     public function store(Request $request)
     {
-    //    return $request->all();
-
-       $request->validate([
-        'img' => 'mimes:png,jpg,jpeg'
-        ]);
-
         $data = new AboutUs;
         $data->title = $request->title;
         $data->desc = $request->desc;
-
-        if ($request->hasFile('img')) {
-            $image = $request->img;
-            $imageName = time() . str_random(15).'.'.$image->getClientOriginalExtension();
-            $uploadPath = 'upload/about-us/' . $imageName; //make sure folder path already exist
-            $image->move('upload/about-us/', $imageName);
-            $data->img = $uploadPath;
-        }
-
+        $icon = Icon::select('icon')->where('id',$request->icon)->first();
+        $data->img = $icon->icon;
         if ($data->save()) {
             Alert::success('Sukses Menambah Data', 'Sukses');
 
@@ -131,7 +114,6 @@ class AboutUsController extends Controller
             \File::delete(public_path($oldImg));
             $data->img = $uploadPath;
         }
-
         if($data->save()) {
             Alert::success('Sukses Update Data', 'Sukses');
 
@@ -150,9 +132,9 @@ class AboutUsController extends Controller
     public function destroy($id)
     {
         $data = AboutUs::findOrFail($id);
-        if ($data) { 
+        if ($data) {
             \File::delete(public_path($data->img));
-            $data->delete(); 
+            $data->delete();
             Alert::success('Success Delete Data', 'Success');
         } else {
             Alert::error('Gagal Delete Data', 'Gagal');
@@ -162,33 +144,43 @@ class AboutUsController extends Controller
     public function published($id)
     {
         $data = AboutUs::findOrFail($id);
-        if ($data) { 
-    
+        if ($data) {
+
             $data->update([
                 'isPublished' => 1
-            ]); 
+            ]);
             Alert::success('Success Update Data', 'Success');
         } else {
             Alert::error('Gagal Update Data', 'Gagal');
         }
-        return redirect()->back(); 
+        return redirect()->back();
     }
 
     public function unpublished($id)
     {
         $data = AboutUs::findOrFail($id);
-        if ($data) { 
-    
+        if ($data) {
+
             $data->update([
                 'isPublished' => 0
-            ]); 
+            ]);
             Alert::success('Success Update Data', 'Success');
         } else {
             Alert::error('Gagal Update Data', 'Gagal');
         }
-        return redirect()->back(); 
+        return redirect()->back();
     }
 
+    public function select2(Request $request){
+        $search = $request->q;
+        if ($request->q) {
+            $data['items'] = Icon::select('id','full_name','icon')->where('full_name', 'like', '%' . $search . '%')->get();
+        }else{
+            $data['items'] = Icon::select('id','full_name','icon')->get();
+            $data['total_count'] = count($data);
+        }
+        return response()->json($data, 200);
+    }
 
     public function htmlAction($row)
     {
@@ -208,6 +200,6 @@ class AboutUsController extends Controller
             break;
 
         }
-       
+
     }
 }
