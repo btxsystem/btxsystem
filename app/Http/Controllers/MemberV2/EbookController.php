@@ -42,8 +42,10 @@ class EbookController extends Controller
                 $no_invoice = date_format($date,"ymdh").rand(100,999);
                 $cek = DB::table('transaction_bills')->where('customer_number',$no_invoice)->select('id')->get();
             } while (count($cek)>0);
-
             $price = $ebook->price+2750;
+            if($ebook->is_promotion) {
+                $price -= ((int) $ebook->total_price_discount);
+            }
             $user = Auth::user();
             $haveExistEbook = TransactionMember::where('member_id', $user->id)->where('expired_at', '>', Carbon::now())->where('ebook_id',$ebook->id)->first();
 
