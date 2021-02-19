@@ -142,7 +142,7 @@
                             @php
                                 $date = str_replace('-', '/', $data->expired_at);
                                 $tomorrow = date('Y-m-d 00:00:00', strtotime($date . "+1 days"));
-                            @endphp 
+                            @endphp
                             <label class="control-label col-md-4">Status &nbsp; </label>: &nbsp;{{ $data->status == '1' ? 'Active' : 'Non Active' }} ({{$tomorrow}})
                         </div>
 
@@ -517,15 +517,15 @@
                                 <select name="ebook_id" id="ebook_id" class="form-control" value="{{old('ebook_id')}}">
                                     <option value="">Silahkan pilih ebook</option>
                                     @foreach($ebooks as $ebook)
-                                    <option 
-                                        data-id="{{ $ebook->id }}" 
-                                        data-allow-merge-discount="{{$ebook->allow_merge_discount}}" 
-                                        data-maximum-product="{{$ebook->maximum_product}}" 
-                                        data-register-promotion="{{$ebook->register_promotion}}" 
-                                        data-minimum-product="{{$ebook->minimum_product}}" 
-                                        data-price-discount="{{$ebook->total_price_discount}}" 
-                                        data-promotion="{{$ebook->is_promotion}}" 
-                                        data-price="{{$ebook->price}}" 
+                                    <option
+                                        data-id="{{ $ebook->id }}"
+                                        data-allow-merge-discount="{{$ebook->allow_merge_discount}}"
+                                        data-maximum-product="{{$ebook->maximum_product}}"
+                                        data-register-promotion="{{$ebook->register_promotion}}"
+                                        data-minimum-product="{{$ebook->minimum_product}}"
+                                        data-price-discount="{{$ebook->total_price_discount}}"
+                                        data-promotion="{{$ebook->is_promotion}}"
+                                        data-price="{{$ebook->price}}"
                                         value="{{$ebook->id}}">
                                             {{$ebook->title}} - {{currency($ebook->price)}}
                                     </option>
@@ -569,7 +569,6 @@
 
         $(document).ready(function () {
             let totalHasProduct = parseInt("{{$data->total_product}}")
-
             $('#ebook_id').change(function() {
                 let selected = $(this).find(':selected')
                 let idEbook = selected.data('id')
@@ -580,8 +579,7 @@
 				let maximumProduct = selected.data('maximum-product')
 				let price = selected.data('price')
 				let priceDiscount = selected.data('price-discount')
-                let isPromotion = (totalHasProduct >= minimumProduct && totalHasProduct <= maximumProduct) && promotion
-
+                let isPromotion = (totalHasProduct >= minimumProduct && totalHasProduct <= maximumProduct) && promotion === 1
                 let promotionEbook = new PromotionEbook({
                     id: idEbook,
                     allowMergeDiscount: allowMergeDiscount,
@@ -608,10 +606,10 @@
                     $('#total_price').html(promotionEbook.totalPrice)
                 } else {
                     $('#price_discount').html(`
-                        
+
                     `)
                     $('#normal_price').html(`
-                        
+
                     `)
                     $('#total_price_wrapper').removeClass('text-warning')
                     $('#total_price').html(promotionEbook.totalPrice)
@@ -622,7 +620,7 @@
                 $(this).attr('disabled', true)
                 $('#form-buy-product').submit()
             })
-        
+
           var table = $('.points-table').DataTable({
               destroy: true,
               processing: true,
@@ -748,7 +746,7 @@
               serverSide: true,
               responsive: true,
               ajax: {
-                url: "{{ route('bonus.time-reward') }}?member={{$data->id}}", 
+                url: "{{ route('bonus.time-reward') }}?member={{$data->id}}",
               },
               columns: [
                   {data: 'ebook.title', name: 'ebook.title', className: 'text-center'},

@@ -8,7 +8,7 @@ use Carbon\Carbon;
 class Ebook extends Model
 {
   protected $table = 'ebooks';
-  
+
   protected $guarded = [];
 
   protected $appends = [
@@ -38,7 +38,7 @@ class Ebook extends Model
   {
       return $this->hasMany('\App\Models\BookEbook', 'ebook_id', 'id');
   }
-  
+
   public function videoEbooks()
   {
       return $this->hasMany('\App\Models\VideoEbook', 'ebook_id', 'id');
@@ -75,11 +75,11 @@ class Ebook extends Model
       $endedTimestamp = strtotime($this->ended_at);
 
       if($currentTimestamp >= $startedTimestamp && $currentTimestamp <= $endedTimestamp) {
-        return true;
+        return 1;
       }
     }
 
-    return false;
+    return 0;
   }
 
   public function getAccessEbookAttribute()
@@ -122,7 +122,7 @@ class Ebook extends Model
         }
       }
 
-    
+
       // $currentTimestamp = strtotime(date('Y-m-d H:i:s'));
       // $expiredTimestamp = strtotime($expired['expired_at']);
 
@@ -148,7 +148,7 @@ class Ebook extends Model
       if(!$memberTransaction) {
         return false;
       }
-      
+
       $expired = $memberTransaction->expired_at < date('Y-m-d');
 
       return $expired;
@@ -162,9 +162,9 @@ class Ebook extends Model
       if(!$userTransaction) {
         return false;
       }
-      
+
       $expired = $userTransaction->expired_at < date('Y-m-d');
-      
+
 
       return $expired;
     } else {
@@ -208,7 +208,7 @@ class Ebook extends Model
     if(!$this->access) {
       return 0;
     }
-    
+
     if(\Auth::guard('nonmember')->user()) {
       $memberTransaction = $this->transaction()
         ->where('non_member_id', \Auth::guard('nonmember')
@@ -223,11 +223,11 @@ class Ebook extends Model
         ->user()->id)
         ->latest('id')
         ->first();
-      
+
       return $userTransaction ? $userTransaction->expired_at : 0;
     } else {
       return 0;
-    }    
+    }
   }
 
   public function getCountdownDaysAttribute()
@@ -247,7 +247,7 @@ class Ebook extends Model
       $now = Carbon::create($memberTransaction->expired_at);
       $difference = ($created->diff($now)->days < 1)
           ? '1 Hari'
-          : $created->diff($now)->days . ' Hari';  
+          : $created->diff($now)->days . ' Hari';
       return $difference;
     } else if(\Auth::guard('user')->user()){
       $userTransaction = $this->transactionMember()
@@ -260,13 +260,13 @@ class Ebook extends Model
       $now = Carbon::create($userTransaction->expired_at);
       $difference = ($created->diff($now)->days < 1)
           ? '1 Hari'
-          : $created->diff($now)->days . ' Hari';  
-      return $difference;      
+          : $created->diff($now)->days . ' Hari';
+      return $difference;
     } else {
       return 0;
     }
   }
-  
+
   public function getStatusAttribute()
   {
     if(\Auth::guard('nonmember')->user()) {

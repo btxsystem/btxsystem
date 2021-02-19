@@ -28,9 +28,9 @@ class Employeer extends Authenticatable
     //     'total_bonus'
     //   ];
 
-    // protected $appends = [
-    //     'total_product'
-    // ];
+    protected $appends = [
+        'total_product'
+    ];
 
     protected $guarded = [];
 
@@ -43,12 +43,12 @@ class Employeer extends Authenticatable
     {
         // raw query
         // $totalProducts = DB::select(DB::raw('
-        //     SELECT 
+        //     SELECT
         //        COUNT(transaction_member.id) as total_product
-        //     FROM `transaction_member` 
+        //     FROM `transaction_member`
         //     LEFT JOIN transaction_ebook_expired ON transaction_member.id = transaction_ebook_expired.transaction_id
-        //     WHERE transaction_member.member_id = 3 
-        //     AND transaction_member.status = 1 
+        //     WHERE transaction_member.member_id = 3
+        //     AND transaction_member.status = 1
         //     AND (
         //         CASE
         //             WHEN transaction_ebook_expired.expired_at IS NULL THEN transaction_member.expired_at > NOW()
@@ -69,12 +69,6 @@ class Employeer extends Authenticatable
             ->leftJoin('transaction_ebook_expired', 'transaction_ebook_expired.transaction_id', '=', 'transaction_member.id')
             ->where('transaction_member.member_id', $this->id)
             ->where('transaction_member.status', 1)
-            ->whereRaw('
-                CASE
-                    WHEN transaction_ebook_expired.expired_at IS NULL THEN transaction_member.expired_at > NOW()
-                    ELSE transaction_ebook_expired.expired_at > NOW()
-                END
-            ')
             ->count();
 
         return (int) $totalProducts + 1;
