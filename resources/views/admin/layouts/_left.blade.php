@@ -5,7 +5,7 @@
             <a href="{{ route('dashboard') }}">
                 <i class="fa fa-dashboard" style="color: #6CC66C"  data-name="dashboard" data-size="18" data-c="#418BCA" data-hc="#418BCA"
                     data-loop="true"></i>
-                <span class="title">Dashboard </span>
+                <span class="title">Dashboard</span>
             </a>
         </li>
     @endif
@@ -83,7 +83,7 @@
             </a>
         </li>
     @endif
-    
+
     @if(\Auth::guard('admin')->user()->hasPermission('Hall_Of_Fame'))
         <li class="{{ (request()->is('backoffice/hall-of-fame')) ? 'active' : '' }}">
             <a href="{{ route('hall-of-fame.index') }}">
@@ -290,7 +290,7 @@
                 @endif
             </ul>
             <ul class="sub-menu">
-                 @if(\Auth::guard('admin')->user()->hasPermission('Birthdate')) 
+                 @if(\Auth::guard('admin')->user()->hasPermission('Birthdate'))
                     <li class="#">
                         <a href="{{ route('report.birthdate') }}">
                             <i class="fa fa-angle-double-right"></i>
@@ -410,6 +410,23 @@
             </a>
         </li>
     @endif
+
+    <li class="{{ (request()->segment(2))=='galeries' ? 'active' : '' }}">
+        <a href="#">
+            <i class="fa fa-video-camera" style="color: #6CC66C" data-name="money" data-size="18" data-c="#6CC66C" data-hc="#6CC66C"
+            data-loop="true"></i>
+            <span class="title">Gallery</span>
+            <span class="fa arrow"></span>
+        </a>
+        <ul class="sub-menu">
+            <li class="{{ (request()->is('backoffice/galeries')) ? 'active' : '' }}">
+                <a href="{{ route('galeries.index') }}">
+                    <i class="fa fa-angle-double-right"></i>
+                    Video
+                </a>
+            </li>
+        </ul>
+    </li>
 
     @include('admin/layouts/menu')
 </ul>
