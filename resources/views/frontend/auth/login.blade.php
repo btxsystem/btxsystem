@@ -155,6 +155,7 @@
               <div class="wrap-title">
                 <h2 class="ui-title-block">Our <strong>Product</strong></h2>
               </div>
+              <br>
               <div class="posts-wrap">
                 @foreach ($data['ourProduct'] as $item)
                     <article class="post post_mod-a clearfix wow zoomIn" data-wow-duration="1s" style="width: 46%!important;">
@@ -222,6 +223,7 @@
               <div class="wrap-title">
                 <h2 class="ui-title-block">Our <strong>Headquarter</strong></h2>
               </div>
+              <br>
               <div class="posts-wrap">
                 @foreach ($data['ourHeadQuarter'] as $item)
                     <article class="post post_mod-b clearfix wow zoomIn" data-wow-duration="1s">
@@ -241,6 +243,41 @@
         <!-- end container -->
       </section>
       <!-- end section-default -->
+      @if($data['video'])
+        <section class="section-default">
+            <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                <div class="wrap-title">
+                    <h2 class="ui-title-block">Gallery <strong>Video</strong></h2>
+                </div>
+                <br>
+                <div class="posts-wrap">
+                    @foreach ($data['video'] as $video)
+                        <article class="post post_mod-b clearfix wow zoomIn" data-wow-duration="1s">
+                            <div class="entry-media">
+                                <div class="entry-thumbnail"> <a href="javascript:void(0);" >
+                                <iframe id="ytplayer" type="text/html"
+                                    class="swiper-left"
+                                    src="{{ $video->path}}"
+                                    allowfullscreen="allowfullscreen"
+                                    frameborder="0">
+                                </iframe>
+                                </a> </div>
+                            </div>
+                        </article>
+                        <!-- end post -->
+                    @endforeach
+                </div>
+                <!-- end posts-wrap -->
+                </div>
+                <!-- end col -->
+            </div>
+            <!-- end row -->
+            </div>
+            <!-- end container -->
+        </section>
+    @endif
 
       <!-- end section-video -->
       <section class="section-ui wow fadeInUp" data-wow-duration="1s">
@@ -677,13 +714,13 @@
         })
         n=ebookSelected.length; //Tambah value untuk stored temporary
 			let cancelledEbook = false;
-		
+
 
 			if(n>=2){
 				var r = confirm("Apakah Anda yakin membeli " + n +" ebook?");
 				if (r == true) {
 
-				} else { 
+				} else {
 					cancelledEbook = true
 					$(this).prop("checked", false)
 				}
@@ -695,12 +732,12 @@
           var r = confirm("Apakah Anda yakin membeli 2 ebook?");
           if (r == true) {
 
-          } else { 
+          } else {
             cancelledEbook = true
             $(this).prop("checked", false)
           }
         }*/
-        
+
 
         if($(this).prop('checked')) {
           check += 1;
@@ -710,7 +747,7 @@
             check -= 1;
             priceEbook = priceEbook - parseInt($(this).data('price'));
           }
-          
+
         }
         if(priceEbook != 0) {
           $('#cost-ebook').parent().removeClass('hidden');
@@ -862,7 +899,7 @@
         console.log("Error");
       }
     });
-    
+
   })
 
   $("#username").keyup(function(){
