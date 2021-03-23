@@ -13,8 +13,6 @@
                 <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{{route('member.transaction.topup')}}" method="POST" id="form-topup">
-                @csrf
                 <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="form-line">
                         <input class="form-control" name="nominal" id="nominal" type="number" min="5">
@@ -65,8 +63,15 @@
                     <h5 class="card-inside-title">Select Payment Method</h5>
                     <div class="demo-radio-button">
                         <input name="method" type="radio" value="bca" id="bca" class="with-gap radio-col-red" checked />
-                        <label for="bca">BCA VA</label> 
-
+                        <label for="bca">BCA VA</label>
+                    </div>
+                    <div class="demo-radio-button">
+                        <input name="method" type="radio" value="cc" id="cc" class="with-gap radio-col-red"/>
+                        <label for="cc">Credit Card</label>
+                    </div>
+                    <div class="form-line cvn-form" style="display:none">
+                        <input class="form-control" name="cvn" id="cvn" type="number" min="3">
+                        <label class="form-label">CVN</label>
                     </div>
                 </div>
                 @endif
@@ -76,10 +81,10 @@
                   <div class="demo-radio-button">
                     <input name="method" type="radio" value="transfer" id="transfer" class="with-gap radio-col-red" checked />
                     <label for="transfer">Transfer</label>
-                    
+
 
                      <!-- <input name="method" type="radio" value="bca" id="bca" class="with-gap radio-col-red" checked/>
-                    <label for="bca">BCA VA</label> 
+                    <label for="bca">BCA VA</label>
                     <input name="method" type="radio" value="transfer" id="transfer" class="with-gap radio-col-red"/>
                     <label for="bca">Transfer</label> -->
 
@@ -102,7 +107,7 @@
                     <label for="permata">PERMATA VA</label> -->
                   </div>
                 </div>
-                
+
                 <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12" id="transfer-form">
                   <h4>Bank Name : BCA</h4>
                   <h4>Bank Account : PT. BITREXGO SOLUSI PRIMA</h4>
@@ -114,7 +119,7 @@
                     <a href="#" id="payment-bca" style="cursor:pointer; display:none;" class="btn btn-primary"></a>
                     <button type="button" id="topup-points" disabled=true class="btn btn-primary" style="cursor:pointer;">Topup</a>
                 </div>
-            </form>
+
         </div>
     </div>
 </div>
@@ -401,10 +406,10 @@
 
     $(document).ready(function () {
 
-    
+
     <?php if(getCurrentPaymentMethod() == 'va'):?>
         let is_bca_method = true;
-    <?php elseif(getCurrentPaymentMethod() == 'transfer'):?>
+    <?php else:?>
         let is_bca_method = false;
     <?php endif;?>
 
@@ -442,6 +447,15 @@
           is_bca_method = false;
       })
 
+      $('#cc').change(function(){
+          $('#topup-points').prop('type','submit');
+          $('#bca').removeAttr("checked")
+          $('#bca').prop('checked', false)
+          $('#cc').prop('checked', true)
+          $('.cvn-form').css('display', "block")
+          is_bca_method = false;
+      })
+
       $('#other').change(function(){
         is_bca_method = false;
       })
@@ -456,6 +470,7 @@
           $('#transfer').removeAttr("checked")
           $('#bca').prop('checked', true)
           $('#transfer').prop('checked', false)
+          $('.cvn-form').css('display', "none")
           is_bca_method = true;
       })
 
@@ -467,6 +482,7 @@
 
       $('#topup-points').click(function(){
           let nominal = $('#nominal').val();
+          let cvn = $('#cvn').val();
           let points = $('#points').val();
 
           if(is_bca_method){
@@ -511,7 +527,28 @@
                 }
             });
           }else{
-              $('#form-topup').submit()
+            swal({
+                title: "Are you sure ?",
+                type: "error",
+                confirmButtonClass: "btn-warning",
+                confirmButtonText: "Yes!",
+                showCancelButton: true,
+            },function(){
+                $("#topup-points").prop('disabled',true);
+                $.ajax({
+                    type: 'GET',
+                    url: '{{route("xendit-cardless")}}',
+                    data: {nominal: nominal, cvn: cvn},
+                    success: function (data) {
+                        swal(data);
+                        window.location.href = "{{ route('member.bitrex-money.bitrex-points') }}";
+                    },
+                    error: function() {
+                        console.log("Error");
+                    }
+                });
+            });
+
             // $.post("{{ route('member.payment.midtrans') }}",
             // {
             //     _method: 'POST',
@@ -899,7 +936,7 @@
             return;
         });
     }
-    
+
     function loadMoreData(page){
         $.ajax({
             url: '/member/select/history-points?page=' + page,
@@ -934,7 +971,7 @@
             $("#topup-points").prop('disabled',false);
         }else{
             $("#topup-points").prop('disabled',true);
-            
+
         }
 
         check_button_disabled()

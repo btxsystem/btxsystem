@@ -181,6 +181,13 @@ Route::group(['middleware' => 'admin'], function () {
         Route::delete('{id}', ['as' => 'delete', 'uses' => 'Admin\TrainingController@destroy']);
     });
 
+    Route::group(['prefix'=>'galeries','as'=>'galeries.'],function(){
+        Route::get('', ['as' => 'index', 'uses' => 'Admin\GalleryVideoController@index']);
+        Route::get('create', ['as' => 'create', 'uses' => 'Admin\GalleryVideoController@create']);
+        Route::post('store', ['as' => 'store', 'uses' => 'Admin\GalleryVideoController@store']);
+        Route::delete('{id}', ['as' => 'delete', 'uses' => 'Admin\GalleryVideoController@destroy']);
+    });
+
     Route::group(['prefix'=>'members','as'=>'members.'], function(){
         Route::get('/create-data', ['as' => 'create-data', 'uses' => 'Admin\MemberController@create']);
         Route::get('/show-data/{id}', ['as' => 'show', 'uses' => 'Admin\MemberController@show']);

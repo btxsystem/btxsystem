@@ -175,9 +175,9 @@
 				<hr>
 				<div class="row mb-5">
 				@if($book->id == 1)
-				
+
 				@elseif($book->id == 2)
-				
+
 				@endif
 				{{-- @foreach($book->videoEbooks as $video)
 					@if(count($video->videos) > 0)
@@ -192,7 +192,7 @@
 					</div>
 					@endif
 				@endforeach --}}
-					
+
 				</div>
 				<div class="row">
 					<div class="col-md-3 tabs-cutom">
@@ -222,7 +222,7 @@
 						</div>
 					</div>
 				</div>
-					
+
 				@endif
         @endforeach
 				<!-- <div class="d-flex align-items-center">
@@ -350,29 +350,29 @@ const players = Array.from(document.querySelectorAll('#player')).map(p => {
     });
   }
 
-	new Plyr(p, {	
+	new Plyr(p, {
 		controls: [
 			'play-large', 		// new Plyr(p, {
 			'play', 		// 	controls: [
-			'progress', 		// 		'play-large', 
-			'current-time', 		// 		'play', 
-			'mute', 		// 		'progress', 
-			'volume', 		// 		'current-time', 
-			'captions', 		// 		'mute', 
-			'settings', 		// 		'volume', 
-			'fullscreen'		// 		'captions', 
-		]		// 		'settings', 
+			'progress', 		// 		'play-large',
+			'current-time', 		// 		'play',
+			'mute', 		// 		'progress',
+			'volume', 		// 		'current-time',
+			'captions', 		// 		'mute',
+			'settings', 		// 		'volume',
+			'fullscreen'		// 		'captions',
+		]		// 		'settings',
 	})
 	// new Plyr(p, {
 	// 	controls: [
-	// 		'play-large', 
-	// 		'play', 
-	// 		'progress', 
-	// 		'current-time', 
-	// 		'mute', 
-	// 		'volume', 
-	// 		'captions', 
-	// 		'settings', 
+	// 		'play-large',
+	// 		'play',
+	// 		'progress',
+	// 		'current-time',
+	// 		'mute',
+	// 		'volume',
+	// 		'captions',
+	// 		'settings',
 	// 		'fullscreen'
 	// 	]
 	// })
@@ -547,19 +547,19 @@ function selectedSubscription(param) {
 	<?php if($user = Auth::guard('user')->user()){?>
 		// logic for member
 		totalHasProduct = parseInt("{{$user->total_product}}")
-		isPromotion = (totalHasProduct >= data.minimum_product && totalHasProduct <= data.maximum_product) && data.is_promotion
+		isPromotion = (totalHasProduct >= data.minimum_product && totalHasProduct <= data.maximum_product) && data.is_promotion === 1
 		price = parseInt(data.price)
 	<?php } else if($user = Auth::guard('nonmember')->user()){?>
 		// login for non member
 		totalHasProduct = parseInt("{{$user->total_product}}")
-		isPromotion = (totalHasProduct >= data.minimum_product && totalHasProduct <= data.maximum_product) && data.is_promotion
+		isPromotion = (totalHasProduct >= data.minimum_product && totalHasProduct <= data.maximum_product) && data.is_promotion === 1
 		price = parseInt(data.price) + parseInt(data.price_markup)
 	<?php } else {?>
 	  // login for guest
 		totalHasProduct = parseInt("1")
-		isPromotion = (totalHasProduct >= data.minimum_product && totalHasProduct <= data.maximum_product) && data.is_promotion
+		isPromotion = (totalHasProduct >= data.minimum_product && totalHasProduct <= data.maximum_product) && data.is_promotion === 1
 		price = parseInt(data.price) + parseInt(data.price_markup)
-	<?php } ?>	
+	<?php } ?>
 
 	// check is promotion
 	if(isPromotion) {

@@ -43,15 +43,12 @@ class EbookController extends Controller
                 $cek = DB::table('transaction_bills')->where('customer_number',$no_invoice)->select('id')->get();
             } while (count($cek)>0);
             $price = $ebook->price+2750;
-            if($ebook->is_promotion) {
-                $price -= ((int) $ebook->total_price_discount);
-            }
             $user = Auth::user();
             $haveExistEbook = TransactionMember::where('member_id', $user->id)->where('expired_at', '>', Carbon::now())->where('ebook_id',$ebook->id)->first();
 
-            if($user->total_product >= $ebook->minimum_product && $user->total_product <= $ebook->maximum_product && $ebook->is_promotion && $haveExistEbook && $user->status!=0) {
+            if($user->total_product >= $ebook->minimum_product && $user->total_product <= $ebook->maximum_product && $ebook->is_promotion == 1 && $haveExistEbook && $user->status!=0) {
                 if($ebook->price_discount > 0) {
-                    $price -= (int) ($ebook->price * $ebook->price_discount) / 100;
+                    $price -= (int) $ebook->total_price_discount;
                     $ebookIdDiscount = $ebook->id;
                 }
             }
@@ -86,7 +83,7 @@ class EbookController extends Controller
             $price = $ebook->price+2750;
             $user = Auth::guard('nonmember')->user();
 
-            if(($user->total_product >= $ebook->minimum_product && $user->total_product <= $ebook->maximum_product) && $ebook->is_promotion) {
+            if(($user->total_product >= $ebook->minimum_product && $user->total_product <= $ebook->maximum_product) && $ebook->is_promotion == 1) {
                 if($ebook->price_discount > 0) {
                     $price -= (int) ($ebook->price * $ebook->price_discount) / 100;
                     $ebookIdDiscount = $ebook->id;
@@ -121,7 +118,7 @@ class EbookController extends Controller
 
             $price = $ebook->price+2750;
 
-            if($ebook->minimum_product == 0 && $ebook->is_promotion) {
+            if($ebook->minimum_product == 0 && $ebook->is_promotion == 1) {
                 if($ebook->price_discount > 0) {
                     $price -= (int) ($ebook->price * $ebook->price_discount) / 100;
                     $ebookIdDiscount = $ebook->id;

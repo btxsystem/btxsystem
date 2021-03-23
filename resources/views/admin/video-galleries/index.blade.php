@@ -1,26 +1,26 @@
 @extends('layouts.admin')
 
 @section('title')
-List Of Videos
+List Of Gallery Videos
 @parent
 @stop
 
 @section('content')
 
 <section class="content-header">
-    <h1>Book </h1>
+    <h1>Gallery </h1>
     <ol class="breadcrumb">
         <li>
-            <a href="#">Videos</a>
+            <a href="#">Gallery Videos</a>
         </li>
-        <li class="active">Videos </li>
+        <li class="active">Gallery Videos </li>
     </ol>
 </section>
 <section class="content">
                 <div class="row">
                     <div class="col-md-12">
                         <!-- BEGIN SAMPLE TABLE PORTLET-->
-                        <a class="btn btn-large btn-primary" href="{{ route('video.create') }}"></i>Add</a>
+                        <a class="btn btn-large btn-primary" href="{{ route('galeries.create') }}"></i>Add</a>
                         <div class="portlet box primary" style="margin-top: 15px;">
                             <div class="portlet-title">
                                 <div class="caption">
@@ -46,6 +46,13 @@ List Of Videos
                     </div>
                 </div>
             </section>
+            <form id="delete-form" action="" method="POST" style="display:none;">
+                @csrf
+                {{ method_field('DELETE') }}
+                <button type="submit"></button>
+            </form>
+
+
 @stop
 
 @section('footer_scripts')
@@ -56,7 +63,7 @@ List Of Videos
               processing: true,
               serverSide: true,
               ajax: {
-                url: "{{ route('video.index') }}",
+                url: "{{ route('galeries.index') }}",
               },
 
               columns: [
@@ -67,6 +74,14 @@ List Of Videos
           });
 
         });
+        function deleteVideo(id) {
+                var result = confirm("are you sure delete this data ?")
+                if (result) {
+                    event.preventDefault();
+                    $('#delete-form').attr("action", window.location.href + '/' + id);
+                    $('#delete-form').submit();
+                }
+            }
       </script>
 
 @endsection
