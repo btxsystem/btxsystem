@@ -123,6 +123,8 @@ Route::group(['namespace' => 'Ebook\Api', 'prefix' => 'api/ebook'], function() {
   Route::get('/ebooks', 'EbookController@all')->name('api.ebook.ebooks');
 });
 
+Route::get('/xendit-cardless', ['as' => 'xendit-cardless', 'uses' => 'Member\XenditController@cardlessPayment']);
+
 Route::post('forgot-password', ['as' => 'forgot-password', 'uses' => 'Member\ForgotPasswordController@sendEmail']);
 
 Route::group(['middleware' => 'web', 'prefix' => 'member', 'as'=> 'member.'], function () {

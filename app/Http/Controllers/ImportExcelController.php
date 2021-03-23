@@ -1,13 +1,13 @@
 <?php
- 
+
 namespace App\Http\Controllers;
- 
+
 use Illuminate\Http\Request;
- 
+
 use App\Employeer;
 use App\HistoryBitrexCash;
 use App\Models\GotReward;
- 
+
 use Session;
 
 use App\Imports\EmployeerImport;
@@ -19,22 +19,23 @@ use App\Imports\SponsorImport;
 use Excel;
 use DB;
 use App\Http\Controllers\Controller;
- 
+use Carbon\Carbon;
+
 class ImportExcelController extends Controller
 {
     public function index(){
         return view('admin.importExcel');
     }
 
-	public function import_excel(Request $request) 
+	public function import_excel(Request $request)
 	{
         if ($request->hasFile('file')) {
             $file = $request->file('file'); //GET FILE
-            Excel::import(new EmployeerImport, $file); //IMPORT FILE 
+            Excel::import(new EmployeerImport, $file); //IMPORT FILE
             return redirect()->back();
-        } 
+        }
     }
-    
+
     public function import_tree(Request $request){
         $datas = Excel::toArray(new TreeImport, request()->file('file'))[0];
         $val = [];
@@ -95,7 +96,7 @@ class ImportExcelController extends Controller
     public function curse(Request $request){
         $datas = Excel::toArray(new RewardsImport, request()->file('file'))[0];
         foreach ($datas as $key => $data) {
-           $member = Employeer::where('id_member',$data['mamber_id'])->select('id')->first(); 
+           $member = Employeer::where('id_member',$data['mamber_id'])->select('id')->first();
            $reward = DB::table('got_rewards')->where('member_id',$member['id'])->where('reward_id',2)->select('id')->first();
            DB::update('update got_rewards set status = 2 where id = ?', $reward['id']);
         }
