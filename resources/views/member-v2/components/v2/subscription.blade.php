@@ -286,7 +286,6 @@ div#flag {
 		<div class="container pt-5">
 			<div class="row">
 				@foreach($ebooks as $ebook)
-				dd($ebook);
 				<div class="col-lg-12 mb-3">
 					<div class="row">
 						@if(Auth::guard('nonmember')->user() || Auth::guard('user')->user())
