@@ -78,6 +78,7 @@ class LoginController extends Controller
                                         ->where('isPublished',1)->select('name','path')->get();
         $about_us = AboutUs::where('isPublished',1)->select('title','img','desc')->get();
         $hallOfFame = HallOfFame::with(['member','member.rank'])->get();
+        $video = GaleryVideo::all();
 
         $data = null;
         if ($testimoni) {
@@ -96,6 +97,8 @@ class LoginController extends Controller
             $data['about_us'] = $about_us;
         }if ($hallOfFame) {
             $data['hall_of_fame'] = $hallOfFame;
+        }if ($video) {
+            $data['video'] = $video;
         }
         return view('frontend.auth.login')->with('data',$data);
       }
@@ -125,6 +128,7 @@ class LoginController extends Controller
                                      ->where('isPublished',1)->select('name','path')->get();
     $about_us = AboutUs::where('isPublished',1)->select('title','img','desc')->get();
     $hallOfFame = HallOfFame::with(['member','member.rank'])->get();
+    $video = GaleryVideo::all();
 
     $data = null;
     if ($testimoni) {
@@ -143,6 +147,8 @@ class LoginController extends Controller
         $data['about_us'] = $about_us;
     }if ($hallOfFame) {
         $data['hall_of_fame'] = $hallOfFame;
+    }if ($video) {
+        $data['video'] = $video;
     }
     return view('frontend.auth.login')->with('data',$data);
   }
