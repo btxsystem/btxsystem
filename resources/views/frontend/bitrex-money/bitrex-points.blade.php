@@ -69,6 +69,18 @@
                         <input name="method" type="radio" value="cc" id="cc" class="with-gap radio-col-red"/>
                         <label for="cc">Credit Card</label>
                     </div>
+                    <div class="form-line cc-form" style="display:none">
+                        <input class="form-control" name="ccNumber" id="ccNumber" type="number">
+                        <label class="form-label">Credit Card Number</label>
+                    </div>
+                    <div class="form-line exp-month-form" style="display:none">
+                        <input class="form-control" name="expMonth" id="expMonth" type="number" min="2">
+                        <label class="form-label">Exp Month</label>
+                    </div>
+                    <div class="form-line exp-year-form" style="display:none">
+                        <input class="form-control" name="expYear" id="expYear" type="number" min="4">
+                        <label class="form-label">Exp Year</label>
+                    </div>
                     <div class="form-line cvn-form" style="display:none">
                         <input class="form-control" name="cvn" id="cvn" type="number" min="3">
                         <label class="form-label">CVN</label>
@@ -372,6 +384,10 @@
 </style>
 
 @section('footer_scripts')
+<script type="text/javascript" src="https://js.xendit.co/v1/xendit.min.js"></script>
+<script type="text/javascript">
+     Xendit.setPublishableKey('xnd_public_development_rznQPdwvftzJlRzMdOZ3xt3o7yYEyPeirz2P4OvJqFVDISIuqYLBg1MRONPTbh');
+</script>
 <script src="{{asset('assets2/js/moment.js')}}"></script>
 <script src="{{ !config('services.midtrans.isProduction') ? 'https://app.sandbox.midtrans.com/snap/snap.js' : 'https://app.midtrans.com/snap/snap.js' }}" data-client-key="{{ config('services.midtrans.clientKey') }}"></script>
 <script type="text/javascript">
@@ -453,6 +469,9 @@
           $('#bca').prop('checked', false)
           $('#cc').prop('checked', true)
           $('.cvn-form').css('display', "block")
+          $('.cc-form').css('display', "block")
+          $('.exp-month-form').css('display', "block")
+          $('.exp-year-form').css('display', "block")
           is_bca_method = false;
       })
 
@@ -471,6 +490,9 @@
           $('#bca').prop('checked', true)
           $('#transfer').prop('checked', false)
           $('.cvn-form').css('display', "none")
+          $('.cc-form').css('display', "none")
+          $('.exp-month-form').css('display', "none")
+          $('.exp-year-form').css('display', "none")
           is_bca_method = true;
       })
 
@@ -479,6 +501,53 @@
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
+
+    function xenditResponseHandler (err, creditCardToken) {
+        let nominal = $('#nominal').val();
+        let cvn = $('#cvn').val();
+        if (err) {
+            $('#error pre').text(err.message);
+            $('#error').show();
+            swal(err.message);
+            return;
+        }
+
+        if (creditCardToken.status === 'VERIFIED') {
+            var token = creditCardToken.id;
+            swal({
+                title: "Are you sure ?",
+                type: "error",
+                confirmButtonClass: "btn-warning",
+                confirmButtonText: "Yes!",
+                showCancelButton: true,
+            },function(){
+                $("#topup-points").prop('disabled',true);
+                $.ajax({
+                    type: 'GET',
+                    url: '{{route("xendit-cardless")}}',
+                    data: {
+                        nominal: nominal,
+                        cvn: cvn,
+                        token: token
+                    },
+                    success: function (data) {
+                        swal(data);
+                        window.location.href = "{{ route('member.bitrex-money.bitrex-points') }}";
+                    },
+                    error: function() {
+                        console.log("Error");
+                    }
+                });
+            });
+        } else if (creditCardToken.status === 'IN_REVIEW') {
+            window.open(creditCardToken.payer_authentication_url, 'sample-inline-frame');
+            $('#three-ds-container').show();
+        } else if (creditCardToken.status === 'FAILED') {
+            $('#error pre').text(creditCardToken.failure_reason);
+            $('#error').show();
+            swal(creditCardToken.status); // Re-enable submission
+        }
+    }
 
       $('#topup-points').click(function(){
           let nominal = $('#nominal').val();
@@ -527,27 +596,17 @@
                 }
             });
           }else{
-            swal({
-                title: "Are you sure ?",
-                type: "error",
-                confirmButtonClass: "btn-warning",
-                confirmButtonText: "Yes!",
-                showCancelButton: true,
-            },function(){
-                $("#topup-points").prop('disabled',true);
-                $.ajax({
-                    type: 'GET',
-                    url: '{{route("xendit-cardless")}}',
-                    data: {nominal: nominal, cvn: cvn},
-                    success: function (data) {
-                        swal(data);
-                        window.location.href = "{{ route('member.bitrex-money.bitrex-points') }}";
-                    },
-                    error: function() {
-                        console.log("Error");
-                    }
-                });
-            });
+            Xendit.card.validateCardNumber('4000000000000002');
+            Xendit.card.validateExpiry('12', '2025');
+            Xendit.card.validateCvn('123');
+            Xendit.card.createToken({
+                amount: nominal,
+                card_number: $('#ccNumber').val(),
+                card_exp_month: $('#expMonth').val(),
+                card_exp_year: $('#expYear').val(),
+                card_cvn: cvn,
+                is_multiple_use: false
+            }, xenditResponseHandler);
 
             // $.post("{{ route('member.payment.midtrans') }}",
             // {

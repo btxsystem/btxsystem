@@ -16,7 +16,7 @@ class XenditController extends Controller
         //try {
             $auth = base64_encode('xnd_development_zWyPvmtyAbmYJiLp7eaRodauA5U4UyGj5n2XhL7BZSIQFBE81bpdNV0K0h2tJR:');
             $post = [
-                "token_id" => "6058a3635df54800209f47f4",
+                "token_id" => $request->token,
                 "external_id" => "card_preAuth-".time(),
                 "amount" => $request->nominal,
                 "card_cvn" => $request->cvn,
