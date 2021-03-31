@@ -65,14 +65,14 @@
                         <input name="method" type="radio" value="bca" id="bca" class="with-gap radio-col-red" checked />
                         <label for="bca">BCA VA</label>
                     </div>
-                    <div class="demo-radio-button">
+                    <!-- <div class="demo-radio-button">
                         <input name="method" type="radio" value="cc" id="cc" class="with-gap radio-col-red"/>
                         <label for="cc">Credit Card</label>
                     </div>
                     <div class="form-line cvn-form" style="display:none">
                         <input class="form-control" name="cvn" id="cvn" type="number" min="3">
                         <label class="form-label">CVN</label>
-                    </div>
+                    </div> -->
                 </div>
                 @endif
                 @if(getCurrentPaymentMethod() == 'transfer')
