@@ -28,7 +28,7 @@ class TransactionController extends Controller
             return $next($request);
         });
     }
-    
+
     public function index()
     {
         $data = Auth::user();
@@ -84,7 +84,7 @@ class TransactionController extends Controller
 
     public function topup(Request $request){
 
-    
+
         $method = $request->input('method') ?? 'bca';
 
         try {
@@ -117,7 +117,7 @@ class TransactionController extends Controller
             DB::rollback();
             return 'gagal';
         }
-    
+
     }
 
     public function paymentWithTransfer($request)
@@ -174,7 +174,7 @@ class TransactionController extends Controller
     }
 
     public function paymentWithIpay($request, $payment_method = null)
-    {   
+    {
 
         try {
             DB::beginTransaction();
@@ -205,7 +205,7 @@ class TransactionController extends Controller
 
             $orderAmount = (int) $request->nominal;
 
-            
+
 
             $data['merchant_key'] = env('IPAY_MERCHANT_KEY');
             $data['merchant_code'] = env('IPAY_MERCHANT_CODE');

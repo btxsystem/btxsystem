@@ -95,7 +95,7 @@ Route::get('/video/{file}', 'FileController@serveVideo')->name('serve.video');
 Route::group(['prefix' => 'hall-of-fame', 'as'=> 'hall-of-fame.'], function () {
     Route::get('', ['as' => 'index', 'uses' => 'Member\HallOfFameController@index']);
 });
-Route::post('/login', 'Auth\LoginController@postLogin');
+// Route::post('/login', 'Auth\LoginController@postLogin');
 Route::get('/logout', 'Auth\LoginController@logout');
 Route::post('/finish', 'Member\BitrexPointController@index');
 Route::get('/validate-unique-user', 'ValidationDataController@validateUniqueMemberUsername');
@@ -122,6 +122,8 @@ Route::post('/response-pay-topup', ['as' => 'response.pay.topup', 'uses' => 'Mem
 Route::group(['namespace' => 'Ebook\Api', 'prefix' => 'api/ebook'], function() {
   Route::get('/ebooks', 'EbookController@all')->name('api.ebook.ebooks');
 });
+
+Route::get('/xendit-cardless', ['as' => 'xendit-cardless', 'uses' => 'Member\XenditController@cardlessPayment']);
 
 Route::post('forgot-password', ['as' => 'forgot-password', 'uses' => 'Member\ForgotPasswordController@sendEmail']);
 

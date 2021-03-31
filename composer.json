@@ -27,6 +27,7 @@
         "steevenz/rajaongkir": "^2.2",
         "uxweb/sweet-alert": "^2.0",
         "veritrans/veritrans-php": "^1.2",
+        "xendit/xendit-php": "^2.10",
         "yajra/laravel-datatables-oracle": "^9.4"
     },
     "require-dev": {
