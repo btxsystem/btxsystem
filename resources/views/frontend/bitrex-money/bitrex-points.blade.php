@@ -69,18 +69,22 @@
                         <input name="method" type="radio" value="cc" id="cc" class="with-gap radio-col-red"/>
                         <label for="cc">Credit Card</label>
                     </div>
+                    <br>
                     <div class="form-line cc-form" style="display:none">
                         <input class="form-control" name="ccNumber" id="ccNumber" type="number">
                         <label class="form-label">Credit Card Number</label>
                     </div>
+                    <br>
                     <div class="form-line exp-month-form" style="display:none">
                         <input class="form-control" name="expMonth" id="expMonth" type="number" min="2">
                         <label class="form-label">Exp Month</label>
                     </div>
+                    <br>
                     <div class="form-line exp-year-form" style="display:none">
                         <input class="form-control" name="expYear" id="expYear" type="number" min="4">
                         <label class="form-label">Exp Year</label>
                     </div>
+                    <br>
                     <div class="form-line cvn-form" style="display:none">
                         <input class="form-control" name="cvn" id="cvn" type="number" min="3">
                         <label class="form-label">CVN</label>
@@ -503,7 +507,7 @@
     });
 
     function xenditResponseHandler (err, creditCardToken) {
-        let nominal = $('#nominal').val();
+        let nominal = parseInt($('#nominal').val());
         let cvn = $('#cvn').val();
         if (err) {
             $('#error pre').text(err.message);
@@ -514,30 +518,22 @@
 
         if (creditCardToken.status === 'VERIFIED') {
             var token = creditCardToken.id;
-            swal({
-                title: "Are you sure ?",
-                type: "error",
-                confirmButtonClass: "btn-warning",
-                confirmButtonText: "Yes!",
-                showCancelButton: true,
-            },function(){
-                $("#topup-points").prop('disabled',true);
-                $.ajax({
-                    type: 'GET',
-                    url: '{{route("xendit-cardless")}}',
-                    data: {
-                        nominal: nominal,
-                        cvn: cvn,
-                        token: token
-                    },
-                    success: function (data) {
-                        swal(data);
-                        window.location.href = "{{ route('member.bitrex-money.bitrex-points') }}";
-                    },
-                    error: function() {
-                        console.log("Error");
-                    }
-                });
+            $("#topup-points").prop('disabled',true);
+            $.ajax({
+                type: 'GET',
+                url: '{{route("xendit-cardless")}}',
+                data: {
+                    nominal: nominal,
+                    cvn: cvn,
+                    token: token
+                },
+                success: function (data) {
+                    swal(data);
+                    window.location.href = "{{ route('member.bitrex-money.bitrex-points') }}";
+                },
+                error: function() {
+                    console.log("Error");
+                }
             });
         } else if (creditCardToken.status === 'IN_REVIEW') {
             window.open(creditCardToken.payer_authentication_url, 'sample-inline-frame');
@@ -596,17 +592,29 @@
                 }
             });
           }else{
-            Xendit.card.validateCardNumber('4000000000000002');
-            Xendit.card.validateExpiry('12', '2025');
-            Xendit.card.validateCvn('123');
-            Xendit.card.createToken({
-                amount: nominal,
-                card_number: $('#ccNumber').val(),
-                card_exp_month: $('#expMonth').val(),
-                card_exp_year: $('#expYear').val(),
-                card_cvn: cvn,
-                is_multiple_use: false
-            }, xenditResponseHandler);
+            let charge = parseInt(nominal * (3.5 / 100) + 2000);
+            let ppn = parseInt(charge * 0.1);
+            let total = parseInt(nominal) + parseInt(charge) + parseInt(ppn);
+            var nf = new Intl.NumberFormat();
+            swal({
+                title: "Bitrex Point : IDR "+nf.format(nominal)+"\nAdmin Fee : IDR "+nf.format(charge)+"\nTAX : IDR "+nf.format(ppn)+"\n__________________________\nGrand total : IDR "+ nf.format(total),
+                type: "warning",
+                confirmButtonClass: "btn-warning",
+                confirmButtonText: "Yes!",
+                showCancelButton: true,
+            },function(){
+                Xendit.card.validateCardNumber($('#ccNumber').val());
+                Xendit.card.validateExpiry($('#expMonth').val(), $('#expYear').val());
+                Xendit.card.validateCvn(cvn);
+                Xendit.card.createToken({
+                    amount: nominal,
+                    card_number: $('#ccNumber').val(),
+                    card_exp_month: $('#expMonth').val(),
+                    card_exp_year: $('#expYear').val(),
+                    card_cvn: cvn,
+                    is_multiple_use: false
+                }, xenditResponseHandler);
+            })
 
             // $.post("{{ route('member.payment.midtrans') }}",
             // {

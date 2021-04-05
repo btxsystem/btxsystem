@@ -64,9 +64,9 @@
 <section class="content profile-page">
     <section class="boxs-simple">
         <div class="profile-header">
-            <div class="text-right" style="margin-bottom: 20px; margin-right: 20px;">
+            <!-- <div class="text-right" style="margin-bottom: 20px; margin-right: 20px;">
                 <span id="clock"></span>
-            </div>
+            </div> -->
             <div class="profile_info row">
                 <div class="col-lg-3 col-md-4 col-12">
                     <div class="profile-image float-md-right"> <img src="{{isset($profile['src']) ? asset($profile['src']) : asset('/assetsebook/v2/img/logo-white.png') }}"  alt=""> </div>

@@ -15,10 +15,12 @@ class XenditController extends Controller
     public function cardlessPayment(Request $request) {
         //try {
             $auth = base64_encode('xnd_development_zWyPvmtyAbmYJiLp7eaRodauA5U4UyGj5n2XhL7BZSIQFBE81bpdNV0K0h2tJR:');
+            $adminFee = (int) $request->nominal * (3.5 / 100) + 2000;
+            $ppn = $adminFee * 0.1;
             $post = [
                 "token_id" => $request->token,
                 "external_id" => "card_preAuth-".time(),
-                "amount" => $request->nominal,
+                "amount" => $request->nominal + $adminFee + $ppn,
                 "card_cvn" => $request->cvn,
                 "capture" => "false"
             ];
@@ -42,7 +44,7 @@ class XenditController extends Controller
             $response = json_decode(curl_exec($ch), true);
 
             if ($response['status'] == "CAPTURED") {
-                $this->bitrxpoint($request, $post["external_id"]);
+                $this->bitrxpoint($request, $post["external_id"], $request->nominal + $adminFee + $ppn);
                 return "success";
             }else{
                 return "failed";
@@ -52,16 +54,16 @@ class XenditController extends Controller
         // }
     }
 
-    public function bitrxpoint(Request $request, $ref) {
+    public function bitrxpoint(Request $request, $ref, $total) {
         // try {
 
         //     DB::beginTransaction();
 
             DB::table('history_bitrex_point')->insert([
                 'id_member' => Auth::user()->id,
-                'nominal' => $request->nominal,
+                'nominal' => $total,
                 'points' => $request->nominal/1000,
-                'description' => 'Topup Bitrex Point',
+                'description' => 'Topup Bitrex Point Via Credit Card',
                 'info' => 1,
                 'transaction_ref' => $ref,
                 'status' => 1,
