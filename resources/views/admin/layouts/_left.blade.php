@@ -50,7 +50,7 @@
                     <li class="{{ (request()->is('backoffice/members/active')) ? 'active' : '' }}">
                         <a href="{{ route('members.active.index') }}">
                             <i class="fa fa-angle-double-right"></i>
-                            Members Active
+                            Member Active
                         </a>
                     </li>
                 @endif
@@ -58,15 +58,15 @@
                     <li class="{{ (request()->is('backoffice/members/nonactive')) ? 'active' : '' }}">
                         <a href="{{ route('members.nonactive.index') }}">
                             <i class="fa fa-angle-double-right"></i>
-                            Member Nonactive
+                            Member Non-active
                         </a>
                     </li>
                 @endif
                 @if(\Auth::guard('admin')->user()->hasPermission('Members.add-expired'))
                     <li class="{{ (request()->is('backoffice/member-expired')) ? 'active' : '' }}">
-                        <a href="{{ route('member-expired.index') }}">
+                        <a href="{{ route('members.banned.index') }}">
                             <i class="fa fa-angle-double-right"></i>
-                            Add Expired Member
+                            Member Banned
                         </a>
                     </li>
                 @endif
@@ -133,6 +133,14 @@
         </a>
     </li>
     @endif
+
+    <li class="{{ (request()->is('backoffice/list-va')) ? 'active' : '' }}">
+        <a href="{{ route('list-va') }}">
+            <i class="fa fa-credit-card" style="color: #6CC66C" data-name="money" data-size="18" data-c="#6CC66C" data-hc="#6CC66C"
+            data-loop="true"></i>
+            List Credit Card
+        </a>
+    </li>
 
     @if(\Auth::guard('admin')->user()->hasPermission('Claim_rewards'))
         <li class="{{ (request()->is('backoffice/reward-claims')) ? 'active' : '' }}">

@@ -66,7 +66,7 @@
     }
 
     .wrap-img{
-        border-radius: 50%; width: 100px; height: 100px; overflow: hidden; padding-bottom: 15px;
+        border-radius: 50%; width: 200px; height: 200px; overflow: hidden; padding-bottom: 15px;
     }
 
     .img-user rounded-circle {
@@ -78,13 +78,13 @@
     }
 
     .img-frame {
-        position: absolute; width: 100px; height: 100px;
+        position: absolute; width: 160px; height: 160px;
     }
-    
+
     .wrap-img-platinum {
         border-radius: 50%; width: 100px; height: 100px; overflow: hidden;
     }
-    
+
     .img-frame-platinum {
         position: absolute;
         width: 50px;
@@ -97,8 +97,8 @@
         margin-right: 40px !important;
     }
     .wrap-img .img-user {
-        height: 60px !important;
-        width: 60px !important;
+        height: 100px !important;
+        width: 100px !important;
     }
     .platinum {
         text-align: center;
@@ -350,7 +350,7 @@ body {
                 {{$data['chairman2']->links()}}
             </section>
             @endif
-            
+
             @if(count($data['chairman1']) > 0)
             <section id="chairman_1">
                 <div class="row bg-gray" style="margin-bottom: 30px; padding-bottom: 15px;">
@@ -455,7 +455,7 @@ body {
                     ?>
                     @foreach ($data['platinum3'] as $item)
                         <div class="p-3 d-flex justify-content-center"
-                         style="width: 20%; 
+                         style="width: 20%;
                          <?php
                          switch ($last) {
                             case '2':
@@ -477,7 +477,7 @@ body {
                                     echo "margin-left: 20%;";
                                 }
                                 break;
-                             
+
                             case '6':
                                 if ($getLast == 2 && $first == 0
                                     || $getLast == 7 && $first == 1
@@ -530,7 +530,7 @@ body {
                     $last = substr($count / 5, strpos($count / 5, ".") + 1);
                     ?>
                     @foreach ($data['platinum2'] as $item)
-                        <div class="g-line p-3 d-flex justify-content-center" 
+                        <div class="g-line p-3 d-flex justify-content-center"
                         style="width: 20%;
                         <?php
                          switch ($last) {
@@ -553,7 +553,7 @@ body {
                                     echo "margin-left: 20%;";
                                 }
                                 break;
-                             
+
                             case '6':
                                 if ($getLast == 2 && $first == 0
                                     || $getLast == 7 && $first == 1
@@ -590,7 +590,7 @@ body {
                 {{$data['platinum2']->links()}}
             </section>
             @endif
-            
+
             @if(count($data['platinum1']) > 0)
             <section id="platinum_1">
                 <div class="row bg-gray" style="margin-bottom: 30px; padding-bottom: 15px;">

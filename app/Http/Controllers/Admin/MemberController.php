@@ -24,10 +24,74 @@ use App\Models\TransactionMemberPromotion;
 
 class MemberController extends Controller
 {
+    public function banned(Request $request){
+        if (request()->ajax()) {
+
+            if($request->from_date)
+            {
+                $to_date = date('Y-m-d',strtotime($request->to_date . "+1 days"));
+                // $from_date = date('Y-m-d',strtotime($request->from_date . "+1 days"));
+                $data = Employeer::where('employeers.status', '!=', 1)
+                ->whereBetween('created_at', [$request->from_date, $to_date])
+                ->with(
+                        'rank',
+                        'sponsor',
+                        'archive',
+                        'lastArchive'
+                        )
+                ->select('employeers.id','id_member','username','first_name','last_name','rank_id','sponsor_id','employeers.created_at','employeers.status');
+            }
+            else {
+                $data = Employeer::where('employeers.status', '!=', 1)
+                ->with(
+                        'rank',
+                        'sponsor',
+                        'archive',
+                        'lastArchive'
+                        )
+                ->select('employeers.id','id_member','username','first_name','last_name','rank_id','sponsor_id','employeers.created_at','employeers.status');
+            }
+
+            return Datatables::of($data)
+                    ->addIndexColumn()
+                    ->editColumn('status', function($data) {
+                        return $data->status == 0 ? 'Active' : 'Nonactive' ;
+                    })
+                    ->editColumn('full_name', function($data) {
+                        return $data->first_name .' '. $data->last_name;
+                    })
+                    ->editColumn('join_at', function($data){
+                        return isset($data->created_at) ?  date_format($data->created_at,"d M Y") : date_format($data['created_at'],"d M Y");
+                    })
+                    // ->editColumn('archive',function($data){
+                    //     if (!isset($data->archive[0]) || $data->archive[0] == null) {
+                    //         return '-';
+                    //     }else{
+                    //         return isset($data->archive[0]->created_at) ? date_format($data->archive[0]->created_at,"d M Y") : date_format($data->archive[0]['created_at'],"d M Y");
+                    //     }
+                    // })
+                    ->editColumn('lastArchive', function($data) {
+                        return $data->lastArchive ? date_format($data->lastArchive->created_at, "d M Y"): '-';
+                    })
+                    ->editColumn('ranking', function($data) {
+                        return $data->rank ? $data->rank->name : '-';
+                    })
+                    ->editColumn('sponsor', function($data) {
+                        return $data->sponsor ? $data->sponsor->username : '-';
+                    })
+                    ->addColumn('action', function($row) {
+                        return $this->htmlAction($row);
+                    })
+                    ->rawColumns(['action'])
+                    ->make(true);
+        }
+
+        return view('admin.members.banned.index');
+    }
     public function index(Request $request)
     {
         if (request()->ajax()) {
-            
+
             if($request->from_date)
             {
                 $to_date = date('Y-m-d',strtotime($request->to_date . "+1 days"));
@@ -47,9 +111,9 @@ class MemberController extends Controller
                 ->with(
                         'rank',
                         'sponsor',
-                        'archive', 
+                        'archive',
                         'lastArchive'
-                        ) 
+                        )
                 ->select('employeers.id','id_member','username','first_name','last_name','rank_id','sponsor_id','employeers.created_at','employeers.status');
             }
 
@@ -109,7 +173,7 @@ class MemberController extends Controller
     public function member_hall_of_fame(Request $request)
     {
         if (request()->ajax()) {
-            
+
             if($request->from_date)
             {
                 $to_date = date('Y-m-d',strtotime($request->to_date . "+1 days"));
@@ -123,7 +187,7 @@ class MemberController extends Controller
                 $data = Employeer::where('employeers.status', 1)
                 ->where('rank_id', '!=', null)
                 ->where('rank_id', '!=', '')
-                ->with('rank','sponsor','archive', 'lastArchive') 
+                ->with('rank','sponsor','archive', 'lastArchive')
                 ->select('employeers.id','id_member','username','first_name','last_name','rank_id','sponsor_id','employeers.created_at','employeers.status', 'employeers.show_hall_of_fame');
             }
 
@@ -430,7 +494,7 @@ class MemberController extends Controller
                     ]);
                 }
             }
-            
+
             $data->nik = $data->nik;
             $data->first_name = $request->first_name;
             $data->username = $request->username;
@@ -715,7 +779,7 @@ class MemberController extends Controller
                     Alert::error('Gagal Menambahkan Masa Aktif Ebook, Penambahan Harus lebih besar dari tanggal sebelumnya', 'Gagal');
                     return redirect()->back();
                 }
-                
+
                 $previousDate = Carbon::parse($totalTransaction->expired_at);
 
                 $now = Carbon::parse($date);

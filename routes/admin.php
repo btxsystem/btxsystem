@@ -132,6 +132,9 @@ Route::group(['middleware' => 'admin'], function () {
     //list va
     Route::get('list-va','Admin\ListVaController@index')->name('list-va');
 
+    //list CC
+    Route::get('list-cc','Admin\ListCcController@index')->name('list-cc');
+
     //dashboard-value
     Route::get('dashboard-values','Admin\DashboardValuesController@data')->name('dashboard-values');
     Route::get('analayzer/generate','Admin\DashboardValuesController@analyzer')->name('dashboard-analyzer');
@@ -222,6 +225,10 @@ Route::group(['middleware' => 'admin'], function () {
         Route::group(['prefix' => 'nonactive','as'=>'nonactive.'], function () {
             Route::get('', ['as' => 'index', 'uses' => 'Admin\MemberController@member_nonactive']);
             Route::get('/active/{id}', ['as' => 'active', 'uses' => 'Admin\MemberController@active']);
+        });
+
+        Route::group(['prefix' => 'banned','as'=>'banned.'], function () {
+            Route::get('', ['as' => 'index', 'uses' => 'Admin\MemberController@banned']);
         });
 
         Route::get('/export-data', ['as' => 'export-data', 'uses' => 'Admin\MemberController@export']);
