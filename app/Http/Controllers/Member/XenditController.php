@@ -15,6 +15,7 @@ class XenditController extends Controller
     public function cardlessPayment(Request $request) {
         //try {
             $auth = base64_encode('xnd_production_q7IQLscxs5kuVcauRwSoXc0awxll7zunJXP4XaI7uulO23od2vmYHezRW9MkWDA:');
+            dd($auth);
             $adminFee = (int) $request->nominal * (3.5 / 100) + 2000;
             $ppn = $adminFee * 0.1;
             $post = [

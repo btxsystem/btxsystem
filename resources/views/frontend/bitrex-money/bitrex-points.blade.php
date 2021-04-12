@@ -65,10 +65,10 @@
                         <input name="method" type="radio" value="bca" id="bca" class="with-gap radio-col-red" checked />
                         <label for="bca">BCA VA</label>
                     </div>
-                    <div class="demo-radio-button">
+                    <!-- <div class="demo-radio-button">
                         <input name="method" type="radio" value="cc" id="cc" class="with-gap radio-col-red"/>
                         <label for="cc">Credit Card</label>
-                    </div>
+                    </div> -->
                     <br>
                     <div class="form-line cc-form" style="display:none">
                         <input class="form-control" name="ccNumber" id="ccNumber" type="number">
@@ -597,7 +597,7 @@
             let total = parseInt(nominal) + parseInt(charge) + parseInt(ppn);
             var nf = new Intl.NumberFormat();
             swal({
-                title: "Bitrex Point : IDR "+nf.format(nominal)+"\nAdmin Fee : IDR "+nf.format(charge)+"\nTAX : IDR "+nf.format(ppn)+"\n__________________________\nGrand total : IDR "+ nf.format(total),
+                title: "Bitrex Point : IDR "+nf.format(nominal)+"\nAdmin Fee + TAX : IDR "+nf.format(charge + ppn)+"\n__________________________\nGrand total : IDR "+ nf.format(total),
                 type: "warning",
                 confirmButtonClass: "btn-warning",
                 confirmButtonText: "Yes!",
