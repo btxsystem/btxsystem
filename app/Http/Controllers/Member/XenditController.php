@@ -37,22 +37,24 @@ class XenditController extends Controller
         header("Content-Type:application/json", 'x-callback-token: 8682835e2a23bcbc0f9d4a05a2bbdeac75a0e428583bf5563d54b4f411c62ef5');
         $data = json_decode(file_get_contents('php://input'), true);
         $findData = Exend::where('external_id', $data['external_id'])->first();
-        $statusTrx = 6;
-        if($data['status'] == 'PAID') {
-            $statusTrx = 1;
-            $req = [
-                "user_id" => $findData->user_id,
-                "total" => $findData->nominal,
-                "bank" => $findData->bank
-            ];
-            $this->bitrxpoint($req);
-        }else if($data['status'] == 'EXPIRED') {
-            $statusTrx = 0;
+        if($findData){
+            $statusTrx = 6;
+            if($data['status'] == 'PAID') {
+                $statusTrx = 1;
+                $req = [
+                    "user_id" => $findData->user_id,
+                    "total" => $findData->nominal,
+                    "bank" => $findData->bank
+                ];
+                $this->bitrxpoint($req);
+            }else if($data['status'] == 'EXPIRED') {
+                $statusTrx = 0;
+            }
+            $findData->update([
+                'status' => $statusTrx,
+                'bank' => $data['bank_code'],
+            ]);
         }
-        $findData->update([
-            'status' => $statusTrx,
-            'bank' => $data['bank_code'],
-        ]);
         return redirect('/');
     }
 
