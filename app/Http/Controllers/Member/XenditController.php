@@ -36,12 +36,13 @@ class XenditController extends Controller
     public function callback() {
         header("Content-Type:application/json", 'x-callback-token: 8682835e2a23bcbc0f9d4a05a2bbdeac75a0e428583bf5563d54b4f411c62ef5');
         $data = json_decode(file_get_contents('php://input'), true);
+        dd($data);
         $findData = Exend::where('external_id', $data['external_id'])->first();
         $statusTrx = 6;
         if($data['status'] == 'PAID') {
             $statusTrx = 1;
             $req = [
-                "user_id" => 1,
+                "user_id" => $findData->user_id,
                 "total" => $findData->nominal,
                 "bank" => $findData->bank
             ];
@@ -55,6 +56,7 @@ class XenditController extends Controller
         ]);
         return redirect('/');
     }
+
     public function cardlessPayment(Request $request) {
         //try {
             $auth = base64_encode('xnd_production_q7IQLscxs5kuVcauRwSoXc0awxll7zunJXP4XaI7uulO23od2vmYHezRW9MkWDA:');
