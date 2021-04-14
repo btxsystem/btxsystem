@@ -25,7 +25,7 @@ class XenditController extends Controller
             'external_id' => $params["external_id"],
             'xendit_id' => $createInvoice["id"],
             'user_id' => Auth::user()->id,
-            'nominal' => $params["amount"],
+            'nominal' => $request->nominal,
             'bank' => '0',
             'tax' => $request->tax,
             'status' => 6
@@ -44,6 +44,7 @@ class XenditController extends Controller
                 $req = [
                     "user_id" => $findData->user_id,
                     "total" => $findData->nominal,
+                    "tax" => $findData->tax,
                     "bank" => $findData->bank,
                     "ref" => $findData->xendit_id
                 ];
@@ -104,7 +105,7 @@ class XenditController extends Controller
     public function bitrxpoint($request) {
         DB::table('history_bitrex_point')->insert([
             'id_member' => $request["user_id"],
-            'nominal' => $request["total"],
+            'nominal' => $request["total"] + $request["tax"],
             'points' => $request["total"]/1000,
             'description' => 'Topup Bitrex Point Via Xendit '. $request["bank"],
             'info' => 1,
