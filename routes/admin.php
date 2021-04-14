@@ -173,8 +173,6 @@ Route::group(['middleware' => 'admin'], function () {
 
     Route::resource('member-expired', 'Admin\MemberExpiredController');
 
-
-
     Route::group(['prefix'=>'trainings','as'=>'trainings.'],function(){
         Route::get('', ['as' => 'index', 'uses' => 'Admin\TrainingController@index']);
         Route::get('create', ['as' => 'create', 'uses' => 'Admin\TrainingController@create']);

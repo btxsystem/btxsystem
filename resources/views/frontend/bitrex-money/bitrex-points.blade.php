@@ -65,12 +65,12 @@
                         <input name="method" type="radio" value="bca" id="bca" class="with-gap radio-col-red" checked />
                         <label for="bca">BCA VA</label>
                     </div>
-                    <!-- <div class="demo-radio-button">
+                    <div class="demo-radio-button">
                         <input name="method" type="radio" value="cc" id="cc" class="with-gap radio-col-red"/>
                         <label for="cc">Credit Card</label>
-                    </div> -->
+                    </div>
                     <br>
-                    <div class="form-line cc-form" style="display:none">
+                    <!-- <div class="form-line cc-form" style="display:none">
                         <input class="form-control" name="ccNumber" id="ccNumber" type="number">
                         <label class="form-label">Credit Card Number</label>
                     </div>
@@ -88,7 +88,7 @@
                     <div class="form-line cvn-form" style="display:none">
                         <input class="form-control" name="cvn" id="cvn" type="number" min="3">
                         <label class="form-label">CVN</label>
-                    </div>
+                    </div> -->
                 </div>
                 @endif
                 @if(getCurrentPaymentMethod() == 'transfer')
@@ -423,10 +423,8 @@
         $('#success-button').prop('class', "btn btn-md topup");
         topupPoint();
     })
-
     $(document).ready(function () {
-
-
+    $('input[type=number]').on('wheel',function(e){ $(this).blur(); });
     <?php if(getCurrentPaymentMethod() == 'va'):?>
         let is_bca_method = true;
     <?php else:?>
@@ -506,45 +504,6 @@
         }
     });
 
-    function xenditResponseHandler (err, creditCardToken) {
-        let nominal = parseInt($('#nominal').val());
-        let cvn = $('#cvn').val();
-        if (err) {
-            $('#error pre').text(err.message);
-            $('#error').show();
-            swal(err.message);
-            return;
-        }
-
-        if (creditCardToken.status === 'VERIFIED') {
-            var token = creditCardToken.id;
-            $("#topup-points").prop('disabled',true);
-            $.ajax({
-                type: 'GET',
-                url: '{{route("xendit-cardless")}}',
-                data: {
-                    nominal: nominal,
-                    cvn: cvn,
-                    token: token
-                },
-                success: function (data) {
-                    swal(data);
-                    window.location.href = "{{ route('member.bitrex-money.bitrex-points') }}";
-                },
-                error: function() {
-                    console.log("Error");
-                }
-            });
-        } else if (creditCardToken.status === 'IN_REVIEW') {
-            window.open(creditCardToken.payer_authentication_url, 'sample-inline-frame');
-            $('#three-ds-container').show();
-        } else if (creditCardToken.status === 'FAILED') {
-            $('#error pre').text(creditCardToken.failure_reason);
-            $('#error').show();
-            swal(creditCardToken.status); // Re-enable submission
-        }
-    }
-
       $('#topup-points').click(function(){
           let nominal = $('#nominal').val();
           let cvn = $('#cvn').val();
@@ -592,10 +551,12 @@
                 }
             });
           }else{
+
             let charge = parseInt(nominal * (3.5 / 100) + 2000);
             let ppn = parseInt(charge * 0.1);
             let total = parseInt(nominal) + parseInt(charge) + parseInt(ppn);
             var nf = new Intl.NumberFormat();
+
             swal({
                 title: "Bitrex Point : IDR "+nf.format(nominal)+"\nAdmin Fee + TAX : IDR "+nf.format(charge + ppn)+"\n__________________________\nGrand total : IDR "+ nf.format(total),
                 type: "warning",
@@ -603,17 +564,20 @@
                 confirmButtonText: "Yes!",
                 showCancelButton: true,
             },function(){
-                Xendit.card.validateCardNumber($('#ccNumber').val());
-                Xendit.card.validateExpiry($('#expMonth').val(), $('#expYear').val());
-                Xendit.card.validateCvn(cvn);
-                Xendit.card.createToken({
-                    amount: nominal,
-                    card_number: $('#ccNumber').val(),
-                    card_exp_month: $('#expMonth').val(),
-                    card_exp_year: $('#expYear').val(),
-                    card_cvn: cvn,
-                    is_multiple_use: false
-                }, xenditResponseHandler);
+
+                $("#topup-points").prop('disabled',true);
+                $.ajax({
+                    type: 'POST',
+                    url: '{{route("xendit-payment")}}',
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        nominal: nominal,
+                        tax: charge + ppn
+                    },
+                    success: function (data) {
+                        window.location.replace(data.invoice_url);
+                    }
+                });
             })
 
             // $.post("{{ route('member.payment.midtrans') }}",
