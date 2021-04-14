@@ -33,10 +33,10 @@ class XenditController extends Controller
         return $createInvoice;
     }
 
-    public function callback(Request $request) {
+    public function callback() {
         header("Content-Type:application/json", 'x-callback-token: 8682835e2a23bcbc0f9d4a05a2bbdeac75a0e428583bf5563d54b4f411c62ef5');
         $data = json_decode(file_get_contents('php://input'), true);
-        $findData = Exend::where('external_id', $data['external_id'])->first();
+        $findData = Exend::where('xendit_id', $data['external_id'])->first();
         if($findData){
             $statusTrx = 6;
             if($data['status'] == 'PAID') {
@@ -44,7 +44,8 @@ class XenditController extends Controller
                 $req = [
                     "user_id" => $findData->user_id,
                     "total" => $findData->nominal,
-                    "bank" => $findData->bank
+                    "bank" => $findData->bank,
+                    "ref" => $findData->xendit_id
                 ];
                 $this->bitrxpoint($req);
             }else if($data['status'] == 'EXPIRED') {
@@ -55,7 +56,7 @@ class XenditController extends Controller
                 'bank' => $data['bank_code'],
             ]);
         }
-        return redirect('/');
+        return response()->json($data);
     }
 
     public function cardlessPayment(Request $request) {
@@ -100,21 +101,21 @@ class XenditController extends Controller
         // }
     }
 
-    public function bitrxpoint(Request $request) {
+    public function bitrxpoint($request) {
         DB::table('history_bitrex_point')->insert([
-            'id_member' => $request->user_id,
-            'nominal' => $request->total,
-            'points' => $request->total/1000,
-            'description' => 'Topup Bitrex Point Via Xendit '. $request->bank,
+            'id_member' => $request["user_id"],
+            'nominal' => $request["total"],
+            'points' => $request["total"]/1000,
+            'description' => 'Topup Bitrex Point Via Xendit '. $request["bank"],
             'info' => 1,
-            'transaction_ref' => $request->ref,
+            'transaction_ref' => $request["ref"],
             'status' => 1,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
         ]);
-        $member = Employeer::where('id', $request->user_id)->first();
+        $member = Employeer::where('id', $request["user_id"])->first();
         $member->update([
-            'bitrex_points' => $member->bitrex_points + $request->total/1000
+            'bitrex_points' => $member["bitrex_points"] + $request["total"]/1000
         ]);
         return $member;
     }
