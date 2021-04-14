@@ -34,9 +34,10 @@ class XenditController extends Controller
     }
 
     public function callback(Request $request) {
-        header("Content-Type:application/json", 'x-callback-token: 8682835e2a23bcbc0f9d4a05a2bbdeac75a0e428583bf5563d54b4f411c62ef5');
-        $data = json_decode(file_get_contents('php://input'), true);
-        dd($request);
+        // header("Content-Type:application/json", 'x-callback-token: 8682835e2a23bcbc0f9d4a05a2bbdeac75a0e428583bf5563d54b4f411c62ef5');
+        // dd($data);
+        // $data = json_decode(file_get_contents('php://input'), true);
+        dd(response()->json($request->all()));
         $findData = Exend::where('external_id', $data['external_id'])->first();
         $statusTrx = 6;
         if($data['status'] == 'PAID') {
