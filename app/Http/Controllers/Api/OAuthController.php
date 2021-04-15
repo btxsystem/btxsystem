@@ -22,7 +22,7 @@ class OAuthController extends Controller
       $basicAuth = str_replace("Basic ", "", $request->header("Authorization"));
       $basicAuthDecode = base64_decode($basicAuth);
       $basicAuthDecodeSplit = explode(":", $basicAuthDecode);
-      
+
       //client
       $grantType = $request->input('grant_type') ?? '';
       $clientId = $basicAuthDecodeSplit[0] ?? 0;
@@ -44,7 +44,7 @@ class OAuthController extends Controller
             'English' => 'Invalid client_id/client_secret/grant_type'
           ]
         ], 400);
-      } 
+      }
 
       return response()->json([
         'access_token' => $result['access_token'],
