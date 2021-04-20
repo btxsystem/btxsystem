@@ -67,7 +67,7 @@
                     </div>
                     <div class="demo-radio-button">
                         <input name="method" type="radio" value="cc" id="cc" class="with-gap radio-col-red"/>
-                        <label for="cc">Credit Card</label>
+                        <label for="cc">Other Payment (Credit Card, Bank Transfer & E-money)</label>
                     </div>
                     <br>
                     <!-- <div class="form-line cc-form" style="display:none">
@@ -266,6 +266,33 @@
     </div>
 </div>
 
+<div class="modal fade" id="transferBp" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="form-line">
+                    <input class="form-control" name="username_bp" id="username_bp" type="text">
+                    <label class="form-label">Username</label>
+                </div>
+                <p id="username_danger" style="color:red"></p>
+                <div class="username_confirm">
+
+                </div>
+                <br>
+                <div class="form-line">
+                    <input class="form-control" name="nominal_bp" id="nominal_bp" type="number" min="1">
+                    <label class="form-label">Nominal (Bitrex Points)</label>
+                </div>
+                <p id="nominal_bp_danger" style="color:red"></p>
+            </div>
+            <div class="modal-footer">
+                <a href="#" class="btn btn-secondary" data-dismiss="modal">Close</a>
+                <button type="button" class="btn btn-primary sendBp" style="cursor:pointer" disabled>Send</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="modal fade" id="convert" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -325,10 +352,21 @@
                     <hr>
                 </div>
                 <div class="body">
+                    <a href="#" class="btn btn-md btn-info" data-toggle="modal" data-target="#transferBp" id="success-button">Transfer Bitrex Points</a>
+                </div>
+                <br> <br>
+                <div>
+                    <hr>
+                </div>
+                <div class="body">
                     <a href="#" class="btn btn-primary btn-md topup" data-toggle="modal" data-target="#topup">Topup</a>
                     <a href="#" class="btn btn-primary btn-md cek-ongkir" data-toggle="modal" data-target="#cekongkir">Cek Ongkir</a>
                     {{--<a href="#" class="btn btn-primary btn-md convert" data-toggle="modal" data-target="#convert">Convert to BV</a>--}}
                     <h5 class="d-flex flex-row-reverse">Bitrex Points: {{number_format($profile->bitrex_points,0,".",".")}}</h5>
+                </div>
+                <br> <br>
+                <div>
+                    <hr>
                 </div>
             </div>
         </div>
@@ -417,6 +455,96 @@
         $('#failed-button').prop('class', "btn btn-md topup");
         bitrexPoint();
     })
+
+    var cekValidateUsername = false;
+    var cekValidateBP = false;
+
+    $('#nominal_bp').keyup(function(){
+        cekBP(this.value);
+    });
+
+    function cekTermSendBP(){
+        cekValidateBP && cekValidateUsername ?  $('.sendBp').prop('disabled', false): $('.sendBp').prop('disabled', true);
+    }
+
+    $('.sendBp').click(function(){
+        $.ajax({
+			type: 'POST',
+			url: '/member/sendBp/store',
+            data:
+            {
+                "_token": "{{ csrf_token() }}",
+                username : $('#username_bp').val(),
+                bitrex_points : $('#nominal_bp').val()
+            },
+			success: function (data) {
+                if (data.success == 1) {
+                    swal("Success", "Transfer Success!", "success");
+                }else{
+                    swal("Failed", "Transfer Failed!", "warning");
+                }
+                window.location.href = '/income-and-expenses/bitrex-points'
+			},
+			error: function() {
+				console.log("Error");
+			}
+		});
+    })
+
+    function cekBP(bp){
+        let totalBP = '{{Auth::user()->bitrex_points}}';
+        if (parseInt(bp) > parseInt(totalBP)) {
+            $('#nominal_bp_danger').text('your balance is less');
+        }else if (bp == '') {
+            $('#nominal_bp_danger').text('Bitrex Point is required');
+        }else{
+            $('#nominal_bp_danger').empty();
+        }
+        if (parseInt(bp) <= parseInt(totalBP) && bp != '') {
+            cekValidateBP = true;
+        }else{
+            cekValidateBP = false;
+        }
+        cekTermSendBP();
+    }
+
+    function cekUsername(username){
+        let myUsername = '{{Auth::user()->username}}';
+        let cek = /^[a-zA-Z0-9_]*$/.test(username);
+		username = !cek ? username.match(/[a-zA-Z0-9_]/g).join('') : username;
+		var text = username;
+		$.ajax({
+			type: 'GET',
+			url: '/member/select/username/'+text,
+			success: function (data) {
+                if (!data.username) {
+                    $('#username_danger').text('username you entered doesn\'t exists')
+                    $(".username_confirm").html('');
+                }else if(username == myUsername){
+				    $('#username_danger').text('can not send bp to your self')
+                    $(".username_confirm").html('');
+                }else{
+                    $.ajax({
+                        url: '/member/select/user/'+text,
+                        success:function(data){
+                            $(".username_confirm").html('<div class="form-control fullname_user">Fullname : '+data.first_name+' '+data.last_name+'</div><div class="form-control id_user">User ID : '+data.id_member+'</div>');
+                        }
+                    });
+                    $('#username_danger').empty();
+                }
+				cekValidateUsername = !data.username || username == myUsername ? false  : true;
+			},
+			error: function() {
+				console.log("Error");
+			}
+		});
+        cekTermSendBP();
+    }
+
+    $('#username_bp').keyup(function(){
+		let username = this.value;
+        cekUsername(username);
+	})
 
     $('#failed-button').click(function(){
         $('#failed-button').prop('class', "btn btn-md btn-info topup");
@@ -1008,21 +1136,21 @@
         check_button_disabled()
     })
 
-    $('#points-convert').keyup(function(){
-        $('#convert-bp').prop('disabled', false);
-        let bp = {!!$profile->bitrex_points!!};
-        var points = 'IDR ' + addCommas(this.value * 1000);
-        $('#nominal-convert').val(points);
-        $('#bitrex-val').val(this.value*1000);
-        var check = /^[0-9]+$/.test(this.value);
-        if (bp >= this.value && check) {
-            $('#convert-bp').prop('disabled', false);
-        }else{
-            $('#convert-bp').prop('disabled', true);
-        }
+    // $('#points-convert').keyup(function(){
+    //     $('#convert-bp').prop('disabled', false);
+    //     let bp = {!!$profile->bitrex_points!!};
+    //     var points = 'IDR ' + addCommas(this.value * 1000);
+    //     $('#nominal-convert').val(points);
+    //     $('#bitrex-val').val(this.value*1000);
+    //     var check = /^[0-9]+$/.test(this.value);
+    //     if (bp >= this.value && check) {
+    //         $('#convert-bp').prop('disabled', false);
+    //     }else{
+    //         $('#convert-bp').prop('disabled', true);
+    //     }
 
-        check_button_disabled()
-    })
+    //     check_button_disabled()
+    // })
 
     $('.demo-radio-button input').change(function() {
       $(this).val() == "transfer" ? $('#transfer-form').show() : $('#transfer-form').hide();

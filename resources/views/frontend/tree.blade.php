@@ -337,7 +337,7 @@
 							<div class="col-md-12">
 								<br>
 								<div class="chart" id="tree">
-									
+
 								</div>
 								<div id="overlay">
 									<div class="cv-spinner">
@@ -849,7 +849,7 @@ em{
 				${render}
 			</div>
 		`)
-		
+
 		$('#checkboxEbook input[type=checkbox]').each(function() {
 			if(parseInt($(this).val()) == 1) {
 			$(this).prop('checked', true)
@@ -911,14 +911,14 @@ em{
 			}
 
 			n=ebookSelected.length; //Tambah value untuk stored temporary
-			
+
 			let cancelledEbook = false;
-		
+
 			if(n>=2 && $(this).prop("checked")){
 				var r = confirm("Apakah Anda yakin membeli " + n +" ebook?");
 				if (r == true) {
 
-				} else { 
+				} else {
 					cancelledEbook = true
 					$(this).prop("checked", false)
 					ebookSelected.splice(indexEbook,1)
@@ -934,7 +934,7 @@ em{
 				var r = confirm("Apakah Anda yakin membeli 2 ebook?");
 				if (r == true) {
 
-				} else { 
+				} else {
 					cancelledEbook = true
 					$(this).prop("checked", false)
 				}
@@ -959,11 +959,11 @@ em{
 
 			// 		if($(this).data('promotion')) {
 			// 			priceEbook = priceEbook - (parseInt($(this).data('price')) - parseInt($(this).data('price-discount')));
-			// 		} else {	
+			// 		} else {
 			// 			priceEbook = priceEbook - parseInt($(this).data('price'));
 			// 		}
 			// 	}
-				
+
 			// }*/
 
 			priceEbook = 0
@@ -985,7 +985,7 @@ em{
 							priceEbook = priceEbook + (parseInt(price) - parseInt(priceDiscount));
 							totalDiscount += parseInt(priceDiscount)
 
-							/*jika member sudah pilih ebook yg ada discount, 
+							/*jika member sudah pilih ebook yg ada discount,
 								maka blok dan cek apakah ebook lain bisa dapat discount juga
 								Jika belum memilih, masukan nilai id ebook yang promosi ke temporary
 							*/
@@ -1011,12 +1011,12 @@ em{
 						if(isPromotion && isRegisterPromotion && ebookSelected.length <= maximumProduct) {
 							priceEbook = priceEbook - (parseInt(price) - parseInt(priceDiscount));
 							totalDiscount -= parseInt(priceDiscount)
-						} else {	
+						} else {
 							priceEbook = priceEbook - parseInt(price);
 						}
 					}
 				}
-				
+
 			})
 
 			// parsing value
@@ -1041,7 +1041,7 @@ em{
 			} else {
 				$('#total-discount-tr').hide()
 			}
-			
+
 			if(priceEbook != 0) {
 				$('#cost-ebook').parent().removeClass('hidden');
 			} else {
@@ -1233,7 +1233,6 @@ em{
 		} else {
 			if(bitrexPoint < grandTotal) {
 				$('.register').prop('disabled', true)
-				console.log('false')
 				check_cost = false
 			} else {
 				check_cost = true
@@ -1254,7 +1253,7 @@ em{
 		$('#district').empty().trigger('change');
 		$('#kurir').empty().trigger('change');
 		grandTotal = (priceEbook + postalFee + 280000) / 1000;
-		
+
 		if(is_va) {
 			check_cost = true
 		} else {
@@ -1274,7 +1273,7 @@ em{
 		grandTotal -= postalFee;
 		postalFee = 0;
 		grandTotal = (priceEbook - postalFee + 280000) / 1000;
-		
+
 		if(is_va) {
 			check_cost = true
 		} else {

@@ -26,11 +26,58 @@ class BitrexPointController extends Controller
             return $next($request);
         });
     }
-    
+
     public function index()
     {
         $data = Auth::user();
         return view('frontend.bitrex-money.bitrex-points')->with('profile',$data);
+    }
+
+    public function sendBP(Request $request)
+    {
+        $user = Auth::user();
+        $employ = Employeer::where('username', $request->username)->first();
+        if (!$employ || $request->bitrex_points == '' || $request->bitrex_points < 1 || $request->username == '' || $request->username == $user->username || (int) $user->bitrex_points < (int) $request->bitrex_point) {
+            return response()->json(
+                [
+                    'success' => 0,
+                    'message' => 'your balance is less'
+                ]
+            );
+        }else{
+            $user->bitrex_points = $user->bitrex_points - $request->bitrex_points;
+            $employ->bitrex_points = $employ->bitrex_points + $request->bitrex_points;
+
+            $user->save();
+            $employ->save();
+
+            $historyBpUser = new HistoryBitrexPoints;
+            $historyBpUser->id_member = $user->id;
+            $historyBpUser->info = 0;
+            $historyBpUser->description = 'Send Bitrex Point to '.$employ->username;
+            $historyBpUser->nominal = $request->bitrex_points * 1000;
+            $historyBpUser->points = $request->bitrex_points;
+            $historyBpUser->status = 1;
+            $historyBpUser->transaction_ref = 'TRF'.time();
+            $historyBpUser->save();
+
+            $historyBpEmploy = new HistoryBitrexPoints;
+            $historyBpEmploy->id_member = $employ->id;
+            $historyBpEmploy->info = 1;
+            $historyBpEmploy->description = 'Topup Bitrex Points from '.$user->username.'Via Transfer Bitrex Points';
+            $historyBpEmploy->nominal = $request->bitrex_points * 1000;
+            $historyBpEmploy->points = $request->bitrex_points;
+            $historyBpEmploy->status = 1;
+            $historyBpEmploy->transaction_ref = $historyBpUser->transaction_ref;
+            $historyBpEmploy->save();
+
+            return response()->json(
+                [
+                    'success' => 1,
+                    'message' => 'success transfer bitrex points'
+                ]
+            );
+        }
     }
 
     public function store(Request $request){
