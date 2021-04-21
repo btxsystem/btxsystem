@@ -301,6 +301,8 @@
                     <input class="form-control" name="password_bp" id="password_bp" type="password">
                     <label class="form-label">Password</label>
                 </div>
+                <br>
+                <p style="color:red">Dengan memasukkan Password Anda, Anda setuju melakukan tranfer Bitrex Point.</p>
             </div>
             <div class="modal-footer">
                 <a href="#" class="btn btn-secondary" data-dismiss="modal">Close</a>
@@ -361,8 +363,8 @@
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12">
                 <div class="body">
-                    <a href="#" class="btn btn-md btn-info topup" id="success-button">Success</a>
-                    <a href="#" class="btn btn-md cek-ongkir" id="failed-button">Failed</a>
+                    <a href="#" class="btn btn-md btn-success topup" id="success-button">Success</a>
+                    <a href="#" class="btn btn-md btn-danger cek-ongkir" id="failed-button">Failed</a>
                 </div>
                 <br> <br>
                 <div>
