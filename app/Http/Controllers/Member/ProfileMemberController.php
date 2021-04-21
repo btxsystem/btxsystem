@@ -358,6 +358,15 @@ class ProfileMemberController extends Controller
         return response()->json($data);
     }
 
+    public function getUser($user){
+        $data = [
+            'status' => 200,
+            'username' => false,
+        ];
+        $data = Employeer::where('username',$user)->first();
+        return response()->json($data);
+    }
+
     public function isSameEmail($user){
         $data = [
             'status' => 200,
