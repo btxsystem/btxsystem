@@ -74,7 +74,7 @@ class BitrexPointController extends Controller
             $historyBpUser = new HistoryBitrexPoints;
             $historyBpUser->id_member = $user->id;
             $historyBpUser->info = 0;
-            $historyBpUser->description = 'Send Bitrex Point to '.$employ->username.'(Via Transfer Bitrex Points)';
+            $historyBpUser->description = 'Send Bitrex Point to '.$employ->username.' (Via Transfer Bitrex Points)';
             $historyBpUser->nominal = $request->bitrex_points * 1000;
             $historyBpUser->points = $request->bitrex_points;
             $historyBpUser->status = 1;
@@ -84,7 +84,7 @@ class BitrexPointController extends Controller
             $historyBpEmploy = new HistoryBitrexPoints;
             $historyBpEmploy->id_member = $employ->id;
             $historyBpEmploy->info = 1;
-            $historyBpEmploy->description = 'Topup Bitrex Points from '.$user->username.'(Via Transfer Bitrex Points)';
+            $historyBpEmploy->description = 'Topup Bitrex Points from '.$user->username.' (Via Transfer Bitrex Points)';
             $historyBpEmploy->nominal = $request->bitrex_points * 1000;
             $historyBpEmploy->points = $request->bitrex_points;
             $historyBpEmploy->status = 1;
