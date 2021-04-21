@@ -278,7 +278,7 @@
                 <div class="username_confirm">
 
                 </div>
-                <br>
+                <div class="form-control current_bp" style="color:green"> </div>
                 <div class="form-line">
                     <input class="form-control" name="nominal_bp" id="nominal_bp" type="number" min="1">
                     <label class="form-label">Nominal (Bitrex Points)</label>
@@ -577,6 +577,8 @@
         topupPoint();
     })
     $(document).ready(function () {
+        current_bp = '{{Auth::user()->bitrex_points}}'
+        $(".current_bp").text("Your Bitrex Point : "+current_bp)
     $('input[type=number]').on('wheel',function(e){ $(this).blur(); });
     <?php if(getCurrentPaymentMethod() == 'va'):?>
         let is_bca_method = true;
