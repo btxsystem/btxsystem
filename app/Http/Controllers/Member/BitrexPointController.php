@@ -13,6 +13,7 @@ use App\Service\PaymentVa\TransactionPaymentService as Va;
 use DataTables;
 use DB;
 use Alert;
+use Illuminate\Support\Facades\Hash;
 use App\Models\TransactionBill;
 
 class BitrexPointController extends Controller
@@ -37,6 +38,25 @@ class BitrexPointController extends Controller
     {
         $user = Auth::user();
         $employ = Employeer::where('username', $request->username)->first();
+
+        if (!(Hash::check($request->password, $user->password))) {
+            return response()->json(
+                [
+                    'success' => 0,
+                    'message' => 'Your password is wrong'
+                ]
+            );
+        }
+
+        if ($request->bitrex_points > $user->bitrex_points) {
+            return response()->json(
+                [
+                    'success' => 0,
+                    'message' => 'Your balance is less'
+                ]
+            );
+        }
+
         if (!$employ || $request->bitrex_points == '' || $request->bitrex_points < 1 || $request->username == '' || $request->username == $user->username || (int) $user->bitrex_points < (int) $request->bitrex_point) {
             return response()->json(
                 [

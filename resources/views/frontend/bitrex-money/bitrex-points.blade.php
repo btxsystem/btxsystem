@@ -287,7 +287,24 @@
             </div>
             <div class="modal-footer">
                 <a href="#" class="btn btn-secondary" data-dismiss="modal">Close</a>
-                <button type="button" class="btn btn-primary sendBp" style="cursor:pointer" disabled>Send</button>
+                <a href="#" class="btn btn-md btn-info sendBp" data-toggle="modal" data-target="#confirmationTf" id="success-button">Trandfer</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="confirmationTf" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="form-line">
+                    <input class="form-control" name="password_bp" id="password_bp" type="password">
+                    <label class="form-label">Password</label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a href="#" class="btn btn-secondary" data-dismiss="modal">Close</a>
+                <button type="button" class="btn btn-primary sendBpConfirmation" style="cursor:pointer">Transfer</button>
             </div>
         </div>
     </div>
@@ -468,6 +485,10 @@
     }
 
     $('.sendBp').click(function(){
+        $("#transferBp").hide();
+    });
+
+    $('.sendBpConfirmation').click(function(){
         $.ajax({
 			type: 'POST',
 			url: '/member/sendBp/store',
@@ -475,15 +496,17 @@
             {
                 "_token": "{{ csrf_token() }}",
                 username : $('#username_bp').val(),
-                bitrex_points : $('#nominal_bp').val()
+                bitrex_points : $('#nominal_bp').val(),
+                password : $('#password_bp').val()
             },
 			success: function (data) {
+                console.log(data);
                 if (data.success == 1) {
                     swal("Success", "Transfer Success!", "success");
                 }else{
-                    swal("Failed", "Transfer Failed!", "warning");
+                    swal("Failed", data.message);
                 }
-                window.location.href = '/income-and-expenses/bitrex-points'
+                window.location.href = '/member/income-and-expenses/bitrex-points'
 			},
 			error: function() {
 				console.log("Error");
@@ -521,7 +544,7 @@
                     $('#username_danger').text('username you entered doesn\'t exists')
                     $(".username_confirm").html('');
                 }else if(username == myUsername){
-				    $('#username_danger').text('can not send bp to your self')
+				    $('#username_danger').text('can not transfer bp to your self')
                     $(".username_confirm").html('');
                 }else{
                     $.ajax({

@@ -133,7 +133,7 @@ Route::group(['middleware' => 'admin'], function () {
     Route::get('list-va','Admin\ListVaController@index')->name('list-va');
 
     //list CC
-    Route::get('list-cc','Admin\ListCcController@index')->name('list-cc');
+    Route::get('list-xendit','Admin\ListCcController@index')->name('list-xendit');
 
     //dashboard-value
     Route::get('dashboard-values','Admin\DashboardValuesController@data')->name('dashboard-values');

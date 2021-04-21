@@ -134,11 +134,11 @@
     </li>
     @endif
 
-    <li class="{{ (request()->is('backoffice/list-va')) ? 'active' : '' }}">
-        <a href="{{ route('list-va') }}">
+    <li class="{{ (request()->is('backoffice/list-xendit')) ? 'active' : '' }}">
+        <a href="{{ route('list-xendit') }}">
             <i class="fa fa-credit-card" style="color: #6CC66C" data-name="money" data-size="18" data-c="#6CC66C" data-hc="#6CC66C"
             data-loop="true"></i>
-            List Credit Card
+            Xendit
         </a>
     </li>
 
