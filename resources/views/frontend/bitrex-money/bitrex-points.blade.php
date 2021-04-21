@@ -572,7 +572,7 @@
 	})
 
     $('#failed-button').click(function(){
-        $('#failed-button').prop('class', "btn btn-md btn-info topup");
+        $('#failed-button').prop('class', "btn btn-md btn-danger topup");
         $('#success-button').prop('class', "btn btn-md topup");
         topupPoint();
     })
