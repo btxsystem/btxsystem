@@ -287,7 +287,7 @@
             </div>
             <div class="modal-footer">
                 <a href="#" class="btn btn-secondary" data-dismiss="modal">Close</a>
-                <a href="#" class="btn btn-md btn-info sendBp" data-toggle="modal" data-target="#confirmationTf" id="success-button">Trandfer</a>
+                <a href="#" class="btn btn-md btn-info sendBp" data-toggle="modal" data-target="#confirmationTf" id="success-button">Transfer</a>
             </div>
         </div>
     </div>
