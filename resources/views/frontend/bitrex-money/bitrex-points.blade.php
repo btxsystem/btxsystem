@@ -578,7 +578,7 @@
     })
     $(document).ready(function () {
         current_bp = '{{Auth::user()->bitrex_points}}'
-        $(".current_bp").text("Your Bitrex Points : "+addCommas(current_bp))
+        $(".current_bp").text("Available Bitrex Point : "+addCommas(current_bp))
     $('input[type=number]').on('wheel',function(e){ $(this).blur(); });
     <?php if(getCurrentPaymentMethod() == 'va'):?>
         let is_bca_method = true;
