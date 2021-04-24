@@ -26,6 +26,9 @@ class ListCcController extends Controller
                     ->editColumn('username', function($row) {
                         return isset($row->member->username) ? $row->member->username : $row['member']['username'];
                     })
+                    ->editColumn('nominal', function($row) {
+                        return $row->status == 1 ? $row->nominal + $row->tax : $row->nominal;
+                    })
                     ->editColumn('status', function($row) {
                         $status = '';
                         if($row->status == 1){
