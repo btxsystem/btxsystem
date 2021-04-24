@@ -62,11 +62,17 @@
                         </a>
                     </li>
                 @endif
+                <li class="{{ (request()->is('backoffice/members/banned')) ? 'active' : '' }}">
+                    <a href="{{ route('members.banned.index') }}">
+                        <i class="fa fa-angle-double-right"></i>
+                        Member Banned
+                    </a>
+                </li>
                 @if(\Auth::guard('admin')->user()->hasPermission('Members.add-expired'))
                     <li class="{{ (request()->is('backoffice/member-expired')) ? 'active' : '' }}">
-                        <a href="{{ route('members.banned.index') }}">
+                        <a href="{{ route('member-expired.index') }}">
                             <i class="fa fa-angle-double-right"></i>
-                            Member Banned
+                            Member Expired
                         </a>
                     </li>
                 @endif
