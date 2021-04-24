@@ -38,11 +38,6 @@ class Kernel extends ConsoleKernel
             $now = date('Y-m-d H:i:s');
 
             foreach ($pairings as $key => $pairing) {
-
-                if ($pairing->expired_at < $now) {
-                    continue;
-                }
-
                 $bonus = 0;
                 $bonus_pairing = 0;
                 $tamp = 0;
@@ -117,7 +112,7 @@ class Kernel extends ConsoleKernel
                     $fail_pairing = ($bonus_pairing - 10000000) / 100000 ;
                     $bonus_pairing = 10000000;
                 }
-                if ($bonus_pairing > 0) {
+                if ($bonus_pairing > 0 && $pairing->expired_at > $now) {
                     try {
                         DB::beginTransaction();
                         DB::table('history_pv_pairing')->insert(['id_member' => $pairing->id_member, 'total_pairing' => $has_pairing, 'fail_pairing' => $fail_pairing, 'left' => $left_pairing, 'midle' => $midle_pairing, 'right' => $right_pairing, 'created_at' => Carbon::now(), 'updated_at' => Carbon::now(), 'current_left' => $pairing->pv_left, 'current_midle' => $pairing->pv_midle, 'current_right' => $pairing->pv_right]);
