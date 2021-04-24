@@ -10,3 +10,4 @@ Route::middleware('bca')->post('/va/bills', 'Bca\VirtualAccountController@bills'
 Route::middleware('bca')->post('/va/payments', 'Bca\VirtualAccountController@payments');
 
 Route::post('/xendit-callback', 'Member\XenditController@callback');
+Route::post('/generate-expmember', 'Member\GenerateExpMemberController@store');
