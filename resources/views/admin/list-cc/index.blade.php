@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 {{-- Page title --}}
 @section('title')
-List Of Credit Card
+List Of Xendit Payment
 @parent
 @stop
 {{-- Page content --}}
@@ -12,7 +12,7 @@ List Of Credit Card
     <h1>Users</h1>
     <ol class="breadcrumb">
         <li>
-            <a href="#" class="active">List Credit Card</a>
+            <a href="#" class="active">List Xendit Payment</a>
         </li>
     </ol>
 </section>
@@ -24,7 +24,7 @@ List Of Credit Card
                 <div class="portlet-title">
                     <div class="caption">
                         <i class="livicon" data-name="permissions" data-size="16" data-loop="true" data-c="#fff" data-hc="white"></i>
-                        List Credit Card Table
+                        List Xendit Table
                     </div>
                 </div>
 
@@ -34,7 +34,7 @@ List Of Credit Card
                             <tr>
                                 <th>Name</th>
                                 <th>Username</th>
-                                <th>Description</th>
+                                <th>Payment Type</th>
                                 <th>Nominal</th>
                                 <th>No Ref</th>
                                 <th>Status</th>
@@ -62,15 +62,15 @@ List Of Credit Card
           processing: true,
           serverSide: true,
           ajax: {
-            url: "{{ route('list-cc') }}",
+            url: "{{ route('list-xendit') }}",
           },
 
           columns: [
               {data: 'fullname', name: 'fullname'},
               {data: 'username', name: 'username'},
-              {data: 'description', name: 'description'},
+              {data: 'bank', name: 'bank'},
               {data: 'nominal', name: 'nominal'},
-              {data: 'transaction_ref', name: 'transaction_ref'},
+              {data: 'xendit_id', name: 'xendit_id'},
               {data: 'status', name: 'status'},
               {data: 'date', name: 'date'},
           ]
