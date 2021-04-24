@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\HistoryBitrexPoints;
 use DataTables;
 use DB;
+use App\Xendit;
 
 class ListCcController extends Controller
 {
@@ -16,9 +17,7 @@ class ListCcController extends Controller
     public function index()
     {
         if (request()->ajax()) {
-            $data = HistoryBitrexPoints::with('member')
-                                        ->where('description', 'Topup Bitrex Point Via Credit Card')
-                                        ->get();
+            $data = Xendit::with('member')->get();
             return Datatables::of($data)
                     ->addIndexColumn()
                     ->editColumn('fullname', function($row) {
@@ -31,8 +30,10 @@ class ListCcController extends Controller
                         $status = '';
                         if($row->status == 1){
                             $status = 'Success';
-                        }else{
+                        }else if($row->status == 0){
                             $status = 'Failed';
+                        }else{
+                            $status = 'Pending';
                         }
                         return $status;
                     })
