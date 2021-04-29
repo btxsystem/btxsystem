@@ -207,11 +207,11 @@
                             <td class="text-right"> <h4><span id="cost-ebook">0</span></h4> </td>
                             <td> <h4>IDR</h4> </td>
                           </tr>
-                          <tr>
+                          <!-- <tr>
                             <td> <h4>Total Shipping</h4> </td>
                             <td class="text-right"> <h4><span id="cost-postal">0</span></h4> </td>
                             <td> <h4>IDR</h4> </td>
-                          </tr>
+                          </tr> -->
                           <tr>
                             <td> <h4>Grand Total</h4> </td>
                             <td class="text-right"> <h4><span id="grand-total">0</span></h4> </td>
