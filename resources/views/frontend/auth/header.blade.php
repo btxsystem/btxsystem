@@ -82,9 +82,9 @@
                       <b style="color:red" id="email_danger"></b>
                     </div>
                     <br>
-                    <!-- <div class="input-group col-md-12">
-                        <input class="form-control" type="number" placeholder="NIK/Passport" name="nik" id="passport" required>
-                    </div> -->
+                    <div class="input-group col-md-12">
+                        <input class="form-control" type="number" placeholder="NIK/Passport" name="nik" id="passport">
+                    </div>
                     <br>
                     <div class="input-group col-md-12">
                         <input class="form-control" type="text" placeholder="Phone Number" name="phone_number" id="phone_number" required>

@@ -62,12 +62,12 @@
 							<label class="form-label">Phone Number <em>*</em></label>
 						</div>
 					</div>
-					<!-- <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
+					<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div class="form-line">
-							<input class="form-control" value="{{ isset($profile['data']['nik']) ? $profile['data']['nik'] : ''  }}" id="nik" name="nik" id="number_phone" type="text" min="1" required>
-							<label class="form-label">NIK / Passport <em>*</em></label>
+							<input class="form-control" value="{{ isset($profile['data']['nik']) ? $profile['data']['nik'] : ''  }}" id="nik" name="nik" id="number_phone" type="text" min="1">
+							<label class="form-label">NIK / Passport</label>
 						</div>
-					</div> -->
+					</div>
           			<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div class="form-line">
 							<input class="form-control" value="{{ isset($profile['data']['npwp_number']) ? $profile['data']['npwp_number'] : ''  }}" id="npwp_number" name="npwp_number" type="text" min="1">
@@ -645,9 +645,9 @@ em{
 		checkTerm()
 	})
 
-	// $('#nik').change(function(){
-	// 	checkTerm()
-	// })
+	$('#nik').change(function(){
+		checkTerm()
+	})
 
 	$('#npwp_number').change(function(){
 		checkTerm()
@@ -674,9 +674,9 @@ em{
 		checkTerm()
 	});
 
-	// $('#nik').keyup(function(){
-	// 	checkTerm()
-	// })
+	$('#nik').keyup(function(){
+		checkTerm()
+	})
 
 	$('#phone_number').keyup(function(){
 		checkTerm()
@@ -1336,24 +1336,25 @@ em{
 		checkTerm()
 	})
 
-	// $('#nik').on('input', function() {
-	// 	let str = /^[a-zA-Z0-9_]*$/.test(this.value);
-	// 	this.value = !str ? $(this).val().match(/[a-zA-Z0-9_]/g).join('') : this.value;
-	// 	var text = this.value;
-	// 	$.ajax({
-	// 		type: 'GET',
-	// 		url: '/member/select/nik/'+text,
-	// 		success: function (data) {
-	// 			data.nik ? $('#nik_danger').text('identity you entered already exists') : $('#nik_danger').empty();
-	// 			check_nik = data.nik ? false  : true;
-	// 		},
-	// 		error: function() {
-	// 			console.log("Error");
-	// 		}
-	// 	});checkTerm()
+	$('#nik').on('input', function() {
+		let str = /^[a-zA-Z0-9_]*$/.test(this.value);
+		this.value = !str ? $(this).val().match(/[a-zA-Z0-9_]/g).join('') : this.value;
+		// var text = this.value;
+		// $.ajax({
+		// 	type: 'GET',
+		// 	url: '/member/select/nik/'+text,
+		// 	success: function (data) {
+		// 		data.nik ? $('#nik_danger').text('identity you entered already exists') : $('#nik_danger').empty();
+		// 		check_nik = data.nik ? false  : true;
+		// 	},
+		// 	error: function() {
+		// 		console.log("Error");
+		// 	}
+		// });
+        checkTerm()
 
 
-	// })
+	})
 
 	$('#bank_account_number').on('input', function() {
 		let str = this.value;

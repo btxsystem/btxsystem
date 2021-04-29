@@ -337,7 +337,7 @@ class MemberController extends Controller
             'email' => 'required|email|unique:users|max:255',
             'password' => 'required|min:6',
             'birthdate' => 'required',
-            'nik' => 'required',
+            // 'nik' => 'required',
             'gender' => 'required',
             'parent_id' => 'required',
             'sponsor_id' => 'required',
