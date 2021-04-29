@@ -138,7 +138,7 @@ class TransactionPaymentService
                     'last_name' => $parameter[1]->last_name ? $parameter[1]->last_name : null,
                     'email' => $parameter[1]->email,
                     'phone_number' => $parameter[1]->phone_number,
-                    'nik' => //$parameter[1]->nik,
+                    'nik' => $parameter[1]->nik,
                     'npwp_number' => $parameter[1]->npwp_number ? $parameter[1]->npwp_number : null,
                     'bank_account_name' => $parameter[1]->bank_account_name,
                     'bank_account_number' => $parameter[1]->bank_account_number,

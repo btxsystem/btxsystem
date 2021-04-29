@@ -82,9 +82,9 @@
                       <b style="color:red" id="email_danger"></b>
                     </div>
                     <br>
-                    <!-- <div class="input-group col-md-12">
+                    <div class="input-group col-md-12">
                         <input class="form-control" type="number" placeholder="NIK/Passport" name="nik" id="passport" required>
-                    </div> -->
+                    </div>
                     <br>
                     <div class="input-group col-md-12">
                         <input class="form-control" type="text" placeholder="Phone Number" name="phone_number" id="phone_number" required>
@@ -207,11 +207,11 @@
                             <td class="text-right"> <h4><span id="cost-ebook">0</span></h4> </td>
                             <td> <h4>IDR</h4> </td>
                           </tr>
-                          <tr>
+                          <!-- <tr>
                             <td> <h4>Total Shipping</h4> </td>
                             <td class="text-right"> <h4><span id="cost-postal">0</span></h4> </td>
                             <td> <h4>IDR</h4> </td>
-                          </tr>
+                          </tr> -->
                           <tr>
                             <td> <h4>Grand Total</h4> </td>
                             <td class="text-right"> <h4><span id="grand-total">0</span></h4> </td>
