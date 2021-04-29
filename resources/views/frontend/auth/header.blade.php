@@ -82,9 +82,9 @@
                       <b style="color:red" id="email_danger"></b>
                     </div>
                     <br>
-                    <div class="input-group col-md-12">
+                    <!-- <div class="input-group col-md-12">
                         <input class="form-control" type="number" placeholder="NIK/Passport" name="nik" id="passport" required>
-                    </div>
+                    </div> -->
                     <br>
                     <div class="input-group col-md-12">
                         <input class="form-control" type="text" placeholder="Phone Number" name="phone_number" id="phone_number" required>
@@ -239,7 +239,7 @@
                       <button type="button" class="btn" style="border-radius: 5px; background-color: orange; color: #fff; margin-top: -5px;" data-dismiss="modal">Close</button>
                     </div>
                 </form>
-                
+
             </div>
             </div>
         </div>

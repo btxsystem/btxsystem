@@ -221,7 +221,7 @@
 		// 	`)
 
 		// 	$('#checkboxEbook input[type=checkbox]').change(function(index) {
-				
+
 		// 		if($(this).prop('checked')) {
 		// 			priceEbook = priceEbook + parseInt($(this).data('price'))
 		// 		} else {
@@ -243,7 +243,7 @@
 		// 		$('#cost-ebook').html(toPrice(priceEbook))
 		// 		$('#grand-total').html(toPrice(priceEbook + postalFee + 280000))
 		// 	})
-			
+
 		// })
 
 		$('form#paymssent').submit(function(e) {
@@ -380,9 +380,9 @@
 		} else {
 			$('#cost-postal').parent().addClass('hidden')
 		}
-		
+
 		$('#cost-postal').html(toIDR(postalFee))
-		$('#grand-total').html(toIDR(priceEbook + postalFee + 280000))
+		$('#grand-total').html(toIDR(priceEbook + postalFee))
 	});
 
 	$('#shipping').change(function(){

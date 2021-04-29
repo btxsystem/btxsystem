@@ -280,7 +280,7 @@
     @endif
 
       <!-- end section-video -->
-      <section class="section-ui wow fadeInUp" data-wow-duration="1s">
+      <!-- <section class="section-ui wow fadeInUp" data-wow-duration="1s">
         <div class="container">
           <div class="row">
             <div class="col-xs-15">
@@ -288,13 +288,13 @@
                 <div class="ui-ktp" style="font-size:20px;font-weight:bold"> PT BITREXGO SOLUSI PRIMA HANYA AKAN MEMBERIKAN 1 HAK USAHA UNTUK 1 KTP KEPADA SELURUH MEMBER TANPA KECUALI </div>
                 <div class="ui-ktp" style="font-size:20px;font-weight:bold"> 1 KTP BERLAKU UNTUK 1 HAK USAHA </div><br>
                 <div class="entry-thumbnail"><img class="ui-ktp" src="{{asset('img/KTP.png')}}" width="270" height="250" alt="Foto"/></a> </div>
-              </div>
+              </div> -->
             <!-- end col -->
-          </div>
+          <!-- </div> -->
           <!-- end row -->
-        </div>
+        <!-- </div> -->
         <!-- end container -->
-      </section>
+      <!-- </section> -->
       <!-- end section-video -->
 
 
@@ -704,7 +704,7 @@
         $(this).prop('checked', true)
         priceEbook = priceEbook + parseInt($(this).data('price'))
         $('#cost-ebook').html(toPrice(priceEbook))
-        $('#grand-total').html(toPrice((priceEbook + postalFee + 280000)))
+        $('#grand-total').html(toPrice((priceEbook + postalFee)))
       }
     });
 
@@ -763,9 +763,9 @@
         }
 
         $('#cost-ebook').html(toPrice(priceEbook))
-        $('#grand-total').html(toPrice((priceEbook + postalFee + 280000)))
+        $('#grand-total').html(toPrice((priceEbook + postalFee)))
 
-        grandTotal = (priceEbook + postalFee + 280000);
+        grandTotal = (priceEbook + postalFee);
 
         validasiForm()
       })

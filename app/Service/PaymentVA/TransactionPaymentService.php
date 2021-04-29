@@ -138,7 +138,7 @@ class TransactionPaymentService
                     'last_name' => $parameter[1]->last_name ? $parameter[1]->last_name : null,
                     'email' => $parameter[1]->email,
                     'phone_number' => $parameter[1]->phone_number,
-                    'nik' => $parameter[1]->nik,
+                    'nik' => //$parameter[1]->nik,
                     'npwp_number' => $parameter[1]->npwp_number ? $parameter[1]->npwp_number : null,
                     'bank_account_name' => $parameter[1]->bank_account_name,
                     'bank_account_number' => $parameter[1]->bank_account_number,
@@ -163,7 +163,7 @@ class TransactionPaymentService
             ];
             $arr_tojson = json_encode($product_detail);
 
-            $cost = 280000 +2750;
+            $cost = 2750;
             $cost += isset($parameter[1]->kurir) ? $parameter[1]->kurir : 0;
 
             // foreach ($parameter[1]->ebooks as $key => $ebook) {
@@ -218,7 +218,7 @@ class TransactionPaymentService
                     'last_name' => $parameter[1]->lastName ? $parameter[1]->lastName : null,
                     'email' => $parameter[1]->email,
                     'phone_number' => $parameter[1]->phone_number,
-                    'nik' => $parameter[1]->nik ? $parameter[1]->nik : null,
+                    'nik' => '',//$parameter[1]->nik ? $parameter[1]->nik : null,
                     'npwp_number' => $parameter[1]->npwp_number ? $parameter[1]->npwp_number : null,
                     'bank_account_name' => $parameter[1]->bank_account_name,
                     'bank_account_number' => $parameter[1]->bank_account_number,
@@ -242,7 +242,7 @@ class TransactionPaymentService
             ];
             $arr_tojson = json_encode($product_detail);
 
-            $cost = 280000 +2750;
+            $cost = 2750;
             $cost += isset($parameter[1]->postalFee) ? (int) $parameter[1]->postalFee : 0;
 
             foreach ($parameter[1]->ebooks as $key => $ebook) {

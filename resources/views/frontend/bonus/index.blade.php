@@ -39,7 +39,7 @@
                                 <div class="col-sm-6 col-7">
                                     <h4>IDR</h4>
                                     <h3 class="m-t-0 bonus-sponsor"></h3>
-                                    <p class="m-b-0">Bonus Sponsor</p>
+                                    <p class="m-b-0">Komisi Sponsor</p>
                                 </div>
                                 <div class="col-sm-6 col-5 pl-0">
                                     <img src="{{url('img/money-bag.png')}}" class="img-fluid" style="opacity: 0.3;">
@@ -57,7 +57,7 @@
                                 <div class="col-sm-6 col-7">
                                     <h4>IDR</h4>
                                     <h3 class="m-t-0 bonus-pairing"></h3>
-                                    <p class="m-b-0">Bonus Pairing</p>
+                                    <p class="m-b-0">Komisi Pairing</p>
                                 </div>
                                 <div class="col-sm-6 col-5 pl-0">
                                     <img src="{{url('img/money-bag.png')}}" class="img-fluid" style="opacity: 0.3;">

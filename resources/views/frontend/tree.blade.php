@@ -62,12 +62,12 @@
 							<label class="form-label">Phone Number <em>*</em></label>
 						</div>
 					</div>
-					<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
+					<!-- <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div class="form-line">
 							<input class="form-control" value="{{ isset($profile['data']['nik']) ? $profile['data']['nik'] : ''  }}" id="nik" name="nik" id="number_phone" type="text" min="1" required>
 							<label class="form-label">NIK / Passport <em>*</em></label>
 						</div>
-					</div>
+					</div> -->
           			<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div class="form-line">
 							<input class="form-control" value="{{ isset($profile['data']['npwp_number']) ? $profile['data']['npwp_number'] : ''  }}" id="npwp_number" name="npwp_number" type="text" min="1">
@@ -120,12 +120,12 @@
 						</div>
 					</div>
           			<div class="dropdown-divider"></div>
-          			<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
+          			<!-- <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div class="demo-radio-button">
 							<input name="pack" type="radio" value="1" id="pack" class="with-gap radio-col-red" checked />
 							<label for="shipping">Starter Pack</label>
 						</div>
-					</div>
+					</div> -->
 					<div class="dropdown-divider"></div>
 					<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<h5 class="card-inside-title">Choose a ebook <em>*</em></h5>
@@ -137,7 +137,7 @@
 						<div class="buy_ebook"></div>
 					</div>
           			<div class="dropdown-divider"></div>
-					<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
+					<!-- <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<h5 class="card-inside-title">Choose a shipping method</h5>
 						<div class="demo-radio-button">
               				<input name="shipping_method" type="radio" value="0" id="pickup" class="with-gap radio-col-red" checked/>
@@ -145,7 +145,7 @@
 							<input name="shipping_method" type="radio" value="1" id="shipping" class="with-gap radio-col-red" />
 							<label for="shipping">Shipping</label>
 						</div>
-					</div>
+					</div> -->
 					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 pickup-form">
 						<h4>B-G 168, Jl. Pluit Indah Raya, Pluit, Penjaringan, North Jakarta City, Jakarta 14450</h4>
 					</div>
@@ -186,11 +186,11 @@
 						<div class="form-group address-form">
 						<div class="table-responsive">
                 <table class="table table-borderless">
-                  <tr>
+                  <!-- <tr>
                     <td> <h4>Starter Pack</h4> </td>
                     <td class="text-right"> <h4><span id="cost-starter">0</span></h4> </td>
                     <td> <h4>Points</h4> </td>
-                  </tr>
+                  </tr> -->
                   <tr>
                     <td> <h4>Total Ebook</h4> </td>
                     <td class="text-right"> <h4><span id="cost-ebook">0</span></h4> </td>
@@ -610,7 +610,7 @@ em{
 	var check = 1;
 	var check_email = false;
 	var check_user = false;
-	var check_nik = false;
+	// var check_nik = false;
 	var available_email = false;
 	var parent_id = undefined;
 	var check_cost = true;
@@ -645,9 +645,9 @@ em{
 		checkTerm()
 	})
 
-	$('#nik').change(function(){
-		checkTerm()
-	})
+	// $('#nik').change(function(){
+	// 	checkTerm()
+	// })
 
 	$('#npwp_number').change(function(){
 		checkTerm()
@@ -674,9 +674,9 @@ em{
 		checkTerm()
 	});
 
-	$('#nik').keyup(function(){
-		checkTerm()
-	})
+	// $('#nik').keyup(function(){
+	// 	checkTerm()
+	// })
 
 	$('#phone_number').keyup(function(){
 		checkTerm()
@@ -730,14 +730,14 @@ em{
 			&& $('#email').val() != ''
 			&& $('#phone_number').val() != ''
 			&& $('#first_name').val() != ''
-			&& $('#nik').val() != ''
+			// && $('#nik').val() != ''
 			&& $('#birthdate').val() != ''
 			&& adult >= 18
 			&& check > 0
 			&& check_email
 			&& check_cost
 			&& check_user
-			&& check_nik
+			// && check_nik
 			&& available_email
 		) {
 			$('.register').prop('disabled', false)
@@ -811,7 +811,7 @@ em{
 
 	$(document).ready(function() {
 		$('.register').prop('disabled', true)
-		$('#cost-starter').html('280')
+		// $('#cost-starter').html('280')
 
 		var element = document.querySelector('#bah');
 
@@ -855,7 +855,7 @@ em{
 			$(this).prop('checked', true)
 			priceEbook = priceEbook + parseInt($(this).data('price'))
 			$('#cost-ebook').html(toPrice(priceEbook / 1000))
-			$('#grand-total').html(toPrice((priceEbook + postalFee + 280000) / 1000))
+			$('#grand-total').html(toPrice((priceEbook + postalFee) / 1000))
 			}
 		})
 
@@ -1056,9 +1056,9 @@ em{
 			}
 
 			$('#cost-ebook').html(toPrice(priceEbook / 1000))
-			$('#grand-total').html(toPrice((priceEbook + postalFee + 280000) / 1000))
+			$('#grand-total').html(toPrice((priceEbook + postalFee) / 1000))
 
-			grandTotal = (priceEbook + postalFee + 280000) / 1000;
+			grandTotal = (priceEbook + postalFee) / 1000;
 
 			if(is_va) {
 				check_cost = true
@@ -1224,9 +1224,9 @@ em{
 		}
 
 		$('#cost-postal').html(toPrice(postalFee / 1000))
-		$('#grand-total').html(toPrice((priceEbook + postalFee + 280000) / 1000))
+		$('#grand-total').html(toPrice((priceEbook + postalFee) / 1000))
 
-		grandTotal = (priceEbook + postalFee + 280000) / 1000;
+		grandTotal = (priceEbook + postalFee) / 1000;
 
 		if(is_va) {
 			check_cost = true
@@ -1252,7 +1252,7 @@ em{
 		$('#city').empty().trigger('change');
 		$('#district').empty().trigger('change');
 		$('#kurir').empty().trigger('change');
-		grandTotal = (priceEbook + postalFee + 280000) / 1000;
+		grandTotal = (priceEbook + postalFee) / 1000;
 
 		if(is_va) {
 			check_cost = true
@@ -1272,7 +1272,7 @@ em{
     	$('.pickup-form').show();
 		grandTotal -= postalFee;
 		postalFee = 0;
-		grandTotal = (priceEbook - postalFee + 280000) / 1000;
+		grandTotal = (priceEbook - postalFee) / 1000;
 
 		if(is_va) {
 			check_cost = true
@@ -1336,24 +1336,24 @@ em{
 		checkTerm()
 	})
 
-	$('#nik').on('input', function() {
-		let str = /^[a-zA-Z0-9_]*$/.test(this.value);
-		this.value = !str ? $(this).val().match(/[a-zA-Z0-9_]/g).join('') : this.value;
-		var text = this.value;
-		$.ajax({
-			type: 'GET',
-			url: '/member/select/nik/'+text,
-			success: function (data) {
-				data.nik ? $('#nik_danger').text('identity you entered already exists') : $('#nik_danger').empty();
-				check_nik = data.nik ? false  : true;
-			},
-			error: function() {
-				console.log("Error");
-			}
-		});checkTerm()
+	// $('#nik').on('input', function() {
+	// 	let str = /^[a-zA-Z0-9_]*$/.test(this.value);
+	// 	this.value = !str ? $(this).val().match(/[a-zA-Z0-9_]/g).join('') : this.value;
+	// 	var text = this.value;
+	// 	$.ajax({
+	// 		type: 'GET',
+	// 		url: '/member/select/nik/'+text,
+	// 		success: function (data) {
+	// 			data.nik ? $('#nik_danger').text('identity you entered already exists') : $('#nik_danger').empty();
+	// 			check_nik = data.nik ? false  : true;
+	// 		},
+	// 		error: function() {
+	// 			console.log("Error");
+	// 		}
+	// 	});checkTerm()
 
 
-	})
+	// })
 
 	$('#bank_account_number').on('input', function() {
 		let str = this.value;

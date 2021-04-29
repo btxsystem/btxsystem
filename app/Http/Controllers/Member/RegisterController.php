@@ -38,7 +38,7 @@ class RegisterController extends Controller
     $lastName = $request->input('lastName') ?? '';
     $username = $request->input('username') ?? '';
     $email = $request->input('email') ?? '';
-    $nik = $request->input('passport') ?? '';
+    $nik = '';//$request->input('passport') ?? '';
     $birthdate = $request->input('birthdate') ?? null;
 
     //shipping
@@ -238,7 +238,7 @@ class RegisterController extends Controller
 
   public function paymentWithEbook(Request $request, $params)
   {
-    $priceProduct = 280000;
+    $priceProduct = 0;
 
     $ebookIds = [];
     foreach ($params['ebooks'] as $ebook) {
@@ -296,7 +296,7 @@ class RegisterController extends Controller
 
   public function paymentWithoutEbook(Request $request, $params)
   {
-    $orderAmount = 280000;
+    $orderAmount = 0;
 
     $data['merchant_key'] = env('IPAY_MERCHANT_KEY');
     $data['merchant_code'] = env('IPAY_MERCHANT_CODE');

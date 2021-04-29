@@ -171,14 +171,14 @@
                         <div class="col-lg-4 col-md-5 col-sm-4">
                             <div class="icon l-parpl"><i class="zmdi zmdi-accounts-outline"></i></div>
                             <div class="col-in">
-                                <small class="text-muted m-t-0">Bonus Sponsor</small> <br><br>
+                                <small class="text-muted m-t-0">Komisi Sponsor</small> <br><br>
                                 <h4 class="counter m-b-0">IDR <b class="sponsor"></b> </h4>
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-4 col-sm-4">
                             <div class="icon l-turquoise"><i class="zmdi zmdi-swap"></i></div>
                             <div class="col-in">
-                                <small class="text-muted m-t-0">Bonus Pairing</small> <br><br>
+                                <small class="text-muted m-t-0">Komisi Pairing</small> <br><br>
                                 <h4 class="counter m-b-0">IDR <b class="pairing"></b> </h4>
                             </div>
                         </div>
