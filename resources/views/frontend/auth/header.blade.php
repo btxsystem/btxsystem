@@ -143,7 +143,7 @@
                     </div>
                     <br>
                     <div class="input-group col-md-12">
-                      <h5 class="card-inside-title">Choose a ebook</h5>
+                      <h5 class="card-inside-title">Select ebook</h5>
                       <div class="demo-radio-button">
                         <!-- <div class="btn-group-toggle" data-toggle="buttons" id="data-ebooks">
                             <input type="checkbox" name="basic" id="basic" checked> Basic &nbsp;&nbsp;

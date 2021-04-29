@@ -128,7 +128,7 @@
 					</div> -->
 					<div class="dropdown-divider"></div>
 					<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
-						<h5 class="card-inside-title">Choose a ebook <em>*</em></h5>
+						<h5 class="card-inside-title">Select ebook <em>*</em></h5>
 						<div class="demo-radio-button">
 							<!-- <input name="method" type="radio" value="1" id="shipping" class="with-gap radio-col-red" checked />
 							<label for="shipping">Shipping</label> -->
@@ -146,9 +146,9 @@
 							<label for="shipping">Shipping</label>
 						</div>
 					</div> -->
-					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 pickup-form">
+					<!-- <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 pickup-form">
 						<h4>B-G 168, Jl. Pluit Indah Raya, Pluit, Penjaringan, North Jakarta City, Jakarta 14450</h4>
-					</div>
+					</div> -->
 					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 shipping-form">
 						<div class="form-group">
 							<select id="province" name="province" class="province"></select>

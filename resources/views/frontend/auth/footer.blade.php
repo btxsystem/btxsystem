@@ -6,11 +6,11 @@
             <div class="col-lg-3 col-sm-3">
               <section class="footer-section">
                 <div class="footer-info" style="text-align: justify;font-weight: bold;margin-bottom: 10px;">PT. BITREXGO SOLUSI PRIMA</div>
-                <div class="footer-contacts footer-contacts_mod-a"> <i class="icon stroke icon-Pointer"></i>
+                <!-- <div class="footer-contacts footer-contacts_mod-a"> <i class="icon stroke icon-Pointer"></i>
                   <address class="footer-contacts__inner">
                   B-G 168, Jl. Pluit Indah Raya, Pluit, Penjaringan, North Jakarta City, Jakarta 14450
                   </address>
-                </div>
+                </div> -->
                 <div class="footer-contacts"> <i class="icon stroke icon-Phone2"></i> <span class="footer-contacts__inner">+62 817-0380-0329, (021) 80823903</span> </div>
 								<div class="footer-contacts"> <i class="icon stroke icon-Mail"></i> <a class="footer-contacts__inner" href="mailto:cs@bitrexgo.co.id">cs@bitrexgo.co.id</a> <a class="footer-contacts__inner" href="mailto:bitrexgo@gmail.com">bitrexgo@gmail.com</a> </div>
 								<div class="footer-contacts"> <i class="fa fa-telegram"></i>
