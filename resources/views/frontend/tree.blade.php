@@ -64,8 +64,8 @@
 					</div>
 					<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div class="form-line">
-							<input class="form-control" value="{{ isset($profile['data']['nik']) ? $profile['data']['nik'] : ''  }}" id="nik" name="nik" id="number_phone" type="text" min="1">
-							<label class="form-label">NIK / Passport</label>
+							<input class="form-control" value="{{ isset($profile['data']['nik']) ? $profile['data']['nik'] : ''  }}" id="nik" name="nik" id="number_phone" type="text" min="1" required>
+							<label class="form-label">NIK / Passport <em>*</em></label>
 						</div>
 					</div>
           			<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -730,7 +730,7 @@ em{
 			&& $('#email').val() != ''
 			&& $('#phone_number').val() != ''
 			&& $('#first_name').val() != ''
-			// && $('#nik').val() != ''
+			&& $('#nik').val() != ''
 			&& $('#birthdate').val() != ''
 			&& adult >= 18
 			&& check > 0
