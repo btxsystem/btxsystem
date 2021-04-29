@@ -9,7 +9,7 @@ use App\Service\Bca\VirtualAccountService;
 
 class VirtualAccountController extends Controller
 {
-  
+
   public $virtualAccountService;
 
   public function __construct(
@@ -28,7 +28,7 @@ class VirtualAccountController extends Controller
   {
     try {
       $inquryBills = $this->virtualAccountService->checkInquiryBills($request);
-  
+
       return response()->json($inquryBills, 200);
     } catch (\Exception $e) {
       return response()->json([
@@ -51,7 +51,7 @@ class VirtualAccountController extends Controller
   {
     try {
       $paymentBills = $this->virtualAccountService->paymentBills($request);
-  
+
       return response()->json($paymentBills, 200);
     } catch (\Exception $e) {
       return response()->json([
@@ -61,7 +61,7 @@ class VirtualAccountController extends Controller
           'English' => "Service doesn't exist"
         ]
       ], 400);
-    }    
+    }
   }
 
 }

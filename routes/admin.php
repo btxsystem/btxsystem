@@ -132,6 +132,9 @@ Route::group(['middleware' => 'admin'], function () {
     //list va
     Route::get('list-va','Admin\ListVaController@index')->name('list-va');
 
+    //list CC
+    Route::get('list-xendit','Admin\ListCcController@index')->name('list-xendit');
+
     //dashboard-value
     Route::get('dashboard-values','Admin\DashboardValuesController@data')->name('dashboard-values');
     Route::get('analayzer/generate','Admin\DashboardValuesController@analyzer')->name('dashboard-analyzer');
@@ -170,8 +173,6 @@ Route::group(['middleware' => 'admin'], function () {
 
     Route::resource('member-expired', 'Admin\MemberExpiredController');
 
-
-
     Route::group(['prefix'=>'trainings','as'=>'trainings.'],function(){
         Route::get('', ['as' => 'index', 'uses' => 'Admin\TrainingController@index']);
         Route::get('create', ['as' => 'create', 'uses' => 'Admin\TrainingController@create']);
@@ -179,6 +180,13 @@ Route::group(['middleware' => 'admin'], function () {
         Route::get('{id}/edit', ['as' => 'edit', 'uses' => 'Admin\TrainingController@edit']);
         Route::put('{id}', ['as' => 'update', 'uses' => 'Admin\TrainingController@update']);
         Route::delete('{id}', ['as' => 'delete', 'uses' => 'Admin\TrainingController@destroy']);
+    });
+
+    Route::group(['prefix'=>'galeries','as'=>'galeries.'],function(){
+        Route::get('', ['as' => 'index', 'uses' => 'Admin\GalleryVideoController@index']);
+        Route::get('create', ['as' => 'create', 'uses' => 'Admin\GalleryVideoController@create']);
+        Route::post('store', ['as' => 'store', 'uses' => 'Admin\GalleryVideoController@store']);
+        Route::delete('{id}', ['as' => 'delete', 'uses' => 'Admin\GalleryVideoController@destroy']);
     });
 
     Route::group(['prefix'=>'members','as'=>'members.'], function(){
@@ -215,6 +223,10 @@ Route::group(['middleware' => 'admin'], function () {
         Route::group(['prefix' => 'nonactive','as'=>'nonactive.'], function () {
             Route::get('', ['as' => 'index', 'uses' => 'Admin\MemberController@member_nonactive']);
             Route::get('/active/{id}', ['as' => 'active', 'uses' => 'Admin\MemberController@active']);
+        });
+
+        Route::group(['prefix' => 'banned','as'=>'banned.'], function () {
+            Route::get('', ['as' => 'index', 'uses' => 'Admin\MemberController@banned']);
         });
 
         Route::get('/export-data', ['as' => 'export-data', 'uses' => 'Admin\MemberController@export']);

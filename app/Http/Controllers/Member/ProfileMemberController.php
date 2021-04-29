@@ -200,7 +200,7 @@ class ProfileMemberController extends Controller
                     'bitrex_cash' => 0,
                     'bitrex_points' => 0,
                     'pv' => 0,
-                    'nik' => $request->nik,
+                    'nik' => '', //$request->nik,
                     // 'expired_at' => count($ebooks) < 2 ? Carbon::create(date('Y-m-d H:i:s'))->addYear(1) : Carbon::create(date('Y-m-d H:i:s'))->addYear(5),
                     'expired_at' => Carbon::create(date('Y-m-d H:i:s'))->addYear(1),
                     'bank_name' => $request->bank_name,
@@ -355,6 +355,15 @@ class ProfileMemberController extends Controller
         ];
         $cek = Employeer::where('username',$user)->select('username')->first();
         $cek ? $data['username'] = true : $data['username'] = false;
+        return response()->json($data);
+    }
+
+    public function getUser($user){
+        $data = [
+            'status' => 200,
+            'username' => false,
+        ];
+        $data = Employeer::where('username',$user)->first();
         return response()->json($data);
     }
 
@@ -528,7 +537,7 @@ class ProfileMemberController extends Controller
                 'bitrex_cash' => 0,
                 'bitrex_points' => 0,
                 'pv' => 0,
-                'nik' => $data->passport ?? $data->nik,
+                'nik' => '',//$data->passport ?? $data->nik,
                 'no_rec' => $data->bank_account_number,
                 'bank_account_name' => $data->bank_account_name,
                 'bank_name' => $data->bank_name,
@@ -567,7 +576,7 @@ class ProfileMemberController extends Controller
                     'bitrex_cash' => 0,
                     'bitrex_points' => 0,
                     'pv' => 0,
-                    'nik' => $data->passport ?? $data->nik,
+                    'nik' => '',//$data->passport ?? $data->nik,
                     'no_rec' => $data->bank_account_number,
                     'bank_account_name' => $data->bank_account_name,
                     'bank_name' => $data->bank_name,
@@ -593,7 +602,7 @@ class ProfileMemberController extends Controller
                     'bitrex_cash' => 0,
                     'bitrex_points' => 0,
                     'pv' => 0,
-                    'nik' => $data->passport ?? $data->nik,
+                    'nik' => '', //$data->passport ?? $data->nik,
                     'no_rec' => $data->bank_account_number,
                     'bank_account_name' => $data->bank_account_name,
                     'bank_name' => $data->bank_name,
@@ -619,7 +628,7 @@ class ProfileMemberController extends Controller
                     'bitrex_cash' => 0,
                     'bitrex_points' => 0,
                     'pv' => 0,
-                    'nik' => $data->passport ?? $data->nik,
+                    'nik' => '',//$data->passport ?? $data->nik,
                     'no_rec' => $data->bank_account_number,
                     'bank_account_name' => $data->bank_account_name,
                     'bank_name' => $data->bank_name,
@@ -669,7 +678,7 @@ class ProfileMemberController extends Controller
                 'bitrex_cash' => 0,
                 'bitrex_points' => 0,
                 'pv' => 0,
-                'nik' => $request->passport,
+                'nik' => '',//$request->passport,
                 'expired_at' => Carbon::create(date('Y-m-d H:i:s'))->addYear(1),
                 'bank_name' => $request->bank_name,
                 'bank_account_name' => $request->bank_account_name,
@@ -706,7 +715,7 @@ class ProfileMemberController extends Controller
                     'bitrex_cash' => 0,
                     'bitrex_points' => 0,
                     'pv' => 0,
-                    'nik' => $request->passport,
+                    'nik' => '',//$request->passport,
                     'expired_at' => Carbon::create(date('Y-m-d H:i:s'))->addYear(1),
                     'bank_name' => $request->bank_name,
                     'bank_account_name' => $request->bank_account_name,
@@ -730,7 +739,7 @@ class ProfileMemberController extends Controller
                     'bitrex_cash' => 0,
                     'bitrex_points' => 0,
                     'pv' => 0,
-                    'nik' => $request->passport,
+                    'nik' => '',//$request->passport,
                     'expired_at' => Carbon::create(date('Y-m-d H:i:s'))->addYear(1),
                     'bank_name' => $request->bank_name,
                     'bank_account_name' => $request->bank_account_name,
@@ -754,7 +763,7 @@ class ProfileMemberController extends Controller
                     'bitrex_cash' => 0,
                     'bitrex_points' => 0,
                     'pv' => 0,
-                    'nik' => $request->passport,
+                    'nik' => '',//$request->passport,
                     'expired_at' => Carbon::create(date('Y-m-d H:i:s'))->addYear(1),
                     'bank_name' => $request->bank_name,
                     'bank_account_name' => $request->bank_account_name,
@@ -911,7 +920,7 @@ class ProfileMemberController extends Controller
                             'bitrex_cash' => 0,
                             'bitrex_points' => 0,
                             'pv' => 0,
-                            'nik' => $request->nik,
+                            'nik' => '',//$request->nik,
                             'no_rec' => $request->bank_account_number,
                             'bank_account_name' => $request->bank_account_name,
                             'bank_name' => $request->bank_name,
@@ -954,7 +963,7 @@ class ProfileMemberController extends Controller
                                     'bitrex_cash' => 0,
                                     'bitrex_points' => 0,
                                     'pv' => 0,
-                                    'nik' => $request->nik,
+                                    'nik' => '',//$request->nik,
                                     'no_rec' => $request->bank_account_number,
                                     'verification' => $cek_npwp,
                                     'bank_account_name' => $request->bank_account_name,
@@ -984,7 +993,7 @@ class ProfileMemberController extends Controller
                                     'bitrex_cash' => 0,
                                     'bitrex_points' => 0,
                                     'pv' => 0,
-                                    'nik' => $request->nik,
+                                    'nik' => '',//$request->nik,
                                     'no_rec' => $request->bank_account_number,
                                     'bank_account_name' => $request->bank_account_name,
                                     'bank_name' => $request->bank_name,
@@ -1014,7 +1023,7 @@ class ProfileMemberController extends Controller
                                     'bitrex_cash' => 0,
                                     'bitrex_points' => 0,
                                     'pv' => 0,
-                                    'nik' => $request->nik,
+                                    'nik' => '',//$request->nik,
                                     'no_rec' => $request->bank_account_number,
                                     'bank_account_name' => $request->bank_account_name,
                                     'bank_name' => $request->bank_name,

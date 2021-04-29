@@ -79,7 +79,7 @@
         <div class="email-ct">
           <p>Dear, {{ $data->username }}</p>
           <p>
-          Anda telah mendapatkan Bonus Pairing {{ $data->nominal }}. Tingkatkan terus aktivitas anda di Bitrexgo untuk mendapatkan reward selanjutnya.
+          Anda telah mendapatkan Komisi Pairing {{ $data->nominal }}. Tingkatkan terus aktivitas anda di Bitrexgo untuk mendapatkan reward selanjutnya.
           </p>
           <br>
           <br>

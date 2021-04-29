@@ -159,7 +159,7 @@ class TransactionBillService
 
         // jika belum ada transaksi
         if(!$check || !$ebookRenewal) return false;
-        
+
         $data['income'] = $ebookRenewal->price_markup;
         $data['expired_at'] = Carbon::create($check->expired_at)->addYears($duration);
       }
@@ -185,9 +185,9 @@ class TransactionBillService
     try {
       DB::beginTransaction();
       $productDetail = json_decode($transactionBillRepo->detail->product_detail);
-      
+
       $user = Employeer::where('id', $productDetail->user_id)->first();
-  
+
       if(!$user) return false;
 
       if(isset($productDetail->discount) && $productDetail->discount > 0) {
@@ -222,7 +222,7 @@ class TransactionBillService
       }
 
       DB::commit();
-  
+
       return true;
     } catch (\Exception $e) {
       DB::rollback();
@@ -243,7 +243,7 @@ class TransactionBillService
       $productDetail = json_decode($transactionBillRepo->detail->product_detail);
 
       $user = NonMember::where('id', $productDetail->user_id)->first();
-      
+
       if(!$user) return false;
 
       if(isset($productDetail->discount) && $productDetail->discount > 0) {
@@ -253,13 +253,13 @@ class TransactionBillService
           'ebook_id' => $productDetail->discount ?? 0
         ]);
       }
-      
-      
+
+
       $saveEbook = $this->createEbookNonMember(
         $productDetail,
         $transactionBillRepo->customer_number
       );
-      
+
 
       $updateTransaction = $transactionBillRepo->update([
         'payment_flag_status' => '00',
@@ -278,7 +278,7 @@ class TransactionBillService
       }
 
       DB::commit();
-  
+
       return true;
     } catch (\Exception $e) {
       DB::rollback();
@@ -333,7 +333,7 @@ class TransactionBillService
       }
 
       DB::commit();
-  
+
       return true;
     } catch (\Exception $e) {
       DB::rollback();
@@ -388,7 +388,7 @@ class TransactionBillService
         DB::rollback();
         return false;
       }
-      
+
       DB::commit();
 
       $employeer = Employeer::where('id', $registerMember)->first();
@@ -400,7 +400,7 @@ class TransactionBillService
 
       Mail::to($employeer->email)
         ->send(new RegisterMemberMail($dataEmail, null));
-  
+
       return true;
 
     } catch (\Exception $e) {
@@ -414,11 +414,11 @@ class TransactionBillService
     if (isset($data->npwp_number)) {
         $cek_npwp = strlen($data->npwp_number) >= 15 ? 1 : 0;
     }
-    
+
     $isHaveChild = Employeer::where('parent_id',$id)->select('position')->get();
     if (count($isHaveChild) == 3) {
         $pv = DB::table('pv_rank')->where('id_member',$id)->select('pv_left', 'pv_midle', 'pv_right')->first();
-        
+
         if($pv != null){
             if ($pv->pv_left <= $pv->pv_midle and $pv->pv_left <= $pv->pv_right) {
                 $child = Employeer::where('parent_id',$id)->where('position',0)->select('id')->first();
@@ -452,7 +452,7 @@ class TransactionBillService
             'bitrex_cash' => 0,
             'bitrex_points' => 0,
             'pv' => 0,
-            'nik' => $data->passport ?? $data->nik,
+            'nik' => '',//$data->passport ?? $data->nik,
             'no_rec' => $data->bank_account_number,
             'bank_account_name' => $data->bank_account_name,
             'bank_name' => $data->bank_name,
@@ -491,7 +491,7 @@ class TransactionBillService
                 'bitrex_cash' => 0,
                 'bitrex_points' => 0,
                 'pv' => 0,
-                'nik' => $data->passport ?? $data->nik,
+                'nik' => '',//$data->passport ?? $data->nik,
                 'no_rec' => $data->bank_account_number,
                 'bank_account_name' => $data->bank_account_name,
                 'bank_name' => $data->bank_name,
@@ -517,7 +517,7 @@ class TransactionBillService
                 'bitrex_cash' => 0,
                 'bitrex_points' => 0,
                 'pv' => 0,
-                'nik' => $data->passport ?? $data->nik,
+                'nik' => '',//$data->passport ?? $data->nik,
                 'no_rec' => $data->bank_account_number,
                 'bank_account_name' => $data->bank_account_name,
                 'bank_name' => $data->bank_name,
@@ -543,7 +543,7 @@ class TransactionBillService
                 'bitrex_cash' => 0,
                 'bitrex_points' => 0,
                 'pv' => 0,
-                'nik' => $data->passport ?? $data->nik,
+                'nik' => '',//$data->passport ?? $data->nik,
                 'no_rec' => $data->bank_account_number,
                 'bank_account_name' => $data->bank_account_name,
                 'bank_name' => $data->bank_name,
@@ -561,7 +561,7 @@ class TransactionBillService
     $isHaveChild = Employeer::where('parent_id',$sponsor->id)->select('position')->get();
     if (count($isHaveChild) == 3) {
         $pv = DB::table('pv_rank')->where('id_member',$sponsor->id)->select('pv_left', 'pv_midle', 'pv_right')->first();
-        
+
         if($pv != null){
             if ($pv->pv_left <= $pv->pv_midle and $pv->pv_left <= $pv->pv_right) {
                 $child = Employeer::where('parent_id',$sponsor->id)->where('position',0)->select('id')->first();
@@ -594,7 +594,7 @@ class TransactionBillService
             'bitrex_cash' => 0,
             'bitrex_points' => 0,
             'pv' => 0,
-            'nik' => $request->nik,
+            'nik' => '',//$request->nik,
             'expired_at' => Carbon::create(date('Y-m-d H:i:s'))->addYear(1),
             'bank_name' => $request->bank_name,
             'bank_account_name' => $request->bank_account_name,
@@ -631,7 +631,7 @@ class TransactionBillService
                 'bitrex_cash' => 0,
                 'bitrex_points' => 0,
                 'pv' => 0,
-                'nik' => $request->nik,
+                'nik' => '',//$request->nik,
                 'expired_at' => Carbon::create(date('Y-m-d H:i:s'))->addYear(1),
                 'bank_name' => $request->bank_name,
                 'bank_account_name' => $request->bank_account_name,
@@ -655,7 +655,7 @@ class TransactionBillService
                 'bitrex_cash' => 0,
                 'bitrex_points' => 0,
                 'pv' => 0,
-                'nik' => $request->nik,
+                'nik' => '',//$request->nik,
                 'expired_at' => Carbon::create(date('Y-m-d H:i:s'))->addYear(1),
                 'bank_name' => $request->bank_name,
                 'bank_account_name' => $request->bank_account_name,
@@ -679,7 +679,7 @@ class TransactionBillService
                 'bitrex_cash' => 0,
                 'bitrex_points' => 0,
                 'pv' => 0,
-                'nik' => $request->nik,
+                'nik' => '',//$request->nik,
                 'expired_at' => Carbon::create(date('Y-m-d H:i:s'))->addYear(1),
                 'bank_name' => $request->bank_name,
                 'bank_account_name' => $request->bank_account_name,

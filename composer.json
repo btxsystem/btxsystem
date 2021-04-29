@@ -18,6 +18,7 @@
         "laravel/framework": "5.8.*",
         "laravel/passport": "^7.3",
         "laravel/tinker": "^1.0",
+        "lcobucci/jwt": "3.3.3",
         "maatwebsite/excel": "^3.1",
         "mashape/unirest-php": "^3.0",
         "predis/predis": "^1.1",
@@ -26,6 +27,7 @@
         "steevenz/rajaongkir": "^2.2",
         "uxweb/sweet-alert": "^2.0",
         "veritrans/veritrans-php": "^1.2",
+        "xendit/xendit-php": "^2.10",
         "yajra/laravel-datatables-oracle": "^9.4"
     },
     "require-dev": {

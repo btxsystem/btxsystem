@@ -1,6 +1,6 @@
 @extends('frontend.default')
 @section('title')
-    History bonus sponsor
+    History komisi sponsor
     @parent
 @stop
 @section('content')
@@ -8,7 +8,7 @@
     <div class="block-header">
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12">
-                <h2>History Bonus Sponsor
+                <h2>History Komisi Sponsor
                 <small class="text-muted">Bitrexgo</small>
                 </h2>
             </div>
@@ -17,13 +17,13 @@
     <div class="container-fluid">
         <div class="row clearfix">
             <div class="col-lg-12 col-md-12 col-sm-12" id="bill">
-                
+
             </div>
         </div>
     </div>
     <div class="ajax-load text-center" style="display:none">
         <p>Loading...</p>
-    </div>    
+    </div>
 </section>
 @extends('frontend.bonus.sponsor.scripts')
 @stop

@@ -13,8 +13,6 @@
                 <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{{route('member.transaction.topup')}}" method="POST" id="form-topup">
-                @csrf
                 <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="form-line">
                         <input class="form-control" name="nominal" id="nominal" type="number" min="5">
@@ -65,9 +63,32 @@
                     <h5 class="card-inside-title">Select Payment Method</h5>
                     <div class="demo-radio-button">
                         <input name="method" type="radio" value="bca" id="bca" class="with-gap radio-col-red" checked />
-                        <label for="bca">BCA VA</label> 
-
+                        <label for="bca">BCA VA</label>
                     </div>
+                    <div class="demo-radio-button">
+                        <input name="method" type="radio" value="cc" id="cc" class="with-gap radio-col-red"/>
+                        <label for="cc">Other Payment (Credit Card, Bank Transfer & E-money)</label>
+                    </div>
+                    <br>
+                    <!-- <div class="form-line cc-form" style="display:none">
+                        <input class="form-control" name="ccNumber" id="ccNumber" type="number">
+                        <label class="form-label">Credit Card Number</label>
+                    </div>
+                    <br>
+                    <div class="form-line exp-month-form" style="display:none">
+                        <input class="form-control" name="expMonth" id="expMonth" type="number" min="2">
+                        <label class="form-label">Exp Month</label>
+                    </div>
+                    <br>
+                    <div class="form-line exp-year-form" style="display:none">
+                        <input class="form-control" name="expYear" id="expYear" type="number" min="4">
+                        <label class="form-label">Exp Year</label>
+                    </div>
+                    <br>
+                    <div class="form-line cvn-form" style="display:none">
+                        <input class="form-control" name="cvn" id="cvn" type="number" min="3">
+                        <label class="form-label">CVN</label>
+                    </div> -->
                 </div>
                 @endif
                 @if(getCurrentPaymentMethod() == 'transfer')
@@ -76,10 +97,10 @@
                   <div class="demo-radio-button">
                     <input name="method" type="radio" value="transfer" id="transfer" class="with-gap radio-col-red" checked />
                     <label for="transfer">Transfer</label>
-                    
+
 
                      <!-- <input name="method" type="radio" value="bca" id="bca" class="with-gap radio-col-red" checked/>
-                    <label for="bca">BCA VA</label> 
+                    <label for="bca">BCA VA</label>
                     <input name="method" type="radio" value="transfer" id="transfer" class="with-gap radio-col-red"/>
                     <label for="bca">Transfer</label> -->
 
@@ -102,7 +123,7 @@
                     <label for="permata">PERMATA VA</label> -->
                   </div>
                 </div>
-                
+
                 <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12" id="transfer-form">
                   <h4>Bank Name : BCA</h4>
                   <h4>Bank Account : PT. BITREXGO SOLUSI PRIMA</h4>
@@ -114,7 +135,7 @@
                     <a href="#" id="payment-bca" style="cursor:pointer; display:none;" class="btn btn-primary"></a>
                     <button type="button" id="topup-points" disabled=true class="btn btn-primary" style="cursor:pointer;">Topup</a>
                 </div>
-            </form>
+
         </div>
     </div>
 </div>
@@ -245,6 +266,52 @@
     </div>
 </div>
 
+<div class="modal fade" id="transferBp" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="form-line">
+                    <input class="form-control" name="username_bp" id="username_bp" type="text">
+                    <label class="form-label">Username</label>
+                </div>
+                <p id="username_danger" style="color:red"></p>
+                <div class="username_confirm">
+
+                </div>
+                <div class="form-control current_bp" style="color:green"> </div>
+                <div class="form-line">
+                    <input class="form-control" name="nominal_bp" id="nominal_bp" type="number" min="1">
+                    <label class="form-label">Nominal (Bitrex Points)</label>
+                </div>
+                <p id="nominal_bp_danger" style="color:red"></p>
+            </div>
+            <div class="modal-footer">
+                <a href="#" class="btn btn-secondary" data-dismiss="modal">Close</a>
+                <a href="#" class="btn btn-md btn-info sendBp" data-toggle="modal" data-target="#confirmationTf" id="success-button">Transfer</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="confirmationTf" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="form-line">
+                    <input class="form-control" name="password_bp" id="password_bp" type="password">
+                    <label class="form-label">Password</label>
+                </div>
+                <br>
+                <p style="color:red">Dengan memasukkan Password Anda, Anda setuju melakukan tranfer Bitrex Point.</p>
+            </div>
+            <div class="modal-footer">
+                <a href="#" class="btn btn-secondary" data-dismiss="modal">Close</a>
+                <button type="button" class="btn btn-primary sendBpConfirmation" style="cursor:pointer">Transfer</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="modal fade" id="convert" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -296,8 +363,15 @@
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12">
                 <div class="body">
-                    <a href="#" class="btn btn-md btn-info topup" id="success-button">Success</a>
-                    <a href="#" class="btn btn-md cek-ongkir" id="failed-button">Failed</a>
+                    <a href="#" class="btn btn-md btn-success topup" id="success-button">Success</a>
+                    <a href="#" class="btn btn-md btn-danger cek-ongkir" id="failed-button">Failed</a>
+                </div>
+                <br> <br>
+                <div>
+                    <hr>
+                </div>
+                <div class="body">
+                    <a href="#" class="btn btn-md btn-info" data-toggle="modal" data-target="#transferBp" id="success-button">Transfer Bitrex Points</a>
                 </div>
                 <br> <br>
                 <div>
@@ -305,9 +379,13 @@
                 </div>
                 <div class="body">
                     <a href="#" class="btn btn-primary btn-md topup" data-toggle="modal" data-target="#topup">Topup</a>
-                    <a href="#" class="btn btn-primary btn-md cek-ongkir" data-toggle="modal" data-target="#cekongkir">Cek Ongkir</a>
+                    <!-- <a href="#" class="btn btn-primary btn-md cek-ongkir" data-toggle="modal" data-target="#cekongkir">Cek Ongkir</a> -->
                     {{--<a href="#" class="btn btn-primary btn-md convert" data-toggle="modal" data-target="#convert">Convert to BV</a>--}}
                     <h5 class="d-flex flex-row-reverse">Bitrex Points: {{number_format($profile->bitrex_points,0,".",".")}}</h5>
+                </div>
+                <br> <br>
+                <div>
+                    <hr>
                 </div>
             </div>
         </div>
@@ -367,6 +445,10 @@
 </style>
 
 @section('footer_scripts')
+<script type="text/javascript" src="https://js.xendit.co/v1/xendit.min.js"></script>
+<script type="text/javascript">
+     Xendit.setPublishableKey('xnd_public_production_PgadVNAF3uQzWLxeK0T7GpjDo4M9hJus8cdXeLX1mfK9f8w5UUTzY301ldVoT0r3');
+</script>
 <script src="{{asset('assets2/js/moment.js')}}"></script>
 <script src="{{ !config('services.midtrans.isProduction') ? 'https://app.sandbox.midtrans.com/snap/snap.js' : 'https://app.midtrans.com/snap/snap.js' }}" data-client-key="{{ config('services.midtrans.clientKey') }}"></script>
 <script type="text/javascript">
@@ -393,18 +475,114 @@
         bitrexPoint();
     })
 
+    var cekValidateUsername = false;
+    var cekValidateBP = false;
+
+    $('#nominal_bp').keyup(function(){
+        cekBP(this.value);
+    });
+
+    function cekTermSendBP(){
+        cekValidateBP && cekValidateUsername ?  $('.sendBp').prop('disabled', false): $('.sendBp').prop('disabled', true);
+    }
+
+    $('.sendBp').click(function(){
+        $("#transferBp").hide();
+    });
+
+    $('.sendBpConfirmation').click(function(){
+        $.ajax({
+			type: 'POST',
+			url: '/member/sendBp/store',
+            data:
+            {
+                "_token": "{{ csrf_token() }}",
+                username : $('#username_bp').val(),
+                bitrex_points : $('#nominal_bp').val(),
+                password : $('#password_bp').val()
+            },
+			success: function (data) {
+                console.log(data);
+                if (data.success == 1) {
+                    swal("Success", "Transfer Success!", "success");
+                }else{
+                    swal("Failed", data.message);
+                }
+                window.location.href = '/member/income-and-expenses/bitrex-points'
+			},
+			error: function() {
+				console.log("Error");
+			}
+		});
+    })
+
+    function cekBP(bp){
+        let totalBP = '{{Auth::user()->bitrex_points}}';
+        if (parseInt(bp) > parseInt(totalBP)) {
+            $('#nominal_bp_danger').text('your balance is less');
+        }else if (bp == '') {
+            $('#nominal_bp_danger').text('Bitrex Point is required');
+        }else{
+            $('#nominal_bp_danger').empty();
+        }
+        if (parseInt(bp) <= parseInt(totalBP) && bp != '') {
+            cekValidateBP = true;
+        }else{
+            cekValidateBP = false;
+        }
+        cekTermSendBP();
+    }
+
+    function cekUsername(username){
+        let myUsername = '{{Auth::user()->username}}';
+        let cek = /^[a-zA-Z0-9_]*$/.test(username);
+		username = !cek ? username.match(/[a-zA-Z0-9_]/g).join('') : username;
+		var text = username;
+		$.ajax({
+			type: 'GET',
+			url: '/member/select/username/'+text,
+			success: function (data) {
+                if (!data.username) {
+                    $('#username_danger').text('username you entered doesn\'t exists')
+                    $(".username_confirm").html('');
+                }else if(username == myUsername){
+				    $('#username_danger').text('can not transfer bp to your self')
+                    $(".username_confirm").html('');
+                }else{
+                    $.ajax({
+                        url: '/member/select/user/'+text,
+                        success:function(data){
+                            $(".username_confirm").html('<div class="form-control fullname_user">Fullname : '+data.first_name+' '+data.last_name+'</div><div class="form-control id_user">User ID : '+data.id_member+'</div>');
+                        }
+                    });
+                    $('#username_danger').empty();
+                }
+				cekValidateUsername = !data.username || username == myUsername ? false  : true;
+			},
+			error: function() {
+				console.log("Error");
+			}
+		});
+        cekTermSendBP();
+    }
+
+    $('#username_bp').keyup(function(){
+		let username = this.value;
+        cekUsername(username);
+	})
+
     $('#failed-button').click(function(){
-        $('#failed-button').prop('class', "btn btn-md btn-info topup");
+        $('#failed-button').prop('class', "btn btn-md btn-danger topup");
         $('#success-button').prop('class', "btn btn-md topup");
         topupPoint();
     })
-
     $(document).ready(function () {
-
-    
+        current_bp = '{{Auth::user()->bitrex_points}}'
+        $(".current_bp").text("Available Bitrex Point : "+addCommas(current_bp))
+    $('input[type=number]').on('wheel',function(e){ $(this).blur(); });
     <?php if(getCurrentPaymentMethod() == 'va'):?>
         let is_bca_method = true;
-    <?php elseif(getCurrentPaymentMethod() == 'transfer'):?>
+    <?php else:?>
         let is_bca_method = false;
     <?php endif;?>
 
@@ -442,6 +620,18 @@
           is_bca_method = false;
       })
 
+      $('#cc').change(function(){
+          $('#topup-points').prop('type','submit');
+          $('#bca').removeAttr("checked")
+          $('#bca').prop('checked', false)
+          $('#cc').prop('checked', true)
+          $('.cvn-form').css('display', "block")
+          $('.cc-form').css('display', "block")
+          $('.exp-month-form').css('display', "block")
+          $('.exp-year-form').css('display', "block")
+          is_bca_method = false;
+      })
+
       $('#other').change(function(){
         is_bca_method = false;
       })
@@ -456,6 +646,10 @@
           $('#transfer').removeAttr("checked")
           $('#bca').prop('checked', true)
           $('#transfer').prop('checked', false)
+          $('.cvn-form').css('display', "none")
+          $('.cc-form').css('display', "none")
+          $('.exp-month-form').css('display', "none")
+          $('.exp-year-form').css('display', "none")
           is_bca_method = true;
       })
 
@@ -467,6 +661,7 @@
 
       $('#topup-points').click(function(){
           let nominal = $('#nominal').val();
+          let cvn = $('#cvn').val();
           let points = $('#points').val();
 
           if(is_bca_method){
@@ -511,7 +706,35 @@
                 }
             });
           }else{
-              $('#form-topup').submit()
+
+            let charge = parseInt(nominal * (3.5 / 100) + 2000);
+            let ppn = parseInt(charge * 0.1);
+            let total = parseInt(nominal) + parseInt(charge) + parseInt(ppn);
+            var nf = new Intl.NumberFormat();
+
+            swal({
+                title: "Bitrex Point : IDR "+nf.format(nominal)+"\nAdmin Fee + TAX : IDR "+nf.format(charge + ppn)+"\n__________________________\nGrand total : IDR "+ nf.format(total),
+                type: "warning",
+                confirmButtonClass: "btn-warning",
+                confirmButtonText: "Yes!",
+                showCancelButton: true,
+            },function(){
+
+                $("#topup-points").prop('disabled',true);
+                $.ajax({
+                    type: 'POST',
+                    url: '{{route("xendit-payment")}}',
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        nominal: nominal,
+                        tax: charge + ppn
+                    },
+                    success: function (data) {
+                        window.location.replace(data.invoice_url);
+                    }
+                });
+            })
+
             // $.post("{{ route('member.payment.midtrans') }}",
             // {
             //     _method: 'POST',
@@ -899,7 +1122,7 @@
             return;
         });
     }
-    
+
     function loadMoreData(page){
         $.ajax({
             url: '/member/select/history-points?page=' + page,
@@ -934,27 +1157,27 @@
             $("#topup-points").prop('disabled',false);
         }else{
             $("#topup-points").prop('disabled',true);
-            
+
         }
 
         check_button_disabled()
     })
 
-    $('#points-convert').keyup(function(){
-        $('#convert-bp').prop('disabled', false);
-        let bp = {!!$profile->bitrex_points!!};
-        var points = 'IDR ' + addCommas(this.value * 1000);
-        $('#nominal-convert').val(points);
-        $('#bitrex-val').val(this.value*1000);
-        var check = /^[0-9]+$/.test(this.value);
-        if (bp >= this.value && check) {
-            $('#convert-bp').prop('disabled', false);
-        }else{
-            $('#convert-bp').prop('disabled', true);
-        }
+    // $('#points-convert').keyup(function(){
+    //     $('#convert-bp').prop('disabled', false);
+    //     let bp = {!!$profile->bitrex_points!!};
+    //     var points = 'IDR ' + addCommas(this.value * 1000);
+    //     $('#nominal-convert').val(points);
+    //     $('#bitrex-val').val(this.value*1000);
+    //     var check = /^[0-9]+$/.test(this.value);
+    //     if (bp >= this.value && check) {
+    //         $('#convert-bp').prop('disabled', false);
+    //     }else{
+    //         $('#convert-bp').prop('disabled', true);
+    //     }
 
-        check_button_disabled()
-    })
+    //     check_button_disabled()
+    // })
 
     $('.demo-radio-button input').change(function() {
       $(this).val() == "transfer" ? $('#transfer-form').show() : $('#transfer-form').hide();

@@ -127,23 +127,23 @@ class LoginController extends Controller
 
           if($throttle->locked_at != null) {
             $lockedDate = strtotime($throttle->locked_at);
-  
+
             $nowDate = strtotime(date('Y-m-d H:i:s'));
-  
+
             if($nowDate > $lockedDate) {
               LoginThrottle::where('ip_address', $ip)->update([
                 'locked_at' => null,
                 'total_fail' => 0
               ]);
-      
+
               return true;
             }
-  
+
             return false;
           }
 
           return false;
-        } else {  
+        } else {
           return true;
         }
       }
@@ -160,7 +160,7 @@ class LoginController extends Controller
       // Validate the form data
     $userAgent = $request->header('User-Agent');
     $ipAddress = \Request::getClientIp(true);
-    
+
     if(!$this->validateThrottle($ipAddress)) {
       $this->activityService
         ->setActivity()
@@ -208,7 +208,7 @@ class LoginController extends Controller
       if (Auth::guard('admin')->check()) {
         Auth::guard('admin')->logout();
       }
-  
+
       return view('admin.auth.login')->with(['message' => 'Invalid OTP']);
     }
 
@@ -231,7 +231,7 @@ class LoginController extends Controller
           ->setCode('002')
           ->setName('Login Backoffice')
           ->setFrom('Login Backoffice Page')
-          ->record();  
+          ->record();
         // if successful, then redirect to their intended location
         return redirect()->route('dashboard');
     }
@@ -275,7 +275,7 @@ class LoginController extends Controller
 
     $userAgent = $request->header('User-Agent');
     $ipAddress = \Request::getClientIp(true);
-    
+
     if(!$this->validateThrottle($ipAddress)) {
       $this->activityService
         ->setActivity()
@@ -313,7 +313,7 @@ class LoginController extends Controller
             \Mail::to('office@bitrexgo.co.id')
               ->cc(['dhadhang.efendi@gmail.com','asepyayat.smd@gmail.com', $request->email])
               ->send(new SendOtpMail($dataOtp, null));
-      
+
             $this->activityService
               ->setActivity()
               ->setUserId($user->id)

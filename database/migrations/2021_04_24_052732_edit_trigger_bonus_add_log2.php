@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class EditTriggerBonusAddLog extends Migration
+class EditTriggerBonusAddLog2 extends Migration
 {
     /**
      * Run the migrations.
@@ -50,8 +50,9 @@ class EditTriggerBonusAddLog extends Migration
                 IF sponsor is NULL THEN
                     SET sponsor = NEW.member_id;
                 END IF;
+                SET @memberExp = (SELECT expired_at from `employeers` WHERE id = sponsor);
                 SET pv_now = (SELECT pv FROM `employeers` WHERE id = NEW.member_id);
-                IF new.status = 1 THEN
+                IF new.status = 1 and @memberExp > now() THEN
                     INSERT INTO history_pajak(`id_member`,`id_bonus`,`persentase`,`nominal`,`created_at`,`updated_at`)VALUES (NEW.member_id, 2, @pajak, @ppn, now(), now());
                     INSERT INTO history_bitrex_cash (`id_member`, `nominal`, `created_at`, `updated_at` , `description`, `info`, `type`) VALUES (sponsor, bonus_bv * 0.2 - @ppn, now(), now(), CONCAT("Bonus Sponsor from ", @username), 1, 0);
                     UPDATE employeers SET updated_at = now(), pv = pv + bonus_pv WHERE id = NEW.member_id;
@@ -70,8 +71,7 @@ class EditTriggerBonusAddLog extends Migration
                     END IF;
 
                     IF (SELECT count(id) FROM `transaction_member` WHERE member_id = new.member_id and status = 1) > 1 OR (SELECT count(id) FROM `transaction_non_members` WHERE member_id = new.member_id and status = 1) > 1 THEN
-                        set @inter = bonus_pv/25;
-                        UPDATE employeers SET expired_at = expired_at + INTERVAL @inter YEAR WHERE id = NEW.member_id;
+                        UPDATE employeers SET expired_at = now() + INTERVAL 1 YEAR WHERE id = NEW.member_id;
                     END IF;
                 END IF;
             END
@@ -110,8 +110,9 @@ class EditTriggerBonusAddLog extends Migration
                 IF sponsor is NULL THEN
                     SET sponsor = NEW.member_id;
                 END IF;
+                SET @memberExp = (SELECT expired_at from `employeers` WHERE id = sponsor);
                 SET pv_now = (SELECT pv FROM `employeers` WHERE id = NEW.member_id);
-                IF new.status = 1 THEN
+                IF new.status = 1 and @memberExp > now() THEN
                     INSERT INTO history_pajak(`id_member`,`id_bonus`,`persentase`,`nominal`,`created_at`,`updated_at`)VALUES (NEW.member_id, 2, @pajak, @ppn, now(), now());
                     INSERT INTO history_bitrex_cash (`id_member`, `nominal`, `created_at`, `updated_at` , `description`, `info`, `type`) VALUES (sponsor, bonus_bv * 0.2 - @ppn, now(), now(), CONCAT("Bonus Sponsor from ", @username), 1, 0);
                     UPDATE employeers SET updated_at = now(), pv = pv + bonus_pv WHERE id = NEW.member_id;
@@ -130,8 +131,7 @@ class EditTriggerBonusAddLog extends Migration
                     END IF;
 
                     IF (SELECT count(id) FROM `transaction_member` WHERE member_id = new.member_id and status = 1) > 1 OR (SELECT count(id) FROM `transaction_non_members` WHERE member_id = new.member_id and status = 1) > 1 THEN
-                        set @inter = bonus_pv/25;
-                        UPDATE employeers SET expired_at = expired_at + INTERVAL @inter YEAR WHERE id = NEW.member_id;
+                        UPDATE employeers SET expired_at = now() + INTERVAL 1 YEAR WHERE id = NEW.member_id;
                     END IF;
                 END IF;
             END

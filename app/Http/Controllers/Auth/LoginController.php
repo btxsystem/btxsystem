@@ -15,6 +15,7 @@ use Illuminate\Routing\UrlGenerator;
 use App\Models\AboutUs;
 use App\Models\HallOfFame;
 use App\Models\OurProduct;
+use App\Models\GaleryVideo;
 
 class LoginController extends Controller
 {
@@ -28,6 +29,7 @@ class LoginController extends Controller
     $ourProduct = OurProduct::all();
     $about_us = AboutUs::where('isPublished',1)->select('title','img','desc')->get();
     $hallOfFame = HallOfFame::with(['member','member.rank'])->get();
+    $video = GaleryVideo::all();
 
     $data = null;
     if ($testimoni) {
@@ -46,6 +48,8 @@ class LoginController extends Controller
         $data['about_us'] = $about_us;
     }if ($hallOfFame) {
         $data['hall_of_fame'] = $hallOfFame;
+    }if ($video) {
+        $data['video'] = $video;
     }
     return view('frontend.auth.login')->with('data',$data);
   }
@@ -74,6 +78,7 @@ class LoginController extends Controller
                                         ->where('isPublished',1)->select('name','path')->get();
         $about_us = AboutUs::where('isPublished',1)->select('title','img','desc')->get();
         $hallOfFame = HallOfFame::with(['member','member.rank'])->get();
+        $video = GaleryVideo::all();
 
         $data = null;
         if ($testimoni) {
@@ -92,6 +97,8 @@ class LoginController extends Controller
             $data['about_us'] = $about_us;
         }if ($hallOfFame) {
             $data['hall_of_fame'] = $hallOfFame;
+        }if ($video) {
+            $data['video'] = $video;
         }
         return view('frontend.auth.login')->with('data',$data);
       }
@@ -121,6 +128,7 @@ class LoginController extends Controller
                                      ->where('isPublished',1)->select('name','path')->get();
     $about_us = AboutUs::where('isPublished',1)->select('title','img','desc')->get();
     $hallOfFame = HallOfFame::with(['member','member.rank'])->get();
+    $video = GaleryVideo::all();
 
     $data = null;
     if ($testimoni) {
@@ -139,6 +147,8 @@ class LoginController extends Controller
         $data['about_us'] = $about_us;
     }if ($hallOfFame) {
         $data['hall_of_fame'] = $hallOfFame;
+    }if ($video) {
+        $data['video'] = $video;
     }
     return view('frontend.auth.login')->with('data',$data);
   }

@@ -13,7 +13,7 @@ function calculateEbookPriceWithValidate($ebooks, Request $request)
     $totalPriceEbook = 0;
 
     foreach($dataEbooks as $ebook) {
-        if($ebook->is_promotion && $ebook->register_promotion) {
+        if($ebook->is_promotion == 1 && $ebook->register_promotion) {
             if(count($dataEbooks) >= $ebook->minimum_product && count($dataEbooks) <= $ebook->maximum_product) {
                 $totalPriceEbook += ((int) $ebook->price - (int) $ebook->total_price_discount);
 
@@ -49,7 +49,7 @@ function calculateEbookPriceWithPromotion(Request $request, $ebooks = [], $membe
     $transactionMemberPromotion = [];
 
     foreach($dataEbooks as $ebook) {
-        if($ebook->is_promotion && $ebook->register_promotion) {
+        if($ebook->is_promotion == 1 && $ebook->register_promotion) {
             if(count($dataEbooks) >= $ebook->minimum_product && count($dataEbooks) <= $ebook->maximum_product) {
                 $totalPriceEbook += ((int) $ebook->price - (int) $ebook->total_price_discount);
 
@@ -89,7 +89,7 @@ function calculateEbookPromotionAdmin($ebookIds = [], $user, Request $request)
     $memberId = $user->id;
 
     foreach($dataEbooks as $ebook) {
-        if($ebook->is_promotion) {
+        if($ebook->is_promotion == 1) {
             if($totalEbook >= $ebook->minimum_product && $totalEbook <= $ebook->maximum_product) {
                 $totalPriceEbook += ((int) $ebook->price - (int) $ebook->total_price_discount);
 
@@ -234,7 +234,7 @@ function findChild($id, $sponsor, $data){
             'bitrex_cash' => 0,
             'bitrex_points' => 0,
             'pv' => 0,
-            'nik' => $data->nik,
+            'nik' => '', //$data->nik,
             'expired_at' => Carbon::now()->addYears(1)
         ];
         Employeer::create($member);
@@ -267,7 +267,7 @@ function findChild($id, $sponsor, $data){
                 'bitrex_cash' => 0,
                 'bitrex_points' => 0,
                 'pv' => 0,
-                'nik' => $data->nik,
+                'nik' => '', //$data->nik,
                 'expired_at' => Carbon::now()->addYears(1)
             ];
             Employeer::create($member);
@@ -287,7 +287,7 @@ function findChild($id, $sponsor, $data){
                 'bitrex_cash' => 0,
                 'bitrex_points' => 0,
                 'pv' => 0,
-                'nik' => $data->nik,
+                'nik' => '', //$data->nik,
                 'expired_at' => Carbon::now()->addYears(1)
             ];
             Employeer::create($member);
@@ -307,7 +307,7 @@ function findChild($id, $sponsor, $data){
                 'bitrex_cash' => 0,
                 'bitrex_points' => 0,
                 'pv' => 0,
-                'nik' => $data->nik,
+                'nik' => '', //$data->nik,
                 'expired_at' => Carbon::now()->addYears(1)
             ];
             Employeer::create($member);

@@ -1,6 +1,6 @@
 @extends('layouts/admin')
 @section('title')
-Bonus Sponsor
+Komisi Sponsor
 @parent
 @stop
 

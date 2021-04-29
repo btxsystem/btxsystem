@@ -1,6 +1,6 @@
 @extends('layouts/admin')
 @section('title')
-Bonus Sponsor
+Komisi Sponsor
 @parent
 @stop
 
@@ -15,10 +15,10 @@ Bonus Sponsor
         <li class="active">Sponsor</li>
     </ol>
 </section>
-    <section class="content">                
+    <section class="content">
     <div class="row">
         <div class="col-md-12">
-           
+
         <div class="portlet box primary" style="margin-top: 15px;">
                 <div class="portlet-title">
                     <div class="caption">
@@ -26,7 +26,7 @@ Bonus Sponsor
                         Sponsor Table
                     </div>
                 </div>
-                
+
                 <div class="portlet-body flip-scroll">
                     <table id="sponsor" class="table data-table table-bordered table-striped table-condensed flip-content sponsor" >
                         <thead class="flip-content">
@@ -46,7 +46,7 @@ Bonus Sponsor
     </div>
     </section>
 
-  
+
     <!-- <div id="detail" class="modal fade">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -62,7 +62,7 @@ Bonus Sponsor
                                 Bitrex Cash Table
                             </div>
                         </div>
-                        
+
                         <div class="portlet-body flip-scroll">
                             <table class="table data-table table-bordered table-striped table-condensed flip-content detail" >
                                 <thead class="flip-content">
@@ -127,12 +127,12 @@ Bonus Sponsor
                     title: 'Membership',
                     orientation: 'landscape',
                     filename: 'membership'
-                }, 
+                },
                 {
                     extend: 'excel',
                     title: 'Membership',
                     filename: 'membership'
-                }, 
+                },
                 {
                 extend: 'print',
                 orientation: 'landscape',
@@ -140,7 +140,7 @@ Bonus Sponsor
                 }
               ],
               ajax: {
-                url: "{{ route('bonus.sponsor') }}", 
+                url: "{{ route('bonus.sponsor') }}",
               },
               columns: [
                   {data: 'member.username', name: 'member.username', className: 'text-center'},
@@ -154,7 +154,7 @@ Bonus Sponsor
 
 
     var detail = (id) => {
-        console.log('masuk'); 
+        console.log('masuk');
         var table = $('.detail').DataTable({
               destroy: true,
               processing: true,
@@ -164,14 +164,14 @@ Bonus Sponsor
               },
               columns: [
                   {
-                      data: 'DT_RowIndex', name: 'DT_RowIndex', 
+                      data: 'DT_RowIndex', name: 'DT_RowIndex',
                       orderable: false, searchable: false
                   },
                   {data: 'nominal', name: 'nominal'},
                   {data: 'description', name: 'description', searchable: false},
                   {data: 'created_at', name: 'created_at', orderable: false, searchable: false},
-              ]    
-        });    
+              ]
+        });
     };
       </script>
 

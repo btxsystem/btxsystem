@@ -123,12 +123,18 @@ Route::group(['namespace' => 'Ebook\Api', 'prefix' => 'api/ebook'], function() {
   Route::get('/ebooks', 'EbookController@all')->name('api.ebook.ebooks');
 });
 
+Route::post('/xendit-payment', ['as' => 'xendit-payment', 'uses' => 'Member\XenditController@store']);
+
 Route::post('forgot-password', ['as' => 'forgot-password', 'uses' => 'Member\ForgotPasswordController@sendEmail']);
 
 Route::group(['middleware' => 'web', 'prefix' => 'member', 'as'=> 'member.'], function () {
 
     Route::group(['prefix' => 'testimonial', 'as'=> 'testimonial.'], function() {
         Route::post('store', ['as' => 'store', 'uses' => 'Member\TestimonialController@store']);
+    });
+
+    Route::group(['prefix' => 'sendBp', 'as'=> 'sendBp.'], function() {
+        Route::post('store', ['as' => 'store', 'uses' => 'Member\BitrexPointController@sendBP']);
     });
 
     Route::group(['prefix' => 'bp', 'as'=> 'bp.'], function () {
@@ -190,6 +196,7 @@ Route::group(['middleware' => 'web', 'prefix' => 'member', 'as'=> 'member.'], fu
         Route::get('child-tree/{user}', ['as' => 'child-tree', 'uses' => 'Member\DashboardController@getChildTree']);
         Route::get('tree-upline/{user}', ['as' => 'tree-upline', 'uses' => 'Member\DashboardController@getParentTree']);
         Route::get('username/{user}', ['as' => 'username', 'uses' => 'Member\ProfileMemberController@isSameUsername']);
+        Route::get('user/{user}', ['as' => 'user', 'uses' => 'Member\ProfileMemberController@getUser']);
         Route::get('email/{user}', ['as' => 'email', 'uses' => 'Member\ProfileMemberController@isSameEmail']);
         Route::get('nik/{user}', ['as' => 'nik', 'uses' => 'Member\ProfileMemberController@isSameNik']);
         Route::get('history-points', ['as' => 'history-points', 'uses' => 'Member\BitrexPointController@getHistoryPoints']);

@@ -1,6 +1,6 @@
 @include('frontend.auth.header')
 <div aria-live="polite" aria-atomic="true" class="d-flex justify-content-center align-items-center" style="min-height: 200px;position:absolute;right:0;left:0;top:0">
-<div role="alert" aria-live="assertive" aria-atomic="true" class="bg-white border" id="corona" data-autohide="false" style="width:400px;font-size:1.6rem;margin-top:100px;z-index:999!important;margin-right:120px">
+<!-- <div role="alert" aria-live="assertive" aria-atomic="true" class="bg-white border" id="corona" data-autohide="false" style="width:400px;font-size:1.6rem;margin-top:100px;z-index:999!important;margin-right:120px">
   <div class="toast-header bg-light">
     <strong class="mr-auto">ANNOUNCEMENT</strong>
     <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close" onclick="closeCorona()">
@@ -13,7 +13,7 @@
   <div class="toast-body">
     <a target="_blank" href="{{asset('assets3/maintenance_announcement.pdf')}}">Update for Maintenance</a>
   </div>
-</div>
+</div> -->
 </div>
     <div class="main-content">
       <div class="slide">
@@ -155,6 +155,7 @@
               <div class="wrap-title">
                 <h2 class="ui-title-block">Our <strong>Product</strong></h2>
               </div>
+              <br>
               <div class="posts-wrap">
                 @foreach ($data['ourProduct'] as $item)
                     <article class="post post_mod-a clearfix wow zoomIn" data-wow-duration="1s" style="width: 46%!important;">
@@ -222,6 +223,7 @@
               <div class="wrap-title">
                 <h2 class="ui-title-block">Our <strong>Headquarter</strong></h2>
               </div>
+              <br>
               <div class="posts-wrap">
                 @foreach ($data['ourHeadQuarter'] as $item)
                     <article class="post post_mod-b clearfix wow zoomIn" data-wow-duration="1s">
@@ -241,9 +243,44 @@
         <!-- end container -->
       </section>
       <!-- end section-default -->
+      @if($data['video'])
+        <section class="section-default">
+            <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                <div class="wrap-title">
+                    <h2 class="ui-title-block">Gallery <strong>Video</strong></h2>
+                </div>
+                <br>
+                <div class="posts-wrap">
+                    @foreach ($data['video'] as $video)
+                        <article class="post post_mod-b clearfix wow zoomIn" data-wow-duration="1s">
+                            <div class="entry-media">
+                                <div class="entry-thumbnail"> <a href="javascript:void(0);" >
+                                <iframe id="ytplayer" type="text/html"
+                                    class="swiper-left"
+                                    src="{{ $video->path}}"
+                                    allowfullscreen="allowfullscreen"
+                                    frameborder="0">
+                                </iframe>
+                                </a> </div>
+                            </div>
+                        </article>
+                        <!-- end post -->
+                    @endforeach
+                </div>
+                <!-- end posts-wrap -->
+                </div>
+                <!-- end col -->
+            </div>
+            <!-- end row -->
+            </div>
+            <!-- end container -->
+        </section>
+    @endif
 
       <!-- end section-video -->
-      <section class="section-ui wow fadeInUp" data-wow-duration="1s">
+      <!-- <section class="section-ui wow fadeInUp" data-wow-duration="1s">
         <div class="container">
           <div class="row">
             <div class="col-xs-15">
@@ -251,13 +288,13 @@
                 <div class="ui-ktp" style="font-size:20px;font-weight:bold"> PT BITREXGO SOLUSI PRIMA HANYA AKAN MEMBERIKAN 1 HAK USAHA UNTUK 1 KTP KEPADA SELURUH MEMBER TANPA KECUALI </div>
                 <div class="ui-ktp" style="font-size:20px;font-weight:bold"> 1 KTP BERLAKU UNTUK 1 HAK USAHA </div><br>
                 <div class="entry-thumbnail"><img class="ui-ktp" src="{{asset('img/KTP.png')}}" width="270" height="250" alt="Foto"/></a> </div>
-              </div>
+              </div> -->
             <!-- end col -->
-          </div>
+          <!-- </div> -->
           <!-- end row -->
-        </div>
+        <!-- </div> -->
         <!-- end container -->
-      </section>
+      <!-- </section> -->
       <!-- end section-video -->
 
 
@@ -667,7 +704,7 @@
         $(this).prop('checked', true)
         priceEbook = priceEbook + parseInt($(this).data('price'))
         $('#cost-ebook').html(toPrice(priceEbook))
-        $('#grand-total').html(toPrice((priceEbook + postalFee + 280000)))
+        $('#grand-total').html(toPrice((priceEbook + postalFee)))
       }
     });
 
@@ -677,13 +714,13 @@
         })
         n=ebookSelected.length; //Tambah value untuk stored temporary
 			let cancelledEbook = false;
-		
+
 
 			if(n>=2){
 				var r = confirm("Apakah Anda yakin membeli " + n +" ebook?");
 				if (r == true) {
 
-				} else { 
+				} else {
 					cancelledEbook = true
 					$(this).prop("checked", false)
 				}
@@ -695,12 +732,12 @@
           var r = confirm("Apakah Anda yakin membeli 2 ebook?");
           if (r == true) {
 
-          } else { 
+          } else {
             cancelledEbook = true
             $(this).prop("checked", false)
           }
         }*/
-        
+
 
         if($(this).prop('checked')) {
           check += 1;
@@ -710,7 +747,7 @@
             check -= 1;
             priceEbook = priceEbook - parseInt($(this).data('price'));
           }
-          
+
         }
         if(priceEbook != 0) {
           $('#cost-ebook').parent().removeClass('hidden');
@@ -726,9 +763,9 @@
         }
 
         $('#cost-ebook').html(toPrice(priceEbook))
-        $('#grand-total').html(toPrice((priceEbook + postalFee + 280000)))
+        $('#grand-total').html(toPrice((priceEbook + postalFee)))
 
-        grandTotal = (priceEbook + postalFee + 280000);
+        grandTotal = (priceEbook + postalFee);
 
         validasiForm()
       })
@@ -862,7 +899,7 @@
         console.log("Error");
       }
     });
-    
+
   })
 
   $("#username").keyup(function(){

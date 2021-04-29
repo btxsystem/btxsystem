@@ -25,7 +25,7 @@ class BitrexCashController extends Controller
             return $next($request);
         });
     }
-    
+
     public function index()
     {
         $data = Auth::user();
@@ -35,7 +35,7 @@ class BitrexCashController extends Controller
     public function getHistoryCash(){
         $data = Auth::user();
         $history = HistoryBitrexCash::where('id_member',$data->id)->orderBy('created_at','desc')->paginate(4);
-        return response()->json(['cash'=>$history]); 
+        return response()->json(['cash'=>$history]);
     }
 
     public function resendOTP(){
@@ -75,7 +75,7 @@ class BitrexCashController extends Controller
                 $remark2 = "Auto withdraw";
                 $transactionId = substr(Auth::user()->id_member, -4).rand(1000,9999);
                 $referenceId = 'BITREXGO/WD/'.date("Ymd/").$transactionId;
-                
+
                 $bca = new BCA;
                 $response = $bca->transfer($date, $accountnumber, $amount, $remark1, $remark2, $transactionId, $referenceId);
                 $data = json_encode($response);
@@ -103,7 +103,7 @@ class BitrexCashController extends Controller
                         $data_response = [
                             'status' => 'Something wrong',
                         ];
-                    } 
+                    }
                 }else{
                     $data_response = [
                         'status' => $data,
@@ -122,7 +122,7 @@ class BitrexCashController extends Controller
 
                 $bca = new BCA;
                 $response = $bca->domesticTransfer($date, $accountnumber, $accountname, $bankcode, $amount, $remark1, $remark2, $transactionId, $referenceId);
-                
+
                 $data = json_encode($response);
                 if($data == '"Success"') {
                     try {
@@ -148,7 +148,7 @@ class BitrexCashController extends Controller
                         $data_response = [
                             'status' => 'Something wrong',
                         ];
-                    } 
+                    }
                 }else{
                     $data_response = [
                         'status' => $data,
@@ -171,7 +171,7 @@ class BitrexCashController extends Controller
             if (!$is_available) {
                 DB::table('otp_withdrawal')->insert(['member_id' => Auth::id(), 'otp' => $otp, 'expired_at' => $min , 'created_at' => now(), 'updated_at' => now()]);
             }else{
-                DB::table('otp_withdrawal')->where('member_id', Auth::id())->update(['otp' => $otp, 'expired_at' => $min, 'updated_at' => now()]);   
+                DB::table('otp_withdrawal')->where('member_id', Auth::id())->update(['otp' => $otp, 'expired_at' => $min, 'updated_at' => now()]);
             }
             $dataEmail = (object) [
                 'otp' => $otp,
