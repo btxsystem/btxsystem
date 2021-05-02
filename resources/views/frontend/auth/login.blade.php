@@ -12,7 +12,7 @@
 
     <p>Dengan ini PT. Bitrexgo Solusi Prima telah melakukan update terhadap SIUPL terbaru.</p>
 
-    <p>Diantanya adalah pembaharuan kode etik dan marketing plan yang dapat dilihat pada masing-masing dashboard member.</p>
+    <p>Diantaranya adalah pembaharuan kode etik dan marketing plan yang dapat dilihat pada masing-masing dashboard member.</p>
   </div>
 </div>
 </div>
