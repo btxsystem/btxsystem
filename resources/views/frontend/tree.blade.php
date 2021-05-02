@@ -767,8 +767,6 @@ em{
 		$('#payment_method').html(`
 				<input name="payment_method" type="radio" value="point" id="bp" class="with-gap radio-col-red" checked/>
 				<label for="bp">Bitrex Points</label>
-				<input name="payment_method" type="radio" value="va" id="va" class="with-gap radio-col-red" />
-				<label for="va">Virtual Account BCA</label>
 		`);
 		$('#action-member').attr('action', '{{route("register-autoplacement")}}');
 		$('#register').modal('show');
