@@ -378,7 +378,7 @@
             </a>
 
             <div class="btnBook">
-              <a class="btn btn-effect btn-info btn-buy" href="{{'ebook.'.$_SERVER['SERVER_NAME'].'/ebook'}}">
+              <a class="btn btn-effect btn-info btn-buy" href="'ebook.'.$_SERVER['SERVER_NAME'].'/ebook'">
                   <span style="color:white">EBOOK</span>
               </a>
             </div>
