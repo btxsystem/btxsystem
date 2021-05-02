@@ -90,7 +90,7 @@
                                                                     <h2 class="mb-0" style="color: #8543da;">{!! $item->title !!}</h2>
                                                                     <br>
                                                                     <h5 style="color:black">{!! $item->description !!}</h5><br>
-                                                                    <a href="'ebook.'.$_SERVER['SERVER_NAME'].'/ebook'" class="btn btn-danger btn-sm mt-3 px-5">Go to Ebook</a>
+                                                                    <a href="https://ebook."{{$_SERVER['SERVER_NAME']}}"./ebook" class="btn btn-danger btn-sm mt-3 px-5">Go to Ebook</a>
                                                                     <a href="{{route('member.ebook.referral', ['type' => isset($item->title) ? $item->title : $item['title'], 'username' => isset($profile->username) ? $profile->username : $profile['username']])}}" class="btn btn-primary btn-sm mt-3 px-5" id="view1">VIEW</a>
                                                                 </div>
                                                             </div>
