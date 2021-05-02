@@ -8,7 +8,7 @@
     </button>
   </div>
   <div class="toast-body">
-    <a target="_blank" href="{{asset('assets3/Announcement.pdf')}}">Update for Maintenance</a>
+    <a target="_blank" href="/announcment">Update for Maintenance</a>
   </div>
 </div>
 </div>
