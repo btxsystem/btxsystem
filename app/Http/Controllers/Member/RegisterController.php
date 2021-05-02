@@ -38,7 +38,7 @@ class RegisterController extends Controller
     $lastName = $request->input('lastName') ?? '';
     $username = $request->input('username') ?? '';
     $email = $request->input('email') ?? '';
-    $nik = '';//$request->input('passport') ?? '';
+    $nik = $request->input('passport') ?? '';
     $birthdate = $request->input('birthdate') ?? null;
 
     //shipping

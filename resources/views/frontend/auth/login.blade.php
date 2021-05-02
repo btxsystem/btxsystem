@@ -1,6 +1,6 @@
 @include('frontend.auth.header')
 <div aria-live="polite" aria-atomic="true" class="d-flex justify-content-center align-items-center" style="min-height: 200px;position:absolute;right:0;left:0;top:0">
-<!-- <div role="alert" aria-live="assertive" aria-atomic="true" class="bg-white border" id="corona" data-autohide="false" style="width:400px;font-size:1.6rem;margin-top:100px;z-index:999!important;margin-right:120px">
+<div role="alert" aria-live="assertive" aria-atomic="true" class="bg-white border" id="corona" data-autohide="false" style="width:400px;font-size:1.6rem;margin-top:100px;z-index:999!important;margin-right:120px">
   <div class="toast-header bg-light">
     <strong class="mr-auto">ANNOUNCEMENT</strong>
     <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close" onclick="closeCorona()">
@@ -8,12 +8,9 @@
     </button>
   </div>
   <div class="toast-body">
-    <a target="_blank" href="{{asset('assets3/Surat_Himbauan_Covid-19-revisi_2.pdf')}}">Corona Virus Update</a>
+    <a target="_blank" href="{{asset('assets3/Announcement.pdf')}}">Update for Maintenance</a>
   </div>
-  <div class="toast-body">
-    <a target="_blank" href="{{asset('assets3/maintenance_announcement.pdf')}}">Update for Maintenance</a>
-  </div>
-</div> -->
+</div>
 </div>
     <div class="main-content">
       <div class="slide">
