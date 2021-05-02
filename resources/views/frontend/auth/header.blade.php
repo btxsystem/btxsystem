@@ -378,7 +378,7 @@
             </a>
 
             <div class="btnBook">
-              <a class="btn btn-effect btn-info btn-buy" href="/ebook">
+              <a class="btn btn-effect btn-info btn-buy" href="{{route('member.home')}}">
                   <span style="color:white">EBOOK</span>
               </a>
             </div>
