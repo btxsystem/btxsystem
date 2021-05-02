@@ -18,7 +18,7 @@
                         <input class="form-control" name="nominal" id="nominal" type="number" min="5">
                         <label class="form-label">Nominal</label>
                     </div>
-                    <p class="notif" style="color:green">Minimum input bitrex points 10000, and Multiples 1000</p>
+                    <p class="notif" style="color:green">Minimum input nominal 10000, and Multiples 1000</p>
                 </div>
                 <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="form-line">
