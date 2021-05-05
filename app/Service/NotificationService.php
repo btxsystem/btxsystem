@@ -94,7 +94,7 @@ class NotificationService extends Notification
             'username' => Auth::user()->username,
         ];
 
-        Mail::to('cs@bitrexgo.co.id ')->send(new RequestArchiveRewardAdminMail($dataEmailAdm));
+        Mail::to('cs@bitrexgo.co.id')->send(new RequestArchiveRewardAdminMail($dataEmailAdm));
 
         return;
     }
