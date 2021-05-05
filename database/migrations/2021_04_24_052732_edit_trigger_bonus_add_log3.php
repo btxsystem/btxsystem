@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class EditTriggerBonusAddLog2 extends Migration
+class EditTriggerBonusAddLog3 extends Migration
 {
     /**
      * Run the migrations.
@@ -52,13 +52,14 @@ class EditTriggerBonusAddLog2 extends Migration
                 END IF;
                 SET @memberExp = (SELECT expired_at from `employeers` WHERE id = sponsor);
                 SET pv_now = (SELECT pv FROM `employeers` WHERE id = NEW.member_id);
-                IF new.status = 1 and @memberExp > now() THEN
+                IF new.status = 1 THEN
                     INSERT INTO history_pajak(`id_member`,`id_bonus`,`persentase`,`nominal`,`created_at`,`updated_at`)VALUES (NEW.member_id, 2, @pajak, @ppn, now(), now());
-                    INSERT INTO history_bitrex_cash (`id_member`, `nominal`, `created_at`, `updated_at` , `description`, `info`, `type`) VALUES (sponsor, bonus_bv * 0.2 - @ppn, now(), now(), CONCAT("Bonus Sponsor from ", @username), 1, 0);
+                    IF @memberExp > now() THEN
+                        INSERT INTO history_bitrex_cash (`id_member`, `nominal`, `created_at`, `updated_at` , `description`, `info`, `type`) VALUES (sponsor, bonus_bv * 0.2 - @ppn, now(), now(), CONCAT("Bonus Sponsor from ", @username), 1, 0);
+                        UPDATE employeers SET updated_at = now(), bitrex_cash = bitrex_cash + (bonus_bv * 0.2 - @ppn) WHERE id = sponsor;
+                    END IF;
                     UPDATE employeers SET updated_at = now(), pv = pv + bonus_pv WHERE id = NEW.member_id;
-                    UPDATE employeers SET updated_at = now(), bitrex_cash = bitrex_cash + (bonus_bv * 0.2 - @ppn) WHERE id = sponsor;
                     INSERT INTO history_pv (`pv`, `pv_today`, `id_member`, `created_at`, `updated_at`) VALUES (pv_now , bonus_pv, NEW.member_id, now(), now());
-
                     IF is_promo > 0 THEN
                         INSERT INTO `transaction_member_histories` (`transaction_id`, `pv`, `bv`, `discount`, `price_discount`, `price`, `created_at`, `updated_at`) VALUES(
                             NEW.id, bonus_pv, (bonus_bv * 0.2 - @ppn), discount, ((price_ebook * discount) / 100), price_ebook, now(), now()
@@ -112,11 +113,13 @@ class EditTriggerBonusAddLog2 extends Migration
                 END IF;
                 SET @memberExp = (SELECT expired_at from `employeers` WHERE id = sponsor);
                 SET pv_now = (SELECT pv FROM `employeers` WHERE id = NEW.member_id);
-                IF new.status = 1 and @memberExp > now() THEN
+                IF new.status = 1 THEN
                     INSERT INTO history_pajak(`id_member`,`id_bonus`,`persentase`,`nominal`,`created_at`,`updated_at`)VALUES (NEW.member_id, 2, @pajak, @ppn, now(), now());
-                    INSERT INTO history_bitrex_cash (`id_member`, `nominal`, `created_at`, `updated_at` , `description`, `info`, `type`) VALUES (sponsor, bonus_bv * 0.2 - @ppn, now(), now(), CONCAT("Bonus Sponsor from ", @username), 1, 0);
+                    IF @memberExp > now() THEN
+                        INSERT INTO history_bitrex_cash (`id_member`, `nominal`, `created_at`, `updated_at` , `description`, `info`, `type`) VALUES (sponsor, bonus_bv * 0.2 - @ppn, now(), now(), CONCAT("Bonus Sponsor from ", @username), 1, 0);
+                        UPDATE employeers SET updated_at = now(), bitrex_cash = bitrex_cash + (bonus_bv * 0.2 - @ppn) WHERE id = sponsor;
+                    END IF;
                     UPDATE employeers SET updated_at = now(), pv = pv + bonus_pv WHERE id = NEW.member_id;
-                    UPDATE employeers SET updated_at = now(), bitrex_cash = bitrex_cash + (bonus_bv * 0.2 - @ppn) WHERE id = sponsor;
                     INSERT INTO history_pv (`pv`, `pv_today`, `id_member`, `created_at`, `updated_at`) VALUES (pv_now , bonus_pv, NEW.member_id, now(), now());
 
                     IF is_promo > 0 THEN
