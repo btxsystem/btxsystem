@@ -24,7 +24,7 @@
                     <div class="form-line">
                         <input class="form-control" name="points" id="points" type="text" readonly>
                     </div>
-                    {{--<p class="notif" style="color:green">Convert from IDR 1000</p>--}}
+                    <p class="notif" style="color:green">Convert from nominal to Bitrex Points</p>
                 </div>
                 <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="form-check">

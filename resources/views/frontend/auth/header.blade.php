@@ -377,11 +377,11 @@
               <img class="header-logo__img" src="{{asset('img/ap2li_new_1.png')}}"  alt="AP2LI Logo" height="auto" width="190px">
             </a>
 
-            <div class="btnBook">
+            <!-- <div class="btnBook">
               <a class="btn btn-effect btn-info btn-buy" href="https://ebook.{{$_SERVER['SERVER_NAME']}}/ebook">
                   <span style="color:white">EBOOK</span>
               </a>
-            </div>
+            </div> -->
             <div class="header-inner">
               <div class="header-search">
                 <div class="navbar-search">
@@ -408,7 +408,7 @@
                     <li><a id="hall-if-fame" href="/hall-of-fame">Hall Of Fame</a></li>
                     <!-- <li><a href="#"><button class="btn btn-effect btn-info btn-buy" style="background: #b92240; margin-top: -10px;">JOIN</button></a></li> -->
                     <!-- <li><a data-toggle="modal" data-target="#join"><button class="btn btn-effect btn-info btn-buy" style="background: #b92240; margin-top: -10px;">JOIN</button></a></li>-->
-                     <li><a><button class="btn btn-effect btn-info btn-buy" style="background: #b92240; margin-top: -10px;">JOIN</button></a></li>
+                     <!-- <li><a><button class="btn btn-effect btn-info btn-buy" style="background: #b92240; margin-top: -10px;">JOIN</button></a></li> -->
                    {{--<li><a data-toggle="modal" data-target="#join"><button class="btn btn-effect btn-info btn-buy" style="background: #b92240; margin-top: -10px;">JOIN</button></a></li>--}}
                     <!-- <li><a href="#"><button class="btn btn-effect btn-info btn-buy" style="background: #b92240; margin-top: -10px;">JOIN</button></a></li> -->
 
