@@ -119,7 +119,7 @@ class ProfileMemberController extends Controller
             }
 
             $method = $request->input('payment_method') ?? 'point';
-            $shippingMethod = $request->input('shipping_method') ?? "0";
+            (int) $shippingMethod = 0; //$request->input('shipping_method') ?? 0;
 
             $checkEmail = Employeer::where('email', $request->email)->count();
 
@@ -247,7 +247,7 @@ class ProfileMemberController extends Controller
                     return view('frontend.tree')->with('profile',$data);
                 }
 
-                if($request->input('shipping_method') == "1") {
+                if((int)$shippingMethod == 1) {
                     $price = (int) $price + (int) + $request->input('cost');
                 }
 
@@ -787,7 +787,7 @@ class ProfileMemberController extends Controller
             }
 
             $method = $request->input('payment_method') ?? 'point';
-            $shippingMethod = $request->input('shipping_method') ?? "0";
+            (int) $shippingMethod = 0; //$request->input('shipping_method') ?? 0;
 
             $checkEmail = Employeer::where('email', $request->email)->count();
 
@@ -845,7 +845,7 @@ class ProfileMemberController extends Controller
                     return view('frontend.tree')->with('profile',$data);
                 }
 
-                if($request->input('shipping_method') == "1") {
+                if((int) $shippingMethod == 1) {
                     $price = (int) $price + (int) + $request->input('cost');
                 }
 
@@ -1045,7 +1045,7 @@ class ProfileMemberController extends Controller
                         TransactionMemberPromotion::insert($calculateEbookPrice['promotions']);
                         $price += (int) $calculateEbookPrice['total_price'] / 1000;
 
-                        if((int)$shippingMethod == 1) {
+                        if((int) $shippingMethod == 1) {
                             $kurir = substr($request->kurir_name, 0, strpos($request->kurir_name, " -"));
                             DB::table('address')->insert([
                                 'decription' => $request->input('address'),
