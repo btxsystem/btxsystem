@@ -107,6 +107,8 @@ class ProfileMemberController extends Controller
     }
 
     public function register(Request $request){
+        $checkEmail = Employeer::where('email', $request->email)->count();
+        return $checkEmail;
         try {
             if (!isset($request->bank_name) || $request->bank_name==null) {
                 $request->bank_name = 'BCA';
@@ -122,7 +124,6 @@ class ProfileMemberController extends Controller
             (int) $shippingMethod = 0; //$request->input('shipping_method') ?? 0;
 
             $checkEmail = Employeer::where('email', $request->email)->count();
-
             if($checkEmail > 0) {
                 DB::rollback();
                 Alert::error('Email sudah terdaftar', 'Error')->persistent("OK");
