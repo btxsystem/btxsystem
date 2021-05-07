@@ -108,7 +108,7 @@ class ProfileMemberController extends Controller
 
     public function register(Request $request){
         $checkEmail = Employeer::where('email', $request->email)->count();
-        return $checkEmail;
+        return $request->all();
         die;
         try {
             if (!isset($request->bank_name) || $request->bank_name==null) {
