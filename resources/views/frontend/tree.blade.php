@@ -767,8 +767,6 @@ em{
 		$('#payment_method').html(`
 				<input name="payment_method" type="radio" value="point" id="bp" class="with-gap radio-col-red" checked/>
 				<label for="bp">Bitrex Points</label>
-				<input name="payment_method" type="radio" value="va" id="va" class="with-gap radio-col-red" />
-				<label for="va">Virtual Account BCA</label>
 		`);
 		$('#action-member').attr('action', '{{route("register-autoplacement")}}');
 		$('#register').modal('show');
@@ -836,13 +834,15 @@ em{
 		}).done(function(res) {
 			const {data} = res
 			let render = data.map((v, i) => {
-				return `
-				<div class="form-check">
-				<input class="form-check-input" data-id="${v.id}" data-allow-merge-discount="${v.allow_merge_discount}" data-maximum-product="${v.maximum_product}" data-register-promotion="${v.register_promotion}" data-minimum-product="${v.minimum_product}" data-price-discount="${v.total_price_discount}" data-promotion="${v.is_promotion}" data-price="${v.price}" type="checkbox" name="ebooks[]" value="${v.id}" id="${v.title}">
-				<label class="form-check-label" id="${i}" for="${v.title}" ${v.id == 1 ? 'checked' : ''}>
-					${v.title}
-				</label>
-				</div>`
+                if (v.id != 7) {
+                    return `
+                        <div class="form-check">
+                        <input class="form-check-input" data-id="${v.id}" data-allow-merge-discount="${v.allow_merge_discount}" data-maximum-product="${v.maximum_product}" data-register-promotion="${v.register_promotion}" data-minimum-product="${v.minimum_product}" data-price-discount="${v.total_price_discount}" data-promotion="${v.is_promotion}" data-price="${v.price}" type="checkbox" name="ebooks[]" value="${v.id}" id="${v.title}">
+                        <label class="form-check-label" id="${i}" for="${v.title}" ${v.id == 1 ? 'checked' : ''}>
+                            ${v.title}
+                        </label>
+                        </div>`
+                }
 		})
 		$('#ebook-list').html(`
 			<div id="checkboxEbook">

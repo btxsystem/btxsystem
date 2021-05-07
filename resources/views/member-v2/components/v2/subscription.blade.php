@@ -359,18 +359,26 @@ div#flag {
 												$now = date('Y-m-d H:i:s');
 											@endphp
 
+
 											@if($expired > $now)
+                                                @if($ebook->id != 7)
 												<a href="{{route('member.ebook.detail', ['type' => $ebook->slug])}}" class="btn btn-secondary text-white btn-sm mt-3 px-5">VIEW</a>
-											@endif
+											    @endif
+                                            @endif
 										@else
                       @if($ebook->status == 6)
+                                                @if($ebook->id != 7)
 												<form action="">
 													<a href="{{route('member.ebook.detail', ['type' => $ebook->slug, 'username' => $username])}}" class="btn btn-identity-red btn-sm mt-3 px-5">BUY</a>
 												</form>
+                                                @endif
+
                       @else
+                      @if($ebook->id != 7)
                       <form action="">
                         <a href="{{route('member.ebook.detail', ['type' => $ebook->slug, 'username' => $username])}}" class="btn btn-identity-red btn-sm mt-3 px-5">BUY</a>
                       </form>
+                      @endif
                       @endif
 										@endif
 									</div>

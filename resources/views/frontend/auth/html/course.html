@@ -1,746 +1,913 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimal-ui">
-  <title>Bitrexgo</title>
-  <link href="assets/img/favicon.png" type="image/x-icon" rel="shortcut icon">
-  <!-- <link href="http://templines.rocks/html/academica/assets/css/master.css" rel="stylesheet"> -->
-  <link href="assets/css/master.css" rel="stylesheet">
-  <!-- SWITCHER -->
-  <link href="assets/css/switcher.css" rel="stylesheet" id="switcher-css" media="all">
 
-  <link href="assets/css/color2.css" rel="alternate stylesheet" title="color2" media="all">
-  <link href="assets/css/color3.css" rel="alternate stylesheet" title="color3" media="all">
-  <link href="assets/css/color4.css" rel="alternate stylesheet" title="color4" media="all">
-  <link href="assets/css/color5.css" rel="alternate stylesheet" title="color5" media="all">
-  <script src="assets/js/jquery-1.11.3.min.js"></script>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimal-ui">
+    <title>Bitrexgo</title>
+    <link href="assets/img/favicon.png" type="image/x-icon" rel="shortcut icon">
+    <!-- <link href="http://templines.rocks/html/academica/assets/css/master.css" rel="stylesheet"> -->
+    <link href="assets/css/master.css" rel="stylesheet">
+    <!-- SWITCHER -->
+    <link href="assets/css/switcher.css" rel="stylesheet" id="switcher-css" media="all">
+
+    <link href="assets/css/color2.css" rel="alternate stylesheet" title="color2" media="all">
+    <link href="assets/css/color3.css" rel="alternate stylesheet" title="color3" media="all">
+    <link href="assets/css/color4.css" rel="alternate stylesheet" title="color4" media="all">
+    <link href="assets/css/color5.css" rel="alternate stylesheet" title="color5" media="all">
+    <script src="assets/js/jquery-1.11.3.min.js"></script>
 </head>
 
 <body>
 
-<style type="text/css">
-img.header-logo__img {
-    margin-top: 15px;
-    margin-bottom: 15px;
-}
-.border-decor_top {
-    border-top: 0px solid #ddd;
-}
-header.header {
-    background: #fff;
-}
-.header.sticky {
-    left: 0;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    background-color: #fff;
-    border: #e8e9ed 1px solid;
-    z-index: 888;
-    padding-top: 0px;
-}
-.yamm .nav > li > a {
-    position: relative;
-    display: block;
-    padding: 0 10px 0 20px;
-    text-transform: uppercase;
-    transition: all .1s ease-out;
-    font-family: Montserrat , arial;
-    color: #222;
-}
-.yamm .nav-subtitle {
-    display: block;
-    color: #6d6d6d;
-    font-size: 10px;
-    margin-top: 5px;
-    line-height: 1.2;
-}
-.btn-warning {
-    color: #ffffff;
-    background-color: #b92240;
-    border-color: #ff0054;
-    box-shadow: 0 4px 0 0 #ff0054;
-}
-.btn-warning:after {
-    background-color: #b92240;
-}
-.bg-color_primary, .btn-header, .btn-primary, .find-course__title, .find-course .form-group {
-    background-color: #b92240;
-}
-.find-course_mod-a .form-group:after, .staff:hover .staff__inner, .post:hover .entry-main, .nav-tabs > li {
-    border-top-color: #b92240;
-}
-.btn-info {
-    color: #ffffff;
-    box-shadow: 0 4px 0 0 #52001b;
-    background-color: #b92240;
-}
-.btn-info:after {
-    background-color: #b92240;
-}
-.section-video:after {
-    position: absolute;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(34, 145, 155, 0.84);
-    content: '';
-}
-.section-subscribe {
-    background-color: #22919b;
-}
-.btn-success {
-    color: #fff;
-    background-color: #b92240;
-    box-shadow: 0 4px 0 0 #8c0733;
-}
-.btn-success:after {
-    background-color: #b92240;
-}
-.footer {
-    color: #fff;
-    background-color: #1d2228;
-}
-.footer-contacts__inner {
-    display: block;
-    margin-left: 26px;
-    color: #fff;
-}
-.footer-list__link {
-    color: #fff;
-}
-.footer-title:after {
-    display: block;
-    width: 30px;
-    margin-top: 18px;
-    margin-bottom: 42px;
-    border-top: 1px solid #fff;
-    content: '';
-}
-a, .color_primary, .rtd ul > li:before, .yamm .nav > li > a:hover, .footer-list__link:hover, .post_mod-a .entry-date, .post_mod-c .entry-date, .panel-default .panel-title, .accordion .panel-heading .panel-active, .breadcrumb > li .icon, .list-courses__number, .list-categories__link:hover .list-categories__name, .list-categories__link:hover .list-categories__number, .list-courses__meta .icon, blockquote:before, .about__title strong, .reviews__text:before {
-    color: #b92240;
-}
-.tweets__link {
-    font-family: Montserrat , arial;
-    font-size: 12px;
-    color: #ffffff;
-}
-.list-clients__item:nth-child(1) img {
-    border-bottom-color: #9c0939;
-}
-.list-clients__item:nth-child(2) img {
-    border-bottom-color: #9c0838;
-}
-.list-clients__item:nth-child(3) img {
-    border-bottom-color: #9c0838;
-}
-.post .entry-main {
-    position: relative;
-    border-top: 2px solid #b92240;
-    cursor: default;
-    transition: all 0.3s;
-}
-.section-progress {
-    padding-top: 80px;
-    padding-bottom: 100px;
-    background: url(https://cdn2.hubspot.net/hubfs/2828691/bimbel%20online/asset-bg-3@3x.png);
-    background-size: cover;
-}
-.section_mod-a {
-    padding-bottom: 30px;
-    background-color: #22919b;
-}
-.footer .form-control {
-    margin-bottom: 8px;
-    padding-top: 13px;
-    padding-bottom: 12px;
-    border-color: #e6ebf1;
-    background-color: #e6ebf1;
-}
-.wrap-title-page {
-    position: relative;
-    padding-top: 40px;
-    padding-bottom: 70px;
-    background-color: #22919b;
-}
-.post .entry-hover {
-    position: absolute;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(67, 158, 166, 0.84);
-    opacity: 0;
-    transition: all 0.3s;
-    text-align: center;
-}
-.post .entry-main {
-    position: relative;
-    border-top: 2px solid #439ea5;
-    cursor: default;
-    transition: all 0.3s;
-}
-.find-course_mod-a .form-group:after, .staff:hover .staff__inner, .post:hover .entry-main, .nav-tabs > li {
-    border-top-color: #439EA0;
-}
-.wrap-breadcrumb {
-    margin-top: -20px;
-    margin-bottom: 0;
-    padding: 21px 40px 20px;
-    border-top-left-radius: 4px;
-    border-top-right-radius: 4px;
-    background-color: #155253;
-    list-style: none;
-}
-.breadcrumb > li {
-    font-family: 'Open Sans';
-    font-weight: 400;
-    text-transform: uppercase;
-    color: #ffffff;
-    font-size: 11px;
-    display: inline-block;
-}
+    <style type="text/css">
+        img.header-logo__img {
+            margin-top: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .border-decor_top {
+            border-top: 0px solid #ddd;
+        }
+        
+        header.header {
+            background: #fff;
+        }
+        
+        .header.sticky {
+            left: 0;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: #fff;
+            border: #e8e9ed 1px solid;
+            z-index: 888;
+            padding-top: 0px;
+        }
+        
+        .yamm .nav>li>a {
+            position: relative;
+            display: block;
+            padding: 0 10px 0 20px;
+            text-transform: uppercase;
+            transition: all .1s ease-out;
+            font-family: Montserrat, arial;
+            color: #222;
+        }
+        
+        .yamm .nav-subtitle {
+            display: block;
+            color: #6d6d6d;
+            font-size: 10px;
+            margin-top: 5px;
+            line-height: 1.2;
+        }
+        
+        .btn-warning {
+            color: #ffffff;
+            background-color: #b92240;
+            border-color: #ff0054;
+            box-shadow: 0 4px 0 0 #ff0054;
+        }
+        
+        .btn-warning:after {
+            background-color: #b92240;
+        }
+        
+        .bg-color_primary,
+        .btn-header,
+        .btn-primary,
+        .find-course__title,
+        .find-course .form-group {
+            background-color: #b92240;
+        }
+        
+        .find-course_mod-a .form-group:after,
+        .staff:hover .staff__inner,
+        .post:hover .entry-main,
+        .nav-tabs>li {
+            border-top-color: #b92240;
+        }
+        
+        .btn-info {
+            color: #ffffff;
+            box-shadow: 0 4px 0 0 #52001b;
+            background-color: #b92240;
+        }
+        
+        .btn-info:after {
+            background-color: #b92240;
+        }
+        
+        .section-video:after {
+            position: absolute;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(34, 145, 155, 0.84);
+            content: '';
+        }
+        
+        .section-subscribe {
+            background-color: #22919b;
+        }
+        
+        .btn-success {
+            color: #fff;
+            background-color: #b92240;
+            box-shadow: 0 4px 0 0 #8c0733;
+        }
+        
+        .btn-success:after {
+            background-color: #b92240;
+        }
+        
+        .footer {
+            color: #fff;
+            background-color: #1d2228;
+        }
+        
+        .footer-contacts__inner {
+            display: block;
+            margin-left: 26px;
+            color: #fff;
+        }
+        
+        .footer-list__link {
+            color: #fff;
+        }
+        
+        .footer-title:after {
+            display: block;
+            width: 30px;
+            margin-top: 18px;
+            margin-bottom: 42px;
+            border-top: 1px solid #fff;
+            content: '';
+        }
+        
+        a,
+        .color_primary,
+        .rtd ul>li:before,
+        .yamm .nav>li>a:hover,
+        .footer-list__link:hover,
+        .post_mod-a .entry-date,
+        .post_mod-c .entry-date,
+        .panel-default .panel-title,
+        .accordion .panel-heading .panel-active,
+        .breadcrumb>li .icon,
+        .list-courses__number,
+        .list-categories__link:hover .list-categories__name,
+        .list-categories__link:hover .list-categories__number,
+        .list-courses__meta .icon,
+        blockquote:before,
+        .about__title strong,
+        .reviews__text:before {
+            color: #b92240;
+        }
+        
+        .tweets__link {
+            font-family: Montserrat, arial;
+            font-size: 12px;
+            color: #ffffff;
+        }
+        
+        .list-clients__item:nth-child(1) img {
+            border-bottom-color: #9c0939;
+        }
+        
+        .list-clients__item:nth-child(2) img {
+            border-bottom-color: #9c0838;
+        }
+        
+        .list-clients__item:nth-child(3) img {
+            border-bottom-color: #9c0838;
+        }
+        
+        .post .entry-main {
+            position: relative;
+            border-top: 2px solid #b92240;
+            cursor: default;
+            transition: all 0.3s;
+        }
+        
+        .section-progress {
+            padding-top: 80px;
+            padding-bottom: 100px;
+            background: url(https://cdn2.hubspot.net/hubfs/2828691/bimbel%20online/asset-bg-3@3x.png);
+            background-size: cover;
+        }
+        
+        .section_mod-a {
+            padding-bottom: 30px;
+            background-color: #22919b;
+        }
+        
+        .footer .form-control {
+            margin-bottom: 8px;
+            padding-top: 13px;
+            padding-bottom: 12px;
+            border-color: #e6ebf1;
+            background-color: #e6ebf1;
+        }
+        
+        .wrap-title-page {
+            position: relative;
+            padding-top: 40px;
+            padding-bottom: 70px;
+            background-color: #22919b;
+        }
+        
+        .post .entry-hover {
+            position: absolute;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(67, 158, 166, 0.84);
+            opacity: 0;
+            transition: all 0.3s;
+            text-align: center;
+        }
+        
+        .post .entry-main {
+            position: relative;
+            border-top: 2px solid #439ea5;
+            cursor: default;
+            transition: all 0.3s;
+        }
+        
+        .find-course_mod-a .form-group:after,
+        .staff:hover .staff__inner,
+        .post:hover .entry-main,
+        .nav-tabs>li {
+            border-top-color: #439EA0;
+        }
+        
+        .wrap-breadcrumb {
+            margin-top: -20px;
+            margin-bottom: 0;
+            padding: 21px 40px 20px;
+            border-top-left-radius: 4px;
+            border-top-right-radius: 4px;
+            background-color: #155253;
+            list-style: none;
+        }
+        
+        .breadcrumb>li {
+            font-family: 'Open Sans';
+            font-weight: 400;
+            text-transform: uppercase;
+            color: #ffffff;
+            font-size: 11px;
+            display: inline-block;
+        }
+        
+        .jelect-current {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            padding: 2px 21px 0px 0px;
+            overflow-wrap: normal;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            color: #fff;
+            font-size: 11px;
+            font-family: "Open Sans";
+            text-transform: uppercase;
+        }
+        
+        .bg-color_primary,
+        .btn-header,
+        .btn-primary,
+        .find-course__title,
+        .find-course .form-group {
+            background-color: #27cbbd;
+        }
+        
+        .btn-primary {
+            box-shadow: 0 4px 0 0 #009286;
+        }
+        
+        .btn-primary,
+        .header.sticky .navbar,
+        .staff .social-links li>a:hover {
+            border-color: #27cbbd;
+        }
+        
+        .btn-primary:after {
+            background-color: #145253;
+        }
+        
+        .widget_courses {
+            border-top-color: #439ea6;
+        }
+        
+        .widget_categories {
+            border-top-color: #439ea6;
+        }
+        
+        .list-collapse {
+            margin-top: 23px;
+            margin-bottom: 50px;
+            border-top: 3px solid #439da6;
+        }
+        
+        .list-collapse__inner .icon {
+            padding-right: 16px;
+            font-size: 16px;
+            color: #439da6;
+        }
+    </style>
 
-.jelect-current {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    padding: 2px 21px 0px 0px;
-    overflow-wrap: normal;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    color: #fff;
-    font-size: 11px;
-    font-family: "Open Sans";
-    text-transform: uppercase;
-}
-.bg-color_primary, .btn-header, .btn-primary, .find-course__title, .find-course .form-group {
-    background-color: #27cbbd;
-}
-.btn-primary {
-    box-shadow: 0 4px 0 0 #009286;
-}
-.btn-primary, .header.sticky .navbar, .staff .social-links li > a:hover {
-    border-color: #27cbbd;
-}
-.btn-primary:after {
-    background-color: #145253;
-}
-.widget_courses {
-    border-top-color: #439ea6;
-}
-.widget_categories {
-    border-top-color: #439ea6;
-}
-.list-collapse {
-    margin-top: 23px;
-    margin-bottom: 50px;
-    border-top: 3px solid #439da6;
-}
-.list-collapse__inner .icon {
-    padding-right: 16px;
-    font-size: 16px;
-    color: #439da6;
-}
-</style>
+    <!-- Loader -->
+    <div id="page-preloader"><span class="spinner"></span></div>
+    <!-- Loader end -->
 
-<!-- Loader -->
-<div id="page-preloader"><span class="spinner"></span></div>
-<!-- Loader end -->
+    <div class="layout-theme animated-css" data-header="sticky" data-header-top="200">
 
-<div class="layout-theme animated-css"  data-header="sticky" data-header-top="200"> 
-  
-  <div id="wrapper"> 
-    
-    <!-- HEADER -->
-    <header class="header">
-      
-      <div class="container">
-        <div class="row">
-          <div class="col-xs-12"> <a class="header-logo" href="javascript:void(0);"><img class="header-logo__img" src="img/logo.png"  alt="Logo" height="auto" width="190px"></a>
-            <div class="header-inner">
-              <div class="header-search">
-                <div class="navbar-search">
-                  <form id="search-global-form">
-                    <div class="input-group">
-                      <input type="text" placeholder="Type your search..." class="form-control" autocomplete="off" name="s" id="search" value="">
-                      <span class="input-group-btn">
+        <div id="wrapper">
+
+            <!-- HEADER -->
+            <header class="header">
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <a class="header-logo" href="javascript:void(0);"><img class="header-logo__img" src="img/logo.png" alt="Logo" height="auto" width="190px"></a>
+                            <div class="header-inner">
+                                <div class="header-search">
+                                    <div class="navbar-search">
+                                        <form id="search-global-form">
+                                            <div class="input-group">
+                                                <input type="text" placeholder="Type your search..." class="form-control" autocomplete="off" name="s" id="search" value="">
+                                                <span class="input-group-btn">
                       <button type="reset" class="btn search-close" id="search-close"><i class="fa fa-times"></i></button>
                       </span> </div>
-                  </form>
-                </div>
-              </div>
-              <!-- <a id="search-open" href="#fakelink"><i class="icon stroke icon-Search"></i></a> <a class="header-cart" href="/"> <i class="icon stroke icon-ShoppingCart"></i></a> -->
-              <nav class="navbar yamm">
-                <div class="navbar-header hidden-md  hidden-lg  hidden-sm ">
-                  <button type="button" data-toggle="collapse" data-target="#navbar-collapse-1" class="navbar-toggle"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
-                </div>
-                <div id="navbar-collapse-1" class="navbar-collapse collapse">
-                  <ul class="nav navbar-nav">
-                    <li><a href="#">HOME<span class="nav-subtitle">homepage</span></a></li>
-                    <li><a href="#">EVENT & PROMOTION<span class="nav-subtitle">check activity</span></a></li>
-                    <li><a href="#">GALLERY<span class="nav-subtitle">awesome picture</span></a></li>
-                    <li><a href="#">ABOUT US<span class="nav-subtitle">introduction</span></a></li>
-                    <li><a href="#">TESTIMONY<span class="nav-subtitle">what they say</span></a></li>
-                    <li><a href="#">CONTACT US<span class="nav-subtitle">we can help</span></a></li>
-                    <li><a href="#">LOGIN<span class="nav-subtitle">your account</span></a></li>
-                  </ul>
-                </div>
-              </nav>
-              <!--end navbar --> 
-              
-            </div>
-            <!-- end header-inner --> 
-          </div>
-          <!-- end col  --> 
-        </div>
-        <!-- end row  --> 
-      </div>
-      <!-- end container--> 
-    </header>
-    <!-- end header -->  
-    <div class="main-content">
-      <div id="sliderpro1" class="slider-pro main-slider">
-        <div class="sp-slides">
-          <div class="sp-slide"> <img class="sp-image" src="assets/img/slide.jpg"
-          data-src="assets/img/slide.jpg"
-          data-retina="assets/img/slide.jpg" alt="img"/>
-            <div class="item-wrap sp-layer  sp-padding" data-horizontal="700" data-vertical="1"
-          data-show-transition="left" data-hide-transition="up" data-show-delay="400" data-hide-delay="200">
-              <div class="main-slider__inner text-center">
-                <div class="main-slider__title" >Welcome to Bitrexgo</div>
-                <div class="main-slider__subtitle ">A place to learn about trading.</div>
-                <a class="main-slider__btn btn btn-warning btn-effect" href="/">VIEW</a> </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <!-- end main-slider -->
-      
-      <div class="section_mod-a">
-        <div class="container">
-          <div class="section_mod-a__inner">
-            <div class="row">
-              <div class="col-md-8">
-                <section class="section-advantages wow bounceInLeft" data-wow-duration="1s">
-                  <h2 class="ui-title-block ui-title-block_mod-a">About Bitrexgo</h2>
-                  <div class="ui-subtitle-block ui-subtitle-block_mod-a">Bitrexgo is one of the best education platform for Foreign Exchange Trading in Indonesia.</div>
-                  <ul class="advantages advantages_mod-a list-unstyled">
-                    <li class="advantages__item"> <span class="advantages__icon"><i class="icon stroke icon-Cup"></i></span>
-                      <div class="advantages__inner">
-                        <h3 class="ui-title-inner decor decor_mod-a">Bitrexgo</h3>
-                        <div class="advantages__info">
-                          <p>We are one of the best Education Platform for Foreign Exchange Trading in Indonesia.</p>
-                        </div>
-                      </div>
-                    </li>
-                    <li class="advantages__item"> <span class="advantages__icon"><i class="icon stroke icon-DesktopMonitor"></i></span>
-                      <div class="advantages__inner">
-                        <h3 class="ui-title-inner decor decor_mod-a">Vision</h3>
-                        <div class="advantages__info">
-                          <p>Educate and empower people to become Smart Traders.</p>
-                        </div>
-                      </div>
-                    </li>
-                    <li class="advantages__item"> <span class="advantages__icon"><i class="icon stroke icon-WorldGlobe"></i></span>
-                      <div class="advantages__inner">
-                        <h3 class="ui-title-inner decor decor_mod-a">Mission</h3>
-                        <div class="advantages__info">
-                          <p>Revolutionize the Financial Educational Industry, with Bitrexgo as the vehicle which will bring people to change their lives, and the lives of others.</p>
-                        </div>
-                      </div>
-                    </li>
-                    <li class="advantages__item"> <span class="advantages__icon"><i class="icon stroke icon-Users"></i></span>
-                      <div class="advantages__inner">
-                        <h3 class="ui-title-inner decor decor_mod-a">Mission</h3>
-                        <div class="advantages__info">
-                          <p>Revolutionize the Financial Educational Industry, with Bitrexgo as the vehicle which will bring people to change their lives, and the lives of others.</p>
-                        </div>
-                      </div>
-                    </li>
-                  </ul>
-                </section>
-                <!-- end section-advantages --> 
-              </div>
-              <!-- end col -->
-              <div class="col-md-4">
-                <section class="find-course find-course_mod-a wow bounceInRight" data-wow-duration="1s">
-                  <h2 class="find-course__title"><i class="icon stroke icon-User"></i>Become a Member</h2>
-                  <form class="find-course__form" action="get">
-                    <div class="form-group">
-                      <input class="form-control" type="text" placeholder="First Name">
-                      <input class="form-control" type="text" placeholder="Last Name">
-                      <input class="form-control" type="text" placeholder="Phone">
-                      <input class="form-control" type="text" placeholder="Email">
-                      <!-- end jelect --> 
-                    </div>
-                    <!-- end form-group -->
-                    <div class="find-course__wrap-btn">
-                      <button class="btn btn-effect btn-info">SUBMIT</button>
-                    </div>
-                  </form>
-                </section>
-                <!-- end find-course --> 
-              </div>
-              <!-- end col --> 
-            </div>
-            <!-- end row --> 
-          </div>
-          <!-- end section_mod-a__inner --> 
-        </div>
-        <!-- end container --> 
-      </div>
-      <!-- end section_mod-a -->
-      
-      <section class="section-default">
-        <div class="container">
-          <div class="row">
-            <div class="col-xs-12">
-              <div class="wrap-title">
-                <h2 class="ui-title-block">Our <strong>Facility</strong></h2>
-                <div class="ui-subtitle-block ui-subtitle-block_mod-b">Bitrexgo is one of the best education platform for Foreign Exchange Trading in Indonesia.</div>
-              </div>
-              <div class="posts-wrap">
-                <article class="post post_mod-a clearfix wow zoomIn" data-wow-duration="1s">
-                  <div class="entry-media">
-                    <div class="entry-thumbnail"> <a href="javascript:void(0);" ><img class="img-responsive" src="assets/img/1.jpg" width="250" height="250" alt="Foto"/></a> </div>
-                  </div>
-                  <div class="entry-main">
-                    <h3 class="entry-title ui-title-inner decor decor_mod-b"><a href="javascript:void(0);">Basic to Advanced Financial Education</a></h3>
-                    <div class="entry-content">
-                      <p>Bitrexgo is one of the best education platform for Foreign Exchange Trading in Indonesia</p>
-                    </div>
-                  </div>
-                </article>
-                <!-- end post -->
-                <article class="post post_mod-a clearfix wow zoomIn" data-wow-duration="1s" data-wow-delay=".5s">
-                  <div class="entry-media">
-                    <div class="entry-thumbnail"> <a href="javascript:void(0);" ><img class="img-responsive" src="assets/img/2.jpg" width="250" height="250" alt="Foto"/></a> </div>
-                  </div>
-                  <div class="entry-main">
-                    <h3 class="entry-title ui-title-inner decor decor_mod-b"><a href="javascript:void(0);">Education Videos</a></h3>
-                    <div class="entry-content">
-                      <p>Bitrexgo is one of the best education platform for Foreign Exchange Trading in Indonesia</p>
-                    </div>
-                  </div>
-                </article>
-                <!-- end post -->
-                <article class="post post_mod-a clearfix wow zoomIn" data-wow-duration="1s" data-wow-delay="1s">
-                  <div class="entry-media">
-                    <div class="entry-thumbnail"> <a href="javascript:void(0);" ><img class="img-responsive" src="assets/img/3.jpg" width="250" height="250" alt="Foto"/></a> </div>
-                  </div>
-                  <div class="entry-main">
-                    <h3 class="entry-title ui-title-inner decor decor_mod-b"><a href="javascript:void(0);">Online & Offline Class</a></h3>
-                    <div class="entry-content">
-                      <p>Bitrexgo is one of the best education platform for Foreign Exchange Trading in Indonesia</p>
-                    </div>
-                  </div>
-                </article>
-                <!-- end post -->
-                <article class="post post_mod-a clearfix wow zoomIn" data-wow-duration="1s" data-wow-delay="1.5s">
-                  <div class="entry-media">
-                    <div class="entry-thumbnail"> <a href="javascript:void(0);" ><img class="img-responsive" src="assets/img/4.jpg" width="250" height="250" alt="Foto"/></a> </div>
-                  </div>
-                  <div class="entry-main">
-                    <h3 class="entry-title ui-title-inner decor decor_mod-b"><a href="javascript:void(0);">Smart Financial Community</a></h3>
-                    <div class="entry-content">
-                      <p>Bitrexgo is one of the best education platform for Foreign Exchange Trading in Indonesia</p>
-                    </div>
-                  </div>
-                </article>
-                <!-- end post --> 
-              </div>
-              <!-- end posts-wrap --> 
-            </div>
-            <!-- end col --> 
-          </div>
-          <!-- end row --> 
-        </div>
-        <!-- end container --> 
-      </section>
-      <!-- end section-default -->
-      
-      <div class="section-progress wow fadeInUp section-parallax"  data-speed="25"  data-wow-duration="1s">
-        <div class="container">
-          <div class="row">
-            <div class="col-xs-12">
-              <ul class="list-progress list-unstyled" style="font-size: 30px;margin-top: -45px;">
-                <br>The forex market is the largest and most liquid market in the world. With a daily volume over $4 trillion.
-              </ul>
-              <!-- end list-progress --> 
-            </div>
-            <!-- end col  --> 
-          </div>
-          <!-- end row  --> 
-        </div>
-        <!-- end container--> 
-      </div>
-      <!-- end section-progress-->
-      
-      <section class="section-default">
-        <div class="container">
-          <div class="row">
-            <div class="col-xs-12">
-              <div class="wrap-title">
-                <h2 class="ui-title-block">Our <strong>Training Place</strong></h2>
-                <div class="ui-subtitle-block ui-subtitle-block_mod-b">Bitrexgo is one of the best education platform for Foreign Exchange Trading in Indonesia.</div>
-              </div>
-              <div class="posts-wrap">
-                <article class="post post_mod-b clearfix wow zoomIn" data-wow-duration="1s">
-                  <div class="entry-media">
-                    <div class="entry-thumbnail"> <a href="javascript:void(0);" ><img class="img-responsive" src="https://bitrexgo.co.id/assets1/images/pic1.jpg" width="370" height="220" alt="Foto"/></a> </div>
-                  </div>
-                </article>
-                <!-- end post -->
-                
-                <article class="post post_mod-b clearfix wow zoomIn" data-wow-duration="1s" data-wow-delay=".5s">
-                  <div class="entry-media">
-                    <div class="entry-thumbnail"> <a href="javascript:void(0);" ><img class="img-responsive" src="https://bitrexgo.co.id/assets1/images/service-0.png" width="370" height="220" alt="Foto"/></a> </div>
-                  </div>
-                </article>
-                <!-- end post -->
-                
-                <article class="post post_mod-b clearfix wow zoomIn" data-wow-duration="1s" data-wow-delay="1s">
-                  <div class="entry-media">
-                    <div class="entry-thumbnail"> <a href="javascript:void(0);" ><img class="img-responsive" src="https://bitrexgo.co.id/assets1/images/pic1.jpg" width="370" height="220" alt="Foto"/></a> </div>
-                  </div>
-                </article>
-                <!-- end post --> 
-              </div>
-              <!-- end posts-wrap --> 
-            </div>
-            <!-- end col --> 
-          </div>
-          <!-- end row --> 
-        </div>
-        <!-- end container --> 
-      </section>
-      <!-- end section-default -->
-      
-      <section class="section-video wow fadeInUp" data-wow-duration="1s">
-        <div class="container">
-          <div class="row">
-            <div class="col-xs-12">
-              <div class="video-block"> <a class="video-block__link" href="https://www.youtube.com/watch?v=wh6lxMpffCo" rel="prettyPhoto"><i class="icon stroke icon-Play"></i></a>
-                <h2 class="video-block__title">Bitrexgo Video</h2>
-                <div class="video-block__subtitle">Bitrexgo is one of the best education platform for Foreign Exchange Trading in Indonesia.</div>
-              </div>
-            </div>
-            <!-- end col --> 
-          </div>
-          <!-- end row --> 
-        </div>
-        <!-- end container --> 
-      </section>
-      <!-- end section-video -->
-      
-      <section class="section-subscribe wow fadeInUp" data-wow-duration="1s">
-        <div class="subscribe">
-          <div class="container">
-            <div class="row">
-              <div class="col-sm-6">
-                <div class="subscribe__icon-wrap"> <i class="icon_bg stroke icon-Imbox"></i><i class="icon stroke icon-Imbox"></i> </div>
-                <div class="subscribe__inner">
-                  <h2 class="subscribe__title">STAY UPDATED WITH BITREXGO</h2>
-                  <div class="subscribe__description">Bitrexgo is one of the best education for Foreign Exchange Trading.</div>
-                </div>
-              </div>
-              <!-- end col -->
-              <div class="col-sm-6">
-                <form class="subscribe__form" action="get">
-                  <input class="subscribe__input form-control" type="text" placeholder="Your Email address ...">
-                  <button class="subscribe__btn btn btn-success btn-effect">SUBSCRIBE</button>
-                </form>
-              </div>
-              <!-- end col --> 
-            </div>
-            <!-- end row --> 
-          </div>
-          <!-- end container --> 
-        </div>
-      </section>
-      <!-- end section-subscribe -->
-      
-      <div class="container">
-        <div class="row">
-          <div class="border-decor_top">
-            <div class="col-md-6">
-              <section class="section-default wow bounceInLeft" data-wow-duration="1s">
-                <h2 class="ui-title-block">What <strong>Students Say</strong></h2>
-                <div class="slider-reviews owl-carousel owl-theme owl-theme_mod-c enable-owl-carousel"
-                        data-single-item="true"
-                        data-auto-play="7000"
-                        data-navigation="true"
-                        data-pagination="false"
-                        data-transition-style="fade"
-                        data-main-text-animation="true"
-                        data-after-init-delay="4000"
-                        data-after-move-delay="2000"
-                        data-stop-on-hover="true">
-                  <div class="reviews">
-                    <div class="reviews__text" style="text-align: justify;">I am very satisfied with the Web, make it easier to me to know about Trading and made me want to learn more, I am very satisfied with the Web, make it easier to me to know about Trading and made me want to learn more, I am very satisfied with the Web, make it easier to me to know about Trading and made me want to learn more. Thank you </div>
-                    <span class="reviews__autor">-- Den Nie Sularso</span> <span class="reviews__categories"></span> </div>
-                  <!-- end reviews -->
-                  
-                  <div class="reviews">
-                    <div class="reviews__text" style="text-align: justify;">Great Web and interesting, making me instantly memorized and remember it. I so want to know more about trading on this web, Great Web and interesting, making me instantly memorized and remember it. I so want to know more about trading on this web, Great Web and interesting, making me instantly memorized and remember it. I so want to know more about trading on this web.</div>
-                    <span class="reviews__autor">-- Felio Wijoyo</span> <span class="reviews__categories"></span> </div>
-                  <!-- end reviews -->
-                  
-                  <div class="reviews">
-                    <div class="reviews__text" style="text-align: justify;">Web content in an attractive and transparent, making people ask questions and want to learn about the trading. could try I am interested, Web content in an attractive and transparent, making people ask questions and want to learn about the trading. could try I am interested, Web content in an attractive and transparent.</div>
-                    <span class="reviews__autor">-- Anastasia Mirna</span> <span class="reviews__categories"></span> </div>
-                  <!-- end reviews --> 
-                </div>
-                <!-- end slider-reviews --> 
-              </section>
-              <!-- end section-default --> 
-            </div>
-            <!-- end col -->
-            
-            <div class="col-md-6">
-              <section class="section-default wow bounceInRight" data-wow-duration="1s">
-                <h2 class="ui-title-block">Our <strong>Gallery</strong></h2>
-                <ul class="list-clients list-unstyled clearfix">
-                  <li class="list-clients__item" style="width: 30%"><img class="img-responsive" src="https://bitrexgo.co.id/assets1/images/gallery/5.jpg" height="100" width="200" alt="Partners"></li>
-                  <li class="list-clients__item" style="width: 30%"><img class="img-responsive" src="https://bitrexgo.co.id/assets1/images/gallery/5.jpg" height="100" width="200" alt="Partners"></li>
-                  <li class="list-clients__item" style="width: 30%"><img class="img-responsive" src="https://bitrexgo.co.id/assets1/images/gallery/11.jpg" height="100" width="200" alt="Partners"></li>
-                </ul>
-                <ul class="list-clients list-unstyled clearfix">
-                  <li class="list-clients__item" style="width: 30%"><img class="img-responsive" src="https://bitrexgo.co.id/assets1/images/gallery/5.jpg" height="100" width="200" alt="Partners"></li>
-                  <li class="list-clients__item" style="width: 30%"><img class="img-responsive" src="https://bitrexgo.co.id/assets1/images/gallery/11.jpg" height="100" width="200" alt="Partners"></li>
-                  <li class="list-clients__item" style="width: 30%"><img class="img-responsive" src="https://bitrexgo.co.id/assets1/images/gallery/5.jpg" height="100" width="200" alt="Partners"></li>
-                </ul>
-                <!-- end accordion --> 
-              </section>
-            </div>
-            <!-- end col --> 
-          </div>
-          <!-- end section-default --> 
-        </div>
-        <!-- end row --> 
-      </div>
-      <!-- end container -->
+                                        </form>
+                                    </div>
+                                </div>
+                                <!-- <a id="search-open" href="#fakelink"><i class="icon stroke icon-Search"></i></a> <a class="header-cart" href="/"> <i class="icon stroke icon-ShoppingCart"></i></a> -->
+                                <nav class="navbar yamm">
+                                    <div class="navbar-header hidden-md  hidden-lg  hidden-sm ">
+                                        <button type="button" data-toggle="collapse" data-target="#navbar-collapse-1" class="navbar-toggle"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
+                                    </div>
+                                    <div id="navbar-collapse-1" class="navbar-collapse collapse">
+                                        <ul class="nav navbar-nav">
+                                            <li><a href="#">HOME<span class="nav-subtitle">homepage</span></a></li>
+                                            <li><a href="#">EVENT & PROMOTION<span class="nav-subtitle">check activity</span></a></li>
+                                            <li><a href="#">GALLERY<span class="nav-subtitle">awesome picture</span></a></li>
+                                            <li><a href="#">ABOUT US<span class="nav-subtitle">introduction</span></a></li>
+                                            <li><a href="#">TESTIMONY<span class="nav-subtitle">what they say</span></a></li>
+                                            <li><a href="#">CONTACT US<span class="nav-subtitle">we can help</span></a></li>
+                                            <li><a href="#">LOGIN<span class="nav-subtitle">your account</span></a></li>
+                                        </ul>
+                                    </div>
+                                </nav>
+                                <!--end navbar -->
 
-    </div>
-    <!-- end main-content -->
+                            </div>
+                            <!-- end header-inner -->
+                        </div>
+                        <!-- end col  -->
+                    </div>
+                    <!-- end row  -->
+                </div>
+                <!-- end container-->
+            </header>
+            <!-- end header -->
+            <div class="main-content">
+                <div id="sliderpro1" class="slider-pro main-slider">
+                    <div class="sp-slides">
+                        <div class="sp-slide"> <img class="sp-image" src="assets/img/slide.jpg" data-src="assets/img/slide.jpg" data-retina="assets/img/slide.jpg" alt="img" />
+                            <div class="item-wrap sp-layer  sp-padding" data-horizontal="700" data-vertical="1" data-show-transition="left" data-hide-transition="up" data-show-delay="400" data-hide-delay="200">
+                                <div class="main-slider__inner text-center">
+                                    <div class="main-slider__title">Welcome to Bitrexgo</div>
+                                    <div class="main-slider__subtitle ">A place to learn about trading.</div>
+                                    <a class="main-slider__btn btn btn-warning btn-effect" href="/">VIEW</a> </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-    
-    <footer class="footer wow fadeInUp" data-wow-duration="1s">
-      <div class="container">
-        <div class="footer-inner border-decor_top">
-          <div class="row">
-            <div class="col-lg-3 col-sm-3">
-              <section class="footer-section">
-                <a href="javascript:void(0);"><img class="footer-logo img-responsive" src="assets/img/logo.png" height="35" width="180" alt="Logo" style="padding-top: 0px;"></a>
-                <div class="footer-info" style="text-align: justify;font-weight: bold;margin-bottom: 10px;">PT. BITREXGO SOLUSI PRIMA</div>
-                <div class="footer-contacts footer-contacts_mod-a"> <i class="icon stroke icon-Pointer"></i>
-                  <address class="footer-contacts__inner">
-                  B-G 168, Jl. Pluit Indah Raya, Pluit, Penjaringan, North Jakarta City, Jakarta 14450 
+                <!-- end main-slider -->
+
+                <div class="section_mod-a">
+                    <div class="container">
+                        <div class="section_mod-a__inner">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <section class="section-advantages wow bounceInLeft" data-wow-duration="1s">
+                                        <h2 class="ui-title-block ui-title-block_mod-a">About Bitrexgo</h2>
+                                        <div class="ui-subtitle-block ui-subtitle-block_mod-a">Bitrexgo is one of the best education platform for Foreign Exchange Trading in Indonesia.</div>
+                                        <ul class="advantages advantages_mod-a list-unstyled">
+                                            <li class="advantages__item"> <span class="advantages__icon"><i class="icon stroke icon-Cup"></i></span>
+                                                <div class="advantages__inner">
+                                                    <h3 class="ui-title-inner decor decor_mod-a">Bitrexgo</h3>
+                                                    <div class="advantages__info">
+                                                        <p>We are one of the best Education Platform for Foreign Exchange Trading in Indonesia.</p>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li class="advantages__item"> <span class="advantages__icon"><i class="icon stroke icon-DesktopMonitor"></i></span>
+                                                <div class="advantages__inner">
+                                                    <h3 class="ui-title-inner decor decor_mod-a">Vision</h3>
+                                                    <div class="advantages__info">
+                                                        <p>Educate and empower people to become Smart Traders.</p>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li class="advantages__item"> <span class="advantages__icon"><i class="icon stroke icon-WorldGlobe"></i></span>
+                                                <div class="advantages__inner">
+                                                    <h3 class="ui-title-inner decor decor_mod-a">Mission</h3>
+                                                    <div class="advantages__info">
+                                                        <p>Revolutionize the Financial Educational Industry, with Bitrexgo as the vehicle which will bring people to change their lives, and the lives of others.</p>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li class="advantages__item"> <span class="advantages__icon"><i class="icon stroke icon-Users"></i></span>
+                                                <div class="advantages__inner">
+                                                    <h3 class="ui-title-inner decor decor_mod-a">Mission</h3>
+                                                    <div class="advantages__info">
+                                                        <p>Revolutionize the Financial Educational Industry, with Bitrexgo as the vehicle which will bring people to change their lives, and the lives of others.</p>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </section>
+                                    <!-- end section-advantages -->
+                                </div>
+                                <!-- end col -->
+                                <div class="col-md-4">
+                                    <section class="find-course find-course_mod-a wow bounceInRight" data-wow-duration="1s">
+                                        <h2 class="find-course__title"><i class="icon stroke icon-User"></i>Become a Member</h2>
+                                        <form class="find-course__form" action="get">
+                                            <div class="form-group">
+                                                <input class="form-control" type="text" placeholder="First Name">
+                                                <input class="form-control" type="text" placeholder="Last Name">
+                                                <input class="form-control" type="text" placeholder="Phone">
+                                                <input class="form-control" type="text" placeholder="Email">
+                                                <!-- end jelect -->
+                                            </div>
+                                            <!-- end form-group -->
+                                            <div class="find-course__wrap-btn">
+                                                <button class="btn btn-effect btn-info">SUBMIT</button>
+                                            </div>
+                                        </form>
+                                    </section>
+                                    <!-- end find-course -->
+                                </div>
+                                <!-- end col -->
+                            </div>
+                            <!-- end row -->
+                        </div>
+                        <!-- end section_mod-a__inner -->
+                    </div>
+                    <!-- end container -->
+                </div>
+                <!-- end section_mod-a -->
+
+                <section class="section-default">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="wrap-title">
+                                    <h2 class="ui-title-block">Our <strong>Facility</strong></h2>
+                                    <div class="ui-subtitle-block ui-subtitle-block_mod-b">Bitrexgo is one of the best education platform for Foreign Exchange Trading in Indonesia.</div>
+                                </div>
+                                <div class="posts-wrap">
+                                    <article class="post post_mod-a clearfix wow zoomIn" data-wow-duration="1s">
+                                        <div class="entry-media">
+                                            <div class="entry-thumbnail">
+                                                <a href="javascript:void(0);"><img class="img-responsive" src="assets/img/1.jpg" width="250" height="250" alt="Foto" /></a>
+                                            </div>
+                                        </div>
+                                        <div class="entry-main">
+                                            <h3 class="entry-title ui-title-inner decor decor_mod-b"><a href="javascript:void(0);">Basic to Advanced Financial Education</a></h3>
+                                            <div class="entry-content">
+                                                <p>Bitrexgo is one of the best education platform for Foreign Exchange Trading in Indonesia</p>
+                                            </div>
+                                        </div>
+                                    </article>
+                                    <!-- end post -->
+                                    <article class="post post_mod-a clearfix wow zoomIn" data-wow-duration="1s" data-wow-delay=".5s">
+                                        <div class="entry-media">
+                                            <div class="entry-thumbnail">
+                                                <a href="javascript:void(0);"><img class="img-responsive" src="assets/img/2.jpg" width="250" height="250" alt="Foto" /></a>
+                                            </div>
+                                        </div>
+                                        <div class="entry-main">
+                                            <h3 class="entry-title ui-title-inner decor decor_mod-b"><a href="javascript:void(0);">Education Videos</a></h3>
+                                            <div class="entry-content">
+                                                <p>Bitrexgo is one of the best education platform for Foreign Exchange Trading in Indonesia</p>
+                                            </div>
+                                        </div>
+                                    </article>
+                                    <!-- end post -->
+                                    <article class="post post_mod-a clearfix wow zoomIn" data-wow-duration="1s" data-wow-delay="1s">
+                                        <div class="entry-media">
+                                            <div class="entry-thumbnail">
+                                                <a href="javascript:void(0);"><img class="img-responsive" src="assets/img/3.jpg" width="250" height="250" alt="Foto" /></a>
+                                            </div>
+                                        </div>
+                                        <div class="entry-main">
+                                            <h3 class="entry-title ui-title-inner decor decor_mod-b"><a href="javascript:void(0);">Online & Offline Class</a></h3>
+                                            <div class="entry-content">
+                                                <p>Bitrexgo is one of the best education platform for Foreign Exchange Trading in Indonesia</p>
+                                            </div>
+                                        </div>
+                                    </article>
+                                    <!-- end post -->
+                                    <article class="post post_mod-a clearfix wow zoomIn" data-wow-duration="1s" data-wow-delay="1.5s">
+                                        <div class="entry-media">
+                                            <div class="entry-thumbnail">
+                                                <a href="javascript:void(0);"><img class="img-responsive" src="assets/img/4.jpg" width="250" height="250" alt="Foto" /></a>
+                                            </div>
+                                        </div>
+                                        <div class="entry-main">
+                                            <h3 class="entry-title ui-title-inner decor decor_mod-b"><a href="javascript:void(0);">Smart Financial Community</a></h3>
+                                            <div class="entry-content">
+                                                <p>Bitrexgo is one of the best education platform for Foreign Exchange Trading in Indonesia</p>
+                                            </div>
+                                        </div>
+                                    </article>
+                                    <!-- end post -->
+                                </div>
+                                <!-- end posts-wrap -->
+                            </div>
+                            <!-- end col -->
+                        </div>
+                        <!-- end row -->
+                    </div>
+                    <!-- end container -->
+                </section>
+                <!-- end section-default -->
+
+                <div class="section-progress wow fadeInUp section-parallax" data-speed="25" data-wow-duration="1s">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <ul class="list-progress list-unstyled" style="font-size: 30px;margin-top: -45px;">
+                                    <br>The forex market is the largest and most liquid market in the world. With a daily volume over $4 trillion.
+                                </ul>
+                                <!-- end list-progress -->
+                            </div>
+                            <!-- end col  -->
+                        </div>
+                        <!-- end row  -->
+                    </div>
+                    <!-- end container-->
+                </div>
+                <!-- end section-progress-->
+
+                <section class="section-default">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="wrap-title">
+                                    <h2 class="ui-title-block">Our <strong>Training Place</strong></h2>
+                                    <div class="ui-subtitle-block ui-subtitle-block_mod-b">Bitrexgo is one of the best education platform for Foreign Exchange Trading in Indonesia.</div>
+                                </div>
+                                <div class="posts-wrap">
+                                    <article class="post post_mod-b clearfix wow zoomIn" data-wow-duration="1s">
+                                        <div class="entry-media">
+                                            <div class="entry-thumbnail">
+                                                <a href="javascript:void(0);"><img class="img-responsive" src="https://bitrexgo.co.id/assets1/images/pic1.jpg" width="370" height="220" alt="Foto" /></a>
+                                            </div>
+                                        </div>
+                                    </article>
+                                    <!-- end post -->
+
+                                    <article class="post post_mod-b clearfix wow zoomIn" data-wow-duration="1s" data-wow-delay=".5s">
+                                        <div class="entry-media">
+                                            <div class="entry-thumbnail">
+                                                <a href="javascript:void(0);"><img class="img-responsive" src="https://bitrexgo.co.id/assets1/images/service-0.png" width="370" height="220" alt="Foto" /></a>
+                                            </div>
+                                        </div>
+                                    </article>
+                                    <!-- end post -->
+
+                                    <article class="post post_mod-b clearfix wow zoomIn" data-wow-duration="1s" data-wow-delay="1s">
+                                        <div class="entry-media">
+                                            <div class="entry-thumbnail">
+                                                <a href="javascript:void(0);"><img class="img-responsive" src="https://bitrexgo.co.id/assets1/images/pic1.jpg" width="370" height="220" alt="Foto" /></a>
+                                            </div>
+                                        </div>
+                                    </article>
+                                    <!-- end post -->
+                                </div>
+                                <!-- end posts-wrap -->
+                            </div>
+                            <!-- end col -->
+                        </div>
+                        <!-- end row -->
+                    </div>
+                    <!-- end container -->
+                </section>
+                <!-- end section-default -->
+
+                <section class="section-video wow fadeInUp" data-wow-duration="1s">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="video-block"> <a class="video-block__link" href="https://www.youtube.com/watch?v=wh6lxMpffCo" rel="prettyPhoto"><i class="icon stroke icon-Play"></i></a>
+                                    <h2 class="video-block__title">Bitrexgo Video</h2>
+                                    <div class="video-block__subtitle">Bitrexgo is one of the best education platform for Foreign Exchange Trading in Indonesia.</div>
+                                </div>
+                            </div>
+                            <!-- end col -->
+                        </div>
+                        <!-- end row -->
+                    </div>
+                    <!-- end container -->
+                </section>
+                <!-- end section-video -->
+
+                <section class="section-subscribe wow fadeInUp" data-wow-duration="1s">
+                    <div class="subscribe">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="subscribe__icon-wrap"> <i class="icon_bg stroke icon-Imbox"></i><i class="icon stroke icon-Imbox"></i> </div>
+                                    <div class="subscribe__inner">
+                                        <h2 class="subscribe__title">STAY UPDATED WITH BITREXGO</h2>
+                                        <div class="subscribe__description">Bitrexgo is one of the best education for Foreign Exchange Trading.</div>
+                                    </div>
+                                </div>
+                                <!-- end col -->
+                                <div class="col-sm-6">
+                                    <form class="subscribe__form" action="get">
+                                        <input class="subscribe__input form-control" type="text" placeholder="Your Email address ...">
+                                        <button class="subscribe__btn btn btn-success btn-effect">SUBSCRIBE</button>
+                                    </form>
+                                </div>
+                                <!-- end col -->
+                            </div>
+                            <!-- end row -->
+                        </div>
+                        <!-- end container -->
+                    </div>
+                </section>
+                <!-- end section-subscribe -->
+
+                <div class="container">
+                    <div class="row">
+                        <div class="border-decor_top">
+                            <div class="col-md-6">
+                                <section class="section-default wow bounceInLeft" data-wow-duration="1s">
+                                    <h2 class="ui-title-block">What <strong>Students Say</strong></h2>
+                                    <div class="slider-reviews owl-carousel owl-theme owl-theme_mod-c enable-owl-carousel" data-single-item="true" data-auto-play="7000" data-navigation="true" data-pagination="false" data-transition-style="fade" data-main-text-animation="true" data-after-init-delay="4000"
+                                        data-after-move-delay="2000" data-stop-on-hover="true">
+                                        <div class="reviews">
+                                            <div class="reviews__text" style="text-align: justify;">I am very satisfied with the Web, make it easier to me to know about Trading and made me want to learn more, I am very satisfied with the Web, make it easier to me to know about Trading and made me want to learn
+                                                more, I am very satisfied with the Web, make it easier to me to know about Trading and made me want to learn more. Thank you </div>
+                                            <span class="reviews__autor">-- Den Nie Sularso</span> <span class="reviews__categories"></span> </div>
+                                        <!-- end reviews -->
+
+                                        <div class="reviews">
+                                            <div class="reviews__text" style="text-align: justify;">Great Web and interesting, making me instantly memorized and remember it. I so want to know more about trading on this web, Great Web and interesting, making me instantly memorized and remember it. I so want
+                                                to know more about trading on this web, Great Web and interesting, making me instantly memorized and remember it. I so want to know more about trading on this web.</div>
+                                            <span class="reviews__autor">-- Felio Wijoyo</span> <span class="reviews__categories"></span> </div>
+                                        <!-- end reviews -->
+
+                                        <div class="reviews">
+                                            <div class="reviews__text" style="text-align: justify;">Web content in an attractive and transparent, making people ask questions and want to learn about the trading. could try I am interested, Web content in an attractive and transparent, making people ask questions
+                                                and want to learn about the trading. could try I am interested, Web content in an attractive and transparent.</div>
+                                            <span class="reviews__autor">-- Anastasia Mirna</span> <span class="reviews__categories"></span> </div>
+                                        <!-- end reviews -->
+                                    </div>
+                                    <!-- end slider-reviews -->
+                                </section>
+                                <!-- end section-default -->
+                            </div>
+                            <!-- end col -->
+
+                            <div class="col-md-6">
+                                <section class="section-default wow bounceInRight" data-wow-duration="1s">
+                                    <h2 class="ui-title-block">Our <strong>Gallery</strong></h2>
+                                    <ul class="list-clients list-unstyled clearfix">
+                                        <li class="list-clients__item" style="width: 30%"><img class="img-responsive" src="https://bitrexgo.co.id/assets1/images/gallery/5.jpg" height="100" width="200" alt="Partners"></li>
+                                        <li class="list-clients__item" style="width: 30%"><img class="img-responsive" src="https://bitrexgo.co.id/assets1/images/gallery/5.jpg" height="100" width="200" alt="Partners"></li>
+                                        <li class="list-clients__item" style="width: 30%"><img class="img-responsive" src="https://bitrexgo.co.id/assets1/images/gallery/11.jpg" height="100" width="200" alt="Partners"></li>
+                                    </ul>
+                                    <ul class="list-clients list-unstyled clearfix">
+                                        <li class="list-clients__item" style="width: 30%"><img class="img-responsive" src="https://bitrexgo.co.id/assets1/images/gallery/5.jpg" height="100" width="200" alt="Partners"></li>
+                                        <li class="list-clients__item" style="width: 30%"><img class="img-responsive" src="https://bitrexgo.co.id/assets1/images/gallery/11.jpg" height="100" width="200" alt="Partners"></li>
+                                        <li class="list-clients__item" style="width: 30%"><img class="img-responsive" src="https://bitrexgo.co.id/assets1/images/gallery/5.jpg" height="100" width="200" alt="Partners"></li>
+                                    </ul>
+                                    <!-- end accordion -->
+                                </section>
+                            </div>
+                            <!-- end col -->
+                        </div>
+                        <!-- end section-default -->
+                    </div>
+                    <!-- end row -->
+                </div>
+                <!-- end container -->
+
+            </div>
+            <!-- end main-content -->
+
+
+            <footer class="footer wow fadeInUp" data-wow-duration="1s">
+                <div class="container">
+                    <div class="footer-inner border-decor_top">
+                        <div class="row">
+                            <div class="col-lg-3 col-sm-3">
+                                <section class="footer-section">
+                                    <a href="javascript:void(0);"><img class="footer-logo img-responsive" src="assets/img/logo.png" height="35" width="180" alt="Logo" style="padding-top: 0px;"></a>
+                                    <div class="footer-info" style="text-align: justify;font-weight: bold;margin-bottom: 10px;">PT. BITREXGO SOLUSI PRIMA</div>
+                                    <div class="footer-contacts footer-contacts_mod-a"> <i class="icon stroke icon-Pointer"></i>
+                                        <address class="footer-contacts__inner">
+                  B-G 168, Jl. Pluit Indah Raya, Pluit, Penjaringan, North Jakarta City, Jakarta 14450
                   </address>
+                                    </div>
+                                    <div class="footer-contacts"> <i class="icon stroke icon-Phone2"></i> <span class="footer-contacts__inner">+62 817-0380-0329, (021) 80823903</span> </div>
+                                    <div class="footer-contacts"> <i class="icon stroke icon-Mail"></i> <a class="footer-contacts__inner" href="mailto:Info@academica.com">cs@bitrexgo.com</a> </div>
+                                    <div class="footer-contacts">© 2019 BITREXGO. All Rights Reserved</div>
+                                </section>
+                                <!-- end footer-section -->
+                            </div>
+                            <!-- end col -->
+
+                            <div class="col-lg-2 col-sm-3">
+                                <section class="footer-section">
+                                    <h3 class="footer-title">NAVIGATION</h3>
+                                    <ul class="footer-list list-unstyled">
+                                        <li class="footer-list__item"><a class="footer-list__link" href="javascript:void(0);">Event & Promotion</a></li>
+                                        <li class="footer-list__item"><a class="footer-list__link" href="javascript:void(0);">Gallery</a></li>
+                                        <li class="footer-list__item"><a class="footer-list__link" href="javascript:void(0);">About Us</a></li>
+                                        <li class="footer-list__item"><a class="footer-list__link" href="javascript:void(0);">Testimony</a></li>
+                                        <li class="footer-list__item"><a class="footer-list__link" href="javascript:void(0);">Contact Us</a></li>
+                                        <li class="footer-list__item"><a class="footer-list__link" href="javascript:void(0);">Login</a></li>
+                                    </ul>
+                                </section>
+                                <!-- end footer-section -->
+                            </div>
+                            <!-- end col -->
+
+                            <div class="col-lg-3 col-sm-3">
+                                <section class="footer-section">
+                                    <h3 class="footer-title">RECENT EVENTS & PROMOTION</h3>
+                                    <div class="tweets">
+                                        <div class="tweets__text">Go-Trip Korea 2019</div>
+                                        <div><a href="javascript:void(0);">https://bitrexgo.co.id/hVl5G</a></div>
+                                        <span class="tweets__time">on Agust 21, 2019</span> </div>
+                                    <div class="tweets">
+                                        <div class="tweets__text">Go-Cruise Singapore 2019<br><a href="javascript:void(0);">https://bitrexgo.co.id/IMDS15</a></div>
+                                        <span class="tweets__time">on June 30, 2019</span> </div>
+                                    <a class="tweets__link" href="javascript:void(0);">Get Information @Bitrexgo</a> </section>
+                                <!-- end footer-section -->
+                            </div>
+                            <!-- end col -->
+
+                            <div class="col-lg-4 col-sm-3">
+                                <section class="footer-section">
+                                    <h3 class="footer-title">OUR CONTACT</h3>
+                                    <form class="form">
+                                        <div class="form-group">
+                                            <input class="form-control" type="text" placeholder="Your Name">
+                                            <input class="form-control" type="email" placeholder="Email address">
+                                            <textarea class="form-control" rows="7" placeholder="Message"></textarea>
+                                            <button class="btn btn-primary btn-effect">SEND MESSSAGE</button>
+                                        </div>
+                                    </form>
+                                </section>
+                                <!-- end footer-section -->
+                            </div>
+                            <!-- end col -->
+                        </div>
+                        <!-- end row -->
+                    </div>
+                    <!-- end footer-inner -->
+
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="footer-bottom" style="font-size: 10px;">
+
+                                FULL RISK DISCLOSURE: Trading contains substantial risk and is not for every investor. An investor could potentially lose all or more than the initial investment. Risk capital is money that can be lost without jeopardizing financial security or life style.
+                                Only risk capital should be used for trading and only those with sufficient risk capital should consider trading. Past performance is no guarantee of future results.
+
+                            </div>
+                            <!-- end footer-bottom -->
+                        </div>
+                        <!-- end col -->
+                    </div>
+                    <!-- end row -->
                 </div>
-                <div class="footer-contacts"> <i class="icon stroke icon-Phone2"></i> <span class="footer-contacts__inner">+62 817-0380-0329, (021) 80823903</span> </div>
-                <div class="footer-contacts"> <i class="icon stroke icon-Mail"></i> <a class="footer-contacts__inner" href="mailto:Info@academica.com">cs@bitrexgo.com</a> </div>
-                <div class="footer-contacts">© 2019 BITREXGO. All Rights Reserved</div>
-              </section>
-              <!-- end footer-section --> 
-            </div>
-            <!-- end col -->
-            
-            <div class="col-lg-2 col-sm-3">
-              <section class="footer-section">
-                <h3 class="footer-title">NAVIGATION</h3>
-                <ul class="footer-list list-unstyled">
-                  <li class="footer-list__item"><a class="footer-list__link" href="javascript:void(0);">Event & Promotion</a></li>
-                  <li class="footer-list__item"><a class="footer-list__link" href="javascript:void(0);">Gallery</a></li>
-                  <li class="footer-list__item"><a class="footer-list__link" href="javascript:void(0);">About Us</a></li>
-                  <li class="footer-list__item"><a class="footer-list__link" href="javascript:void(0);">Testimony</a></li>
-                  <li class="footer-list__item"><a class="footer-list__link" href="javascript:void(0);">Contact Us</a></li>
-                  <li class="footer-list__item"><a class="footer-list__link" href="javascript:void(0);">Login</a></li>
-                </ul>
-              </section>
-              <!-- end footer-section --> 
-            </div>
-            <!-- end col -->
-            
-            <div class="col-lg-3 col-sm-3">
-              <section class="footer-section">
-                <h3 class="footer-title">RECENT EVENTS & PROMOTION</h3>
-                <div class="tweets">
-                  <div class="tweets__text">Go-Trip Korea 2019</div>
-                  <div><a href="javascript:void(0);">https://bitrexgo.co.id/hVl5G</a></div>
-                  <span class="tweets__time">on Agust 21, 2019</span> </div>
-                <div class="tweets">
-                  <div class="tweets__text">Go-Cruise Singapore 2019<br><a href="javascript:void(0);">https://bitrexgo.co.id/IMDS15</a></div>
-                  <span class="tweets__time">on June 30, 2019</span> </div>
-                <a class="tweets__link" href="javascript:void(0);">Get Information @Bitrexgo</a> </section>
-              <!-- end footer-section --> 
-            </div>
-            <!-- end col -->
-            
-            <div class="col-lg-4 col-sm-3">
-              <section class="footer-section">
-                <h3 class="footer-title">OUR CONTACT</h3>
-                <form class="form">
-                  <div class="form-group">
-                    <input class="form-control" type="text" placeholder="Your Name">
-                    <input class="form-control" type="email" placeholder="Email address">
-                    <textarea class="form-control" rows="7" placeholder="Message"></textarea>
-                    <button class="btn btn-primary btn-effect">SEND MESSSAGE</button>
-                  </div>
-                </form>
-              </section>
-              <!-- end footer-section --> 
-            </div>
-            <!-- end col --> 
-          </div>
-          <!-- end row --> 
+                <!-- end container -->
+            </footer>
         </div>
-        <!-- end footer-inner -->
-        
-        <div class="row">
-          <div class="col-xs-12">
-            <div class="footer-bottom" style="font-size: 10px;">
-              
-              FULL RISK DISCLOSURE: Trading contains substantial risk and is not for every investor. An investor could potentially lose all or more than the initial investment. Risk capital is money that can be lost without jeopardizing financial security or life style. Only risk capital should be used for trading and only those with sufficient risk capital should consider trading. Past performance is no guarantee of future results.
+        <!-- end wrapper -->
+    </div>
+    <!-- end layout-theme -->
 
-            </div>
-            <!-- end footer-bottom --> 
-          </div>
-          <!-- end col --> 
-        </div>
-        <!-- end row --> 
-      </div>
-      <!-- end container --> 
-    </footer>
-  </div>
-  <!-- end wrapper --> 
-</div>
-<!-- end layout-theme --> 
+    <!-- SCRIPTS -->
+    <script src="assets/js/jquery-migrate-1.2.1.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="assets/js/modernizr.custom.js"></script>
+    <script src="assets/js/waypoints.min.js"></script>
+    <script src="assets/js/jquery.easing.min.js"></script>
 
-<!-- SCRIPTS --> 
-<script src="assets/js/jquery-migrate-1.2.1.js"></script>
-<script src="assets/js/bootstrap.min.js"></script> 
-<script src="assets/js/modernizr.custom.js"></script> 
-<script src="assets/js/waypoints.min.js"></script> 
-<script src="assets/js/jquery.easing.min.js"></script> 
+    <!--THEME-->
+    <script src="assets/js/jquery.sliderPro.min.js"></script>
+    <script src="assets/js/owl.carousel.min.js"></script>
+    <script src="assets/js/jquery.isotope.min.js"></script>
+    <script src="assets/js/jquery.prettyPhoto.js"></script>
+    <script src="assets/js/jquery.datetimepicker.js"></script>
+    <script src="assets/js/jquery.jelect.js"></script>
+    <script src="assets/js/jquery.easypiechart.min.js"></script>
+    <script src="assets/js/cssua.min.js"></script>
+    <script src="assets/js/wow.min.js"></script>
+    <script src="assets/js/custom.min.js"></script>
 
-<!--THEME--> 
-<script src="assets/js/jquery.sliderPro.min.js"></script> 
-<script src="assets/js/owl.carousel.min.js"></script> 
-<script src="assets/js/jquery.isotope.min.js"></script> 
-<script src="assets/js/jquery.prettyPhoto.js"></script> 
-<script src="assets/js/jquery.datetimepicker.js"></script> 
-<script src="assets/js/jquery.jelect.js"></script> 
-<script src="assets/js/jquery.easypiechart.min.js"></script> 
-<script src="assets/js/cssua.min.js"></script> 
-<script src="assets/js/wow.min.js"></script> 
-<script src="assets/js/custom.min.js"></script> 
-
-<!--COLOR SWITCHER --> 
-<script src="assets/js/bootstrap-select.js"></script> 
-<script src="assets/js/dmss.js"></script>
+    <!--COLOR SWITCHER -->
+    <script src="assets/js/bootstrap-select.js"></script>
+    <script src="assets/js/dmss.js"></script>
 </body>
+
+</html>                            </div>
+                            <!-- end col -->
+
+                            <div class="col-lg-3 col-sm-3">
+                                <section class="footer-section">
+                                    <h3 class="footer-title">RECENT EVENTS & PROMOTION</h3>
+                                    <div class="tweets">
+                                        <div class="tweets__text">Go-Trip Korea 2019</div>
+                                        <div><a href="javascript:void(0);">https://bitrexgo.co.id/hVl5G</a></div>
+                                        <span class="tweets__time">on Agust 21, 2019</span> </div>
+                                    <div class="tweets">
+                                        <div class="tweets__text">Go-Cruise Singapore 2019<br><a href="javascript:void(0);">https://bitrexgo.co.id/IMDS15</a></div>
+                                        <span class="tweets__time">on June 30, 2019</span> </div>
+                                    <a class="tweets__link" href="javascript:void(0);">Get Information @Bitrexgo</a> </section>
+                                <!-- end footer-section -->
+                            </div>
+                            <!-- end col -->
+
+                            <div class="col-lg-4 col-sm-3">
+                                <section class="footer-section">
+                                    <h3 class="footer-title">OUR CONTACT</h3>
+                                    <form class="form">
+                                        <div class="form-group">
+                                            <input class="form-control" type="text" placeholder="Your Name">
+                                            <input class="form-control" type="email" placeholder="Email address">
+                                            <textarea class="form-control" rows="7" placeholder="Message"></textarea>
+                                            <button class="btn btn-primary btn-effect">SEND MESSSAGE</button>
+                                        </div>
+                                    </form>
+                                </section>
+                                <!-- end footer-section -->
+                            </div>
+                            <!-- end col -->
+                        </div>
+                        <!-- end row -->
+                    </div>
+                    <!-- end footer-inner -->
+
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="footer-bottom" style="font-size: 10px;">
+
+                                FULL RISK DISCLOSURE: Trading contains substantial risk and is not for every investor. An investor could potentially lose all or more than the initial investment. Risk capital is money that can be lost without jeopardizing financial security or life style.
+                                Only risk capital should be used for trading and only those with sufficient risk capital should consider trading. Past performance is no guarantee of future results.
+
+                            </div>
+                            <!-- end footer-bottom -->
+                        </div>
+                        <!-- end col -->
+                    </div>
+                    <!-- end row -->
+                </div>
+                <!-- end container -->
+            </footer>
+        </div>
+        <!-- end wrapper -->
+    </div>
+    <!-- end layout-theme -->
+
+    <!-- SCRIPTS -->
+    <script src="assets/js/jquery-migrate-1.2.1.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="assets/js/modernizr.custom.js"></script>
+    <script src="assets/js/waypoints.min.js"></script>
+    <script src="assets/js/jquery.easing.min.js"></script>
+
+    <!--THEME-->
+    <script src="assets/js/jquery.sliderPro.min.js"></script>
+    <script src="assets/js/owl.carousel.min.js"></script>
+    <script src="assets/js/jquery.isotope.min.js"></script>
+    <script src="assets/js/jquery.prettyPhoto.js"></script>
+    <script src="assets/js/jquery.datetimepicker.js"></script>
+    <script src="assets/js/jquery.jelect.js"></script>
+    <script src="assets/js/jquery.easypiechart.min.js"></script>
+    <script src="assets/js/cssua.min.js"></script>
+    <script src="assets/js/wow.min.js"></script>
+    <script src="assets/js/custom.min.js"></script>
+
+    <!--COLOR SWITCHER -->
+    <script src="assets/js/bootstrap-select.js"></script>
+    <script src="assets/js/dmss.js"></script>
+</body>
+
 </html>

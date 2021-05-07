@@ -34,7 +34,7 @@ class BitrexCashController extends Controller
 
     public function getHistoryCash(){
         $data = Auth::user();
-        $history = HistoryBitrexCash::where('id_member',$data->id)->orderBy('created_at','desc')->paginate(4);
+        $history = HistoryBitrexCash::where('id_member',$data->id)->orderBy('created_at','desc')->paginate(7);
         return response()->json(['cash'=>$history]);
     }
 
