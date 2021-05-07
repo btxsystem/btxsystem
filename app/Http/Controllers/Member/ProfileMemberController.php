@@ -340,10 +340,9 @@ class ProfileMemberController extends Controller
                 return redirect()->route('member.tree');
             }
         } catch(\Illuminate\Database\QueryException $e) {
-            // DB::rollback();
-            // Alert::error('Kesalahan teknis', 'Error')->persistent("OK");
-            // $data = Auth::user();
-            return($e);
+            DB::rollback();
+            Alert::error('Kesalahan teknis', 'Error')->persistent("OK");
+            $data = Auth::user();
             $data['data'] = $request;
             return view('frontend.tree')->with('profile',$data) ;
         }
