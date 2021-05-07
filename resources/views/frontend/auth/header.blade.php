@@ -377,11 +377,11 @@
               <img class="header-logo__img" src="{{asset('img/ap2li_new_1.png')}}"  alt="AP2LI Logo" height="auto" width="190px">
             </a>
 
-            <!-- <div class="btnBook">
+            <div class="btnBook">
               <a class="btn btn-effect btn-info btn-buy" href="https://ebook.{{$_SERVER['SERVER_NAME']}}/ebook">
                   <span style="color:white">EBOOK</span>
               </a>
-            </div> -->
+            </div>
             <div class="header-inner">
               <div class="header-search">
                 <div class="navbar-search">
