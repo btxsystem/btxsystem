@@ -107,9 +107,6 @@ class ProfileMemberController extends Controller
     }
 
     public function register(Request $request){
-        $checkEmail = Employeer::where('email', $request->email)->count();
-        return $request->all();
-        die;
         try {
             if (!isset($request->bank_name) || $request->bank_name==null) {
                 $request->bank_name = 'BCA';
@@ -178,7 +175,7 @@ class ProfileMemberController extends Controller
                     return view('frontend.tree')->with('profile',$data) ;
                 }
 
-                $price = 280;
+                $price = 0;
                 $sponsor = Auth::user();
                 $idMember = invoiceNumbering();
 
@@ -816,7 +813,7 @@ class ProfileMemberController extends Controller
             }
 
             if($method == 'point') {
-                $price = 280;
+                $price = 0;
                 $ebooks = $request->input('ebooks') ?? [];
                 $ebookSelected = $request->input('selected_ebook');
                 $cekEbook = Ebook::whereIn('id', $ebooks)->get();

@@ -1019,8 +1019,6 @@ em{
 
 			})
 
-			// parsing value
-			console.log(discountEbooks)
 			if(discountEbooks.length > 0) {
 				$('#selected_ebook').val(discountEbooks[0])
 			} else {
