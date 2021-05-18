@@ -119,7 +119,7 @@
 							<label for="female">Female</label>
 						</div>
 					</div>
-          			<div class="dropdown-divider"></div>
+          			<!-- <div class="dropdown-divider"></div> -->
           			<!-- <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div class="demo-radio-button">
 							<input name="pack" type="radio" value="1" id="pack" class="with-gap radio-col-red" checked />
@@ -209,6 +209,11 @@
                   <tr>
                     <td> <h4>Grand Total</h4> </td>
                     <td class="text-right"> <h4><span id="grand-total">0</span></h4> </td>
+                    <td> <h4>Points</h4> </td>
+                  </tr>
+                  <tr style="color:green">
+                    <td> <h4>Available Bitrex Point</h4> </td>
+                    <td class="text-right"> <h4><span id="grand-total">{{number_format($profile->bitrex_points,0,".",".")}}</span></h4> </td>
                     <td> <h4>Points</h4> </td>
                   </tr>
                 </table>

@@ -122,10 +122,10 @@
             width: 20px;
             padding-bottom: 15px;
         }
-        .wrap-img.director_1 {
+        /* .wrap-img.director_1 {
             height: 45px;
             width: 65px;
-        }
+        } */
         .wrap-img-platinum {
             width: 130px;
             height: 45px;
@@ -163,12 +163,28 @@
             left: 2px;
             top: -11px;
         }
+        .wrap-img-director {
+            height: 70px;
+            width: 40px;
+            padding-bottom: 20px;
+        }
+        .wrap-img-director .img-frame {
+            width: 75px;
+            height: 75px;
+        }
+        .wrap-img-director .img-user {
+            height: 50px !important;
+            width: 50px !important;
+        }
+        .text-title-director {
+            font-size: 10px;
+        }
     }
     @media(max-width: 360px) {
-        .wrap-img.director_1 {
+        /* .wrap-img.director_1 {
             height: 45px;
             width: 20px;
-        }
+        } */
         .wrap-img-platinum {
             width: 130px;
         }
@@ -330,11 +346,11 @@ body {
 
                     @foreach ($data['chairman2'] as $item)
                         <div class="g-line col-lg-4 p-3 mx-auto d-block text-center">
-                            <div class="d-flex align-items-center mx-auto justify-content-center wrap-img">
+                            <div class="d-flex align-items-center mx-auto justify-content-center wrap-img wrap-img-director">
                                 <img src="{{$item['src'] != null ? checkImageHof($item['src']) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user rounded-circle" >
                                 <img src="{{asset('assets3/img/Chairman2.png')}}" class="img-fluid img-frame">
                             </div>
-                            <span class="text-title">{{strtoupper($item['first_name'])}} {{strtoupper($item['last_name'])}}</span>
+                            <span class="text-title-director">{{strtoupper($item['first_name'])}} {{strtoupper($item['last_name'])}}</span>
                         </div>
                     @endforeach
                 </div>
@@ -352,11 +368,11 @@ body {
                     </div>
                     @foreach ($data['chairman1'] as $item)
                         <div class="g-line p-3 mx-auto d-block text-center" style="width: 50%;">
-                            <div class="d-flex align-items-center mx-auto justify-content-center wrap-img">
+                            <div class="d-flex align-items-center mx-auto justify-content-center wrap-img wrap-img-director">
                                 <img src="{{$item['src'] != null ? checkImageHof($item['src']) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user rounded-circle" >
                                 <img src="{{asset('assets3/img/Chairman1.png')}}" class="img-fluid img-frame">
                             </div>
-                            <span class="text-title">{{strtoupper($item['first_name'])}} {{strtoupper($item['last_name'])}}</span>
+                            <span class="text-title-director">{{strtoupper($item['first_name'])}} {{strtoupper($item['last_name'])}}</span>
                         </div>
                     @endforeach
                 </div>
@@ -373,12 +389,12 @@ body {
                         </p>
                     </div>
                     @foreach ($data['director3'] as $item)
-                        <div class="g-line p-3 mx-auto d-block text-center" style="width: 33%;">
-                            <div class="d-flex align-items-center mx-auto justify-content-center wrap-img">
+                        <div class="g-line p-3 mx-auto d-block text-center" style="width: 50%;">
+                            <div class="d-flex align-items-center mx-auto justify-content-center wrap-img wrap-img-director">
                                 <img src="{{$item['src'] != null ? checkImageHof($item['src']) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user rounded-circle" >
                                 <img src="{{asset('assets3/img/Director3.png')}}" class="img-fluid img-frame">
                             </div>
-                            <span class="text-title">{{strtoupper($item['first_name'])}} {{strtoupper($item['last_name'])}}</span>
+                            <span class="text-title-director">{{strtoupper($item['first_name'])}} {{strtoupper($item['last_name'])}}</span>
                         </div>
                     @endforeach
                 </div>
@@ -395,12 +411,12 @@ body {
                         </p>
                     </div>
                     @foreach ($data['director2'] as $item)
-                        <div class="g-line p-3 mx-auto d-block text-center" style="width: 33%;">
-                            <div class="d-flex align-items-center mx-auto justify-content-center wrap-img">
+                        <div class="g-line p-3 mx-auto d-block text-center" style="width: 50%;">
+                            <div class="d-flex align-items-center mx-auto justify-content-center wrap-img wrap-img-director">
                                 <img src="{{$item['src'] != null ? checkImageHof($item['src']) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user rounded-circle" >
                                 <img src="{{asset('assets3/img/Director2.png')}}" class="img-fluid img-frame">
                             </div>
-                            <span class="text-title">{{strtoupper($item['first_name'])}} {{strtoupper($item['last_name'])}}</span>
+                            <span class="text-title-director">{{strtoupper($item['first_name'])}} {{strtoupper($item['last_name'])}}</span>
                         </div>
                     @endforeach
                 </div>
@@ -417,12 +433,12 @@ body {
                         </p>
                     </div>
                     @foreach ($data['director1'] as $item)
-                        <div class="g-line p-3 mx-auto d-block text-center" style="width: 33%;">
-                            <div class="d-flex align-items-center mx-auto justify-content-center wrap-img director_1">
+                        <div class="g-line p-3 mx-auto d-block text-center" style="width: 50%;">
+                            <div class="d-flex align-items-center mx-auto justify-content-center wrap-img director_1 wrap-img-director">
                                 <img src="{{$item['src'] != null ? checkImageHof($item['src']) : asset('assets3/img/favicon.png')}}" class="img-fluid img-user rounded-circle" >
                                 <img src="{{asset('assets3/img/Director1.png')}}" class="img-fluid img-frame">
                             </div>
-                            <span class="text-title">{{strtoupper($item['first_name'])}} {{strtoupper($item['last_name'])}}</span>
+                            <span class="text-title-director">{{strtoupper($item['first_name'])}} {{strtoupper($item['last_name'])}}</span>
                         </div>
                     @endforeach
                 </div>
