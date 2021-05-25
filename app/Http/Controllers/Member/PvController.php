@@ -104,7 +104,7 @@ class PvController extends Controller
     public function generate(){
 
         $pairings = DB::table('pairings')->join('employeers','pairings.id_member','=','employeers.id')
-                                         ->select('pairings.pv_left','pairings.pv_midle','pairings.pv_right','pairings.id_member','employeers.rank_id','employeers.bitrex_cash','employeers.verification')
+                                         ->select('pairings.pv_left','pairings.pv_midle','pairings.pv_right','pairings.id_member','employeers.rank_id','employeers.bitrex_cash','employeers.verification', 'employeers.expired_at')
                                          ->get();
 
         foreach ($pairings as $key => $pairing) {
