@@ -22,7 +22,7 @@ class PvController extends Controller
             return $next($request);
         });
     }
-    
+
     public function index()
     {
         $data = Auth::user();
@@ -157,7 +157,7 @@ class PvController extends Controller
                 }
             }
             $has_pairing = $bonus_pairing / 100000;
-            if ($pairing->rank_id == null || $pairing->rank_id < 1) {
+            if ($pairing->rank_id == null || $pairing->rank_id < 1 || $pairing->expired_at <= now()) {
                 $has_pairing = 0;
                 $fail_pairing = $bonus_pairing / 100000 ;
                 $bonus_pairing = 0;
