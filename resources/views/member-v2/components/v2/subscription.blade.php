@@ -703,11 +703,11 @@ function showModalLogin() {
 }
 
 function getTimeRemaining(endtime) {
-  var t = Date.parse(endtime) - Date.parse(new Date());
-  var seconds = Math.floor(parseInt((t / 1000) % 60));
-  var minutes = Math.floor(parseInt((t / 1000 / 60) % 60));
-  var hours = Math.floor(parseInt((t / (1000 * 60 * 60)) % 24));
-  var days = Math.floor(parseInt(t / (1000 * 60 * 60 * 24)));
+  var t = parseInt(Date.parse(endtime) - Date.parse(new Date()));
+  var seconds = Math.floor((t / 1000) % 60);
+  var minutes = Math.floor((t / 1000 / 60) % 60);
+  var hours = Math.floor((t / (1000 * 60 * 60)) % 24);
+  var days = Math.floor(t / (1000 * 60 * 60 * 24));
 
 	if (days < 0) {
 		days = 0
