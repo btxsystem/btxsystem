@@ -703,7 +703,9 @@ function showModalLogin() {
 }
 
 function getTimeRemaining(endtime) {
-  var t = parseInt(Date.parse(endtime) - Date.parse(new Date()));
+  var endtime = endtime.split(/[- :]/);
+  var endtime = new Date(endtime[0], endtime[1]-1, endtime[2], endtime[3], endtime[4], endtime[5]);
+  var t = Date.parse(endtime) - Date.parse(new Date());
   var seconds = Math.floor((t / 1000) % 60);
   var minutes = Math.floor((t / 1000 / 60) % 60);
   var hours = Math.floor((t / (1000 * 60 * 60)) % 24);
