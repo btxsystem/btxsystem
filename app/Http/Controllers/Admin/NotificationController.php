@@ -7,6 +7,10 @@ use App\Service\NotificationService;
 use DataTables;
 use Illuminate\Support\Carbon;
 use App\Models\Notification;
+use App\Employeer;
+use Illuminate\Http\Request;
+use App\Mail\ResendMail;
+use Illuminate\Auth\Notifications\ResetPassword;
 
 class NotificationController
 {
@@ -20,6 +24,18 @@ class NotificationController
     public function index()
     {
         return view('admin.notification.index');
+    }
+
+    public function resendEmail(Request $request)
+    {
+        $member = Employeer::where('id',$request->id)->first();
+        $member->password = bcrypt('bitrexgo123');
+        $member->save();
+
+        \Mail::to($member->email)
+              ->send(new ResendMail($member));
+
+        return redirect()->back();
     }
 
     public function data()

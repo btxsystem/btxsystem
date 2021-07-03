@@ -42,6 +42,8 @@
                     </div>
 
                     <div class="pull-right">
+                        <a style="color: white; text-decoration: none !important;" onMouseOut="this.style.color='white'" onMouseOver="this.style.color='#f06262'" href="#ResendEmailModal" data-toggle="modal"><i style="font-size:15px;" class="fa fa-envelope"></i>&nbsp; &nbsp;<strong>Resend Email</strong></a>
+                        &nbsp; &nbsp;
                         @if(\Auth::guard('admin')->user()->hasPermission('Members.edit_password'))
                             <a style="color: white; text-decoration: none !important;" onMouseOut="this.style.color='white'" onMouseOver="this.style.color='#f06262'" href="#updatePasswordModal" data-toggle="modal"><i style="font-size:15px;" class="fa fa-refresh"></i>&nbsp; &nbsp;<strong>Update Password</strong></a>
                             &nbsp; &nbsp;
@@ -345,6 +347,35 @@
     </div>
  </section>
 
+ <div id="ResendEmailModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title">Resend Email to {{$data->username}}</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="well form-horizontal" action="{{ route('notification.resend-email') }}">
+                        {{ csrf_field() }}
+                        <fieldset>
+                        <input id="id" name="id" value="{{$data->id}}" type="hidden">
+
+                            <div class="form-group">
+                                <div class="col-md-8 inputGroupContainer">
+                                    <div class="input-group">
+                                        Yakin ingin mengirim email ke {{$data->username}} ?
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+</div>
 
 <!--section ends-->
 <div id="updatePasswordModal" class="modal fade">

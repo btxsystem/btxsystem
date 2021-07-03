@@ -48,6 +48,7 @@ Route::group(['middleware' => 'admin'], function () {
 
     Route::group(['prefix'=>'notification','as'=>'notification.'], function(){
         Route::get('', ['as' => '', 'uses' => 'Admin\NotificationController@index']);
+        Route::get('resend-email', ['as' => 'resend-email', 'uses' => 'Admin\NotificationController@resendEmail']);
         Route::get('data', ['as' => 'data', 'uses' => 'Admin\NotificationController@data']);
         Route::get('read/{id}', ['as' => 'read', 'uses' => 'Admin\NotificationController@read']);
         Route::get('delete/{id}', ['as' => 'delete', 'uses' => 'Admin\NotificationController@delete']);
