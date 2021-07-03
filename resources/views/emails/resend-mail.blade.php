@@ -8,8 +8,9 @@
 </head>
 <body>
   Hi, <strong>{{$data->first_name}} {{$data->last_name}}</strong><br/><br/>
-  Akun anda telah diperbaharui, untuk kenyamanan silahkan untuk memperbaharui password anda pada dasboard member bitrexgo : <br/><br/>
-  Email Login : <strong>{{$data->email}} </strong>
+  Akun anda telah diperbaharui, untuk kenyamanan anda mohon untuk memperbaharui password anda pada dashboard member Bitrexgo :
+  <br/>
+  <strong>{{$data->email}} </strong>
   <br/>
   Password Login : <strong>bitrexgo123</strong>
 </body>

@@ -31,6 +31,6 @@ class ResendMail extends Mailable
     {
         return $this->view('emails.resend-mail')
                     ->from('mailbitrexgo@bitrexgo.id', 'Bitrexgo')
-                    ->subject('Virtual Account');
+                    ->subject('BITREXGO ACCOUNT UPDATE');
     }
 }
