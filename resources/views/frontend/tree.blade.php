@@ -119,13 +119,13 @@
 							<label for="female">Female</label>
 						</div>
 					</div>
-          			<!-- <div class="dropdown-divider"></div> -->
-          			<!-- <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
+          			<div class="dropdown-divider"></div>
+          			<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div class="demo-radio-button">
 							<input name="pack" type="radio" value="1" id="pack" class="with-gap radio-col-red" checked />
-							<label for="shipping">Starter Pack</label>
+							<label for="shipping">Tanda Kepemilikan Ebook</label>
 						</div>
-					</div> -->
+					</div>
 					<div class="dropdown-divider"></div>
 					<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<h5 class="card-inside-title">Select ebook <em>*</em></h5>
@@ -149,7 +149,7 @@
 					<!-- <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 pickup-form">
 						<h4>B-G 168, Jl. Pluit Indah Raya, Pluit, Penjaringan, North Jakarta City, Jakarta 14450</h4>
 					</div> -->
-					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 shipping-form">
+					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div class="form-group">
 							<select id="province" name="province" class="province"></select>
               				<input type="hidden" name="province_name" id="province_name" value="">
@@ -186,21 +186,16 @@
 						<div class="form-group address-form">
 						<div class="table-responsive">
                 <table class="table table-borderless">
-                  <!-- <tr>
-                    <td> <h4>Starter Pack</h4> </td>
-                    <td class="text-right"> <h4><span id="cost-starter">0</span></h4> </td>
-                    <td> <h4>Points</h4> </td>
-                  </tr> -->
                   <tr>
                     <td> <h4>Total Ebook</h4> </td>
                     <td class="text-right"> <h4><span id="cost-ebook">0</span></h4> </td>
                     <td> <h4>Points</h4> </td>
                   </tr>
-                  <!-- <tr>
-                    <td> <h4>Total Shipping</h4> </td>
+                  <tr>
+                    <td> <h4>Cost Postal</h4> </td>
                     <td class="text-right"> <h4><span id="cost-postal">0</span></h4> </td>
                     <td> <h4>Points</h4> </td>
-				  </tr> -->
+				  </tr>
 				  <tr id="total-discount-tr" class="hidden">
                     <td> <h4>Total Discount</h4> </td>
                     <td class="text-right"> <h4><span id="total-discount">0</span></h4> </td>
@@ -814,7 +809,7 @@ em{
 
 	$(document).ready(function() {
 		$('.register').prop('disabled', true)
-		// $('#cost-starter').html('280')
+		$('#cost-starter').html('0')
 
 		var element = document.querySelector('#bah');
 
@@ -1217,7 +1212,6 @@ em{
 
 		$('#kurir_name').val($(this).find(":checked").text())
 		$('#cost').val(Math.ceil(this.value/1000))
-		$('#cost-starter').html('280')
 		postalFee = Math.ceil(this.value)
 
 		if(postalFee != 0) {

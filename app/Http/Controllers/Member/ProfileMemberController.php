@@ -786,7 +786,7 @@ class ProfileMemberController extends Controller
             }
 
             $method = $request->input('payment_method') ?? 'point';
-            (int) $shippingMethod = 0; //$request->input('shipping_method') ?? 0;
+            (int) $shippingMethod = 1; //$request->input('shipping_method') ?? 0;
 
             $checkEmail = Employeer::where('email', $request->email)->count();
 
