@@ -119,13 +119,6 @@
 							<label for="female">Female</label>
 						</div>
 					</div>
-          			<div class="dropdown-divider"></div>
-          			<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
-						<div class="demo-radio-button">
-							<input name="pack" type="radio" value="1" id="pack" class="with-gap radio-col-red" checked />
-							<label for="shipping">Tanda Kepemilikan Ebook</label>
-						</div>
-					</div>
 					<div class="dropdown-divider"></div>
 					<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<h5 class="card-inside-title">Select ebook <em>*</em></h5>
@@ -135,6 +128,14 @@
               				<div id="ebook-list"></div>
 						</div>
 						<div class="buy_ebook"></div>
+					</div>
+
+          			<div class="dropdown-divider"></div>
+          			<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
+						<div class="demo-radio-button">
+							<input name="pack" type="radio" value="1" id="pack" class="with-gap radio-col-red" checked />
+							<label for="shipping">Tanda Kepemilikan Ebook</label>
+						</div>
 					</div>
           			<div class="dropdown-divider"></div>
 					<!-- <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
