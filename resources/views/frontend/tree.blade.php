@@ -131,10 +131,6 @@
 					</div>
 
           			<div class="dropdown-divider"></div>
-          			<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                      <h5 class="card-inside-title">Proof of ownership <em>*</em></h5>
-					</div>
-          			<div class="dropdown-divider"></div>
 					<!-- <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<h5 class="card-inside-title">Choose a shipping method</h5>
 						<div class="demo-radio-button">
@@ -148,6 +144,7 @@
 						<h4>B-G 168, Jl. Pluit Indah Raya, Pluit, Penjaringan, North Jakarta City, Jakarta 14450</h4>
 					</div> -->
 					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <h5 class="card-inside-title">Proof of ownership <em>*</em></h5>
 						<div class="form-group">
 							<select id="province" name="province" class="province"></select>
               				<input type="hidden" name="province_name" id="province_name" value="">
