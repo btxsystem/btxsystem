@@ -76,6 +76,11 @@
                     <br>
                     <span class="job_post"><b>ID : {{$profile['id_member']}}</b></span>
                 </div>
+                <div class="col-lg-3 col-md-8 col-12 profile" style="text-align: center !important;">
+                    <h4 class="m-t-5 m-b-0"><strong>Personal Rank</strong></h4>
+                    <br>
+                    <span class="job_post"><strong>{{$profile['personal_rank']}}</strong></span>
+                </div>
             </div>
         </div>
         <div class="profile-sub-header">

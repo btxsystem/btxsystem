@@ -22,12 +22,24 @@ class DashboardController extends Controller
             return $next($request);
         });
     }
-    
+
     public function index()
     {
         $data = Auth::user();
         $rank = DB::table('ranks')->select('name')->where('id','=',$data->rank_id)->first();
         $pv_group = DB::table('pv_rank')->select('pv_left','pv_midle','pv_right')->where('id_member','=',$data->id)->first();
+        $sumPersonalRank = 0;
+        foreach($data->transaction_member as $trx_member){
+            if($trx_member->status == 1){
+                $sumPersonalRank += $trx_member->ebook->pv;
+            }
+        }
+        $personalRank = 'STARTER';
+        if ($sumPersonalRank >= 100 &&  $sumPersonalRank < 200) {
+            $personalRank = 'BASIC';
+        } else if ( $sumPersonalRank >= 200) {
+            $personalRank = 'PRO';
+        }
         $profile = array(
             "id_member" => $data->id_member,
             "username" =>  $data->username,
@@ -46,7 +58,8 @@ class DashboardController extends Controller
             "bitrex_cash" => $data->bitrex_cash,
             "bitrex_points" => $data->bitrex_points,
             "src" => $data->src,
-            "pv" => $pv_group ? $pv_group->pv_left + $pv_group->pv_midle + $pv_group->pv_right : 0
+            "pv" => $pv_group ? $pv_group->pv_left + $pv_group->pv_midle + $pv_group->pv_right : 0,
+            "personal_rank" => $personalRank
         );
         return view('frontend.dashboard')->with('profile',$profile);
     }

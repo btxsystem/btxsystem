@@ -126,6 +126,7 @@
 							<!-- <input name="method" type="radio" value="1" id="shipping" class="with-gap radio-col-red" checked />
 							<label for="shipping">Shipping</label> -->
               				<div id="ebook-list"></div>
+                            <div id="personal-rank"></div>
 						</div>
 						<div class="buy_ebook"></div>
 					</div>
@@ -598,6 +599,8 @@ em{
 
 <script>
 	var priceEbook = 0
+    var personalRank = 0
+    personalRankLabel = "STARTER"
 	var postalFee = 0
 	var grandTotal = 0;
 	var bitrexPoint = '{{Auth::user()->bitrex_points}}'
@@ -832,7 +835,7 @@ em{
                 if (v.id != 7) {
                     return `
                         <div class="form-check">
-                        <input class="form-check-input" data-id="${v.id}" data-allow-merge-discount="${v.allow_merge_discount}" data-maximum-product="${v.maximum_product}" data-register-promotion="${v.register_promotion}" data-minimum-product="${v.minimum_product}" data-price-discount="${v.total_price_discount}" data-promotion="${v.is_promotion}" data-price="${v.price}" type="checkbox" name="ebooks[]" value="${v.id}" id="${v.title}">
+                        <input class="form-check-input" data-id="${v.id}" data-allow-merge-discount="${v.allow_merge_discount}" data-maximum-product="${v.maximum_product}" data-register-promotion="${v.register_promotion}" data-minimum-product="${v.minimum_product}" data-price-discount="${v.total_price_discount}" data-promotion="${v.is_promotion}" data-price="${v.price}" data-pv="${v.pv}" type="checkbox" name="ebooks[]" value="${v.id}" id="${v.title}">
                         <label class="form-check-label" id="${i}" for="${v.title}" ${v.id == 1 ? 'checked' : ''}>
                             ${v.title}
                         </label>
@@ -849,7 +852,16 @@ em{
 			if(parseInt($(this).val()) == 1) {
 			$(this).prop('checked', true)
 			priceEbook = priceEbook + parseInt($(this).data('price'))
+            personalRank = personalRank +  $(this).data('pv')
+            if (personalRank >= 100 && personalRank < 200) {
+                personalRankLabel = 'BASIC'
+            } else if(personalRank >= 200) {
+                personalRankLabel = 'PRO'
+            } else{
+                personalRankLabel = 'STARTER'
+            }
 			$('#cost-ebook').html(toPrice(priceEbook / 1000))
+            $('#personal-rank').html("<br/><h5 class='card-inside-title'>Persoal Rank: "+personalRankLabel+"</h5>")
 			$('#grand-total').html(toPrice((priceEbook + postalFee) / 1000))
 			}
 		})
@@ -962,6 +974,7 @@ em{
 			// }*/
 
 			priceEbook = 0
+            personalRank = 0
 			let totalDiscount = 0;
 			ebookSelected.each(function(index, book) {
 				let idEbook = $(this).data('id')
@@ -972,9 +985,11 @@ em{
 				let maximumProduct = $(this).data('maximum-product')
 				let price = $(this).data('price')
 				let priceDiscount = $(this).data('price-discount')
+                let pv = $(this).data('pv')
 
 
 				if($(this).prop('checked')) {
+                    personalRank = personalRank + pv;
 					if(isPromotion && isRegisterPromotion) {
 						if(ebookSelected.length >= minimumProduct && ebookSelected.length <= maximumProduct) {
 							priceEbook = priceEbook + (parseInt(price) - parseInt(priceDiscount));
@@ -1003,6 +1018,7 @@ em{
 				} else {
 					if(!cancelledEbook) {
 						check -= 1;
+                        personalRank = personalRank - pv;
 						if(isPromotion && isRegisterPromotion && ebookSelected.length <= maximumProduct) {
 							priceEbook = priceEbook - (parseInt(price) - parseInt(priceDiscount));
 							totalDiscount -= parseInt(priceDiscount)
@@ -1011,7 +1027,14 @@ em{
 						}
 					}
 				}
-
+                if (personalRank >= 100 && personalRank < 200) {
+                    personalRankLabel = 'BASIC'
+                } else if(personalRank >= 200) {
+                    personalRankLabel = 'PRO'
+                } else {
+                    personalRankLabel = 'STARTER'
+                }
+                $('#personal-rank').html("<br/><h5 class='card-inside-title'>Persoal Rank: "+personalRankLabel+"</h5>")
 			})
 
 			if(discountEbooks.length > 0) {
