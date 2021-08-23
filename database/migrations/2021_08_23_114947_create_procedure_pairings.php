@@ -21,7 +21,7 @@ class CreateProcedurePairings extends Migration
                 DECLARE parent, cek, cek_rank, total_pv int;
                 SET max_sp_recursion_depth=10000;
                 set parent = (select parent_id from `employeers` where id = idm);
-                set cek = (select sum(id_member) from pairings where id_member = parent);
+                set cek = (select count(id_member) from pairings where id_member = parent);
                 set cek_rank = (select sum(ebooks.pv) from ebooks INNER JOIN transaction_member ON ebooks.id = transaction_member.ebook_id where transaction_member.member_id = 3 AND ebooks.parent_id=0);
                 set time_zone = "+07:00";
                 IF cek_rank < 100 and pv > 50 THEN
