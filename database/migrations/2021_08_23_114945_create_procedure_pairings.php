@@ -14,6 +14,7 @@ class CreateProcedurePairings extends Migration
     public function up()
     {
         DB::unprepared('DROP PROCEDURE IF EXISTS `add_pv_pairing`');
+        DB::unprepared('DROP TRIGGER IF EXISTS `tr_bonus_pairing`');
         DB::unprepared('
             CREATE PROCEDURE add_pv_pairing(idm INT, pv INT)
             BEGIN
@@ -33,20 +34,17 @@ class CreateProcedurePairings extends Migration
                     set total_pv = (select sum(`right`) from history_pv_pairing where id_member = parent AND DATE(created_at) >= CURDATE());
                 END IF;
                 IF cek_rank < 100 and total_pv < 50 THEN
-                    set max_pv = max_pv + 50;
-                    IF max_pv > 50 THEN
-                        set pv = 50;
-                    END IF
-                ELSEIF (cek_rank >= 100 and cek_rank < 200) and total_pv < 100 THEN
-                    set max_pv = max_pv + 100;
-                    IF max_pv > 100 THEN
-                        set pv = 100;
-                    END IF
+                    set max_pv = total_pv + 50;
+                    IF max_pv > 50 THEN set pv = 50;
+                    END IF;
+                ELSEIF cek_rank < 200 and total_pv < 100 THEN
+                    set max_pv = total_pv + 100;
+                    IF max_pv > 100 THEN set pv = 100;
+                    END IF;
                 ELSEIF cek_rank >= 200 and total_pv < 200 THEN
-                    set max_pv = max_pv + 200;
-                    IF max_pv > 200 THEN
-                        set pv = 200;
-                    END IF
+                    set max_pv = total_pv + 200;
+                    IF max_pv > 200 THEN set pv = 200;
+                    END IF;
                 END IF;
                 IF parent is not null THEN
                     IF cek is null THEN
