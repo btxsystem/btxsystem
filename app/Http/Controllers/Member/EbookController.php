@@ -21,7 +21,7 @@ class EbookController extends Controller
             return $next($request);
         });
     }
-    
+
     public function index()
     {
         $data = Auth::user();

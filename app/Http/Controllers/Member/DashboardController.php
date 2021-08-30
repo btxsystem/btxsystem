@@ -9,6 +9,7 @@ use App\Http\Controllers\Member\PvController;
 use DB;
 use App\Employeer;
 use Carbon\Carbon;
+use App\Models\Ebook;
 use stdClass;
 
 class DashboardController extends Controller
@@ -63,7 +64,11 @@ class DashboardController extends Controller
             "progress_rank" => $sumPersonalRank > 200 ? 100 : $sumPersonalRank / 2,
             "my_personal_rank" => $sumPersonalRank
         );
-        return view('frontend.dashboard')->with('profile',$profile);
+        $ebook = Ebook::with(['children'])
+                        ->where('parent_id', 0)
+                        ->orderBy('position', 'ASC')
+                        ->get();
+        return view('frontend.dashboard',['profile' => $profile, 'ebook' => $ebook]);
     }
 
     public function getAutoRetailDaily(){

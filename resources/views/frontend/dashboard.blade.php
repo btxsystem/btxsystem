@@ -61,6 +61,69 @@
     </div>
 </div>
 
+<div class="modal fade" id="transferBp" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="form-line">
+                    <div class="block-header">
+                        <div class="row">
+                            <div class="col-lg-7 col-md-6 col-sm-12">
+                                <h2>Ebook
+                                <small class="text-muted">Bitrexgo</small>
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container-fluid">
+                        <div class="row clearfix">
+                            <div class="col-lg-12 col-md-12">
+                                <div class="card" style="background-color:#b92240">
+                                    <div class="container-fluid">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="ebook">
+                                                    <div class="my-5">
+                                                        <div class="container">
+                                                            @foreach ($ebook as $item)
+                                                                <div class="row">
+                                                                    <div class="col-lg-12 mb-3">
+                                                                        <div class="row">
+                                                                        <div class="col-10 mx-auto">
+                                                                            <div id="basic-expired" class="ml-md-5 ml-3">
+                                                                                <span id="clock-basic"></span>
+                                                                            </div>
+                                                                        </div>
+                                                                        </div>
+                                                                        <div class="bg-white shadow rounded p-3 border-hover triangle">
+                                                                            <div class="row">
+                                                                                <input type="text" value="{{$item->id}}" hidden>
+                                                                                <div class="col-lg-9">
+                                                                                    <br>
+                                                                                    <h2 class="mb-0" style="color: #8543da;">{!! $item->title !!} ( +{{ $item->pv }} pv )</h2>
+                                                                                    <a href="https://ebook.{{$_SERVER['SERVER_NAME']}}/ebook" class="btn btn-danger btn-sm mt-3 px-5">Go to Ebook</a>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            @endforeach
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 <section class="content profile-page">
     <section class="boxs-simple">
         <div class="profile-header">
@@ -108,6 +171,10 @@
         </div>
     </section>
     <div class="container-fluid">
+        <a href="#" class="btn btn-md btn-info" data-toggle="modal" data-target="#transferBp" id="success-button">Upgrade Membership</a>
+    </div>
+    <div class="container-fluid">
+        <br>
         <div class="row clearfix training_" hidden="true">
             <a href="#" data-toggle="modal" data-target="#training">
             <div class="col-lg-12 col-md-12">
