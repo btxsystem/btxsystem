@@ -60,7 +60,7 @@ class DashboardController extends Controller
             "src" => $data->src,
             "pv" => $pv_group ? $pv_group->pv_left + $pv_group->pv_midle + $pv_group->pv_right : 0,
             "personal_rank" => $personalRank,
-            "progress_rank" => $sumPersonalRank > 200 ? 200 : $sumPersonalRank / 200,
+            "progress_rank" => $sumPersonalRank > 200 ? 100 : $sumPersonalRank / 2,
             "my_personal_rank" => $sumPersonalRank
         );
         return view('frontend.dashboard')->with('profile',$profile);
