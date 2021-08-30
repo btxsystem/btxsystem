@@ -79,7 +79,11 @@
                 <div class="col-lg-3 col-md-8 col-12 profile" style="text-align: center !important;">
                     <h4 class="m-t-5 m-b-0"><strong>Personal Rank</strong></h4>
                     <br>
-                    <span class="job_post"><strong>{{$profile['personal_rank']}}</strong></span>
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar" style="width: {{$profile['progress_rank']}}%" aria-valuenow="{{$profile['personal_rank']}}" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <br>
+                    <span class="job_post"><strong>{{$profile['personal_rank']}} ( {{$profile['my_personal_rank']}} )</strong></span>
                 </div>
             </div>
         </div>
