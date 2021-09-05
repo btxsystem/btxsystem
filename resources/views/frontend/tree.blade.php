@@ -145,7 +145,7 @@
 						<h4>B-G 168, Jl. Pluit Indah Raya, Pluit, Penjaringan, North Jakarta City, Jakarta 14450</h4>
 					</div> -->
 					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                        <h5 class="card-inside-title">Proof of ownership <em>*</em></h5>
+                        <h5 class="card-inside-title">Shipping address to send proof of ownership <em>*</em></h5>
 						<div class="form-group">
 							<select id="province" name="province" class="province"></select>
               				<input type="hidden" name="province_name" id="province_name" value="">
@@ -161,7 +161,7 @@
             			<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
 							<div class="form-line">
 								<input class="form-control" name="address" id="address" type="text" min="3">
-								<label class="form-label">Address</label>
+								<label class="form-label">Address <em>*</em></label>
 							</div>
   						</div>
 						<div class="form-group kurir-form">
@@ -861,7 +861,7 @@ em{
                 personalRankLabel = 'STARTER'
             }
 			$('#cost-ebook').html(toPrice(priceEbook / 1000))
-            $('#personal-rank').html("<br/><h5 class='card-inside-title'>Persoal Rank: "+personalRankLabel+"</h5>")
+            $('#personal-rank').html("<br/><h5 class='card-inside-title'>Personal Rank: "+personalRankLabel+"</h5>")
 			$('#grand-total').html(toPrice((priceEbook + postalFee) / 1000))
 			}
 		})
@@ -1214,9 +1214,15 @@ em{
 			type: 'GET',
 			url: '/member/shipping/cost/'+id,
 			success: function (data) {
+                kurir = [];
+                $.each( data, function( key, value ) {
+                    if (value.text.indexOf("jne") != -1) {
+                        kurir[key] = value;
+                    }
+                });
 				$('#kurir').select2({
 					placeholder: 'Kurir',
-					data: data,
+					data: kurir,
 				});
 			},
 			error: function() {
@@ -1280,9 +1286,9 @@ em{
 	});
 
 	$('#pickup').change(function(){
-    	$('#address').prop('required', false);
-		$('#province').prop('required',false);
-		$('#city').prop('required',false);
+    	// $('#address').prop('required', false);
+		// $('#province').prop('required',false);
+		// $('#city').prop('required',false);
 		$('.shipping-form').hide();
     	$('.pickup-form').show();
 		grandTotal -= postalFee;

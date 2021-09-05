@@ -177,6 +177,16 @@
         height: 23px;
     }
 
+    .profile-page .profile .personal-rank-image {
+        margin: -20px auto 0;
+    }
+
+    @media only screen and (max-width: 700px) {
+        .profile-page .profile {
+            text-align: center !important;
+        }
+    }
+
 </style>
 <script type="text/javascript">
 
