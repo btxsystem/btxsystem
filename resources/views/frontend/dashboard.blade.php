@@ -168,8 +168,10 @@
             </div>
         </div>
     </section>
-    <div class="container-fluid">
-        <a href="#" class="btn btn-md btn-info" data-toggle="modal" data-target="#transferBp" id="success-button">Upgrade Membership</a>
+    <div class="container-fluid mobile-center">
+        <a href="#" data-toggle="modal" data-target="#transferBp" id="success-button">
+            <img class="upgrade-membership" src="assets3/img/upgrade-membership.png" alt="">
+        </a>
     </div>
     <div class="container-fluid">
         <br>
@@ -227,13 +229,13 @@
             </div>
             <div class="col-lg-4 col-sm-6 col-md-6" style="text-align: center;">
                 <div>
-                    <a target="_blank" href="{{asset('assets3/compro.pdf')}}" style="cursor: pointer;">
+                    <a target="_blank" href="{{asset('assets3/Compro-Final.pdf')}}" style="cursor: pointer;">
                         <img style="width: 80%;" src="assets3/img/Compro-Icon.png" alt="">
                     </a>
                 </div>
                 <br>
                 <div>
-                    <a target="_blank" href="{{asset('assets3/code-ethic.pdf')}}" style="cursor: pointer;">
+                    <a target="_blank" href="{{asset('assets3/Kode-Etik-Final.pdf')}}" style="cursor: pointer;">
                         <img style="width: 80%;" src="assets3/img/KE-Icon.png" alt="">
                     </a>
                 </div>
