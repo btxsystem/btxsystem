@@ -836,9 +836,9 @@ class MemberController extends Controller
 
             $addedExpiredMember = Carbon::parse($now)->addDays($diff)->toDateString();
 
-            $employeer->update([
-                'expired_at' => $addedExpiredMember
-            ]);
+            // $employeer->update([
+            //     'expired_at' => $addedExpiredMember
+            // ]);
 
             $transaction = TransactionEbookExpired::insert([
                 'transaction_id' => $transactionId,
