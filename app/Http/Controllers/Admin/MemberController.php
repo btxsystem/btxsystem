@@ -786,11 +786,11 @@ class MemberController extends Controller
 
                 $diff = $previousDate->diffInDays($now);
 
-                $addedExpiredMember = Carbon::parse($now)->addDays($diff)->toDateString();
+                $addedExpiredMember = Carbon::parse($now)->addDays(1)->toDateString();
 
-                // $employeer->update([
-                //     'expired_at' => $addedExpiredMember
-                // ]);
+                $employeer->update([
+                    'expired_at' => $addedExpiredMember
+                ]);
 
                 $transaction = TransactionEbookExpired::where('transaction_id', $transactionId)->update([
                     'expired_at' => $date
@@ -834,11 +834,11 @@ class MemberController extends Controller
 
             $diff = $previousDate->diffInDays($now);
 
-            $addedExpiredMember = Carbon::parse($now)->addDays($diff)->toDateString();
+            $addedExpiredMember = Carbon::parse($now)->addDays(1)->toDateString();
 
-            // $employeer->update([
-            //     'expired_at' => $addedExpiredMember
-            // ]);
+            $employeer->update([
+                'expired_at' => $addedExpiredMember
+            ]);
 
             $transaction = TransactionEbookExpired::insert([
                 'transaction_id' => $transactionId,
