@@ -80,7 +80,7 @@ class TransferConfirmationController extends Controller
     public function approve($invoice_number)
     {
         // If Type *Register Member* update table transaction member
-        
+
         TransferConfirmation::where('invoice_number', $invoice_number)->update([
           'status' => 1,
           'approved_at' => now()
@@ -158,7 +158,7 @@ class TransferConfirmationController extends Controller
                     $additionalParameter = (object) [
                       'password' => $newPassword
                     ];
-          
+
                     DB::table('non_members')->where('id', $checkIsRegister->nonMember->id)->update([
                       'password' => password_hash($newPassword, PASSWORD_BCRYPT)
                     ]);
@@ -249,7 +249,7 @@ class TransferConfirmationController extends Controller
                     $trxNonMember = TransactionNonMember::where('transaction_ref', $data->invoice_number);
                     if(!$isRenewal) {
                       $trxNonMember->update([
-                        'expired_at' => Carbon::create($trxNonMember->latest('id')->first()->expired_at)->addYear(1)
+                        'expired_at' => Carbon::create(date('Y-m-d H:i:s'))->addYear(1)//Carbon::create($trxNonMember->latest('id')->first()->expired_at)->addYear(1)
                       ]);
                     } else {
                       $getEbookIdByHistory = PaymentHistoryNonMember::where('ref_no', $data->invoice_number)->first();
@@ -263,7 +263,7 @@ class TransferConfirmationController extends Controller
                         'ebook_id' => $getEbookIdByHistory->ebook_id,
                         'status' => $trxNonMember->latest('id')->first()->status,
                         'transaction_ref' => $trxNonMember->latest('id')->first()->transaction_ref,
-                        'expired_at' => Carbon::create($trxNonMember->latest('id')->first()->expired_at)->addYear(1)
+                        'expired_at' => Carbon::create(date('Y-m-d H:i:s'))->addYear(1) //Carbon::create($trxNonMember->latest('id')->first()->expired_at)->addYear(1)
                       ]);
                     }
 
@@ -271,7 +271,7 @@ class TransferConfirmationController extends Controller
                     $trxMember = TransactionMember::where('transaction_ref', $data->invoice_number);
                     if(!$isRenewal) {
                       $trxMember->update([
-                        'expired_at' => Carbon::create($trxMember->latest('id')->first()->expired_at)->addYear(1)
+                        'expired_at' => Carbon::create(date('Y-m-d H:i:s'))->addYear(1)//Carbon::create($trxMember->latest('id')->first()->expired_at)->addYear(1)
                       ]);
                     } else {
                       $getEbookIdByHistory = PaymentHistoryMember::where('ref_no', $data->invoice_number)->first();
@@ -281,7 +281,7 @@ class TransferConfirmationController extends Controller
                         'ebook_id' => $getEbookIdByHistory->ebook_id,
                         'status' => $trxMember->latest('id')->first()->status,
                         'transaction_ref' => $trxMember->latest('id')->first()->transaction_ref,
-                        'expired_at' => Carbon::create($trxMember->latest('id')->first()->expired_at)->addYear(1)
+                        'expired_at' => Carbon::create(date('Y-m-d H:i:s'))->addYear(1) //Carbon::create($trxMember->latest('id')->first()->expired_at)->addYear(1)
                       ]);
                     }
                   }
@@ -300,9 +300,9 @@ class TransferConfirmationController extends Controller
     public function destroy($id)
     {
         $data = TransferConfirmation::findOrFail($id);
-        if ($data) { 
+        if ($data) {
             \File::delete(public_path($data->image));
-            $data->delete(); 
+            $data->delete();
             Alert::success('Success Delete Data', 'Success');
         } else {
             Alert::error('Gagal Delete Data', 'Gagal');
@@ -311,7 +311,7 @@ class TransferConfirmationController extends Controller
 
 
     public function htmlAction($row)
-    {  
+    {
       $show = \Auth::guard('admin')->user()->hasPermission('Transfer_confirmation.detail') ? '<a data-id="'.$row->id.'"  class="btn btn-success fa fa-eye show-testimonial" title="Show Payment"></a>' : '';
       $approve = \Auth::guard('admin')->user()->hasPermission('Transfer_confirmation.approve') ? '<a data-invoice_number="'.$row->invoice_number.' "class="btn btn-default fa fa-check approve-payment" style="background-color: #b85ebd; color: #ffffff;" title="Approve Payment"></a>' : '';
       $delete = \Auth::guard('admin')->user()->hasPermission('Transfer_confirmation.delete') ? '<a data-id="'.$row->id.'"  class="btn btn-danger fa fa-trash delete-payment" title="Delete Payment"></a>' : '';
