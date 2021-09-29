@@ -35,6 +35,12 @@
     .btn-buy {
       margin-right: -45px!important
     }
+    @media (max-width:991px){
+        .alert-announcment {
+            width: 300px !important;
+            margin-right: 0 !important;
+        }
+    }
   </style>
 </head>
 
