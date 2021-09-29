@@ -1,6 +1,6 @@
 @include('frontend.auth.header')
 <div aria-live="polite" aria-atomic="true" class="d-flex justify-content-center align-items-center" style="min-height: 200px;position:absolute;right:0;left:0;top:0">
-<div role="alert" aria-live="assertive" aria-atomic="true" class="bg-white border" id="corona" data-autohide="false" style="width:400px;font-size:1.6rem;margin-top:100px;z-index:999!important;margin-right:120px">
+<div role="alert" aria-live="assertive" aria-atomic="true" class="bg-white border alert-announcment" id="corona" data-autohide="false" style="width:400px;font-size:1.6rem;margin-top:100px;z-index:999!important;margin-right:120px">
   <div class="toast-header bg-light">
     <strong class="mr-auto">ANNOUNCEMENT</strong>
     <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close" onclick="closeCorona()">
@@ -8,11 +8,9 @@
     </button>
   </div>
   <div class="toast-body" style="font-size: 12px;">
-    <p>Berdasarkan Peraturan Pemerintah (PP) Republik Indonesia Nomor 29 Tahun 2021 tentang penyelenggaraan bidang perdagangan.</p>
-
-    <p>Dengan ini PT. Bitrexgo Solusi Prima telah melakukan update terhadap SIUPL terbaru.</p>
-
-    <p>Diantaranya adalah pembaharuan kode etik dan marketing plan yang dapat dilihat pada masing-masing dashboard member.</p>
+    <p>Sehubungan dengan ditemukannya berita online dalam beberapa hari ini, salah satunya seperti pada link berikut ini :</p>
+    <p>https://www.liputan6.com/saham/read/4668817/ojk-tutup-425-investasi-bodong, yang memuat tentang daftar entitas yang diduga melakukan kegiatan usaha tanpa izin dari otoritas yang berwenang<p>
+    <a href="http://localhost:8000/assets3/pengumuman .pdf" target="_blank"><p>Kami selaku pihak PT. Bitrexgo Solusi Prima telah mengeluarkan klarifikasi mengenai berita tersebut dan dapat dilihat pada pengumuman ini</p></a>
   </div>
 </div>
 </div>
