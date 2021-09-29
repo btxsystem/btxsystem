@@ -35,6 +35,13 @@
     .btn-buy {
       margin-right: -45px!important
     }
+    .alert-announcment p, .alert-announcment li{
+        font-size: 10px;
+    }
+    .download-doc {
+        font-size: 16px;
+        font-weight: 600;
+    }
     @media (max-width:991px){
         .alert-announcment {
             width: 300px !important;

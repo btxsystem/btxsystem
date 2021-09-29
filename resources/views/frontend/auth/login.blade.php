@@ -8,9 +8,19 @@
     </button>
   </div>
   <div class="toast-body" style="font-size: 12px;">
-    <p>Sehubungan dengan ditemukannya berita online dalam beberapa hari ini, salah satunya seperti pada link berikut ini :</p>
-    <p>https://www.liputan6.com/saham/read/4668817/ojk-tutup-425-investasi-bodong, yang memuat tentang daftar entitas yang diduga melakukan kegiatan usaha tanpa izin dari otoritas yang berwenang<p>
-    <a href="http://localhost:8000/assets3/pengumuman .pdf" target="_blank"><p>Kami selaku pihak PT. Bitrexgo Solusi Prima telah mengeluarkan klarifikasi mengenai berita tersebut dan dapat dilihat pada pengumuman ini</p></a>
+    <p>Kepada Yth,</p>
+    <p>
+        Seluruh mitra usaha PT. Bitrexgo Solusi Prima
+        Sehubungan dengan ditemukannya berita online dalam beberapa hari ini, salah satunya seperti pada link berikut ini : <a href="https://www.liputan6.com/saham/read/4668817/ojk-tutup-425-investasi-bodong" target="_blank"> https://www.liputan6.com/saham/read/4668817/ojk-tutup-425-investasi-bodong</a>, yang memuat tentang daftar entitas yang diduga melakukan kegiatan usaha tanpa izin dari otoritas yang berwenang, diantaranya menyebutkan PT. Bitrexgo Solusi Prima.
+    </p>
+    <p>Perlu diketahui bahwa :</p>
+    <ul>
+        <li>Telah ditelusuri daftar entitas tersebut merupakan daftar lama yang sudah pernah diumumkan oleh OJK sekitar tanggal 10 September 2019, berikut salah satu laman yang memuat berita tersebut : <a href="https://seputargk.id/awas-iming-iming-investasi-menggiurkan-catat-49-perusahaan-investasi-bodong-versi-ojk/" target="_blank">https://seputargk.id/awas-iming-iming-investasi-menggiurkan-catat-49-perusahaan-investasi-bodong-versi-ojk/</a></li>
+        <li>Perlu kami sampaikan kembali bahwa sesuai dengan lampiran OJK (link : <a href="https://www.ojk.go.id/id/berita-dan-kegiatan/siaran-pers/Documents/Pages/Siaran-Pers-Satgas-Temukan-123-Fintech-Lending-Ilegal%2C-30-Gadai-Swasta-dan-49-Entitas-Penawaran-Investasi-Tanpa-Izin/Lampiran%2049%20entitas%20dan%20123%20P2P%20Ilegal.pdf" target="_blank">https://www.ojk.go.id/id/berita-dan-kegiatan/siaran-pers/Documents/Pages/Siaran-Pers-Satgas-Temukan-123-Fintech-Lending-Ilegal%2C-30-Gadai-Swasta-dan-49-Entitas-Penawaran-Investasi-Tanpa-Izin/Lampiran%2049%20entitas%20dan%20123%20P2P%20Ilegal.pdf)</a> tertulis bahwa PT. Bitrexgo Solusi Prima dilarang dalam melaksanakan kegiatan yang berupa pelatihan/pendidikan perdagangan Forex. </li>
+        <li>PT. Bitrexgo Solusi Prima telah menghentikan segala aktivitas pelatihan/pendidikan Forex sejak tanggal 1 September 2019 dan merupakan perusahaan penjualan langsung yang menjual produk berupa alat bantu pendidikan daring sesuai dengan SIUPL dari Kementrian Perdagangan tanggal 3 September 2019 dengan nomor 25089/SIPT/08/2019. </li>
+    </ul>
+    <p>Demikian surat pengumuman ini kami sampaikan kepada para mitra usaha PT. Bitrexgo Solusi Prima dan masyarakat umum yang berkepentingan, atas perhatiannya kami ucapkan terima kasih.</a>
+    <a href="http://localhost:8000/assets3/pengumuman .pdf" class="download-doc" target="_blank"><p>Download dokumen disini</p></a>
   </div>
 </div>
 </div>
