@@ -20,7 +20,7 @@
         <li>PT. Bitrexgo Solusi Prima telah menghentikan segala aktivitas pelatihan/pendidikan Forex sejak tanggal 1 September 2019 dan merupakan perusahaan penjualan langsung yang menjual produk berupa alat bantu pendidikan daring sesuai dengan SIUPL dari Kementrian Perdagangan tanggal 3 September 2019 dengan nomor 25089/SIPT/08/2019. </li>
     </ul>
     <p>Demikian surat pengumuman ini kami sampaikan kepada para mitra usaha PT. Bitrexgo Solusi Prima dan masyarakat umum yang berkepentingan, atas perhatiannya kami ucapkan terima kasih.</a>
-    <a href="http://localhost:8000/assets3/pengumuman .pdf" class="download-doc" target="_blank"><p>Download dokumen disini</p></a>
+    <a href="https://bitrexgo.co.id/assets3/pengumuman .pdf" class="download-doc" target="_blank"><p>Download dokumen disini</p></a>
   </div>
 </div>
 </div>
