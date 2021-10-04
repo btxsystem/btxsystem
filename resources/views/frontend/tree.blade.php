@@ -119,13 +119,6 @@
 							<label for="female">Female</label>
 						</div>
 					</div>
-          			<!-- <div class="dropdown-divider"></div> -->
-          			<!-- <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
-						<div class="demo-radio-button">
-							<input name="pack" type="radio" value="1" id="pack" class="with-gap radio-col-red" checked />
-							<label for="shipping">Starter Pack</label>
-						</div>
-					</div> -->
 					<div class="dropdown-divider"></div>
 					<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<h5 class="card-inside-title">Select ebook <em>*</em></h5>
@@ -133,9 +126,11 @@
 							<!-- <input name="method" type="radio" value="1" id="shipping" class="with-gap radio-col-red" checked />
 							<label for="shipping">Shipping</label> -->
               				<div id="ebook-list"></div>
+                            <div id="personal-rank"></div>
 						</div>
 						<div class="buy_ebook"></div>
 					</div>
+
           			<div class="dropdown-divider"></div>
 					<!-- <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<h5 class="card-inside-title">Choose a shipping method</h5>
@@ -149,7 +144,8 @@
 					<!-- <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 pickup-form">
 						<h4>B-G 168, Jl. Pluit Indah Raya, Pluit, Penjaringan, North Jakarta City, Jakarta 14450</h4>
 					</div> -->
-					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 shipping-form">
+					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <h5 class="card-inside-title">Shipping address to send proof of ownership <em>*</em></h5>
 						<div class="form-group">
 							<select id="province" name="province" class="province"></select>
               				<input type="hidden" name="province_name" id="province_name" value="">
@@ -165,7 +161,7 @@
             			<div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
 							<div class="form-line">
 								<input class="form-control" name="address" id="address" type="text" min="3">
-								<label class="form-label">Address</label>
+								<label class="form-label">Address <em>*</em></label>
 							</div>
   						</div>
 						<div class="form-group kurir-form">
@@ -186,21 +182,16 @@
 						<div class="form-group address-form">
 						<div class="table-responsive">
                 <table class="table table-borderless">
-                  <!-- <tr>
-                    <td> <h4>Starter Pack</h4> </td>
-                    <td class="text-right"> <h4><span id="cost-starter">0</span></h4> </td>
-                    <td> <h4>Points</h4> </td>
-                  </tr> -->
                   <tr>
                     <td> <h4>Total Ebook</h4> </td>
                     <td class="text-right"> <h4><span id="cost-ebook">0</span></h4> </td>
                     <td> <h4>Points</h4> </td>
                   </tr>
-                  <!-- <tr>
-                    <td> <h4>Total Shipping</h4> </td>
+                  <tr>
+                    <td> <h4>Cost Postal</h4> </td>
                     <td class="text-right"> <h4><span id="cost-postal">0</span></h4> </td>
                     <td> <h4>Points</h4> </td>
-				  </tr> -->
+				  </tr>
 				  <tr id="total-discount-tr" class="hidden">
                     <td> <h4>Total Discount</h4> </td>
                     <td class="text-right"> <h4><span id="total-discount">0</span></h4> </td>
@@ -608,6 +599,8 @@ em{
 
 <script>
 	var priceEbook = 0
+    var personalRank = 0
+    personalRankLabel = "STARTER"
 	var postalFee = 0
 	var grandTotal = 0;
 	var bitrexPoint = '{{Auth::user()->bitrex_points}}'
@@ -814,7 +807,7 @@ em{
 
 	$(document).ready(function() {
 		$('.register').prop('disabled', true)
-		// $('#cost-starter').html('280')
+		$('#cost-starter').html('0')
 
 		var element = document.querySelector('#bah');
 
@@ -842,7 +835,7 @@ em{
                 if (v.id != 7) {
                     return `
                         <div class="form-check">
-                        <input class="form-check-input" data-id="${v.id}" data-allow-merge-discount="${v.allow_merge_discount}" data-maximum-product="${v.maximum_product}" data-register-promotion="${v.register_promotion}" data-minimum-product="${v.minimum_product}" data-price-discount="${v.total_price_discount}" data-promotion="${v.is_promotion}" data-price="${v.price}" type="checkbox" name="ebooks[]" value="${v.id}" id="${v.title}">
+                        <input class="form-check-input" data-id="${v.id}" data-allow-merge-discount="${v.allow_merge_discount}" data-maximum-product="${v.maximum_product}" data-register-promotion="${v.register_promotion}" data-minimum-product="${v.minimum_product}" data-price-discount="${v.total_price_discount}" data-promotion="${v.is_promotion}" data-price="${v.price}" data-pv="${v.pv}" type="checkbox" name="ebooks[]" value="${v.id}" id="${v.title}">
                         <label class="form-check-label" id="${i}" for="${v.title}" ${v.id == 1 ? 'checked' : ''}>
                             ${v.title}
                         </label>
@@ -859,7 +852,16 @@ em{
 			if(parseInt($(this).val()) == 1) {
 			$(this).prop('checked', true)
 			priceEbook = priceEbook + parseInt($(this).data('price'))
+            personalRank = personalRank +  $(this).data('pv')
+            if (personalRank >= 100 && personalRank < 200) {
+                personalRankLabel = 'BASIC'
+            } else if(personalRank >= 200) {
+                personalRankLabel = 'PRO'
+            } else{
+                personalRankLabel = 'STARTER'
+            }
 			$('#cost-ebook').html(toPrice(priceEbook / 1000))
+            $('#personal-rank').html("<br/><h5 class='card-inside-title'>Personal Rank: "+personalRankLabel+"</h5>")
 			$('#grand-total').html(toPrice((priceEbook + postalFee) / 1000))
 			}
 		})
@@ -972,6 +974,7 @@ em{
 			// }*/
 
 			priceEbook = 0
+            personalRank = 0
 			let totalDiscount = 0;
 			ebookSelected.each(function(index, book) {
 				let idEbook = $(this).data('id')
@@ -982,9 +985,11 @@ em{
 				let maximumProduct = $(this).data('maximum-product')
 				let price = $(this).data('price')
 				let priceDiscount = $(this).data('price-discount')
+                let pv = $(this).data('pv')
 
 
 				if($(this).prop('checked')) {
+                    personalRank = personalRank + pv;
 					if(isPromotion && isRegisterPromotion) {
 						if(ebookSelected.length >= minimumProduct && ebookSelected.length <= maximumProduct) {
 							priceEbook = priceEbook + (parseInt(price) - parseInt(priceDiscount));
@@ -1013,6 +1018,7 @@ em{
 				} else {
 					if(!cancelledEbook) {
 						check -= 1;
+                        personalRank = personalRank - pv;
 						if(isPromotion && isRegisterPromotion && ebookSelected.length <= maximumProduct) {
 							priceEbook = priceEbook - (parseInt(price) - parseInt(priceDiscount));
 							totalDiscount -= parseInt(priceDiscount)
@@ -1021,7 +1027,14 @@ em{
 						}
 					}
 				}
-
+                if (personalRank >= 100 && personalRank < 200) {
+                    personalRankLabel = 'BASIC'
+                } else if(personalRank >= 200) {
+                    personalRankLabel = 'PRO'
+                } else {
+                    personalRankLabel = 'STARTER'
+                }
+                $('#personal-rank').html("<br/><h5 class='card-inside-title'>Persoal Rank: "+personalRankLabel+"</h5>")
 			})
 
 			if(discountEbooks.length > 0) {
@@ -1201,9 +1214,15 @@ em{
 			type: 'GET',
 			url: '/member/shipping/cost/'+id,
 			success: function (data) {
+                kurir = [];
+                $.each( data, function( key, value ) {
+                    if (value.text.indexOf("jne") != -1) {
+                        kurir[key] = value;
+                    }
+                });
 				$('#kurir').select2({
 					placeholder: 'Kurir',
-					data: data,
+					data: kurir,
 				});
 			},
 			error: function() {
@@ -1217,7 +1236,6 @@ em{
 
 		$('#kurir_name').val($(this).find(":checked").text())
 		$('#cost').val(Math.ceil(this.value/1000))
-		$('#cost-starter').html('280')
 		postalFee = Math.ceil(this.value)
 
 		if(postalFee != 0) {
@@ -1268,9 +1286,9 @@ em{
 	});
 
 	$('#pickup').change(function(){
-    	$('#address').prop('required', false);
-		$('#province').prop('required',false);
-		$('#city').prop('required',false);
+    	// $('#address').prop('required', false);
+		// $('#province').prop('required',false);
+		// $('#city').prop('required',false);
 		$('.shipping-form').hide();
     	$('.pickup-form').show();
 		grandTotal -= postalFee;

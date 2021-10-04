@@ -1,108 +1,114 @@
-#owl-testi.owl-carousel .owl-nav button.owl-next, .owl-carousel .owl-nav button.owl-prev, .owl-carousel button.owl-dot {
-	border: 1px #dadada solid;
-	margin-right: 10px;
-	width: 60px;
-  height: 60px;
+#owl-testi.owl-carousel .owl-nav button.owl-next,
+.owl-carousel .owl-nav button.owl-prev,
+.owl-carousel button.owl-dot {
+    border: 1px #dadada solid;
+    margin-right: 10px;
+    width: 60px;
+    height: 60px;
 }
 
-#owl-testi.owl-carousel .owl-nav button.owl-next span, .owl-carousel .owl-nav button.owl-prev span {
-	font-size: 30px;
-	line-height: .8;
+#owl-testi.owl-carousel .owl-nav button.owl-next span,
+.owl-carousel .owl-nav button.owl-prev span {
+    font-size: 30px;
+    line-height: .8;
 }
-
-
 
 .btnBook .btn {
-  margin-top: 55px;
-  border-radius: 5px;
-  position: absolute;
-  background: #b92240;
-  margin-left: 50px;
-  /*box-shadow: 0 3px 0 0 #52001b;*/
+    margin-top: 55px;
+    border-radius: 5px;
+    position: absolute;
+    background: #b92240;
+    /* margin-left: 10px; */
+    /*box-shadow: 0 3px 0 0 #52001b;*/
 }
-.btnBook .btn a{
-  color: #ffffff;
+
+.btnBook .btn a {
+    color: #ffffff;
 }
+
 .slide .imgSlide {
-  background-image: url('./../../img/BGcompro.jpg');
+    background-image: url('./../../img/BGcompro.jpg');
 }
+
 .slide .imgSlide .colFormSignup {
-  width: 400px;
-  float: right;
-  margin-top: 30px;
-  margin-bottom: 60px;
+    width: 400px;
+    float: right;
+    margin-top: 30px;
+    margin-bottom: 60px;
 }
 
 .btn-buy {
-  border-radius: 5px;
+    border-radius: 5px;
 }
-
 
 @media (max-width: 480px) {
-  .slide .imgSlide .colFormSignup {
-    float: none;
-    width: 100%;
-  }
-  .btnBook .btn {
-    margin-top: 5px;
-    margin-left: 65px;
-  }
-  .btn-buy {
-    margin-top: 6px !important;
-  }
+    .slide .imgSlide .colFormSignup {
+        float: none;
+        width: 100%;
+    }
+    .btnBook .btn {
+        margin-top: 5px;
+        margin-left: 65px;
+    }
+    .btn-buy {
+        margin-top: 6px !important;
+    }
 }
 
-
 .slide-banner {
-	position: absolute; top: 70px; z-index: 9998; left: 100px;
+    position: absolute;
+    top: 70px;
+    z-index: 9998;
+    left: 100px;
 }
 
 .body-banner {
-	background-color: #fff;
-	padding: 20px;
-	border-radius: 10px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
 }
 
 .btn-link:hover {
-	text-decoration: none;
+    text-decoration: none;
 }
 
 .pointer {
-	cursor: pointer;
+    cursor: pointer;
 }
 
 .mb-0 {
-	margin-bottom: 0;
+    margin-bottom: 0;
 }
 
 .page-item.disabled .page-link {
-	border : 0;
+    border: 0;
 }
 
 .page-item .page-link {
-	border : 0;
-	color: #333;
+    border: 0;
+    color: #333;
 }
 
 .page-item.active .page-link {
-	background-color: transparent;
-	color: #dc3c45;
+    background-color: transparent;
+    color: #dc3c45;
 }
 
 .hall-card {
-	min-height: 250px;
-	min-width: 250px;
-	max-height: 250px;
-	max-width: 250px;
-	overflow: hidden;
-	border-radius: 50%;
+    min-height: 250px;
+    min-width: 250px;
+    max-height: 250px;
+    max-width: 250px;
+    overflow: hidden;
+    border-radius: 50%;
 }
+
 .frame {
-	position: absolute;
-	left: auto;
-	right: auto;
-	top: 0;
-	bottom: 0%;
+    position: absolute;
+    left: auto;
+    right: auto;
+    top: 0;
+    bottom: 0%;
 }
 
 .owl-carousel .owl-dots {
@@ -111,68 +117,68 @@
     align-items: center;
     margin-top: 10px;
 }
+
 .owl-carousel button.owl-dot.active {
-  background: none repeat scroll 0 0 #869791;
-  border-radius: 20px;
-  display: block;
-  height: 12px;
-  margin: 5px 7px;
-  opacity: 0.5;
-  width: 12px;
+    background: none repeat scroll 0 0 #869791;
+    border-radius: 20px;
+    display: block;
+    height: 12px;
+    margin: 5px 7px;
+    opacity: 0.5;
+    width: 12px;
 }
+
 .owl-carousel button.owl-dot {
-  background: none repeat scroll 0 0 #cacaca;
-  border-radius: 20px;
-  display: block;
-  height: 12px;
-  margin: 5px 7px;
-  opacity: 0.5;
-  width: 12px;
+    background: none repeat scroll 0 0 #cacaca;
+    border-radius: 20px;
+    display: block;
+    height: 12px;
+    margin: 5px 7px;
+    opacity: 0.5;
+    width: 12px;
 }
 
 @media (max-width: 1024px) {
-	.slide-banner {
-		left: 0px;
-		width: 51%;
-		top: 170px;
-	}
-
-	.body-banner {
-		background-color: #fff;
-		padding: 20px;
-		border-radius: 10px;
-	}
-
-	.frame {
-		left: 19px;
-		top: 30px;
-	}
+    .slide-banner {
+        left: 0px;
+        width: 51%;
+        top: 170px;
+    }
+    .body-banner {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+    }
+    .frame {
+        left: 19px;
+        top: 30px;
+    }
 }
 
 @media (max-width: 480px) {
-	.slide-banner {
-		left: 0px;
-		width: 100%;
-		top: 150px;
-	}
-	.card-header h3 {
-		font-size: 20px;
-	}
-	.mb-sm-3 {
-		margin-bottom: 1.5rem;
-	}
+    .slide-banner {
+        left: 0px;
+        width: 100%;
+        top: 150px;
+    }
+    .card-header h3 {
+        font-size: 20px;
+    }
+    .mb-sm-3 {
+        margin-bottom: 1.5rem;
+    }
 }
 
 @media (max-width: 375px) {
-	.frame {
-		left: 20px;
-		top: 15px;
-	}
+    .frame {
+        left: 20px;
+        top: 15px;
+    }
 }
 
 @media (max-width: 360px) {
-	.frame {
-		top: 23px;
-		left: 20px;
-	}
+    .frame {
+        top: 23px;
+        left: 20px;
+    }
 }

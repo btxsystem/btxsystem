@@ -61,6 +61,69 @@
     </div>
 </div>
 
+<div class="modal fade" id="transferBp" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="form-group form-float col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="form-line">
+                    <div class="block-header">
+                        <div class="row">
+                            <div class="col-lg-7 col-md-6 col-sm-12">
+                                <h2>Ebook
+                                <small class="text-muted">Bitrexgo</small>
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container-fluid">
+                        <div class="row clearfix">
+                            <div class="col-lg-12 col-md-12">
+                                <div class="card" style="background-color:#b92240">
+                                    <div class="container-fluid">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="ebook">
+                                                    <div class="my-5">
+                                                        <div class="container">
+                                                            @foreach ($ebook as $item)
+                                                                <div class="row">
+                                                                    <div class="col-lg-12 mb-3">
+                                                                        <div class="row">
+                                                                        <div class="col-10 mx-auto">
+                                                                            <div id="basic-expired" class="ml-md-5 ml-3">
+                                                                                <span id="clock-basic"></span>
+                                                                            </div>
+                                                                        </div>
+                                                                        </div>
+                                                                        <div class="bg-white shadow rounded p-3 border-hover triangle">
+                                                                            <div class="row">
+                                                                                <input type="text" value="{{$item->id}}" hidden>
+                                                                                <div class="col-lg-9">
+                                                                                    <br>
+                                                                                    <h2 class="mb-0" style="color: #8543da;">{!! $item->title !!} ( +{{ $item->pv }} pv )</h2>
+                                                                                    <a href="https://ebook.{{$_SERVER['SERVER_NAME']}}/ebook" class="btn btn-danger btn-sm mt-3 px-5">Go to Ebook</a>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            @endforeach
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 <section class="content profile-page">
     <section class="boxs-simple">
         <div class="profile-header">
@@ -75,6 +138,13 @@
                     <h4 class="m-t-5 m-b-0"><strong>{{$profile['name']}}</strong></h4>
                     <br>
                     <span class="job_post"><b>ID : {{$profile['id_member']}}</b></span>
+                </div>
+                <div class="col-lg-3 col-md-8 col-12 profile" style="text-align: center !important;">
+                    <h4 class="m-t-5 m-b-0"><strong>Personal Rank</strong></h4>
+                    <br>
+                    <img class="personal-rank-image" src="assets3/img/{{Str::lower($profile['personal_rank'])}}.png"  alt="">
+                    <br>
+                    <span class="job_post"><strong>{{$profile['personal_rank']}} ( {{$profile['my_personal_rank']}} )</strong></span>
                 </div>
             </div>
         </div>
@@ -98,7 +168,13 @@
             </div>
         </div>
     </section>
+    <div class="container-fluid mobile-center">
+        <a href="#" data-toggle="modal" data-target="#transferBp" id="success-button">
+            <img class="upgrade-membership" src="assets3/img/upgrade-membership.png" alt="">
+        </a>
+    </div>
     <div class="container-fluid">
+        <br>
         <div class="row clearfix training_" hidden="true">
             <a href="#" data-toggle="modal" data-target="#training">
             <div class="col-lg-12 col-md-12">
@@ -153,13 +229,13 @@
             </div>
             <div class="col-lg-4 col-sm-6 col-md-6" style="text-align: center;">
                 <div>
-                    <a target="_blank" href="{{asset('assets3/compro.pdf')}}" style="cursor: pointer;">
+                    <a target="_blank" href="{{asset('assets3/Compro-Final.pdf')}}" style="cursor: pointer;">
                         <img style="width: 80%;" src="assets3/img/Compro-Icon.png" alt="">
                     </a>
                 </div>
                 <br>
                 <div>
-                    <a target="_blank" href="{{asset('assets3/code-ethic.pdf')}}" style="cursor: pointer;">
+                    <a target="_blank" href="{{asset('assets3/Kode-Etik-Final.pdf')}}" style="cursor: pointer;">
                         <img style="width: 80%;" src="assets3/img/KE-Icon.png" alt="">
                     </a>
                 </div>

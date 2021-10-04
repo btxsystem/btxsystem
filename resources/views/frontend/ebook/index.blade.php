@@ -81,8 +81,11 @@
                                                         <div class="bg-white shadow rounded p-3 border-hover triangle">
                                                             <div class="row">
                                                                 <div class="col-lg-3 d-flex align-items-center">
-                                                                    <img src="{{URL::to('/')}}/{{isset($item->src) ? $item->src : $item['src'] }}" class="mx-auto d-block" style="width: 200px;
-                                                                    height: 250px;">
+                                                                    <div class="row">
+                                                                        <img src="{{URL::to('/')}}/assets3/img/cards/{{Str::lower($item->title)}}.png" class="mx-auto d-block" style="width: 200px; padding-bottom: 10px;">
+                                                                        <img src="{{URL::to('/')}}/{{isset($item->src) ? $item->src : $item['src'] }}" class="mx-auto d-block" style="width: 200px;
+                                                                        height: 250px;">
+                                                                    </div>
                                                                 </div>
                                                                 <input type="text" value="{{$item->id}}" hidden>
                                                                 <div class="col-lg-9">
