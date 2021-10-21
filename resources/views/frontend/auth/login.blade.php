@@ -9,7 +9,10 @@
   </div>
   <div class="toast-body" style="font-size: 12px;">
     <p>Kepada Yth,</p>
-    <p>
+    <p>Seluruh mitra usaha PT. Bitrexgo Solusi Prima, sehubungan dengan wabah covid-19 yang belum berakhir. Maka dengan ini perusahaan memutuskan untuk mencairkan semua bentuk reward trip dalam bentuk uang tunai. Perihal nilai dan metode pengajuan claim reward akan diinformasikan lebih lanjut melalui surat keputusan resmi perusahaan PT Bitrexgo Solusi Prima.</p>
+    <p>Terima kasih,</p>
+    <p>Bitrexgo</p>
+    <!-- <p>
         Seluruh mitra usaha PT. Bitrexgo Solusi Prima
         Sehubungan dengan ditemukannya berita online dalam beberapa hari ini, salah satunya seperti pada link berikut ini : <a href="https://www.liputan6.com/saham/read/4668817/ojk-tutup-425-investasi-bodong" target="_blank"> https://www.liputan6.com/saham/read/4668817/ojk-tutup-425-investasi-bodong</a>, yang memuat tentang daftar entitas yang diduga melakukan kegiatan usaha tanpa izin dari otoritas yang berwenang, diantaranya menyebutkan PT. Bitrexgo Solusi Prima.
     </p>
@@ -20,7 +23,7 @@
         <li>PT. Bitrexgo Solusi Prima telah menghentikan segala aktivitas pelatihan/pendidikan Forex sejak tanggal 1 September 2019 dan merupakan perusahaan penjualan langsung yang menjual produk berupa alat bantu pendidikan daring sesuai dengan SIUPL dari Kementrian Perdagangan tanggal 3 September 2019 dengan nomor 25089/SIPT/08/2019. </li>
     </ul>
     <p>Demikian surat pengumuman ini kami sampaikan kepada para mitra usaha PT. Bitrexgo Solusi Prima dan masyarakat umum yang berkepentingan, atas perhatiannya kami ucapkan terima kasih.</a>
-    <a href="https://bitrexgo.co.id/assets3/pengumuman .pdf" class="download-doc" target="_blank"><p>Download dokumen disini</p></a>
+    <a href="https://bitrexgo.co.id/assets3/pengumuman .pdf" class="download-doc" target="_blank"><p>Download dokumen disini</p></a> -->
   </div>
 </div>
 </div>
