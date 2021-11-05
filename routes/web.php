@@ -128,6 +128,8 @@ Route::post('/xendit-payment', ['as' => 'xendit-payment', 'uses' => 'Member\Xend
 
 Route::post('forgot-password', ['as' => 'forgot-password', 'uses' => 'Member\ForgotPasswordController@sendEmail']);
 
+Route::get('export-excel', ['as' => 'export-excel', 'uses' => 'Member\ExportExcelController@index']);
+
 Route::group(['middleware' => 'web', 'prefix' => 'member', 'as'=> 'member.'], function () {
 
     Route::group(['prefix' => 'testimonial', 'as'=> 'testimonial.'], function() {

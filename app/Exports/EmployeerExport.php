@@ -26,6 +26,12 @@ class EmployeerExport implements FromView
         ]);
     }
 
+    public function allEmplooyer(){
+        return view('frontend.team-report.export_member', [
+            'datas' => Employeer::all()
+        ]);
+    }
+
 
 
     // public function collection()

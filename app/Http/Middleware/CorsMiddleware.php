@@ -18,13 +18,13 @@ class CorsMiddleware
         $dotenv = Dotenv::create(public_path('../'), '.env');
         $dotenv->load();
 
-        $allowedOrigins = explode(",", env("ALLOW_IFRAME") ?? "http://staging.bitrexgo.id");
+        $allowedOrigins = explode(",", env("ALLOW_IFRAME") ?? "http://bitrexgo.co.id");
 
         $response = $next($request);
-        
-        foreach($allowedOrigins as $url) {
-          $response->header('Content-Security-Policy', 'frame-ancestors '.$url);
-        }
+
+        // foreach($allowedOrigins as $url) {
+        //   $response->header('Content-Security-Policy', 'frame-ancestors '.$url);
+        // }
 
         return $response;
     }
