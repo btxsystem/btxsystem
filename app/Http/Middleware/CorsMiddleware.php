@@ -22,9 +22,9 @@ class CorsMiddleware
 
         $response = $next($request);
 
-        // foreach($allowedOrigins as $url) {
-        //   $response->header('Content-Security-Policy', 'frame-ancestors '.$url);
-        // }
+        foreach($allowedOrigins as $url) {
+          $response->header('Content-Security-Policy', 'frame-ancestors '.$url);
+        }
 
         return $response;
     }
