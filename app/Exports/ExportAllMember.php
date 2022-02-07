@@ -15,7 +15,7 @@ class ExportAllMember implements FromView
     public function view(): View
     {
         return view('frontend.team-report.export_member', [
-            'datas' => Employeer::where('status', 1)->get()
+            'datas' => Employeer::where('expired_at', '>=',now())->get()
         ]);
     }
 }
