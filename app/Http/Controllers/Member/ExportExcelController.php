@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Member;
 use App\Http\Controllers\Controller;
 use Excel;
 use App\Exports\ExportAllMember;
-use App\Models\TransactionMember;
+use App\Exports\TrxMember;
 
 class ExportExcelController extends Controller
 {
@@ -16,19 +16,7 @@ class ExportExcelController extends Controller
 
     public function transaction()
     {
-        $trx = TransactionMember::where('status', 1)
-            ->whereNotNull('transaction_ref')
-            ->whereYear('created_at', '=', 2021)
-            ->with(['ebook' => function($data) {
-                                $data->select(['id','title','price']);
-                            },
-                    'member' => function($data) {
-                                $data->select(['id','id_member','username','first_name','last_name','phone_number']);
-                            }
-                ])
-        ->select('transaction_member.*')
-        ->orderBy('transaction_member.created_at','desc')->get();
-        return Excel::download($trx, now() .' ' .'emplooyers.xlsx');
+        return Excel::download(new TrxMember, now() .' ' .'transaction-emplooyers.xlsx');
     }
 
 
