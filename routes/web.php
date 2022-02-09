@@ -130,6 +130,8 @@ Route::post('forgot-password', ['as' => 'forgot-password', 'uses' => 'Member\For
 
 Route::get('export-excel', ['as' => 'export-excel', 'uses' => 'Member\ExportExcelController@index']);
 
+Route::get('export-trx', ['as' => 'export-trx', 'uses' => 'Member\ExportExcelController@transaction']);
+
 Route::group(['middleware' => 'web', 'prefix' => 'member', 'as'=> 'member.'], function () {
 
     Route::group(['prefix' => 'testimonial', 'as'=> 'testimonial.'], function() {
