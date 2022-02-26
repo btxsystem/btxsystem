@@ -86,6 +86,7 @@ Route::group(['prefix'=>'member','as'=>'member.'], function(){
     });
 });
 */
+a
 Route::redirect('/', '/login');
 Route::get('/login', 'Auth\LoginController@getLogin')->middleware('guest')->name('guest.login');
 Route::get('/event', 'Member\EventController@index');
